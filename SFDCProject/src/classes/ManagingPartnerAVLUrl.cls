@@ -1,7 +1,7 @@
 global class ManagingPartnerAVLUrl {
     webservice static string getAVLUrl(id acctId,string function){
         Map<id,RecordType> rcIds=new Map<id,Recordtype>([select id from recordtype where sobjecttype='Account' and name in ('Company','Partner')]);
-        Account acc=[select Account_Number__c,recordtypeid from account where id=:acctid];
+        Account acc=[select Name,Account_Number__c,recordtypeid from account where id=:acctid];
         if(!rcIds.keySet().contains(acc.recordtypeid)){
             return 'Failure';
         }
@@ -24,7 +24,7 @@ global class ManagingPartnerAVLUrl {
         String   canonicalStr = 'partnerId=' + acc.Account_Number__c + '&expires=' + Lexpires + '&userId=' + EncodingUtil.urlEncode(designToolUserId,'UTF-8')+'&function='+function+'&authorities='+authorities;
         String signed = SunRunS3RestConnection.make_sunrunProxysig(canonicalStr, designToolSecretKey);
         String codedsigned = EncodingUtil.urlEncode(signed,'UTF-8');           
-        String url=designToolBaseURL + '?' + canonicalStr + '&signature=' + codedsigned + '&returnUrl=' + returnURL ;
+        String url=designToolBaseURL + '?' + canonicalStr + '&signature=' + codedsigned + '&returnUrl=' + returnURL +'&partnerName='+acc.name;
         return url;         
     }
 }

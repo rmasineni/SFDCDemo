@@ -54,24 +54,14 @@ public virtual class BaseAwsService extends BaseClass {
         }
     }
     
-    public String awsSendSqsMessage(String sqsUrl, String body, AwsConfig awsConfig, SyncJobInfo syncJob) {
+    public String awsSendSqsMessage(String sqsUrl, String body, AwsConfig awsConfig) {
         AwsRequest awsRequest = new AwsRequest();
         awsRequest.url = sqsUrl;
         awsRequest.bodyParams.put('Action', 'SendMessage');
         awsRequest.bodyParams.put('MessageBody', body);
         awsRequest.bodyParams.put('Version', '2012-11-05');
         
-        if (syncJob != null) {
-	        syncJob.log('Sending sqs request url=' + sqsUrl + ', body=' + body);
-        }
-        
-        String response = awsHttpPost(awsConfig, awsRequest);
-
-        if (syncJob != null) {
-	        syncJob.log('Received sqs response ' + response);
-        }
-        
-        return response;
+        return awsHttpPost(awsConfig, awsRequest);
     }
     
     /**

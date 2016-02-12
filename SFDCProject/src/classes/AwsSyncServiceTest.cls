@@ -478,22 +478,21 @@ public class AwsSyncServiceTest {
 
         //With sync disabled, insert contract and it should not create sync records.
         ServiceContract contract = new ServiceContract(Opportunity__c=opty1.id);
-        AwsSyncServiceImpl.recordsProcessedInThisTxn.clear();
+        AwsSyncServiceImpl.syncRecordsCreatedIds.clear();
         insert contract;
 		System.assertEquals(0, querySyncRecords(contract.id).size());
 		
-		//Enable sync and then insert contract associated with account which doens't have queue
-		//and ensure that sync should not happen.
+		//Enable sync and then insert contract without status failure and sync should not happen.
 		Sf.settingsService.setBoolean('AwsSqsContractsSyncEnabled', true);
         contract = new ServiceContract(Opportunity__c=opty2.id);
-        AwsSyncServiceImpl.recordsProcessedInThisTxn.clear();
+        AwsSyncServiceImpl.syncRecordsCreatedIds.clear();
         insert contract;
 		System.assertEquals(0, querySyncRecords(contract.id).size());
 	
 		//insert a contract and see that sync record created
 		Sf.settingsService.setBoolean('AwsSqsContractsSyncEnabled', true);
         contract = new ServiceContract(Opportunity__c=opty1.id);
-        AwsSyncServiceImpl.recordsProcessedInThisTxn.clear();
+        AwsSyncServiceImpl.syncRecordsCreatedIds.clear();
         insert contract;
 		System.assertEquals(1, querySyncRecords(contract.id).size());
 		delete querySyncRecords(contract.id);
@@ -501,13 +500,13 @@ public class AwsSyncServiceTest {
         //update a contract with non-eligible field and see that sync record not created
 		contract.Opportunity__c = opty1.id;
         contract.Agreement_Type__c  = 'Some Value';
-        AwsSyncServiceImpl.recordsProcessedInThisTxn.clear();
+        AwsSyncServiceImpl.syncRecordsCreatedIds.clear();
         update contract;
 		System.assertEquals(0, querySyncRecords(contract.id).size());
 
         //update a contract with eligible field and see that sync record not created
         contract.Status__c = 'Some new updated value';
-        AwsSyncServiceImpl.recordsProcessedInThisTxn.clear();
+        AwsSyncServiceImpl.syncRecordsCreatedIds.clear();
         update contract;
 		System.assertEquals(1, querySyncRecords(contract.id).size());
     }
@@ -601,7 +600,7 @@ public class AwsSyncServiceTest {
         //With sync disabled, insert proposal and it should not create sync records.
         Proposal__c proposal = new Proposal__c(Mode_Name__c='Mode', Opportunity__c=opty1.id,
 			Sales_Rep_Email__c='test@yopmail.com', Date_Issued__c=Date.today(), System_Size_STC_DC__c=10.0, Upfront_Payment__c=00.0);
-        AwsSyncServiceImpl.recordsProcessedInThisTxn.clear();
+        AwsSyncServiceImpl.syncRecordsCreatedIds.clear();
         insert proposal;
 		System.assertEquals(0, querySyncRecords(proposal.id).size());
 		
@@ -609,14 +608,14 @@ public class AwsSyncServiceTest {
 		Sf.settingsService.setBoolean('AwsSqsProposalsSyncEnabled', true);
         proposal = new Proposal__c(Mode_Name__c='Mode', Opportunity__c=opty2.id,
 			Sales_Rep_Email__c='test@yopmail.com', Date_Issued__c=Date.today(), System_Size_STC_DC__c=10.0, Upfront_Payment__c=00.0);
-        AwsSyncServiceImpl.recordsProcessedInThisTxn.clear();
+        AwsSyncServiceImpl.syncRecordsCreatedIds.clear();
         insert proposal;
 		System.assertEquals(0, querySyncRecords(proposal.id).size());
 	
 		//insert proposal with queue and see that sync record created
         proposal = new Proposal__c(Mode_Name__c='Mode', Opportunity__c=opty1.id,
 			Sales_Rep_Email__c='test@yopmail.com', Date_Issued__c=Date.today(), System_Size_STC_DC__c=10.0, Upfront_Payment__c=00.0);
-        AwsSyncServiceImpl.recordsProcessedInThisTxn.clear();
+        AwsSyncServiceImpl.syncRecordsCreatedIds.clear();
         insert proposal;
 		System.assertEquals(1, querySyncRecords(proposal.id).size());
 		delete querySyncRecords(proposal.id);
@@ -624,13 +623,14 @@ public class AwsSyncServiceTest {
         //update proposal with non-eligible field and see that sync record not created
 		proposal.Opportunity__c = opty1.id;
         proposal.Name = 'Some Value';
-        AwsSyncServiceImpl.recordsProcessedInThisTxn.clear();
+        AwsSyncServiceImpl.syncRecordsCreatedIds.clear();
         update proposal;
 		System.assertEquals(0, querySyncRecords(proposal.id).size());
+
        
         //update proposal with eligible field and see that sync record not created
         proposal.Status__c = 'Some new updated value';
-        AwsSyncServiceImpl.recordsProcessedInThisTxn.clear();
+        AwsSyncServiceImpl.syncRecordsCreatedIds.clear();
         update proposal;
 		System.assertEquals(1, querySyncRecords(proposal.id).size());
     }

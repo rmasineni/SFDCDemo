@@ -29,6 +29,13 @@
         <value>07/04/2014</value>
     </labels>
     <labels>
+        <fullName>BrightCurrent</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>BrightCurrent</shortDescription>
+        <value>00163000005IF3p</value>
+    </labels>
+    <labels>
         <fullName>Cdyne_LicenseKey</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -54,7 +61,7 @@
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Comcast Account Id</shortDescription>
-        <value>0016000000W92rEAAR</value>
+        <value>00163000005ICrZ</value>
     </labels>
     <labels>
         <fullName>CoreLogic</fullName>
@@ -159,21 +166,21 @@
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Design Tool Base URL</shortDescription>
-        <value>http://lightmile-bb.sunrun.com/sunrun/fromInternalSalesforce.action</value>
+        <value>http://localdev-lightmile-bb.sunrundev.com/sunrun/fromInternalSalesforce.action</value>
     </labels>
     <labels>
         <fullName>Design_Tool_From_PartnerPortal</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Design_Tool_From_PartnerPortal</shortDescription>
-        <value>http://lightmile-bb.sunrun.com/sunrun/fromExternalSalesforce.action</value>
+        <value>http://localdev-lightmile-bb.sunrundev.com/sunrun/fromExternalSalesforce.action</value>
     </labels>
     <labels>
         <fullName>Design_Tool_From_Salesforce</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Design_Tool_From_Salesforce</shortDescription>
-        <value>http://lightmile-bb.sunrun.com/sunrun/fromInternalSalesforce.action</value>
+        <value>http://localdev-lightmile-bb.sunrundev.com/sunrun/fromInternalSalesforce.action</value>
     </labels>
     <labels>
         <fullName>Design_Tool_Secret_Key</fullName>
@@ -285,7 +292,7 @@
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Home Depot MMSVSKU</shortDescription>
-        <value>1001382215</value>
+        <value>100819</value>
     </labels>
     <labels>
         <fullName>Home_Depot_Oppty_Sync_End_DateTime</fullName>
@@ -383,7 +390,7 @@
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>LGCY Power Acc Id</shortDescription>
-        <value>00160000012yDNR</value>
+        <value>00163000005ICv6</value>
     </labels>
     <labels>
         <fullName>LeadDeDupeMethod</fullName>
@@ -397,21 +404,21 @@
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>LeadOrgCostco</shortDescription>
-        <value>0016000000ws0ZD</value>
+        <value>00163000005ICtU</value>
     </labels>
     <labels>
         <fullName>LeadOrgHomedepot</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>LeadOrgHomedepot</shortDescription>
-        <value>0016000000wsKkX</value>
+        <value>00163000005ICtt</value>
     </labels>
     <labels>
         <fullName>Lead_Non_Customer_Acount</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Lead Non Customer Acount</shortDescription>
-        <value>0016000000zeM9d</value>
+        <value>00163000005ICu3</value>
     </labels>
     <labels>
         <fullName>Lead_Status_Duplicate</fullName>
@@ -446,35 +453,35 @@
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>LeaseDimension_InpersonAPIKey</shortDescription>
-        <value>68130449a1bd67c24cda0557301c3765</value>
+        <value>e80b330f29a62d65494265e40d645700</value>
     </labels>
     <labels>
         <fullName>LeaseDimensions</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>LeaseDimensions</shortDescription>
-        <value>https://new.credit.sunrun.com/</value>
+        <value>https://uat.credit.sunrun.com</value>
     </labels>
     <labels>
         <fullName>LeaseDimensions_APIKey</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>LeaseDimensions_APIKey</shortDescription>
-        <value>86dedf31bf4f456b71707fb847758727</value>
+        <value>556de8dd95048d0a0939beb4088f6a33</value>
     </labels>
     <labels>
         <fullName>LeaseDimensions_APIPassword</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>LeaseDimensions_APIPassword</shortDescription>
-        <value>9eyVFeYG</value>
+        <value>wr0ngPassword3</value>
     </labels>
     <labels>
         <fullName>LeaseDimensions_APIUsername</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>LeaseDimensions_APIUsername</shortDescription>
-        <value>salesforce.sunrun@leasedimensions.com</value>
+        <value>dealer-api-test@leasedimensions.com</value>
     </labels>
     <labels>
         <fullName>LeaseDimensions_CreateAndInviteHomeowner</fullName>
@@ -488,14 +495,14 @@
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>LeaseDimensions_DefaultInstaller</shortDescription>
-        <value>0123456789EwW4</value>
+        <value>0123456789QyY2</value>
     </labels>
     <labels>
         <fullName>LeaseDimensions_Inperson</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>LeaseDimensions_Inperson</shortDescription>
-        <value>https://ipcredit.sunrun.com/leaseapplication/view</value>
+        <value>https://sunrunuat.leasedimensions.com/leaseapplication/view</value>
     </labels>
     <labels>
         <fullName>LeaseDimensions_RefreshHomeownerCredit</fullName>
@@ -516,7 +523,7 @@
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>LeaseDimensions Sungevity Email</shortDescription>
-        <value>sungevity@sunrunhome.com</value>
+        <value>sungevity@yopmail.com</value>
     </labels>
     <labels>
         <fullName>Login_Content_Title1</fullName>
@@ -600,21 +607,21 @@
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>NetExam API Key</shortDescription>
-        <value>869dlsui-1042-9z87-di8s-dkls89dcK88ld97</value>
+        <value>dk42kdKA-0dkE-Ke76-kN62-837mdKhduc763J0</value>
     </labels>
     <labels>
         <fullName>NetExam_API_Pass</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>NetExam API Pass</shortDescription>
-        <value>2kB4eE8jiTK23API</value>
+        <value>01JgxX6k</value>
     </labels>
     <labels>
         <fullName>NetExam_API_User</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>NetExam API User</shortDescription>
-        <value>apiuserSRProd</value>
+        <value>srsbxapiuser</value>
     </labels>
     <labels>
         <fullName>No_Of_Days_Limit_For_DeDup</fullName>
@@ -649,7 +656,7 @@
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>PartnerPortalSiteUrl</shortDescription>
-        <value>http://partner.sunrun.com</value>
+        <value>http://devlocal-sunrun.cs43.force.com/partner</value>
     </labels>
     <labels>
         <fullName>PartnerSalesProfileName</fullName>
@@ -663,7 +670,7 @@
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Partner Concierge Helpdesk Email</shortDescription>
-        <value>tsmith@sunrun.com</value>
+        <value>rmasineni@gmail.com</value>
     </labels>
     <labels>
         <fullName>Partner_Help_Record_Type</fullName>
@@ -726,7 +733,7 @@
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>PosigenID</shortDescription>
-        <value>00160000014nuOY</value>
+        <value>00163000005ICva</value>
     </labels>
     <labels>
         <fullName>ProposalApprovalLimit1</fullName>
@@ -747,7 +754,7 @@
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ProposalToolEndpoint</shortDescription>
-        <value>https://prd-rootwar.sunrun.com/contract/services/Contract010000</value>
+        <value>https://localdev-api.sunrundev.com/contract/services/Contract010000</value>
     </labels>
     <labels>
         <fullName>ProposalToolPassword</fullName>
@@ -838,28 +845,28 @@
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>SalesPartnerAccFluent</shortDescription>
-        <value>0016000000ywDAY</value>
+        <value>00163000005ICwY</value>
     </labels>
     <labels>
         <fullName>SalesPartnerAccGenSun</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>SalesPartnerAccGenSun</shortDescription>
-        <value>00160000018zGAQ</value>
+        <value>00163000005ICwn</value>
     </labels>
     <labels>
         <fullName>SalesPartnerAccLGCY</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>SalesPartnerAccLGCY</shortDescription>
-        <value>00160000012yDNR</value>
+        <value>00163000005ICxC</value>
     </labels>
     <labels>
         <fullName>SalesPartnerAccRedVentures</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>SalesPartnerAccRedVentures</shortDescription>
-        <value>0016000000Yf9dP</value>
+        <value>00163000005ICxR</value>
     </labels>
     <labels>
         <fullName>Sales_Profile_Id</fullName>
@@ -873,14 +880,14 @@
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>SalesforceInstance</shortDescription>
-        <value>na4.salesforce.com</value>
+        <value>cs43.salesforce.com</value>
     </labels>
     <labels>
         <fullName>Scheduling_InstallBranch</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Scheduling_InstallBranch</shortDescription>
-        <value>00160000018evG6</value>
+        <value>00163000005IDvX</value>
     </labels>
     <labels>
         <fullName>Scheduling_PrevApptDuration</fullName>
@@ -923,7 +930,7 @@
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>SunRunHomesEndPoint</shortDescription>
-        <value>https://prd-rootwar.sunrun.com/accountmanagement/services/AccountManagement010000</value>
+        <value>https://devlocal-rootwar.sunrun.com/accountmanagement/services/AccountManagement010000</value>
     </labels>
     <labels>
         <fullName>SunRun_CRM</fullName>
@@ -937,7 +944,7 @@
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>SunRun DocuSign Email</shortDescription>
-        <value>sunrun_esignatures@sunrunhome.com</value>
+        <value>sunrunops3@gmail.com</value>
     </labels>
     <labels>
         <fullName>SunRun_DocuSign_User</fullName>
@@ -951,28 +958,28 @@
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>SunRun S3 Bucket</shortDescription>
-        <value>production.sunrun</value>
+        <value>devlocal-sunrun</value>
     </labels>
     <labels>
         <fullName>SunRun_S3_Proxy</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>SunRun S3 Proxy</shortDescription>
-        <value>https://s3proxy.sunrun.com</value>
+        <value>https://devlocal-s3proxy.sunrundev.com</value>
     </labels>
     <labels>
         <fullName>Sungevity_Inc_Id</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Sungevity Inc Id</shortDescription>
-        <value>0016000000xSz4Q</value>
+        <value>00163000005IE6F</value>
     </labels>
     <labels>
         <fullName>SunrunHelpdeskEmail</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>SunrunHelpdeskEmail</shortDescription>
-        <value>sunrunhelp@sunrun.com</value>
+        <value>sunrunhelp@yopmail.com</value>
     </labels>
     <labels>
         <fullName>SunrunHomesPassword</fullName>
@@ -980,7 +987,7 @@
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>SunrunHomesPassword</shortDescription>
-        <value>wUuvsFNE1hlCcMge5clHPkoj5brwHpCmwqs</value>
+        <value>2gvLmDS2XGRmk5Y6jfVlLPWigre1rwQhdCj</value>
     </labels>
     <labels>
         <fullName>SunrunHomesUser</fullName>
@@ -995,21 +1002,21 @@
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>SunrunOperationEmail</shortDescription>
-        <value>meterregistration@sunrun.com</value>
+        <value>meterregistration@yopmail.com</value>
     </labels>
     <labels>
         <fullName>SunrunPortalSiteURL</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>SunrunPortalSiteURL</shortDescription>
-        <value>https://sunrun.secure.force.com/</value>
+        <value>http://devlocal-sunrun.cs43.force.com/partner</value>
     </labels>
     <labels>
         <fullName>Sunrun_Customer_Care_Email</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Sunrun Customer Care Email</shortDescription>
-        <value>customercare@sunrun.com</value>
+        <value>customercare@yopmail.com</value>
     </labels>
     <labels>
         <fullName>Sunrun_DSG_Email</fullName>
@@ -1058,28 +1065,28 @@
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Sunrun Inc Id</shortDescription>
-        <value>0016000000owsk8</value>
+        <value>00163000005IDq8</value>
     </labels>
     <labels>
         <fullName>Sunrun_Installation_Service</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Sunrun Installation Service</shortDescription>
-        <value>00160000015B0tA</value>
+        <value>00163000005IEhu</value>
     </labels>
     <labels>
         <fullName>Sunrun_Operations_Email</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Sunrun Operations Email</shortDescription>
-        <value>operations@sunrun.com</value>
+        <value>testops@yopmail.com</value>
     </labels>
     <labels>
         <fullName>Sunrun_Partner_Portal_Email</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Sunrun Partner Portal</shortDescription>
-        <value>partnerportal@sunrun.com</value>
+        <value>partnerportal@yopmail.com</value>
     </labels>
     <labels>
         <fullName>Sunrun_SFDC_Admin</fullName>
@@ -1261,7 +1268,7 @@
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>eSignEndPointURL</shortDescription>
-        <value>https://www.docusign.net/restapi/v2/accounts/</value>
+        <value>https://demo.docusign.net/restapi/v2/accounts/</value>
     </labels>
     <labels>
         <fullName>isconverted</fullName>
@@ -2003,7 +2010,7 @@ Check with your financial institution to see if there are any fees associated wi
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>REC Partner Id</shortDescription>
-        <value>0016000000HhqcQ</value>
+        <value>00163000005ICwE</value>
     </labels>
     <labels>
         <fullName>wfTaskDependencyLkpId</fullName>

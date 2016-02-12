@@ -258,6 +258,7 @@
         </rules>
     </decisions>
     <description>When a new User record is created, a trigger automatically creates a Contact record. This Flow updates the new Contact record with additional details and permissions for BrightPath.</description>
+    <interviewLabel>Contact Update {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Contact Update</label>
     <processType>AutoLaunchedFlow</processType>
     <recordCreates>

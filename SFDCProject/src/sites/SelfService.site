@@ -18,6 +18,7 @@
     <indexPage>BMCServiceDesk__SelfServiceHome</indexPage>
     <masterLabel>SelfService</masterLabel>
     <portal>Customer Portal</portal>
+    <requireHttps>false</requireHttps>
     <requireInsecurePortalAccess>false</requireInsecurePortalAccess>
     <siteAdmin>it-helpdesk@sunrun.com</siteAdmin>
     <siteRedirectMappings>

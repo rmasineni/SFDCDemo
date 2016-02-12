@@ -53,4 +53,6 @@
     <tab>API_Request_Log__c</tab>
     <tab>Partner_Api_Field__c</tab>
     <tab>InContact_Lead_Management__c</tab>
+    <tab>DocuSign_Tab_Management__c</tab>
+    <tab>DocuSign_Template__c</tab>
 </CustomApplication>

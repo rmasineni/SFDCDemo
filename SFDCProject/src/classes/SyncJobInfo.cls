@@ -1,6 +1,4 @@
 public class SyncJobInfo {
-    
-    private static final BaseClass utils = new BaseClass();
 	public static final Integer SyncErrorDelayMins = Sf.settingsService.getInteger('SyncServiceSyncErrorDelayMins', 5);
     public Map<String, App_Log__c> appLogsMap {get;set;}
     
@@ -9,14 +7,8 @@ public class SyncJobInfo {
      */
     public List<Sync_Record__c> syncRecords {get;set {
         this.syncRecords = value;
-		this.syncRecordsMap = utils.groupBy(this.syncRecords, 'Record_Id__c');
+		this.syncRecordsMap = new BaseClass().groupBy(this.syncRecords, 'Record_Id__c');
     }}
-    
-    /**
-     * If sync job batch is not set yet, and if code logs anything they will be stored here.
-     * When app log is created, these messages will be appended.
-     */
-    List<String> defaultLogEntries = new List<String>();
     
     /**
      * Sync Records map by corresponding source record ids. If you notice, there could be more than
@@ -122,14 +114,7 @@ public class SyncJobInfo {
     }
 
     public SyncJobInfo setBatch(String recordId) {
-        List<Sync_Record__c> syncRecordsBatch = syncRecordsMap.get(recordId);
-		
-        if (syncRecordsBatch == null) {
-            log('Sync Records Batch is null for record ' + recordId  + ' hence initializing with empty list');
-            syncRecordsBatch = new List<Sync_Record__c>();
-        }
-        
-        setBatch(syncRecordsBatch);
+        setBatch(syncRecordsMap.get(recordId));
         return this;
     }
 
@@ -145,14 +130,6 @@ public class SyncJobInfo {
         appLogBatch.Module__c = module;
         appLogBatch.Action__c = action;
         
-        if (!defaultLogEntries.isEmpty()) {
-            appLogBatch.Details__c = utils.join(defaultLogEntries, '\n\n');
-            defaultLogEntries.clear();
-        } else {
-            //We will append to this so initializing with empty will not print 'null' at top of the log file
-            appLogBatch.Details__c  = '';
-        }
-        
         if (!syncRecordsBatch.isEmpty()) {
             appLogBatch.Record_Id__c = syncRecordsBatch.get(0).Record_Id__c;
             appLogBatch.External_Id__c = syncRecordsBatch.get(0).External_Id__c;
@@ -167,7 +144,7 @@ public class SyncJobInfo {
             }
         }
         
-        log('Processing batch of '  + syncRecordsBatch.size() + ' sync records. Sync Records: ' + syncRecordsBatch);
+        log('Processing batch of '  + syncRecordsBatch.size() + ' ' + syncRecordsBatch);
         return this;
     }
     
@@ -203,12 +180,7 @@ public class SyncJobInfo {
 
     public SyncJobInfo log(String message) {
 		System.debug(System.LoggingLevel.INFO, message);
-        
-        if (appLogBatch == null) {
-            defaultLogEntries.add(DateTime.now() + ': ' + message);
-        } else {
-	        appLogBatch.Details__c += '\n\n' + DateTime.now() + ': ' + message;
-        }
+        appLogBatch.Details__c += '\n' + DateTime.now() + ': ' + message;
         return this;
     }
     

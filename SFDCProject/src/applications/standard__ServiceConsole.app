@@ -2,8 +2,10 @@
 <CustomApplication xmlns="http://soap.sforce.com/2006/04/metadata">
     <defaultLandingTab>standard-home</defaultLandingTab>
     <detailPageRefreshMethod>none</detailPageRefreshMethod>
+    <enableCustomizeMyTabs>false</enableCustomizeMyTabs>
     <enableKeyboardShortcuts>true</enableKeyboardShortcuts>
     <enableMultiMonitorComponents>true</enableMultiMonitorComponents>
+    <enablePinTabs>true</enablePinTabs>
     <isServiceCloudConsole>true</isServiceCloudConsole>
     <keyboardShortcuts>
         <defaultShortcut>
@@ -111,23 +113,56 @@
             <active>false</active>
             <keyCommand>SHIFT+K</keyCommand>
         </defaultShortcut>
+        <defaultShortcut>
+            <action>FOCUS_MACRO</action>
+            <active>false</active>
+            <keyCommand>M</keyCommand>
+        </defaultShortcut>
+        <defaultShortcut>
+            <action>FOCUS_FOOTER_PANEL</action>
+            <active>false</active>
+            <keyCommand>F</keyCommand>
+        </defaultShortcut>
+        <defaultShortcut>
+            <action>TOGGLE_LIST_VIEW</action>
+            <active>false</active>
+            <keyCommand>SHIFT+N</keyCommand>
+        </defaultShortcut>
+        <defaultShortcut>
+            <action>TOGGLE_LEFT_SIDEBAR</action>
+            <active>false</active>
+            <keyCommand>SHIFT+LEFT ARROW</keyCommand>
+        </defaultShortcut>
+        <defaultShortcut>
+            <action>TOGGLE_RIGHT_SIDEBAR</action>
+            <active>false</active>
+            <keyCommand>SHIFT+RIGHT ARROW</keyCommand>
+        </defaultShortcut>
+        <defaultShortcut>
+            <action>TOGGLE_TOP_SIDEBAR</action>
+            <active>false</active>
+            <keyCommand>SHIFT+UP ARROW</keyCommand>
+        </defaultShortcut>
+        <defaultShortcut>
+            <action>TOGGLE_BOTTOM_SIDEBAR</action>
+            <active>false</active>
+            <keyCommand>SHIFT+DOWN ARROW</keyCommand>
+        </defaultShortcut>
+        <defaultShortcut>
+            <action>TOGGLE_APP_LEVEL_COMPONENTS</action>
+            <active>false</active>
+            <keyCommand>Z</keyCommand>
+        </defaultShortcut>
+        <defaultShortcut>
+            <action>REOPEN_LAST_TAB</action>
+            <active>false</active>
+            <keyCommand>SHIFT+C</keyCommand>
+        </defaultShortcut>
     </keyboardShortcuts>
     <listPlacement>
         <location>full</location>
     </listPlacement>
     <listRefreshMethod>none</listRefreshMethod>
-    <pushNotifications>
-        <pushNotification>
-            <fieldNames>Lead_Status__c</fieldNames>
-            <fieldNames>Status</fieldNames>
-            <objectName>Lead</objectName>
-        </pushNotification>
-        <pushNotification>
-            <fieldNames>StageName</fieldNames>
-            <fieldNames>Sub_Stage__c</fieldNames>
-            <objectName>Opportunity</objectName>
-        </pushNotification>
-    </pushNotifications>
     <saveUserSessions>true</saveUserSessions>
     <tab>standard-Account</tab>
     <tab>standard-Contact</tab>
@@ -152,6 +187,8 @@
     <tab>Custom_Search</tab>
     <tab>Partner_Api_Field__c</tab>
     <tab>InContact_Lead_Management__c</tab>
+    <tab>DocuSign_Tab_Management__c</tab>
+    <tab>DocuSign_Template__c</tab>
     <workspaceMappings>
         <mapping>
             <tab>Appointment__c</tab>
@@ -164,6 +201,12 @@
         </mapping>
         <mapping>
             <tab>DocuSign_Log__c</tab>
+        </mapping>
+        <mapping>
+            <tab>DocuSign_Tab_Management__c</tab>
+        </mapping>
+        <mapping>
+            <tab>DocuSign_Template__c</tab>
         </mapping>
         <mapping>
             <tab>Document_Classification__c</tab>

@@ -44,6 +44,7 @@
         <actionName>View</actionName>
         <type>Default</type>
     </actionOverrides>
+    <allowInChatterGroups>false</allowInChatterGroups>
     <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
     <deploymentStatus>Deployed</deploymentStatus>
     <enableActivities>true</enableActivities>
@@ -7094,16 +7095,19 @@ AND(NOT(ISNULL(Permit_Expected_Date__c) ) , ISNULL(Permit_Submitted_Date__c), IS
     <validationRules>
         <fullName>Rebate_Conf_Num_needed_for_NTP_Granted</fullName>
         <active>true</active>
-        <description>Ref: BSKY-2834 
+        <description>Ref: BSKY-7194 
+Rebate Conf Num is not required for IREA Service Contracts 
+Ref: BSKY-2834 
 NTP Granted field can not be specified if Rebate Conf Num field is blank.</description>
         <errorConditionFormula>AND 
 ( 
 OR(Service_Contract__r.State__c = &apos;CO&apos;, Service_Contract__r.State__c = &apos;CT&apos;), 
+NOT(ISPICKVAL(Service_Contract__r.Opportunity__r.Utility_Company__c ,&quot;IREA&quot;)), 
 ISBLANK(Rebate_Conf_Num__c), 
 NOT(ISBLANK(NTP_Granted__c)) 
 )</errorConditionFormula>
         <errorDisplayField>Adjustment_to_Credit_Memo_Amt__c</errorDisplayField>
-        <errorMessage>For asset in CO or CT, NTP Granted field can not be specified if Rebate Conf Num field is blank.</errorMessage>
+        <errorMessage>For asset in CO or CT for Utility Company other than &quot;IREA&quot;, NTP Granted field can not be specified if Rebate Conf Num field is blank.</errorMessage>
     </validationRules>
     <validationRules>
         <fullName>Validation_on_Credit_Memo_on_Rebate</fullName>

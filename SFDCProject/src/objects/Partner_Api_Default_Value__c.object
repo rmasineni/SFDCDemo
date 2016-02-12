@@ -44,6 +44,7 @@
         <actionName>View</actionName>
         <type>Default</type>
     </actionOverrides>
+    <allowInChatterGroups>false</allowInChatterGroups>
     <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
     <deploymentStatus>Deployed</deploymentStatus>
     <description>This object is used to store all default/overridden field values for various Partner APIs like Lead API, Opty API etc.</description>
@@ -162,7 +163,7 @@
         <filters>
             <field>Input_Value__c</field>
             <operation>contains</operation>
-            <value>Comcast</value>
+            <value>Red</value>
         </filters>
         <label>Comcast_Lead</label>
         <language>en_US</language>

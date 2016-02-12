@@ -529,21 +529,7 @@ public with sharing virtual class BaseClass {
 
         return randomString;
     }
-	
-    /**
-     * Generates a random number between 0 and given upper limit (inclusive)
-     */
-    public Integer getRandomInteger(Integer upper) {
-		return getRandomInteger(0, upper);
-    }
 
-    /**
-     * Generates a random number between lower (inclusive) and upper (inclusive)
-     */
-    public Integer getRandomInteger(Integer lower, Integer upper) {
-		return Math.round(Math.random() * (upper - lower)) + lower;
-    }
-    
     public String join(String value1, String value2, String separator){
         return join(new String[]{value1, value2}, separator, true);
     }
@@ -2194,19 +2180,5 @@ public with sharing virtual class BaseClass {
         }
         
         return ids;
-    }
-    
-    public Boolean containsIgnoreCase(List<String> values, String valueToSearch) {
-        if (values == null || valueToSearch == null) {
-            return false;
-        }
-        
-        for (String value : values) {
-            if (value.equalsIgnoreCase(valueToSearch)) {
-                return true;
-            }
-        }
-        
-        return false;
     }
 }

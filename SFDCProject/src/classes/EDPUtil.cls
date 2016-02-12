@@ -99,6 +99,8 @@ public class EDPUtil {
     public static String EPBB = 'EPBB';
     public static String LARGE_SYSTEM_NTP_REQUEST = 'Large System NTP Request';
     public static string EXPIRED = 'Expired';
+    public static string REBATE_FORM='Rebate Form';
+    public static string NEM_FORM='NEM Agreement';
 
     public static Set<Id> pendingTaskProposalIds = new Set<Id>();
     static final public String ProposalPrefix = Schema.SObjectType.Proposal__c.getKeyPrefix(); 
@@ -919,6 +921,7 @@ public class EDPUtil {
     public static String getBaseURL() {
         String baseURL = '';
         String redirectUrl = System.URL.getCurrentRequestUrl().getPath();
+        
         Boolean isPartnerPortalURL = false;
         if(redirectUrl.startsWith('/partner')){
             isPartnerPortalURL = true;
@@ -933,6 +936,7 @@ public class EDPUtil {
         else{
             String Instance = null;
             List<String> parts = System.URL.getSalesforceBaseUrl().getHost().replace('-api','').split('\\.');
+           
             if (parts.size() == 3) Instance = parts[0];
             else if (parts.size() == 5) Instance = parts[1];
             else Instance = null; 
@@ -940,6 +944,7 @@ public class EDPUtil {
                 baseURL = 'https://' + Instance + '.salesforce.com';    
             }               
         }
+        system.debug('==>URL : '+baseURL);
         return baseURL;
     }
     
@@ -1201,6 +1206,7 @@ public class EDPUtil {
             //String proposalCostStack = 'INTEGRATED';
             String proposalCostStack = tempProposalobj.cost_stack__c;
             System.debug('proposalCostStack: ' + proposalCostStack);
+            EDPDocumentSettings.proposalState =  tempProposalobj.State__c;
             mandatoryDocumentClassificationMap = EDPDocumentSettings.getDocumentClassificationByCategroy(null, 
                                                                                                 EDPDocumentSettings.MANDATORY_REQUIREMENTS,
                                                                                                 modes, proposalCostStack);
@@ -1441,6 +1447,11 @@ public class EDPUtil {
                 proposalValidationMap.put(proposalObj.Id, CustomErrorMessages.NOT_AUTHORIZED_USER);
             }else if(proposalObj.Opportunity__c == null ){
                 proposalValidationMap.put(proposalObj.Id, CustomErrorMessages.FOUND_NO_VALID_OPPORTUNITY);
+            }else if( proposalObj.sales_partner__c != System.Label.Sunrun_Inc_Id && 
+               (proposalObj.Agreement_Type__c == 'Customer Owned - Bank Financed' || proposalObj.Agreement_Type__c == 'Customer Owned - Full Upfront')){
+               proposalValidationMap.put(proposalObj.Id, CustomErrorMessages.PARTNER_CASH_COBF_ERROR);    
+            }else if(proposalObj.Required_Loan_Amount__c > proposalObj.Max_Loan_Amount__c){
+               proposalValidationMap.put(proposalObj.Id, CustomErrorMessages.MAX_LOAN_AMT_ERROR);   
             }else if(proposalObj.Estimation_Method__c == 'From average monthly bill estimation' ){
                 proposalValidationMap.put(proposalObj.Id, CustomErrorMessages.MONTHLY_BILL_ERROR);
             /*}else if(proposalObj.Opportunity__r.Purchased_Thru__c == 'Costco' && proposalObj.Retail_PO__c == null){

@@ -44,6 +44,7 @@
         <actionName>View</actionName>
         <type>Default</type>
     </actionOverrides>
+    <allowInChatterGroups>false</allowInChatterGroups>
     <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
     <deploymentStatus>Deployed</deploymentStatus>
     <enableActivities>true</enableActivities>
@@ -839,11 +840,6 @@
             <operation>contains</operation>
             <value>valencia</value>
         </filters>
-        <filters>
-            <field>Category__c</field>
-            <operation>equals</operation>
-            <value>Service</value>
-        </filters>
         <label>SA - Valencia Branch Territory</label>
         <language>en_US</language>
     </listViews>
@@ -1041,6 +1037,23 @@
             <value>South Bay 1</value>
         </filters>
         <label>South Bay Zone 1</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>South_Carolina</fullName>
+        <columns>Territory__c</columns>
+        <columns>Category__c</columns>
+        <columns>Threshold__c</columns>
+        <columns>Buffer__c</columns>
+        <columns>NAME</columns>
+        <columns>Zip_Code__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Territory__c</field>
+            <operation>contains</operation>
+            <value>South Carolina</value>
+        </filters>
+        <label>South Carolina</label>
         <language>en_US</language>
     </listViews>
     <listViews>

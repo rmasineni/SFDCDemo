@@ -83,14 +83,14 @@ public abstract class BaseSyncJob extends BaseClass implements Queueable, Databa
             jobInfo.module = module;
             jobInfo.action = action;
             
-            jobInfo.log('Executing sync job ' + jobInfo);
+            System.debug('Executing sync job ' + jobInfo);
             
             execute(jobInfo);
             
-            jobInfo.log('Completing executing the job ' + jobInfo.syncRecords);
+            System.debug('Completing executing the job ' + jobInfo.syncRecords);
             
         } catch (Exception e) {
-            if (jobInfo.syncRecords != null && !jobInfo.syncRecords.isEmpty()) {
+            if (!jobInfo.syncRecords.isEmpty()) {
 	            jobInfo.setBatch(jobInfo.syncRecords).handleException(e);
             } else {
                 throw e;

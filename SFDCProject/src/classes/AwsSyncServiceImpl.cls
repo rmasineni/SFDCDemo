@@ -5,8 +5,7 @@ public class AwsSyncServiceImpl extends BaseAwsService implements AwsSyncService
     /**
      * Map is used to avoid the recursion of triggers and sending multiple updates to same record in this transaction.
      */
-    public static final Map<Id, String> recordsProcessedInThisTxn = new Map<Id, String>();
-    
+    public static final Map<Id, String> syncRecordsCreatedIds = new Map<Id, String>();
     private static String sqsQueueUrl = null;
     private static AwsConfig awsConfig = null;
     
@@ -71,6 +70,7 @@ public class AwsSyncServiceImpl extends BaseAwsService implements AwsSyncService
             insertSyncRecords(AwsSyncServiceDto.OptysSync, opties);
         }
     }
+
     
     public void handlePaymentsTrigger() {
         info('Handling the Payment transactions trigger for Aws SQS Sync for records ' + Trigger.new);
@@ -122,10 +122,7 @@ public class AwsSyncServiceImpl extends BaseAwsService implements AwsSyncService
 					Sf.settingsService.getStringList('AwsSqsContractsSyncTriggerFields', new List<String>()));
             }
             
-            //If these contracts are already processed, then ignore them.
-            potentionalContracts = removeObjectsMatchingIds(potentionalContracts, recordsProcessedInThisTxn);
-            
-            info('Potentional contracts to be sycned to sqs after filtering are ' + potentionalContracts);
+            info('Potentional contracts to be sycned to sqs ' + potentionalContracts);
             
             //Among these we need to check which are associated with opties, which have queue
             //configured. Only then, we will mark them as to be synced.
@@ -148,9 +145,6 @@ public class AwsSyncServiceImpl extends BaseAwsService implements AwsSyncService
             }
             
             insertSyncRecords(AwsSyncServiceDto.ContractsSync, syncEligibleContracts);
-            
-            //Will mark these contract ids as processed, so if trigger recurrs, we will not process them saving soqls.
-            putAll(recordsProcessedInThisTxn, potentionalContracts);
         }
     }
 
@@ -175,9 +169,6 @@ public class AwsSyncServiceImpl extends BaseAwsService implements AwsSyncService
 					Sf.settingsService.getStringList('AwsSqsProposalsSyncTriggerFields', new List<String>()));
             }
             
-            //If these proposals are already processed, then ignore them.
-            potentionalProposals = removeObjectsMatchingIds(potentionalProposals, recordsProcessedInThisTxn);
-            
             //Among these we need to check which are associated with opties, which have queue
             //configured. Only then, we will mark them as to be synced.
             Map<Id, Sobject> optysWithSqsQueue = getIdMap([
@@ -197,9 +188,6 @@ public class AwsSyncServiceImpl extends BaseAwsService implements AwsSyncService
             }
             
             insertSyncRecords(AwsSyncServiceDto.ProposalsSync, syncEligibleProposals);
-
-            //Will mark these contract ids as processed, so if trigger recurrs, we will not process them saving soqls.
-            putAll(recordsProcessedInThisTxn, potentionalProposals);
         }
     }
 
@@ -276,7 +264,7 @@ public class AwsSyncServiceImpl extends BaseAwsService implements AwsSyncService
                         continue;
                     }
     
-                    sendSqsMessage(queueNames, jobId, sobj, getEventFields(sobj, opty), syncJob);
+                    sendSqsMessage(queueNames, jobId, sobj, getEventFields(sobj, opty));
 
                     syncJob.syncSuccess();
                 } catch (Exception e) {
@@ -313,18 +301,18 @@ public class AwsSyncServiceImpl extends BaseAwsService implements AwsSyncService
         String jobId = getRandomString();
         
         List<Sobject> sobjs = queryRecords(syncJob.action, syncJob.getRecordIds());
-        syncJob.log('Sobjects queried to sync to sqs ' + sobjs);
+        info('Sobjects queried to sync to sqs ' + sobjs);
         
         for (Sobject sobj : sobjs) {
             if (getCalloutsQuota() < 1) {
-                syncJob.log('Callouts quota limit reached while syncing the ' + syncJob.action + ' and hence stopping syncing to sqs and starting a new job run');
+                info('Callouts quota limit reached while syncing the ' + syncJob.action + ' and hence stopping syncing to sqs and starting a new job run');
                 runJob(syncJob.action);
                 break;
             }
             
             syncJob.setBatch(sobj.id);
             
-            syncJob.log('Syncing object to Sqs ' + sobj);
+            info('Syncing object to Sqs ' + sobj);
             
             try {
                 List<String> queueNames = getSqsQueueNames(sobj);
@@ -333,7 +321,7 @@ public class AwsSyncServiceImpl extends BaseAwsService implements AwsSyncService
                     continue;
                 }
                 
-                sendSqsMessage(queueNames, jobId, sobj, syncJob);
+                sendSqsMessage(queueNames, jobId, sobj);
 
 				syncJob.syncSuccess();
 
@@ -562,7 +550,7 @@ public class AwsSyncServiceImpl extends BaseAwsService implements AwsSyncService
 			insertSyncRecords(action, sqsSyncApplicableRecords);
         }
 	}
-
+                    
     public void insertSyncRecords(String action, List<Sobject> sqsSyncApplicableRecords) {
         info('Inserting SQS Sync Records for ' + sqsSyncApplicableRecords);
         
@@ -571,13 +559,13 @@ public class AwsSyncServiceImpl extends BaseAwsService implements AwsSyncService
         } else {
 	        List<Sobject> recurrsionFilteredRecords = new List<Sobject>();
             for (Sobject sobj : sqsSyncApplicableRecords) {
-                if (recordsProcessedInThisTxn.containsKey(sobj.id)) {
+                if (syncRecordsCreatedIds.containsKey(sobj.id)) {
                     info('Record is already processed in this tx to insert into sync records and hence ignoring it');
                 } else {
                     recurrsionFilteredRecords.add(sobj);
-                    recordsProcessedInThisTxn.put(sobj.id, '');
+                    syncRecordsCreatedIds.put(sobj.id, '');
                 }
-            }
+            }    
         
             info('Matched ' + recurrsionFilteredRecords.size() + ' records for ' + action + ' to be synced to SQS.');
             if (!recurrsionFilteredRecords.isEmpty()) {
@@ -587,11 +575,11 @@ public class AwsSyncServiceImpl extends BaseAwsService implements AwsSyncService
         }
 	}
     
-    public void sendSqsMessage(List<String> queueNames, String jobId, Sobject sobj, SyncJobInfo syncJob) {
-        sendSqsMessage(queueNames, jobId, sobj, getEventFields(sobj), syncJob);
+    public void sendSqsMessage(List<String> queueNames, String jobId, Sobject sobj) {
+        sendSqsMessage(queueNames, jobId, sobj, getEventFields(sobj));
     }
     
-    public void sendSqsMessage(List<String> queueNames, String jobId, Sobject sobj, Map<String, String> eventFields, SyncJobInfo syncJob) {
+    public void sendSqsMessage(List<String> queueNames, String jobId, Sobject sobj, Map<String, String> eventFields) {
         JsonWriter jsonWriter = new JsonWriter();
         jsonWriter.write('eventTxId', jobId + '-' + getRandomLongString());
 		
@@ -599,9 +587,8 @@ public class AwsSyncServiceImpl extends BaseAwsService implements AwsSyncService
 	        jsonWriter.write(eventField, eventFields.get(eventField));
         }
 
-        String messageJson = jsonWriter.toPrettyJson();
         for (String queueName : queueNames) {
-            awsSendSqsMessage(replaceMergeToken(getAwsSqsUrl(), 'QueueName', queueName), messageJson, getAwsConfig(), syncJob);
+            awsSendSqsMessage(replaceMergeToken(getAwsSqsUrl(), 'QueueName', queueName), jsonWriter.toPrettyJson(), getAwsConfig());
         }
     }
     
@@ -652,7 +639,7 @@ public class AwsSyncServiceImpl extends BaseAwsService implements AwsSyncService
     }
     
     public String sendSqsMessage(String queueName, String message) {
-    	return awsSendSqsMessage(replaceMergeToken(getAwsSqsUrl(), 'QueueName', queueName), message, getAwsConfig(), null);
+    	return awsSendSqsMessage(replaceMergeToken(getAwsSqsUrl(), 'QueueName', queueName), message, getAwsConfig());
     }
 	
     public Boolean isSqsSyncEnabled(String action) {

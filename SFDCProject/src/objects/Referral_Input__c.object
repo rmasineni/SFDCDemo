@@ -44,6 +44,7 @@
         <actionName>View</actionName>
         <type>Default</type>
     </actionOverrides>
+    <allowInChatterGroups>false</allowInChatterGroups>
     <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
     <deploymentStatus>Deployed</deploymentStatus>
     <description>We are collecting the referred by and referred to in this object. In some cases, we will have the account id and contact id, and in some we will not, hence the other fields such as first name, last name etc.</description>

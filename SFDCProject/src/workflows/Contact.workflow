@@ -552,7 +552,7 @@ NOT(ISPICKVAL(PRIORVALUE(Accreditation_Status__c),&quot;Accredited&quot;)), ISPI
     </rules>
     <tasks>
         <fullName>How_to_sell_Sunrun_email_sent_to_partner_contact</fullName>
-        <assignedTo>rmasineni@sunrunhome.com.prod</assignedTo>
+        <assignedTo>rmasineni@sunrunhome.com</assignedTo>
         <assignedToType>user</assignedToType>
         <description>Email &quot;How to sell Sunrun&quot; is sent to partner contact</description>
         <dueDateOffset>0</dueDateOffset>

@@ -44,6 +44,7 @@
         <actionName>View</actionName>
         <type>Default</type>
     </actionOverrides>
+    <allowInChatterGroups>false</allowInChatterGroups>
     <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
     <deploymentStatus>Deployed</deploymentStatus>
     <enableActivities>true</enableActivities>
@@ -741,6 +742,23 @@
         <language>en_US</language>
     </listViews>
     <listViews>
+        <fullName>SA_Long_Island_Branch_Region1</fullName>
+        <columns>NAME</columns>
+        <columns>Region__c</columns>
+        <columns>Territory__c</columns>
+        <columns>Branch__c</columns>
+        <columns>Priority__c</columns>
+        <columns>Sales_Rep__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Territory__c</field>
+            <operation>startsWith</operation>
+            <value>[211</value>
+        </filters>
+        <label>SA - Long Island Branch Region</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
         <fullName>SA_Maryland_Branch_Region</fullName>
         <columns>NAME</columns>
         <columns>Region__c</columns>
@@ -1165,10 +1183,10 @@
         <filterScope>Everything</filterScope>
         <filters>
             <field>Territory__c</field>
-            <operation>equals</operation>
-            <value>Inland Empire 2b</value>
+            <operation>contains</operation>
+            <value>Valencia</value>
         </filters>
-        <label>Inland Empire 2b</label>
+        <label>Test</label>
         <language>en_US</language>
     </listViews>
     <listViews>

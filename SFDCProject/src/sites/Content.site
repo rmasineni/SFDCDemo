@@ -15,6 +15,7 @@
     <inactiveIndexPage>BMCServiceDesk__InMaintenance</inactiveIndexPage>
     <indexPage>UtilityTimelinesHomePage</indexPage>
     <masterLabel>Content</masterLabel>
+    <requireHttps>true</requireHttps>
     <requireInsecurePortalAccess>false</requireInsecurePortalAccess>
     <siteAdmin>sunruncrm@sunrunhome.com</siteAdmin>
     <siteTemplate>BMCServiceDesk__SiteTemplate</siteTemplate>

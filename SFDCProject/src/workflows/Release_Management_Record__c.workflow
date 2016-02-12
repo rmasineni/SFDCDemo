@@ -41,7 +41,7 @@
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>rmasineni@sunrunhome.com.prod</recipient>
+            <recipient>rmasineni@sunrunhome.com</recipient>
             <type>user</type>
         </recipients>
         <recipients>

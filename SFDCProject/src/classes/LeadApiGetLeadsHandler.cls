@@ -75,12 +75,10 @@ public with sharing class LeadApiGetLeadsHandler extends RestService {
             }
         }
         
-        Id loggedInUserId = UserInfo.getUserId();
 		List<String> whereClauses = new String[]{
             'IsConverted = false',
             'LastModifiedDate >= :startTime',
-            'LastModifiedDate <= :endTime',
-            'Lead_Generated_by__c = :loggedInUserId'
+            'LastModifiedDate <= :endTime'
         };
 
         String soql = createSoqlWithAuditFields(fields, 'Lead', whereClauses, 'lastmodifieddate', page, pageSize);
@@ -124,12 +122,10 @@ public with sharing class LeadApiGetLeadsHandler extends RestService {
 		if (!contactFields.isEmpty()) {
         	fields.add('(select ' + join(contactFields, ', ') + ' from OpportunityContactRoles where IsPrimary=true)');
 		}
-
-        Id loggedInUserId = UserInfo.getUserId();
+                
 		List<String> whereClauses = new String[]{
             'LastModifiedDate >= :startTime',
-            'LastModifiedDate <= :endTime',
-            '(Lead_Generated_by__c = :loggedInUserId or SalesRep__c = :loggedInUserId)'
+            'LastModifiedDate <= :endTime'
         };
 
 		String soql = createSoqlWithAuditFields(fields, 'Opportunity', whereClauses, 'lastmodifieddate', page, pageSize);

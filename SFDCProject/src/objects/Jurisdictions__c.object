@@ -44,6 +44,7 @@
         <actionName>View</actionName>
         <type>Default</type>
     </actionOverrides>
+    <allowInChatterGroups>false</allowInChatterGroups>
     <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
     <deploymentStatus>Deployed</deploymentStatus>
     <enableActivities>false</enableActivities>
@@ -76,7 +77,7 @@
         <filters>
             <field>NAME</field>
             <operation>contains</operation>
-            <value>CA-City County of Orange</value>
+            <value>CA-City Coronado</value>
         </filters>
         <label>California Jurisdictions</label>
         <language>en_US</language>

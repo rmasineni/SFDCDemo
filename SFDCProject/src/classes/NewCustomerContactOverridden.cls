@@ -70,6 +70,7 @@ public class NewCustomerContactOverridden {
         List<SelectOption> contactRoles = new List<SelectOption>();
         contactRoles.add(new SelectOption('', '-- None --'));
     contactRoles.add(new SelectOption('Homeowner', 'Homeowner'));
+     contactRoles.add(new SelectOption('UtilityBillContact', 'Utility Bill Contact'));
     contactRoles.add(new SelectOption('Other', 'Other'));
     return contactRoles;
     }

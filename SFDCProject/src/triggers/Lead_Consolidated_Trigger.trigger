@@ -27,6 +27,7 @@ trigger Lead_Consolidated_Trigger on Lead (before insert, after insert, before u
             //LeadTriggerClass.ReferralCodeLookup_trigger(trigger.new);
             LeadTriggerClass.LeadBeforeInsert(trigger.new);
             LeadTriggerClass.LeadExtSourceBeforeInsert(trigger.new);  
+            LeadTriggerClass.UpdateCallCenterCheckbox(trigger.new);
             LeadTriggerClass.doFieldMarketingBranch(trigger.new,trigger.oldMap,trigger.isInsert,trigger.isUpdate);  
             }catch(Exception ex){
                 System.debug('-----Exception block before insert:' +ex+'line no'+ ex.getLineNumber()); 
@@ -55,7 +56,7 @@ trigger Lead_Consolidated_Trigger on Lead (before insert, after insert, before u
             LeadTriggerClass.ProcessCostcoLead(trigger.new);
             LeadTriggerClass.doFieldMarketingBranch(trigger.new,trigger.oldMap,trigger.isInsert,trigger.isUpdate);
          //   LeadTriggerClass.NotifyReferee(trigger.new,trigger.oldmap);
-             
+            LeadTriggerClass.UpdateCallCenterCheckbox(trigger.new); 
              if(!System.isfuture()&&!system.isBatch())
             LeadTriggerClass.updateInContactInfoOnLead(trigger.oldMap,trigger.new,trigger.isInsert,trigger.isUpdate);
             
@@ -112,7 +113,7 @@ trigger Lead_Consolidated_Trigger on Lead (before insert, after insert, before u
             LeadTriggerClass.trg_after_lead_ins_upd(trigger.oldmap, trigger.new, trigger.isUpdate);          
             LeadTriggerClass.trg_lead_after_insert(trigger.oldMap, trigger.new, trigger.isInsert, trigger.isUpdate);
             LeadTriggerClass.ConversionScript(trigger.old, trigger.new);
-            LeadTriggerClass.ConversionAndUpdateOppty(trigger.new);
+            LeadTriggerClass.ConversionAndUpdateOppty(trigger.new,trigger.oldMap);
             //LeadTriggerClass.trg_before_insert_fillLeadGeneratedByBefIns(trigger.new);
             LeadTriggerClass.LeadEmail(trigger.new);
             //LeadTriggerClass.trg_lead_zip_to_utility(trigger.new);

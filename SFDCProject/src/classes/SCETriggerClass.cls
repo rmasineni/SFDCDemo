@@ -856,8 +856,8 @@ public class SCETriggerClass{
     }
     
     /**********************************************************************************************************************
-		This method gets the list of (TO) recipients for each Service Contract when service contract status is Deal Cancelled
-	************************************************************************************************************************/
+        This method gets the list of (TO) recipients for each Service Contract when service contract status is Deal Cancelled
+    ************************************************************************************************************************/
     private static map<Id,List<Id>> getToAddrRecipientList(List<Service_Contract_Event__c> sceList){
         List<Id> recipientList = new List<String>(); 
         List<Id> tempRecipientList = new List<String>();
@@ -866,8 +866,8 @@ public class SCETriggerClass{
         for(Service_Contract_Event__c sce: sceList){
             
             /* if(sce.Customer_s_Email__c != Null){
-				recipientList.add(sce.Customer_s_Email__c);           
-			} */
+                recipientList.add(sce.Customer_s_Email__c);           
+            } */
             
             if(sce.Service_Contract__r.Install_Partner__c == 'Sunrun'){
                 if(sce.Sales_Rep_Email__c != null)
@@ -875,6 +875,8 @@ public class SCETriggerClass{
                 if(sce.Project_Manager_Email__c != null)
                     recipientList.add(sce.Project_Manager_Email__c);
             } 
+              else   
+              if(!(sce.Sales_Rep_Email__c == Null || sce.Sales_Rep_Email__c == '' )) recipientList.add(sce.Sales_Rep_Email__c); /* BSKY-7272 */
             
             tempRecipientList = recipientList.clone();   
             sceCCRecipientMap.put(sce.id,tempRecipientList);

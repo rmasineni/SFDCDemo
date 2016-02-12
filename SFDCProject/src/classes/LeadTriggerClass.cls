@@ -14,6 +14,45 @@ public class LeadTriggerClass{
         
         return null;
     }
+     //Added for BSKY-7120 and BSKY-7251 Incontact Hard Coded Values/Update Call Center when Sales Partner = Sunrun
+    
+    public static void UpdateCallCenterCheckbox(List<Lead> lst_Leads)
+    {        
+    		Set<String> LeadSourceSet=new Set<String>();
+        	for(Partner_Lead_Criteria__c plcObj:Partner_Lead_Criteria__c.getAll().values()){
+        	 	LeadSourceSet.add(plcObj.Lead_Source__c);
+        	 }   
+            //Checking 7120 criteria to enable the call center checkbox
+            for(Lead ldtemp :lst_Leads)
+            {
+                if(!ldtemp.Call_Center__c)
+                {
+                    if(ldtemp.Custom_Lead_Source__c!=null && !LeadSourceSet.contains(ldtemp.Custom_Lead_Source__c))
+                    {
+                        if((ldtemp.Lead_Gen_Partner__c!=null && ldtemp.Lead_Gen_Partner__c==System.label.BrightCurrent) 
+                            || ldtemp.DoNotCall  
+                            || (ldtemp.LastName!=null && ldtemp.LastName.containsIgnoreCase('test'))
+                            || (ldtemp.FirstName!=null && ldtemp.FirstName.containsIgnoreCase('test')) 
+                            || (ldtemp.Company!=null && ldtemp.Company.containsIgnoreCase('test'))                            
+                            || (ldtemp.Lead_Status__c!=null && ldtemp.Lead_Status__c.equalsIgnoreCase('Passed to Partner')))
+                        {                          
+                            ldtemp.Call_Center__c = false;                          
+                        }
+                        else
+                        {
+                            ldtemp.Call_Center__c = True;   
+                        }
+                    }
+                    
+                }
+                //BSKY-7292
+                if(ldtemp.Status!=null && ldtemp.Status=='Closed Lost') {
+                    ldtemp.Dial_Status__c='FINAL';
+                }
+                
+            }
+    }
+    
     public static void InsertSouthRecords(List<Lead> lst_SouthLeads){
         String ConnectionName = System.Label.SunRunConnectionName;
         Id networkId = getConnectionId(ConnectionName); 
@@ -1607,7 +1646,7 @@ Description: This trigger creates a referral input based on the Lead data,
     }
     
 }
-    public static void ConversionAndUpdateOppty(List<Lead> lst_newLead){
+    public static void ConversionAndUpdateOppty(List<Lead> lst_newLead,Map<id,Lead> oldMap){
             Set<Id> convertedOpportunityIds = new Set<Id>();
             for(Lead ld:lst_newLead){
                 if(ld.convertedOpportunityId!=null && ld.Status =='Converted'){
@@ -2661,6 +2700,7 @@ Description: This trigger creates a referral input based on the Lead data,
         list<Lead> leadAPIList = new  list<Lead>();
         if(!clmMap.isEmpty() && !lst_newLead.isEmpty() ){
             for(lead lead: lst_newLead){
+            	if(lead.Call_Center__c){
                 if(IsInsert || (IsUpdate && (lead.Call_Center__c!= map_oldLead.get(lead.Id).Call_Center__c 
                                              || lead.Campaign_Call_Attempts__c!=map_oldLead.get(lead.Id).Campaign_Call_Attempts__c
                                              || lead.Channel__c !=map_oldLead.get(lead.Id).Channel__c
@@ -2767,6 +2807,7 @@ Description: This trigger creates a referral input based on the Lead data,
                                                         } 
                                                  }   
                                              }
+            }
             }
         }
         

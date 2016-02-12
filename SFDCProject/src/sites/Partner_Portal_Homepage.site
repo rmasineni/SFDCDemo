@@ -17,6 +17,7 @@
     <indexPage>PartnerPortalLogin</indexPage>
     <masterLabel>Partner Portal Homepage</masterLabel>
     <portal>Sunrun Partner Website</portal>
+    <requireHttps>false</requireHttps>
     <requireInsecurePortalAccess>false</requireInsecurePortalAccess>
     <siteAdmin>sunruncrm@sunrunhome.com</siteAdmin>
     <siteTemplate>SiteTemplate</siteTemplate>

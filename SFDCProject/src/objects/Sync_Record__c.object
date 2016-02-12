@@ -44,6 +44,7 @@
         <actionName>View</actionName>
         <type>Default</type>
     </actionOverrides>
+    <allowInChatterGroups>false</allowInChatterGroups>
     <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
     <deploymentStatus>Deployed</deploymentStatus>
     <description>Many times when a record is modified, it needs to be synced to other places and we need to capture the status of the sync status and details for analysis or troubleshooting. If a record needs to be synced to multiple places, then we would end up in creating multiple fields in source object. Also sometimes we will not be able to update the object back due to various reasons. This object helps to keep track of such records and helps update the status with details.</description>
@@ -459,37 +460,6 @@
             <value>AwsSqsSync</value>
         </filters>
         <label>All Aws Sync</label>
-        <language>en_US</language>
-    </listViews>
-    <listViews>
-        <fullName>All_Aws_Sync_Errors</fullName>
-        <columns>NAME</columns>
-        <columns>Module__c</columns>
-        <columns>Action__c</columns>
-        <columns>Type__c</columns>
-        <columns>Value1__c</columns>
-        <columns>Status__c</columns>
-        <columns>Sub_Status__c</columns>
-        <columns>Sobject__c</columns>
-        <columns>Record__c</columns>
-        <columns>Attempts__c</columns>
-        <columns>Delay_Until_Time__c</columns>
-        <columns>Message__c</columns>
-        <columns>App_Log__c</columns>
-        <columns>External_Id__c</columns>
-        <columns>UPDATEDBY_USER</columns>
-        <filterScope>Everything</filterScope>
-        <filters>
-            <field>Module__c</field>
-            <operation>equals</operation>
-            <value>AwsSqsSync</value>
-        </filters>
-        <filters>
-            <field>Status__c</field>
-            <operation>equals</operation>
-            <value>Sync Error</value>
-        </filters>
-        <label>All Aws Sync Errors</label>
         <language>en_US</language>
     </listViews>
     <listViews>

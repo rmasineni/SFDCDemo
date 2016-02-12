@@ -15,7 +15,9 @@
     <inactiveIndexPage>CommunitiesLogin</inactiveIndexPage>
     <indexPage>CommunitiesLanding</indexPage>
     <masterLabel>AEE Community Portal</masterLabel>
+    <requireHttps>true</requireHttps>
     <requireInsecurePortalAccess>false</requireInsecurePortalAccess>
+    <selfRegPage>CommunitiesSelfReg</selfRegPage>
     <siteAdmin>raghu.puchala@sunrun.com</siteAdmin>
     <siteType>ChatterNetwork</siteType>
     <subdomain>sunruncommunity</subdomain>

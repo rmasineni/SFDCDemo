@@ -44,6 +44,7 @@
         <actionName>View</actionName>
         <type>Default</type>
     </actionOverrides>
+    <allowInChatterGroups>false</allowInChatterGroups>
     <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
     <deploymentStatus>Deployed</deploymentStatus>
     <description>This represents a proposal to an opportunity with pricing information and other meta information related to the issuing of the proposal.</description>
@@ -6047,6 +6048,15 @@ TRUE, FALSE)</formula>
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>Revised_Customer_SignOff_Date__c</fullName>
+        <externalId>false</externalId>
+        <label>Revised Customer Signoff</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>DateTime</type>
+    </fields>
+    <fields>
         <fullName>Revised_Proposal1__c</fullName>
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
@@ -8041,14 +8051,14 @@ TRUE, FALSE)</formula>
         <columns>Date_Time_Finance_Received_Proposal__c</columns>
         <columns>Stage__c</columns>
         <columns>Assigne__c</columns>
-        <columns>Homeowner_Name__c</columns>
+        <columns>Sales_Partner__c</columns>
         <columns>Partner_Name__c</columns>
         <columns>State__c</columns>
         <columns>Utility__c</columns>
+        <columns>EDP_Phase__c</columns>
         <columns>Revised_Proposal__c</columns>
+        <columns>Total_Solar_Prepay_Required__c</columns>
         <columns>Change_Order__c</columns>
-        <columns>Pending_Comments__c</columns>
-        <columns>Sales_Partner_Name__c</columns>
         <filterScope>Everything</filterScope>
         <filters>
             <field>Stage__c</field>
@@ -8732,7 +8742,6 @@ TRUE, FALSE)</formula>
         <columns>NAME</columns>
         <columns>Sales_Partner__c</columns>
         <columns>Install_Partner__c</columns>
-        <columns>Date_Time_Pending_Task_Resolved__c</columns>
         <columns>Cost_Stack__c</columns>
         <columns>Mode_Name__c</columns>
         <columns>Assigne__c</columns>
