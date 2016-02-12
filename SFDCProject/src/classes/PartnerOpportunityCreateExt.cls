@@ -26,9 +26,9 @@ public class PartnerOpportunityCreateExt {
     public Id partnerContactId{get;set;}  
     public String returnPageVal;
     public User CurrentUser;
+    public Energy_Storage__c energyStorage { get;set;}
     public boolean isAEEuser{get;set;}
     public boolean isSunrunDivision{get;set;}
-    public Energy_Storage__c energyStorage { get;set;}
     // Variables for Partner Terms and Conditions
     public List<TermsConditions__c> PartnerTermsConditions;
     
@@ -40,15 +40,14 @@ public class PartnerOpportunityCreateExt {
             isPartnerUser = false;
             createAppointment = false;
             isAEEuser = false;
-            opp=[select id,Account.Zip_6__c,Zip_6_Account__c,Prospect_Id__c,primary_title__c,secondary_title__c,appointment_category__c,home_type__c,Core_Logic_Land_Type__c,
-                 Install_Branch_Id__c, install_partner__r.Name,Sales_partner__r.Name,Installation_Type__c,Unable_to_create_proposal__c,HOA__c,Over_2_stories__c,Ready_for__c,
-                 Site_Design_Priority__c,Site_Design_Status__c,Designer__c,
+            opp=[select id,Account.Zip_6__c,Zip_6_Account__c,Prospect_Id__c,primary_title__c,secondary_title__c,appointment_category__c,home_type__c,
+                 Core_Logic_Land_Type__c,install_partner__r.Name,Sales_partner__r.Name,Installation_Type__c,Unable_to_create_proposal__c,HOA__c,
+                 Over_2_stories__c,
                  Date_and_time_request__c,Request_redesign__c,Reason_for_redesign__c,Date_and_time_response__c,Reason_for_not_generating_proposal__c,
-                 Usage_Option__c,Annual_kWh_usage__c,Utility_Company__c,Territory__c,Site_Designer__c,Rate_Schedule__c,Hawaii_NEM_Approved__c,
-                 (select id,name,First_Name__c,Last_Name__c,Payment_Mode__c,Payment_Type__c,Status__c,Amount__c,Transaction_DateTime__c from payment_transactions__r order by createddate desc), 
-                 (select id,name, Appointment_Date_Time__c, duration__c, Appointment_Time_Local__c, Appointment_End_Date_Time__c, Appointment_Type__c, Event_Assigned_To__r.name, Status__c, Sub_Region__c, lastmodifieddate from Appointments__r order by createddate desc)  
-                 
-                 from opportunity where id=:id];
+                 Usage_Option__c,
+                 Annual_kWh_usage__c,Utility_Company__c,Territory__c,Site_Designer__c,Rate_Schedule__c,Hawaii_NEM_Approved__c,Ready_for__c,
+                 Site_Design_Priority__c,Site_Design_Status__c,Designer__c,
+                 (select id,name,First_Name__c,Last_Name__c,Payment_Mode__c,Payment_Type__c,Status__c,Amount__c,Transaction_DateTime__c from payment_transactions__r order by createddate desc) from opportunity where id=:id];
             List<OpportunityContactRole> OpptyRoleobjlist = [SELECT id, ContactId, OpportunityId, Role, isPrimary FROM OpportunityContactRole WHERE OpportunityId =: opp.id and isPrimary = true limit 1 ];
             if(!OpptyRoleobjlist.isempty())
             contactObj = [SELECT id, MobilePhone,otherphone,name, AccountId, Firstname, Lastname, Email, MailingStreet, MailingCity, MailingState, MailingCountry, MailingPostalCode, HomePhone,
@@ -60,22 +59,14 @@ public class PartnerOpportunityCreateExt {
             if(userObj != null && userObj.contactId != null){
                 isPartnerUser = true;
             }
+            system.debug('==>current user'+CurrentUser);
+            system.debug('==>Default Division'+CurrentUser.DefaultDivision);
             string userDivision = CurrentUser.DefaultDivision;
             system.debug('==>userDiv'+userDivision);
             if(userDivision != null){
               isAEEAccountUser(userDivision);
               isSunrunDiv(userDivision);
             }
-
-            if(opp.Install_Branch_Id__c != null && opp.install_partner__r.Id !=null){
-                String tempString1 = opp.install_partner__r.Id + '';
-                String tempString2 = System.Label.Sunrun_Inc_Id;
-                if(tempString1.contains(tempString2)){
-                    createAppointment = true;
-                }
-                System.debug('tempString1: ' + tempString1 + 'tempString2: ' + tempString2 + ' createAppointment: ' + createAppointment);
-            }
-
             List<Energy_Storage__c> lstEnergyStorage = [Select Id,Number_of_adults_home_during_the_day__c,Use_A_C__c,Date_of_Meter_Instal__c,Meter_Sensor_ID__c,ES_kWh__c,Opportunity__c,PV_kWdc__c,Time_return_from_work__c,Prepaid_20_Year_PPA_Lease_Savings__c,Monthly_20_Year_Savings__c,Prepaid_20_Year_PPA_Lease__c,Monthly_20_Year_PPA_Lease_Payment__c,Electric_vehicle_charged_after_4PM__c,Current_Blended_Utility_Rate__c,PV_Turnkey__c,Yearly_kWh_consumption__c,Name from Energy_Storage__c where Opportunity__c=: id];
               if(lstEnergyStorage !=null && lstEnergyStorage.size()>0)
                   energyStorage = lstEnergyStorage[0];
@@ -85,7 +76,6 @@ public class PartnerOpportunityCreateExt {
             ApexPages.addMessages(exceptionObj);               
         }     
     }
-    
     public boolean isAEEAccountUser(string userDiv){
     string AEEDiv = label.AEE_label;
     system.debug('AEElabel'+AEEDiv);
@@ -152,6 +142,7 @@ public class PartnerOpportunityCreateExt {
         return options;
     }
 
+
      public List<SelectOption> getApptCategories(){
         display = false;
         List<SelectOption> options = new List<SelectOption>();
@@ -159,7 +150,7 @@ public class PartnerOpportunityCreateExt {
         options.add(new SelectOption('Site Audit','Site Audit'));
         return options;
      }
-
+     
      public List<SelectOption> getPayTransOptions(){
         display = false;
         List<SelectOption> options = new List<SelectOption>();
@@ -240,8 +231,8 @@ public class PartnerOpportunityCreateExt {
         
         String message=CDYNEStandardButtonCall.callOpportunity(opp.id);
         System.debug(LoggingLevel.INFO,'message : '+message);
-         
-        if(message!='Success'&&message!='Sales Rep Message'&&message!='Sales Rep Division Message'&&message!='County Message'){
+        //BSKY-7265 
+        if(message!='Success'&&message!='Sales Rep Message'&&message!='Sales Rep Division Message'&&message!='County Message'&&message!='Design Only Message'){
          displayPopupMessage=message;
          displayPopup=true; 
          //ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, message));
@@ -340,15 +331,17 @@ public class PartnerOpportunityCreateExt {
                     displayPopup=true; 
                     ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,errorMessage));                     
                 }
-                if((message=='Sales Rep Message'||message=='Sales Rep Division Message'&&userinfo.getUserType()!='PowerPartner')||message=='County Message'){
+                //BSKY-7265
+                if((message=='Sales Rep Message'||message=='Sales Rep Division Message'&&userinfo.getUserType()!='PowerPartner')||message=='County Message'||message=='Design Only Message'){
                     String partnerTCAccepted = partnerTandCAccepted ? 'true' : 'false';
                     returnPageVal = 'Opty';
                     
                     displaySalesRepUrl=true;  
-                    if(userinfo.getUserType()=='PowerPartner'&&baseURL.containsIgnoreCase('partner'))               
-                    SalesRepURL='/partner/apex/SalesRepRedirect?Id='+id+'&message='+message+'&redirectUrl='+redirectURL+'&partnerTandCAccepted='+partnerTCAccepted+'&partnerContactId='+partnerContactId;
-                    else
-                    SalesRepURL='/apex/SalesRepRedirect?Id='+id+'&message='+message+'&redirectUrl='+redirectURL+'&partnerTandCAccepted='+partnerTCAccepted+'&partnerContactId='+partnerContactId;
+                    SalesRepURL=baseURL+'/apex/SalesRepRedirect?Id='+id+'&message='+message+'&redirectUrl='+redirectURL+'&partnerTandCAccepted='+partnerTCAccepted+'&partnerContactId='+partnerContactId;
+                    //if(userinfo.getUserType()=='PowerPartner'&&baseURL.containsIgnoreCase('partner'))               
+                    //SalesRepURL='/partner/apex/SalesRepRedirect?Id='+id+'&message='+message+'&redirectUrl='+redirectURL+'&partnerTandCAccepted='+partnerTCAccepted+'&partnerContactId='+partnerContactId;
+                    //else
+                    //SalesRepURL='/apex/SalesRepRedirect?Id='+id+'&message='+message+'&redirectUrl='+redirectURL+'&partnerTandCAccepted='+partnerTCAccepted+'&partnerContactId='+partnerContactId;
                     //PageReference editOpp = new PageReference('/apex/SalesRepRedirect?Id='+id);
                     ///editOpp.setRedirect(true);
                     return null;
@@ -548,6 +541,7 @@ public class PartnerOpportunityCreateExt {
         displayTandCURL = false;
     }
 
+
     public pagereference showScheduler(){
         Pagereference page;
         scRedirectUrl = '';
@@ -564,6 +558,5 @@ public class PartnerOpportunityCreateExt {
             return page;
         }       
         return null;
-    }
-    
+    }    
 }

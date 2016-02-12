@@ -39,29 +39,28 @@ trigger trg_opptyteam_before_insert_update on Opportunity_Team__c (before insert
         }
         
          if((trigger.isinsert && ot.Role__c!=null)||(trigger.isUpdate &&trigger.oldmap.get(ot.id).Role__c!=ot.Role__c )) {
-             If(!roles.contains(ot.Role__c)){
-                 roles.add(ot.Role__c);
+      		                  If(!roles.contains(ot.Role__c)){
+        		                     roles.add(ot.Role__c);
+                 }
+                 else {
+                      ot.Role__c.addError('Role already exists with another User.');
+                 }        
+                               
              }
-             else {
-                 ot.Role__c.addError('Role already exists with another User.');
-             }        
-             
-         }
      }
-         
-              if(!optyMap.isEmpty() && optyMap.size() >0  ){
+              if(!optyMap.isEmpty() ){
                   for(Opportunity_Team__c optyTeam:[Select Role__c,id,Opportunity__c 
                                                     From Opportunity_Team__c 
                                                     where Role__c in:roles and Opportunity__c in : optyMap.keyset() ]){
-                                                        for(Opportunity_Team__c ot: trigger.new){
-                                                            if( optyTeam.Opportunity__c == ot.Opportunity__c &&  optyTeam.Role__c == ot.Role__c){
+                              for(Opportunity_Team__c ot: trigger.new){
+                                               if( optyTeam.Opportunity__c == ot.Opportunity__c &&  optyTeam.Role__c == ot.Role__c){
                                                                 ot.Role__c.addError('Role already exists with another User');
                                                             }
                                                         }
-                                                    }
-              }    
-
-          
+                  }
+                  
+              }
+              
     if(!optyMap.isempty()){
         update optyMap.values();
         } 

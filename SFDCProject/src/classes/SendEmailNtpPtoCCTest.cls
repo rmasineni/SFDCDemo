@@ -6,7 +6,7 @@ public class SendEmailNtpPtoCCTest {
     testmethod public static void sendemailscentppto(){
         
         //For role 'Billing Contact
-            
+        		
         Sf.settingsService.setString(Constants.RequestPaymentBaseUrl, 'RequestPaymentBaseUrl');
         
         Account acc = BaseClassTest.createTestAccount();
@@ -29,11 +29,10 @@ public class SendEmailNtpPtoCCTest {
         Complete_Deal_Received__c=system.today(),Final_Rebate_Amount__c=250,    
         Rebate_Conf_Rec_d__c=system.today(),service_contract__c=sc1.id);
         insert sce;
-               
+        
         sce.NTP_Granted__c = system.today();
-        //sce.PTO__c = system.today();
+        sce.PTO__c = system.today();
         sce.SR_Signoff__c= system.today();
-       // sce.Meter_Registration_Date__c=system.today();
         sce.Facility_Design_Approved__c= system.today();
         sce.Complete_Deal_Received__c = system.today();
         sce.Final_Rebate_Amount__c = 250;
@@ -44,7 +43,7 @@ public class SendEmailNtpPtoCCTest {
         
         opty = [Select id,Payment_Request_Url__c,Payment_Request_Token_Status__c,Payment_Request_Contact_Role_Id__c from Opportunity where Id=:opty.Id];
         system.assertEquals('Valid', opty.Payment_Request_Token_Status__c);
-       // system.assertEquals(true,SendEmailClass.checkptosend);
+        system.assertEquals(true,SendEmailClass.checkptosend);
     }
     
     testmethod static void sendemailscentppto1(){
@@ -113,8 +112,7 @@ public class SendEmailNtpPtoCCTest {
         Rebate_Conf_Rec_d__c=system.today(),service_contract__c=sc3.id);
         insert sce;
         
-        //sce.PTO__c = system.today();
-       // sce.Meter_Registration_Date__c=system.today();
+        sce.PTO__c = system.today();
         sce.SR_Signoff__c= system.today();
         sce.Facility_Design_Approved__c= system.today();
         sce.Complete_Deal_Received__c = system.today();
@@ -125,14 +123,14 @@ public class SendEmailNtpPtoCCTest {
         update sce;
         
         opty = [Select id,Payment_Request_Url__c,Payment_Request_Token_Status__c,Payment_Request_Contact_Role_Id__c from Opportunity where Id=:opty.Id];
-       // system.assertEquals('Valid', opty.Payment_Request_Token_Status__c);
+        system.assertEquals('Valid', opty.Payment_Request_Token_Status__c);
     }
     
      testmethod static void sendemailcc(){
         
         Sf.settingsService.setString(Constants.RequestPaymentBaseUrl, 'RequestPaymentBaseUrl');
         
-        Account acc  = BaseClassTest.createTestAccount();
+        Account acc	= BaseClassTest.createTestAccount();
         
         Contact con = New Contact(FirstName='John',LastName='Doe',Email='johndoe@test.com',AccountId=acc.Id,Title='Sales Rep',Job_Function__c='Inside Sales',Division__c='Inside Sales');
         insert con;
@@ -147,20 +145,20 @@ public class SendEmailNtpPtoCCTest {
         insert cc;
 
         Profile p = [SELECT Id FROM Profile WHERE Name='Customer Portal Manager Custom'];
-       User u = new User(alias = 'standt', Title = 'Test', email='test@test.com', emailencodingkey='UTF-8', FirstName = 'Testing', lastname='Testing', languagelocalekey='en_US', localesidkey='en_US', IsPortalSelfRegistered = true, profileid = p.Id, ContactId = con.id, timezonesidkey='America/Los_Angeles', CommunityNickname = 'Tom', isActive = true, username='testsendemailcust@test.com');
-    insert u;
+   		User u = new User(alias = 'standt', Title = 'Test', email='test@test.com', emailencodingkey='UTF-8', FirstName = 'Testing', lastname='Testing', languagelocalekey='en_US', localesidkey='en_US', IsPortalSelfRegistered = true, profileid = p.Id, ContactId = con.id, timezonesidkey='America/Los_Angeles', CommunityNickname = 'Tom', isActive = true, username='testsendemailcust@test.com');
+		insert u;
         
         cc = [Select Sunrun_Credit_Status__c,Status__c,Credit_Email_Sent__c,Deal_Id__c from Customer_Credit__c where Id=:cc.Id];
         cc.Sunrun_Credit_Status__c = 'PASS';
         update cc;
 
-    cc = [Select Credit_Email_Sent__c from Customer_Credit__c where Id=:cc.Id];           
+		cc = [Select Credit_Email_Sent__c from Customer_Credit__c where Id=:cc.Id];           
         system.assertEquals(true, cc.Credit_Email_Sent__c);
         
         String tempid;
         
         system.runas(u){
-    Customer_Credit__c cc1 = new Customer_Credit__c(First_Name__c = 'John', Last_Name__c = 'Doe', Customer_Email__c = 'johndoe@test.com', Sunrun_Credit_Status__c = null, Status__c = 'N/A', Credit_Email_Sent__c = false, Deal_Id__c = opty.Deal_Id__c, Contact__c = con.Id);
+		Customer_Credit__c cc1 = new Customer_Credit__c(First_Name__c = 'John', Last_Name__c = 'Doe', Customer_Email__c = 'johndoe@test.com', Sunrun_Credit_Status__c = null, Status__c = 'N/A', Credit_Email_Sent__c = false, Deal_Id__c = opty.Deal_Id__c, Contact__c = con.Id);
         insert cc1;
         tempid = cc1.Id;
         }
@@ -169,7 +167,7 @@ public class SendEmailNtpPtoCCTest {
         cc1.Sunrun_Credit_Status__c = 'PASS';
         update cc1;
             
-    cc1 = [Select Credit_Email_Sent__c from Customer_Credit__c where Id=:cc1.Id];           
+		cc1 = [Select Credit_Email_Sent__c from Customer_Credit__c where Id=:cc1.Id];           
         system.assertEquals(true, cc1.Credit_Email_Sent__c);
         }
 }

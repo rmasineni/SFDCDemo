@@ -44,8 +44,10 @@
         <actionName>View</actionName>
         <type>Default</type>
     </actionOverrides>
+    <allowInChatterGroups>false</allowInChatterGroups>
     <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
     <deploymentStatus>Deployed</deploymentStatus>
+    <description>InContact Lead Management manages lead object for inContact</description>
     <enableActivities>true</enableActivities>
     <enableBulkApi>true</enableBulkApi>
     <enableDivisions>false</enableDivisions>
@@ -199,8 +201,24 @@
     <label>InContact Lead Management</label>
     <listViews>
         <fullName>All</fullName>
+        <columns>NAME</columns>
+        <columns>Call_Center__c</columns>
+        <columns>Caller_ID__c</columns>
+        <columns>Campaign_Call_Attempts_c__c</columns>
+        <columns>Channel__c</columns>
+        <columns>Dail_Status__c</columns>
+        <columns>Lead_Type__c</columns>
+        <columns>Priority__c</columns>
+        <columns>Stage__c</columns>
+        <columns>To_Stage__c</columns>
+        <columns>To_Status__c</columns>
+        <columns>Use_API__c</columns>
+        <columns>Voicemail__c</columns>
+        <columns>Wait__c</columns>
+        <columns>CONNECTION_SENT.NAME</columns>
         <filterScope>Everything</filterScope>
         <label>All</label>
+        <language>en_US</language>
     </listViews>
     <nameField>
         <displayFormat>ICN-{0000}</displayFormat>

@@ -70,8 +70,8 @@ public class InstallAuditService
     
     public Install_Audit__c getInstallAudit(string installAuditId)
     {
-        Install_Audit__c installAudit = [select Id, Site_Visit_Date__c, Status__c, Comments__c, Priority_Criteria_Missed__c, Criteria_Missing__c,
-                                         Auditor_Account__c, Auditor_Contact__c, Priority_Criteria_Missing__c, 
+        Install_Audit__c installAudit = [select Id, Site_Visit_Date__c, Status__c, Comments__c, Priority_Criteria_Missed__c, 
+                                         Auditor_Account__c, Auditor_Contact__c, 
                                          Install_Audit_Type__c, Score__c, EPC_Discrepancies__c, Partner_Metric__c, Corporate_Metric__c, 
 										 Generation_Asset__r.Name, Generation_Asset__r.Home_Address__c,Generation_Asset__r.Proposal_Unique_ID__c,
 										 Service_Contract__r.Id, Service_Contract__r.Name, Service_Contract__r.Home_Address__c,Service_Contract__r.Proposal__c

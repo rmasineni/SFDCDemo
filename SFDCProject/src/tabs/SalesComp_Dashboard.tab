@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomTab xmlns="http://soap.sforce.com/2006/04/metadata">
+    <frameHeight>600</frameHeight>
+    <hasSidebar>false</hasSidebar>
+    <label>SalesComp - Dashboard</label>
+    <mobileReady>false</mobileReady>
+    <motif>Custom97: Thermometer</motif>
+    <url>https://snrn-dev.callidusondemand.com/CallidusPortal/do/noheader/CPOR/workspace.do?sforceSessionId=
+{!API.Session_ID}&amp;sforceServerUrl={!API.Partner_Server_URL_90}&amp;leftmenu=true</url>
+    <urlEncodingKey>UTF-8</urlEncodingKey>
+</CustomTab>

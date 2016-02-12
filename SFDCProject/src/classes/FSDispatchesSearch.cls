@@ -313,8 +313,8 @@ public with sharing class FSDispatchesSearch {
         String SearchCondition = '';
         bAllView = False;
         if(viewName == null || viewName == '') {
-          //viewName = 'ALL'; //CommentedBy Suneetha "BSKY-6106" 
-          viewName = 'ACTIVE';
+          // viewName = 'ALL';  //CommentedBy Suneetha "BSKY-6106"
+           viewName = 'ACTIVE';
         }   
         if(viewName == 'ACTIVE'){          
             displayFSDispatchName = true;

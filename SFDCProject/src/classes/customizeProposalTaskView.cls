@@ -6,8 +6,8 @@ public with sharing class customizeProposalTaskView {
     public Integer pageNumber = 0;
     public Integer totalCount {get;set;}
     public Integer pageSize = 5;
-	public List<Task> lstTask{get;set;}
-	public Date dateVal = Date.today();
+    public List<Task> lstTask{get;set;}
+    public Date dateVal = Date.today();
     public  Date dateValWeek = Date.today().addDays(7);
     public String userId{get;set;}
     
@@ -23,8 +23,8 @@ public with sharing class customizeProposalTaskView {
     }
     
     public List<Task> getlstTask(){
-    	System.debug(lstTask);
-    	return lstTask;
+        System.debug(lstTask);
+        return lstTask;
     }
     
    /* public List<SelectOption> getView1() {
@@ -45,11 +45,12 @@ public with sharing class customizeProposalTaskView {
     }
         
     private string getSelectionQuery(String userId){      
-        String soqlQuery = ' Select ID,status,ActivityDate,OwnerId,WhatId,What.Name,Subject'; 
+        String soqlQuery = ' Select ID,status,ActivityDate,createddate,OwnerId,WhatId,What.Name,Subject,Pending_Proposal_Reason__c ';
         soqlQuery += ' from Task ';
-        soqlQuery += ' where Status != \''+EDPUtil.COMPLETED+'\' And Status != \''+EDPUtil.RESOLVED+'\' And Status != \''+EDPUtil.CLOSED+'\' ';
+        soqlQuery += ' where Status = \'Open\' ';
         soqlQuery += ' AND WhatId != null AND OwnerId = \''+ userId+'\' AND ActivityDate != null AND what.type = \'Proposal__c\' ';
         soqlQuery += ' ' + getFilterCondition();
+        soqlQuery +=' AND Createddate>N_DAYS_AGO: 90';
         soqlQuery += ' ORDER BY ActivityDate DESC' ;
         System.debug('soqlQuery2: ' + soqlQuery);
         return soqlQuery;
@@ -66,10 +67,10 @@ public with sharing class customizeProposalTaskView {
             
             searchCondition = ' And ActivityDate >= :dateVal And ActivityDate < :dateValWeek';
         }else if(PickList2 == 'dOver'){
-        	
+            
             searchCondition = ' And ActivityDate < :dateVal';
         }else if(PickList2 == 'allTasks'){
-        	
+            
             searchCondition = '';
         }
               
@@ -176,11 +177,12 @@ public with sharing class customizeProposalTaskView {
     }
     
     private void setTaskCount(String userId){      
-		String soqlQuery = ' Select count()'; 
+        String soqlQuery = ' Select count()'; 
         soqlQuery += ' from Task ';
-        soqlQuery += ' where Status != \''+EDPUtil.COMPLETED+'\' And Status != \''+EDPUtil.RESOLVED+'\' And Status != \''+EDPUtil.CLOSED+'\' ';
+        soqlQuery += ' where Status = \'Open\' ';
         soqlQuery += ' And WhatId != null and OwnerId = \''+ userId+'\' AND ActivityDate != null and what.type = \'Proposal__c\' ';
         soqlQuery += ' ' + getFilterCondition();
+        soqlQuery +=' AND Createddate>N_DAYS_AGO: 90';
         System.debug('soqlQuery1: ' + soqlQuery);
         totalCount = Database.countQuery(soqlQuery);
     }

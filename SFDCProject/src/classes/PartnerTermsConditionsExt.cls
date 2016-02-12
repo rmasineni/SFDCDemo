@@ -157,7 +157,7 @@ public with sharing class PartnerTermsConditionsExt {
            }else{
                redirectUrl = '/apex/TandCModifyProposalError?returnId='+ objectId +'&src=P&returnPage=Proposal&errorType=Error&errorMessage='+responseObj.errorMessage +'&selectedDesign='+ selectedDesign;            
            }
-        }else if(responseObj.status == 'Warning'){			
+        }else if(responseObj.status == 'Warning'){          
            if(userinfo.getUserType().equalsIgnoreCase('PowerPartner') && baseURL.containsIgnoreCase('partner')){   
               redirectUrl = '/partner/apex/TandCModifyProposalError?returnId='+ objectId +'&src=P&returnPage=Proposal&errorType=Warning&errorMessage='+ responseObj.errorMessage +'&selectedDesign='+ selectedDesign;
            }else{

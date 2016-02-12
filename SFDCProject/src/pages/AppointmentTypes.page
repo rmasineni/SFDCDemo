@@ -22,9 +22,6 @@
 				result = false;
 			}
 			return result;
-    	 	//var win = window.open(redirectUrl, '_blank');
-  			//win.focus();
-    	 	//return true;
     	 }
     </script>
 </apex:page>

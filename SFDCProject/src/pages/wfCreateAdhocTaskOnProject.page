@@ -6,7 +6,7 @@
         <apex:pageMessages />
             <div style="text-align: center;" >
                
-                 <apex:commandButton action="{!saveAdhocTask}" value=" Save " status="status2" title="Click to save the Task" rendered="{!editModeSec}"/>
+                <apex:commandButton action="{!saveAdhocTask}" value=" Save " status="status2" title="Click to save the Task" rendered="{!editModeSec}"/>
                 &nbsp;
                 <apex:commandButton action="{!editTask}" value=" Edit " status="status2" title="Click to Edit the Task" rendered="{!!editModeSec}"/>
                  &nbsp;&nbsp;&nbsp;

@@ -15,5 +15,4 @@
     <tab>standard-WorkBadgeDefinition</tab>
     <tab>Appointment__c</tab>
     <tab>SalesComp</tab>
-    <tab>Partner_Api_Field__c</tab>
 </CustomApplication>

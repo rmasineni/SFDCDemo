@@ -1,278 +1,135 @@
 <apex:page title="Sunrun Partner Portal" sidebar="false" showHeader="false" controller="PartnerPortalLanding">
 	<apex:pagemessages />
-	<!-- <apex:stylesheet value="{!URLFOR($Resource.PartnerPortalHomePageImage3, 'Homepagebackground.css')}"/>  -->
-	<style>
-		.headerLogo {
-			margin:15px 15px 15px 30px;
-			border:0;
-			height: 60px;
-			width: 190px;
-		}
-		.frame {
-		    font-family: 'Arial',sans-serif;
-		    text-align: left;
-		}
-		a {
-		    color: #0099FF;
-		    text-decoration: underline;
-		}
-
-		a, ul.footerUlist, li.footerlist, .divider {
-			
-		    background: none repeat scroll 0 0 transparent;
-		    border: 0 none;
-		    font-size: 100%;
-		    margint: 1.0em;
- 		    outline: 0 none;
-		    vertical-align: baseline;
-		    display: inline;
-		}
-		
-		ul.footerUlist, li.footerlist{
-			margin-left: 1.5em;
-		}
-		
-		.divider {
-			padding: 0 0.8em;
-		}
-
-		.wordwrap { 
-			white-space: pre-wrap;    
-			white-space: -moz-pre-wrap;
-			white-space: -pre-wrap;     
-			white-space: -o-pre-wrap;   
-			word-wrap: break-word;     
-		}
-		.buttons{
-			background: -moz-linear-gradient(rgba(9, 124, 230, 0.04), #37A8F3); /* FF 3.6+ */  
-		    background: -ms-linear-gradient(rgba(9, 124, 230, 0.04), #37A8F3); /* IE10 */  
-		    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #000000), color-stop(100%, #ffffff)); /* Safari 4+, Chrome 2+ */  
-		    background: -webkit-linear-gradient(rgba(9, 124, 230, 0.04), #37A8F3); /* Safari 5.1+, Chrome 10+ */  
-		    background: -o-linear-gradient(rgba(9, 124, 230, 0.04), #37A8F3); /* Opera 11.10 */  
-		    background: linear-gradient(rgba(9, 124, 230, 0.04), #37A8F3); 
-			border: 1px solid #AAAAAA;
-			border-radius: 10px 10px 10px 10px;
-			bottom: 14px;
-			color: white;
-			cursor: pointer;
-			font-size: 11px;
-			height: 20px;
-			right: 10px;
-			text-align: center;
-			width: 90px;
-			font: bold 11px arial,sans-serif;
-		}
-            .buttons2{
-                background: -moz-linear-gradient(rgba(9, 124, 230, 0.04), #37A8F3); /* FF 3.6+ */  
-                background: -ms-linear-gradient(rgba(9, 124, 230, 0.04), #37A8F3); /* IE10 */  
-                background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #000000), color-stop(100%, #ffffff)); /* Safari 4+, Chrome 2+ */  
-                background: -webkit-linear-gradient(rgba(9, 124, 230, 0.04), #37A8F3); /* Safari 5.1+, Chrome 10+ */  
-                background: -o-linear-gradient(rgba(9, 124, 230, 0.04), #37A8F3); /* Opera 11.10 */  
-                background: linear-gradient(rgba(9, 124, 230, 0.04), #37A8F3); 
-				border: 1px solid #AAAAAA;
-                border-radius: 10px 10px 10px 10px;
-                bottom: 14px;
-                color: white;
-                cursor: pointer;
-                font-size: 11px;
-               	height: 20px;
-                right: 10px;
-                text-align: center;
-                width: 120px;
-                font: bold 11px arial,sans-serif;
-            }
-
-		.errorMsg2 {
-		    color: #CC0000;
-		}
-		
-		div.contenetDiv1{
-			position: relative;
-			border: 10px;
-			text-align: center;
-			#padding: 10px;
-			#background: #edd;
-			box-shadow:1px 1px 1px none;
-			border-radius:10px;	
-			height: 265px;
-		    #width: 585px;
-		    overflow: auto;
-			margin-bottom:15px;
-			border: 3px solid #E5E5E5; 
-		}
-
-		div .contenetDiv101{
-			position: relative;
-			border: 0px;
-			text-align: center;
-			box-shadow:1px 1px 1px none;
-			border-radius:10px;	
-		    overflow: auto;
-			margin-bottom:25px;
-		}
-
-		div .contenetDiv102{
-			position: relative;
-			border: 0px;
-			text-align: center;
-			box-shadow:1px 1px 1px none;
-			border-radius:10px;	
-		    overflow: auto;
-			margin-top:35px;
-		}
-
-		div .contenetDiv103{
-			position: relative;
-			border: 0px;
-			text-align: center;
-			box-shadow:1px 1px 1px none;
-			border-radius:10px;	
-		    overflow: auto;
-			margin-top:35px;
-		}
-
-		div .contenetDiv111{
-			position: relative;
-			border: 10px;
-			text-align: center;
-			box-shadow:1px 1px 1px none;
-			height: 140px;
-		    overflow: auto;
-			margin-bottom:25px;
-		}
-
-		div .contenetDiv112{
-			position: relative;
-			border: 10px;
-			text-align: center;
-			box-shadow:1px 1px 1px none;
-			height: 140px;
-		    overflow: auto;
-			margin-top:25px;
-		}
-
-		div.contenetDiv21{
-			position: relative;
-			border: 10px;
-			text-align: center;
-			#background: #edd;
-			box-shadow:1px 1px 1px none;
-			border-radius:10px;	
-			height: 265px;
-		    width: 335px;
-			margin-bottom: 15px;
-			border-style:solid;
-			border: 3px solid #00ADE6;
-			overflow: auto;
-		}			
-
-		div.contenetDiv22{
-			position: relative;
-			border: 10px;
-			text-align: center;
-			#background: #edd;
-			box-shadow:1px 1px 1px none;
-			border-radius:10px;	
-			height: 330px;
-		    width: 335px;
-			margin-bottom: 15px;
-			border: 3px solid #E5E5E5;
-			overflow: auto;
-		}
-	
-		div.contenetDiv3{
-			position: relative;
-			border: 10px;
-			text-align: left;
-			#background: #edd;
-			box-shadow:1px 1px 1px none;
-			border-radius:10px;	
-			height: 200px;
-		    width: 960x;
-			margin-bottom: 15px;
-			border: 3px solid #E5E5E5;
-			overflow: auto;
-		}
-		h1.loginHeader {
-		    color: #434440;
-		    font-size: 1.5em;
-		    margin: 0.5em;
-		    font-weight: normal;
-		    font-family: 'Verdana','Geneva',sans-serif;
-		}
-
-		h2.loginHeader {
-		    color: #434440;
-		    font-size: 1.0em;
-		    margin: 0.5em;
-		    font-weight: normal;
-		    font-family: 'Verdana','Geneva',sans-serif;
-		}
-
-		div.imageDiv1
-		{
-			background:url();
-			background-size:800px 600px;
-			background-repeat:no-repeat;
-		}
-
-
-	</style>
-	<apex:stylesheet value="{!URLFOR($Resource.Css960GS, '960.css')}" />
-	<!-- 
-	<div id="frame" class="HomepageBackground">
-		<br></br>
-		<c:PartnerPortalLandingArticles1 content="{!accountMessage}"/>
-			
-	</div>	
-	 -->
-
-	<div id="frame">
-		<apex:outputpanel layout="block" styleclass="container_16">
-			<c:PartnerPortalLandingArticles1 content="{!accountMessage}"/>
-		</apex:outputpanel>
-	</div>
-  
-    <apex:includeScript value="{!URLFOR($Resource.jqueryui_181, 'development-bundle/jquery-1.7.1.js')}"  />
-    <apex:includeScript value="{!URLFOR($Resource.jqueryui_181, 'development-bundle/external/jquery.bgiframe-2.1.2.js')}"  />
-    <apex:includeScript value="{!URLFOR($Resource.jqueryui_181, 'development-bundle/ui/jquery.ui.core.js')}"  />
-    <apex:includeScript value="{!URLFOR($Resource.jqueryui_181, 'development-bundle/ui/jquery.ui.widget.js')}"  />
-    <apex:includeScript value="{!URLFOR($Resource.jqueryui_181, 'development-bundle/ui/jquery.ui.mouse.js')}"  />
-    <apex:includeScript value="{!URLFOR($Resource.jqueryui_181, 'development-bundle/ui/jquery.ui.button.js')}"  />
-    <apex:includeScript value="{!URLFOR($Resource.jqueryui_181, 'development-bundle/ui/jquery.ui.draggable.js')}"  />
-    <apex:includeScript value="{!URLFOR($Resource.jqueryui_181, 'development-bundle/ui/jquery.ui.position.js')}"  />
-    <apex:includeScript value="{!URLFOR($Resource.jqueryui_181, 'development-bundle/ui/jquery.ui.dialog.js')}"  />
-
-    <script>
-		var sideBarTd = parent.document.getElementById("sidebarCell");
-        if(sideBarTd){
-			sideBarTd.className = " sidebarCell sidebarCollapsible sidebarCollapsed";
-        }
-        
-        function test1(){
-
-        }
-        
-        $(function() {
-            $('#resizeDiv1').draggable();
-            $('#resizeDiv2').draggable();
-        });
-        
-    </script>
-
+    
     <style>
-        div.contenetDiv4{
-            position: relative;
-            border: 10px;
+        body {
+            font-family: Roboto, proxima-nova, sans-serif;
+        }
+        
+        html, body { 
+        	margin: 0; padding: 0; 
+       	}
+		
+        #home-page-content { 
+        	margin-right: auto; margin-left: auto; width: 1000px; 
+        }
+        
+        #home-page-links {
+        	clear: both;
+        	padding-top: 10px;
+        }
+    	#home-page-links ul {
+        	list-style: none;
+        }
+    	#home-page-links ul li {
+        	float: left;
+        	padding: 0 25px;
+        }
+    	#home-page-links ul li:first-child {
+        	padding-left: 0;
+        }
+    	#home-page-links ul li:last-child {
+        	padding-right: 0;
+        }
+    	#home-page-links ul li img {
+        	width: 129px;
+        	height: 129px;
+        }
+        
+        .link-caption {
+            font-size: 18px;
             text-align: center;
-            background: #edd;
-            box-shadow:1px 1px 1px none;
-            border-radius:10px; 
-            height: 100px;
-            width: 50x;
-            margin-bottom: 15px;
-            border: 1px solid #E5E5E5;
+            padding-top: 10px;
+            color: #888;
+            max-width: 122px;
+        }
+        
+        #home-page-banners ul {
+        	list-style: none;
+        }
+        #home-page-banners li {
+        	float: left;
+        }
+        #cee {
+        	background-image: url("{!URLFOR($Resource.CommunityResourcesAee, 'partner/images/cee-image.png')}");
+	 		background-size:     cover;
+    		background-repeat:   no-repeat;
+    		background-position: center center;
+			width: 450px;
+    		height: 275px;
+        }
+        #aee {
+        	background-image: url("{!URLFOR($Resource.CommunityResourcesAee, 'partner/images/aee-image.png')}");
+	 		background-size:     cover;
+    		background-repeat:   no-repeat;
+    		background-position: center center;         
+			width: 450px;
+    		height: 275px;        
+        }
+        
+        .banner .title {
+        	padding-top: 200px;
+        	color: #989CA1;
+        	display: block;
+			margin-left: 20px;
+        }
+        
+        .banner .description {
+            font-size: 18px;
+            color: white;
+            text-transform: uppercase;
+            display: inline-block;
+            border-bottom: 2px solid #2DB5E8;
+            width: 256px;
+			margin-left: 20px;
+	    	padding-top: 2px;
         }
     </style>
-    
+	
+    <div id="home-page-content">
+        <div id="home-page-banners">
+            <ul>
+                <li>
+                    <a target="newtab" href="https://cee.leadmanager.co/login?utm_source=sunrunpartnerportal">
+                        <div id="cee" class="banner">
+                            <span class="title">CEE</span>
+                            <span class="description">Grow your sales funnel with qualified leads</span>
+                        </div>
+                	</a>
+                </li>
+                <li>
+                    <a target="newtab" href="http://www.aeesolar.com/?utm_source=sunrunpartnerportal">
+                        <div id="aee" class="banner">
+                            <span class="title">AEE</span>
+                            <span class="description">Proven products at competitive prices</span>
+                        </div>
+                	</a>
+                </li>
+            </ul>
+        </div>    
+        <div id="home-page-links">
+            <ul>
+                <li>
+                    <a target="newtab" href="https://pages.sunrun.com/monthly_update.html"><img src="{!URLFOR($Resource.CommunityResourcesAee, 'partner/images/update-icon.png')}"/></a>
+                    <div class="link-caption">Updates</div>
+                </li>
+                <li>
+                    <a target="newtab" href="https://pages.sunrun.com/rs/935-SWT-917/images/2016%20Q1%20Customer%20Referral%20Promotion_Clearslide%20%281%29.pdf"><img src="{!URLFOR($Resource.CommunityResourcesAee, 'partner/images/promotion-icon.png')}"/></a>
+                    <div class="link-caption">Current Promotions</div>
+                </li>
+                <li>
+                    <a target="newtab" href="https://docs.google.com/a/sunrunhome.com/forms/d/1eyAXmfBBbVRWQAD94hoYxljOGmAVL50qMOb9fY4225w/viewform"><img src="{!URLFOR($Resource.CommunityResourcesAee, 'partner/images/referral-icon.png')}"/></a>
+                    <div class="link-caption">Referrals</div>
+                </li>
+                <li>
+                    <a target="newtab" href="http://sunrun.netexam.com/"><img src="{!URLFOR($Resource.CommunityResourcesAee, 'partner/images/net-exam-icon.png')}"/></a>
+                    <div class="link-caption">Training</div>
+                </li>
+                <li>
+                    <a target="newtab" href="http://www.ascendprinting.com/sunrunpartners"><img src="{!URLFOR($Resource.CommunityResourcesAee, 'partner/images/store-icon.png')}"/></a>
+                    <div class="link-caption">Marketing Support</div>
+                </li>
+            </ul>
+        </div>
+    </div>
 </apex:page>

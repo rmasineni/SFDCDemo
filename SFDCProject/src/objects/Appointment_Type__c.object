@@ -44,6 +44,7 @@
         <actionName>View</actionName>
         <type>Default</type>
     </actionOverrides>
+    <allowInChatterGroups>false</allowInChatterGroups>
     <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
     <deploymentStatus>Deployed</deploymentStatus>
     <enableActivities>false</enableActivities>
@@ -61,6 +62,34 @@
         <label>Appointment Type</label>
         <picklist>
             <picklistValues>
+                <fullName>Home Visit</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Home Visit Follow up</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Site Audit</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Site Audit Revisit</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Phone Call</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Phone Call Follow up</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Standard Field Service</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
                 <fullName>1hr Field Service visit</fullName>
                 <default>false</default>
             </picklistValues>
@@ -76,35 +105,7 @@
                 <fullName>8hr Field Service visit</fullName>
                 <default>false</default>
             </picklistValues>
-            <picklistValues>
-                <fullName>Home Visit</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Home Visit Follow up</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Phone Call</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Phone Call Follow up</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Site Audit</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Site Audit Revisit</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Standard Field Service</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>true</sorted>
+            <sorted>false</sorted>
         </picklist>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>

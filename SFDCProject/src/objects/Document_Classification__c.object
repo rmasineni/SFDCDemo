@@ -44,6 +44,7 @@
         <actionName>View</actionName>
         <type>Default</type>
     </actionOverrides>
+    <allowInChatterGroups>false</allowInChatterGroups>
     <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
     <deploymentStatus>Deployed</deploymentStatus>
     <enableActivities>false</enableActivities>
@@ -185,7 +186,6 @@
         <columns>ESignature_allowed__c</columns>
         <columns>NAME</columns>
         <columns>Welcome_email_attachment__c</columns>
-        <columns>category__c</columns>
         <columns>Partner_Welcome_Email_Attachment__c</columns>
         <columns>Source_System__c</columns>
         <columns>Allow_To_Over_Write__c</columns>
@@ -194,6 +194,7 @@
         <columns>OWNER.FIRST_NAME</columns>
         <columns>OWNER.LAST_NAME</columns>
         <columns>Show_On_Mobile__c</columns>
+        <columns>category__c</columns>
         <filterScope>Everything</filterScope>
         <label>All</label>
         <language>en_US</language>

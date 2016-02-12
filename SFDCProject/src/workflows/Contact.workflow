@@ -1,6 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Workflow xmlns="http://soap.sforce.com/2006/04/metadata">
     <alerts>
+        <fullName>Appointment_Confirmation_Home_Visit_Email</fullName>
+        <description>Appointment Confirmation Home Visit Email</description>
+        <protected>false</protected>
+        <recipients>
+            <field>Email</field>
+            <type>email</type>
+        </recipients>
+        <senderAddress>noreply@sunrun.com</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template>unfiled$public/Appointment_Confirmation_Home_Visit</template>
+    </alerts>
+    <alerts>
+        <fullName>Appointment_Confirmation_Phone_Email</fullName>
+        <description>Appointment Confirmation Phone Email</description>
+        <protected>false</protected>
+        <recipients>
+            <field>Email</field>
+            <type>email</type>
+        </recipients>
+        <senderAddress>noreply@sunrun.com</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template>unfiled$public/Appointment_Confirmation_Phone</template>
+    </alerts>
+    <alerts>
         <fullName>CSLB_Application_Received</fullName>
         <description>CSLB Application Received</description>
         <protected>false</protected>
@@ -219,6 +243,42 @@
         <protected>false</protected>
     </flowActions>
     <rules>
+        <fullName>Appointment Confirmation Home Visit</fullName>
+        <actions>
+            <name>Appointment_Confirmation_Home_Visit_Email</name>
+            <type>Alert</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>Contact.Appointment_Scheduled_Time__c</field>
+            <operation>notEqual</operation>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Contact.Appointment_Type__c</field>
+            <operation>equals</operation>
+            <value>Field Consultation</value>
+        </criteriaItems>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>Appointment Confirmation Phone Consultation</fullName>
+        <actions>
+            <name>Appointment_Confirmation_Phone_Email</name>
+            <type>Alert</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>Contact.Appointment_Scheduled_Time__c</field>
+            <operation>notEqual</operation>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Contact.Appointment_Type__c</field>
+            <operation>equals</operation>
+            <value>Phone Consultation</value>
+        </criteriaItems>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
         <fullName>CSLB Application Received Email</fullName>
         <actions>
             <name>CSLB_Application_Received</name>
@@ -249,8 +309,7 @@
             <type>Alert</type>
         </actions>
         <active>false</active>
-        <formula>PRIORVALUE( Proposal_Tool_Access__c )!=null&amp;&amp; ISPICKVAL(Proposal_Tool_Access__c,&apos;&apos;)&amp;&amp;
- NOT(ISPICKVAL(Accreditation_Status__c, &apos;Accredited&apos;))&amp;&amp;NOT(ISPICKVAL(Accreditation_Status__c, &apos;Not a salesperson - accreditation not needed&apos;))</formula>
+        <formula>PRIORVALUE( Proposal_Tool_Access__c )!=null&amp;&amp; ISPICKVAL(Proposal_Tool_Access__c,&apos;&apos;)&amp;&amp;  NOT(ISPICKVAL(Accreditation_Status__c, &apos;Accredited&apos;))&amp;&amp;NOT(ISPICKVAL(Accreditation_Status__c, &apos;Not a salesperson - accreditation not needed&apos;))</formula>
         <triggerType>onAllChanges</triggerType>
     </rules>
     <rules>
@@ -431,8 +490,7 @@
             <type>Alert</type>
         </actions>
         <active>false</active>
-        <formula>AND( 
-NOT(ISPICKVAL(PRIORVALUE(Accreditation_Status__c),&quot;Accredited&quot;)), ISPICKVAL(Accreditation_Status__c,&quot;Accredited&quot;))</formula>
+        <formula>AND(  NOT(ISPICKVAL(PRIORVALUE(Accreditation_Status__c),&quot;Accredited&quot;)), ISPICKVAL(Accreditation_Status__c,&quot;Accredited&quot;))</formula>
         <triggerType>onAllChanges</triggerType>
     </rules>
     <rules>

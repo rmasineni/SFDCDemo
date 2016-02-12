@@ -67,6 +67,7 @@ trigger InstallAudit_AccountAssigned on Install_Audit__c (before update, after i
 			}
 		}
 	
+        system.debug('accountMap>>' + accountMap);
 		List<ServiceContractShare> oldSCObjectsShares = new List<ServiceContractShare>();
 		List<Install_Audit__Share> oldInstallAuditsShares = new List<Install_Audit__Share>();
 		
@@ -113,12 +114,14 @@ trigger InstallAudit_AccountAssigned on Install_Audit__c (before update, after i
 			if(Trigger.isInsert && newAudit.Service_Contract__c != null 
 				&& installPartnerToSC.containsKey(newAudit.Service_Contract__c)){
 				Set<id> installerIds = installPartnerToSC.get(newAudit.Service_Contract__c);
+                    system.debug('installerIdsinstallerIds>' +  installerIds);
 				for(Id installerId: installerIds){
 					if(accountMap != null && accountMap.containsKey(installerId)) {
 						Account accountObj = accountMap.get(installerId);
-	
+						system.debug('accountObj>>' + accountObj);
 						Install_Audit__Share installAuditShare = new Install_Audit__Share();
 						installAuditShare.ParentId = newAudit.Id;
+                        system.debug('accountObj.group_Id__c>>' + accountObj.group_Id__c);
 						installAuditShare.UserOrGroupId = accountObj.group_Id__c;
 						installAuditShare.AccessLevel = 'Edit';             
 						installAuditShares.Add(installAuditShare);						

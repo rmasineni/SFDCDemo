@@ -1,0 +1,11 @@
+<apex:page controller="EmployeeRoleReporting" readOnly="true" >
+
+<apex:form >
+  <apex:pageBlock title="Employee Report">
+    <apex:pageblockButtons location="Top">
+      <apex:commandButton value="Download VPs Reporters" action="{!exportAll}"/>
+    </apex:pageblockButtons>
+  </apex:pageBlock>
+</apex:form>
+
+</apex:page>

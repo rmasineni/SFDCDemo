@@ -15,12 +15,12 @@ public PartnerPortalLanding(){
 }
 @IsTest(SeeAllData=true) 
 public static void testPartnerPortalLanding(){
-	
-	Id userId = PartnerDetail__c.getValues('EDPTestAccount').PartnerUserId__c;
-	User partnerUser = [Select id, name, email from User where Id =:userId];		
-	System.runAs(partnerUser){
-    	PartnerPortalLanding PartnerPortalLandingobj = new PartnerPortalLanding();
-	}
+    
+    Id userId = PartnerDetail__c.getValues('EDPTestAccount').PartnerUserId__c;
+    User partnerUser = [Select id, name, email from User where Id =:userId];        
+    System.runAs(partnerUser){
+        PartnerPortalLanding PartnerPortalLandingobj = new PartnerPortalLanding();
+    }
 }
 
 }

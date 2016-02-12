@@ -92,14 +92,14 @@ public with sharing class Sf {
         }
         return appLogger;
     }private set;}    
-/*
+
     public static NearbyCustomersViewerService nearbyCustomersViewerService {get {
         if (nearbyCustomersViewerService == null) {
             nearbyCustomersViewerService =  (NearbyCustomersViewerService) createInstance('NearbyCustomersViewerServiceImpl');
         }
         return nearbyCustomersViewerService;
     }private set;}    
-*/
+
     public static SyncService syncService {get {
         if (syncService == null) {
             syncService =  (SyncService) createInstance('SyncServiceImpl');

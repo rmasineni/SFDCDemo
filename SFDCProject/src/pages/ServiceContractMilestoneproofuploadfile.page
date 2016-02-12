@@ -1,6 +1,6 @@
 <apex:page controller="ServiceContractMilestoneProof" sidebar="false" id="msProof">
-	<script>
-		function allowUpdateNumPanels()
+    <script>
+        function allowUpdateNumPanels()
         {       
             if('{!bError}' == 'true')
             {            
@@ -154,7 +154,7 @@
                 <apex:pageBlockSectionitem id="item8">
                     <apex:outputLabel value="Meter Test Date"/>
                     <apex:outputPanel >
-						<apex:outputField value="{!scEventObj.Meter_Registration_Date__c}"/>
+                        <apex:outputField value="{!scEventObj.Meter_Registration_Date__c}"/>
                     </apex:outputPanel>
                 </apex:pageBlockSectionitem>
                 <apex:pageBlockSectionitem id="item9">
@@ -173,6 +173,16 @@
                         </apex:selectList>                        
                     </apex:outputPanel>
                 </apex:pageBlockSectionitem>  
+                
+                
+                <apex:pageBlockSectionitem id="item13">
+                    <apex:outputLabel value="Completion of Construction"/>
+                    <apex:outputPanel >
+                        <apex:outputField value="{!SCEventObj.Completion_of_Construction__c}"/>
+                    </apex:outputPanel>
+                </apex:pageBlockSectionitem>
+                
+               
                
                <!-- 
                <apex:pageBlockSectionitem rendered="{!if(scEventObj.SmartTurn_M1_StatusCode__c == 'SUCCESS',false,true)}" id="item10">
@@ -205,7 +215,7 @@
                 
 <!--                <apex:pageBlock mode="maindetail" rendered="{!if(AND(isInstallPartnerVerengo,NULLVALUE(selServiceContractRec.SmartTurn_M2_StatusCode__c,'') <> 'SUCCESS'),true,false)}">-->
                 <!-- 
-				<apex:pageBlock mode="maindetail" rendered="{!if(OR(AND($User.ContactId != '', isInstallPartnerVerengo, selServiceContractRec.Cash_Grant_Eligible__c, NULLVALUE(scEventObj.SmartTurn_M1_StatusCode__c,'') <> 'SUCCESS'),AND($User.ContactId == '', isInstallPartnerVerengo, selServiceContractRec.Cash_Grant_Eligible__c, NULLVALUE(selServiceContractRec.SmartTurn_M2_StatusCode__c,'') <> 'SUCCESS')),true,false)}">                
+                <apex:pageBlock mode="maindetail" rendered="{!if(OR(AND($User.ContactId != '', isInstallPartnerVerengo, selServiceContractRec.Cash_Grant_Eligible__c, NULLVALUE(scEventObj.SmartTurn_M1_StatusCode__c,'') <> 'SUCCESS'),AND($User.ContactId == '', isInstallPartnerVerengo, selServiceContractRec.Cash_Grant_Eligible__c, NULLVALUE(selServiceContractRec.SmartTurn_M2_StatusCode__c,'') <> 'SUCCESS')),true,false)}">                
                   <apex:pageBlockButtons location="bottom">
                     <apex:commandButton rendered="{!if($User.ContactId != '',false,true)}" onclick="allowUpdateNumPanels();" action="{!OnlyUpdatePanelCount}" value="Update # of Panels" style="left:0px;position:relative;" title="Update # of Panels"/>
                   </apex:pageBlockButtons>
@@ -224,7 +234,7 @@
                 <apex:pageBlockSectionitem id="item11" rendered="{!AND(isM3Proof == True,ISNULL(SCEventObj.Partner_PTO_proof_date__c))}" >
                     <apex:outputLabel value="PTO Date"/>
                     <apex:outputPanel >
-						<apex:inputField id="ptoDate" value="{!SCEventObj.Partner_PTO_proof_date__c}" />
+                        <apex:inputField id="ptoDate" value="{!SCEventObj.Partner_PTO_proof_date__c}" />
                     </apex:outputPanel>
                 </apex:pageBlockSectionitem>
                 <apex:pageBlockSectionitem id="item12" rendered="{!AND(isM3Proof == True,NOT(ISNULL(SCEventObj.Partner_PTO_proof_date__c)))}">
@@ -233,7 +243,7 @@
                         <apex:outputField id="ptoDate" value="{!SCEventObj.Partner_PTO_proof_date__c}" />
                     </apex:outputPanel>
                 </apex:pageBlockSectionitem>
-            </apex:pageBlockSection>
+                </apex:pageBlockSection>
             <apex:pageBlockSection id="smartTurn" title="SmartTurn Upload Details" columns="2" rendered="{!AND(isM2Proof == True,selServiceContractRec.Cash_Grant_Eligible__c)}" >
                 <apex:pageBlockSectionitem id="item1">
                     <apex:outputLabel value="Panel Serial Number(s). Enter one serial number per line. Or, copy-paste from a spreadsheet."/>
@@ -249,15 +259,15 @@
                     </apex:outputPanel>
                 </apex:pageBlockSectionitem>              
                  -->
-				 <!-- 
+                 <!-- 
                 <apex:pageBlockSectionitem id="item3">
                     <apex:outputLabel value="SmartTurn Message"/>
                     <apex:outputPanel >
                         <apex:outputField id="m2message" value="{!selServiceContractRec.SmartTurn_Message__c}" />
                     </apex:outputPanel>
-                </apex:pageBlockSectionitem>				 
-				 
-				  -->
+                </apex:pageBlockSectionitem>                 
+                 
+                  -->
 
                 
                 <apex:commandButton disabled="{!NOT(enableSlNoUpload)}" action="{!submitSerialNumber}" value="Submit Serial Number(s)" status="slNoStatus" style="left:100px;position:relative;" title="Click this button to Submit the Serial Numbers to SmartTurn" />

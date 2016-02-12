@@ -59,7 +59,7 @@ public class ProposalUtil {
         if(proposalNmaes.size() > 0 ){
       for(Proposal__c propObj : [Select Id, Opportunity__c, name, Stage__C, cost_stack__c, Total_Solar_Prepay_Required__c, Conditional_Approval__c, ACH_Required__c, Sunrun_Credit_Status__c,Agreement_Type__c,Sales_Partner__c,Finance_Type__c,
                                             Primary_Customer__c,Credit_Status__c, Credit_team_notes__c,  Current_Customer_Credit_Report__c, home_type__c, Customer_Signoff_Date__c,
-                                            Conditional_Approval_Amount__c, Original_Proposal_ID__c, Partner_Financed__c, Original_Proposal_ID__r.Id, 
+                                            Conditional_Approval_Amount__c, Original_Proposal_ID__c, Partner_Financed__c, Original_Proposal_ID__r.Id, Install_Partner__c,
                                             Original_Proposal_ID__r.Conditional_Approval__c, Original_Proposal_ID__r.ACH_Required__c, Name_on_Credit_Verified__c, Date_Time_Ops_Received_Proposal_back__c,
                                             Original_Proposal_ID__r.Primary_Customer__c, Original_Proposal_ID__r.Credit_Status__c, Original_Proposal_ID__r.Name_on_Credit_Verified__c,
                                             Original_Proposal_ID__r.Credit_team_notes__c,Original_Proposal_ID__r.Current_Customer_Credit_Report__c, Original_Proposal_ID__r.Date_Time_Ops_Received_Proposal_back__c,
@@ -1151,8 +1151,8 @@ public class ProposalUtil {
                     if( proposalObj.Stage__c != EDPUtil.SR_OPS_APPROVED ) {
                         proposalObj.SR_Signoff__c = null; 
                         proposalObj.Customer_Signoff_Date__c = null;
-                        //proposalObj.signed__c = false;
-                      }
+                      //  proposalObj.signed__c = false;
+                    }
                     
                     proposalObj.Current_Customer_Credit_Report__c = null;
                     proposalObj.ACH_Required__c = false;              
@@ -1172,9 +1172,6 @@ public class ProposalUtil {
                             proposalObj.stage__c = ProposalUtil.SUNRUN_VOID;
                             proposalObj.Status_Reason__c = voidReason;
                         }
-                    }
-                    if( proposalObj.Stage__c != EDPUtil.SR_OPS_APPROVED && !getIgnoreVoidReasons().contains(ProposalObj.Status_Reason__c)) {
-                        proposalObj.signed__c = false;
                     }
                     modifiedProposals.add(proposalObj);
                 }
@@ -1207,7 +1204,7 @@ public class ProposalUtil {
             if(!proposalIds.isEmpty()){
                 for(Proposal__c proposalObj : [Select Id, Original_Proposal_ID__c, Proposal_Type__c, Current_Customer_Credit_Report__c,
                                                 Proposal_Source__c, stage__c, signed__c, ACH_Required__c, Customer_Signoff_Date__c,
-                                                SR_Signoff__c,Status_Reason__c from Proposal__c where Id in :proposalIds 
+                                                SR_Signoff__c from Proposal__c where Id in :proposalIds 
                                                 and Proposal_Source__c =:blackBirdStr]){
                     proposalMap.put(proposalObj.Id, proposalObj);
                 }
@@ -1491,7 +1488,7 @@ public class ProposalUtil {
         if(contactProposalMap == null){
             contactProposalMap = new Map<Id, Map<Id, Proposal__c> >();
             if(contactIds != null && contactIds.size() > 0){
-                for(Proposal__C proposalObj : ([Select Id, name, Primary_Customer__c, opportunity__c, Proposal_Source__c, stage__c,Status_Reason__c from Proposal__C where 
+                for(Proposal__C proposalObj : ([Select Id, name, Primary_Customer__c, opportunity__c, Proposal_Source__c, stage__c from Proposal__C where 
                                                                         Proposal_Source__c = :proposalSource and Primary_Customer__c in :contactIds 
                                                                         and stage__c not in :stageList ])){
                                                                             
@@ -1513,7 +1510,7 @@ public class ProposalUtil {
         if(optyProposalMapForVoid == null){
             optyProposalMapForVoid = new Map<Id, Map<Id, Proposal__c> >();
             if(opportunityIds != null && opportunityIds.size() > 0){
-                for(Proposal__C proposalObj : ([Select Id, name, Opportunity__c, stage__c, Proposal_Source__c,Status_Reason__c from Proposal__C where 
+                for(Proposal__C proposalObj : ([Select Id, name, Opportunity__c, stage__c, Proposal_Source__c from Proposal__C where 
                                                                         Proposal_Source__c = :proposalSource and Opportunity__c in :opportunityIds 
                                                                         and stage__c not in :stageList])){
                                                                             
@@ -1536,7 +1533,7 @@ public class ProposalUtil {
             if(accountIds != null && accountIds.size() > 0){
                 Map<Id, Set<Id>> accountOptyMap = new Map<Id, Set<Id>>();
                 Set<Id> opportunityIds = new Set<Id>();
-                for(Proposal__C proposalObj : ([Select Id, name, Opportunity__c, stage__c, Proposal_Source__c, Opportunity__r.accountId,Status_Reason__c from Proposal__C where 
+                for(Proposal__C proposalObj : ([Select Id, name, Opportunity__c, stage__c, Proposal_Source__c, Opportunity__r.accountId from Proposal__C where 
                                                     Proposal_Source__c = :proposalSource and Opportunity__r.accountId  in :accountIds and stage__c not in :stageList])){
                                                                             
                     Map<Id,Proposal__C> proposalsMap = accountProposalMapForVoid.containsKey(proposalObj.Opportunity__r.accountId) ? 

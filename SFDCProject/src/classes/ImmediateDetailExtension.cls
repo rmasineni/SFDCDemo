@@ -23,6 +23,14 @@ public with sharing class ImmediateDetailExtension {
     public Set<id> PTOpptyIds=new Set<id>();
     public String SelectedOpportunityId  {get; set;}
     public Integer oppCount {get; set;}
+    
+    // BSKY-7263 - Update Quick design entry criteria variables
+    
+    Public String SiteDesignPriorityNormal='Normal';
+    Public String SiteDesignPriorityHigh='High';
+    Public String QuickDesignAccessManual='Manual';
+    Public String QuickDesignAccessAuto='Auto';
+        
     public ApexPages.StandardSetController setCon {
         get {
             if(setCon == null) {
@@ -183,8 +191,9 @@ public with sharing class ImmediateDetailExtension {
                 selectedDesign ='DesignNewProposal';
             String message=CDYNEStandardButtonCall.callOpportunity(selectedOppId);
             DesignToolWebservice.DesignToolWebserviceResponse responseObj;
-            System.debug(LoggingLevel.INFO,'message : '+message);         
-            if(message!='Success'&&message!='Sales Rep Message'&&message!='Sales Rep Division Message'&&message!='County Message'){
+            System.debug(LoggingLevel.INFO,'message : '+message); 
+            //BSKY-7265        
+            if(message!='Success'&&message!='Sales Rep Message'&&message!='Sales Rep Division Message'&&message!='County Message'&&message!='Design Only Message'){
              displayPopupMessage=message;
              displayPopup=true; 
              return null;   
@@ -259,7 +268,8 @@ public with sharing class ImmediateDetailExtension {
                     displayPopup=true; 
                     //ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,errorMessage));                     
                 }
-                if((message=='Sales Rep Message'||message=='Sales Rep Division Message'&&userinfo.getUserType()!='PowerPartner')||message=='County Message'){
+                //BSKY-7265
+                if((message=='Sales Rep Message'||message=='Sales Rep Division Message'&&userinfo.getUserType()!='PowerPartner')||message=='County Message'||message=='Design Only Message'){
                     String partnerTCAccepted = partnerTandCAccepted ? 'true' : 'false';
                     returnPageVal = 'Opty';                    
                     displaySalesRepUrl=true;                     
@@ -447,7 +457,16 @@ public with sharing class ImmediateDetailExtension {
         soqlQuery += ' from Opportunity ';
     //  soqlQuery += ' where Site_Design_Status__c=:Status';
     //  soqlQuery += ' where (Site_Design_Priority__c!=null AND Site_Design_Requested__c!=null AND Site_Design_Status__c=:Status AND Install_Partner__r.name=:InstallPartner AND Ready_for__c=:ReadyFor) OR(Site_Design_Priority__c!=null AND Ready_for__c=:ReadyForRedesign AND Site_Design_Requested__c!=null )';
-        soqlQuery += ' where (Site_Design_Priority__c!=null AND Site_Design_Requested__c!=null AND Site_Design_Status__c=:Status AND Install_Partner__r.name=:InstallPartner AND Ready_for__c=:ReadyFor) ';
+        //soqlQuery += ' where (Site_Design_Priority__c!=null AND Site_Design_Requested__c!=null AND Site_Design_Status__c=:Status AND Install_Partner__r.name=:InstallPartner AND Ready_for__c=:ReadyFor) ';
+        
+        // BSKY-7263 - Update Quick design entry criteria Logic start
+        
+       soqlQuery += ' where (Site_Design_Requested__c!=null AND Site_Design_Status__c=:Status AND Ready_for__c=:ReadyFor) ';
+        
+        soqlQuery += ' AND ((Site_Design_Priority__c!=null AND (Site_Design_Priority__c=:SiteDesignPriorityNormal OR Site_Design_Priority__c=:SiteDesignPriorityHigh)) AND (Sales_Partner__r.Quick_Design_Access__c!=null AND (Sales_Partner__r.Quick_Design_Access__c=:QuickDesignAccessManual OR Sales_Partner__r.Quick_Design_Access__c=:QuickDesignAccessAuto) ))';
+        
+        // BSKY-7263 - Update Quick design entry criteria Logic stop
+        
         soqlQuery += searchCondition;
   //    soqlQuery += ' ORDER BY LastModifiedDate desc' ;
         soqlQuery += ' ORDER BY Site_Design_Priority__c Desc, Site_Design_Requested__c Asc' ;

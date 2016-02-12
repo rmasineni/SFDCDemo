@@ -79,6 +79,7 @@ public class UnitTest_ServiceContractUtil {
         proposal.Upfront_Payment__c = 4000;
         proposal.Year_1_monthly_payment__c =  5000;
         proposal.Yr_1_Avoided_Power_Cost__c = 6000;
+        proposal.Utility__c='PSE&G';
         proposal.Create_Service_Contract__c = 'Yes';
         List<String> partnerIdSet = new  List<Id>();
         partnerIdSet.addall(salesPartnerIds);

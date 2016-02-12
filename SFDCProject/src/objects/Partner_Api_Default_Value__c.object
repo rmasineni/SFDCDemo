@@ -44,6 +44,7 @@
         <actionName>View</actionName>
         <type>Default</type>
     </actionOverrides>
+    <allowInChatterGroups>false</allowInChatterGroups>
     <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
     <deploymentStatus>Deployed</deploymentStatus>
     <description>This object is used to store all default/overridden field values for various Partner APIs like Lead API, Opty API etc.</description>
@@ -57,19 +58,10 @@
     <enableStreamingApi>true</enableStreamingApi>
     <externalSharingModel>ReadWrite</externalSharingModel>
     <fields>
-        <fullName>Active__c</fullName>
-        <defaultValue>true</defaultValue>
-        <externalId>false</externalId>
-        <inlineHelpText>Indicate if this config is active or not. If not active, then this configuration is not considered for processing. You can use this field to temporarily remove the configuration.</inlineHelpText>
-        <label>Active</label>
-        <trackTrending>false</trackTrending>
-        <type>Checkbox</type>
-    </fields>
-    <fields>
-        <fullName>Api__c</fullName>
+        <fullName>API__c</fullName>
         <externalId>false</externalId>
         <inlineHelpText>This indicates the API endpoint to which this field default is applicable. If this is applicable for all endpoints, then specify All.</inlineHelpText>
-        <label>Api</label>
+        <label>API</label>
         <picklist>
             <picklistValues>
                 <fullName>All</fullName>
@@ -83,6 +75,15 @@
         </picklist>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Active__c</fullName>
+        <defaultValue>true</defaultValue>
+        <externalId>false</externalId>
+        <inlineHelpText>Indicate if this config is active or not. If not active, then this configuration is not considered for processing. You can use this field to temporarily remove the configuration.</inlineHelpText>
+        <label>Active</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
     </fields>
     <fields>
         <fullName>Input_Field__c</fullName>
@@ -147,35 +148,33 @@
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
     </fields>
-    <label>Partner Api Default Value</label>
+    <label>Partner API Default Value</label>
     <listViews>
-        <fullName>Comcast_Lead</fullName>
+        <fullName>All</fullName>
+        <columns>CREATED_DATE</columns>
         <columns>NAME</columns>
         <columns>Active__c</columns>
-        <columns>Api__c</columns>
-        <columns>Input_Field__c</columns>
+        <columns>API__c</columns>
+        <columns>Type__c</columns>
         <columns>Input_Value__c</columns>
+        <columns>Input_Field__c</columns>
         <columns>Output_Field__c</columns>
         <columns>Output_Value__c</columns>
-        <columns>Type__c</columns>
         <filterScope>Everything</filterScope>
         <filters>
             <field>Input_Value__c</field>
             <operation>contains</operation>
-            <value>Comcast</value>
+            <value>RV</value>
         </filters>
-        <label>Comcast_Lead</label>
+        <label>All</label>
         <language>en_US</language>
-        <sharedTo>
-            <allInternalUsers></allInternalUsers>
-        </sharedTo>
     </listViews>
     <listViews>
         <fullName>LGCY_Comcast</fullName>
         <booleanFilter>1</booleanFilter>
         <columns>NAME</columns>
         <columns>Active__c</columns>
-        <columns>Api__c</columns>
+        <columns>API__c</columns>
         <columns>Input_Field__c</columns>
         <columns>Input_Value__c</columns>
         <columns>Output_Field__c</columns>
@@ -191,34 +190,41 @@
         <language>en_US</language>
     </listViews>
     <listViews>
-        <fullName>Sunrun_Comcast_LGCY</fullName>
-        <booleanFilter>1</booleanFilter>
+        <fullName>REPOWER</fullName>
         <columns>NAME</columns>
         <columns>Active__c</columns>
-        <columns>Api__c</columns>
+        <columns>API__c</columns>
         <columns>Input_Field__c</columns>
         <columns>Input_Value__c</columns>
         <columns>Output_Field__c</columns>
-        <columns>CREATEDBY_USER</columns>
-        <columns>CREATED_DATE</columns>
+        <columns>Output_Value__c</columns>
+        <columns>Type__c</columns>
         <filterScope>Everything</filterScope>
         <filters>
-            <field>Input_Value__c</field>
-            <operation>contains</operation>
-            <value>Sunrun,Comcast,LGCY</value>
+            <field>Input_Field__c</field>
+            <operation>equals</operation>
+            <value>externalSource</value>
         </filters>
-        <label>Sunrun / Comcast / LGCY View</label>
+        <filters>
+            <field>Input_Value__c</field>
+            <operation>equals</operation>
+            <value>REPOWER</value>
+        </filters>
+        <label>REPOWER</label>
         <language>en_US</language>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
     </listViews>
     <nameField>
-        <displayFormat>PAD-{0000000000}</displayFormat>
-        <label>Partner Api Default Value#</label>
+        <displayFormat>PAF-{0000000000}</displayFormat>
+        <label>Partner API Default Value#</label>
         <type>AutoNumber</type>
     </nameField>
-    <pluralLabel>Partner Api Default Values</pluralLabel>
+    <pluralLabel>Partner API Default Values</pluralLabel>
     <searchLayouts>
         <customTabListAdditionalFields>Active__c</customTabListAdditionalFields>
-        <customTabListAdditionalFields>Api__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>API__c</customTabListAdditionalFields>
         <customTabListAdditionalFields>Input_Field__c</customTabListAdditionalFields>
         <customTabListAdditionalFields>Input_Value__c</customTabListAdditionalFields>
         <customTabListAdditionalFields>Output_Field__c</customTabListAdditionalFields>
@@ -226,7 +232,7 @@
         <customTabListAdditionalFields>Type__c</customTabListAdditionalFields>
         <customTabListAdditionalFields>UPDATEDBY_USER</customTabListAdditionalFields>
         <searchResultsAdditionalFields>Active__c</searchResultsAdditionalFields>
-        <searchResultsAdditionalFields>Api__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>API__c</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>Input_Field__c</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>Input_Value__c</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>Output_Field__c</searchResultsAdditionalFields>

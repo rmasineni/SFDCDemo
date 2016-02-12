@@ -141,7 +141,7 @@ global class EDPWebServices {
 				alertMessage =  proposalValidationMap.get(proposalId);
 				return alertMessage;
 			}
-			
+		
 			Set<Id> oprtyIds = new Set<Id>();
 			oprtyIds.add(proposalObj.Opportunity__r.Id);
 			Boolean modifiedProposal = false;
@@ -158,7 +158,7 @@ global class EDPWebServices {
 					parentProposalObj = Database.query(proposalSOQLStr);
 				}
 			}
-
+		
 			if(parentProposalObj != null){
 				if(parentProposalObj.SR_Signoff__c != null){
 					proposalObj.SR_Signoff__c = parentProposalObj.SR_Signoff__c;
@@ -173,7 +173,7 @@ global class EDPWebServices {
 				proposalObj.Completed_Approval_Process__c = parentProposalObj.Completed_Approval_Process__c;
 				modifiedProposal = true;
 			}
-			
+				
 			
 			if(proposalValidationMap != null && proposalValidationMap.size() > 0){
 				alertMessage =  proposalValidationMap.get(proposalId);
@@ -192,10 +192,11 @@ global class EDPWebServices {
 			if(modifiedProposal){
 				update proposalObj;
 			}
-				
+						
 		}catch(Exception e){
 			System.debug('System Error: ' + e.getMessage());
-			return CustomErrorMessages.SFDC_SYSTEM_ERROR;
+           	return CustomErrorMessages.SFDC_SYSTEM_ERROR;
+            
 		}
 		return alertMessage;
 	}

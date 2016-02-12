@@ -1,6 +1,6 @@
 public without sharing class CostcoSyncServiceImpl extends BaseClass implements CostcoSyncService {
 
-    public static final String Costco = 'Costco';
+	public static final String Costco = 'Costco';
     public String authToken;
 
     /**
@@ -1004,7 +1004,7 @@ public without sharing class CostcoSyncServiceImpl extends BaseClass implements 
                 Opportunity_External_Id__c, 
                 External_Sync_System__c,
                 External_Sync_Status__c,
-				Has_Appointments__c,
+                Has_Appointments__c,
                 Lead_Created_Date_Time__c,
                 Number_of_Proposals__c,
                 Gross_System_Purchase_Price__c

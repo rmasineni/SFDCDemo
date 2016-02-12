@@ -44,6 +44,7 @@
         <actionName>View</actionName>
         <type>Default</type>
     </actionOverrides>
+    <allowInChatterGroups>false</allowInChatterGroups>
     <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
     <deploymentStatus>Deployed</deploymentStatus>
     <enableActivities>true</enableActivities>
@@ -259,7 +260,6 @@
     </fields>
     <fields>
         <fullName>AutoCap__c</fullName>
-        <description>Added for BSKY-6422 - 11/9/2015</description>
         <externalId>false</externalId>
         <label>AutoCap</label>
         <picklist>
@@ -3725,6 +3725,32 @@ Service_Contract__r.Actual_GAAP_Cost__c,
         <type>Currency</type>
     </fields>
     <fields>
+        <fullName>Random_Cohort__c</fullName>
+        <externalId>false</externalId>
+        <formula>RPAD( 
+TEXT( 
+MOD( 
+value( 
+text(DAY(DATEVALUE(now())))&amp; 
+text(Month(DATEVALUE(now())))&amp; 
+text(Year(DATEVALUE(now()))) &amp; 
+(SUBSTITUTE( 
+SUBSTITUTE( 
+SUBSTITUTE( 
+SUBSTITUTE(TEXT(DateTimeValue(CreatedDate)), &quot;:&quot;, &quot;&quot;), &quot;-&quot;, &quot;&quot;), &quot; &quot;, &quot;&quot;), &quot;Z&quot;, &quot;&quot;)) 
+) 
+,value( Right( Name,5 ))) 
+) 
+,5,Right( Name,1 ))</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Random Cohort</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Rate_Modification_Date__c</fullName>
         <externalId>false</externalId>
         <label>Rate Modification Date</label>
@@ -4040,6 +4066,16 @@ Service_Contract__r.Actual_GAAP_Cost__c,
         <type>Picklist</type>
     </fields>
     <fields>
+        <fullName>Retail_Loan_Draw_Date__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>date the loan is drawn by the retail team</inlineHelpText>
+        <label>Retail Loan Draw Date</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
         <fullName>Return_to_Sales_Date__c</fullName>
         <externalId>false</externalId>
         <label>Return to Sales Date</label>
@@ -4047,6 +4083,15 @@ Service_Contract__r.Actual_GAAP_Cost__c,
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Revised_Customer_SignOff__c</fullName>
+        <externalId>false</externalId>
+        <label>Revised Customer SignOff</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>DateTime</type>
     </fields>
     <fields>
         <fullName>Revised_SR_Signoff__c</fullName>
@@ -4556,6 +4601,16 @@ Service_Contract__r.Actual_GAAP_Cost__c,
         <fullName>SunRun_NTP_Costco_PO_Issued__c</fullName>
         <externalId>false</externalId>
         <label>SunRun NTP Costco PO Issued</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Sunrun_Loan_Draw_Date__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>date the loan is drawn by sunrun accounting team</inlineHelpText>
+        <label>Sunrun Loan Draw Date</label>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
@@ -5285,8 +5340,12 @@ IF(MONTH( Welcome_Call__c ) = 12, &quot;12 - Dec&quot;,null
     <label>Service Contract Event</label>
     <listViews>
         <fullName>All</fullName>
+        <columns>PTO__c</columns>
+        <columns>Random_Cohort__c</columns>
+        <columns>NAME</columns>
         <filterScope>Everything</filterScope>
         <label>All</label>
+        <language>en_US</language>
     </listViews>
     <listViews>
         <fullName>NV_Assigned_BP_Projects</fullName>
@@ -5371,31 +5430,6 @@ IF(MONTH( Welcome_Call__c ) = 12, &quot;12 - Dec&quot;,null
             <operation>equals</operation>
         </filters>
         <label>LOS WFM WIP</label>
-        <language>en_US</language>
-    </listViews>
-    <listViews>
-        <fullName>Santhosh_Test</fullName>
-        <columns>Project_Number__c</columns>
-        <columns>Job_Type__c</columns>
-        <columns>Scheduled_Construction_Start_Date__c</columns>
-        <columns>Project_Status__c</columns>
-        <columns>Project_Manager__c</columns>
-        <columns>Oracle_DC_Watts__c</columns>
-        <columns>Customer_Contact__c</columns>
-        <columns>NAME</columns>
-        <columns>Service_Panel_Upgrade__c</columns>
-        <columns>HOA_Approved__c</columns>
-        <columns>Reroof_under_array__c</columns>
-        <columns>Permit_Jurisdiction_municipality__c</columns>
-        <columns>Permit_Approval_Date__c</columns>
-        <columns>PP_Notes__c</columns>
-        <columns>NTP_Granted__c</columns>
-        <filterScope>Everything</filterScope>
-        <filters>
-            <field>PTO_Recorded_Date__c</field>
-            <operation>notEqual</operation>
-        </filters>
-        <label>Santhosh Test</label>
         <language>en_US</language>
     </listViews>
     <listViews>
@@ -6904,6 +6938,14 @@ Service_Contract__r.Install_Partner__c != &quot;American Solar Electric&quot;
         <errorMessage>M2 cannot be entered unless plans and NTP have been approved</errorMessage>
     </validationRules>
     <validationRules>
+        <fullName>NTP_HOA_Validation</fullName>
+        <active>false</active>
+        <description>As this is an attached home / condo development, HOA and neighbors must grant approval before NTP is granted. Once approval documents are received, fill in the &apos;HOA approved&apos; date</description>
+        <errorConditionFormula>NOT(ISBLANK(NTP_Granted__c)) &amp;&amp; ISBLANK(HOA_Approved__c) &amp;&amp; (ISPICKVAL(HOA__c, &quot;Yes - attached home / single-family condo&quot;))</errorConditionFormula>
+        <errorDisplayField>Adjustment_to_Credit_Memo_Amt__c</errorDisplayField>
+        <errorMessage>As this is an attached home / condo development, HOA and neighbors must grant approval before NTP is granted. Once approval documents are received, fill in the &apos;HOA approved&apos; date</errorMessage>
+    </validationRules>
+    <validationRules>
         <fullName>NTP_HOA_Validation_v2</fullName>
         <active>true</active>
         <errorConditionFormula>AND( 
@@ -7004,7 +7046,7 @@ Service_Contract__r.System_Size_DC__c  &gt;= 15
     </validationRules>
     <validationRules>
         <fullName>NTP_validation_rule_4</fullName>
-        <active>false</active>
+        <active>true</active>
         <description>Rebate Conf Rec&apos;d and Final Rebate Amount must be filled in OR Credit Memo on Rebate must have a value EXCEPT IF State is HI or it is a new home or install partner is Verengo or Solar Universe or Sunrun or Est Rebate Amount is zero</description>
         <errorConditionFormula>NOT (ISBLANK( NTP_Granted__c ) || (NTP_Granted__c &lt;= DATE(2012,11,14)) ) 
 &amp;&amp; 
@@ -7094,16 +7136,19 @@ AND(NOT(ISNULL(Permit_Expected_Date__c) ) , ISNULL(Permit_Submitted_Date__c), IS
     <validationRules>
         <fullName>Rebate_Conf_Num_needed_for_NTP_Granted</fullName>
         <active>true</active>
-        <description>Ref: BSKY-2834 
+        <description>Ref: BSKY-7194
+Rebate Conf Num is not required for IREA Service Contracts
+Ref: BSKY-2834 
 NTP Granted field can not be specified if Rebate Conf Num field is blank.</description>
         <errorConditionFormula>AND 
 ( 
-OR(Service_Contract__r.State__c = &apos;CO&apos;, Service_Contract__r.State__c = &apos;CT&apos;), 
+OR(Service_Contract__r.State__c = &apos;CO&apos;, Service_Contract__r.State__c = &apos;CT&apos;),
+ NOT(ISPICKVAL(Service_Contract__r.Opportunity__r.Utility_Company__c ,&quot;IREA&quot;)), 
 ISBLANK(Rebate_Conf_Num__c), 
 NOT(ISBLANK(NTP_Granted__c)) 
 )</errorConditionFormula>
         <errorDisplayField>Adjustment_to_Credit_Memo_Amt__c</errorDisplayField>
-        <errorMessage>For asset in CO or CT, NTP Granted field can not be specified if Rebate Conf Num field is blank.</errorMessage>
+        <errorMessage>For asset in CO or CT for Utility Company other than &quot;IREA&quot;, NTP Granted field can not be specified if Rebate Conf Num field is blank.</errorMessage>
     </validationRules>
     <validationRules>
         <fullName>Validation_on_Credit_Memo_on_Rebate</fullName>

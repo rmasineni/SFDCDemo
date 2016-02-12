@@ -261,10 +261,16 @@ public class EDPDocumentSettings {
 			}else{
 			    whereCondition = ' AND (Partner_Type__c = null) ';
 			}
-
+			system.debug('proposalState>>' +  proposalState);
+            system.debug('requiredForSubmission>>' +  requiredForSubmission);
+              system.debug('requiredForSubmission>>' +  requiredForSubmission);
 	        if(requiredForSubmission != NULL && requiredForSubmission != '' && requiredForSubmission == MANDATORY_REQUIREMENTS ){
 	            whereCondition += ' AND ( Mandatory_Document__c = true )';   	
 	        }
+          /* else if (requiredForSubmission != NULL && requiredForSubmission != '' && requiredForSubmission == MANDATORY_REQUIREMENTS ){
+                whereCondition += ' AND ( (Mandatory_Document__c = true)  OR  (Document_Name__c in :edputil.REBATE_FORM)) '; 
+                
+            }*/
         
 	        if(categoryType != null && categoryType != '' && categoryType == REQUIRES_SIGNATURE){
 	            whereCondition += (whereCondition == '' ) ? ' where ' : ' AND ';

@@ -17,7 +17,7 @@ public with sharing class LMAuthoritiesButtonProposalExt{
     	unsignedOrVoided=true;
     	String customerAgreementStr = EDPUtil.CUSTOMER_AGREEMENT;
         proposalObj=(Proposal__c)controller.getrecord();
-        proposalObj=[select id,Signed__c,Proposal_Source__c,Stage__c,Last_Customer_Signed_Proposal__c,Status_Reason__c  from proposal__c where id=:controller.getid()];
+        proposalObj=[select id,Signed__c,Proposal_Source__c,Stage__c,Last_Customer_Signed_Proposal__c, Status_Reason__c from proposal__c where id=:controller.getid()];
         List<SR_Attachment__c> srAttachments = [Select Id, active__c, Customer_Signed__c, Wet_Sign_Status__c, proposal__r.Customer_Signoff_Date__c, Document_Source__c,
         										proposal__r.Ultimate_Parent_Proposal__r.Customer_Signoff_Date__c, proposal__r.Change_Order_Information__c
         										from SR_Attachment__c where Proposal__c =:proposalObj.Id and active__c = true 
@@ -57,7 +57,7 @@ public with sharing class LMAuthoritiesButtonProposalExt{
          return null;
      }
      else if(proposalObj.Stage__c==null|| (proposalObj.Stage__c=='Voided' && !proposalUtil.getIgnoreVoidReasons().contains(proposalObj.Status_Reason__c) ) ||proposalObj.Stage__c=='Inactive'||proposalObj.Stage__c=='Replaced'){
-         errorMessage='This is not an active proposal to modify the design documents';
+         errorMessage='This is not an active proposal to modify the design documents--';
          //ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,errorMessage));
          showErrorAlert = true;
          return null;

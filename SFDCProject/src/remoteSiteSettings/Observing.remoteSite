@@ -3,5 +3,5 @@
     <description>https://devapi.sunrunhome.com:8443/contract/services/Contract010000/getObservedSalesForceContactIds</description>
     <disableProtocolSecurity>true</disableProtocolSecurity>
     <isActive>true</isActive>
-    <url>https://prd-api.sunrunhome.com</url>
+    <url>https://devmaj-api.sunrundev.com</url>
 </RemoteSiteSetting>

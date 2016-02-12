@@ -11,6 +11,7 @@ global class RestServiceDto {
 	global static String Unable_To_Process_Request ='UNABLE_TO_PROCESS_REQUEST';
     global static Map<String, Map<String, String>> ApiFieldMappings = new Map<String, Map<String, String>>();
     global static Map<String, List<String>> ApiRequiredFields = new Map<String, List<String>>();
+    global static Map<String, List<String>> ApiSummaryFields = new Map<String, List<String>>();
     
     global static Map<String, Integer> ErrorCodeToHttpCodeMap = new Map<String, Integer> {
         Error_MethodNotAllowed => 405, //Method not allowed
@@ -216,6 +217,25 @@ global class RestServiceDto {
         return requiredFields;
     }
     
+    public static List<String> getSummaryFields(String apiName) {
+    	List<String> summayFields = ApiSummaryFields.get(apiName);
+        if (summayFields == null) {
+            summayFields = new List<String>();
+            List<Partner_Api_Field__c> apiFields = [
+                select 
+                	Rest_Field__c, 
+                	Sfdc_Field__c 
+               	from Partner_Api_Field__c 
+                where Api__c = :apiName and Summary_Field__c = true];
+            for (Partner_Api_Field__c apiField : apiFields) {
+                summayFields.add(apiField.Rest_Field__c);
+            }
+            ApiSummaryFields.put(apiName, summayFields);
+        }
+        
+        return summayFields;
+    }
+
     public static void insertFieldMapping(String apiName, String sobjName, String mapValue) {
        	Map<String, String> mapSetting = new Map<String, String>();
         
@@ -255,4 +275,19 @@ global class RestServiceDto {
         
         update fieldsToUpdate;
     }
+    
+    public static void setSummaryFields(String apiName, List<String> requiredValues) {
+        List<Partner_Api_Field__c> fieldsToUpdate = new List<Partner_Api_Field__c>();
+        Map<String, String> requiredValuesMap = utils.getStringMap(requiredValues);
+        List<Partner_Api_Field__c> fields = [select id, Rest_Field__c from Partner_Api_Field__c where Api__c = :apiName];
+        for (Partner_Api_Field__c field : fields) {
+            if (requiredValuesMap.containsKey(field.Rest_Field__c)) {
+                field.Summary_Field__c = true;
+	            fieldsToUpdate.add(field);
+            }
+        }
+        
+        update fieldsToUpdate;
+    }
+    
 }

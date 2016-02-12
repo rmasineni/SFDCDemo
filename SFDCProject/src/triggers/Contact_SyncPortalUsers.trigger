@@ -1,9 +1,9 @@
 trigger Contact_SyncPortalUsers on Contact (after update, after insert) {
 
-  Boolean skipValidations = False;
-  skipValidations = SkipTriggerValidation.performTriggerValidations();
-  if(skipValidations == false){
-
+   Boolean skipValidations = False;
+   skipValidations = SkipTriggerValidation.performTriggerValidations();
+   if(skipValidations == false){
+    
     Set<Id> accountIds = new Set<Id>();
     Set<Id> contactIdsForLMSInfo = new Set<Id>();
     Set<Id> statusChangeContactIds = new Set<Id>();
@@ -19,36 +19,36 @@ trigger Contact_SyncPortalUsers on Contact (after update, after insert) {
     Set<Id> revokePartnerPortalIDs = new Set<Id>();
     Map<Id, Id> contactPrposalMap = new Map<Id, Id>();
     User loginUser = PRMContactUtil.getLoginUser();
-  Set<Id> modifiedRelatedObjectIds = new Set<Id>();
-  Set<Id> proposalIdsForVoid = new Set<Id>();
-  Map<Id, Map<Id, Proposal__C>> contactProposalmap;
-  Map<Id, Proposal__c> voidedProposals = new Map<Id, Proposal__c>();
-  RecordType residentialRecordType = PRMLibrary.getResidentialContactRecordType();
-  if(Trigger.isUpdate){
-    if(ContactUtil.eligibleForVoid != null && ContactUtil.eligibleForVoid.size() > 0){
-      contactProposalmap = ProposalUtil.getActiveProposalsForContacts(null);
+    Set<Id> modifiedRelatedObjectIds = new Set<Id>();
+    Set<Id> proposalIdsForVoid = new Set<Id>();
+    Map<Id, Map<Id, Proposal__C>> contactProposalmap;
+    Map<Id, Proposal__c> voidedProposals = new Map<Id, Proposal__c>();
+    RecordType residentialRecordType = PRMLibrary.getResidentialContactRecordType();
+    if(Trigger.isUpdate){
+        if(ContactUtil.eligibleForVoid != null && ContactUtil.eligibleForVoid.size() > 0){
+            contactProposalmap = ProposalUtil.getActiveProposalsForContacts(null);
+        }
     }
-  }
 
     for(Contact contactObj: Trigger.new){
         Contact oldContactObj = null;
 
         if(Trigger.isUpdate){
             oldContactObj = Trigger.oldMap.get(contactObj.id);
-      if(ContactUtil.eligibleForVoid.contains(contactObj.Id) 
-        && !ContactUtil.voidedContactIds.contains(contactObj.Id)){
-        ContactUtil.voidedContactIds.add(contactObj.Id);
-        System.debug('Business logic to void the proposals ...' + ContactUtil.voidedContactIds);
-        if(contactProposalmap != null && contactProposalmap.size() > 0){
-          Map<Id, Proposal__C> proposalMap = contactProposalmap.get(contactObj.Id);
-          System.debug('proposalMap: '  + proposalMap);
-          if(proposalMap != null && !proposalMap.isEmpty()){
-            voidedProposals.putAll(proposalMap);
-          }
-        }
-      }
-      
-      if(contactObj.RecordTypeId == residentialRecordType.Id ){
+            if(ContactUtil.eligibleForVoid.contains(contactObj.Id) 
+                && !ContactUtil.voidedContactIds.contains(contactObj.Id)){
+                ContactUtil.voidedContactIds.add(contactObj.Id);
+                System.debug('Business logic to void the proposals ...' + ContactUtil.voidedContactIds);
+                if(contactProposalmap != null && contactProposalmap.size() > 0){
+                    Map<Id, Proposal__C> proposalMap = contactProposalmap.get(contactObj.Id);
+                    System.debug('proposalMap: '  + proposalMap);
+                    if(proposalMap != null && !proposalMap.isEmpty()){
+                        voidedProposals.putAll(proposalMap);
+                    }
+                }
+            }
+            
+            if(contactObj.RecordTypeId == residentialRecordType.Id ){
                 modifiedRelatedObjectIds.add(contactObj.Id);
             }
         }
@@ -97,9 +97,9 @@ trigger Contact_SyncPortalUsers on Contact (after update, after insert) {
                 }else if(contactObj.MailingPostalCode != oldContactObj.MailingPostalCode){
                     contactIds.add(contactObj.Id);
                 }else if(contactObj.timeZoneSidKey__c != oldContactObj.timeZoneSidKey__c){
-          contactIds.add(contactObj.Id);
-        }
-        
+                    contactIds.add(contactObj.Id);
+                }
+                
                 System.debug('contactIds: '  +contactIds );
                 System.debug('contactObj.fax: '  +contactObj.fax );
                 System.debug('oldContactObj.fax: '  +oldContactObj.fax );
@@ -133,18 +133,18 @@ trigger Contact_SyncPortalUsers on Contact (after update, after insert) {
         
      }
 
-  if(voidedProposals != null && !voidedProposals.isEmpty()){
-    Map<Id, String> reasonMap = new Map<Id, String>();
-    for(Proposal__c tempProposalObj : voidedProposals.values()){
-      reasonMap.put(tempProposalObj.Id, ProposalUtil.CONTACT_NAME_CHANGE);
+    if(voidedProposals != null && !voidedProposals.isEmpty()){
+        Map<Id, String> reasonMap = new Map<Id, String>();
+        for(Proposal__c tempProposalObj : voidedProposals.values()){
+            reasonMap.put(tempProposalObj.Id, ProposalUtil.CONTACT_NAME_CHANGE);
+        }
+        ProposalUtil.voidProposals(voidedProposals, reasonMap, true);
     }
-    ProposalUtil.voidProposals(voidedProposals, reasonMap, true);
-  }
-  
-  if(modifiedRelatedObjectIds != null && !modifiedRelatedObjectIds.isEmpty()){
+    
+    if(modifiedRelatedObjectIds != null && !modifiedRelatedObjectIds.isEmpty()){
         ServiceContractUtil.updateServiceContractsForContacts(modifiedRelatedObjectIds, datetime.now());
-  }
-  
+    }
+    
      if(contactIds.size() > 0){
         Set<Id> updateContactIds = new Set<Id>();
         for(User userObj: [Select Id, firstname, title, lastname, email, contactId, MobilePhone,
@@ -165,7 +165,7 @@ trigger Contact_SyncPortalUsers on Contact (after update, after insert) {
                 (userObj.Country != contactObj.MailingCountry) ||
                 (userObj.PostalCode != contactObj.MailingPostalCode) ||
                 (userObj.email != contactObj.email) ||
-        (userObj.TimeZoneSidKey != contactObj.timeZoneSidKey__c))){
+                (userObj.TimeZoneSidKey != contactObj.timeZoneSidKey__c))){
                 updateContactIds.add(contactObj.Id);    
             }
             System.debug('updateContactIds: '  +updateContactIds );
@@ -222,9 +222,9 @@ trigger Contact_SyncPortalUsers on Contact (after update, after insert) {
                 (accountObj.stage__c == 'Confirmed' || accountObj.stage__c.contains('Contract Negotiation'))){
                 
                System.debug('LMSInfoManager.processedContactIds: ' + LMSInfoManager.processedContactIds);
-        if(!LMSInfoManager.processedContactIds.contains(contactObj.Id)){
+                if(!LMSInfoManager.processedContactIds.contains(contactObj.Id)){
                     lmsInfoContactIds.add(contactObj.Id);
-        }
+                }
 
 
                 if((contactObj.sells_sunrun__c == PRMContactUtil.YES && contactObj.active__C == true) 
@@ -253,13 +253,12 @@ trigger Contact_SyncPortalUsers on Contact (after update, after insert) {
         }
         if(lmsInfoContactIds.size() > 0 || deactivateContactIds.size() > 0){
             If(!Test.isRunningTest()){
-              //Code added 3/3/2014---Do not call future class from batch apex---Prashanth Veloori
-              if(system.isFuture() == false && system.isBatch() == false)
+                //Code added 3/3/2014---Do not call future class from batch apex---Prashanth Veloori
+                if(system.isFuture() == false && system.isBatch() == false)
                 NetExamWebServiceAPIHelper7.SendContactFromTrigger(lmsInfoContactIds, activateContactIds, deactivateContactIds);
                 }
         }
         
      }
-
-  }
+   }
 }

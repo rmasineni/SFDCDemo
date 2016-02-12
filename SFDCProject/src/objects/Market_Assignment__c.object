@@ -44,6 +44,7 @@
         <actionName>View</actionName>
         <type>Default</type>
     </actionOverrides>
+    <allowInChatterGroups>false</allowInChatterGroups>
     <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
     <deploymentStatus>Deployed</deploymentStatus>
     <enableActivities>true</enableActivities>
@@ -623,11 +624,6 @@
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>Choptank Electric</fullName>
-                <controllingFieldValues>MD</controllingFieldValues>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
                 <fullName>CO - Xcel Energy (XCEL)</fullName>
                 <controllingFieldValues>CO</controllingFieldValues>
                 <default>false</default>
@@ -850,45 +846,26 @@
     </fields>
     <label>Market Assignment</label>
     <listViews>
-        <fullName>AEE</fullName>
-        <columns>Market__c</columns>
+        <fullName>All</fullName>
         <columns>NAME</columns>
+        <columns>Market__c</columns>
         <columns>Partner__c</columns>
         <columns>Role__c</columns>
-        <columns>Sunrun_Fee_Adder__c</columns>
+        <columns>Start_Date__c</columns>
+        <columns>End_Date__c</columns>
+        <columns>Select_All_Zipcodes__c</columns>
+        <columns>Zipcodes__c</columns>
         <columns>Partner_Performance_Adder__c</columns>
+        <columns>Sunrun_Fee_Adder__c</columns>
         <columns>Sales_Partner_age_distribution__c</columns>
         <columns>Install_Partner_age_distribution__c</columns>
         <filterScope>Everything</filterScope>
         <filters>
             <field>Partner__c</field>
             <operation>contains</operation>
-            <value>AEE Solar</value>
+            <value>Smith Electrical</value>
         </filters>
-        <label>AEE</label>
-        <language>en_US</language>
-        <sharedTo>
-            <allInternalUsers></allInternalUsers>
-        </sharedTo>
-    </listViews>
-    <listViews>
-        <fullName>AGR_Group_Nevada</fullName>
-        <columns>NAME</columns>
-        <columns>Market__c</columns>
-        <columns>Partner__c</columns>
-        <columns>Utility_Company__c</columns>
-        <columns>Role__c</columns>
-        <columns>Territory__c</columns>
-        <columns>Partner_Performance_Adder__c</columns>
-        <columns>Sunrun_Fee_Adder__c</columns>
-        <columns>Sum_of_adders__c</columns>
-        <filterScope>Everything</filterScope>
-        <filters>
-            <field>Partner__c</field>
-            <operation>contains</operation>
-            <value>AGR Group Nevada</value>
-        </filters>
-        <label>AGR Group Nevada</label>
+        <label>Sravanthi Scratch</label>
         <language>en_US</language>
     </listViews>
     <listViews>
@@ -906,10 +883,6 @@
         <columns>Sales_Partner_age_distribution__c</columns>
         <columns>Install_Partner_age_distribution__c</columns>
         <filterScope>Everything</filterScope>
-        <filters>
-            <field>Market__c</field>
-            <operation>notEqual</operation>
-        </filters>
         <label>All Active</label>
         <language>en_US</language>
     </listViews>
@@ -940,6 +913,18 @@
             <value>TODAY</value>
         </filters>
         <label>All Inactive</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>Amer_Elec</fullName>
+        <columns>NAME</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Partner__c</field>
+            <operation>contains</operation>
+            <value>american Electric</value>
+        </filters>
+        <label>Amer-Elec</label>
         <language>en_US</language>
     </listViews>
     <listViews>
@@ -991,33 +976,13 @@
         <filters>
             <field>Partner__c</field>
             <operation>contains</operation>
-            <value>Brightcurrent</value>
+            <value>BrightCurrent</value>
         </filters>
         <label>Brightcurrent</label>
         <language>en_US</language>
         <sharedTo>
             <allInternalUsers></allInternalUsers>
         </sharedTo>
-    </listViews>
-    <listViews>
-        <fullName>Castle_Energy_LLC</fullName>
-        <columns>NAME</columns>
-        <columns>Market__c</columns>
-        <columns>Partner__c</columns>
-        <columns>Utility_Company__c</columns>
-        <columns>Role__c</columns>
-        <columns>Territory__c</columns>
-        <columns>Partner_Performance_Adder__c</columns>
-        <columns>Sunrun_Fee_Adder__c</columns>
-        <columns>Sum_of_adders__c</columns>
-        <filterScope>Everything</filterScope>
-        <filters>
-            <field>Partner__c</field>
-            <operation>equals</operation>
-            <value>&quot;Castle Energy, LLC&quot;</value>
-        </filters>
-        <label>Castle Energy, LLC</label>
-        <language>en_US</language>
     </listViews>
     <listViews>
         <fullName>Clean_Solar</fullName>
@@ -1055,26 +1020,6 @@
         </filters>
         <label>ClearSolar, CA, Inc.</label>
         <language>en_US</language>
-    </listViews>
-    <listViews>
-        <fullName>Clear_Link_Technologies</fullName>
-        <columns>Market__c</columns>
-        <columns>NAME</columns>
-        <columns>Partner__c</columns>
-        <columns>Role__c</columns>
-        <columns>Sales_Partner_age_distribution__c</columns>
-        <columns>Install_Partner_age_distribution__c</columns>
-        <filterScope>Everything</filterScope>
-        <filters>
-            <field>Partner__c</field>
-            <operation>contains</operation>
-            <value>Clear Link Technologies</value>
-        </filters>
-        <label>Clear Link Technologies</label>
-        <language>en_US</language>
-        <sharedTo>
-            <allInternalUsers></allInternalUsers>
-        </sharedTo>
     </listViews>
     <listViews>
         <fullName>DC_solar_integrators</fullName>
@@ -1128,28 +1073,6 @@
         </filters>
         <label>Four Phase Energy Corporation</label>
         <language>en_US</language>
-    </listViews>
-    <listViews>
-        <fullName>Generation_Sun</fullName>
-        <columns>Market__c</columns>
-        <columns>NAME</columns>
-        <columns>Partner__c</columns>
-        <columns>Role__c</columns>
-        <columns>Sunrun_Fee_Adder__c</columns>
-        <columns>Partner_Performance_Adder__c</columns>
-        <columns>Sales_Partner_age_distribution__c</columns>
-        <columns>Install_Partner_age_distribution__c</columns>
-        <filterScope>Everything</filterScope>
-        <filters>
-            <field>Partner__c</field>
-            <operation>contains</operation>
-            <value>Generation Sun</value>
-        </filters>
-        <label>Generation Sun</label>
-        <language>en_US</language>
-        <sharedTo>
-            <allInternalUsers></allInternalUsers>
-        </sharedTo>
     </listViews>
     <listViews>
         <fullName>GoSolarPros</fullName>
@@ -1298,55 +1221,6 @@
         <language>en_US</language>
     </listViews>
     <listViews>
-        <fullName>Integrated_Pricing_Levels</fullName>
-        <booleanFilter>1 AND 2 AND 3 AND 4 AND 5 AND 6 AND 7</booleanFilter>
-        <columns>NAME</columns>
-        <columns>Market__c</columns>
-        <columns>Partner__c</columns>
-        <columns>Partner_Performance_Adder__c</columns>
-        <columns>Sunrun_Fee_Adder__c</columns>
-        <columns>Sum_of_adders__c</columns>
-        <columns>Role__c</columns>
-        <filterScope>Everything</filterScope>
-        <filters>
-            <field>Role__c</field>
-            <operation>equals</operation>
-            <value>Sales;Install</value>
-        </filters>
-        <filters>
-            <field>Partner__c</field>
-            <operation>notContain</operation>
-            <value>Sunrun</value>
-        </filters>
-        <filters>
-            <field>Partner__c</field>
-            <operation>notContain</operation>
-            <value>LGCY</value>
-        </filters>
-        <filters>
-            <field>Partner__c</field>
-            <operation>notContain</operation>
-            <value>Red Ventures</value>
-        </filters>
-        <filters>
-            <field>Partner__c</field>
-            <operation>notContain</operation>
-            <value>Generation Sun</value>
-        </filters>
-        <filters>
-            <field>Partner__c</field>
-            <operation>notContain</operation>
-            <value>Fluent</value>
-        </filters>
-        <filters>
-            <field>Partner_Performance_Adder__c</field>
-            <operation>notEqual</operation>
-            <value>0</value>
-        </filters>
-        <label>Integrated Pricing Levels Non-Zero</label>
-        <language>en_US</language>
-    </listViews>
-    <listViews>
         <fullName>Lgcy_Market_Assignment</fullName>
         <columns>NAME</columns>
         <columns>Market__c</columns>
@@ -1395,62 +1269,6 @@
         <language>en_US</language>
     </listViews>
     <listViews>
-        <fullName>Markets_SCE_Integrated1</fullName>
-        <columns>NAME</columns>
-        <columns>Market__c</columns>
-        <columns>Partner__c</columns>
-        <columns>Partner_Performance_Adder__c</columns>
-        <columns>Sunrun_Fee_Adder__c</columns>
-        <columns>Sum_of_adders__c</columns>
-        <columns>Role__c</columns>
-        <filterScope>Everything</filterScope>
-        <filters>
-            <field>Market__c</field>
-            <operation>contains</operation>
-            <value>MD</value>
-        </filters>
-        <filters>
-            <field>Partner__c</field>
-            <operation>notContain</operation>
-            <value>Sunrun</value>
-        </filters>
-        <filters>
-            <field>Role__c</field>
-            <operation>notEqual</operation>
-            <value>Sales</value>
-        </filters>
-        <label>Markets - MD - Integrated</label>
-        <language>en_US</language>
-    </listViews>
-    <listViews>
-        <fullName>Markets_SCE_Integrated2</fullName>
-        <columns>NAME</columns>
-        <columns>Market__c</columns>
-        <columns>Partner__c</columns>
-        <columns>Partner_Performance_Adder__c</columns>
-        <columns>Sunrun_Fee_Adder__c</columns>
-        <columns>Sum_of_adders__c</columns>
-        <columns>Role__c</columns>
-        <filterScope>Everything</filterScope>
-        <filters>
-            <field>Market__c</field>
-            <operation>contains</operation>
-            <value>LADWP</value>
-        </filters>
-        <filters>
-            <field>Partner__c</field>
-            <operation>notContain</operation>
-            <value>Sunrun</value>
-        </filters>
-        <filters>
-            <field>Role__c</field>
-            <operation>notEqual</operation>
-            <value>Sales</value>
-        </filters>
-        <label>Markets - LADWP - Integrated</label>
-        <language>en_US</language>
-    </listViews>
-    <listViews>
         <fullName>Neil_Kelly_Co</fullName>
         <columns>NAME</columns>
         <columns>Market__c</columns>
@@ -1466,26 +1284,6 @@
         </filters>
         <label>Neil Kelly Co.</label>
         <language>en_US</language>
-    </listViews>
-    <listViews>
-        <fullName>PosiGen</fullName>
-        <columns>Market__c</columns>
-        <columns>NAME</columns>
-        <columns>Partner__c</columns>
-        <columns>Role__c</columns>
-        <columns>Sales_Partner_age_distribution__c</columns>
-        <columns>Install_Partner_age_distribution__c</columns>
-        <filterScope>Everything</filterScope>
-        <filters>
-            <field>Partner__c</field>
-            <operation>contains</operation>
-            <value>PosiGen</value>
-        </filters>
-        <label>PosiGen</label>
-        <language>en_US</language>
-        <sharedTo>
-            <allInternalUsers></allInternalUsers>
-        </sharedTo>
     </listViews>
     <listViews>
         <fullName>Power_Home</fullName>
@@ -1714,28 +1512,6 @@
         <language>en_US</language>
     </listViews>
     <listViews>
-        <fullName>Solar_Universe</fullName>
-        <columns>NAME</columns>
-        <columns>Market__c</columns>
-        <columns>Partner__c</columns>
-        <columns>Role__c</columns>
-        <columns>Utility_Company__c</columns>
-        <columns>Partner_Performance_Adder__c</columns>
-        <columns>Sunrun_Fee_Adder__c</columns>
-        <columns>Territory__c</columns>
-        <filterScope>Everything</filterScope>
-        <filters>
-            <field>Partner__c</field>
-            <operation>contains</operation>
-            <value>Solar Universe</value>
-        </filters>
-        <label>Solar Universe</label>
-        <language>en_US</language>
-        <sharedTo>
-            <allInternalUsers></allInternalUsers>
-        </sharedTo>
-    </listViews>
-    <listViews>
         <fullName>Solarmax_Renewable_Energy_Provider_Inc</fullName>
         <columns>NAME</columns>
         <columns>Market__c</columns>
@@ -1752,26 +1528,6 @@
             <value>Solarmax Renewable Energy Provider</value>
         </filters>
         <label>Solarmax Renewable Energy Provider, Inc.</label>
-        <language>en_US</language>
-    </listViews>
-    <listViews>
-        <fullName>Spectrum_Energy_Inc</fullName>
-        <columns>NAME</columns>
-        <columns>Market__c</columns>
-        <columns>Partner__c</columns>
-        <columns>Utility_Company__c</columns>
-        <columns>Role__c</columns>
-        <columns>Territory__c</columns>
-        <columns>Partner_Performance_Adder__c</columns>
-        <columns>Sunrun_Fee_Adder__c</columns>
-        <columns>Sum_of_adders__c</columns>
-        <filterScope>Everything</filterScope>
-        <filters>
-            <field>Partner__c</field>
-            <operation>contains</operation>
-            <value>Spectrum Energy</value>
-        </filters>
-        <label>Spectrum Energy, Inc.</label>
         <language>en_US</language>
     </listViews>
     <listViews>
@@ -1906,7 +1662,6 @@
         <columns>Partner__c</columns>
         <columns>Start_Date__c</columns>
         <columns>End_Date__c</columns>
-        <columns>Select_All_Zipcodes__c</columns>
         <filterScope>Everything</filterScope>
         <filters>
             <field>Partner__c</field>
@@ -1914,26 +1669,6 @@
             <value>USNO Contracting Services</value>
         </filters>
         <label>USNO Contracting Services, Inc.</label>
-        <language>en_US</language>
-    </listViews>
-    <listViews>
-        <fullName>US_Green_Energy_Technologies</fullName>
-        <columns>NAME</columns>
-        <columns>Market__c</columns>
-        <columns>Partner__c</columns>
-        <columns>Utility_Company__c</columns>
-        <columns>Role__c</columns>
-        <columns>Territory__c</columns>
-        <columns>Partner_Performance_Adder__c</columns>
-        <columns>Sunrun_Fee_Adder__c</columns>
-        <columns>Sum_of_adders__c</columns>
-        <filterScope>Everything</filterScope>
-        <filters>
-            <field>Partner__c</field>
-            <operation>contains</operation>
-            <value>US Green Energy Technologies</value>
-        </filters>
-        <label>US Green Energy Technologies</label>
         <language>en_US</language>
     </listViews>
     <listViews>

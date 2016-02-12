@@ -44,6 +44,7 @@
         <actionName>View</actionName>
         <type>Default</type>
     </actionOverrides>
+    <allowInChatterGroups>false</allowInChatterGroups>
     <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
     <deploymentStatus>Deployed</deploymentStatus>
     <enableActivities>true</enableActivities>
@@ -62,10 +63,6 @@
         <picklist>
             <picklistValues>
                 <fullName>Bakersfield</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>CA Valencia</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
@@ -158,10 +155,6 @@
             </picklistValues>
             <picklistValues>
                 <fullName>South Los Angeles</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Ventura</fullName>
                 <default>false</default>
             </picklistValues>
             <sorted>true</sorted>
@@ -286,18 +279,14 @@
     </fields>
     <label>Appointment Region</label>
     <listViews>
-        <fullName>All1</fullName>
-        <columns>Branch__c</columns>
-        <columns>Sales_Rep__c</columns>
-        <columns>Territory__c</columns>
-        <columns>Region__c</columns>
+        <fullName>All</fullName>
         <columns>NAME</columns>
+        <columns>Region__c</columns>
+        <columns>Priority__c</columns>
+        <columns>Territory__c</columns>
+        <columns>Sales_Rep__c</columns>
+        <columns>Branch__c</columns>
         <filterScope>Everything</filterScope>
-        <filters>
-            <field>Sales_Rep__c</field>
-            <operation>equals</operation>
-            <value>Demetrio Amaya</value>
-        </filters>
         <label>All</label>
         <language>en_US</language>
     </listViews>
@@ -527,9 +516,9 @@
         <columns>CREATEDBY_USER</columns>
         <filterScope>Everything</filterScope>
         <filters>
-            <field>Territory__c</field>
+            <field>Sales_Rep__c</field>
             <operation>contains</operation>
-            <value>[212C]SR- New York Zone C</value>
+            <value>Damon Kronowitz</value>
         </filters>
         <label>QAuser</label>
         <language>en_US</language>
@@ -547,8 +536,8 @@
         <filterScope>Everything</filterScope>
         <filters>
             <field>Territory__c</field>
-            <operation>equals</operation>
-            <value>South Bay 1</value>
+            <operation>contains</operation>
+            <value>San Ramon</value>
         </filters>
         <label>QAuser04</label>
         <language>en_US</language>
@@ -568,57 +557,6 @@
             <value>[103B</value>
         </filters>
         <label>SA - Bakersfield Branch Region</label>
-        <language>en_US</language>
-    </listViews>
-    <listViews>
-        <fullName>SA_Columbia_SC_Branch_Region</fullName>
-        <columns>NAME</columns>
-        <columns>Region__c</columns>
-        <columns>Branch__c</columns>
-        <columns>Territory__c</columns>
-        <columns>Priority__c</columns>
-        <columns>Sales_Rep__c</columns>
-        <filterScope>Everything</filterScope>
-        <filters>
-            <field>Territory__c</field>
-            <operation>startsWith</operation>
-            <value>[861</value>
-        </filters>
-        <label>SA - Columbia, SC Branch Region</label>
-        <language>en_US</language>
-    </listViews>
-    <listViews>
-        <fullName>SA_Denver_Branch_Region</fullName>
-        <columns>NAME</columns>
-        <columns>Region__c</columns>
-        <columns>Territory__c</columns>
-        <columns>Branch__c</columns>
-        <columns>Priority__c</columns>
-        <columns>Sales_Rep__c</columns>
-        <filterScope>Everything</filterScope>
-        <filters>
-            <field>Territory__c</field>
-            <operation>startsWith</operation>
-            <value>[661</value>
-        </filters>
-        <label>SA - Las Vegas Branch Region</label>
-        <language>en_US</language>
-    </listViews>
-    <listViews>
-        <fullName>SA_Denver_Branch_Region1</fullName>
-        <columns>NAME</columns>
-        <columns>Region__c</columns>
-        <columns>Branch__c</columns>
-        <columns>Territory__c</columns>
-        <columns>Priority__c</columns>
-        <columns>Sales_Rep__c</columns>
-        <filterScope>Everything</filterScope>
-        <filters>
-            <field>Territory__c</field>
-            <operation>contains</operation>
-            <value>[501</value>
-        </filters>
-        <label>SA - Denver Branch Region</label>
         <language>en_US</language>
     </listViews>
     <listViews>
@@ -656,244 +594,6 @@
         <language>en_US</language>
     </listViews>
     <listViews>
-        <fullName>SA_Hartford_CT_Branch_Region</fullName>
-        <columns>NAME</columns>
-        <columns>Region__c</columns>
-        <columns>Territory__c</columns>
-        <columns>Branch__c</columns>
-        <columns>Priority__c</columns>
-        <columns>Sales_Rep__c</columns>
-        <filterScope>Everything</filterScope>
-        <filters>
-            <field>Territory__c</field>
-            <operation>startsWith</operation>
-            <value>[231</value>
-        </filters>
-        <label>SA - Hartford, CT  Branch Region</label>
-        <language>en_US</language>
-    </listViews>
-    <listViews>
-        <fullName>SA_Hawaii_Big_Island_Branch_Region</fullName>
-        <columns>NAME</columns>
-        <columns>Region__c</columns>
-        <columns>Territory__c</columns>
-        <columns>Branch__c</columns>
-        <columns>Priority__c</columns>
-        <columns>Sales_Rep__c</columns>
-        <filterScope>Everything</filterScope>
-        <filters>
-            <field>Territory__c</field>
-            <operation>contains</operation>
-            <value>Big Island</value>
-        </filters>
-        <label>SA - Hawaii (Big Island)  Branch Region</label>
-        <language>en_US</language>
-    </listViews>
-    <listViews>
-        <fullName>SA_Hawaii_Oahu_Branch_Region</fullName>
-        <columns>NAME</columns>
-        <columns>Region__c</columns>
-        <columns>Territory__c</columns>
-        <columns>Branch__c</columns>
-        <columns>Priority__c</columns>
-        <columns>Sales_Rep__c</columns>
-        <filterScope>Everything</filterScope>
-        <filters>
-            <field>Territory__c</field>
-            <operation>startsWith</operation>
-            <value>[401]</value>
-        </filters>
-        <label>SA - Hawaii (Oahu)  Branch Region</label>
-        <language>en_US</language>
-    </listViews>
-    <listViews>
-        <fullName>SA_Inland_Empire_Branch_Region</fullName>
-        <columns>NAME</columns>
-        <columns>Region__c</columns>
-        <columns>Territory__c</columns>
-        <columns>Branch__c</columns>
-        <columns>Priority__c</columns>
-        <columns>Sales_Rep__c</columns>
-        <filterScope>Everything</filterScope>
-        <filters>
-            <field>Territory__c</field>
-            <operation>startsWith</operation>
-            <value>[113</value>
-        </filters>
-        <label>SA - Inland Empire Branch Region</label>
-        <language>en_US</language>
-    </listViews>
-    <listViews>
-        <fullName>SA_Long_Island_Branch_Region</fullName>
-        <columns>NAME</columns>
-        <columns>Region__c</columns>
-        <columns>Territory__c</columns>
-        <columns>Branch__c</columns>
-        <columns>Priority__c</columns>
-        <columns>Sales_Rep__c</columns>
-        <filterScope>Everything</filterScope>
-        <filters>
-            <field>Territory__c</field>
-            <operation>startsWith</operation>
-            <value>[211</value>
-        </filters>
-        <label>SA - Long Island Branch Region</label>
-        <language>en_US</language>
-    </listViews>
-    <listViews>
-        <fullName>SA_Maryland_Branch_Region</fullName>
-        <columns>NAME</columns>
-        <columns>Region__c</columns>
-        <columns>Territory__c</columns>
-        <columns>Branch__c</columns>
-        <columns>Priority__c</columns>
-        <columns>Sales_Rep__c</columns>
-        <filterScope>Everything</filterScope>
-        <filters>
-            <field>Territory__c</field>
-            <operation>contains</operation>
-            <value>sr-maryland,sr- maryland</value>
-        </filters>
-        <label>SA - Maryland Branch Region</label>
-        <language>en_US</language>
-    </listViews>
-    <listViews>
-        <fullName>SA_Massachusetts_Branch_Region</fullName>
-        <columns>NAME</columns>
-        <columns>Region__c</columns>
-        <columns>Territory__c</columns>
-        <columns>Branch__c</columns>
-        <columns>Priority__c</columns>
-        <columns>Sales_Rep__c</columns>
-        <filterScope>Everything</filterScope>
-        <filters>
-            <field>Territory__c</field>
-            <operation>startsWith</operation>
-            <value>[221</value>
-        </filters>
-        <label>SA - Massachusetts Branch Region</label>
-        <language>en_US</language>
-    </listViews>
-    <listViews>
-        <fullName>SA_New_Jersey_North_Branch_Region</fullName>
-        <columns>NAME</columns>
-        <columns>Region__c</columns>
-        <columns>Territory__c</columns>
-        <columns>Branch__c</columns>
-        <columns>Priority__c</columns>
-        <columns>Sales_Rep__c</columns>
-        <filterScope>Everything</filterScope>
-        <filters>
-            <field>Territory__c</field>
-            <operation>contains</operation>
-            <value>[201</value>
-        </filters>
-        <label>SA - New Jersey North Branch Region</label>
-        <language>en_US</language>
-    </listViews>
-    <listViews>
-        <fullName>SA_New_Jersey_South_Branch_Region</fullName>
-        <columns>NAME</columns>
-        <columns>Region__c</columns>
-        <columns>Territory__c</columns>
-        <columns>Branch__c</columns>
-        <columns>Priority__c</columns>
-        <columns>Sales_Rep__c</columns>
-        <filterScope>Everything</filterScope>
-        <filters>
-            <field>Territory__c</field>
-            <operation>startsWith</operation>
-            <value>[202</value>
-        </filters>
-        <label>SA - New Jersey South Branch Region</label>
-        <language>en_US</language>
-    </listViews>
-    <listViews>
-        <fullName>SA_North_Los_Angeles_Branch_Region</fullName>
-        <columns>NAME</columns>
-        <columns>Region__c</columns>
-        <columns>Territory__c</columns>
-        <columns>Branch__c</columns>
-        <columns>Priority__c</columns>
-        <columns>Sales_Rep__c</columns>
-        <filterScope>Everything</filterScope>
-        <filters>
-            <field>Territory__c</field>
-            <operation>startsWith</operation>
-            <value>[108</value>
-        </filters>
-        <label>SA - North Los Angeles Branch Region</label>
-        <language>en_US</language>
-    </listViews>
-    <listViews>
-        <fullName>SA_North_San_Diego_Branch_Region</fullName>
-        <columns>NAME</columns>
-        <columns>Region__c</columns>
-        <columns>Territory__c</columns>
-        <columns>Branch__c</columns>
-        <columns>Priority__c</columns>
-        <columns>Sales_Rep__c</columns>
-        <filterScope>Everything</filterScope>
-        <filters>
-            <field>Territory__c</field>
-            <operation>startsWith</operation>
-            <value>[116</value>
-        </filters>
-        <label>SA - North San Diego Branch Region</label>
-        <language>en_US</language>
-    </listViews>
-    <listViews>
-        <fullName>SA_Orange_County_Branch_Region</fullName>
-        <columns>NAME</columns>
-        <columns>Region__c</columns>
-        <columns>Territory__c</columns>
-        <columns>Branch__c</columns>
-        <columns>Priority__c</columns>
-        <columns>Sales_Rep__c</columns>
-        <filterScope>Everything</filterScope>
-        <filters>
-            <field>Territory__c</field>
-            <operation>startsWith</operation>
-            <value>[109</value>
-        </filters>
-        <label>SA - Orange County Branch Region</label>
-        <language>en_US</language>
-    </listViews>
-    <listViews>
-        <fullName>SA_Phoenix_Branch_Region</fullName>
-        <columns>NAME</columns>
-        <columns>Region__c</columns>
-        <columns>Territory__c</columns>
-        <columns>Branch__c</columns>
-        <columns>Priority__c</columns>
-        <columns>Sales_Rep__c</columns>
-        <filterScope>Everything</filterScope>
-        <filters>
-            <field>Territory__c</field>
-            <operation>startsWith</operation>
-            <value>[301,[302</value>
-        </filters>
-        <label>SA - Phoenix Branch Region</label>
-        <language>en_US</language>
-    </listViews>
-    <listViews>
-        <fullName>SA_Portland_Branch_Region</fullName>
-        <columns>NAME</columns>
-        <columns>Region__c</columns>
-        <columns>Territory__c</columns>
-        <columns>Branch__c</columns>
-        <columns>Priority__c</columns>
-        <columns>Sales_Rep__c</columns>
-        <filterScope>Everything</filterScope>
-        <filters>
-            <field>Territory__c</field>
-            <operation>startsWith</operation>
-            <value>[601</value>
-        </filters>
-        <label>SA - Portland Branch Region</label>
-        <language>en_US</language>
-    </listViews>
-    <listViews>
         <fullName>SA_SLO_Branch_Region</fullName>
         <columns>NAME</columns>
         <columns>Region__c</columns>
@@ -911,40 +611,6 @@
         <language>en_US</language>
     </listViews>
     <listViews>
-        <fullName>SA_South_Los_Angeles_Branch_Region</fullName>
-        <columns>NAME</columns>
-        <columns>Region__c</columns>
-        <columns>Territory__c</columns>
-        <columns>Branch__c</columns>
-        <columns>Priority__c</columns>
-        <columns>Sales_Rep__c</columns>
-        <filterScope>Everything</filterScope>
-        <filters>
-            <field>Territory__c</field>
-            <operation>startsWith</operation>
-            <value>[114</value>
-        </filters>
-        <label>SA - South Los Angeles Branch Region</label>
-        <language>en_US</language>
-    </listViews>
-    <listViews>
-        <fullName>SA_South_San_Diego_Branch_Region</fullName>
-        <columns>NAME</columns>
-        <columns>Region__c</columns>
-        <columns>Territory__c</columns>
-        <columns>Branch__c</columns>
-        <columns>Priority__c</columns>
-        <columns>Sales_Rep__c</columns>
-        <filterScope>Everything</filterScope>
-        <filters>
-            <field>Territory__c</field>
-            <operation>startsWith</operation>
-            <value>[104</value>
-        </filters>
-        <label>SA - South San Diego Branch Region</label>
-        <language>en_US</language>
-    </listViews>
-    <listViews>
         <fullName>SA_Stockton_Branch_Region</fullName>
         <columns>NAME</columns>
         <columns>Region__c</columns>
@@ -959,57 +625,6 @@
             <value>Stockton</value>
         </filters>
         <label>SA - Stockton Branch Region</label>
-        <language>en_US</language>
-    </listViews>
-    <listViews>
-        <fullName>SA_Valencia_Branch_Region</fullName>
-        <columns>NAME</columns>
-        <columns>Region__c</columns>
-        <columns>Territory__c</columns>
-        <columns>Branch__c</columns>
-        <columns>Priority__c</columns>
-        <columns>Sales_Rep__c</columns>
-        <filterScope>Everything</filterScope>
-        <filters>
-            <field>Territory__c</field>
-            <operation>contains</operation>
-            <value>[118</value>
-        </filters>
-        <label>SA - Valencia Branch Region</label>
-        <language>en_US</language>
-    </listViews>
-    <listViews>
-        <fullName>SA_Valley_Cottage_Branch_Region</fullName>
-        <columns>NAME</columns>
-        <columns>Region__c</columns>
-        <columns>Branch__c</columns>
-        <columns>Territory__c</columns>
-        <columns>Priority__c</columns>
-        <columns>Sales_Rep__c</columns>
-        <filterScope>Everything</filterScope>
-        <filters>
-            <field>Territory__c</field>
-            <operation>contains</operation>
-            <value>[212</value>
-        </filters>
-        <label>SA - Valley Cottage Branch Region</label>
-        <language>en_US</language>
-    </listViews>
-    <listViews>
-        <fullName>SA_Ventura_Branch_Region</fullName>
-        <columns>NAME</columns>
-        <columns>Region__c</columns>
-        <columns>Territory__c</columns>
-        <columns>Branch__c</columns>
-        <columns>Priority__c</columns>
-        <columns>Sales_Rep__c</columns>
-        <filterScope>Everything</filterScope>
-        <filters>
-            <field>Territory__c</field>
-            <operation>startsWith</operation>
-            <value>[101</value>
-        </filters>
-        <label>SA - Ventura Branch Region</label>
         <language>en_US</language>
     </listViews>
     <listViews>
@@ -1147,7 +762,7 @@
         <filters>
             <field>Territory__c</field>
             <operation>contains</operation>
-            <value>[231c]ct</value>
+            <value>07003</value>
         </filters>
         <label>T07003</label>
         <language>en_US</language>
@@ -1165,10 +780,10 @@
         <filterScope>Everything</filterScope>
         <filters>
             <field>Territory__c</field>
-            <operation>equals</operation>
-            <value>Inland Empire 2b</value>
+            <operation>contains</operation>
+            <value>15020</value>
         </filters>
-        <label>Inland Empire 2b</label>
+        <label>T15020</label>
         <language>en_US</language>
     </listViews>
     <listViews>

@@ -9,7 +9,7 @@
     <headerDocument>Images/PartnerPortal_Header_New.html</headerDocument>
     <isSelfRegistrationActivated>false</isSelfRegistrationActivated>
     <logoDocument>Images/SunrunLogo_V1_2.png</logoDocument>
-    <logoutUrl>http://sunrun.force.com/partner</logoutUrl>
+    <logoutUrl>http://devmaj-sunrun.cs41.force.com/partner</logoutUrl>
     <newPassTemplate>unfiled$public/Partner_Portal_Password_Reset</newPassTemplate>
     <newUserTemplate>unfiled$public/New_User_Partner_Portal</newUserTemplate>
     <showActionConfirmation>false</showActionConfirmation>

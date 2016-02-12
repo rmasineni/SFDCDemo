@@ -19,8 +19,6 @@ trigger trg_proposal_before_insert_update on Proposal__c (before insert, before 
             }else{
                 
                 List<Proposal__c> proposalList = new List<Proposal__c>();
-                List<Proposal__c> posigenproposalList = new List<Proposal__c>();
-                Map<Id,Proposal__c> srOpsReviewd = new Map<Id,Proposal__c>();
                 List<Proposal__c> pendingProposalList = new List<Proposal__c>();
                 Set<Id> userIds = new Set<Id>();
                 Set<String> profileNames = new Set<String>();
@@ -32,21 +30,20 @@ trigger trg_proposal_before_insert_update on Proposal__c (before insert, before 
                 Set<Id> propOriginalIds = new Set<Id>();
                 set<Id> currentPropIds = new set<Id>();
                 Set<Id> opptyIdSet = new Set<Id>();
-                Set<Id> propIdSet = new Set<Id>();
-                
+                Set<Id> propIdSet = new Set<Id>(); 
                 Map<Id, Id> opptyIdPrimConIdsMap = new Map<Id, Id>();     
                 Map<Id, Contact> conIdConRecMap = new Map<Id, Contact>();
                 Set<Id> conIds = new Set<Id>();
                 Contact tempCon;
-                
+
                 for (proposal__c childProp : trigger.new) {
-                    propOriginalIds.add(childProp.Original_Proposal_ID__c);
-                }
+                  propOriginalIds.add(childProp.Original_Proposal_ID__c);
+                 }
                 
                 Map<Id, Proposal__c> ProposalMp =  new Map<Id, Proposal__c>();
                 if(!propOriginalIds.isEmpty()){
                     ProposalMp = ProposalUtil.getOriginalProposalMap(propOriginalIds);
-                    system.debug('>> ProposalMp' + ProposalMp);
+                     system.debug('>> ProposalMp' + ProposalMp);
                 }
                 
                 profileNames.add(EDPUtil.SR_OPS);
@@ -123,36 +120,15 @@ trigger trg_proposal_before_insert_update on Proposal__c (before insert, before 
                 Map<Id, Proposal__c> asBuiltProposalMap = new Map<Id, Proposal__c>();
                 Set<Id> asBuiltOriginalProposalIds = new Set<Id>();
                 
-                //ADDED FOR POSIGEN SALESORG 
-                List<Proposal__c> listProposal =  new List<Proposal__c>();
-                for (Proposal__c proposalObj : Trigger.new) {
-                    system.debug('proposalObjproposalObjproposalObj>>.' +  proposalObj);
-                    if(trigger.isupdate && Trigger.oldMap.get(proposalObj.Id).Stage__c!= proposalObj.Stage__c && proposalObj.Stage__c==edputil.SR_OPS_REVIEWED && !checkRecursive.duplicateProposalIds.contains(proposalObj.id) ){
-                        if(proposalObj.Current_Customer_Credit_Report__c!=null){
-                        checkRecursive.duplicateProposalIds.add(proposalObj.id);
-                        listProposal.add(proposalObj);
-                        }
-                        else{
-                            proposalObj.Stage__c=edputil.SR_OPS_REVIEWED;
-                            // Trigger.newMap.get(proposalObj.id).addError('PosiGen deals requires a Credit Report. Please make sure Credit Report exists.'); 
-                        }
-                    }
-                }
-                if(!listProposal.isEmpty()){
-                    system.debug('listProposal>>.' +  listProposal);
-                    proposalUtil.PosigenCreditProcess(listProposal);
-                }
-                    
-                               
                 Set<Id> ccIds = new Set<Id>();                  
                 for(Proposal__c proposalObj: Trigger.new) {
                     Proposal__c oldProposalObj;
-                    
+
                     if(trigger.isInsert && proposalObj.Proposal_Source__c != null && proposalObj.Proposal_Source__c == ProposalUtil.BLACK_BIRD 
-                       && (proposalObj.cost_stack__c == 'MULTI_PARTY' || proposalObj.cost_stack__c == 'INTEGRATED_SUNRUN_SELLS')){
-                           proposalObj.Design_Plan_Review_Required__c = true;
-                       }
-                    
+                      && (proposalObj.cost_stack__c == 'MULTI_PARTY' || proposalObj.cost_stack__c == 'INTEGRATED_SUNRUN_SELLS')){
+                      proposalObj.Design_Plan_Review_Required__c = true;
+                    }
+
                     if(trigger.isUpdate){
                         oldProposalObj = Trigger.oldMap.get(proposalObj.Id);
                     }
@@ -160,10 +136,10 @@ trigger trg_proposal_before_insert_update on Proposal__c (before insert, before 
                         ProposalUtil.updateUsageValues(proposalObj, oldProposalObj);
                     }
                     
-                      /*  if(trigger.isUpdate && Trigger.oldMap.get(proposalObj.Id).stage__c == EDPUtil.EXPIRED 
-                    && (Trigger.newMap.get(proposalObj.Id).stage__c != Trigger.oldMap.get(proposalObj.Id).stage__c)){
-                    Trigger.newMap.get(proposalObj.id).addError(CustomErrorMessages.EXPIRED_ERROR);       
-                    } */
+                 /*  if(trigger.isUpdate && Trigger.oldMap.get(proposalObj.Id).stage__c == EDPUtil.EXPIRED 
+                       && (Trigger.newMap.get(proposalObj.Id).stage__c != Trigger.oldMap.get(proposalObj.Id).stage__c)){
+                               Trigger.newMap.get(proposalObj.id).addError(CustomErrorMessages.EXPIRED_ERROR);       
+                           } */
                     
                     if(trigger.isUpdate && Trigger.oldMap.get(proposalObj.Id).stage__c == EDPUtil.INACTIVE 
                        && (Trigger.newMap.get(proposalObj.Id).stage__c != Trigger.oldMap.get(proposalObj.Id).stage__c)
@@ -171,32 +147,32 @@ trigger trg_proposal_before_insert_update on Proposal__c (before insert, before 
                            Trigger.newMap.get(proposalObj.Id).stage__c != EDPUtil.Voided && Trigger.newMap.get(proposalObj.Id).stage__c != EDPUtil.EXPIRED) ){
                                Trigger.newMap.get(proposalObj.id).addError(SunrunErrorMessage.getErrorMessage('ERROR_000005').error_message__c); 
                            }
-                    
-                    // BSKY-4879 - Code to Evaluate the logic for Last Customer Signed Proposal ID  
+                  
+                     // BSKY-4879 - Code to Evaluate the logic for Last Customer Signed Proposal ID  
                     if(( Trigger.isUpdate   || Trigger.isInsert) 
-                       && (proposalObj.Proposal_Source__c == ProposalUtil.BLACK_BIRD ) ){
-                           if (proposalObj.Change_Order_Information__c != null &&
-                               ( proposalObj.Change_Order_Information__c.containsIgnoreCase('FULL_PROPOSAL') || 
-                                (proposalObj.Change_Order_Information__c.containsIgnoreCase('CUSTOMER_CHANGE_ORDER') && proposalObj.Signed__c ) )) {
+                                            && (proposalObj.Proposal_Source__c == ProposalUtil.BLACK_BIRD ) ){
+                        if (proposalObj.Change_Order_Information__c != null &&
+                            ( proposalObj.Change_Order_Information__c.containsIgnoreCase('FULL_PROPOSAL') || 
+                             (proposalObj.Change_Order_Information__c.containsIgnoreCase('CUSTOMER_CHANGE_ORDER') && proposalObj.Signed__c ) )) {
                                     proposalObj.Last_Customer_Signed_Proposal__c = null; 
-                                    
-                                    System.debug('> Customer Facing ProPosal');  
+                               
+                                  System.debug('> Customer Facing ProPosal');  
+                             }
+                         
+                         else if(proposalMP.size() > 0 && proposalObj.Original_proposal_ID__c != Null ) {
+                            
+                             if(ProposalMp.get(proposalObj.Original_proposal_ID__c).Last_Customer_Signed_Proposal__c != Null  ) {
+                                 proposalObj.Last_Customer_Signed_Proposal__c = ProposalMp.get(proposalObj.Original_proposal_ID__c).Last_Customer_Signed_Proposal__c;
+                                
+                             }  
+                             else if(proposalObj.Original_Proposal_ID__c != null && ProposalMp.get(proposalObj.Original_proposal_ID__c).Signed__c ){
+                                 proposalObj.Last_Customer_Signed_Proposal__c = proposalObj.Original_Proposal_ID__c;
+                                
                                 }
-                           
-                           else if(proposalMP.size() > 0 && proposalObj.Original_proposal_ID__c != Null ) {
-                               
-                               if(ProposalMp.get(proposalObj.Original_proposal_ID__c).Last_Customer_Signed_Proposal__c != Null  ) {
-                                   proposalObj.Last_Customer_Signed_Proposal__c = ProposalMp.get(proposalObj.Original_proposal_ID__c).Last_Customer_Signed_Proposal__c;
-                                   
-                               }  
-                               else if(proposalObj.Original_Proposal_ID__c != null && ProposalMp.get(proposalObj.Original_proposal_ID__c).Signed__c ){
-                                   proposalObj.Last_Customer_Signed_Proposal__c = proposalObj.Original_Proposal_ID__c;
-                                   
-                               }
-                               
-                               System.debug('> Last_Customer_Signed_Proposal__c' +proposalObj.Last_Customer_Signed_Proposal__c);
-                           }
-                       }
+                             
+                             System.debug('> Last_Customer_Signed_Proposal__c' +proposalObj.Last_Customer_Signed_Proposal__c);
+                            }
+                        }
                     // End Code for BSKY-4879 
                     
                     if(trigger.isUpdate && proposalObj.Stage__c == EDPUtil.SR_OPS_APPROVED
@@ -216,7 +192,7 @@ trigger trg_proposal_before_insert_update on Proposal__c (before insert, before 
                             }
                         }
                     
-                    if(trigger.isInsert){
+                     if(trigger.isInsert){
                         if (String.isNotBlank(proposalObj.Primary_Title__c) && String.isNotBlank(proposalObj.Secondary_Title__c)){
                             proposalObj.Name_on_title__c = proposalObj.Primary_Title__c +','+' '+ proposalObj.Secondary_Title__c;
                             system.debug('CombinedTitle  '+proposalObj.Name_on_title__c);
@@ -248,18 +224,14 @@ trigger trg_proposal_before_insert_update on Proposal__c (before insert, before 
                            proposalObj.SR_Ops_Actions__c = '';
                        }
                     
-                    
-                    
-                    Opportunity optyObj = optyMap.get(proposalObj.Opportunity__c);  
-                   
-                     if(trigger.isupdate && proposalObj.SR_Finance_Action__c != null 
-                       && proposalObj.SR_Finance_Action__c != '' && optyObj.SalesOrganizationName__c!=Label.PosigenID
+                    if(trigger.isupdate && proposalObj.SR_Finance_Action__c != null 
+                       && proposalObj.SR_Finance_Action__c != '' 
                        && Trigger.oldMap.get(proposalObj.Id).SR_Finance_Action__c != proposalObj.SR_Finance_Action__c){
                            proposalObj.Stage__c = proposalObj.SR_Finance_Action__c;
-                             proposalObj.SR_Finance_Action__c = '';
+                           proposalObj.SR_Finance_Action__c = '';
                        }
                     
-                    
+                    Opportunity optyObj = optyMap.get(proposalObj.Opportunity__c);  
                     //if(trigger.isUpdate && proposalStagesForVerification.contains(proposalObj.Stage__c)
                     //   && (Trigger.oldMap.get(proposalObj.Id).Stage__c != proposalObj.Stage__c 
                     //       || Trigger.oldMap.get(proposalObj.Id).System_Size_Validated_by_SR_Ops__c != proposalObj.System_Size_Validated_by_SR_Ops__c
@@ -272,8 +244,8 @@ trigger trg_proposal_before_insert_update on Proposal__c (before insert, before 
                     //              }
                     //       } 
                     
-                    
-                    
+                      
+                  
                     if(trigger.isUpdate && proposalStagesForVerification.contains(proposalObj.Stage__c)
                        && (proposalObj.Proposal_Scenarios__c != ProposalUtil.AS_BUILT)
                        && (Trigger.oldMap.get(proposalObj.Id).Stage__c != proposalObj.Stage__c
@@ -331,14 +303,13 @@ trigger trg_proposal_before_insert_update on Proposal__c (before insert, before 
                             proposalList.add(proposalObj);
                             userIds.add(proposalObj.assigne__c);
                         }
-                    
+
                     //BSKY-5975
                     if(trigger.isUpdate && proposalObj.Stage__c == EDPUtil.SR_OPS_APPROVED &&
                        proposalObj.Stage__c != Trigger.oldMap.get(proposalObj.Id).Stage__c){
-                           propIdSet.add(proposalObj.id);    
-                       }
-                    
-                                   
+                        propIdSet.add(proposalObj.id);    
+                    }
+                       
                     if(trigger.isUpdate 
                        && (proposalObj.Stage__c != Trigger.oldMap.get(proposalObj.Id).Stage__c )
                        && (Trigger.oldMap.get(proposalObj.Id).Stage__c != EDPUtil.REPLACED_BY)
@@ -401,7 +372,6 @@ trigger trg_proposal_before_insert_update on Proposal__c (before insert, before 
                                         || (proposalObj.Agreement_Type__c == ProposalUtil.CUST_OWNED_FULL_UPFRONT || proposalObj.Agreement_Type__c == ProposalUtil.CUST_OWNED_BANK_FINANCE)){
                                             partnerFinancedProposalMap.put(proposalObj.Id, proposalObj);    
                                         }
-                                    
                                      
                                  }else if((trigger.isUpdate && proposalObj.Stage__c != Trigger.oldMap.get(proposalObj.Id).Stage__c
                                            && proposalObj.Stage__c == EDPUtil.CREDIT_APPROVED)){
@@ -471,17 +441,17 @@ trigger trg_proposal_before_insert_update on Proposal__c (before insert, before 
                         if(proposalObj.Proposal_Source__c != null && proposalObj.Proposal_Source__c == ProposalUtil.BLACK_BIRD
                            && proposalObj.Original_Proposal_ID__c != Null){
                                if(proposalMP.size() > 0 && !proposalMP.isEmpty() && proposalMp.containsKey(proposalObj.Original_Proposal_ID__c) )  
-                               {
-                                   proposalObj.CVV__c =  ProposalMp.get(proposalObj.Original_proposal_ID__c).cvv__c;
-                                   proposalObj.Shopping_Pass__c = ProposalMp.get(proposalObj.Original_proposal_ID__c).Shopping_Pass__c;
+                                   {
+                                      proposalObj.CVV__c =  ProposalMp.get(proposalObj.Original_proposal_ID__c).cvv__c;
+                                      proposalObj.Shopping_Pass__c = ProposalMp.get(proposalObj.Original_proposal_ID__c).Shopping_Pass__c;
                                    
                                }
-                               
-                           }
+                           
+                        }
                     }
                 }
-                
-                // BSKY-5252 - Code to add the proposal ACH required  from parent proposal
+               
+               // BSKY-5252 - Code to add the proposal ACH required  from parent proposal
                 
                 if(trigger.isInsert ) {
                     Set<Id> pIds = new Set<Id>();   
@@ -491,44 +461,33 @@ trigger trg_proposal_before_insert_update on Proposal__c (before insert, before 
                             pIds.add(currentProposal.Original_Proposal_ID__c);
                     }
                     
-                    Map<Id, proposal__c> parentProp = new Map<Id, proposal__c>( [select Id, ACH_Required__c,ACH_Fee_Eligible__c,ExpirationDate__c,Max_Loan_Amount__c,cvv__c,Shopping_Pass__c,
-                                                                                 Shopping_Pass_Expiration_Month__c,Shopping_Pass_Expiration_Year__c  from proposal__c where id in :pids]  );
-                    system.debug('parentProp>>>' +  parentProp);
+                    Map<Id, proposal__c> parentProp = new Map<Id, proposal__c>( [select Id, ACH_Required__c,ACH_Fee_Eligible__c,ExpirationDate__c,
+                                                                                 Max_Loan_Amount__c,cvv__c,Shopping_Pass__c,Revised_Customer_Signoff_Date__c
+                                                                                  from proposal__c where id in :pids]  );
                     if (parentProp.size() > 0){
-                        
+    
                         for (Proposal__c proposalObj : Trigger.new) {
-                            system.debug('proposalObj>>' +  proposalObj);
                             if(proposalObj.Proposal_Source__c != null && proposalObj.Proposal_Source__c == ProposalUtil.BLACK_BIRD
                                && proposalObj.Original_Proposal_ID__c != Null && proposalObj.Agreement_Type__c == ProposalUtil.CUST_OWNED_BANK_FINANCE){
                                    if(parentProp.size() > 0 && !parentProp.isEmpty() && parentProp.containsKey(proposalObj.Original_Proposal_ID__c)  )  
                                    {
-                                       system.debug('proposalObj>>>>s' +  proposalObj);
-                                       
-                                       // Added for Change Order (COBF)
-                                       
                                        proposalObj.CVV__c =  parentProp.get(proposalObj.Original_proposal_ID__c).cvv__c;
                                        proposalObj.Shopping_Pass__c = parentProp.get(proposalObj.Original_proposal_ID__c).Shopping_Pass__c;
                                        proposalObj.ExpirationDate__c = parentProp.get(proposalObj.Original_proposal_ID__c).ExpirationDate__c;
                                        proposalObj.Max_Loan_Amount__c = parentProp.get(proposalObj.Original_proposal_ID__c).Max_Loan_Amount__c;
-                                       proposalObj.Shopping_Pass_Expiration_Month__c = parentProp.get(proposalObj.Original_proposal_ID__c).Shopping_Pass_Expiration_Month__c;
-                                       proposalObj.Shopping_Pass_Expiration_Year__c = parentProp.get(proposalObj.Original_proposal_ID__c).Shopping_Pass_Expiration_Year__c;
-                                       system.debug('proposalObj>>>>s' +  proposalObj);
                                    }
                                }
-                       /*  if(proposalObj.Proposal_Source__c != null && proposalObj.Proposal_Source__c == ProposalUtil.BLACK_BIRD
+                           if(proposalObj.Proposal_Source__c != null && proposalObj.Proposal_Source__c == ProposalUtil.BLACK_BIRD
                                && proposalObj.Original_Proposal_ID__c != Null && proposalObj.Revised_Customer_SignOff_Date__c == null &&  
                                !proposalObj.Change_Order_Information__c.containsIgnoreCase('FULL_PROPOSAL') && 
                                !proposalObj.Change_Order_Information__c.containsIgnoreCase('CUSTOMER_CHANGE_ORDER') ){
                                    if(parentProp.size() > 0 && !parentProp.isEmpty() && parentProp.containsKey(proposalObj.Original_Proposal_ID__c)  
                                       &&  parentProp.get(proposalObj.Original_Proposal_ID__c).Revised_Customer_Signoff_Date__c != null )  
                                    {
-                                       system.debug('parentProp>>>' +  parentProp);
-                                       system.debug('parentProp.get(proposalObj.Original_proposal_ID__c).Revised_Customer_Signoff_Date__c' +  parentProp.get(proposalObj.Original_proposal_ID__c).Revised_Customer_Signoff_Date__c);
-                                       
                                        proposalObj.Revised_Customer_Signoff_Date__c =  parentProp.get(proposalObj.Original_proposal_ID__c).Revised_Customer_Signoff_Date__c;
                                        
                                    }
-                               } */
+                               } 
                             
                         }
                         for (Proposal__c proposalObj : Trigger.new) {
@@ -542,42 +501,42 @@ trigger trg_proposal_before_insert_update on Proposal__c (before insert, before 
                     } 
                 } 
                 // End Code For BSKY-5252 
+
                 
-                
-                //BSKY-5975 - Check if the Primary Contact associated with the Costco Oppty has Member ID 
+               //BSKY-5975 - Check if the Primary Contact associated with the Costco Oppty has Member ID 
                 if(!propIdSet.isEmpty()){
-                    Map<Id, Proposal__c> propIdPropObjMap =  new Map<Id, proposal__c>( [select Id, Opportunity__c, Opportunity__r.Purchased_Thru__c from proposal__c where id in :propIdSet]  );
-                    for(Proposal__c prop: propIdPropObjMap.values()){
-                        System.debug('prop.Opportunity__r.Purchased_Thru__c : ' +prop.Opportunity__r.Purchased_Thru__c);
-                        if(prop.Opportunity__r.Purchased_Thru__c == 'Costco'){
-                            opptyIdSet.add(prop.Opportunity__c);   
-                        }
-                    }
-                    
-                    if(!opptyIdSet.isEmpty()){
-                        opptyIdPrimConIdsMap = EDPUtil.getPrimaryContactIdForOpportunities(opptyIdSet);  
-                        for(Id conId: opptyIdPrimConIdsMap.values()){
-                            conIds.add(conId); 
-                        } 
-                        System.debug('conIds : ' +conIds);
-                        if(!conIds.isEmpty()){
-                            conIdConRecMap = ContactUtil.getContactRec(conIds);   
-                            System.debug('opptyIdPrimConIdsMap : '+opptyIdPrimConIdsMap);
-                            System.debug('conIdConRecMap :' +conIdConRecMap);
-                            for(Id propId: propIdPropObjMap.keySet()){
-                                //tempProp = propIdPropObjMap.get(propId);
-                                System.debug('prop.Opportunity__c :' +propIdPropObjMap.get(propId).Opportunity__c);
-                                tempCon = conIdConRecMap.get(opptyIdPrimConIdsMap.get(propIdPropObjMap.get(propId).Opportunity__c)); 
-                                if(tempCon !=null && tempCon.Member_ID__c == null){
-                                    Trigger.newMap.get(propIdPropObjMap.get(propId).id).addError('Member ID is required on Primary Contact');
-                                }  
-                            } 
-                        }    
-                    }        
+                  Map<Id, Proposal__c> propIdPropObjMap =  new Map<Id, proposal__c>( [select Id, Opportunity__c, Opportunity__r.Purchased_Thru__c from proposal__c where id in :propIdSet]  );
+                  for(Proposal__c prop: propIdPropObjMap.values()){
+                     System.debug('prop.Opportunity__r.Purchased_Thru__c : ' +prop.Opportunity__r.Purchased_Thru__c);
+                     if(prop.Opportunity__r.Purchased_Thru__c == 'Costco'){
+                        opptyIdSet.add(prop.Opportunity__c);   
+                     }
+                  }
+                   
+                  if(!opptyIdSet.isEmpty()){
+                      opptyIdPrimConIdsMap = EDPUtil.getPrimaryContactIdForOpportunities(opptyIdSet);  
+                      for(Id conId: opptyIdPrimConIdsMap.values()){
+                           conIds.add(conId); 
+                      } 
+                      System.debug('conIds : ' +conIds);
+                      if(!conIds.isEmpty()){
+                          conIdConRecMap = ContactUtil.getContactRec(conIds);   
+                          System.debug('opptyIdPrimConIdsMap : '+opptyIdPrimConIdsMap);
+                          System.debug('conIdConRecMap :' +conIdConRecMap);
+                          for(Id propId: propIdPropObjMap.keySet()){
+                             //tempProp = propIdPropObjMap.get(propId);
+                              System.debug('prop.Opportunity__c :' +propIdPropObjMap.get(propId).Opportunity__c);
+                              tempCon = conIdConRecMap.get(opptyIdPrimConIdsMap.get(propIdPropObjMap.get(propId).Opportunity__c)); 
+                              if(tempCon !=null && tempCon.Member_ID__c == null){
+                                Trigger.newMap.get(propIdPropObjMap.get(propId).id).addError('Member ID is required on Primary Contact');
+                              }  
+                          } 
+                      }    
+                  }        
                 }
-                
-                //BSKY-5975 - End       
-                
+               
+               //BSKY-5975 - End       
+
                 if(!asBuiltProposalMap.isEmpty()){
                     ProposalUtil.processAsBuiltProposals(asBuiltProposalMap, asBuiltOriginalProposalIds);
                 }
@@ -688,9 +647,13 @@ trigger trg_proposal_before_insert_update on Proposal__c (before insert, before 
                                ccIds.add(proposalObj.Current_Customer_Credit_Report__c);
                            }
                     }
-           
                 }
-        
+                
+                Map<Id, Customer_Credit__c> ccMap = new Map<Id, Customer_Credit__c>();
+                if(ccIds != null && !ccIds.isEmpty()){
+                    ccMap = new Map<Id, Customer_Credit__c>([Select Id, Sunrun_Credit_Status__c, Date_Pulled__c, name, Approved_By__c, SRH_Customer_Number__c, Approved__c, Date_Approved__c from Customer_Credit__c where Id in :ccIds]);
+                }
+                
                 if(existingProposalIds.size() > 0){
                     Map<Id, Proposal__C> existingProposals = EDPUtil.getProposals(existingProposalIds);
                     for(Proposal__c proposalObj: changeOrders.values()){
@@ -704,13 +667,6 @@ trigger trg_proposal_before_insert_update on Proposal__c (before insert, before 
                            }
                     }
                 }
-      
-                
-                Map<Id, Customer_Credit__c> ccMap = new Map<Id, Customer_Credit__c>();
-                if(ccIds != null && !ccIds.isEmpty()){
-                    ccMap = new Map<Id, Customer_Credit__c>([Select Id, Sunrun_Credit_Status__c, Date_Pulled__c, name, Approved_By__c, SRH_Customer_Number__c, Approved__c, Date_Approved__c from Customer_Credit__c where Id in :ccIds]);
-                }
-                
                 
                 if(proposalIdsForReview.size() > 0){
                     Map<Id, String> proposalValidationMap = new Map<Id, String>();
@@ -728,62 +684,66 @@ trigger trg_proposal_before_insert_update on Proposal__c (before insert, before 
                 Id loginUserId = UserInfo.getUserId();
                 Map<Id, Id> optyContactMap = new Map<Id, Id>();
                 Map<Id, Customer_Credit__c> modifiedCustomerCredits = new  Map<Id, Customer_Credit__c>();
-                
-               
                 for(Proposal__c proposalObj: proposalsForApprovalReview.values()){
                     Proposal__c tempOldProposalObj = Trigger.oldMap.get(proposalObj.Id);
-                    
                     if(trigger.isUpdate && tempOldProposalObj.Stage__c != proposalObj.Stage__c 
-                       && proposalObj.Stage__c == EDPUtil.SR_OPS_REVIEWED ){
+                       && proposalObj.Stage__c == EDPUtil.SR_OPS_REVIEWED){
                            
                            Boolean modifyAssigne = true;               
                            String approver1 = Label.Proposal_Approver_1;
                            String approver2 = Label.Proposal_Approver_2;
                            
-                                                           /*
-                                //Following approval process has been removed from the business logic.
-                                if(proposalObj.Completed_Approval_Process__c != true && (proposalObj.System_Size_Validated_by_SR_Ops__c == true)){
-                                if(loginUser.Proposal_Approval_Limit__c == null ||
-                                loginUser.Proposal_Approval_Limit__c < proposalObj.System_Size_STC_DC__c){      
-                                modifyAssigne = false;
-                                Boolean createApprovalProcess = false;
-                                Id approverId;
-                                if((proposalObj.System_Size_Validated_by_SR_Ops__c == true) 
-                                && (proposalObj.System_Size_STC_DC__c != null && proposalObj.System_Size_STC_DC__c  >= proposalLimit2)){
-                                proposalObj.Stage__c = (loginUserId != approver2) ? EDPUtil.SR_OPS_RECEIVED : EDPUtil.SR_OPS_REVIEWED;
-                                createApprovalProcess = (loginUserId != approver2) ? true : false;
-                                approverId = approver2;
-                                }else if(proposalObj.System_Size_Validated_by_SR_Ops__c == true){
-                                proposalObj.Stage__c = ((loginUserId != approver1) && (loginUserId != approver2)) ? EDPUtil.SR_OPS_RECEIVED : EDPUtil.SR_OPS_REVIEWED;
-                                createApprovalProcess = ((loginUserId != approver1) && (loginUserId != approver2)) ? true : false;
-                                approverId = approver1;
-                                }
-                                
-                                if(createApprovalProcess == true && !ProposalUtil.inProgressProposalIds.contains(proposalObj.Id)){
-                                Approval.ProcessSubmitRequest req = new Approval.ProcessSubmitRequest();
-                                req.setComments('Please Approve the proposal');
-                                req.setObjectId(proposalObj.Id); 
-                                if(approverId != null){
-                                req.setNextApproverIds(new Id[] {approverId});
-                                }
-                                try{
-                                Approval.ProcessResult result = Approval.process(req);
-                                }catch(Exception e){
-                                Trigger.newMap.get(proposalObj.id).addError('' + e.getMessage());
-                                }
-                                ProposalUtil.inProgressProposalIds.add(proposalObj.Id);
-                                }
-                                }
-                                }
-                                */
-                                                           
+                           /*
+                           //Following approval process has been removed from the business logic.
+                           if(proposalObj.Completed_Approval_Process__c != true && (proposalObj.System_Size_Validated_by_SR_Ops__c == true)){
+                               if(loginUser.Proposal_Approval_Limit__c == null ||
+                                  loginUser.Proposal_Approval_Limit__c < proposalObj.System_Size_STC_DC__c){      
+                                      modifyAssigne = false;
+                                      Boolean createApprovalProcess = false;
+                                      Id approverId;
+                                      if((proposalObj.System_Size_Validated_by_SR_Ops__c == true) 
+                                         && (proposalObj.System_Size_STC_DC__c != null && proposalObj.System_Size_STC_DC__c  >= proposalLimit2)){
+                                             proposalObj.Stage__c = (loginUserId != approver2) ? EDPUtil.SR_OPS_RECEIVED : EDPUtil.SR_OPS_REVIEWED;
+                                             createApprovalProcess = (loginUserId != approver2) ? true : false;
+                                             approverId = approver2;
+                                         }else if(proposalObj.System_Size_Validated_by_SR_Ops__c == true){
+                                             proposalObj.Stage__c = ((loginUserId != approver1) && (loginUserId != approver2)) ? EDPUtil.SR_OPS_RECEIVED : EDPUtil.SR_OPS_REVIEWED;
+                                             createApprovalProcess = ((loginUserId != approver1) && (loginUserId != approver2)) ? true : false;
+                                             approverId = approver1;
+                                         }
+                                      
+                                      if(createApprovalProcess == true && !ProposalUtil.inProgressProposalIds.contains(proposalObj.Id)){
+                                          Approval.ProcessSubmitRequest req = new Approval.ProcessSubmitRequest();
+                                          req.setComments('Please Approve the proposal');
+                                          req.setObjectId(proposalObj.Id); 
+                                          if(approverId != null){
+                                              req.setNextApproverIds(new Id[] {approverId});
+                                          }
+                                          try{
+                                              Approval.ProcessResult result = Approval.process(req);
+                                          }catch(Exception e){
+                                              Trigger.newMap.get(proposalObj.id).addError('' + e.getMessage());
+                                          }
+                                          ProposalUtil.inProgressProposalIds.add(proposalObj.Id);
+                                      }
+                                  }
+                           }
+                           */
+                           
                            //TODO:
                            //Credit automation ...
-                           
                            Opportunity tempOpty = optyMap.get(proposalObj.Opportunity__c);
-                           if( proposalObj.Current_Customer_Credit_Report__c != null && 
+                           System.debug('proposalObj.Current_Customer_Credit_Report__c: ' + proposalObj.Current_Customer_Credit_Report__c);
+                           System.debug('ccMap: ' + ccMap);
+                           System.debug('proposalObj.Sunrun_Credit_Status__c: ' + proposalObj.Sunrun_Credit_Status__c);
+                           System.debug('proposalObj.Partner_Financed__: ' + proposalObj.Partner_Financed__c);
+                           System.debug('tempOpty.Payment_Mode__c: ' + tempOpty.Payment_Mode__c);
+                           System.debug('proposalObj.Agreement_Type__c: ' +  proposalObj.Agreement_Type__c);
+                           System.debug('proposalObj.Name_on_Credit_Verified__c: ' +  proposalObj.Name_on_Credit_Verified__c);
+                           
+                           if(proposalObj.Current_Customer_Credit_Report__c != null && 
                               ccMap.containsKey(proposalObj.Current_Customer_Credit_Report__c) &&
-                              (EDPUtil.CREDIT_APPROVED != proposalObj.Sunrun_Credit_Status__c) && (proposalObj.Sales_Partner__c!= Label.PosigenID)&&
+                              (EDPUtil.CREDIT_APPROVED != proposalObj.Sunrun_Credit_Status__c) &&
                               (((proposalObj.Agreement_Type__c != null && proposalObj.Agreement_Type__c.contains('Prepaid')) 
                                 && (proposalObj.Partner_Financed__c == true || proposalObj.Total_Solar_Prepay_Required__c == true))
                                || proposalObj.Agreement_Type__c == ProposalUtil.CUST_OWNED_FULL_UPFRONT 
@@ -791,7 +751,6 @@ trigger trg_proposal_before_insert_update on Proposal__c (before insert, before 
                                || proposalObj.Name_on_Credit_Verified__c == true)){
                                    
                                    Customer_Credit__c ccObj = ccMap.get(proposalObj.Current_Customer_Credit_Report__c) ;
-                                   system.debug('not posigen>>>');
                                    System.debug('ccObj.Date_Pulled__c: ' + ccObj.Date_Pulled__c);
                                    ProposalUtil.updateProposalAndCustomerCreditForCreditAutomation(tempOpty, proposalObj, ccObj, 
                                                                                                    defaultOpsUser, modifiedCustomerCredits,optyContactMap);
@@ -807,7 +766,6 @@ trigger trg_proposal_before_insert_update on Proposal__c (before insert, before 
                 }
                 
                 if(modifiedCustomerCredits != null && !modifiedCustomerCredits.isEmpty()){
-                    system.debug('modifiedCustomerCredits>>' + modifiedCustomerCredits);
                     update modifiedCustomerCredits.values();
                 }
                 
@@ -816,15 +774,15 @@ trigger trg_proposal_before_insert_update on Proposal__c (before insert, before 
                     if(trigger.isUpdate && tempOldProposalObj.Stage__c != proposalObj.Stage__c 
                        && proposalObj.Stage__c == EDPUtil.SR_OPS_APPROVED){
                            
-                           //Customer Sign Off Date is should not NULL; 
-                           if(!Test.isRunningTest() && proposalObj.Customer_SignOff_Date__c == null){
-                               Trigger.newMap.get(proposalObj.id).addError(CustomErrorMessages.INVALID_CUSTOMER_SIGNOFF_DATE);                          
-                           }
+                            //Customer Sign Off Date is should not NULL; 
+                            if(!Test.isRunningTest() && proposalObj.Customer_SignOff_Date__c == null){
+                                Trigger.newMap.get(proposalObj.id).addError(CustomErrorMessages.INVALID_CUSTOMER_SIGNOFF_DATE);                          
+                            }
                            if(proposalObj.SR_Signoff__c == null){
                                proposalObj.SR_Signoff__c = datetime.now();
                            }
                            
-                           if((proposalObj.name.indexOf('H') == 0 ) || (proposalObj.name.indexOf('C') == 0 ) || ((proposalObj.name.indexOf('P') == 0 ) && proposalObj.Revised_Proposal__c == true)){
+                           if((proposalObj.name.indexOf('H') == 0 ) || (proposalObj.name.indexOf('C') == 0 ) || ((proposalObj.name.indexOf('P') == 0 ) )){
                                proposalObj.Revised_SR_Signoff__c = datetime.now();
                            }
                        }
@@ -833,11 +791,8 @@ trigger trg_proposal_before_insert_update on Proposal__c (before insert, before 
                 if(optyContactMap != null && !optyContactMap.isEmpty()){
                     ProposalUtil.createCustomerCreditContactRole(optyContactMap);
                 }  
-            
-            
-            }
-            
-            Sf.costcoSyncService.handleProposalsTrigger();      
+            }  
+         Sf.costcoSyncService.handleProposalsTrigger();      
         }catch(Exception expObj){
             System.debug('Before Trigger: Proposal Exception: ' + expObj);
             for(Proposal__c proposalObj : Trigger.new){

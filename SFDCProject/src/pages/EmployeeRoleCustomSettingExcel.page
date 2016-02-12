@@ -1,0 +1,65 @@
+<apex:page controller="EmployeeRoleCustomSetting" readOnly="true" action="{!buildOrgChart}" contentType="txt/xml#EmployeeReportCustomSetting.xls">
+
+
+<apex:outputText value="{!xlsHeader}"/>
+<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet"
+ xmlns:o="urn:schemas-microsoft-com:office:office"
+ xmlns:x="urn:schemas-microsoft-com:office:excel"
+ xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet"
+ xmlns:html="http://www.w3.org/TR/REC-html40">
+ <Styles>
+ <Style ss:ID="s1">
+ <Alignment/>
+ <Borders/>
+ <Font ss:Bold="1"/>
+ <Interior/>
+ <NumberFormat/>
+ <Protection/>
+ </Style>
+ </Styles>
+ <apex:repeat value="{!grandListMap}"  var="x">
+ <Worksheet ss:Name='{!username[x]}'>
+ <Table x:FullColumns="1" x:FullRows="1">
+ <Column ss:Width="170"/>
+ <Row>
+ <Cell ss:StyleID="s1"><Data ss:Type="String" >User Id</Data></Cell>
+ <Cell ss:StyleID="s1"><Data ss:Type="String" >Email</Data></Cell>
+ </Row>
+ <apex:repeat value="{!grandListMap[x]}" var="u1">
+ <Row>
+ <Cell><Data ss:Type="String">{!u1.id}</Data></Cell>
+ <Cell><Data ss:Type="String">{!u1.Email}</Data></Cell>
+ </Row>
+ </apex:repeat>
+ </Table>
+ </Worksheet>
+ </apex:repeat>
+ 
+ <Worksheet ss:Name="Summary">
+
+ <Table x:FullColumns="1" x:FullRows="1">
+ <Column ss:Width="170"/>
+ 
+ <Row>
+ <Cell ss:StyleID="s1"><Data ss:Type="String" >Executive</Data></Cell>
+ <Cell ss:StyleID="s1"><Data ss:Type="String" >Used Licenses</Data></Cell>
+ </Row>
+ 
+ <apex:repeat value="{!summaryMap}" var="u3">
+ <apex:repeat value="{!username[u3]}" var="u2">
+ <Row>
+ <Cell ss:StyleID="s1"><Data ss:Type="String" >{!u2}</Data></Cell>
+ <Cell ss:StyleID="s1"><Data ss:Type="Number" >{!summaryMap[u3]}</Data></Cell>
+ </Row> 
+ 
+ </apex:repeat>
+ </apex:repeat>
+ </Table>
+
+ </Worksheet>
+ 
+ 
+</Workbook>
+
+
+</apex:page>

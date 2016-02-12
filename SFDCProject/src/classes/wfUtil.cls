@@ -142,11 +142,11 @@ public class wfUtil {
                         Display_Field6__c, Display_Field7__c, Display_Field8__c, Display_Field9__c, Display_Field10__c,
                         Display_Object6__c, Display_Object7__c, Display_Object8__c,  Display_Object9__c, Display_Object10__c,
                         Object_Name6__c, Object_Name7__c, Object_Name8__c,  Object_Name9__c, Object_Name10__c,
-                        Field_Name6__c, Field_Name7__c, Field_Name8__c, Field_Name9__c, Field_Name10__c,Task_Number__c,  
+                        Field_Name6__c, Field_Name7__c, Field_Name8__c, Field_Name9__c, Field_Name10__c,  
                         Display_Field16__c, Display_Field17__c, Display_Field18__c, Display_Field19__c, Display_Field20__c,
                         Display_Object16__c, Display_Object17__c, Display_Object18__c,  Display_Object19__c, Display_Object20__c,
                         Object_Name16__c, Object_Name17__c, Object_Name18__c,  Object_Name19__c, Object_Name20__c,
-                        Field_Name16__c, Field_Name17__c, Field_Name18__c, Field_Name19__c, Field_Name20__c, 
+                        Field_Name16__c, Field_Name17__c, Field_Name18__c, Field_Name19__c, Field_Name20__c, Task_Number__c,
                         Req1__c,Req2__c,Req3__c, Req4__c, Req5__c, Req11__c,Req12__c,Req13__c, Req14__c, Req15__c, 
                         Req6__c,Req7__c,Req8__c, Req9__c, Req10__c,Req16__c,Req17__c,Req18__c, Req19__c, Req20__c,Reason__c,Sub_Reason__c
                         from Task__C where Id in :taskIds order by Task_Number__c]);
@@ -281,11 +281,13 @@ public class wfUtil {
             String tempTaskName = taskNameMap.get(keyString);
             String action = actionMap.get(keyString);
             Project__c projectObj;
-            for(Project__c tempProjectObj : [Select Id, Status__c, Opportunity__c, Proposal__c, Service_Contract__c from Project__c where Opportunity__c =:optyId
+            for(Project__c tempProjectObj : [Select Id, Status__c, Opportunity__c, Proposal__c, Service_Contract__c  from Project__c where Opportunity__c =:optyId
                                             and status__c in :tempActiveStages]){
                 projectIds.add(tempProjectObj.Id);
                 projectObj = tempProjectObj;
             }
+            
+            
             if(projectObj == null)
                 return;
                 
@@ -301,7 +303,7 @@ public class wfUtil {
 
                 System.debug('taskName: ' + taskName);
                 System.debug('taskObj.status__c: ' + taskObj.status__c);                
-                if((taskName == Label.WFM_Approve_Post_Site_Audit_Change_Order )
+                if((taskName == Label.WFM_Approve_Post_Site_Audit_Change_Order  )
                     && taskObj.status__c == wfUtil.COMPLETE
                     && taskObj.phase__r.project__r.Service_Contract__c != null
                     && tempTaskName == Label.WFM_Submit_Proposal){
@@ -326,7 +328,7 @@ public class wfUtil {
                     }
                 }else{
                     System.debug('Complete --2');
-                    if(taskObj.status__c != wfUtil.COMPLETE && taskObj.name == taskName && action != RE_OPEN){
+                    if(taskObj.status__c != wfUtil.COMPLETE && taskObj.name == taskName && action != RE_OPEN ){
                         taskObj.status__c = wfUtil.COMPLETE;
                         taskObj.End_date__c = Datetime.now();
                         modifiedTasks.put(taskObj.Id, taskObj);

@@ -108,7 +108,7 @@ global class FileUploaderComponentOpp {
                                                                'Savings Estimator'=>docClassificationMap.get('Savings Estimator'),
                                                                'Meter Serial Number'=>docClassificationMap.get('Meter Serial Number')
                                                               };
-        }             
+        }            
         return docClassificationMap;
     }
     

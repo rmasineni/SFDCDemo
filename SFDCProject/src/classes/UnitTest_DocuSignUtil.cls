@@ -295,7 +295,42 @@ public class UnitTest_DocuSignUtil {
 	}
 
 
+    
+    public static testmethod void testgetDocuSignTagInformation(){
+        
+        String documentType = EDPUtil.NEM_FORM ; 
+		String agreementType = 'Customer Owned - Bank Financed';
+		String UtilityName = 'PSE&G';
+		String State = 'NJ';
+        test.startTest();
+        Map<String,Map<String,String>> mpa= DocuSignUtil.getDocuSignTagInformation(documentType,  UtilityName, agreementType,   State);
+        test.stopTest();
+    }
+    
+   /* public static testmethod void initializeDocusignTagsCustomerAndPartner()
+    {
+         DocuSignUtil.CustomerAgreementEnvelop envelopObj = new DocuSignUtil.CustomerAgreementEnvelop();   
+          List<In_Person_Recipient__c> inpersonRecipientList = new List<In_Person_Recipient__c>();
+          SR_Attachment__c srAttachment = DocuSignUtil.getSRAttachment(proposalId, documentType);
+           List<Document> documents = new List<Document>();
+             Document documentObj = new Document();
+             documentObj.documentId = documentId;
+             documentObj.name = srAttachment.Document_Name__c;
+             documents.add(documentObj);
+             envelopObj.documents = documents;
+             
+             Integer recipientId = 1;
+             Integer routingOrder = 1;
+             RecipientList recipientListObj = new RecipientList();
+             envelopObj.recipients = recipientListObj;
+             List<Signer> signers = new List<Signer>();
+             envelopObj.recipients.signers = signers;
+        initializeDocusignTagsCustomerAndPartner (true, 1  , 1,'','TestSunrunName','TestSunrunName@yopmail.com',
+           srAttachment,  contactObj, envelopObj,  inpersonRecipientList,'PSE&G','Primary');
+    }*/
 	
+    
+    
 	/*
 	public static testmethod void testDocuSignUtilMethods(){
 		String baseURL = DocuSignUtil.getBaseURL();

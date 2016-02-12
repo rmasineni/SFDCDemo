@@ -1,0 +1,50 @@
+<apex:page controller="Employee_MasterUtil" showHeader="true" title="Employee Master">
+<apex:form >
+    
+    <!--The below page block is used to Truncate all data of Employee Master and to Deactivate the Terminated User -->
+    <apex:pageblock id="newPageBlock" title="Employee Master">
+            
+            <apex:pageBlockButtons location="top" title="Employee Master">
+                <!-- Buttons to Truncate all data of Employee Master-->
+                <apex:commandButton value="Truncate all data" action="{!truncateAllData}" status="trucData" rerender="trucData,myButtons" immediate="true"/>
+                <!-- Buttons to Deactivate the Terminated User-->
+                <apex:commandButton value="Deactivate Terminated User" action="{!deactivateUser}" status="decUser" rerender="decUser,myButtons" immediate="true"/>
+                <!-- Action status for Deactivate the Terminated User button-->
+                <apex:actionStatus id="decUser" startText="Deactivation of users in progress..." stopText=""/>
+                <!-- Action status for the Truncate all data of Employee Master button-->
+                <apex:actionStatus id="trucData" startText="Truncating the data in progress..." stopText=""/>
+            </apex:pageBlockButtons>
+            
+            <!--To display the error messages -->
+            <apex:pageMessages ></apex:pageMessages>
+    
+    </apex:pageblock>
+    
+    <!-- The below page block is used to display the the Employee Master records -->
+    <apex:pageblock >
+        
+        <!-- Panel to display the list of Employee master records -->
+        <apex:outputPanel id="myButtons">
+        
+            <!--Block to iterate the Employee master records-->
+            <apex:repeat value="{!thousandBlocks}" var="block">
+                
+                <apex:pageBlockTable value="{!block.employeeMaster}" var="a">
+                    <apex:column value="{!a.EMAIL_ADDRESS__c}"/>
+                    <apex:column value="{!a.Deactivate__c}"/>
+                    <apex:facet name="footer">Showing Page # {!pageNumber} of {!totalPages}</apex:facet>                     
+                </apex:pageBlockTable>
+                
+            </apex:repeat>
+                 
+            <!-- Pagination Buttons--> 
+            <apex:commandButton action="{!Beginning}" title="Beginning" value="<<" disabled="{!disablePrevious}" reRender="myButtons"/>
+            <apex:commandButton action="{!Previous}" title="Previous" value="<" disabled="{!disablePrevious}" reRender="myButtons"/>        
+            <apex:commandButton action="{!Next}" title="Next" value=">" disabled="{!disableNext}" reRender="myButtons"/>
+        
+        </apex:outputPanel>
+    
+    </apex:pageblock>
+
+</apex:form>
+</apex:page>

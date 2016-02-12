@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
     <customSettingsType>List</customSettingsType>
-    <customSettingsVisibility>Public</customSettingsVisibility>
     <description>Min/Max on PreBought Panels by Panel Type
 
 Panel Type	Min	Max	Comments
@@ -56,4 +55,5 @@ YL240P-29b</description>
         <unique>false</unique>
     </fields>
     <label>PreBoughtPanelLimits</label>
+    <visibility>Public</visibility>
 </CustomObject>

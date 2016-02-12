@@ -161,6 +161,69 @@ trigger trg_sc_pro_after_insert_update on ServiceContract (after insert, after u
             ServiceContractMilestoneProof.updateMileStoneDetails(serviceContractList,MapServiceContract,trigger.oldMap); 
         }
     }
+   
+    // Create or Update Investor Partner Records
+    
+    If(Trigger.isUpdate  ){
+        
+        map<id,string>  TEFundNameToSCMap = new map< id, string>();
+        map<id,Investor_Mapping__c > scInvMap = new map<id,Investor_Mapping__c>();
+        set<id> scIdsforRelPrtnrDel = new set<id>();
+        set<serviceContract> scSet = new set<serviceContract>();
+        // map<id, Service_Contract_Partner_Rel__c> relatedPartnersToDelete = new map<id,Service_Contract_Partner_Rel__c> ();
+        list<Service_Contract_Partner_Rel__c> relatedPartnersToDelete = new list<Service_Contract_Partner_Rel__c> ();
+        map<id,Investor_Mapping__c> noInvMapScids = new map<id,Investor_Mapping__c>();
+        for(ServiceContract SC: Trigger.new){
+            if(SC.TE_Fund_Name__c  != null){
+                if(Trigger.newMap.get(sc.Id).TE_Fund_Name__c != Trigger.oldmap.get(sc.Id).TE_Fund_Name__c  && !checkRecursive.investorScIds.Contains(sc.id)  ){
+                    
+                    TEFundNameToSCMap.put( SC.id,SC.TE_Fund_Name__c);
+                    checkRecursive.investorScIds.add(sc.id);
+                    scSet.add(sc);    
+                }
+            }
+            // To Delete SC related Partner when TE FUnd Name is Null
+            else if (SC.TE_Fund_Name__c == null && Trigger.newMap.get(sc.Id).TE_Fund_Name__c != Trigger.oldmap.get(sc.Id).TE_Fund_Name__c ) {
+                scIdsforRelPrtnrDel.add(sc.id);
+            }
+        }
+        if(TEFundNameToSCMap.size() > 0 && !TEFundNameToSCMap.isEmpty()  ){
+            for ( Investor_Mapping__c inv : [Select ID, name__c, TE_Fund_Name__c, Borrower__c from Investor_Mapping__c where TE_Fund_Name__c in :TEFundNameToSCMap.values() ]){
+               
+                for(id scids: TEFundNameToSCMap.keySet()  ) {           
+                    if(TEFundNameToSCMap.get(scids).equalsignorecase(inv.TE_Fund_Name__c) && !scInvMap.containsKey(scids) ){
+                    	scInvMap.put(scids , inv );
+                        if(noInvMapScids.containsKey(scids) ){
+                            noInvMapScids.remove(scids);
+                        }
+                            
+                    } else if(!scInvMap.containskey(scids)  ){
+                         noInvMapScids.put(scids,inv);
+                    }
+                } 
+            }
+        }
+		System.debug('>> scInvMap ' +scInvMap + scInvMap == null);
+		system.debug('>> noInvMapScids ' + noInvMapScids);   
+        system.debug('>> TEFundNameToSCMap ' + TEFundNameToSCMap); 
+        if(scInvMap.size() > 0 && !scInvMap.isEmpty() ) {
+           
+            scInvestorPartnerUtil.createInvestorPartner(scInvMap ,scSet );
+        }
+        if(TEFundNameToSCMap.size() >0 && !TEFundNameToSCMap.isEmpty() && ( scInvMap == null || scinvMap.isEmpty()) ){
+            scIdsforRelPrtnrDel.addAll(TEFundNameToSCMap.keySet());
+        }
+        else if(noInvMapScids.size()>0 && !noInvMapScids.isEmpty()  ){
+           
+               scIdsforRelPrtnrDel.addAll(noInvMapScids.keySet()); 
+        }
+        
+        if (scIdsforRelPrtnrDel.size()>0 && !scIdsforRelPrtnrDel.isEmpty() ){
+            system.debug('scIdsforRelPartnerDeletion' + scIdsforRelPrtnrDel );
+            scInvestorPartnerUtil.deleteSCInvestorPartners(scIdsforRelPrtnrDel);
+        }
+        
+    }
     
     /* BSKY-6575 user story Logic Start */
     If(Trigger.isUpdate)
@@ -171,10 +234,10 @@ trigger trg_sc_pro_after_insert_update on ServiceContract (after insert, after u
             System.debug('>> Deal Canncelled');
             if (Trigger.newMap.get(sc.Id).Status__c != Trigger.oldmap.get(sc.Id).Status__c && sc.Status__c == 'Deal Cancelled' && sc.Canceling_party__c == 'Customer' && !checkRecursive.scIdforSendCancelMail.contains(sc.id)  ) 
             {
-                
+               
                 ServiceContractMap.put(sc.Id,sc);
                 checkRecursive.scIdforSendCancelMail.add(sc.id) ;  
-                System.debug('>> ServiceCOntractMpa'+ ServiceContractMap);
+                 System.debug('>> ServiceCOntractMpa'+ ServiceContractMap);
             }
         }
         if(ServiceContractMap.size()>0 && !ServiceContractMap.isEmpty())
@@ -183,5 +246,5 @@ trigger trg_sc_pro_after_insert_update on ServiceContract (after insert, after u
         }
     }
     /* BSKY-6575 user story Logic End */ 
-    
+
 }

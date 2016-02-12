@@ -70,6 +70,7 @@ public class NewCustomerContactOverridden {
         List<SelectOption> contactRoles = new List<SelectOption>();
         contactRoles.add(new SelectOption('', '-- None --'));
     contactRoles.add(new SelectOption('Homeowner', 'Homeowner'));
+       contactRoles.add(new SelectOption('UtilityBillContact', 'Utility Bill Contact'));
     contactRoles.add(new SelectOption('Other', 'Other'));
     return contactRoles;
     }
@@ -399,6 +400,7 @@ public class NewCustomerContactOverridden {
     Pagereference ref;
     if(inputOptyId != null && inputOptyId != ''){
       String baseURL = EDPUtil.getBaseURL();
+      system.debug('==>Base URL : '+baseURL);
       String partnerStr;
       if(baseURL.contains('/aeepartner')){
         partnerStr = '/aeepartner';
@@ -409,6 +411,7 @@ public class NewCustomerContactOverridden {
       else{
         partnerStr = '';
       }
+      system.debug('==>partnerStr'+partnerStr);
       ref = new PageReference(partnerStr + '/apex/partneropportunitycreate?id=' + inputOptyId);
       System.debug('inputOptyId: ' + inputOptyId);
     }else{

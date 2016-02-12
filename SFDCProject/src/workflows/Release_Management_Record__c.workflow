@@ -9,7 +9,7 @@
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>aditya.boyapally@sunrun.com</recipient>
+            <recipient>aditya.boyapally@yopmail.com</recipient>
             <type>user</type>
         </recipients>
         <recipients>
@@ -25,7 +25,7 @@
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>purnachander.chada@sunrunhome.com</recipient>
+            <recipient>purnachander.chada@sunrun.com</recipient>
             <type>user</type>
         </recipients>
         <recipients>
@@ -45,7 +45,7 @@
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>sheetal.chaudhari@sunrunhome.com</recipient>
+            <recipient>sheetal.chaudhari@sunrun.com</recipient>
             <type>user</type>
         </recipients>
         <recipients>

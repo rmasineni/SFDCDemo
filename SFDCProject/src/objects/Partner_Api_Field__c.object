@@ -44,6 +44,7 @@
         <actionName>View</actionName>
         <type>Default</type>
     </actionOverrides>
+    <allowInChatterGroups>false</allowInChatterGroups>
     <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
     <deploymentStatus>Deployed</deploymentStatus>
     <description>Object used to define the Partner APIs rest to SFDC field mappings.</description>
@@ -106,6 +107,10 @@
             </picklistValues>
             <picklistValues>
                 <fullName>Account Api</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Prospect Api</fullName>
                 <default>false</default>
             </picklistValues>
             <sorted>false</sorted>
@@ -171,6 +176,16 @@
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>Summary_Field__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <inlineHelpText>Indicates that this field is summary field and should be includes whenever we send the summary.</inlineHelpText>
+        <label>Summary Field</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>Unique_Token__c</fullName>
         <caseSensitive>false</caseSensitive>
         <externalId>false</externalId>
@@ -203,7 +218,9 @@
         <columns>Rest_Field__c</columns>
         <columns>Sobject__c</columns>
         <columns>Sfdc_Field__c</columns>
+        <columns>Active__c</columns>
         <columns>Required__c</columns>
+        <columns>Read_Only__c</columns>
         <columns>UPDATEDBY_USER</columns>
         <filterScope>Everything</filterScope>
         <filters>
@@ -233,6 +250,24 @@
         <language>en_US</language>
     </listViews>
     <listViews>
+        <fullName>All_Contract_Api_Fields</fullName>
+        <columns>NAME</columns>
+        <columns>Api__c</columns>
+        <columns>Rest_Field__c</columns>
+        <columns>Sobject__c</columns>
+        <columns>Sfdc_Field__c</columns>
+        <columns>Required__c</columns>
+        <columns>UPDATEDBY_USER</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Api__c</field>
+            <operation>equals</operation>
+            <value>Contract Api</value>
+        </filters>
+        <label>All Contract Api Fields</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
         <fullName>All_Credit_Api_Fields</fullName>
         <columns>NAME</columns>
         <columns>Api__c</columns>
@@ -259,6 +294,7 @@
         <columns>Sfdc_Field__c</columns>
         <columns>Required__c</columns>
         <columns>UPDATEDBY_USER</columns>
+        <columns>Summary_Field__c</columns>
         <filterScope>Everything</filterScope>
         <filters>
             <field>Api__c</field>
@@ -277,6 +313,7 @@
         <columns>Sfdc_Field__c</columns>
         <columns>Required__c</columns>
         <columns>UPDATEDBY_USER</columns>
+        <columns>Summary_Field__c</columns>
         <filterScope>Everything</filterScope>
         <filters>
             <field>Api__c</field>
@@ -341,7 +378,7 @@
         <language>en_US</language>
     </listViews>
     <listViews>
-        <fullName>All_Service_Contract_Api_Fields</fullName>
+        <fullName>Search</fullName>
         <columns>NAME</columns>
         <columns>Api__c</columns>
         <columns>Rest_Field__c</columns>
@@ -351,11 +388,11 @@
         <columns>UPDATEDBY_USER</columns>
         <filterScope>Everything</filterScope>
         <filters>
-            <field>Api__c</field>
-            <operation>equals</operation>
-            <value>Contract Api</value>
+            <field>Rest_Field__c</field>
+            <operation>contains</operation>
+            <value>proposal</value>
         </filters>
-        <label>All Service Contract Api Fields</label>
+        <label>Search</label>
         <language>en_US</language>
     </listViews>
     <nameField>

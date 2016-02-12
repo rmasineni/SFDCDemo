@@ -99,6 +99,8 @@ public class EDPUtil {
     public static String EPBB = 'EPBB';
     public static String LARGE_SYSTEM_NTP_REQUEST = 'Large System NTP Request';
     public static string EXPIRED = 'Expired';
+    public static string REBATE_FORM='Rebate Form';
+    public static string NEM_FORM='NEM Agreement';
 
     public static Set<Id> pendingTaskProposalIds = new Set<Id>();
     static final public String ProposalPrefix = Schema.SObjectType.Proposal__c.getKeyPrefix(); 
@@ -919,6 +921,7 @@ public class EDPUtil {
     public static String getBaseURL() {
         String baseURL = '';
         String redirectUrl = System.URL.getCurrentRequestUrl().getPath();
+        
         Boolean isPartnerPortalURL = false;
         if(redirectUrl.startsWith('/partner')){
             isPartnerPortalURL = true;
@@ -933,6 +936,7 @@ public class EDPUtil {
         else{
             String Instance = null;
             List<String> parts = System.URL.getSalesforceBaseUrl().getHost().replace('-api','').split('\\.');
+           
             if (parts.size() == 3) Instance = parts[0];
             else if (parts.size() == 5) Instance = parts[1];
             else Instance = null; 
@@ -940,6 +944,7 @@ public class EDPUtil {
                 baseURL = 'https://' + Instance + '.salesforce.com';    
             }               
         }
+        system.debug('==>URL : '+baseURL);
         return baseURL;
     }
     
@@ -1201,9 +1206,11 @@ public class EDPUtil {
             //String proposalCostStack = 'INTEGRATED';
             String proposalCostStack = tempProposalobj.cost_stack__c;
             System.debug('proposalCostStack: ' + proposalCostStack);
+            EDPDocumentSettings.proposalState =  tempProposalobj.State__c;
             mandatoryDocumentClassificationMap = EDPDocumentSettings.getDocumentClassificationByCategroy(null, 
                                                                                                 EDPDocumentSettings.MANDATORY_REQUIREMENTS,
                                                                                                 modes, proposalCostStack);
+                     system.debug('mandatoryDocumentClassificationMap>>' +mandatoryDocumentClassificationMap);   
             Boolean missingRequiredDocumnets = false;
             Boolean missingSignatures = false;
             String missingDocuments = '';
@@ -1225,16 +1232,22 @@ public class EDPUtil {
                         (documentClassificationObj.Document_Name__c == EPBB && !utlityCompanies.contains(tempProposalobj.Utility__c)) ||
                         (documentClassificationObj.Document_Name__c == EDPUtil.UTILITY_BILL  && tempProposalobj.New_Home_without_Utility_Bills__c == true) || 
                         (documentClassificationObj.Document_Name__c == EDPUtil.LIVING_SPACE && tempProposalobj.New_Home_without_Utility_Bills__c != true) ||
-                        (documentClassificationObj.Document_Name__c == 'EPC' && !String.isEmpty(installPartner) && sunrunId.contains(installPartner))){
+                        (documentClassificationObj.Document_Name__c == 'EPC' && !String.isEmpty(installPartner) && sunrunId.contains(installPartner)) ||
+                         (documentClassificationObj.Document_Name__c == EDPUTIL.NEM_FORM))
+                    {
                         continue;
                     }
 
                     Map<String, List<SR_Attachment__C>> srAttachmentsMap  = proposalToSRAttachmentMap.get(proposalId);
+                    system.debug('srAttachmentsMap>'  + srAttachmentsMap);
+                    system.debug('documentClassificationObj>' +  documentClassificationObj);
                     if(srAttachmentsMap != null){
                         if(srAttachmentsMap.containskey(documentClassificationObj.Id)){
                             List<SR_Attachment__C> tempSRAttachmentList = srAttachmentsMap.get(documentClassificationObj.Id);
                             Boolean hasSignatures = false;
                             for(SR_Attachment__C srAttachmentObj : tempSRAttachmentList){
+                                
+                                 system.debug('srAttachmentObj>' +  srAttachmentObj);
                                 if(srAttachmentObj.Wet_Sign_Status__c == SIGNED 
                                         && srAttachmentObj.Document_Source__c == MANUAL_UPLOAD_SOURCE){
                                     hasSignatures = true;
@@ -1248,6 +1261,7 @@ public class EDPUtil {
                                 List<Partner_Document_Relationship__c> partnerDocumentRelationships =   documentClassificationObj.Partner_Document_Relationships__r;
                                 if(partnerDocumentRelationships != null && partnerDocumentRelationships.size() > 0){
                                     Partner_Document_Relationship__c ptrRelationshipObj = partnerDocumentRelationships[0];
+                                    system.debug('ptrRelationshipObj>' +  ptrRelationshipObj);
                                     if(ptrRelationshipObj.Customer_signature_required__c == true 
                                         || ptrRelationshipObj.Partner_signature_required__c == true){
                                         //missingSignatures = true; 
@@ -1441,6 +1455,11 @@ public class EDPUtil {
                 proposalValidationMap.put(proposalObj.Id, CustomErrorMessages.NOT_AUTHORIZED_USER);
             }else if(proposalObj.Opportunity__c == null ){
                 proposalValidationMap.put(proposalObj.Id, CustomErrorMessages.FOUND_NO_VALID_OPPORTUNITY);
+            }else if( proposalObj.sales_partner__c != System.Label.Sunrun_Inc_Id && 
+               (proposalObj.Agreement_Type__c == 'Customer Owned - Bank Financed' || proposalObj.Agreement_Type__c == 'Customer Owned - Full Upfront')){
+               proposalValidationMap.put(proposalObj.Id, CustomErrorMessages.PARTNER_CASH_COBF_ERROR);    
+            }else if(proposalObj.Required_Loan_Amount__c > proposalObj.Max_Loan_Amount__c){
+               proposalValidationMap.put(proposalObj.Id, CustomErrorMessages.MAX_LOAN_AMT_ERROR);   
             }else if(proposalObj.Estimation_Method__c == 'From average monthly bill estimation' ){
                 proposalValidationMap.put(proposalObj.Id, CustomErrorMessages.MONTHLY_BILL_ERROR);
             /*}else if(proposalObj.Opportunity__r.Purchased_Thru__c == 'Costco' && proposalObj.Retail_PO__c == null){

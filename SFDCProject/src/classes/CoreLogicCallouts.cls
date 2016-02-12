@@ -82,6 +82,7 @@ public class CoreLogicCallouts {
         {
             try{
                 f1=(CoreLogicSecondResponse) System.JSON.deserialize(CoreLogicResponse, CoreLogicSecondResponse.class);
+                System.debug('++++++++Geometry : ' + f1.parcels[0].GEOM); 
                 return f1;
             }Catch(Exception e){
                 System.debug('Exception in corelogicSecondCallout---->2');

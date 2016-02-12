@@ -12,6 +12,7 @@
 
     <apex:includescript value="https://cdn.jsdelivr.net/jquery/2.0.3/jquery-2.0.3.min.js"/>
     <apex:includescript value="https://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"/>
+	<link href='https://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/themes/smoothness/jquery-ui.css' rel='stylesheet' type='text/css'/>
     
     <apex:includescript value="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=places"/>
     <apex:includescript value="https://cdnjs.cloudflare.com/ajax/libs/gmaps.js/0.4.5/gmaps.min.js"/>

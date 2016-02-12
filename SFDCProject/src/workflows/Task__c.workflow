@@ -69,7 +69,7 @@
             <operation>equals</operation>
             <value>Open</value>
         </criteriaItems>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+        <triggerType>onAllChanges</triggerType>
     </rules>
     <rules>
         <fullName>wfAdhoc Task Owner Notification</fullName>

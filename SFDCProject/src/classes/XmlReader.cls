@@ -97,25 +97,26 @@ public class XmlReader {
         }
         
         Dom.XmlNode currentObj = rootNode;
-        
+         
         String[] segments = key.split('\\.');
-		//System.debug('Segments ' + segments + ' size ' + segments.size() + ' current obj ' + currentObj);
+		System.debug('Segments after split are ' + segments + ' and current obj ' + currentObj);
         
         for (Integer segmentIndex = 0; segmentIndex < segments.size(); segmentIndex++) {
-            //info('Getting node for segment index ' + segmentIndex);
+            System.debug('Getting node for segment index ' + segmentIndex + ' and name ' + segments.get(segmentIndex) +' from current obj ' + currentObj);
             if (currentObj == null) {
+                System.debug('Current object is null so returning null');
                 return null;
             }
 
             currentObj = getSegmentValue(currentObj, segments.get(segmentIndex));
         }
         
-        //info('Returning the matched node ' + currentObj);
+        System.debug('Returning the matched node ' + currentObj);
         return currentObj;
     }
     
     public Dom.XmlNode getSegmentValue(Dom.XmlNode currentObj, String keySegment) {
-		//System.debug('Getting node for segment ' + keysegment);        
+		System.debug('getSegmentValue for segment ' + keysegment + ' from ' + currentObj.getName() + ' ' + currentObj);        
         
 		//By default we will return first found element matching the name.
 		//If it is array, then we will find the specified indexed matching element.
@@ -126,11 +127,14 @@ public class XmlReader {
         }
         
 		Integer foundElementsCount = 0;
+        System.debug('currentObj.getNodeType() ' + currentObj.getNodeType());
         if (currentObj.getNodeType() == Dom.XmlNodeType.ELEMENT) {
             for (Dom.XmlNode child : currentObj.getChildElements()) {
+                System.debug('Processing child ' + child.getName() + ' and comparing with key segment ' + keySegment + ' ' + child);
                 if (child.getName() == keySegment) {
                     if (foundElementsCount == elementIndex) {
-	                   return child;
+                    	System.debug('Returning matching node ' + child);
+	                   	return child;
                     }
                     foundElementsCount++;
                 }

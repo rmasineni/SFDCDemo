@@ -101,17 +101,28 @@
                         <apex:facet name="header">Proposal ID</apex:facet>
                         <a href='{!urlPrefix}/{!Props.proposalObj.ID}' onclick="redirect('{!Props.proposalObj.ID}')"><apex:outputtext value="{!Props.proposalObj.name}"></apex:outputtext></a>
                     </apex:column>
-                    <apex:column headerValue="Proposal Name" value="{!Props.proposalObj.Proposal_Name__c}"/>
+                    <!-- <apex:column headerValue="Proposal Name" value="{!Props.proposalObj.Proposal_Name__c}"/>-->
+                   <apex:column >
+                    <apex:facet name="header">Opportunity</apex:facet>                  
+                       <a href='{!urlPrefix}/{!Props.proposalObj.opportunity__c}' onclick="redirect('{!Props.proposalObj.opportunity__c}')"><apex:outputtext value="{!Props.proposalObj.Opportunity__r.name}"></apex:outputtext></a>             
+                    </apex:column>
                     <apex:column >
                         <apex:facet name="header">Original Proposal ID</apex:facet>
                         <a href='{!urlPrefix}/{!Props.proposalObj.Original_Proposal_ID__c}' onclick="redirect('{!Props.proposalObj.Original_Proposal_ID__c}')"><apex:outputtext value="{!Props.proposalObj.Original_Proposal_ID__r.name}"></apex:outputtext></a>
                     </apex:column>
                     <apex:column headerValue="Agreement Type" value="{!Props.proposalObj.Agreement_Type__c}"/>
                     <apex:column headerValue="Stage" value="{!Props.proposalObj.Stage__c}"/>
-                    <apex:column headerValue="Last Modified Date" value="{!Props.proposalObj.LastModifiedDate}"/>
+                    <!-- <apex:column headerValue="Last Modified Date" value="{!Props.proposalObj.LastModifiedDate}"/>-->
                     <apex:column headerValue="Customer Name" value="{!Props.proposalObj.Homeowner_Name__c}"/>
                     <!-- <apex:column headerValue="Customer Phone" value="{!Props.proposalObj.Homeowner_Phone__c}"/>   -->
                     <apex:column headerValue="Customer Address" value="{!Props.proposalObj.Customer_Address__c}"/>
+                    <apex:column headerValue="Sunrun Credit Status" value="{!Props.ccObj}">                                  
+                    </apex:column>
+                    <apex:column headerValue="Customer Signature Status">
+                    <apex:outputpanel rendered="{!Props.proposalObj.sr_docs__r.size>0}">
+                    <apex:outputtext value="{!Props.proposalObj.sr_docs__r[0].Customer_Signature_Status__c}"/>
+                    </apex:outputpanel>
+                    </apex:column>
                 </apex:pageBlockTable>
             </apex:pageblocksection>
         

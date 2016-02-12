@@ -28,7 +28,8 @@ trigger trg_user_before_ins_upd on User (before insert, before update) {
             usersList.add(userObj);
         }
     }
-       
+    
+    
     Map<Id, String> contactsWithInvalidDomain = new Map<Id, String>();
     if(contactEmails.size() > 0){
         contactsWithInvalidDomain = PRMLibrary.getContactsWithInvalidDomain(contactEmails);

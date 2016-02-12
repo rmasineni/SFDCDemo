@@ -141,20 +141,14 @@ function setFocusOnLoad() {}
         <apex:outputField styleClass="pbValue" id="reviewerName" value="{!installAudit.Auditor_Contact__c}" rendered="{!NOT(IsPartner)}"/>        
     </td>
     </tr>
-    <tr><td>
+    <tr><td align="right">
        <apex:outputLabel styleClass="pbTitle " for="srhNumber" value="SRH Number: "/>  
     </td>
     <td>
         <apex:outputText rendered="{!(installAudit.Generation_Asset__r.Id != null)}" styleClass="pbValue" id="srhNumber1" value="{!installAudit.Generation_Asset__r.Name}"/> 
         <apex:outputText rendered="{!(installAudit.Service_Contract__r.Id != null)}" styleClass="pbValue" id="srhNumber2" value="{!installAudit.Service_Contract__r.Name}"/>       
-        </td></tr>
-        <tr><td>
-        <apex:outputLabel styleClass="pbTitle" for="criteriaMissing" value="Priority Criteria Missing: " ></apex:outputLabel>  
-    </td>
-    <td>
-        <apex:outputText styleClass="pbValue" id="criteriaMissing" value="{!installAudit.Priority_Criteria_Missing__c}" />
-   </td></tr>
- </table>
+    </td></tr>
+    </table>
  </td>
  <td width="25%" cellpadding="0">
     <table><tr>
@@ -165,17 +159,11 @@ function setFocusOnLoad() {}
         <apex:outputField styleClass="pbValue" id="score2" value="{!installAudit.Score__c}" />
     </td>   
     </tr>
-    <tr><td align="right">
-        <apex:outputLabel styleClass="pbTitle" for="criteriaMissed" value="Criteria Missing: " ></apex:outputLabel>  
-    </td>
-    <td>
-        <apex:outputText styleClass="pbValue" id="criteriaMissed" value="{!installAudit.Criteria_Missing__c}" />
-   </td></tr>
     </table>
  </td>
  <td width="25%">
     <table><tr><td>
-        <apex:outputlabel styleClass="pbTitle" for="priorityMissed" value="Priority Criteria Failed: " ></apex:outputlabel></td>
+       <apex:outputlabel styleClass="pbTitle" for="priorityMissed" value="Priority Criteria Missed: " ></apex:outputLabel></td>
       <td> <apex:outputText styleClass="pbValue" id="priorityMissed" value="{!installAudit.Priority_Criteria_Missed__c}" />
      </td>
     </tr>
@@ -224,8 +212,8 @@ function setFocusOnLoad() {}
 <td width="10%">
     <apex:outputLabel style="font-weight:bold" styleClass="auditheaderheading" for="srhNumber" value="SRH Number: "></apex:outputLabel>
     <!-- <apex:outputText styleClass="auditheaderdata" id="srhNumber" value="{!installAudit.Generation_Asset__r.Name}"/> -->
-    <apex:outputText rendered="{!(installAudit.Generation_Asset__r.Id != null)}" styleClass="auditheaderdata" id="srhNumber1" value="{!installAudit.Generation_Asset__r.Name}"/> 
-    <apex:outputText rendered="{!(installAudit.Service_Contract__r.Id != null)}" styleClass="auditheaderdata" id="srhNumber2" value="{!installAudit.Service_Contract__r.Name}"/>       
+	<apex:outputText rendered="{!(installAudit.Generation_Asset__r.Id != null)}" styleClass="auditheaderdata" id="srhNumber1" value="{!installAudit.Generation_Asset__r.Name}"/> 
+	<apex:outputText rendered="{!(installAudit.Service_Contract__r.Id != null)}" styleClass="auditheaderdata" id="srhNumber2" value="{!installAudit.Service_Contract__r.Name}"/>       
     
 </td>
 <td width="6%">
@@ -236,19 +224,7 @@ function setFocusOnLoad() {}
 </td>
 <td width="14%">    
     <apex:outputPanel rendered="{!NOT(IsAuditor)}" >
-        <apex:outputLabel style="font-weight:bold" styleClass="auditheaderheading" for="criteriaMissed" value="Criteria Missed: " ></apex:outputLabel>  
-        <apex:outputText styleClass="auditheaderdata" id="criteriaMissed" value="{!CriteriaMissed}" />
-    </apex:outputPanel>
-</td> 
-<td width="14%">    
-    <apex:outputPanel rendered="{!NOT(IsAuditor)}" >
-        <apex:outputLabel style="font-weight:bold" styleClass="auditheaderheading" for="criteriaMissing" value="Priority Criteria Missing: " ></apex:outputLabel>  
-        <apex:outputText styleClass="auditheaderdata" id="criteriaMissing" value="{!PriorityCriteriaMissing}" />
-    </apex:outputPanel>
-</td> 
-<td width="14%">    
-        <apex:outputPanel rendered="{!NOT(IsAuditor)}" > 
-        <apex:outputLabel style="font-weight:bold" styleClass="auditheaderheading" for="priorityMissed" value="Priority Criteria Failed: " ></apex:outputLabel>  
+        <apex:outputLabel style="font-weight:bold" styleClass="auditheaderheading" for="priorityMissed" value="Priority Criteria Missed: " ></apex:outputLabel>  
         <apex:outputText styleClass="auditheaderdata" id="priorityMissed" value="{!PriorityCriteriaMissed}" />
     </apex:outputPanel>
 </td>    
@@ -334,7 +310,7 @@ function setFocusOnLoad() {}
     <apex:outputField value="{!site.SiteCharacteristic.Observed_Average_Annual_Shading__c}"  rendered="{!NOT(IsAuditor) || (installAudit.Status__c == 'Submitted' || installAudit.Status__c == 'SR Approved')}"/>    
 </apex:column>
 
-    </apex:pageBlockTable>                           
+</apex:pageblockTable>                           
 </apex:pageBlock>
 
 <!--Feedback -->
@@ -377,7 +353,7 @@ function setFocusOnLoad() {}
     <apex:facet name="header">Comments</apex:facet>
     <apex:inputTextArea tabindex="1" styleClass="scorecardComments"  value="{!af.af.Comments__c}"  disabled="{!NOT(IsAuditor) || (installAudit.Status__c == 'Submitted' || installAudit.Status__c == 'SR Approved' || installAudit.Status__c == 'Denied')}" />
 </apex:column>
-    </apex:pageBlockTable>
+</apex:pageblockTable>
 <apex:outputPanel rendered="{!criteriaTotalPageNumber > 1}">
 <div align="right" style="display:{!IF(NOT(ISNULL(auditFeedbackList)),'block','none')}"> 
 <font size="1pt">
@@ -389,11 +365,11 @@ function setFocusOnLoad() {}
  </font>
 <apex:commandButton value="Previous" action="{!previousCriteriaPage}" tabindex="2000" /><apex:commandButton value="Next" action="{!nextPhotosPage}"  tabindex="1999"/>
 </div>
-</apex:outputPanel> 
+</apex:outputPanel>
 </apex:pageBlock>
 
 <div align="center">
-<apex:commandButton tabindex="4000" value="Save" action="{!SaveAuditFeedback}" rendered="{!NOT(IsPartner) && installAudit.Status__c != 'SR Approved' }" />
+<apex:commandButton tabindex="4000" value="Save" action="{!SaveAuditFeedback}" rendered="{!NOT(IsPartner) && installAudit.Status__c != 'SR Approved' }"/>
 <apex:commandButton tabindex="4001" value="Cancel" action="{!CancelAuditFeedbackEdits}" />
 </div>
 

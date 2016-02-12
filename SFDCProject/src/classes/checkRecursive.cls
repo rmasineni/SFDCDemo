@@ -53,15 +53,13 @@ public Class checkRecursive{
     public static set<id> taskIds = new set<id>();
     public static set<id> LeadOwnerUpdate = new set<id>();
     public static set<id> MileStoneSCIds = new set<id>();
-    private static boolean MileStoneTrigger=true;
     public static set<id> coreLogicAcctIds = new set<id>();
     public static set<id> deDupLeadIds = new set<id>();
-    public static set<id> duplicateProposalIds= new set<id>();
     public static set<id> deDupLeadIdsAfterUpdate = new set<id>();
     public static set<id> loadLeadIdsAfterUpdate = new set<id>();
-    public static set<id> scIdforSendCancelMail = new set<id>();
     //public static boolean loadRelatedRecords;
     public static set<id> investorScIds = new set<id>();
+    public static set<id> scIdforSendCancelMail = new set<id>();
     public static boolean runReferralServiceOnce(){
     if(runReferralService){
      runReferralService=false;
@@ -95,12 +93,5 @@ public Class checkRecursive{
     }
     }
     
-    public static boolean runMileStoneOnce(){
-    if(MileStoneTrigger){
-     MileStoneTrigger=false;
-     return true;
-    }else{
-        return MileStoneTrigger;
-    }
-    }
+    
 }

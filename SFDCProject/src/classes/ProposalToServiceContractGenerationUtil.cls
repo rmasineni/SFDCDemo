@@ -21,7 +21,6 @@ public class ProposalToServiceContractGenerationUtil {
             proposalToSCEventFieldMap.put(proposalToSCEventField.Proposal_Field__c, proposalToSCEventField.Service_Contract_Event_Field__c);           
         }        
     }
-
     
     public static Set<String> getProposalFields() { 
         return proposalToServiceContractFieldMap.keySet();

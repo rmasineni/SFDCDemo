@@ -14,8 +14,6 @@ public class SendEmailClass extends BaseClass{
     EmailTemplate CreditPassCustomer_Spanish= [Select Id,Name from EmailTemplate where Name =: 'Credit Decision - PASS - Customer - New Address - Rev1_SPANISH'];
     OrgWideEmailAddress owcc = [Select Id,Address,DisplayName from OrgWideEmailAddress where DisplayName='Customer Care'];
     OrgWideEmailAddress owea = [Select Id,DisplayName from OrgWideEmailAddress where DisplayName='Sunrun Credit']; 
-    EmailTemplate PosigenCreditPassCustomer = [Select Id,Name from EmailTemplate where developerName =: 'Posigen_Credit_Process_Approval_Letter_Customer'];
-    EmailTemplate PosigenCreditPassPartner = [Select Id,Name from EmailTemplate where developerName =: 'Posigen_Credit_Process_Approval_Letter_Partner'];
     Id CreditCustomerTemplate;
     Id ContactId ;
     Id CreditPartnerTemplate;
@@ -33,7 +31,6 @@ public class SendEmailClass extends BaseClass{
     Map<Id,Opportunity> OppCreditMap = New Map<Id,Opportunity>();
     String roleId;
     String vfPage = 'CustomerOptyAutoPayment';
-    public static string POSIGEN='PosiGen';
     
     public void SendEmailSCNtp(List<ServiceContract>ScNtpList) {
         try{
@@ -187,18 +184,6 @@ public class SendEmailClass extends BaseClass{
         catch(System.EmailException ex){}       
     }
     
-    private void sendMailPosigenSalesPerson(EmailTemplate PosigenCreditPassPartner, id whatId, string salesEmail,id OwnerId, contact con){
-     
-        Messaging.SingleEmailMessage msg1 = New Messaging.SingleEmailMessage();
-        msg1.setTemplateId(PosigenCreditPassPartner.Id);
-        msg1.setCcAddresses(new string[] {'credit@sunrun.com'});
-        msg1.setTargetObjectId(con.id);
-        msg1.setOrgWideEmailAddressId(owea.Id);	
-        msg1.setSaveAsActivity(false);
-        Messaging.sendEmail(new Messaging.SingleEmailMessage[] {msg1});
-      
-    }
-    
    
  public void SendEmailCredit(List<Customer_Credit__c> CcObj, Map<String,Id> CreditOppMap, Map<Id,Customer_Credit__c> TriggerOldMap){
     
@@ -216,8 +201,7 @@ public class SendEmailClass extends BaseClass{
                 Payment_Request_Contact_Role_Id__c,
                 Deal_id__c,
                 Sales_Representative__r.Email,
-                 SalesOrganizationName__c,
-               ownerId,             
+               
                 (
                     select
                     Id,
@@ -292,31 +276,13 @@ public class SendEmailClass extends BaseClass{
                     cctem1.Sales_Rep_Email_Oppty__c =  OppCreditMap.get(CreditOppMap.get(cctem1.Deal_Id__c)).Sales_Representative__r.Email;
                    
                 }
-                //adding logic to send email for posigen customer and salesrep
-                 string salesOrgName =  OppCreditMap.get(CreditOppMap.get(cctem1.Deal_Id__c)).SalesOrganizationName__c;
-                 string salesRepEmail= OppCreditMap.get(CreditOppMap.get(cctem1.Deal_Id__c)).Sales_Representative__r.Email;
-                 Id OwnerId = OppCreditMap.get(CreditOppMap.get(cctem1.Deal_Id__c)).ownerId;
-                 Id whatId= OppCreditMap.get(CreditOppMap.get(cctem1.Deal_Id__c)).Id;
-                if(cctem1.Credit_Email_Sent__c!=true){
-                    if(salesOrgName==Label.PosigenID){
-                        Contact con = new Contact();
-                        con.FirstName = cctem1.First_Name__c;
-                        con.LastName = cctem1.Last_Name__c;
-                        con.Email = salesRepEmail;
-                        con.AccountId = OppCreditMap.get(CreditOppMap.get(cctem1.Deal_Id__c)).AccountId;
-                        insert con;
-                        CreditCustomerTemplate=PosigenCreditPassCustomer.id;
-                        sendMailPosigenSalesPerson(PosigenCreditPassPartner,whatId,salesRepEmail,OwnerId, con);
-                        cctem1.Credit_Email_Sent__c=true;
-                         delete con;
-                    }
-                }
-                if(cctem1.Sunrun_Credit_Status__c == 'PASS' && TriggerOldMap.get(cctem1.Id).Sunrun_Credit_Status__c != 'PASS' && salesOrgName!=Label.PosigenID ){
+                
+                if(cctem1.Sunrun_Credit_Status__c == 'PASS' && TriggerOldMap.get(cctem1.Id).Sunrun_Credit_Status__c != 'PASS' ){
                     CreditCustomerTemplate  = PrimaryLanguage=='Spanish'? CreditPassCustomer_Spanish.id:CreditPassCustomer.id ;
                    
                 }
                 if(cctem1.Sunrun_Credit_Status__c == 'CPASS' && TriggerOldMap.get(cctem1.Id).Sunrun_Credit_Status__c != 'CPASS'  
-                   && ((Integer.valueOf(cctem1.Fico__c) > 679  &&  Integer.valueOf(cctem1.Fico__c) < 700)) && salesOrgName!=Label.PosigenID){
+                   && ((Integer.valueOf(cctem1.Fico__c) > 679  &&  Integer.valueOf(cctem1.Fico__c) < 700))){
                        //&& (cctem1.Fico_Number__c > 679.00  && cctem1.Fico_Number__c < 700))
                        CreditCustomerTemplate  = PrimaryLanguage=='Spanish'? CreditCPassCustomer_Spanish.id: CreditCPassCustomer.Id;   
                    }
@@ -329,7 +295,6 @@ public class SendEmailClass extends BaseClass{
                     con1.AccountId = OppCreditMap.get(CreditOppMap.get(cctem1.Deal_Id__c)).AccountId;
                     insert con1;
                     Messaging.SingleEmailMessage msg1 = New Messaging.SingleEmailMessage();
-                    system.debug('CreditCustomerTemplate>>' +  CreditCustomerTemplate);
                     msg1.setTemplateId(CreditCustomerTemplate);
                     msg1.setCcAddresses(new string[] {'credit@sunrun.com'});
                     msg1.setTargetObjectId(con1.Id);

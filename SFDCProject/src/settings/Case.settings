@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CaseSettings xmlns="http://soap.sforce.com/2006/04/metadata">
     <caseAssignNotificationTemplate>Case_Templates/Case_Reassignment_Notification</caseAssignNotificationTemplate>
+    <caseFeedItemSettings>
+        <characterLimit>400</characterLimit>
+        <collapseThread>false</collapseThread>
+        <displayFormat>Default</displayFormat>
+        <feedItemType>EmailMessageEvent</feedItemType>
+    </caseFeedItemSettings>
     <closeCaseThroughStatusChange>false</closeCaseThroughStatusChange>
     <defaultCaseOwner>CustomerCareCases</defaultCaseOwner>
     <defaultCaseOwnerType>Queue</defaultCaseOwnerType>
@@ -13,6 +19,7 @@
         <enableThreadIDInSubject>true</enableThreadIDInSubject>
         <notifyOwnerOnNewCaseEmail>true</notifyOwnerOnNewCaseEmail>
         <overEmailLimitAction>Requeue</overEmailLimitAction>
+        <preQuoteSignature>false</preQuoteSignature>
         <routingAddresses>
             <addressType>EmailToCase</addressType>
             <caseOrigin>Documents</caseOrigin>
@@ -47,6 +54,15 @@
             <createTask>false</createTask>
             <emailAddress>sungevitycustomercare@sunrun.com</emailAddress>
             <routingName>Sungevity Serviced by Sunrun</routingName>
+            <saveEmailHeaders>false</saveEmailHeaders>
+        </routingAddresses>
+        <routingAddresses>
+            <addressType>EmailToCase</addressType>
+            <caseOrigin>Customer Email</caseOrigin>
+            <casePriority>Normal</casePriority>
+            <createTask>false</createTask>
+            <emailAddress>cancellations@sunrunhome.com</emailAddress>
+            <routingName>Sunrun Cancellations</routingName>
             <saveEmailHeaders>false</saveEmailHeaders>
         </routingAddresses>
         <routingAddresses>

@@ -1,7 +1,51 @@
 public with sharing class projTaskHelper {
 
  	 Static  set<id> allowUsersToModify = new set<id>();
-
+   /* public static void updateTaskProject(map<Id,Phase__c> newMap, map<Id,Phase__c> oldMap){
+        list<Task__c> taskTemp = new list<Task__c>();
+        set<Id> phaseTempIds = new set<Id>();
+        for(Phase__c pTemp: newMap.values()){
+            if(pTemp.Project__c != oldMap.get(pTemp.Id).Project__c){
+                phaseTempIds.add(pTemp.Id);     
+            }
+        }
+        
+        if(phaseTempIds.size()>0){
+            for(Phase__c pTemp : [select Id, Project__c,(select Id, Project_Name__c from Tasks__r) from Phase__c where Id in:phaseTempIds]){
+                for(Task__c tTemp: pTemp.Tasks__r){
+                    tTemp.Project_name__c = pTemp.Project__c;
+                    taskTemp.add(tTemp);
+                }
+            }
+        }
+        
+        if(taskTemp.size()>0){
+            update taskTemp;
+        }
+    }
+  
+    public static void populateTaskProject(list<Task__c> tskList){
+    set<Id> tempPhaseIds = new set<Id>();
+    map<Id, Phase__c> mapIdPhaseTemp = new map<Id, Phase__c>();
+    
+    for(Task__c tTemp : tskList){
+       system.debug(tTemp.Phase__r.Project__c+'<<<<>>>>'+tTemp.Phase__c); 
+           if(tTemp.Phase__c != null)
+               tempPhaseIds.add(tTemp.Phase__c);
+    } 
+    
+     if(tempPhaseIds.size()>0){
+            mapIdPhaseTemp = new map<Id,Phase__c>([select id,Project__c from Phase__c where Id in:tempPhaseIds]);
+        }
+    
+    for (Task__c tTmp : tskList){
+         if(mapIdPhaseTemp.size()>0 && mapIdPhaseTemp.containsKey(tTmp.Phase__c)){
+                tTmp.Project_Name__c = mapIdPhaseTemp.get(tTmp.Phase__c).Project__c;
+                system.debug('>>>>>'+tTmp.Project_Name__c); 
+            }
+       }
+    
+    } */
     
  public static void updatePhaseStatus(map<Id,task__c>newMap, map<Id,task__c> oldMap){
             set<Id> phaseIds = new set<Id>();
@@ -11,12 +55,12 @@ public with sharing class projTaskHelper {
             set<Phase__c> phasesToUpdate = new set<Phase__c>();
             set<string> statusValues = new set<string>();
             map<string, set<string>> phaseMapStatus = new map<string, set<string>>();
-     		             
+             
             // at insert
             if(oldMap == null){
-                for(task__c task: [select Id, Phase__c,Type__c from task__c where Id in:newMap.keyset()]){
-                    phaseIds.add(task.Phase__c); 
-                  
+                for(task__c task: [select Id, Phase__c from task__c where Id in:newMap.keyset()]){
+                    phaseIds.add(task.Phase__c);    
+                    
                 }
             }
             // at update
@@ -43,7 +87,7 @@ public with sharing class projTaskHelper {
                     for(task__c tsk : phase.tasks__r) { 
                         boolean t = tsk.Type__c == wfUtil.PROJ_BLOCKED? true:false;
                        
-                        if (tsk.Blocked_Project__c  && tsk.Status__c == wfUtil.BLOCKED  ) { 
+                        if (tsk.Blocked_Project__c && tsk.Status__c == wfUtil.BLOCKED ) {
                             if (phaseMapStatus.containsKey(tsk.phase__c))
                                 phaseMapStatus.get(tsk.phase__c).add(wfUtil.PROJ_BLOCKED); 
                             else                        

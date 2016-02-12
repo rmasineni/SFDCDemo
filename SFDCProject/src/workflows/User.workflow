@@ -94,6 +94,16 @@
         <triggerType>onAllChanges</triggerType>
     </rules>
     <rules>
+        <fullName>TEst SFDC</fullName>
+        <active>false</active>
+        <criteriaItems>
+            <field>User.DefaultDivision</field>
+            <operation>notEqual</operation>
+            <value>Null</value>
+        </criteriaItems>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
         <fullName>User Deactivated</fullName>
         <actions>
             <name>User_Deactivated</name>

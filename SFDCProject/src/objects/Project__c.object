@@ -48,6 +48,7 @@
         <skipRecordTypeSelect>false</skipRecordTypeSelect>
         <type>Visualforce</type>
     </actionOverrides>
+    <allowInChatterGroups>false</allowInChatterGroups>
     <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
     <deploymentStatus>Deployed</deploymentStatus>
     <description>This is a generic template for Custom Object.  With this template, you may adjust the default elements and values and add new elements and values.</description>
@@ -133,6 +134,18 @@ IF(Current_Phase__c = &quot;Completion&quot;, &quot;7-Completion&quot;, &quot;No
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Electrical_Engineer__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Electrical Engineer</label>
+        <referenceTo>Account</referenceTo>
+        <relationshipLabel>Projects (Electrical Engineer)</relationshipLabel>
+        <relationshipName>Projects_ElectricalEngg</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
     </fields>
     <fields>
         <fullName>End_Date__c</fullName>
@@ -427,6 +440,18 @@ IF(Project_Age__c &gt; 90, &quot;90+ days&quot;, &quot;None&quot;)))))</formula>
         <type>Picklist</type>
     </fields>
     <fields>
+        <fullName>Structural_Engineer__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Structural Engineer</label>
+        <referenceTo>Account</referenceTo>
+        <relationshipLabel>Projects (Structural Engineer)</relationshipLabel>
+        <relationshipName>Projects_StructuralEngg</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
         <fullName>Type__c</fullName>
         <externalId>false</externalId>
         <label>Project Type</label>
@@ -559,17 +584,10 @@ IF(Project_Age__c &gt; 90, &quot;90+ days&quot;, &quot;None&quot;)))))</formula>
         <columns>OWNER.LAST_NAME</columns>
         <columns>Proposal__c</columns>
         <columns>CREATED_DATE</columns>
-        <columns>Build_Parter__c</columns>
         <filterScope>Everything</filterScope>
         <filters>
             <field>Install_Partner__c</field>
             <operation>equals</operation>
-            <value>Sunrun</value>
-        </filters>
-        <filters>
-            <field>CREATED_DATE</field>
-            <operation>greaterOrEqual</operation>
-            <value>1/12/2016 12:00 AM</value>
         </filters>
         <label>sunrun projects</label>
         <language>en_US</language>

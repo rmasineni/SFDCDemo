@@ -43,7 +43,7 @@ public  class Test_InContactAPI
         Test.setMock(HttpCalloutMock.class, new MockHttpResponseInContact());  
         try{
             // InContactService.InConatctList(leadFilterList); 
-           InContactService.processInContactListUpload(jsonstring);
+            InContactService.processInContactListUpload(jsonstring);
         }
         catch(exception e){}
         Test.stopTest();

@@ -3,5 +3,5 @@
     <description>Lease Dimensions Greenlight TEST Environment</description>
     <disableProtocolSecurity>false</disableProtocolSecurity>
     <isActive>true</isActive>
-    <url>https://credit.sunrun.com</url>
+    <url>https://sunrunuat.leasedimensions.com</url>
 </RemoteSiteSetting>

@@ -118,8 +118,36 @@ public class LeadApiCreateLeadHandler extends LeadApiBaseHandler {
             lead.company = Lead.FirstName + ' ' + lead.LastName;
         }
         
+        //Populate sales rep email based on technology last value and profile id
+        populateSalesRepEmail(lead);
+        
         resp.stopwatch.markSubElapsedTime();
         return lead;
+    }
+    
+    /**
+     * Populates the Sales_Rep_Email__c field of lead based on below logic.
+     * 
+     * If incoming lead's Technology_Last__c (rest field technologyLast) matches
+     * one of the configured settings LeadApiTechLastValuesForSalesRepEmail
+     * 
+     * and If current user's Profile Developer name matches one of the values defined
+     * in LeadApiSalesRepProfileIds, 
+     * 
+     * then Sales_Rep_Email__c will be populated with current user's email.
+     */
+    public void populateSalesRepEmail(Lead lead) {
+        String incomingTechnologyLast = lead.Technology_Last__c;
+        if (String.isEmpty(incomingTechnologyLast)) {
+            return;
+        }
+        
+        List<String> technologyLastValuesToMatch = Sf.settingsService.getStringList('LeadApiTechLastValuesForSalesRepEmail', null);
+        List<String> salesRepProfileIds = Sf.settingsService.getStringList('LeadApiSalesRepProfileIds', null);
+        if (containsIgnoreCase(technologyLastValuesToMatch, incomingTechnologyLast)
+            && containsIgnoreCase(salesRepProfileIds, UserInfo.getProfileId())) {
+                lead.Sales_Rep_Email__c = UserInfo.getUserEmail();
+            }
     }
     
     /**

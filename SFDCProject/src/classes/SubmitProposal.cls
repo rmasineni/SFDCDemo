@@ -124,13 +124,15 @@ public class SubmitProposal {
     	Boolean result = false;
     	String errorMessage = '';
     	if(propsalObject != null){
-    		Id sunrunId = System.Label.Sunrun_Inc_Id;
-    		if(propsalObject.stage__c == 'Created' || propsalObject.stage__c == 'Ready for Submission'){
-				//if(propsalObject.stage__c == 'Created' && propsalObject.Sales_Partner__c == sunrunId
-				//	 &&  propsalObject.Agreement_Type__c == 'Customer Owned - Full Upfront'
-				//	&& (propsalObject.Finance_Type__c != 'N/A' && propsalObject.Finance_Type__c != 'Bank Financed')){
-				//	errorMessage = 'Since this is a proposal for Customer Owned system, please specify Finance Type (either Bank Financed or N/A)';
-				//}else{
+/*
+            if( propsalObject.sales_partner__c != System.Label.Sunrun_Inc_Id && 
+			   (propsalObject.Agreement_Type__c == 'Customer Owned - Bank Financed' || propsalObject.Agreement_Type__c == 'Customer Owned - Full Upfront')){
+                    errorMessage = SunrunErrorMessage.getErrorMessage('ERROR_000033').error_message__c;     
+                    ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, errorMessage));
+                    result = false;
+			}else*/
+			if(propsalObject.stage__c == 'Created' || propsalObject.stage__c == 'Ready for Submission'){
+    			
 					DesignToolWebservice.DesignToolWebserviceResponse responseObj = new DesignToolWebservice.DesignToolWebserviceResponse();
 					responseObj = DesignTool.canUserSubmitProposal(propsalObject.Opportunity__c);
 					if(responseObj != null && responseObj.status == ProposalUtil.SUCCESS){
@@ -150,7 +152,7 @@ public class SubmitProposal {
 					}else{
 						errorMessage = responseObj.errorMessage;
 					}
-				//}
+			    }
     		}else{
     			if(propsalObject.stage__c == 'SR Ops Approved'){
     				errorMessage = 'This is an approved proposal. You can not resubmit it again';
@@ -158,7 +160,7 @@ public class SubmitProposal {
     				errorMessage = 'Invalid proposal stage for submission';
     			}
     		}
-    	}
+
     	if(result == false){
     		ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, errorMessage));
 			showSubmitFirst = false;

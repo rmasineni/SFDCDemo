@@ -1,9 +1,15 @@
 public virtual without sharing class PaymentServiceImpl extends BaseClass implements PaymentService {
     
-    private static Integer MAX_CUSTOM_PARAMS = 100;
-    private static String PaymentType_Card = 'card';
-    private static String TransactionType_Sale = 'sale';
-    private static String PaymentTokenStatus_Consumed = 'Consumed';
+    public static Integer MAX_CUSTOM_PARAMS = 100;
+    
+    public static String PaymentType_Card = 'card';
+    public static String TransactionType_Sale = 'sale';
+    public static String PaymentTokenStatus_Consumed = 'Consumed';
+    public static String Language_Spanish = 'Spanish';
+    public static String LanguageCode_Spanish = 'es';
+    public static String LanguageCode_English = 'en';
+    public static String PaymentMode_OneTime = 'OneTime';
+    public static String PaymentMode_Recurring = 'Recurring';
 
     public Payment_Transaction__c savePaymentResponse(Dto.PaymentResponse paymentResponse) {
         debug('Saving the payment transaction ' +paymentResponse);
@@ -641,5 +647,108 @@ public virtual without sharing class PaymentServiceImpl extends BaseClass implem
             update sobj;
         }
     }
+
+    public Opportunity createPaymentUrl(String optyId, String paymentMode) {
+        Opportunity opty = queryOptyForPaymentAndAllContactRoles(optyId);
+        if (opty == null) {
+            throw new BusinessException('Opportunity not found with Id ' + optyId);
+        }
+        
+        //By default use the contact role available in the opty with role Homeowner.
+        //If not, throw error.
+        if (opty.OpportunityContactRoles.isEmpty()) {
+            throw new BusinessException('There are no Contacts defined in the opportunity with role Homeowner');
+        }
+
+        OpportunityContactRole homeOwnerRole = null;
+        for (OpportunityContactRole role : opty.OpportunityContactRoles) {
+            if (role.Role == 'Homeowner') {
+                homeOwnerRole = role;
+                break;
+            }
+        }
+
+        createPaymentUrl(opty, paymentMode, homeOwnerRole==null?null:homeOwnerRole.id, null, null);
+        
+        update opty;
+        return opty;
+    }
     
+    public Opportunity createPaymentUrl(Opportunity opty, String paymentMode, String optyContactRoleId, String salesPartnerName, String languageCode) {
+        
+        if (salesPartnerName == null) {
+            salesPartnerName = getSalesPartnerName(opty.id);
+        }
+        
+        if (languageCode == null) {
+            languageCode = getPaymentLanguageCode(opty.id);
+        }
+
+        //The payment request url would look like below
+        //https://majdev-sunrun.cs9.force.com/partner/apex/{VfPage}?token={Token}&&language={preferredLanguageParam}
+        String paymentRequestUrl = Sf.settingsService.getString('PaymentRequestUrl');
+        String token = generateVerificationToken();
+        
+        Map<String, String> parms = new Map<String, String>();
+        parms.put('VfPage', getPaymentPage(paymentMode, getSalesPartnerName(opty.id)));
+        parms.put('Token', token);
+        parms.put('Language', languageCode);
+        paymentRequestUrl = replaceMergeTokens(paymentRequestUrl, parms);
+        
+        opty.Payment_Request_Url__c = paymentRequestUrl;
+        opty.Payment_Request_Token__c = token;
+        opty.Payment_Request_Token_Status__c = 'Valid';
+        opty.Payment_Request_Contact_Role_Id__c =  optyContactRoleId;
+        
+        return opty;
+    }
+    
+    public String getPaymentPage(String paymentMode, String salesPartnerName) {
+        String paymentPageSetting = paymentMode==PaymentMode_OneTime?'PaymentBrandingOptyPaymentPage':'PaymentBrandingOptyAutoPaymentPage';
+        String defaultPaymentPage = paymentMode==PaymentMode_OneTime?'CustomerOptyPayment':'CustomerOptyAutoPayment';
+        
+        Map<String, String> pageMap = Sf.settingsService.getStringMap(paymentPageSetting, new Map<String, String>());
+        
+        String vfPage = (String) firstNonNull(pageMap.get(salesPartnerName), defaultPaymentPage);
+        
+        return vfPage;
+    }
+
+    public String getPaymentEmailTemplate(String paymentMode, String salesPartnerName, String languageCode) {
+        String emailTemplateSetting = paymentMode==PaymentMode_OneTime?'PaymentBrandingOptyPaymentEmail':'PaymentBrandingOptyAutoPaymentEmail';
+        String defaultEmailTemplate;
+        if (paymentMode == PaymentMode_OneTime) {
+            defaultEmailTemplate = LanguageCode_Spanish == languageCode?'Request_For_Payment_SPANISH':'Request_For_Payment';
+        } else {
+            defaultEmailTemplate = LanguageCode_Spanish == languageCode?'Request_For_Auto_Payment_SPANISH':'Request_For_Auto_Payment';
+        }
+        
+       	Map<String, String> emalTemplateMap = Sf.settingsService.getStringMap(emailTemplateSetting, new Map<String, String>());
+        return (String) firstNonNull(emalTemplateMap.get(salesPartnerName), defaultEmailTemplate);
+    }
+
+    public String getPaymentLanguageCode(String optyId) {
+        String languageCode;
+        OpportunityContactRole con  = [
+            select  
+            ContactId,  
+            contact.preferred_language__c 
+            from OpportunityContactRole 
+            where OpportunityId = :optyId and IsPrimary = true limit 1];
+        
+        if (Language_Spanish == con.Contact.preferred_language__c) {
+            languageCode = LanguageCode_Spanish;
+        }
+        
+        return (String) firstNonNull(languageCode, LanguageCode_English);
+    }
+
+    public String getSalesPartnerName(Id optyId) {
+        Opportunity opty = [select id, (select Partner_Name__r.Name from Partner_Roles__r where Role__c = 'Sales') from Opportunity where id = :optyId limit 1];
+        if (!opty.Partner_Roles__r.isEmpty()) {
+            return opty.Partner_Roles__r.get(0).Partner_Name__r.Name;
+        }
+        
+        return null;
+    }
 }

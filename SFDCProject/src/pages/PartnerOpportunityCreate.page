@@ -4,7 +4,7 @@
 <apex:messages styleClass="producterror"/>
 
 <apex:pageBlock >              
-    <div style="width:700px;margin: 0 auto;text-align: center;">         
+      <div style="width:700px;margin: 0 auto;text-align: center;">         
            <apex:outputText style="font-size:130%;font-weight: bold;" value="Navigate BrightPath:" rendered="{!AND(NOT(showConfirm),(BBEligible),DesignTypes.size>1)}"></apex:outputText>
             <apex:selectList style="min-width:200px;" title="NavigationDD" size="1" value="{!selectedDesign}" multiselect="false" rendered="{!AND(NOT(showConfirm),(BBEligible),DesignTypes.size>1)}">
                 <apex:selectOptions value="{!DesignTypes}"/>
@@ -73,15 +73,14 @@
         <div style="width:840px;margin: 0 auto;text-align: center;">
             <apex:outputPanel rendered="{!createAppointment}">
                 <apex:outputText style="font-size:130%;font-weight: bold;" value="Create Appointment:"></apex:outputText>         
-                    <apex:selectList id="actionId" style="min-width:200px;" title="apptCategory" size="1" value="{!opp.Appointment_category__c}" multiselect="false">
+                    <apex:selectList id="actionId" style="min-width:200px;" title="apptCategory" size="1" value="{!opp.Appointment_Category__c}" multiselect="false">
                     <apex:selectOptions value="{!apptCategories}"/>
-                </apex:selectList>
-                
-                <!-- <apex:inputField  style="min-width:200px;" id="actionId" value="{!opp.Appointment_category__c}"/>  -->             
+                </apex:selectList>         
                 <apex:commandLink value="Go" onclick="return processSchedUserActions('{!$Component.actionId}')" action="{!showScheduler}" target="_blank" styleClass="btn" style="min-width:58px;"  />
             </apex:outputPanel>             
         </div>
-    
+
+             
     <apex:pageBlockSection title="Opportunity Detail">
         <apex:pageBlockSectionItem >
         <apex:outputLabel value="First Name"/>
@@ -173,10 +172,10 @@
         <apex:outputField value="{!contactObj.Preferred_Language__c}">
         </apex:outputField>
         </apex:pageBlockSectionItem>
-        <apex:pageBlockSectionItem rendered="{!!isAEEUser}">        
-        <apex:outputLabel value="Hawaii NEM Approved"/>     
-        <apex:outputField value="{!Opportunity.Hawaii_NEM_Approved__c}">        
-        </apex:outputField>     
+        <apex:pageBlockSectionItem rendered="{!!isAEEUser}">
+        <apex:outputLabel value="Hawaii NEM Approved"/>
+        <apex:outputField value="{!Opportunity.Hawaii_NEM_Approved__c}">
+        </apex:outputField>
         </apex:pageBlockSectionItem>      
         <apex:pageBlockSectionItem >
         <apex:outputLabel value="Notes"/>
@@ -308,7 +307,7 @@
         <apex:outputLabel value="{!$ObjectType.Opportunity.fields.Average_Monthly_Electric_Bill__c.label}"/>
         <apex:outputField value="{!Opportunity.Average_Monthly_Electric_Bill__c}">
         </apex:outputField>
-        </apex:pageBlockSectionItem>   -->   
+        </apex:pageBlockSectionItem>   --> 
          <apex:pageBlockSectionItem rendered="{!!isAEEUser}">
                 <apex:outputLabel value="Consumption Meter"/>
                 <apex:outputField value="{!Opportunity.Energy_Storage_Applicable__c}" >
@@ -357,11 +356,11 @@
         </apex:outputField>
       </apex:pageBlockSectionItem>
     
-    <!-- <apex:pageBlockSectionItem helpText="{!$ObjectType.Opportunity.Fields.Ready_for__c.inlineHelpText}">
+   <!--  <apex:pageBlockSectionItem helpText="{!$ObjectType.Opportunity.Fields.Ready_for__c.inlineHelpText}">
         <apex:outputLabel value="{!$ObjectType.Opportunity.fields.Ready_for__c.label}"/>
         <apex:outputField value="{!Opportunity.Ready_for__c}">
         </apex:outputField>
-      </apex:pageBlockSectionItem> --> 
+      </apex:pageBlockSectionItem>  -->
       <apex:pageBlockSectionItem helpText="{!$ObjectType.Opportunity.Fields.Opportunity_Status__c.inlineHelpText}">
         <apex:outputLabel value="Closed Reason"/>
         <apex:outputField value="{!Opportunity.Opportunity_Status__c}">
@@ -422,7 +421,7 @@
         </apex:outputField>
       </apex:pageBlockSectionItem>             
     </apex:pageBlockSection> 
-     <apex:pageBlockSection title="Design">
+    <apex:pageBlockSection title="Design">
     <apex:pageBlockSectionItem helpText="{!$ObjectType.Opportunity.Fields.Ready_for__c.inlineHelpText}">
         <apex:outputLabel value="{!$ObjectType.Opportunity.fields.Ready_for__c.label}"/>
         <apex:outputField value="{!Opportunity.Ready_for__c}">
@@ -448,8 +447,6 @@
       </apex:pageBlockSectionItem>
           
     </apex:pageBlockSection> 
-
-    
     <apex:outputPanel id="retOP">
                     
             <apex:pageBlockSection title="Demographics and bill inputs" rendered="{!Opportunity.Energy_Storage_Applicable__c}">
@@ -574,7 +571,7 @@
     
     
        
-    <apex:pageBlockButtons >    
+    <apex:pageBlockButtons >
         <apex:commandButton value="Edit" action="{!redirect}">
         </apex:commandButton>
         <!-- 
@@ -633,7 +630,7 @@
         </apex:outputPanel>
          -->
             <!-- End Santosh Changes -->
-            
+         
     </apex:pageBlockButtons>    
 </apex:pageBlock>
     
@@ -723,6 +720,7 @@
          </apex:pageBlockSection>                
         </apex:pageBlock>
     </apex:form>
+
     <apex:form rendered="{!!isAEEUser}">
          <apex:pageBlock >
          <apex:pageBlockSection Title="Appointments" columns="1">
@@ -748,16 +746,6 @@
                 <apex:column headervalue="Appointment Type">
                     <apex:outputField value="{!apt.Appointment_Type__c}"/>
                 </apex:column>
-                <apex:column headervalue="Appointment Time Local">
-                    <apex:outputField value="{!apt.Appointment_Time_Local__c}">
-                     <apex:inlineEditSupport disabled="true"/>
-                    </apex:outputField>
-                </apex:column>   
-                <apex:column headervalue="Duration">
-                    <apex:outputField value="{!apt.Duration__c}">
-                     <apex:inlineEditSupport disabled="true"/>
-                    </apex:outputField>
-                </apex:column>
                 <apex:column headervalue="Event Assigned To">
                     <apex:outputField value="{!apt.Event_Assigned_To__r.name}"/>
                 </apex:column>
@@ -775,6 +763,7 @@
         </apex:pageBlock>
     </apex:form>
 
+
 <apex:include pageName="OpportunityNotesMainPage"/>    
 <!--
 <apex:relatedList list="Notes__r"/>
@@ -787,7 +776,7 @@
         var isPartner = "{!IsPartnerUser}";
         if(isPartner == 'true')
         {
-            tempURL = '/partner/OpportunityCustomerCreditManager?id=' + optyId;
+            tempURL = '/partner/OpportunityCustomerCreditManager?id=' + optyId; 
         }  
         var newwindow = window.open(tempURL, '', 'toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=950,height=465,left=150,top=150'); 
         newwindow.focus();
@@ -819,18 +808,19 @@
         alert(status);
     }
 
-function processSchedUserActions(actionId){
-   var result = true;
-   var actionText = document.getElementById(actionId).value;
-   if(actionText == null || actionText == "" || actionText == '--None--'){
-       alert('Select an appointment type');
-       result = false;
-   }
-   return result;
-   //var win = window.open(redirectUrl, '_blank');
-   //win.focus();
-   //return true;
-}
+
+    function processSchedUserActions(actionId){
+       var result = true;
+       var actionText = document.getElementById(actionId).value;
+       if(actionText == null || actionText == "" || actionText == '--None--'){
+           alert('Select an appointment type');
+           result = false;
+       }
+       return result;
+       //var win = window.open(redirectUrl, '_blank');
+       //win.focus();
+       //return true;
+    }
 
 </script>
 <style>

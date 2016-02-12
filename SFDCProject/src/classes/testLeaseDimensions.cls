@@ -23,7 +23,6 @@
 private class testLeaseDimensions {
 	
 	static testMethod void myUnitTest() {
-        Test.startTest();
     Account a = new Account();
     a.Name = 'Lease Account';
     a.BillingStreet = '1290 Happy Path';
@@ -417,16 +416,8 @@ private class testLeaseDimensions {
         //System.assertEquals(ccObj.fico__c, crdtInfo.X3Fico);
        // System.assertEquals(ccObj.Decisioning_Bureau__c, crdtInfo.Bureau1);   	
     	//System.debug('ccObj.fico__c4: ' + ccObj.fico__c);
-    	LD.ProcessReturnValue('SUCCESS','test',null);
-    	LD.ProcessReturnValue('FAIL','test',null);
-    	map<Id,Proposal__c> proposals = new map<Id,Proposal__c>([select Id, Primary_Customer__r.firstname, Primary_Customer__r.LastName ,Primary_Customer__r.email ,
-                                                           Primary_Customer__r.Birthdate,Primary_Customer__r.MailingStreet, Primary_Customer__r.Phone, Opportunity__r.AccountId, 
-                                                         Primary_Customer__r.MailingCity,Primary_Customer__r.MailingState,  Opportunity__r.Deal_Id__c, Install_Partner_Name__c,
-                                                         Primary_Customer__r.MailingCountry, Primary_Customer__r.MailingPostalCode, 
-                                                         Agreement_Type__c, Primary_Customer__r.id ,Current_Customer_Credit_Report__c
-                                                                 from proposal__c where Current_Customer_Credit_Report__c=null limit 1]);
-       set<Id> setId =  LeaseDimensions.createCreditRecord(proposals, proposals);
-      Test.stopTest();
+        
+
     }
     catch(Exception e)
     {

@@ -18,15 +18,6 @@
         <operation>Formula</operation>
         <protected>false</protected>
     </fieldUpdates>
-    <fieldUpdates>
-        <fullName>Update_IsVisibleInSelfService</fullName>
-        <field>IsVisibleInSelfService</field>
-        <literalValue>1</literalValue>
-        <name>Update IsVisibleInSelfService</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Literal</operation>
-        <protected>false</protected>
-    </fieldUpdates>
     <rules>
         <fullName>Completed to Closed</fullName>
         <actions>
@@ -55,16 +46,6 @@
         </actions>
         <active>true</active>
         <formula>ISPICKVAL (Status, &quot;Resolved&quot;) &amp;&amp; NOT(ISPICKVAL ((PRIORVALUE(Status)), &quot;Resolved&quot;))</formula>
-        <triggerType>onAllChanges</triggerType>
-    </rules>
-    <rules>
-        <fullName>Update IsVisibleInSelfService field for portal tasks</fullName>
-        <actions>
-            <name>Update_IsVisibleInSelfService</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>true</active>
-        <formula>Owner:User.ContactId !=null</formula>
         <triggerType>onAllChanges</triggerType>
     </rules>
 </Workflow>

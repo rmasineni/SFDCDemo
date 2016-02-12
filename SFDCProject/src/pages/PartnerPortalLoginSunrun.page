@@ -1,0 +1,283 @@
+<apex:page title="AEE Partner Portal" sidebar="false" showHeader="false" controller="PartnerPortalLogin">
+    <link href="{!URLFOR($Resource.CommunityResourcesAee, 'partner/css/sunrun.css')}" rel='stylesheet' type='text/css'/>
+    
+	<style>
+    	.form-group.error {
+        	display: initial;
+        }
+        
+        .form-group.error ul {
+        	list-style: none;
+        	color: white;
+       	 	display: inline-block;
+        }
+        
+        .sfdc-submit-button {
+        	background: linear-gradient(#f8a232, #f06a19) !Important;
+            font-family: "naivnormal_text" !Important;
+            color: white !Important;
+            font-size: 18.2px !Important;
+        }
+        
+        /* this is to remove the -28px margin in li items */
+        .sunrun-analitycs-processed ul li, .footer-secondary-menu ul li {
+        	margin-left: 0 !Important;
+        }
+        
+    </style>
+<body id="my-sunrun" class="my-sunrun page-login  login">
+    <header class="navbar-mobile">
+        <div class="inner">
+            <div class="logo">
+                <img src="{!URLFOR($Resource.CommunityResourcesAee, 'partner/images/sunrun_white_logo.png')}"/>
+            </div>
+            <nav class="navbar navbar-fixed-bottom-mobile main-nav col-xs-12 ng-scope" ng-controller="navigationController">
+                <div ui-sref-active="active" class="col-xs-4 nav-item">
+                    <a ui-sref="dashboard" analytics-on="click" analytics-category="Global" analytics-event="Click" analytics-label="Dashboard" ng-click="appAnalytics(&#39;Global&#39;,&#39;Click&#39;,&#39;Dashboard&#39;)" href="http://stg.customer.sunrun.com/#/dashboard"><i class="icon icon-dial"></i>Dashboard</a>
+                </div>
+                <div ui-sref-active="active" class="col-xs-4  nav-item">
+                    <a ui-sref="referral" analytics-on="click" analytics-category="Global" analytics-event="Click" analytics-label="Refer A Friend" ng-click="appAnalytics(&#39;Global&#39;,&#39;Click&#39;,&#39;Refer A Friend&#39;)" href="http://stg.customer.sunrun.com/#/referral"><i class="icon icon-plus"></i>Refer A Friend</a>
+                </div>
+                <div ui-sref-active="active" class="col-xs-4  nav-item">
+                    <a ui-sref="account" analytics-on="click" analytics-category="Global" analytics-event="Click" analytics-label="Account" ng-click="appAnalytics(&#39;Global&#39;,&#39;Click&#39;,&#39;Account&#39;)" href="http://stg.customer.sunrun.com/#/account"><i class="icon icon-person"></i>Account</a>
+                </div>
+            </nav>
+        </div>
+    </header>
+    <header class="navbar navbar-desktop container navbar-default yamm">
+        <div class="container inner">
+            <div class="navbar-header">
+                <a class=" navbar-btn" ui-sref="dashboard" title="Home" href="http://stg.customer.sunrun.com/#/dashboard">
+                    <img src="{!URLFOR($Resource.CommunityResourcesAee, 'partner/images/sunrun_logo.png')}" alt="Sunrun logo"/>
+                </a>
+                <button type="button" class="navbar-toggle pull-left" data-toggle="collapse" data-target="#main-nav"> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span>
+                </button>
+                <div class="visible-xs-inline-block phone-menu-outer yamm">
+                    <span class="phone-menu collapsed" data-toggle="collapse" data-target="#phone-menu-dropdown">
+          <span class="glyphicon glyphicon-earphone"></span>
+                    <span class="glyphicon glyphicon-triangle-bottom"></span>
+                    </span>
+                    <div class="phone-menu-dropdown collapse" id="phone-menu-dropdown">
+                        <div class="phone-menu-inner">
+                            <h3><a class="invoca" href="tel:855-408-4918">855-408-4918</a></h3>
+                            <p>Monday through Friday 6am - 9pm PST</p>
+                            <p>Saturday 8am - 5pm PST</p>
+                            <p>Sunday 8am - 12pm PST</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="navbar-collapse collapse" id="main-nav">
+                <nav>
+                    <ul class="menu nav navbar-nav primary sunrun-analitycs-processed">
+                        <div class="navbar-inner show-on-auth">
+                            <li class="first leaf dashboard-link"><a ui-sref="dashboard" href="http://stg.customer.sunrun.com/#/dashboard">Dashboard</a></li>
+                            <li class="leaf referral-link"><a ui-sref="referral" href="http://stg.customer.sunrun.com/#/referral">Referral</a></li>
+                            <li class="leaf account-link"><a ui-sref="accountdesktop" href="http://stg.customer.sunrun.com/#/account-desktop">Account</a></li>
+                            <li class="leaf support-link"><a ui-sref="support" href="http://stg.customer.sunrun.com/#/support">Support</a></li>
+                            <div class="header-picker ng-hide" ng-show="hasMultipleHomes">
+                                <select ng-change="getAddressProduction(address)" ng-model="address" ng-options="loc.address for loc in locations track by loc.id" ng-disabled="currState !== &#39;dashboard&#39;" class="ng-pristine ng-untouched ng-valid" disabled="disabled">
+                                    <option value="?" selected="selected"></option>
+                                </select>
+                                <span class="glyphicon glyphicon-home"></span>
+                                <span class="glyphicon toggle-icon"></span>
+                            </div>
+                        </div>
+                    </ul>
+                    <ul class="menu nav navbar-nav secondary sunrun-analitycs-processed">
+                        <div class="navbar-inner">
+                            <li class="first leaf dropdown yamm-fw contact" data-toggle="collapse" data-target="#contact-menu"> <span class="glyphicon glyphicon-envelope"></span> <a href="http://www.sunrun.com/contact-us" class="parent">Contact Us</a>
+                                <ul class="collapse dropdown-menu" id="contact-menu">
+                                    <div class="contact-menu">
+                                        <div class="contact-menu-inner">
+                                            <div class="support column">
+                                                <div class="section">
+                                                    <div class="left">
+                                                        <img alt="Support" width="33" height="33" src="{!URLFOR($Resource.CommunityResourcesAee, 'partner/images/headset.min.svg')}"/>
+                                                    </div>
+                                                    <div class="right">
+                                                        <h5>Customer Support</h5>
+                                                        <p>Phone <a class="invoca" href="tel:855-408-4918">855-408-4918</a></p>
+                                                        <div class="hours-listing">
+                                                            <span class="mon bold"><span class="day">Monday</span> <span class="hours">6:00 am - 9:00 pm</span> <span class="timezone">PT</span></span>
+                                                            <span class="tue"><span class="day">Tuesday</span> <span class="hours">6:00 am - 9:00 pm</span><span class="timezone">PT</span></span>
+                                                            <span class="wed"><span class="day">Wednesday</span> <span class="hours">6:00 am - 9:00 pm</span> <span class="timezone">PT</span></span>
+                                                            <span class="thu"><span class="day">Thursday</span> <span class="hours">6:00 am - 9:00 pm</span> <span class="timezone">PT</span></span>
+                                                            <span class="fri"><span class="day">Friday</span> <span class="hours">6:00 am - 9:00 pm</span> <span class="timezone">PT</span></span>
+                                                            <span class="sat"><span class="day">Saturday</span> <span class="hours">8:00 am - 5:00 pm</span> <span class="timezone">PT</span></span>
+                                                            <span class="sun"><span class="day">Sunday</span> <span class="hours">8:00 am - 12:00 pm</span> <span class="timezone">PT</span></span>
+                                                        </div>
+                                                        <p>Email <a href="mailto:customercare@sunrun.com">customercare@sunrun.com</a></p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="column">
+                                                <div class="section">
+                                                    <div class="left"><img alt="Shop for solar" width="33" height="33" src="{!URLFOR($Resource.CommunityResourcesAee, 'partner/images/cart.min.svg')}"/></div>
+                                                    <div class="right">
+                                                        <h5>Shop for solar</h5> <span>Phone <a class="invoca" href="tel:855-408-4918">855-408-4918</a></span> <span>Get a <a href="http://www.sunrun.com/free-solar-quote">free quote</a></span></div>
+                                                </div>
+                                                <div class="section">
+                                                    <div class="left"><img alt="Sunrun Careers" width="33" height="33" src="{!URLFOR($Resource.CommunityResourcesAee, 'partner/images/briefcase.min.svg')}"/></div>
+                                                    <div class="right">
+                                                        <h5>Sunrun careers</h5> <span>Check our <a href="http://www.sunrun.com/about/solar-careers">careers page</a></span></div>
+                                                </div>
+                                                <div class="section last">
+                                                    <div class="left"><img alt="Partner With Us" width="33" height="33" src="{!URLFOR($Resource.CommunityResourcesAee, 'partner/images/handshake.min.svg')}"/></div>
+                                                    <div class="right">
+                                                        <h5>Partner With Us</h5> <span>See our <a href="http://www.sunrun.com/partner-with-us">partnership opportunities</a></span></div>
+                                                </div>
+                                            </div>
+                                            <div class="column last">
+                                                <div class="section">
+                                                    <div class="left"><img alt="Press Inquiries" width="33" height="33" src="{!URLFOR($Resource.CommunityResourcesAee, 'partner/images/handshake.min.svg')}"/></div>
+                                                    <div class="right">
+                                                        <h5>Press Inquiries</h5> <span>Email <a href="mailto:press@sunrun.com">press@sunrun.com</a></span></div>
+                                                </div>
+                                                <div class="section">
+                                                    <div class="left"><img alt="General Inquiries" width="33" height="33" src="{!URLFOR($Resource.CommunityResourcesAee, 'partner/images/envelope.min.svg')}"/></div>
+                                                    <div class="right">
+                                                        <h5>General Inquiries</h5> <span>Email <a href="mailto:info@sunrun.com">info@sunrun.com</a></span></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </ul>
+                            </li>
+                            <li class="leaf phone"><span class="glyphicon glyphicon-earphone"></span><a href="tel:855-408-4918" class="invoca">855-408-4918</a></li>
+                            <li class="last leaf"><span class="glyphicon glyphicon-user"></span>
+                                <a href="https://customer.sunrun.com/" class="sunrun-external-processed login">Sign In</a>
+                                <a href="" ng-click="logout()" class="sunrun-external-processed logout">Sign Out</a>
+                            </li>
+                        </div>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+        <div class="bottom-shadow"></div>
+    </header>
+    <section class="container content-container">
+        <div class="bg-container">
+            <div class="address-picker ng-hide" ng-show="hasMultipleHomes">
+                <select ng-change="getAddressProduction(address)" ng-model="address" ng-options="loc.address for loc in locations track by loc.id" class="ng-pristine ng-untouched ng-valid">
+                    <option value="?" selected="selected"></option>
+                </select>
+            </div>
+            <div class="row content inner">
+                <!-- uiView:  -->
+                <div ui-view="" autoscroll="true" class="main-view animated fadeIn ng-scope">
+                    <div class="logo ng-scope">
+                        <img src="{!URLFOR($Resource.CommunityResourcesAee, 'partner/images/sunrun_white_logo.png')}"/>
+                    </div>
+                    <div class="login col-sm-12 ng-scope">
+                        <apex:form >
+                        <div class="form">
+                            <div class="form-group first-row row desktop-half">
+                                <label for="email">User name</label>
+                                <apex:inputtext size="30" id="username" styleClass="desktop-switch ng-pristine ng-untouched ng-valid-email ng-invalid ng-invalid-required" value="{!username}"/>
+                            </div>
+                            <div class="form-group row desktop-half">
+                                <label for="password">Password</label>
+                                <apex:inputSecret size="30" id="password" styleClass="desktop-switch ng-pristine ng-untouched ng-invalid ng-invalid-required"  value="{!password}"/>
+                            </div>
+
+                            <div class="form-group error" style="display:initial">
+                                <c:PartnerPortalErrorMessage />
+                            </div>
+                            <div class="forgot-pass-btn clearfix">
+                                <a ui-sref="password-a" class="white-link-uppercase" ng-click="appAnalytics(&#39;Login&#39;,&#39;Password&#39;,&#39;Forgot Password&#39;);" analytics-on="click" analytics-category="Login" analytics-event="Password" analytics-label="Forgot Password" href="/partner/PartnerPortalForgotPassword">or Password?</a>
+                                <a ui-sref="password-a" class="white-link-uppercase" ng-click="appAnalytics(&#39;Login&#39;,&#39;Password&#39;,&#39;Forgot Password&#39;);" analytics-on="click" analytics-category="Login" analytics-event="Password" analytics-label="Forgot Password" href="/partner/PartnerPortalForgotUserName">Forgot Username?</a>
+                            </div>
+                            <div class="form-group sign-in-btn submit-btn-center">
+                                <apex:commandButton styleClass="btn btn-gradient sfdc-submit-button" action="{!login}" value="    Sign In    " id="theButton1"/>
+                            </div>
+                        </div>
+                        </apex:form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="registration ng-scope" ng-controller="authController">
+            <div class="form-container clearfix" ng-hide="hideRegisterForm">
+                <h2 class="reg-header" ng-hide="registerMessage">Get Started</h2>
+                <p class="reg-copy" ng-hide="registerMessage">Get to the good stuff! Please give us your email address to find your account</p>
+                <form name="registerForm" ng-submit="register(register.email)" ng-hide="registerMessage" class="ng-pristine ng-valid-email ng-invalid ng-invalid-required">
+                    <input type="email" placeholder="Email Address" ng-model="register.email" text-box="" required="" class="ng-pristine ng-untouched ng-valid-email ng-invalid ng-invalid-required" autocomplete="off" style="background-image: url(&quot;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAASCAYAAABSO15qAAAABmJLR0QA/wD/AP+gvaeTAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH3QsPDhss3LcOZQAAAU5JREFUOMvdkzFLA0EQhd/bO7iIYmklaCUopLAQA6KNaawt9BeIgnUwLHPJRchfEBR7CyGWgiDY2SlIQBT/gDaCoGDudiy8SLwkBiwz1c7y+GZ25i0wnFEqlSZFZKGdi8iiiOR7aU32QkR2c7ncPcljAARAkgckb8IwrGf1fg/oJ8lRAHkR2VDVmOQ8AKjqY1bMHgCGYXhFchnAg6omJGcBXEZRtNoXYK2dMsaMt1qtD9/3p40x5yS9tHICYF1Vn0mOxXH8Uq/Xb389wff9PQDbQRB0t/QNOiPZ1h4B2MoO0fxnYz8dOOcOVbWhqq8kJzzPa3RAXZIkawCenHMjJN/+GiIqlcoFgKKq3pEMAMwAuCa5VK1W3SAfbAIopum+cy5KzwXn3M5AI6XVYlVt1mq1U8/zTlS1CeC9j2+6o1wuz1lrVzpWXLDWTg3pz/0CQnd2Jos49xUAAAAASUVORK5CYII=&quot;); background-attachment: scroll; background-position: 100% 50%; background-repeat: no-repeat;"/>
+                    <div class="reg-btns">
+                        <input type="submit" class="btn btn-gradient" value="Find"/>
+                        <a href="" ng-click="getStarted()" class="btn btn-gradient btn-right">Cancel</a>
+                    </div>
+                </form>
+                <div class="message">
+                    <p ng-bind-html="registerMessage | to_trusted" class="ng-binding"></p>
+                </div>
+            </div>
+        </div>
+        <div class="push"></div>
+    </section>
+    <footer class="footer container">
+        <div class="footer-inner">
+            <div class="region region-footer">
+                <section id="block-menu-menu-footer-links" class="block block-menu clearfix sunrun-analitycs-processed" data-personalize-entity-id="block/menu-menu-footer-links">
+                    <ul class="menu nav">
+                        <li class="first leaf" style="padding: 0px 24px;"><a href="http://www.sunrun.com/about">About</a></li>
+                        <li class="leaf" style="padding: 0px 24px;"><a href="http://www.sunrun.com/contact-us">Contact</a></li>
+                        <li class="leaf" style="padding: 0px 24px;"><a href="http://blog.sunrun.com/" class="sunrun-external-processed">Blog</a></li>
+                        <li class="leaf" style="padding: 0px 24px;"><a href="http://newsroom.sunrun.com/" class="sunrun-external-processed">Newsroom</a></li>
+                        <li class="leaf" style="padding: 0px 24px;"><a href="http://investors.sunrun.com/" class="sunrun-external-processed">Investors</a></li>
+                        <li class="leaf" style="padding: 0px 24px;"><a href="http://www.sunrun.com/about/solar-careers">Careers</a></li>
+                        <li class="leaf" style="padding: 0px 24px;"><a href="http://www.sunrun.com/how-it-works/faq#item-2406" target="_blank">Partner Directory</a></li>
+                        <li class="last expanded dropdown yamm-fw collapsed leaf" data-toggle="collapse" data-target="#menu-1476" style="padding: 0px 24px;"><a href="http://www.sunrun.com/solar-by-state" class="parent">Where's Sunrun?</a><span class="glyphicon toggle-icon"></span>
+                            <ul class="collapse dropdown-menu" id="menu-1476">
+                                <div class="dropdown-inner">
+                                    <li class="first leaf"><a href="http://www.sunrun.com/solar-by-state/az">Arizona</a></li>
+                                    <li class="leaf"><a href="http://www.sunrun.com/solar-by-state/ca">California</a></li>
+                                    <li class="leaf"><a href="http://www.sunrun.com/solar-by-state/co">Colorado</a></li>
+                                    <li class="leaf"><a href="http://www.sunrun.com/solar-by-state/ct">Connecticut</a></li>
+                                    <li class="leaf"><a href="http://www.sunrun.com/solar-by-state/de">Delaware</a></li>
+                                    <li class="leaf"><a href="http://www.sunrun.com/solar-by-state/hi">Hawaii</a></li>
+                                    <li class="leaf"><a href="http://www.sunrun.com/solar-by-state/md">Maryland</a></li>
+                                    <li class="leaf"><a href="http://www.sunrun.com/solar-by-state/ma">Massachusetts</a></li>
+                                    <li class="leaf"><a href="http://www.sunrun.com/solar-by-state/nv">Nevada</a></li>
+                                    <li class="leaf"><a href="http://www.sunrun.com/solar-by-state/nh">New Hampshire</a></li>
+                                    <li class="leaf"><a href="http://www.sunrun.com/solar-by-state/nj">New Jersey</a></li>
+                                    <li class="leaf"><a href="http://www.sunrun.com/solar-by-state/ny">New York</a></li>
+                                    <li class="leaf"><a href="http://www.sunrun.com/solar-by-state/or">Oregon</a></li>
+                                    <li class="leaf"><a href="http://www.sunrun.com/solar-by-state/pa">Pennsylvania</a></li>
+                                    <li class="last leaf"><a href="http://www.sunrun.com/solar-by-state/sc">South Carolina</a></li>
+                                </div>
+                            </ul>
+                        </li>
+                    </ul>
+                </section>
+            </div>
+            <div class="footer-bottom">
+                <div class="footer-logo"><img src="{!URLFOR($Resource.CommunityResourcesAee, 'partner/images/sunrun-logo-footer.png')}"/></div>
+                <div class="footer-middle">
+                    <div class="copyright">
+                        <p>© 2015 Sunrun. All rights reserved.</p>
+                    </div>
+                    <div class="footer-secondary-menu">
+                        <ul>
+                            <li><a href="http://www.sunrun.com/state-contractor-license-information">State Contractor License Information</a></li>
+                            <li><a href="http://www.sunrun.com/terms-of-service">Terms</a></li>
+                            <li><a href="http://www.sunrun.com/privacy-policy">Privacy</a></li>
+                            <li><a href="http://www.sunrun.com/sitemap">Sitemap</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="footer-right">
+                    <div class="footer-social">
+                        <a href="https://www.facebook.com/sunrun" target="_blank"><i class="fa fa-facebook"></i></a>
+                        <a href="https://twitter.com/Sunrun/" target="_blank"><i class="fa fa-twitter"></i></a>
+                        <a href="https://www.youtube.com/user/SunRunHomeSolar/" target="_blank"><i class="fa fa-youtube"></i></a>
+                        <a href="https://plus.google.com/+sunrun" target="_blank"><i class="fa fa-google-plus"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <script src="{!URLFOR($Resource.CommunityResourcesAee, 'partner/js/vendor.js')}"></script>
+    <script src="{!URLFOR($Resource.CommunityResourcesAee, 'partner/js/index.js')}"></script>
+</body>
+</apex:page>

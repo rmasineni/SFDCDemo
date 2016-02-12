@@ -47,6 +47,10 @@ public with sharing class SalesRepRedirectExt {
         else if(message=='County Message'){
             message='You won\'t be able to generate proposal as County is not identified.Click on OK to continue or Cancel to select a County';
         }
+        //BSKY-7265
+        else if(message=='Design Only Message'){
+            message='You won\'t be able to generate proposal because information is missing on the Opportunity. Click on OK to continue or Cancel to enter all required information';
+        }
         system.debug('return url:'+redirectUrl);
     }
     public void redirectToDesign(){
@@ -98,6 +102,12 @@ public with sharing class SalesRepRedirectExt {
             String authorities=System.currentPagereference().getParameters().get('authorities');
             if(authorities!=null)
             redirectUrl+='&authorities='+authorities;
+            //BSKY-7266
+                        
+            String DesignOnly=System.currentPagereference().getParameters().get('DesignOnly');
+            if(DesignOnly!=null)
+            redirectUrl+='&DesignOnly';
+
             redirectUrl+='&signature='+System.currentPagereference().getParameters().get('signature');
             redirectUrl+='&returnUrl='+System.currentPagereference().getParameters().get('returnUrl');
             returnUrl=System.currentPagereference().getParameters().get('returnUrl');

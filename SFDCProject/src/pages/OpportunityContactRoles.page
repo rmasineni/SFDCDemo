@@ -42,12 +42,12 @@
                         <apex:column width="50px" rendered="{!!isAEEUser}">
                             <apex:facet name="header">Contact Name</apex:facet>
                             <a href='/partner/{!contactRoleWrapper.contactObj.ID}' onclick="redirect('{!contactRoleWrapper.contactObj.Id}')" ><apex:outputtext value="{!contactRoleWrapper.contactObj.Name}"></apex:outputtext></a>  
+                            
                         </apex:column>
                         <apex:column width="50px" rendered="{!isAEEUser}">
                         <apex:facet name="header">Contact Name</apex:facet>
                         <a href='/aeepartner/{!contactRoleWrapper.contactObj.ID}' onclick="redirect('{!contactRoleWrapper.contactObj.Id}')" ><apex:outputtext value="{!contactRoleWrapper.contactObj.Name}"></apex:outputtext></a>
                         </apex:column>
-
                         <!-- <apex:column width="50px" headerValue="Name" value="{!contactRoleWrapper.contactObj.Name}" /> -->
                         <apex:column width="20px" headerValue="Role" value="{!contactRoleWrapper.contactRoleObj.role}" />
                         <apex:column width="30px" headerValue="Credit Status" value="{!contactRoleWrapper.contactObj.Credit_Decision_on_Portal__c}" />

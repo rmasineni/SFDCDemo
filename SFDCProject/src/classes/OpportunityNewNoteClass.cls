@@ -27,7 +27,6 @@ public class OpportunityNewNoteClass {
         isSaved = false;
         showEditSec = true;
         noteRecordObj = (Opportunity)stdController.getRecord();
-
         Opportunityid = noteRecordObj.id;
         System.debug('noteRecord'+Opportunityid);
         

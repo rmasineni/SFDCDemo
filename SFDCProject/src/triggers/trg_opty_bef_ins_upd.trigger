@@ -5,16 +5,15 @@ trigger trg_opty_bef_ins_upd on Opportunity (before insert, before update) {
     Map<Id, String> optyReasonMap = new Map<Id, String>();
     Set<Id> opportunityIds = new Set<Id>();
     Set<Id> optyIdsForProposals = new Set<Id>();
-    Map<Id,Opportunity> OpportunityMap = new Map<Id,Opportunity>(); //added for 6792 user story
     List<Opportunity> siteAuditScheduledOpptyList = new List<Opportunity>();
     Map<Id, Id> opptyAcctMap = new Map<Id, Id>(); 
     Map<Id, Account> opptyIdAcctMap = new Map<Id, Account>(); 
-    BaseScheduling bas=new BaseScheduling();
-
+    BaseScheduling bas=new BaseScheduling();    
+    Map<Id,Opportunity> OpportunityMap = new Map<Id,Opportunity>();
     Boolean skipValidations = false;
   skipValidations = SkipTriggerValidation.performTriggerValidations();
   if(skipValidations == false){ 
-       //update Energy Efficiency Program/Energy Efficiency Amount
+      //update Energy Efficiency Program/Energy Efficiency Amount
       for(Opportunity opptyObj:Trigger.New){
           if(opptyObj.SalesOrganizationName__c== Label.PosigenID){
               if(Trigger.isinsert||(Trigger.isupdate&&Trigger.oldmap.get(opptyObj.id).SalesOrganizationName__c!=opptyObj.SalesOrganizationName__c)){
@@ -25,12 +24,14 @@ trigger trg_opty_bef_ins_upd on Opportunity (before insert, before update) {
           }
           
       }
-         
+      
+      
+      
       for(Opportunity optyObj:Trigger.New)
-      {   
+      {         
           if(optyObj.Opportunity_Division_Custom__c==null||(Trigger.isupdate&&Trigger.oldmap.get(optyObj.id).Division!=optyObj.Division)){
               optyObj.Opportunity_Division_Custom__c=optyObj.Division;
-          }           
+          }          
           //Change code from closed/won to Unqualified(2/19/14)
           if(Trigger.isInsert && 'Unqualified' == optyObj.StageName)
           {
@@ -59,21 +60,21 @@ trigger trg_opty_bef_ins_upd on Opportunity (before insert, before update) {
                   OpportunityUtil.reasonMap.put(optyObj.Id, resultMap.get(optyObj.Id));
                   System.debug('OpportunityUtil.reasonMap: ' + OpportunityUtil.reasonMap);
               }
-
+             
               if(optyObj.Site_Audit_Scheduled__c != null && optyObj.Site_Audit_Scheduled__c != oldOpportunityObj.Site_Audit_Scheduled__c){
                  siteAuditScheduledOpptyList.add(optyObj);  
                  opptyAcctMap.put(optyObj.AccountId, optyObj.Id);
               }
           }//End isUpdate
-
+          
           if(Trigger.isInsert && optyObj.Site_Audit_Scheduled__c != null) {
-                 siteAuditScheduledOpptyList.add(optyObj);    
-                 opptyAcctMap.put(optyObj.AccountId, optyObj.Id);
-          }//End isInsert
-
+             siteAuditScheduledOpptyList.add(optyObj);   
+             opptyAcctMap.put(optyObj.AccountId, optyObj.Id);
+          }
       }
-      
-      //Translate Site Audit Site Scheduled date to date with Customer TimeZone. 
+
+      //Translate Site Audit Site Scheduled date as per Customer TimeZone. 
+      if(!opptyAcctMap.isEmpty()){
           for(Account acct: [select Id, TimeZone__c, HasDaylightSavings__c from Account where id in :opptyAcctMap.keySet()]){
               opptyIdAcctMap.put(opptyAcctMap.get(acct.Id), acct);  
           }
@@ -86,6 +87,7 @@ trigger trg_opty_bef_ins_upd on Opportunity (before insert, before update) {
               System.debug('Time Zone : ' +custTimeZone); 
               opp.Site_Audit_Scheduled_Local__c = bas.getFormattedDatetime(opp.Site_Audit_Scheduled__c, custTimeZone); 
           }  
+      }
          // System.debug('Trigger.NewMap: ' + Trigger.NewMap);
          //Comment Auto calculation of usage(BSKY-4086) 
       //OpportunityUtil.calculateMonUsage(trigger.new,trigger.oldMap,trigger.isinsert,trigger.isupdate) ;
@@ -301,26 +303,27 @@ trigger trg_opty_bef_ins_upd on Opportunity (before insert, before update) {
         
     }
     */
-    
      /* BSKY-6792 logic start */
     If(Trigger.isUpdate)
     {
    //  Map<Id,Opportunity> OpportunityMap = new Map<Id,Opportunity>();
      for(Opportunity oppty : Trigger.new)
      {
-      if(((Trigger.oldMap.get(oppty.ID).StageName =='8. Future Prospect' || Trigger.oldMap.get(oppty.ID).StageName =='9. Closed Lost') && (oppty.StageName == '1. Created' ||oppty.StageName == '2. Appointment Process'||oppty.StageName == '3. Proposal Presented to Customer'||oppty.StageName == '4. Verbal Commit')))
+      if(((Trigger.oldMap.get(oppty.ID).StageName =='8. Future Prospect' || Trigger.oldMap.get(oppty.ID).StageName =='9. Closed Lost') && oppty.StageName == '1. Created' ||oppty.StageName == '2. Appointment Process'||oppty.StageName == '3. Proposal Presented to Customer'||oppty.StageName == '4. Verbal Commit'))
       {
-     
        OpportunityMap.put(oppty.ID,Oppty);
-        system.debug('inside map details--->'+OpportunityMap);
       }
      }
     }
     if(OpportunityMap.size()>0)
     {
-      ProjectStatusUpdateClass.OpptyProjectStatUpdate(OpportunityMap);
+     ProjectStatusUpdateClass.OpptyProjectStatUpdate(OpportunityMap);
     }
+    
+    
     /* BSKY-6792 logic End */
+    
+ 
     
     
 }

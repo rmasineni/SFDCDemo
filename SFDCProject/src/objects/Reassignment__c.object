@@ -44,6 +44,7 @@
         <actionName>View</actionName>
         <type>Default</type>
     </actionOverrides>
+    <allowInChatterGroups>false</allowInChatterGroups>
     <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
     <deploymentStatus>Deployed</deploymentStatus>
     <description>Manages the transfer of generation assets between contacts</description>
@@ -488,26 +489,6 @@ Changed to Picklist on 2012.10.24 [SFDC-585]</description>
             </picklistValues>
             <picklistValues>
                 <fullName>Not Applicable</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>PUC Filed</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>UCC Filed</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>PUC Filed, UCC Not Applicable</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>UCC Filed, PUC Not Applicable</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>PUC, UCC Filed</fullName>
                 <default>false</default>
             </picklistValues>
             <sorted>false</sorted>

@@ -44,6 +44,7 @@
         <actionName>View</actionName>
         <type>Default</type>
     </actionOverrides>
+    <allowInChatterGroups>false</allowInChatterGroups>
     <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
     <deploymentStatus>Deployed</deploymentStatus>
     <description>This object is used to store the custom audit data related to sobjects. Standard salesforce provided audit fields limit of 20 fields is not sufficient for some of the critical objects so this custom audit capability is implemented.</description>

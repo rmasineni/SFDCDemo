@@ -18,19 +18,14 @@
     <indexPage>BMCServiceDesk__SelfServiceHome</indexPage>
     <masterLabel>SelfService</masterLabel>
     <portal>Customer Portal</portal>
+    <requireHttps>false</requireHttps>
     <requireInsecurePortalAccess>false</requireInsecurePortalAccess>
     <siteAdmin>it-helpdesk@sunrun.com</siteAdmin>
     <siteRedirectMappings>
         <action>Temporary</action>
         <isActive>true</isActive>
-        <source>/googleefa4791440e85c9c.html</source>
-        <target>/resource/GoogleCalendarResources</target>
-    </siteRedirectMappings>
-    <siteRedirectMappings>
-        <action>Temporary</action>
-        <isActive>true</isActive>
-        <source>/googlef2c401e2b63b6a2e.html</source>
-        <target>/resource/GoogleCalendarResources</target>
+        <source>/googlec7c55cc35e45ac15.html</source>
+        <target>/resource/GoogleDomainVerificationHtmlFile</target>
     </siteRedirectMappings>
     <siteTemplate>BMCServiceDesk__SiteTemplate</siteTemplate>
     <siteType>Visualforce</siteType>

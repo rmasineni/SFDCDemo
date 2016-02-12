@@ -94,5 +94,7 @@ public class CustomErrorMessages {
 	public static string NULL_EMAIL = 'Customer email address is required to initiate esignature.';	
 	//public static string PO_ERROR = 'Retail PO# is required to submit the Proposal.';
     public static string EXPIRED_ERROR = 'Expired Proposals Cannot be modified.';
+    public static string PARTNER_CASH_COBF_ERROR = 'Please only submit Monthly or Prepaid proposal to Sunrun'; 
+    public static string MAX_LOAN_AMT_ERROR = 'Required Loan Amount is more than Maximum Loan Amount'; 
 	
 }

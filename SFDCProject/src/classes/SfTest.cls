@@ -2,7 +2,6 @@
 public class SfTest {
     
     testmethod public static void test() {
-        
         System.assertNotEquals(null, Sf.settingsService);
         System.assertNotEquals(null, Sf.addressService);
         System.assertNotEquals(null, Sf.paymentService);
@@ -16,7 +15,7 @@ public class SfTest {
         System.assertNotEquals(null, Sf.homeDepotSyncService);
         System.assertNotEquals(null, Sf.schedulerService);
         System.assertNotEquals(null, Sf.appLogger);
-        //System.assertNotEquals(null, Sf.nearbyCustomersViewerService);
+        System.assertNotEquals(null, Sf.nearbyCustomersViewerService);
         System.assertNotEquals(null, Sf.syncService);
         System.assertNotEquals(null, Sf.commonScheduler);
         System.assertNotEquals(null, Sf.coreLogicService);

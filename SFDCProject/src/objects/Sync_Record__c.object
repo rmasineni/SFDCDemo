@@ -44,6 +44,7 @@
         <actionName>View</actionName>
         <type>Default</type>
     </actionOverrides>
+    <allowInChatterGroups>false</allowInChatterGroups>
     <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
     <deploymentStatus>Deployed</deploymentStatus>
     <description>Many times when a record is modified, it needs to be synced to other places and we need to capture the status of the sync status and details for analysis or troubleshooting. If a record needs to be synced to multiple places, then we would end up in creating multiple fields in source object. Also sometimes we will not be able to update the object back due to various reasons. This object helps to keep track of such records and helps update the status with details.</description>
@@ -58,7 +59,7 @@
     <externalSharingModel>ReadWrite</externalSharingModel>
     <fields>
         <fullName>Action__c</fullName>
-        <externalId>true</externalId>
+        <externalId>false</externalId>
         <inlineHelpText>Indicates the action which this sync job does, within the module. for ex, ContractsSync or GetAccountTitleDetails etc,</inlineHelpText>
         <label>Action</label>
         <length>255</length>
@@ -148,7 +149,7 @@
     </fields>
     <fields>
         <fullName>Module__c</fullName>
-        <externalId>true</externalId>
+        <externalId>false</externalId>
         <inlineHelpText>Module to which this sync record associated with. For ex., &apos;AwsSqsSync&apos; or &apos;CoreLogicSync&apos;</inlineHelpText>
         <label>Module</label>
         <length>255</length>
@@ -358,33 +359,25 @@
         <columns>App_Log__c</columns>
         <columns>Processing_Time__c</columns>
         <columns>UPDATEDBY_USER</columns>
-        <columns>CREATED_DATE</columns>
         <filterScope>Everything</filterScope>
-        <filters>
-            <field>Sobject__c</field>
-            <operation>contains</operation>
-            <value>Account</value>
-        </filters>
         <label>All</label>
         <language>en_US</language>
     </listViews>
     <listViews>
-        <fullName>All_Aws_Contracts_Sync</fullName>
+        <fullName>All_Aws_Leads_Sync</fullName>
         <columns>NAME</columns>
         <columns>Module__c</columns>
         <columns>Action__c</columns>
         <columns>Type__c</columns>
-        <columns>Value1__c</columns>
         <columns>Status__c</columns>
         <columns>Sub_Status__c</columns>
         <columns>Sobject__c</columns>
         <columns>Record__c</columns>
-        <columns>Attempts__c</columns>
-        <columns>Delay_Until_Time__c</columns>
         <columns>Message__c</columns>
         <columns>App_Log__c</columns>
-        <columns>External_Id__c</columns>
+        <columns>Attempts__c</columns>
         <columns>UPDATEDBY_USER</columns>
+        <columns>Processing_Time__c</columns>
         <filterScope>Everything</filterScope>
         <filters>
             <field>Module__c</field>
@@ -394,45 +387,9 @@
         <filters>
             <field>Action__c</field>
             <operation>equals</operation>
-            <value>ContractsSync</value>
+            <value>LeadsSync</value>
         </filters>
-        <filters>
-            <field>Status__c</field>
-            <operation>equals</operation>
-            <value>Sync Error</value>
-        </filters>
-        <label>All Aws Contracts Sync</label>
-        <language>en_US</language>
-    </listViews>
-    <listViews>
-        <fullName>All_Aws_Record_Id_Search</fullName>
-        <columns>NAME</columns>
-        <columns>Module__c</columns>
-        <columns>Action__c</columns>
-        <columns>Type__c</columns>
-        <columns>Value1__c</columns>
-        <columns>Status__c</columns>
-        <columns>Sub_Status__c</columns>
-        <columns>Sobject__c</columns>
-        <columns>Record__c</columns>
-        <columns>Attempts__c</columns>
-        <columns>Delay_Until_Time__c</columns>
-        <columns>Message__c</columns>
-        <columns>App_Log__c</columns>
-        <columns>External_Id__c</columns>
-        <columns>UPDATEDBY_USER</columns>
-        <filterScope>Everything</filterScope>
-        <filters>
-            <field>Module__c</field>
-            <operation>equals</operation>
-            <value>AwsSqsSync</value>
-        </filters>
-        <filters>
-            <field>Record_Id__c</field>
-            <operation>startsWith</operation>
-            <value>0063200001lcT3QAAU</value>
-        </filters>
-        <label>All Aws Record Id Search</label>
+        <label>All Aws Leads Sync</label>
         <language>en_US</language>
     </listViews>
     <listViews>
@@ -441,17 +398,15 @@
         <columns>Module__c</columns>
         <columns>Action__c</columns>
         <columns>Type__c</columns>
-        <columns>Value1__c</columns>
         <columns>Status__c</columns>
         <columns>Sub_Status__c</columns>
         <columns>Sobject__c</columns>
         <columns>Record__c</columns>
-        <columns>Attempts__c</columns>
-        <columns>Delay_Until_Time__c</columns>
         <columns>Message__c</columns>
         <columns>App_Log__c</columns>
-        <columns>External_Id__c</columns>
+        <columns>Attempts__c</columns>
         <columns>UPDATEDBY_USER</columns>
+        <columns>Processing_Time__c</columns>
         <filterScope>Everything</filterScope>
         <filters>
             <field>Module__c</field>
@@ -462,446 +417,77 @@
         <language>en_US</language>
     </listViews>
     <listViews>
-        <fullName>All_Aws_Sync_Errors</fullName>
+        <fullName>All_Google_Calendar_Google_To_Sfdc_Sync</fullName>
         <columns>NAME</columns>
-        <columns>Module__c</columns>
-        <columns>Action__c</columns>
-        <columns>Type__c</columns>
         <columns>Value1__c</columns>
+        <columns>Type__c</columns>
         <columns>Status__c</columns>
-        <columns>Sub_Status__c</columns>
         <columns>Sobject__c</columns>
         <columns>Record__c</columns>
-        <columns>Attempts__c</columns>
-        <columns>Delay_Until_Time__c</columns>
         <columns>Message__c</columns>
         <columns>App_Log__c</columns>
+        <columns>Attempts__c</columns>
         <columns>External_Id__c</columns>
-        <columns>UPDATEDBY_USER</columns>
-        <filterScope>Everything</filterScope>
-        <filters>
-            <field>Module__c</field>
-            <operation>equals</operation>
-            <value>AwsSqsSync</value>
-        </filters>
-        <filters>
-            <field>Status__c</field>
-            <operation>equals</operation>
-            <value>Sync Error</value>
-        </filters>
-        <label>All Aws Sync Errors</label>
-        <language>en_US</language>
-    </listViews>
-    <listViews>
-        <fullName>All_Aws_Sync_To_Be_Synced</fullName>
-        <columns>NAME</columns>
-        <columns>Module__c</columns>
-        <columns>Action__c</columns>
-        <columns>Type__c</columns>
-        <columns>Value1__c</columns>
-        <columns>Status__c</columns>
-        <columns>Sub_Status__c</columns>
-        <columns>Sobject__c</columns>
-        <columns>Record__c</columns>
-        <columns>Attempts__c</columns>
-        <columns>Delay_Until_Time__c</columns>
-        <columns>Message__c</columns>
-        <columns>App_Log__c</columns>
-        <columns>External_Id__c</columns>
-        <columns>UPDATEDBY_USER</columns>
-        <filterScope>Everything</filterScope>
-        <filters>
-            <field>Status__c</field>
-            <operation>equals</operation>
-            <value>To Be Synced</value>
-        </filters>
-        <filters>
-            <field>Module__c</field>
-            <operation>equals</operation>
-            <value>AwsSqsSync</value>
-        </filters>
-        <label>All Aws Sync To Be Synced</label>
-        <language>en_US</language>
-    </listViews>
-    <listViews>
-        <fullName>All_Calendar_Sync</fullName>
-        <columns>NAME</columns>
-        <columns>Action__c</columns>
-        <columns>Type__c</columns>
-        <columns>Value1__c</columns>
-        <columns>Status__c</columns>
-        <columns>Attempts__c</columns>
-        <columns>Sub_Status__c</columns>
-        <columns>Sobject__c</columns>
-        <columns>Record__c</columns>
-        <columns>App_Log__c</columns>
-        <columns>UPDATEDBY_USER</columns>
-        <columns>Inserts__c</columns>
-        <columns>Updates__c</columns>
-        <columns>Deletes__c</columns>
-        <columns>Message__c</columns>
-        <filterScope>Everything</filterScope>
-        <filters>
-            <field>Module__c</field>
-            <operation>equals</operation>
-            <value>GoogleCalendarSync</value>
-        </filters>
-        <label>All Calendar Sync</label>
-        <language>en_US</language>
-    </listViews>
-    <listViews>
-        <fullName>All_Calendar_Sync_Errors</fullName>
-        <columns>NAME</columns>
-        <columns>Module__c</columns>
-        <columns>Action__c</columns>
-        <columns>Type__c</columns>
-        <columns>Value1__c</columns>
-        <columns>Status__c</columns>
-        <columns>Sub_Status__c</columns>
-        <columns>Sobject__c</columns>
-        <columns>Record__c</columns>
-        <columns>Attempts__c</columns>
-        <columns>Delay_Until_Time__c</columns>
-        <columns>Message__c</columns>
-        <columns>App_Log__c</columns>
-        <columns>External_Id__c</columns>
-        <columns>UPDATEDBY_USER</columns>
-        <filterScope>Everything</filterScope>
-        <filters>
-            <field>Status__c</field>
-            <operation>equals</operation>
-            <value>Sync Error</value>
-        </filters>
-        <filters>
-            <field>Module__c</field>
-            <operation>equals</operation>
-            <value>GoogleCalendarSync</value>
-        </filters>
-        <label>All Calendar Sync Errors</label>
-        <language>en_US</language>
-    </listViews>
-    <listViews>
-        <fullName>All_Calendar_Sync_Failed</fullName>
-        <columns>NAME</columns>
-        <columns>Module__c</columns>
-        <columns>Action__c</columns>
-        <columns>Type__c</columns>
-        <columns>Value1__c</columns>
-        <columns>Status__c</columns>
-        <columns>Sub_Status__c</columns>
-        <columns>Sobject__c</columns>
-        <columns>Record__c</columns>
-        <columns>Attempts__c</columns>
-        <columns>Delay_Until_Time__c</columns>
-        <columns>Message__c</columns>
-        <columns>App_Log__c</columns>
-        <columns>External_Id__c</columns>
-        <columns>UPDATEDBY_USER</columns>
-        <filterScope>Everything</filterScope>
-        <filters>
-            <field>Status__c</field>
-            <operation>equals</operation>
-            <value>Sync Failed</value>
-        </filters>
-        <filters>
-            <field>Module__c</field>
-            <operation>equals</operation>
-            <value>GoogleCalendarSync</value>
-        </filters>
-        <label>All Calendar Sync Failed</label>
-        <language>en_US</language>
-    </listViews>
-    <listViews>
-        <fullName>All_Calendar_Sync_Google_to_Sfdc</fullName>
-        <columns>NAME</columns>
-        <columns>Action__c</columns>
-        <columns>Type__c</columns>
-        <columns>Value1__c</columns>
-        <columns>Status__c</columns>
-        <columns>Attempts__c</columns>
-        <columns>Sub_Status__c</columns>
-        <columns>App_Log__c</columns>
-        <columns>UPDATEDBY_USER</columns>
-        <columns>Inserts__c</columns>
-        <columns>Updates__c</columns>
-        <columns>Deletes__c</columns>
-        <columns>Message__c</columns>
         <columns>Processing_Time__c</columns>
+        <columns>UPDATEDBY_USER</columns>
         <filterScope>Everything</filterScope>
-        <filters>
-            <field>Module__c</field>
-            <operation>equals</operation>
-            <value>GoogleCalendarSync</value>
-        </filters>
         <filters>
             <field>Action__c</field>
             <operation>equals</operation>
             <value>GoogleToSfdcSync</value>
         </filters>
-        <label>All Calendar Sync Google to Sfdc</label>
+        <label>All Google Calendar Google To Sfdc Sync</label>
         <language>en_US</language>
     </listViews>
     <listViews>
-        <fullName>All_Calendar_Sync_Google_to_Sfdc_Errors</fullName>
+        <fullName>All_Google_Calendar_Sfdc_to_Google_Sync</fullName>
         <columns>NAME</columns>
         <columns>Module__c</columns>
         <columns>Action__c</columns>
-        <columns>Type__c</columns>
         <columns>Value1__c</columns>
+        <columns>Type__c</columns>
         <columns>Status__c</columns>
         <columns>Sub_Status__c</columns>
         <columns>Sobject__c</columns>
         <columns>Record__c</columns>
-        <columns>Attempts__c</columns>
-        <columns>Delay_Until_Time__c</columns>
         <columns>Message__c</columns>
         <columns>App_Log__c</columns>
+        <columns>Attempts__c</columns>
         <columns>External_Id__c</columns>
+        <columns>Processing_Time__c</columns>
         <columns>UPDATEDBY_USER</columns>
         <filterScope>Everything</filterScope>
-        <filters>
-            <field>Status__c</field>
-            <operation>equals</operation>
-            <value>Sync Error</value>
-        </filters>
-        <filters>
-            <field>Module__c</field>
-            <operation>equals</operation>
-            <value>GoogleCalendarSync</value>
-        </filters>
-        <filters>
-            <field>Action__c</field>
-            <operation>equals</operation>
-            <value>GoogleToSfdcSync</value>
-        </filters>
-        <label>All Calendar Sync Google to Sfdc Errors</label>
-        <language>en_US</language>
-    </listViews>
-    <listViews>
-        <fullName>All_Calendar_Sync_Search</fullName>
-        <columns>NAME</columns>
-        <columns>Action__c</columns>
-        <columns>Type__c</columns>
-        <columns>Value1__c</columns>
-        <columns>Status__c</columns>
-        <columns>Attempts__c</columns>
-        <columns>Sub_Status__c</columns>
-        <columns>Sobject__c</columns>
-        <columns>Record__c</columns>
-        <columns>App_Log__c</columns>
-        <columns>UPDATEDBY_USER</columns>
-        <columns>Inserts__c</columns>
-        <columns>Updates__c</columns>
-        <columns>Deletes__c</columns>
-        <columns>Message__c</columns>
-        <filterScope>Everything</filterScope>
-        <filters>
-            <field>Module__c</field>
-            <operation>equals</operation>
-            <value>GoogleCalendarSync</value>
-        </filters>
-        <filters>
-            <field>Value1__c</field>
-            <operation>equals</operation>
-            <value>staccato.clarida@sunrunhome.com</value>
-        </filters>
-        <label>All Calendar Sync Search</label>
-        <language>en_US</language>
-    </listViews>
-    <listViews>
-        <fullName>All_Calendar_Sync_Sfdc_to_Google_Errors</fullName>
-        <columns>NAME</columns>
-        <columns>Module__c</columns>
-        <columns>Action__c</columns>
-        <columns>Type__c</columns>
-        <columns>Value1__c</columns>
-        <columns>Status__c</columns>
-        <columns>Sub_Status__c</columns>
-        <columns>Sobject__c</columns>
-        <columns>Record__c</columns>
-        <columns>Attempts__c</columns>
-        <columns>Delay_Until_Time__c</columns>
-        <columns>Message__c</columns>
-        <columns>App_Log__c</columns>
-        <columns>External_Id__c</columns>
-        <columns>UPDATEDBY_USER</columns>
-        <filterScope>Everything</filterScope>
-        <filters>
-            <field>Status__c</field>
-            <operation>equals</operation>
-            <value>Sync Error</value>
-        </filters>
-        <filters>
-            <field>Module__c</field>
-            <operation>equals</operation>
-            <value>GoogleCalendarSync</value>
-        </filters>
         <filters>
             <field>Action__c</field>
             <operation>equals</operation>
             <value>SfdcToGoogleSync</value>
         </filters>
-        <label>All Calendar Sync Sfdc to Google Errors</label>
+        <label>All Google Calendar Sfdc to Google Sync</label>
         <language>en_US</language>
     </listViews>
     <listViews>
-        <fullName>All_Calendar_Sync_Sfdc_to_Google_NA</fullName>
+        <fullName>All_Google_Calendar_Sync</fullName>
         <columns>NAME</columns>
         <columns>Module__c</columns>
         <columns>Action__c</columns>
-        <columns>Type__c</columns>
         <columns>Value1__c</columns>
+        <columns>Type__c</columns>
         <columns>Status__c</columns>
-        <columns>Sub_Status__c</columns>
         <columns>Sobject__c</columns>
         <columns>Record__c</columns>
-        <columns>Attempts__c</columns>
-        <columns>Delay_Until_Time__c</columns>
         <columns>Message__c</columns>
         <columns>App_Log__c</columns>
+        <columns>Attempts__c</columns>
         <columns>External_Id__c</columns>
+        <columns>Processing_Time__c</columns>
         <columns>UPDATEDBY_USER</columns>
         <filterScope>Everything</filterScope>
-        <filters>
-            <field>Status__c</field>
-            <operation>equals</operation>
-            <value>Sync Not Applicable</value>
-        </filters>
         <filters>
             <field>Module__c</field>
             <operation>equals</operation>
             <value>GoogleCalendarSync</value>
         </filters>
-        <filters>
-            <field>Action__c</field>
-            <operation>equals</operation>
-            <value>SfdcToGoogleSync</value>
-        </filters>
-        <label>All Calendar Sync Sfdc to Google NA</label>
-        <language>en_US</language>
-    </listViews>
-    <listViews>
-        <fullName>All_Calendar_To_Be_Synced</fullName>
-        <columns>NAME</columns>
-        <columns>Module__c</columns>
-        <columns>Action__c</columns>
-        <columns>Type__c</columns>
-        <columns>Value1__c</columns>
-        <columns>Status__c</columns>
-        <columns>Sub_Status__c</columns>
-        <columns>Sobject__c</columns>
-        <columns>Record__c</columns>
-        <columns>Attempts__c</columns>
-        <columns>Delay_Until_Time__c</columns>
-        <columns>Message__c</columns>
-        <columns>App_Log__c</columns>
-        <columns>External_Id__c</columns>
-        <columns>UPDATEDBY_USER</columns>
-        <filterScope>Everything</filterScope>
-        <filters>
-            <field>Status__c</field>
-            <operation>equals</operation>
-            <value>To Be Synced</value>
-        </filters>
-        <filters>
-            <field>Module__c</field>
-            <operation>equals</operation>
-            <value>GoogleCalendarSync</value>
-        </filters>
-        <label>All Calendar To Be Synced</label>
-        <language>en_US</language>
-    </listViews>
-    <listViews>
-        <fullName>All_Core_Logic_Sync_Errors</fullName>
-        <columns>NAME</columns>
-        <columns>Module__c</columns>
-        <columns>Action__c</columns>
-        <columns>Type__c</columns>
-        <columns>Value1__c</columns>
-        <columns>Status__c</columns>
-        <columns>Sub_Status__c</columns>
-        <columns>Sobject__c</columns>
-        <columns>Record__c</columns>
-        <columns>Attempts__c</columns>
-        <columns>Delay_Until_Time__c</columns>
-        <columns>Message__c</columns>
-        <columns>App_Log__c</columns>
-        <columns>External_Id__c</columns>
-        <columns>UPDATEDBY_USER</columns>
-        <filterScope>Everything</filterScope>
-        <filters>
-            <field>Status__c</field>
-            <operation>equals</operation>
-            <value>Sync Error</value>
-        </filters>
-        <filters>
-            <field>Module__c</field>
-            <operation>equals</operation>
-            <value>CoreLogicSync</value>
-        </filters>
-        <label>All Core Logic Sync Errors</label>
-        <language>en_US</language>
-    </listViews>
-    <listViews>
-        <fullName>All_Core_Logic_Sync_Failed</fullName>
-        <columns>NAME</columns>
-        <columns>Module__c</columns>
-        <columns>Action__c</columns>
-        <columns>Type__c</columns>
-        <columns>Value1__c</columns>
-        <columns>Status__c</columns>
-        <columns>Sub_Status__c</columns>
-        <columns>Sobject__c</columns>
-        <columns>Record__c</columns>
-        <columns>Attempts__c</columns>
-        <columns>Delay_Until_Time__c</columns>
-        <columns>Message__c</columns>
-        <columns>App_Log__c</columns>
-        <columns>External_Id__c</columns>
-        <columns>UPDATEDBY_USER</columns>
-        <filterScope>Everything</filterScope>
-        <filters>
-            <field>Status__c</field>
-            <operation>equals</operation>
-            <value>Sync Failed</value>
-        </filters>
-        <filters>
-            <field>Module__c</field>
-            <operation>equals</operation>
-            <value>CoreLogicSync</value>
-        </filters>
-        <label>All Core Logic Sync Failed</label>
-        <language>en_US</language>
-    </listViews>
-    <listViews>
-        <fullName>All_Core_Logic_To_Be_Synced</fullName>
-        <columns>NAME</columns>
-        <columns>Module__c</columns>
-        <columns>Action__c</columns>
-        <columns>Type__c</columns>
-        <columns>Value1__c</columns>
-        <columns>Status__c</columns>
-        <columns>Sub_Status__c</columns>
-        <columns>Sobject__c</columns>
-        <columns>Record__c</columns>
-        <columns>Attempts__c</columns>
-        <columns>Delay_Until_Time__c</columns>
-        <columns>Message__c</columns>
-        <columns>App_Log__c</columns>
-        <columns>External_Id__c</columns>
-        <columns>UPDATEDBY_USER</columns>
-        <filterScope>Everything</filterScope>
-        <filters>
-            <field>Status__c</field>
-            <operation>equals</operation>
-            <value>To Be Synced</value>
-        </filters>
-        <filters>
-            <field>Module__c</field>
-            <operation>equals</operation>
-            <value>CoreLogicSync</value>
-        </filters>
-        <label>All Core Logic To Be Synced</label>
+        <label>All Google Calendar Sync</label>
         <language>en_US</language>
     </listViews>
     <listViews>
@@ -978,56 +564,28 @@
         <language>en_US</language>
     </listViews>
     <listViews>
-        <fullName>Nick_DAnna_View</fullName>
+        <fullName>Search</fullName>
         <columns>NAME</columns>
-        <columns>OBJECT_ID</columns>
         <columns>Action__c</columns>
         <columns>App_Log__c</columns>
         <columns>Attempts__c</columns>
         <columns>Delay_Until_Time__c</columns>
-        <columns>Message__c</columns>
-        <columns>Module__c</columns>
-        <columns>Processing_Time__c</columns>
+        <columns>Request_Payload__c</columns>
         <columns>Record__c</columns>
         <columns>Record_Id__c</columns>
         <columns>Sobject__c</columns>
         <columns>Status__c</columns>
-        <filterScope>Everything</filterScope>
-        <filters>
-            <field>Record_Id__c</field>
-            <operation>contains</operation>
-            <value>00532000004kOOj</value>
-        </filters>
-        <filters>
-            <field>Status__c</field>
-            <operation>notEqual</operation>
-            <value>Sync Success</value>
-        </filters>
-        <label>Nick DAnna</label>
-        <language>en_US</language>
-    </listViews>
-    <listViews>
-        <fullName>Staccado_view</fullName>
-        <columns>NAME</columns>
-        <columns>OBJECT_ID</columns>
-        <columns>Action__c</columns>
-        <columns>App_Log__c</columns>
-        <columns>Attempts__c</columns>
-        <columns>Delay_Until_Time__c</columns>
+        <columns>Sub_Status__c</columns>
+        <columns>Sub_Type__c</columns>
+        <columns>Type__c</columns>
         <columns>Message__c</columns>
-        <columns>Module__c</columns>
-        <columns>Processing_Time__c</columns>
-        <columns>Record__c</columns>
-        <columns>Record_Id__c</columns>
-        <columns>Sobject__c</columns>
-        <columns>Status__c</columns>
         <filterScope>Everything</filterScope>
         <filters>
             <field>Record_Id__c</field>
             <operation>equals</operation>
-            <value>00532000003tT5zAAE</value>
+            <value>001550000085BYbAAM</value>
         </filters>
-        <label>Staccado view</label>
+        <label>Search</label>
         <language>en_US</language>
     </listViews>
     <nameField>

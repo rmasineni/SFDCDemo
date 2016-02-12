@@ -1,6 +1,6 @@
 @isTest
 public class loadRelatedRecordsQueueableTest {
-   /*  static testmethod void test1() {
+     static testmethod void test1() {
          Lead lead1p = new lead(lastname='Test',company='Tst', Phone='(925)-499-9000', Channel__c = 'Billboard', Custom_Lead_Source__c= 'Billboard : Brilliant');		
          Lead lead2p = new lead(lastname='Test',company='Tst', Phone='(925)-499-9000', Channel__c = 'Billboard', Custom_Lead_Source__c= 'Billboard : Brilliant');		
          insert lead1p; 
@@ -12,5 +12,5 @@ public class loadRelatedRecordsQueueableTest {
          Test.startTest();
          System.enqueueJob(new loadRelatedRecordsQueueable(leadIdSet,deleteLeadIdSet));
          Test.stopTest();
-     } */
+     }
 }

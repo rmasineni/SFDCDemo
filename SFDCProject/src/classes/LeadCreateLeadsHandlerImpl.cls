@@ -136,7 +136,7 @@ public class LeadCreateLeadsHandlerImpl extends RestService implements LeadCreat
                 lead = new Lead();
             }
             
-            Map<String, String> restApiToLeadApiMap = Sf.settingsService.getStringMap('LeadApiLeadFieldMapping');
+            Map<String, String> restApiToLeadApiMap = LeadApiDto.getLeadApiLeadFieldMapping();
             
             for (String restApiField : restApiToLeadApiMap.keySet()) {
                 copyLeadField(leadObj, restApiField, lead, restApiToLeadApiMap.get(restApiField));
@@ -212,7 +212,7 @@ public class LeadCreateLeadsHandlerImpl extends RestService implements LeadCreat
     }
 
     public virtual void validateLeads(List<LeadServiceDto.CreateLeadResponse> leads) {
-        List<String> requiredFields = Sf.settingsService.getStringList('LeadApiLeadRequiredFields', new List<String>());
+        List<String> requiredFields = LeadApiDto.getLeadApiLeadRequiredFields();
         
         //For each lead, validate to make sure required fields are specified.
         for (LeadServiceDto.CreateLeadResponse lead : leads) {

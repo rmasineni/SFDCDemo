@@ -154,7 +154,6 @@ public class UnitTest_WorkflowManagement {
 		ApexPages.StandardController stdcon = new ApexPages.StandardController(projectObj);
 		wfProjectDetails wfProjectObj = new wfProjectDetails(stdcon);
 		wfProjectObj.initialize(); 
-        wfProjectObj.initializeProjectDetails();
 		wfProjectObj.getProjectDetails();
 		wfProjectObj.refreshPage();
 		wfProjectObj.newTask();

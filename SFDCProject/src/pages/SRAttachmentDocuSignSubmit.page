@@ -1,334 +1,335 @@
 <apex:page id="InitiateESigPageId" sidebar="false" showHeader="false" controller="SRAttachmentESignController" cache="false">
-    <style>
-        .producterror { 
-            color: red; font-weight: strong;
-            background-color: #FFFFCC;
-            border-style: solid;
-            border-width: 1px;
-            padding: 6px 8px 6px 6px;
-            border-color: #FF9900;
-            font-size: 100%;
-            margin-left: 15px;
-            margin-right: 15px;
-            }
-        .headerLogo {
-            margin:1px 1px 1px 1px;
-            border:0;
-            padding-left:10px;
-            #height: 35px;
-            #width: 90px;
-        }
-        .bPageTitle, .apexp{
-            margin-left: 15px;
-            margin-right: 20px;
-            width: 97%;
-        }
-        .wrapper{position:relative;}
-        .right,.left{position:absolute;}
-        .right{right:0;}
-        .left{left:0;}
-        .data2Col{ width:22%;}
+	<style>
+    	.producterror { 
+    		color: red; font-weight: strong;
+    		background-color: #FFFFCC;
+        	border-style: solid;
+        	border-width: 1px;
+        	padding: 6px 8px 6px 6px;
+        	border-color: #FF9900;
+        	font-size: 100%;
+        	margin-left: 15px;
+			margin-right: 15px;
+			}
+		.headerLogo {
+			margin:1px 1px 1px 1px;
+			border:0;
+			padding-left:10px;
+			#height: 35px;
+			#width: 90px;
+		}
+		.bPageTitle, .apexp{
+			margin-left: 15px;
+			margin-right: 20px;
+		    width: 97%;
+		}
+		.wrapper{position:relative;}
+		.right,.left{position:absolute;}
+		.right{right:0;}
+		.left{left:0;}
+		.data2Col{ width:22%;}
     </style>
     
-    <div align="left" width="85%">
-        <img src="{!$Resource.PartnerPortalHeader32}" class="headerLogo"/>
-        &nbsp;&nbsp;
-        <apex:sectionHeader title="eSignature Details"/>
-    </div>   
+ 	<div align="left" width="85%">
+		<img src="{!$Resource.PartnerPortalHeader32}" class="headerLogo"/>
+		&nbsp;&nbsp;
+		<apex:sectionHeader title="eSignature Details"/>
+	</div>   
 
-    <apex:form id="formId" >
-        <div align="center">
-            <apex:actionStatus id="mySaveStatus1" onstop="refreshOnComplete('{!proposalId}');" >
-             <apex:facet name="stop">
-                 <apex:commandButton value="Initiate eSignature" rendered="{!NOT(confirmMode) && (enableEsinature) }" 
-                    action="{!sendToDocuSign}" rerender="formId"
-                     status="mySaveStatus1"/>
-             </apex:facet>
-             <apex:facet name="start">
-                <apex:outputtext value="In progress ..." />
-                 <apex:outputPanel >
-                       <apex:image value="/img/loading32.gif" style="height: 15px;"/>
-                       <apex:commandButton value="Processing..." status="mySaveStatus1" 
-                       oncomplete="refreshOnComplete('{!proposalId}');"  disabled="true"/>
-                   </apex:outputPanel>
-               </apex:facet>
-            </apex:actionStatus>
-            &nbsp;
-            <apex:commandButton rendered="{!confirmMode && NOT(isInPersonSigning)}" value="Close" onclick="closeAndRefreshparent('{!parentURL}');" immediate="true"/>
-        </div>  
-        &nbsp;
-        <apex:messages styleClass="producterror" /> 
-        <apex:pageblock rendered="{!NOT(confirmMode)}">
-            <apex:pageblocksection id="eSignInfoId" title="Select Recipients and Documents" collapsible="false" columns="2">
-                <apex:pageBlockSectionItem >
-                    <apex:outputLabel value="Document Type" />
-                    <apex:outputPanel layout="block" styleClass="requiredInput">
-                        <apex:outputPanel layout="block" styleClass="requiredBlock"/>
-                        <apex:selectList value="{!documentType}" id="documentType" size="1">
-                            <script> var documentType = document.getElementById("{!$Component.documentType}"); </script>
-                            <apex:selectOptions value="{!documentTypes}" />
-                             <apex:actionSupport event="onchange" action="{!verifyWetSignature}"
-                                    rerender="formId" 
-                                    status="mySaveStatus1"/>
-                        </apex:selectList>
-                    </apex:outputPanel>
-                </apex:pageBlockSectionItem>
-                                
-                <apex:pageBlockSectionItem >
-                    <apex:outputLabel value="eSigning Type" />
-                    <apex:outputPanel layout="block">
-                        <apex:selectList value="{!eSignOption}" id="eSignOptionsId" size="1">
-                            <apex:selectOptions value="{!esignOptions}" />
-                             <apex:actionSupport event="onchange" action="{!setESigningType}"
-                                    rerender="formId" 
-                                    status="mySaveStatus1"/>
-                        </apex:selectList>
-                    </apex:outputPanel>
-                </apex:pageBlockSectionItem>
+	<apex:form id="formId" >
+		<div align="center">
+			<apex:actionStatus id="mySaveStatus1" onstop="refreshOnComplete('{!proposalId}');" >
+	         <apex:facet name="stop">
+	             <apex:commandButton value="Initiate eSignature" rendered="{!NOT(confirmMode) && (enableEsinature) }" 
+	             	action="{!sendToDocuSign}" rerender="formId"
+	             	 status="mySaveStatus1"/>
+	         </apex:facet>
+	         <apex:facet name="start">
+	         	<apex:outputtext value="In progress ..." />
+	             <apex:outputPanel >
+	                   <apex:image value="/img/loading32.gif" style="height: 15px;"/>
+	                   <apex:commandButton value="Processing..." status="mySaveStatus1" 
+	                   oncomplete="refreshOnComplete('{!proposalId}');"  disabled="true"/>
+	               </apex:outputPanel>
+	           </apex:facet>
+	        </apex:actionStatus>
+			&nbsp;
+			<apex:commandButton rendered="{!confirmMode && NOT(isInPersonSigning)}" value="Close" onclick="closeAndRefreshparent('{!parentURL}');" immediate="true"/>
+		</div>	
+		&nbsp;
+		<apex:messages styleClass="producterror" />	
+		<apex:pageblock rendered="{!NOT(confirmMode)}">
+			<apex:pageblocksection id="eSignInfoId" title="Select Recipients and Documents" collapsible="false" columns="2">
+				<apex:pageBlockSectionItem >
+					<apex:outputLabel value="Document Type" />
+					<apex:outputPanel layout="block" styleClass="requiredInput">
+						<apex:outputPanel layout="block" styleClass="requiredBlock"/>
+						<apex:selectList value="{!documentType}" id="documentType" size="1">
+							<script> var documentType = document.getElementById("{!$Component.documentType}"); </script>
+							<apex:selectOptions value="{!documentTypes}" />
+							 <apex:actionSupport event="onchange" action="{!verifyWetSignature}"
+							 		rerender="formId" 
+							 		status="mySaveStatus1"/>
+						</apex:selectList>
+					</apex:outputPanel>
+				</apex:pageBlockSectionItem>
+								
+				<apex:pageBlockSectionItem >
+					<apex:outputLabel value="eSigning Type" />
+					<apex:outputPanel layout="block">
+						<apex:selectList value="{!eSignOption}" id="eSignOptionsId" size="1">
+							<apex:selectOptions value="{!esignOptions}" />
+							 <apex:actionSupport event="onchange" action="{!setESigningType}"
+							 		rerender="formId" 
+							 		status="mySaveStatus1"/>
+						</apex:selectList>
+					</apex:outputPanel>
+				</apex:pageBlockSectionItem>
 
-                <apex:pageBlockSectionItem rendered="{!displayPartnerSelection && NOT(isUtilityAgreement) && allowPartnerContactSelection}">
-                    <apex:outputLabel value="Partner Contact"  />
-                    <apex:outputPanel rendered="{!allowPartnerContactSelection}" layout="block" styleClass="requiredInput">
-                        <apex:outputPanel layout="block" styleClass="requiredBlock"/>
-                        <apex:inputfield value="{!partnerContactObj.Partner_Contact__c}" id="ptrContact">
-                            <apex:actionSupport event="onchange" action="{!setPartnerEmail}"
-                                rerender="partnerEmailId11"/>                       
-                        </apex:inputfield> 
-                    </apex:outputPanel>
-                </apex:pageBlockSectionItem>                
+				<apex:pageBlockSectionItem rendered="{!displayPartnerSelection && NOT(isUtilityAgreement) && allowPartnerContactSelection}">
+					<apex:outputLabel value="Partner Contact"  />
+					<apex:outputPanel rendered="{!allowPartnerContactSelection}" layout="block" styleClass="requiredInput">
+						<apex:outputPanel layout="block" styleClass="requiredBlock"/>
+						<apex:inputfield value="{!partnerContactObj.Partner_Contact__c}" id="ptrContact">
+							<apex:actionSupport event="onchange" action="{!setPartnerEmail}"
+								rerender="partnerEmailId11"/>						
+						</apex:inputfield> 
+					</apex:outputPanel>
+				</apex:pageBlockSectionItem>				
 
-                <apex:pageBlockSectionItem rendered="{!displayPartnerSelection && NOT(isUtilityAgreement) && NOT(allowPartnerContactSelection)}">
-                    <apex:outputLabel value="Partner Contact"  />
-                    <apex:outputPanel rendered="{!NOT(allowPartnerContactSelection)}" layout="block" styleClass="requiredInput">
-                        <apex:outputtext value="{!partnerName}" />
-                    </apex:outputPanel>
-                </apex:pageBlockSectionItem>    
+				<apex:pageBlockSectionItem rendered="{!displayPartnerSelection && NOT(isUtilityAgreement) && NOT(allowPartnerContactSelection)}">
+					<apex:outputLabel value="Partner Contact"  />
+					<apex:outputPanel rendered="{!NOT(allowPartnerContactSelection)}" layout="block" styleClass="requiredInput">
+						<apex:outputtext value="{!partnerName}" />
+					</apex:outputPanel>
+				</apex:pageBlockSectionItem>	
 
-                
-                <apex:pageBlockSectionItem id="partnerEmailId1" rendered="{!displayPartnerSelection && NOT(isUtilityAgreement)}">
-                    <apex:outputLabel value="Partner Contact Email"  />
-                    <apex:outputpanel id="partnerEmailId11">
-                        <apex:outputtext value="{!partnerEmail}" />
-                    </apex:outputpanel>
-                </apex:pageBlockSectionItem>
+				
+				<apex:pageBlockSectionItem id="partnerEmailId1" rendered="{!displayPartnerSelection && NOT(isUtilityAgreement)}">
+					<apex:outputLabel value="Partner Contact Email"  />
+					<apex:outputpanel id="partnerEmailId11">
+						<apex:outputtext value="{!partnerEmail}" />
+					</apex:outputpanel>
+				</apex:pageBlockSectionItem>
 
-                <apex:pageBlockSectionItem rendered="{!displayCustomerSelection && NOT(isUtilityAgreement)}">
-                    <apex:outputLabel value="Primary Customer" />
-                    <apex:outputPanel layout="block" styleClass="requiredInput">
-                        <apex:outputtext value="{!primaryContactName}" />
-                    </apex:outputPanel>
-                </apex:pageBlockSectionItem>
+				<apex:pageBlockSectionItem rendered="{!displayCustomerSelection && NOT(isUtilityAgreement)}">
+					<apex:outputLabel value="Primary Customer" />
+					<apex:outputPanel layout="block" styleClass="requiredInput">
+						<apex:outputtext value="{!primaryContactName}" />
+					</apex:outputPanel>
+				</apex:pageBlockSectionItem>
 
-                <!-- 
-                <apex:pageBlockSectionItem rendered="{!displayCustomerSelection && NOT(isUtilityAgreement)}">
-                    <apex:outputLabel value="Primary Customer" />
-                    <apex:outputPanel layout="block" styleClass="requiredInput">
-                        <apex:outputPanel layout="block" styleClass="requiredBlock"/>
-                        <apex:selectList value="{!primaryContactId}" id="contactId1" size="1">
-                            <apex:actionSupport event="onchange" action="{!setPrimaryContactEmail}"
-                                rerender="parimaryEmailId11"/>
-                            <apex:selectOptions value="{!contacts}" />
-                        </apex:selectList>
-                    </apex:outputPanel>
-                </apex:pageBlockSectionItem>                
-                 -->
+				<!-- 
+				<apex:pageBlockSectionItem rendered="{!displayCustomerSelection && NOT(isUtilityAgreement)}">
+					<apex:outputLabel value="Primary Customer" />
+					<apex:outputPanel layout="block" styleClass="requiredInput">
+						<apex:outputPanel layout="block" styleClass="requiredBlock"/>
+						<apex:selectList value="{!primaryContactId}" id="contactId1" size="1">
+							<apex:actionSupport event="onchange" action="{!setPrimaryContactEmail}"
+								rerender="parimaryEmailId11"/>
+							<apex:selectOptions value="{!contacts}" />
+						</apex:selectList>
+					</apex:outputPanel>
+				</apex:pageBlockSectionItem>				
+				 -->
 
-                
-                <apex:pageBlockSectionItem Id="parimaryEmailId1" rendered="{!displayCustomerSelection && NOT(isUtilityAgreement)}">
-                    <apex:outputLabel value="Primary Customer Email" />
-                    <apex:outputpanel id="parimaryEmailId11">
-                        <apex:outputtext value="{!primaryContactEmail}" />
-                    </apex:outputpanel>
-                </apex:pageBlockSectionItem>
+				
+				<apex:pageBlockSectionItem Id="parimaryEmailId1" rendered="{!displayCustomerSelection && NOT(isUtilityAgreement)}">
+					<apex:outputLabel value="Primary Customer Email" />
+					<apex:outputpanel id="parimaryEmailId11">
+						<apex:outputtext value="{!primaryContactEmail}" />
+					</apex:outputpanel>
+				</apex:pageBlockSectionItem>
 
-                <apex:pageBlockSectionItem rendered="{!displaySecondaryCustomerSelection && NOT(isUtilityAgreement)}">
-                    <apex:outputLabel value="Secondary Customer" />
-                    <apex:outputPanel layout="block">
-                        <apex:selectList value="{!secondaryContactId}" id="contactId2" size="1">
-                            <apex:actionSupport event="onchange" action="{!setSecondaryContactEmail}"
-                                rerender="secondaryEmailId11"/>                             
-                            <apex:selectOptions value="{!secondarContacts}" />
-                        </apex:selectList>
-                    </apex:outputPanel>
-                </apex:pageBlockSectionItem>
+				<apex:pageBlockSectionItem rendered="{!displaySecondaryCustomerSelection && NOT(isUtilityAgreement)}">
+					<apex:outputLabel value="Secondary Customer" />
+					<apex:outputPanel layout="block">
+						<apex:selectList value="{!secondaryContactId}" id="contactId2" size="1">
+							<apex:actionSupport event="onchange" action="{!setSecondaryContactEmail}"
+								rerender="secondaryEmailId11"/>								
+							<apex:selectOptions value="{!secondarContacts}" />
+						</apex:selectList>
+					</apex:outputPanel>
+				</apex:pageBlockSectionItem>
 
-                <apex:pageBlockSectionItem Id="secondaryEmailId1" rendered="{!displaySecondaryCustomerSelection && NOT(isUtilityAgreement)}">
-                    <apex:outputLabel value="Secondary Customer Email" />
-                    <apex:outputpanel id="secondaryEmailId11">
-                        <apex:outputtext value="{!secondaryContactEmail}" />
-                    </apex:outputpanel>
-                </apex:pageBlockSectionItem>
-            
-                <apex:pageBlockSectionItem rendered="{!isUtilityAgreement}">
-                    <apex:outputtext value="Please select the appropriate signers for this document."/>
-                </apex:pageBlockSectionItem>
-                
-                <apex:pageBlockSectionItem rendered="{!isUtilityAgreement}">
-                    <apex:outputtext value=""/>
-                </apex:pageBlockSectionItem>
-                
-                <apex:pageBlockSectionItem rendered="{!isUtilityAgreement && NOT(wetSignature) }">
-                    <apex:outputLabel value="Partner Contact"  />
-                    <apex:outputPanel layout="block" >
-                        <apex:inputfield value="{!partnerContactObj.Partner_Contact__c}" id="ptrContact">
-                            <apex:actionSupport event="onchange" action="{!setPartnerEmail}"
-                                rerender="nemPartnerEmailId1"/>                     
-                        </apex:inputfield>
-                    </apex:outputPanel>
-                </apex:pageBlockSectionItem>                
-                
-                <apex:pageBlockSectionItem id="nemPartnerEmailId1" rendered="{!isUtilityAgreement && NOT(wetSignature)}">
-                    <apex:outputLabel value="Partner Contact Email"  />
-                    <apex:outputpanel id="nemPartnerEmailId11">
-                        <apex:outputtext value="{!partnerEmail}" />
-                    </apex:outputpanel>
-                </apex:pageBlockSectionItem>
+				<apex:pageBlockSectionItem Id="secondaryEmailId1" rendered="{!displaySecondaryCustomerSelection && NOT(isUtilityAgreement)}">
+					<apex:outputLabel value="Secondary Customer Email" />
+					<apex:outputpanel id="secondaryEmailId11">
+						<apex:outputtext value="{!secondaryContactEmail}" />
+					</apex:outputpanel>
+				</apex:pageBlockSectionItem>
+			
+				<apex:pageBlockSectionItem rendered="{!isUtilityAgreement}">
+					<apex:outputtext value="Please select the appropriate signers for this document."/>
+				</apex:pageBlockSectionItem>
+				
+				<apex:pageBlockSectionItem rendered="{!isUtilityAgreement}">
+					<apex:outputtext value=""/>
+				</apex:pageBlockSectionItem>
+				
+				<apex:pageBlockSectionItem rendered="{!isUtilityAgreement && NOT(wetSignature) }">
+					<apex:outputLabel value="Partner Contact"  />
+					<apex:outputPanel layout="block" >
+						<apex:inputfield value="{!partnerContactObj.Partner_Contact__c}" id="ptrContact">
+							<apex:actionSupport event="onchange" action="{!setPartnerEmail}"
+								rerender="nemPartnerEmailId1"/>						
+						</apex:inputfield>
+					</apex:outputPanel>
+				</apex:pageBlockSectionItem>				
+				
+				<apex:pageBlockSectionItem id="nemPartnerEmailId1" rendered="{!isUtilityAgreement && NOT(wetSignature)}">
+					<apex:outputLabel value="Partner Contact Email"  />
+					<apex:outputpanel id="nemPartnerEmailId11">
+						<apex:outputtext value="{!partnerEmail}" />
+					</apex:outputpanel>
+				</apex:pageBlockSectionItem>
 
-                <apex:pageBlockSectionItem rendered="{!isUtilityAgreement && NOT(wetSignature) }">
-                    <apex:outputLabel value="Primary Customer" />
-                    <apex:outputPanel layout="block">
-                        <apex:selectList value="{!primaryContactId}" id="contactId1" size="1">
-                            <apex:actionSupport event="onchange" action="{!setPrimaryContactEmail}"
-                                rerender="nemParimaryEmailId11"/>
-                            <apex:selectOptions value="{!secondarContacts}" />
-                        </apex:selectList>
-                    </apex:outputPanel>
-                </apex:pageBlockSectionItem>
-                
-                <apex:pageBlockSectionItem Id="nemParimaryEmailId1" rendered="{!isUtilityAgreement && NOT(wetSignature) }">
-                    <apex:outputLabel value="Primary Customer Email" />
-                    <apex:outputpanel id="nemParimaryEmailId11">
-                        <apex:outputtext value="{!primaryContactEmail}" />
-                    </apex:outputpanel>
-                </apex:pageBlockSectionItem>
+				<apex:pageBlockSectionItem rendered="{!isUtilityAgreement && NOT(wetSignature) }">
+					<apex:outputLabel value="Primary Customer" />
+					<apex:outputPanel layout="block">
+						<apex:selectList value="{!primaryContactId}" id="contactId1" size="1">
+							<apex:actionSupport event="onchange" action="{!setPrimaryContactEmail}"
+								rerender="nemParimaryEmailId11"/>
+							<apex:selectOptions value="{!secondarContacts}" />
+						</apex:selectList>
+					</apex:outputPanel>
+				</apex:pageBlockSectionItem>
+				
+				<apex:pageBlockSectionItem Id="nemParimaryEmailId1" rendered="{!isUtilityAgreement && NOT(wetSignature) }">
+					<apex:outputLabel value="Primary Customer Email" />
+					<apex:outputpanel id="nemParimaryEmailId11">
+						<apex:outputtext value="{!primaryContactEmail}" />
+					</apex:outputpanel>
+				</apex:pageBlockSectionItem>
 
-                <apex:pageBlockSectionItem rendered="{!isUtilityAgreement && NOT(wetSignature) }">
-                    <apex:outputLabel value="Secondary Customer" />
-                    <apex:outputPanel layout="block">
-                        <apex:selectList value="{!secondaryContactId}" id="contactId2" size="1">
-                            <apex:actionSupport event="onchange" action="{!setSecondaryContactEmail}"
-                                rerender="nemSecondaryEmailId11"/>                              
-                            <apex:selectOptions value="{!secondarContacts}" />
-                        </apex:selectList>
-                    </apex:outputPanel>
-                </apex:pageBlockSectionItem>
+				<apex:pageBlockSectionItem rendered="{!isUtilityAgreement && NOT(wetSignature) }">
+					<apex:outputLabel value="Secondary Customer" />
+					<apex:outputPanel layout="block">
+						<apex:selectList value="{!secondaryContactId}" id="contactId2" size="1">
+							<apex:actionSupport event="onchange" action="{!setSecondaryContactEmail}"
+								rerender="nemSecondaryEmailId11"/>								
+							<apex:selectOptions value="{!secondarContacts}" />
+						</apex:selectList>
+					</apex:outputPanel>
+				</apex:pageBlockSectionItem>
 
-                <apex:pageBlockSectionItem Id="nemSecondaryEmailId1" rendered="{!isUtilityAgreement && NOT(wetSignature)}">
-                    <apex:outputLabel value="Secondary Customer Email" />
-                    <apex:outputpanel id="nemSecondaryEmailId11">
-                        <apex:outputtext value="{!secondaryContactEmail}" />
-                    </apex:outputpanel>
-                </apex:pageBlockSectionItem>    
+				<apex:pageBlockSectionItem Id="nemSecondaryEmailId1" rendered="{!isUtilityAgreement && NOT(wetSignature)}">
+					<apex:outputLabel value="Secondary Customer Email" />
+					<apex:outputpanel id="nemSecondaryEmailId11">
+						<apex:outputtext value="{!secondaryContactEmail}" />
+					</apex:outputpanel>
+				</apex:pageBlockSectionItem>	
 
-                <apex:pageBlockSectionItem rendered="{!isUtilityAgreement}">
-                    <apex:outputLabel value="Sunrun Operations" />
-                    <apex:outputPanel layout="block">
-                        <apex:inputCheckbox value="{!sunrunOpsSignature}"/>
-                    </apex:outputPanel>
-                </apex:pageBlockSectionItem>
+				<apex:pageBlockSectionItem rendered="{!isUtilityAgreement}">
+					<apex:outputLabel value="Sunrun Operations" />
+					<apex:outputPanel layout="block">
+						<apex:inputCheckbox value="{!sunrunOpsSignature}"/>
+					</apex:outputPanel>
+				</apex:pageBlockSectionItem>
 
-                <apex:pageBlockSectionItem Id="WetSignatureId2" rendered="{!wetSignature}">
-                    <apex:outputLabel value="Status" />
-                    <apex:outputpanel id="WetSignatureId3">
-                        <apex:outputtext value="{!wetsignatureInfo}" />
-                    </apex:outputpanel> 
-                </apex:pageBlockSectionItem>                
-            </apex:pageblocksection>
-        </apex:pageblock>
-        <apex:pageblock rendered="{!(confirmMode)}">
-            <apex:pageblocksection title="eSign Status" collapsible="false" columns="1">
-                <apex:outputtext value="eSignature request has been submitted successfully">
-                </apex:outputtext>
-            </apex:pageblocksection>
-            <script>
-                processInpersonSigning('{!proposalId}', '{!eSignOption}', '{!inpersonSigningRedirectURL}');
-            </script>
-        </apex:pageblock>
-    </apex:form>
-    <apex:includeScript value="{!URLFOR($Resource.jqueryui_181, 'development-bundle/jquery-1.7.1.js')}"  />
-    <script type="text/javascript">
-        var baseURL = '{!BaseURL}' ;
-        var opportunityId = '{!opportunityId}';
-        function processInpersonSigning(proposalIdVal, eSignOption, inpersonSigningURL){
-            if(inpersonSigningURL != null && inpersonSigningURL != ''
-                && eSignOption != null && eSignOption == 'InPerson'){
+				<apex:pageBlockSectionItem Id="WetSignatureId2" rendered="{!wetSignature}">
+					<apex:outputLabel value="Status" />
+					<apex:outputpanel id="WetSignatureId3">
+						<apex:outputtext value="{!wetsignatureInfo}" />
+					</apex:outputpanel>	
+				</apex:pageBlockSectionItem>				
+			</apex:pageblocksection>
+		</apex:pageblock>
+		<apex:pageblock rendered="{!(confirmMode)}">
+			<apex:pageblocksection title="eSign Status" collapsible="false" columns="1">
+				<apex:outputtext value="eSignature request has been submitted successfully">
+				</apex:outputtext>
+			</apex:pageblocksection>
+			<script>
+				closeAndRefreshparent('{!parentURL}');
+				//processInpersonSigning('{!proposalId}', '{!eSignOption}', '{!inpersonSigningRedirectURL}');
+			</script>
+		</apex:pageblock>
+	</apex:form>
+	<apex:includeScript value="{!URLFOR($Resource.jqueryui_181, 'development-bundle/jquery-1.7.1.js')}"  />
+	<script type="text/javascript">
+		var baseURL = '{!BaseURL}' ;
+		var opportunityId = '{!opportunityId}';
+		function processInpersonSigning(proposalIdVal, eSignOption, inpersonSigningURL){
+			if(inpersonSigningURL != null && inpersonSigningURL != ''
+				&& eSignOption != null && eSignOption == 'InPerson'){
 
-                window.moveTo(5,5);
-                window.resizeTo(1200,1200);
-                window.opener.location.href= baseURL + '/' + proposalIdVal;
+				window.moveTo(5,5);
+				window.resizeTo(1200,1200);
+				window.opener.location.href= baseURL + '/' + proposalIdVal;
                 //window.location.href = baseURL + inpersonSigningURL;
                 window.location.href = inpersonSigningURL;
-            }
-        }
-        
-        function refreshOnComplete(proposalIdVal){
-            if(baseURL != null && baseURL != '' && proposalIdVal != null && proposalIdVal != ''){
-                //window.opener.location.href= baseURL + '/' + proposalIdVal;
-            }
-        }
-        
-        function closeAndRefreshparent(parentWindowUrl)
-        {
-            window.top.close();
-            window.opener.parent.location.href = parentWindowUrl;
-            var win = window.open('','_parent','');
-            win.close();
-        }
-        function confirmCancel() {
-             var winMain=window.opener;
-              if (null==winMain)
-              {
-                 winMain=window.parent.opener;
-              }
-              winMain.closePopup();
-              return true;
-        }  
-        
-        function testOnclick(){
-            document.getElementById('InitiateESigPageId:formId:eSignButtonId').disabled=true;
-            var test1 = '';
-        }
+			}
+		}
+		
+		function refreshOnComplete(proposalIdVal){
+			if(baseURL != null && baseURL != '' && proposalIdVal != null && proposalIdVal != ''){
+				//window.opener.location.href= baseURL + '/' + proposalIdVal;
+			}
+		}
+		
+		function closeAndRefreshparent(parentWindowUrl)
+		{
+			window.top.close();
+			window.opener.parent.location.href = parentWindowUrl;
+			var win = window.open('','_parent','');
+			win.close();
+		}
+		function confirmCancel() {
+		     var winMain=window.opener;
+		      if (null==winMain)
+		      {
+		         winMain=window.parent.opener;
+		      }
+		      winMain.closePopup();
+		      return true;
+		}  
+		
+		function testOnclick(){
+			document.getElementById('InitiateESigPageId:formId:eSignButtonId').disabled=true;
+			var test1 = '';
+		}
 
-        function openLookup(baseURL, width, modified, searchParam){
-            var proposalIdStr = '{!proposalId}';
-            var Site = '{!$Site.Prefix}'; 
-            var proposalIdIdValue = '';
-            var originalbaseURL = baseURL;
-            var originalwidth = width;
-            var originalmodified = modified;
-            var originalsearchParam = searchParam;
+		function openLookup(baseURL, width, modified, searchParam){
+			var proposalIdStr = '{!proposalId}';
+			var Site = '{!$Site.Prefix}'; 
+			var proposalIdIdValue = '';
+			var originalbaseURL = baseURL;
+			var originalwidth = width;
+			var originalmodified = modified;
+			var originalsearchParam = searchParam;
 
-            var lookupType = baseURL.substr(baseURL.length-3, 3);
-            if (modified == '1') 
-                baseURL = baseURL + searchParam;
-            
-            var isCustomLookup = false;
-            var urlArr = baseURL.split("&");
-            var txtId = '';
-            if(urlArr.length > 2) {
-                urlArr = urlArr[1].split('=');
-                txtId = urlArr[1];
-            }
-         
-            // Following is the url of Custom Lookup page. You need to change that accordingly
-            if(Site != ''){
-                baseURL = "/partner/apex/CustomPartnerLookup?IdValue=Contact&txt=" + txtId + '&proposalId=' + proposalIdStr;
-            }else{
-                baseURL = "/apex/CustomPartnerLookup?IdValue=Contact&txt=" + txtId + '&proposalId=' + proposalIdStr;
-            }
-         
-            // Following is the id of apex:form control "myForm". You need to change that accordingly
-            baseURL = baseURL + "&frm=" + escapeUTF("{!$Component.myForm}");
-            if (modified == '1') {
-                //baseURL = baseURL + "&lksearch=" + searchParam;
-            }
-            
-            isCustomLookup = true;
-            width = 750;
-            openPopup(baseURL, "lookup", 350, 480, "width="+width+",height=460,toolbar=no,status=no,directories=no,menubar=no,resizable=yes,scrollable=no", true);
+			var lookupType = baseURL.substr(baseURL.length-3, 3);
+			if (modified == '1') 
+				baseURL = baseURL + searchParam;
+			
+			var isCustomLookup = false;
+			var urlArr = baseURL.split("&");
+			var txtId = '';
+			if(urlArr.length > 2) {
+				urlArr = urlArr[1].split('=');
+				txtId = urlArr[1];
+			}
+		 
+			// Following is the url of Custom Lookup page. You need to change that accordingly
+			if(Site != ''){
+				baseURL = "/partner/apex/CustomPartnerLookup?IdValue=Contact&txt=" + txtId + '&proposalId=' + proposalIdStr;
+			}else{
+				baseURL = "/apex/CustomPartnerLookup?IdValue=Contact&txt=" + txtId + '&proposalId=' + proposalIdStr;
+			}
+		 
+			// Following is the id of apex:form control "myForm". You need to change that accordingly
+			baseURL = baseURL + "&frm=" + escapeUTF("{!$Component.myForm}");
+			if (modified == '1') {
+				//baseURL = baseURL + "&lksearch=" + searchParam;
+			}
+		 	
+		 	isCustomLookup = true;
+			width = 750;
+			openPopup(baseURL, "lookup", 350, 480, "width="+width+",height=460,toolbar=no,status=no,directories=no,menubar=no,resizable=yes,scrollable=no", true);
 
-        }
-    </script>
+		}
+	</script>
 
 
 </apex:page>

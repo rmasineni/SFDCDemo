@@ -23,6 +23,19 @@
         </apex:outputPanel>
         &nbsp;&nbsp;
         &nbsp;&nbsp;
+        <apex:outputpanel style="font-size: 13px;">
+            <center>
+            <p>
+            <h2>Contact us:</h2>
+            <br/>           
+            Phone support: <a href="tel:888-840-7180">888-840-7180</a>
+            <br/>
+            Available: 9 AM - 5 PM PST
+            <br/>
+            Email support: <a href="mailto:sunrunhelp@sunrun.com">sunrunhelp@sunrun.com </a>        
+            </p>
+            </center>
+        </apex:outputpanel>
         <apex:pageblock title="Cases"  id="CaseList">
         
             <apex:pageblocksection columns="1">

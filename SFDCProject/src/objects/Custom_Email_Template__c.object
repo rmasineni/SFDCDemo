@@ -44,6 +44,7 @@
         <actionName>View</actionName>
         <type>Default</type>
     </actionOverrides>
+    <allowInChatterGroups>false</allowInChatterGroups>
     <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
     <deploymentStatus>Deployed</deploymentStatus>
     <description>Custom Email Templates</description>
@@ -99,10 +100,6 @@
         <columns>LAST_UPDATE</columns>
         <columns>UPDATEDBY_USER</columns>
         <filterScope>Everything</filterScope>
-        <filters>
-            <field>NAME</field>
-            <operation>notEqual</operation>
-        </filters>
         <label>All</label>
         <language>en_US</language>
     </listViews>

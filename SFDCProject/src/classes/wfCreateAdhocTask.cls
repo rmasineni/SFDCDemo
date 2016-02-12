@@ -51,10 +51,14 @@ public class wfCreateAdhocTask {
        
     }  
     
-    public PageReference editTask() {
-        editModeSec =true;
-        PageReference pageRef = new PageReference('/apex/wfCreateAdhocTask?id='+taskId);
-        return pageRef;    
+        public PageReference editTask() {
+         // editModeSec = true;
+
+          editModeSec =true;
+          PageReference pageRef = new PageReference('/apex/wfCreateAdhocTask?id='+taskId);
+          
+          return pageRef;
+          
     }
 	
 	public Pagereference saveAdhocTask(){

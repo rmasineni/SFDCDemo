@@ -44,6 +44,7 @@
         <actionName>View</actionName>
         <type>Default</type>
     </actionOverrides>
+    <allowInChatterGroups>false</allowInChatterGroups>
     <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
     <deploymentStatus>Deployed</deploymentStatus>
     <description>User managed group for workflow task assignment.</description>
@@ -61,10 +62,6 @@
         <externalId>false</externalId>
         <label>Group</label>
         <picklist>
-            <picklistValues>
-                <fullName>Branch Coordinator</fullName>
-                <default>false</default>
-            </picklistValues>
             <picklistValues>
                 <fullName>Brea PC</fullName>
                 <default>false</default>
@@ -107,10 +104,6 @@
             </picklistValues>
             <picklistValues>
                 <fullName>Interconnection</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Loan Administrator</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
@@ -235,6 +228,16 @@
     </fields>
     <label>User Group</label>
     <listViews>
+        <fullName>All</fullName>
+        <columns>NAME</columns>
+        <columns>Group__c</columns>
+        <columns>User__c</columns>
+        <columns>User_Active__c</columns>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
         <fullName>Contract_Approval</fullName>
         <columns>NAME</columns>
         <columns>User__c</columns>
@@ -270,6 +273,199 @@
         <type>AutoNumber</type>
     </nameField>
     <pluralLabel>User Groups</pluralLabel>
+    <recordTypeTrackHistory>false</recordTypeTrackHistory>
+    <recordTypes>
+        <fullName>Non_Operational_Group</fullName>
+        <active>true</active>
+        <label>Non Operational Group</label>
+        <picklistValues>
+            <picklist>Group__c</picklist>
+            <values>
+                <fullName>Brea PC</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Construction Supervisor</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Contract Coordinator</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Customer Care</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Design Engineering</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Drafting Team</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Inspection Coordinator</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Meter Registration</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Permitting</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Permitting%2FDesign Engineering</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Project Planner</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Project Planner%2FBrea PC</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Project Planner%2FContract Coordinator</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Retail Operations</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Retail Payment Manager</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Sales</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Sales Change Order</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Site Audit</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
+    <recordTypes>
+        <fullName>Operational_Group</fullName>
+        <active>true</active>
+        <label>Operational Group</label>
+        <picklistValues>
+            <picklist>Group__c</picklist>
+            <values>
+                <fullName>Brea PC</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Change Orders</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Construction Supervisor</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Contract Approval</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Contract Coordinator</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Customer Care</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Design Engineering</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Drafting Team</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Inspection Coordinator</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Installation Review</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Interconnection</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Meter Registration</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Milestone Approvals</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>NTP Team</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Permitting</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Permitting%2FDesign Engineering</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Project Planner</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Project Planner%2FBrea PC</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Project Planner%2FContract Coordinator</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Rebates</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Retail Operations</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Retail Payment Manager</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Sales</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Sales Change Order</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Site Audit</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Specialist Team</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
     <searchLayouts>
         <customTabListAdditionalFields>User__c</customTabListAdditionalFields>
         <customTabListAdditionalFields>Group__c</customTabListAdditionalFields>

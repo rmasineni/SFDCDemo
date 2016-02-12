@@ -48,6 +48,7 @@
         <skipRecordTypeSelect>false</skipRecordTypeSelect>
         <type>Visualforce</type>
     </actionOverrides>
+    <allowInChatterGroups>false</allowInChatterGroups>
     <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
     <deploymentStatus>Deployed</deploymentStatus>
     <description>This is a generic template for Custom Object.  With this template, you may adjust the default elements and values and add new elements and values.</description>
@@ -162,6 +163,18 @@
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Delay_Until__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(AND((TEXT(Status__c) = &quot;Open&quot;),Name = &quot;Start Installation&quot;),Project_Name__r.Service_Contract__r.Service_Contract_Event__r.Scheduled_Install_Date__c - 1,
+IF(AND((TEXT(Status__c) = &quot;Open&quot;),Name = &quot;Finish Site Audit&quot;),DATEVALUE(Project_Name__r.Service_Contract__r.Service_Contract_Event__r.Site_Audit_Scheduled__c) - 1,
+DATEVALUE(Start_Date_Since_Last_Open__c)))</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Delay Until</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
     </fields>
     <fields>
         <fullName>Description__c</fullName>
@@ -803,10 +816,6 @@
         <label>Group Name</label>
         <picklist>
             <picklistValues>
-                <fullName>Branch Coordinator</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
                 <fullName>Brea PC</fullName>
                 <default>false</default>
             </picklistValues>
@@ -848,10 +857,6 @@
             </picklistValues>
             <picklistValues>
                 <fullName>Interconnection</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Loan Administrator</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
@@ -1291,11 +1296,6 @@
         <label>Reason</label>
         <picklist>
             <controllingField>Group_Name__c</controllingField>
-            <picklistValues>
-                <fullName>Construction Review</fullName>
-                <controllingFieldValues>Construction Supervisor</controllingFieldValues>
-                <default>false</default>
-            </picklistValues>
             <picklistValues>
                 <fullName>Customer-Facing Request</fullName>
                 <controllingFieldValues>Project Planner</controllingFieldValues>
@@ -1843,10 +1843,6 @@ IF(SLA_Status__c = &quot;Red&quot;, &quot;3-Red&quot;, &quot;0-Blue&quot;)))</fo
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>Interconnection</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
                 <fullName>Inverter/Meter Relocation</fullName>
                 <controllingFieldValues>Design Change Request</controllingFieldValues>
                 <default>false</default>
@@ -1854,11 +1850,6 @@ IF(SLA_Status__c = &quot;Red&quot;, &quot;3-Red&quot;, &quot;0-Blue&quot;)))</fo
             <picklistValues>
                 <fullName>Layout doesn’t match BP design</fullName>
                 <controllingFieldValues>Missing for NTP</controllingFieldValues>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Main Panel Upgrade Review</fullName>
-                <controllingFieldValues>Construction Review</controllingFieldValues>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
@@ -1874,11 +1865,6 @@ IF(SLA_Status__c = &quot;Red&quot;, &quot;3-Red&quot;, &quot;0-Blue&quot;)))</fo
             <picklistValues>
                 <fullName>Missing BP</fullName>
                 <controllingFieldValues>Missing Documents for Review</controllingFieldValues>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Missing CGS Form</fullName>
-                <controllingFieldValues>RTS</controllingFieldValues>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
@@ -1983,7 +1969,6 @@ IF(SLA_Status__c = &quot;Red&quot;, &quot;3-Red&quot;, &quot;0-Blue&quot;)))</fo
             </picklistValues>
             <picklistValues>
                 <fullName>Other</fullName>
-                <controllingFieldValues>Construction Review</controllingFieldValues>
                 <controllingFieldValues>RTS</controllingFieldValues>
                 <default>false</default>
             </picklistValues>
@@ -2030,11 +2015,6 @@ IF(SLA_Status__c = &quot;Red&quot;, &quot;3-Red&quot;, &quot;0-Blue&quot;)))</fo
             <picklistValues>
                 <fullName>Shading does not match inputs</fullName>
                 <controllingFieldValues>Missing for NTP</controllingFieldValues>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Short Circuit (Design Dept Use Only)</fullName>
-                <controllingFieldValues>Project Audit</controllingFieldValues>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
@@ -2947,39 +2927,6 @@ NULL),NULL)</formula>
         </sharedTo>
     </listViews>
     <listViews>
-        <fullName>Subcontracting_Additional_SOW_Open_Task</fullName>
-        <booleanFilter>(1 AND 2) AND (3 OR 4)</booleanFilter>
-        <columns>Project_Name__c</columns>
-        <columns>NAME</columns>
-        <columns>Task_Owner__c</columns>
-        <columns>Status__c</columns>
-        <columns>Task_Age__c</columns>
-        <columns>Task_Notes__c</columns>
-        <filterScope>Everything</filterScope>
-        <filters>
-            <field>Group_Name__c</field>
-            <operation>equals</operation>
-            <value>Contract Coordinator</value>
-        </filters>
-        <filters>
-            <field>Status__c</field>
-            <operation>equals</operation>
-            <value>Open,Blocked</value>
-        </filters>
-        <filters>
-            <field>NAME</field>
-            <operation>equals</operation>
-            <value>Get Electrical Subk Signed</value>
-        </filters>
-        <filters>
-            <field>NAME</field>
-            <operation>equals</operation>
-            <value>Get Solar Waterproofing Subk Signed Subk</value>
-        </filters>
-        <label>Subcontracting-Additional SOW- Open Task</label>
-        <language>en_US</language>
-    </listViews>
-    <listViews>
         <fullName>WFM_doc_collection</fullName>
         <columns>NAME</columns>
         <columns>Customer_Full_Name__c</columns>
@@ -3120,6 +3067,32 @@ NULL),NULL)</formula>
             <value>Cancelled,Blocked</value>
         </filters>
         <label>03.NVEnergy_ICF to be Submitted</label>
+        <language>en_US</language>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>m3_test</fullName>
+        <columns>NAME</columns>
+        <columns>Project_Status__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>NAME</field>
+            <operation>contains</operation>
+            <value>submit m3</value>
+        </filters>
+        <filters>
+            <field>Project_Status__c</field>
+            <operation>contains</operation>
+            <value>cancel</value>
+        </filters>
+        <filters>
+            <field>Status__c</field>
+            <operation>equals</operation>
+            <value>Open</value>
+        </filters>
+        <label>m3 test</label>
         <language>en_US</language>
         <sharedTo>
             <allInternalUsers></allInternalUsers>

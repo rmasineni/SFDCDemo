@@ -1,0 +1,262 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Follow</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <content>EmployeeMaster</content>
+        <skipRecordTypeSelect>false</skipRecordTypeSelect>
+        <type>Visualforce</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <allowInChatterGroups>false</allowInChatterGroups>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <description>This object contains the list of employees who are active and terminated.</description>
+    <enableActivities>false</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableDivisions>false</enableDivisions>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>false</enableHistory>
+    <enableReports>false</enableReports>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <externalSharingModel>ReadWrite</externalSharingModel>
+    <fields>
+        <fullName>Deactivate__c</fullName>
+        <externalId>false</externalId>
+        <label>Deactivate</label>
+        <length>10</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>EMAIL_ADDRESS__c</fullName>
+        <externalId>false</externalId>
+        <label>EMAIL ADDRESS</label>
+        <required>true</required>
+        <trackTrending>false</trackTrending>
+        <type>Email</type>
+        <unique>true</unique>
+    </fields>
+    <fields>
+        <fullName>EMPLOYEE_MOBILE_NUMBER__c</fullName>
+        <externalId>false</externalId>
+        <label>EMPLOYEE MOBILE  NUMBER</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Phone</type>
+    </fields>
+    <fields>
+        <fullName>EMPLOYEE_NUMBER__c</fullName>
+        <externalId>false</externalId>
+        <label>EMPLOYEE NUMBER</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>EMPLOYEE_PRIMARY_WORK_NUMBER__c</fullName>
+        <externalId>false</externalId>
+        <label>EMPLOYEE PRIMARY WORK NUMBER</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Phone</type>
+    </fields>
+    <fields>
+        <fullName>EMPLOYEE_SECONDARY_WORK_NUMBER__c</fullName>
+        <externalId>false</externalId>
+        <label>EMPLOYEE SECONDARY WORK NUMBER</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Phone</type>
+    </fields>
+    <fields>
+        <fullName>FIRST_NAME__c</fullName>
+        <externalId>false</externalId>
+        <label>FIRST NAME</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>JOB__c</fullName>
+        <externalId>false</externalId>
+        <label>JOB</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>LAST_NAME__c</fullName>
+        <externalId>false</externalId>
+        <label>LAST NAME</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>LOCATION__c</fullName>
+        <externalId>false</externalId>
+        <label>LOCATION</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>ORGANIZATION_NAME__c</fullName>
+        <externalId>false</externalId>
+        <label>ORGANIZATION NAME</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>SUPERVISOR_EMAIL_ADDRESS__c</fullName>
+        <externalId>false</externalId>
+        <label>SUPERVISOR EMAIL ADDRESS</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Email</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>SUPERVISOR_EMPLOYEE_NUMBER__c</fullName>
+        <externalId>false</externalId>
+        <label>SUPERVISOR EMPLOYEE NUMBER</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>SUPERVISOR_FULL_NAME__c</fullName>
+        <externalId>false</externalId>
+        <label>SUPERVISOR FULL NAME</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Termination_Status__c</fullName>
+        <externalId>false</externalId>
+        <label>Termination Status</label>
+        <length>40</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <label>Employee Master</label>
+    <listViews>
+        <fullName>All</fullName>
+        <columns>NAME</columns>
+        <columns>EMAIL_ADDRESS__c</columns>
+        <columns>Termination_Status__c</columns>
+        <columns>Deactivate__c</columns>
+        <columns>OBJECT_ID</columns>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+        <language>en_US</language>
+    </listViews>
+    <nameField>
+        <label>Employee Master Name</label>
+        <type>Text</type>
+    </nameField>
+    <pluralLabel>Employee Master</pluralLabel>
+    <searchLayouts/>
+    <sharingModel>ReadWrite</sharingModel>
+    <webLinks>
+        <fullName>Deactivate_Terminated_User</fullName>
+        <availability>online</availability>
+        <description>Deactivate the Users who are active and terminated</description>
+        <displayType>massActionButton</displayType>
+        <linkType>javascript</linkType>
+        <masterLabel>Deactivate Terminated User</masterLabel>
+        <openType>onClickJavaScript</openType>
+        <protected>false</protected>
+        <requireRowSelection>true</requireRowSelection>
+        <url>{!REQUIRESCRIPT(&quot;/soap/ajax/14.0/connection.js&quot;)} 
+{!REQUIRESCRIPT(&quot;/soap/ajax/14.0/apex.js&quot;)} 
+var res=sforce.apex.execute(&quot;Employee_MasterUtil&quot;,&quot;deactivateUser&quot;,{});
+ // invoked when sending ajax request
+  $(document).ajaxSend(function () {
+      $(&quot;#loading&quot;).show();
+  });
+
+  // invoked when sending ajax completed
+  $(document).ajaxComplete(function () {
+      $(&quot;#loading&quot;).hide();
+  });</url>
+    </webLinks>
+    <webLinks>
+        <fullName>Truncate_all_data</fullName>
+        <availability>online</availability>
+        <description>Before importing the data in Employee_Master__c object, truncated all the data</description>
+        <displayType>massActionButton</displayType>
+        <linkType>javascript</linkType>
+        <masterLabel>Truncate all data</masterLabel>
+        <openType>onClickJavaScript</openType>
+        <protected>false</protected>
+        <requireRowSelection>false</requireRowSelection>
+        <url>{!REQUIRESCRIPT(&quot;/soap/ajax/14.0/connection.js&quot;)}
+{!REQUIRESCRIPT(&quot;/soap/ajax/14.0/apex.js&quot;)}
+var res=sforce.apex.execute(&quot;Employee_MasterUtil&quot;,&quot;truncateAllData&quot;,{})
+window.location.reload( true );</url>
+    </webLinks>
+</CustomObject>

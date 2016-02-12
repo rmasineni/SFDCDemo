@@ -44,6 +44,7 @@
         <actionName>View</actionName>
         <type>Default</type>
     </actionOverrides>
+    <allowInChatterGroups>false</allowInChatterGroups>
     <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
     <deploymentStatus>Deployed</deploymentStatus>
     <enableActivities>false</enableActivities>
@@ -95,21 +96,6 @@
     </fields>
     <label>Appointment Group</label>
     <listViews>
-        <fullName>All</fullName>
-        <columns>NAME</columns>
-        <columns>OBJECT_ID</columns>
-        <columns>Contact__c</columns>
-        <columns>Group__c</columns>
-        <filterScope>Everything</filterScope>
-        <filters>
-            <field>Contact__c</field>
-            <operation>equals</operation>
-            <value>Demetrio Amaya</value>
-        </filters>
-        <label>All</label>
-        <language>en_US</language>
-    </listViews>
-    <listViews>
         <fullName>All1</fullName>
         <columns>NAME</columns>
         <columns>Contact__c</columns>
@@ -154,9 +140,9 @@
         <columns>Group__c</columns>
         <filterScope>Everything</filterScope>
         <filters>
-            <field>Group__c</field>
+            <field>Contact__c</field>
             <operation>equals</operation>
-            <value>Site Auditors</value>
+            <value>POS Salesuser</value>
         </filters>
         <label>Group = Site Auditors</label>
         <language>en_US</language>

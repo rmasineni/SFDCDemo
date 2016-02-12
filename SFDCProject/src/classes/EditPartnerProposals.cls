@@ -47,7 +47,7 @@ public class EditPartnerProposals
         this.proposalRecord = (Proposal__c)stdController.getRecord();
         isSaved  = false;
         propObj = [Select id, name, Assigne__c, Partner_Actions__c,stage__c,Original_Proposal_ID__c, signed__c,
-        			Change_Order_Information__c, opportunity__c, Revised_Proposal__c, proposal_source__c ,Status_Reason__c 
+        			Change_Order_Information__c, opportunity__c, Revised_Proposal__c, proposal_source__c  ,Status_Reason__c
         			from proposal__c where id =: this.proposalRecord.id];
         this.proposalRecord = propObj;
         this.customLookupObj.User__c = this.proposalRecord.Assigne__c;

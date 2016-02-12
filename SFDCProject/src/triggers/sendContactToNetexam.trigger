@@ -1,7 +1,7 @@
 trigger sendContactToNetexam on Contact (after insert, after update) { 
 
     if(system.isFuture()) return;
-    if(system.isBatch()) return;
+    
     if(Test.isRunningTest() && UserInfo.getName() == 'MyTestUserAlias') return;
     
     //NetExamUserServiceAPI connector = new NetExamUserServiceAPI();
@@ -10,9 +10,9 @@ trigger sendContactToNetexam on Contact (after insert, after update) {
     public class MissingLastNameException extends Exception{}  
     public class MissingEmailException extends Exception{}   
     
-  Boolean skipValidations = False;
-  skipValidations = SkipTriggerValidation.performTriggerValidations();
-  if(skipValidations == false){
+ Boolean skipValidations = false;
+ skipValidations = SkipTriggerValidation.performTriggerValidations();
+ if(skipValidations == false){   
     
     if(controlContactTriggerRecursion.ControlNetExamTrigger)
     {
@@ -31,7 +31,7 @@ trigger sendContactToNetexam on Contact (after insert, after update) {
               }
         }
         
-        if( !system.isFuture() && !system.isBatch() &&  contactIds.size() > 0)
+        if(contactIds.size() > 0)
         {
                NetExamWebServiceAPIHelper81.SendContactListToNetExam(contactIds);
         }

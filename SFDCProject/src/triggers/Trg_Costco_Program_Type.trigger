@@ -12,7 +12,7 @@ Map<Id,String> AcntIDAndNameMap = New Map<Id,String>();
            if(o.Billing_State__c == 'CA' ||o.Billing_State__c == 'MA' || o.Billing_State__c == 'AZ' || o.Billing_State__c == 'NV' || o.Billing_State__c == 'NJ' || o.Billing_State__c == 'OR' || o.Billing_State__c == 'MD'){
             o.Program_Type__c = 'Program 1';
            }
-           if(o.Billing_State__c == 'HI' || o.Billing_State__c == 'NY' || o.Billing_State__c == 'CO' || o.Billing_State__c == 'CT'){
+           if(o.Billing_State__c == 'HI' || o.Billing_State__c == 'NY' || o.Billing_State__c == 'CO'|| o.Billing_State__c == 'CT'){
             o.Program_Type__c = 'Program 2';    
            } 
         }
@@ -61,6 +61,22 @@ if(!SetAcntId.isEmpty())
             SetOpptId.add(oppty.id);
             System.debug('This is opp Ids:'+SetOpptId);
         }
+        //BSKY-7264 - Create new field on Opportunity: Design Only - Logic Start
+        if((oppty.Sales_Partner__c == label.Sunrun_Inc_Id && oppty.Purchased_Thru__c==null)
+                || oppty.SalesRep__c==null
+                ||(oppty.Square_footage__c==null && oppty.Annual_kWh_usage__c==null)
+                ||((oppty.Purchased_Thru__c!=null && oppty.Purchased_Thru__c.equalsIgnoreCase('Costco')) && (oppty.Costco_Member_ID__c == null ||oppty.Lead_Organization_Location_2__c == null) && oppty.Sales_Partner__c == label.Sunrun_Inc_Id))
+             {
+                 oppty.Design_Only__c = TRUE;
+             }
+        if(oppty.Purchased_Thru__c!=null
+           && oppty.SalesRep__c!=null 
+           && (oppty.Square_footage__c!=null || oppty.Annual_kWh_usage__c!=null))
+             {
+                 oppty.Design_Only__c = FALSE;
+             }
+        //BSKY-7264 - Create new field on Opportunity: Design Only - Logic End
+        
     }
 }
 if(!SetOpptId.isEmpty())
@@ -92,6 +108,7 @@ if(!SetOpptId.isEmpty())
         }
       }
    }    
+   //JurisdictionOnOppty.copyJurisdictionToOppty(Trigger.New,Trigger.isUpdate,Trigger.oldMap,Trigger.newMap);
  }
     
 }

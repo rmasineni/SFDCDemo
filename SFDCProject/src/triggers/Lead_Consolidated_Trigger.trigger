@@ -18,16 +18,25 @@ trigger Lead_Consolidated_Trigger on Lead (before insert, after insert, before u
             //Lead_Distribution_SouthNorth.assignLeads(trigger.new); 
             LeadTriggerClass.trg_bef_ins_FindSalesrep(trigger.new);
             LeadTriggerClass.trg_lead_bef_ins_upd_salesRepEmailPhone(trigger.new,trigger.oldMap);  
-            LeadTriggerClass.trg_lead_before_insert(trigger.oldMap, trigger.NewMap, trigger.new, trigger.isUpdate, trigger.isInsert);  
-            sfLead.leadDeDupService.handleLeadsTrigger();          
+            LeadTriggerClass.trg_lead_before_insert(trigger.oldMap, trigger.NewMap, trigger.new, trigger.isUpdate, trigger.isInsert);            
+            sfLead.leadDeDupService.handleLeadsTrigger();
             LeadTriggerClass.trg_webtoleadBeforeInsert(trigger.new);
             //Lead_Distribution_SouthNorth.updateRelatedValues(Trigger.new);            
             //LeadTriggerClass.trg_lead_bef_ins_SP_IP_Partner(trigger.new);
             LeadTriggerClass.LeadAssignmentBeforeInsert(trigger.new);
             //LeadTriggerClass.ReferralCodeLookup_trigger(trigger.new);
             LeadTriggerClass.LeadBeforeInsert(trigger.new);
-            LeadTriggerClass.LeadExtSourceBeforeInsert(trigger.new);  
-            LeadTriggerClass.doFieldMarketingBranch(trigger.new,trigger.oldMap,trigger.isInsert,trigger.isUpdate);  
+            LeadTriggerClass.LeadExtSourceBeforeInsert(trigger.new); 
+            
+            //Added for BSKY-7120 Incontact Hard Coded Values 
+            LeadTriggerClass.UpdateCallCenterCheckbox(trigger.new);
+             //Added for 7120 - Priya
+            LeadTriggerClass.UpdateCallCenterCheckbox(trigger.oldmap,trigger.new, trigger.isInsert, trigger.isUpdate);
+            
+            LeadTriggerClass.doFieldMarketingBranch(trigger.new,trigger.oldMap,trigger.isInsert,trigger.isUpdate);
+            //adding logic to update lead info based InContact data
+            // LeadTriggerClass.updateInContactInfoOnLead(trigger.oldMap, trigger.new, trigger.isInsert, trigger.isUpdate);
+                
             }catch(Exception ex){
                 System.debug('-----Exception block before insert:' +ex+'line no'+ ex.getLineNumber()); 
                 String UserName = UserInfo.getName();
@@ -53,12 +62,20 @@ trigger Lead_Consolidated_Trigger on Lead (before insert, after insert, before u
             LeadTriggerClass.trg_before_insert_fillLeadGeneratedByAftUp(trigger.new);
             LeadTriggerClass.trg_lead_bf_up_findMarketsManual(trigger.new,trigger.oldMap);
             LeadTriggerClass.ProcessCostcoLead(trigger.new);
+
+            //Added for BSKY-7120 Incontact Hard Coded Values
+            LeadTriggerClass.UpdateCallCenterCheckbox(trigger.new);
+
             LeadTriggerClass.doFieldMarketingBranch(trigger.new,trigger.oldMap,trigger.isInsert,trigger.isUpdate);
          //   LeadTriggerClass.NotifyReferee(trigger.new,trigger.oldmap);
-             
-             if(!System.isfuture()&&!system.isBatch())
-            LeadTriggerClass.updateInContactInfoOnLead(trigger.oldMap,trigger.new,trigger.isInsert,trigger.isUpdate);
             
+             //adding logic to update lead info based InContact data
+            if(!System.isfuture()&&!system.isBatch())
+           LeadTriggerClass.updateInContactInfoOnLead(trigger.oldMap, trigger.new, trigger.isInsert, trigger.isUpdate);
+           
+            //Added for 7120 - Priya
+            LeadTriggerClass.UpdateCallCenterCheckbox(trigger.oldmap,trigger.new, trigger.isInsert, trigger.isUpdate);
+           
             for(Lead l : trigger.new){
                 if(l.LastUpdateDifference__c == null &&!checkRecursive.sunrunSouthIds.contains(l.id)&&l.sunrun_south__c){
                     l.LastUpdateDifference__c = 1;
@@ -90,13 +107,14 @@ trigger Lead_Consolidated_Trigger on Lead (before insert, after insert, before u
             LeadTriggerClass.trg_lead_aft_ins_SP_IP_Partner(trigger.new); 
            // LeadTriggerClass.ProcessCostcoLeadAfterInsert(trigger.new);    
             PartnerLeadShare.PartnerLeadShare(trigger.new,trigger.oldmap,trigger.isinsert,trigger.isupdate); 
-            LeadTriggerClass.doReferralStagesUpdate(trigger.new,trigger.oldmap);    
+            LeadTriggerClass.doReferralStagesUpdate(trigger.new,trigger.oldmap);
+            if(!System.isfuture()&&!system.isBatch())
+            LeadTriggerClass.updateInContactInfoOnLead(trigger.oldMap, trigger.new, trigger.isInsert, trigger.isUpdate);
+                
            // LeadTriggerClass.NotifyReferee(null, trigger.new, trigger.isInsert, trigger.isUpdate);
             //LeadTriggerClass.convertQualifiedLeads(trigger.new);
             sfLead.leadDeDupService.handleLeadsTrigger();
-            if(!System.isfuture()&&!system.isBatch())
-            LeadTriggerClass.updateInContactInfoOnLead(trigger.oldMap,trigger.new,trigger.isInsert,trigger.isUpdate);
-            
+           
              }
              catch(Exception ex){
                 System.debug('-----Exception block after insert:' +ex); 
@@ -153,4 +171,6 @@ trigger Lead_Consolidated_Trigger on Lead (before insert, after insert, before u
     Sf.addressService.handleLeadsTrigger();
     Sf.costcoSyncService.handleLeadsTrigger();
     Sf.homeDepotSyncService.handleLeadsTrigger();
+    //Below service calls checks if status of leads changed and if so, sends a sqs message to the partner queue.
+   // Sf.awsSyncService.handleLeadsTrigger();    
 }

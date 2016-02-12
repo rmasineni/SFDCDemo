@@ -1,5 +1,5 @@
 public class AmbassadorSyncServiceImpl extends BaseClass implements AmbassadorSyncService {
-    
+
     public static final String ReferralStatus = 'Referral_Status__c';
     public static final String PaymentStatus1 = 'Referrer_Status_1__c';
     public static final String PaymentStatus2 = 'Referrer_Status_2__c';

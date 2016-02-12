@@ -9,24 +9,36 @@ public class CoreLogicServiceImpl extends BaseClass implements CoreLogicService 
     public static Map<Id, String> accountsProcessed = new Map<Id, String>();
     
     public void handleAccountsTrigger() {
+        System.debug('corelogicservice.handleAccountsTrigger()');
         if (Trigger.isInsert || Trigger.isUpdate) {
+            System.debug('corelogicservice.handleAccountsTrigger() ---> 1');
             List<Account> accountsToBeProcessed = new List<Account>();
             
             for (Integer i = 0; i < Trigger.new.size(); i++) {
+                System.debug('corelogicservice.handleAccountsTrigger() ---> 2');
                 Account oldAccount = (Account) (Trigger.old==null?null:Trigger.old.get(i));
                 Account newAccount = (Account) Trigger.new.get(i);
+                System.debug('isInsert : ' +Trigger.isInsert);
+                System.debug('isUpdate : ' +Trigger.isUpdate);
+                System.debug('oldAccount : ' +oldAccount);
+                System.debug('newAccount : ' +newAccount);
                 
                 if (Trigger.isBefore) {
+                    System.debug('corelogicservice.handleAccountsTrigger() ---> 3');
                     if (isNullOrZero(newAccount.Latitude__c) 
                         	|| isNullOrZero(newAccount.Longitude__c)
                        		|| isCoreLogicSyncRequired(oldAccount, newAccount)) {
+                        System.debug('corelogicservice.handleAccountsTrigger() ---> 4');
 	                    clearCoreLogicFields(newAccount);
                     }
                 } else {
+                    System.debug('corelogicservice.handleAccountsTrigger() ---> 5');
                     if (isCoreLogicSyncRequired(oldAccount, newAccount)) {
                         //If we have submitted already this account for processing in this transaction, 
                         //then let's not process again.
+                        System.debug('corelogicservice.handleAccountsTrigger() ---> 6');
                         if (!accountsProcessed.containsKey(newAccount.id)) {
+                            System.debug('corelogicservice.handleAccountsTrigger() ---> 7');
                             accountsToBeProcessed.add(newAccount);
                             accountsProcessed.put(newAccount.id, '');
                         }
@@ -35,6 +47,7 @@ public class CoreLogicServiceImpl extends BaseClass implements CoreLogicService 
             }
             
             if (!accountsToBeProcessed.isEmpty()) {
+                System.debug('Scheduling CoreLogicJob');
                 Sf.syncService.insertSyncRecords(CoreLogicServiceDto.SyncModule, CoreLogicServiceDto.SyncAction, accountsToBeProcessed);
                 Sf.commonScheduler.runJobAfterMins('CoreLogicJob', Sf.settingsService.getInteger('CoreLogicJobRealtimeDelayMins', 1));
             }
@@ -55,7 +68,8 @@ public class CoreLogicServiceImpl extends BaseClass implements CoreLogicService 
         account.Legal_Description__c = null;
         account.Incorporation_Flag__c = null;
         account.City_Type__c = null;
-        account.Geometry__c = null;
+        account.Geometry__c = null; 
+        account.Ubld_Sq_Ft__c = null; 
     }
     
     public void processJob(SyncJobInfo syncJob) {
@@ -102,7 +116,10 @@ public class CoreLogicServiceImpl extends BaseClass implements CoreLogicService 
 
                 //BSKY-6500
                 account.Geometry__c = parcels.getString('GEOM');
-                                
+                
+                //BSKY-7287
+                account.Ubld_Sq_Ft__c = Integer.valueOf(parcels.getString('UBLD_SQ_FT'));
+
                 account.Incorporation_Flag__c = decodeIncorporationFlag(features);
                 
                 account.City_Type__c = features.getString('AdminLocation.cityType', 'null');

@@ -44,6 +44,7 @@
         <actionName>View</actionName>
         <type>Default</type>
     </actionOverrides>
+    <allowInChatterGroups>false</allowInChatterGroups>
     <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
     <deploymentStatus>Deployed</deploymentStatus>
     <enableActivities>false</enableActivities>
@@ -153,7 +154,6 @@
             </picklistValues>
             <picklistValues>
                 <fullName>Billing</fullName>
-                <controllingFieldValues>Standard</controllingFieldValues>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
@@ -228,7 +228,6 @@
             </picklistValues>
             <picklistValues>
                 <fullName>Equipment</fullName>
-                <controllingFieldValues>Standard</controllingFieldValues>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
@@ -348,11 +347,6 @@
             </picklistValues>
             <picklistValues>
                 <fullName>PTO</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Quality Assurance</fullName>
-                <controllingFieldValues>FS Ticket</controllingFieldValues>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
@@ -1591,7 +1585,6 @@
             </picklistValues>
             <picklistValues>
                 <fullName>Normal</fullName>
-                <controllingFieldValues>Quality Assurance</controllingFieldValues>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
@@ -2511,24 +2504,6 @@
             <value>Collections</value>
         </filters>
         <label>Collections Templates</label>
-    </listViews>
-    <listViews>
-        <fullName>Equipment_Templates</fullName>
-        <columns>NAME</columns>
-        <columns>OBJECT_ID</columns>
-        <columns>OWNER.FIRST_NAME</columns>
-        <columns>OWNER.LAST_NAME</columns>
-        <columns>Priority__c</columns>
-        <columns>Case_Reason__c</columns>
-        <columns>Case_Record_Type__c</columns>
-        <filterScope>Everything</filterScope>
-        <filters>
-            <field>Case_Reason__c</field>
-            <operation>equals</operation>
-            <value>Equipment</value>
-        </filters>
-        <label>Equipment Templates</label>
-        <language>en_US</language>
     </listViews>
     <listViews>
         <fullName>FS_Ticket_Cases</fullName>

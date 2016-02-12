@@ -44,6 +44,7 @@
         <actionName>View</actionName>
         <type>Default</type>
     </actionOverrides>
+    <allowInChatterGroups>false</allowInChatterGroups>
     <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
     <deploymentStatus>Deployed</deploymentStatus>
     <description>Generation Assets are energy generating facilities owned by SunRun</description>
@@ -7229,6 +7230,15 @@ IF(MONTH( Welcome_Call__c ) = 12, &quot;12 - Dec&quot;,null
         <unique>false</unique>
     </fields>
     <label>Generation Asset</label>
+    <listViews>
+        <fullName>AccountsReceivable_Generation_Assets</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Accounts Receivable</label>
+        <queue>AccountsReceivable</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
     <listViews>
         <fullName>All_Gen_Assets</fullName>
         <columns>NAME</columns>

@@ -1,0 +1,3 @@
+public class HomeDepotOpptySyncServiceImpl extends BaseClass implements HomeDepotOpptySyncService{
+
+}

@@ -50,8 +50,8 @@ public class DesignTool {
             //responseObj.url = designToolBaseURL + '?' + canonicalStr + '&signature=' + codedsigned+ '&returnUrl=' + returnURL ;            
         }else if(ObjectType == 'Opportunity'){
             String errMsg = '';
-			
-			List<Opportunity> OpptyList = [select id, name, Annual_kWh_usage__c,Utility_Company__c,Territory__c from Opportunity where id =:objectId];
+            
+            List<Opportunity> OpptyList = [select id, name, Annual_kWh_usage__c,Utility_Company__c,Territory__c,Design_Only__c from Opportunity where id =:objectId];
             system.debug('Annual kWh Use:' + OpptyList[0].Annual_kWh_usage__c);
             List<Territory_Information__c> isTerritoryList = [Select id, Name, IsTerritory__c from Territory_Information__c where IsTerritory__c =: true];
             set<string> isTerritoryTrue = new set<string>();
@@ -73,7 +73,18 @@ public class DesignTool {
                 System.debug('responseObj:::::::::::::::::::::::::83 ' + responseObj);
                 return responseObj;
             }
-            responseObj.url = designToolBaseURL + '?' + canonicalStr + '&signature=' + codedsigned + '&returnUrl=' + returnURL;
+           // responseObj.url = designToolBaseURL + '?' + canonicalStr + '&signature=' + codedsigned + '&returnUrl=' + returnURL;
+           //BSKY-7266 Update the parameter list sent to lightmile Logic start
+           if(OpptyList[0].Design_Only__c == TRUE)
+           {
+            responseObj.url = designToolBaseURL + '?' + canonicalStr +'&DesignOnly=TRUE'+'&signature=' + codedsigned + '&returnUrl=' + returnURL;
+            }
+            else
+            {
+                responseObj.url = designToolBaseURL + '?' + canonicalStr + '&signature=' + codedsigned + '&returnUrl=' + returnURL;
+            }
+             //BSKY-7266 Update the parameter list sent to lightmile Logic End
+             
             DesignToolWebservice.DesignToolWebserviceResponse tempResponse = canUserCreateORModifyProposal(objectId);
             if(tempResponse.errorMessage != null){
                 responseObj.status = tempResponse.status;
@@ -88,8 +99,8 @@ public class DesignTool {
     }
 
     public static DesignToolWebservice.DesignToolWebserviceResponse getModifyProposalURL(String objectId){
-        String Authorities=EDPUtil.getAccessRights();   
-        Map<Id, List<ServiceContract>> serviceContractsMap = new  Map<Id, List<ServiceContract>>();
+        String Authorities=EDPUtil.getAccessRights();  
+         Map<Id, List<ServiceContract>> serviceContractsMap = new  Map<Id, List<ServiceContract>>();
         set<id> opptyId = new set<id> ();
         DesignToolWebservice.DesignToolWebserviceResponse responseObj = new DesignToolWebservice.DesignToolWebserviceResponse();
         responseObj.status = '';
@@ -116,6 +127,8 @@ public class DesignTool {
                 return responseObj;
             }
             Proposal__C proposalObj = proposalList[0];
+           
+
             if(proposalObj.Proposal_Source__c == null || proposalObj.Proposal_Source__c != ProposalUtil.BLACK_BIRD){
                 responseObj.status = ProposalUtil.FAILURE;
                 responseObj.errorMessage = SunrunErrorMessage.getErrorMessage('ERROR_000004').error_message__c;
@@ -124,22 +137,24 @@ public class DesignTool {
             }
     
             if(proposalObj.Stage__c != null 
-               && (proposalObj.Stage__c == ProposalUtil.INVALID || proposalObj.Stage__c == ProposalUtil.SUNRUN_VOID )){
-                   
-                   if(proposalObj != null && proposalObj.Opportunity__c != null ){
-                       opptyId.add(proposalObj.Opportunity__c);
-                       serviceContractsMap = ServiceContractUtil.getServiceContracts('scforvoidprops', opptyId);
-                       system.debug('ServiceContractforVoid proposals' + serviceContractsMap);
-                   }
-                   
-                   if( !(serviceContractsMap.isEmpty() 
-                         && proposalUtil.getIgnoreVoidReasons().contains(proposalObj.Status_Reason__c )) ) {    
-                             responseObj.status = ProposalUtil.FAILURE;
-                             responseObj.errorMessage = SunrunErrorMessage.getErrorMessage('ERROR_000002').error_message__c;
-                             responseObj.url = '';
-                             return responseObj;
-                         }
-            }
+                && (proposalObj.Stage__c == ProposalUtil.INVALID || 
+                    (proposalObj.Stage__c == ProposalUtil.SUNRUN_VOID 
+                    )
+                    )){
+                        
+                        if(proposalObj != null && proposalObj.Opportunity__c != null ){
+                            opptyId.add(proposalObj.Opportunity__c);
+                            serviceContractsMap = ServiceContractUtil.getServiceContracts('scforvoidprops', opptyId);
+                            system.debug('ServiceContractforVoid proposals' + serviceContractsMap);
+                        }
+                        if( !(serviceContractsMap.isEmpty() 
+                           && proposalUtil.getIgnoreVoidReasons().contains(proposalObj.Status_Reason__c )) ) {
+                               responseObj.status = ProposalUtil.FAILURE;
+                               responseObj.errorMessage = SunrunErrorMessage.getErrorMessage('ERROR_000002').error_message__c;
+                               responseObj.url = '';
+                               return responseObj;
+                           }
+                    }                 
     
             //As Built Validations ....
             Boolean result = true;
@@ -155,58 +170,58 @@ public class DesignTool {
             }
             //else{
 
-	            String designToolUserId = userObj.email;
-	            returnURL = EDPUtil.getBaseURL() + '/' + proposalObj.Id;
-	            prospectIdVal = 'O' + proposalObj.Opportunity__r.Prospect_Id__c;
-	            
-	            System.debug('returnURL: ' + returnURL);
-	            String canonicalStr = 'prospectId=' + prospectIdVal;
-	    
-	            String expiresVal = '';
-	            String signatureVal = '';
-	            Long Lexpires = SunRunS3RestConnection.getExpirationTime();
-	
-	            String proposalName = proposalObj.Name; 
-	
-	            String tempSignedRootName = ProposalUtil.getSignedRootProposalName(proposalObj);
-	            System.debug('tempSignedRootName: ' + tempSignedRootName);
-	            String signedRootId = tempSignedRootName;
-	
-	            String modifyProposalInfo = '';
-	
-	        
-	            canonicalStr += '&expires=' + Lexpires + '&userId=' + EncodingUtil.urlEncode(designToolUserId,'UTF-8') ;
-	            if(function!=null){
-	                canonicalStr +='&function='+function+'&authorities='+authorities;
-	            }
-	            if(proposalName != null && proposalName != ''){
-	                canonicalStr +=  '&parentProposalId=' + proposalName;
-	            }
-	            
-	            if(signedRootId != null && signedRootId != ''){
-	                canonicalStr += '&signedRootId=' + signedRootId;
-	            }           
-	            
-	            System.debug('canonicalStr: ' + canonicalStr);
-	            String signed = SunRunS3RestConnection.make_sunrunProxysig(canonicalStr, designToolSecretKey);
-	            String codedsigned = EncodingUtil.urlEncode(signed,'UTF-8');
-	            urlStr = designToolBaseURL + '?' + canonicalStr  + '&signature=' + codedsigned + '&returnUrl=' + returnURL ;
-	            
-	            System.debug('urlStr: ' + urlStr);
-	            responseObj.status = ProposalUtil.SUCCESS;
-	            responseObj.errorMessage = '';
-	            responseObj.url = urlStr;           
+                String designToolUserId = userObj.email;
+                returnURL = EDPUtil.getBaseURL() + '/' + proposalObj.Id;
+                prospectIdVal = 'O' + proposalObj.Opportunity__r.Prospect_Id__c;
+                
+                System.debug('returnURL: ' + returnURL);
+                String canonicalStr = 'prospectId=' + prospectIdVal;
+        
+                String expiresVal = '';
+                String signatureVal = '';
+                Long Lexpires = SunRunS3RestConnection.getExpirationTime();
+    
+                String proposalName = proposalObj.Name; 
+    
+                String tempSignedRootName = ProposalUtil.getSignedRootProposalName(proposalObj);
+                System.debug('tempSignedRootName: ' + tempSignedRootName);
+                String signedRootId = tempSignedRootName;
+    
+                String modifyProposalInfo = '';
+    
+            
+                canonicalStr += '&expires=' + Lexpires + '&userId=' + EncodingUtil.urlEncode(designToolUserId,'UTF-8') ;
+                if(function!=null){
+                    canonicalStr +='&function='+function+'&authorities='+authorities;
+                }
+                if(proposalName != null && proposalName != ''){
+                    canonicalStr +=  '&parentProposalId=' + proposalName;
+                }
+                
+                if(signedRootId != null && signedRootId != ''){
+                    canonicalStr += '&signedRootId=' + signedRootId;
+                }           
+                
+                System.debug('canonicalStr: ' + canonicalStr);
+                String signed = SunRunS3RestConnection.make_sunrunProxysig(canonicalStr, designToolSecretKey);
+                String codedsigned = EncodingUtil.urlEncode(signed,'UTF-8');
+                urlStr = designToolBaseURL + '?' + canonicalStr  + '&signature=' + codedsigned + '&returnUrl=' + returnURL ;
+                
+                System.debug('urlStr: ' + urlStr);
+                responseObj.status = ProposalUtil.SUCCESS;
+                responseObj.errorMessage = '';
+                responseObj.url = urlStr;           
 
-				if(function != 'AsBuilt'){
-	                DesignToolWebservice.DesignToolWebserviceResponse tempResponse = canUserCreateORModifyProposal(proposalObj.Opportunity__c);
-	                if(tempResponse.errorMessage != null){
-	                    responseObj.status = tempResponse.status;
-	                    responseObj.errorMessage = tempResponse.errorMessage;               
-	                    return responseObj;  
-	                }
-				} 
-			
-			//}           
+                if(function != 'AsBuilt'){
+                    DesignToolWebservice.DesignToolWebserviceResponse tempResponse = canUserCreateORModifyProposal(proposalObj.Opportunity__c);
+                    if(tempResponse.errorMessage != null){
+                        responseObj.status = tempResponse.status;
+                        responseObj.errorMessage = tempResponse.errorMessage;               
+                        return responseObj;  
+                    }
+                } 
+            
+            //}           
             
         }catch(Exception exceptionObj){
             responseObj.status = ProposalUtil.FAILURE;
@@ -273,9 +288,9 @@ public class DesignTool {
                 System.debug('serviceContractObj.Opportunity__r.Opportunity_Source_Type__c: ' + serviceContractObj.Opportunity__r.Opportunity_Source_Type__c);
                 if(serviceContractObj.Opportunity__r != null && serviceContractObj.Opportunity__r.Opportunity_Source_Type__c != null 
                     && serviceContractObj.Opportunity__r.Opportunity_Source_Type__c ==  ProposalUtil.BLACK_BIRD){
-					Set<String> contractStages = new Set<String>();
-					contractStages.addall(ServiceContractUtil.getNTPStages());
-					contractStages.addall(ServiceContractUtil.getAfterNTPStages());		
+                    Set<String> contractStages = new Set<String>();
+                    contractStages.addall(ServiceContractUtil.getNTPStages());
+                    contractStages.addall(ServiceContractUtil.getAfterNTPStages());     
                     if((ServiceContractUtil.getNTPStages().contains(serviceContractObj.Status__c) 
                         || ServiceContractUtil.getAfterNTPStages().contains(serviceContractObj.Status__c)) 
                        && (serviceContractObj.TE_Fund_Name__c != null && serviceContractObj.TE_Fund_Name__c != '')){
@@ -283,10 +298,10 @@ public class DesignTool {
                         responseObj.errorMessage = SunrunErrorMessage.getErrorMessage('ERROR_000023').error_message__c;     
                         break;                      
                     }else if(((ServiceContractUtil.getNTPStages().contains(serviceContractObj.Status__c) 
-                        		|| ServiceContractUtil.getAfterNTPStages().contains(serviceContractObj.Status__c)) 
+                                || ServiceContractUtil.getAfterNTPStages().contains(serviceContractObj.Status__c)) 
                       || (serviceContractObj.Status__c == ServiceContractUtil.PENDING && 
-                      		(contractStages.contains(serviceContractObj.Previous_Status__c)
-                        	)))
+                            (contractStages.contains(serviceContractObj.Previous_Status__c)
+                            )))
                        && (serviceContractObj.TE_Fund_Name__c == null || serviceContractObj.TE_Fund_Name__c == '')){
                         responseObj.status = ProposalUtil.WARNING;
                         responseObj.errorMessage = 'NTP has been revoked on the original proposal. Please remember to request NTP again on this modification.';     

@@ -647,7 +647,7 @@ IF(AND(NOT(ISNULL(Customer_Signoff_Date__c)),State__c = &quot;HI&quot;),DATEVALU
             <name>Dealer_fee_value</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <description>For all the  dates after the date period 8/4/2015 , the following assignment of dealer fee should be done.
 12 year 3.99% APR:  13% dealer fee 
 20 year 4.99% APR : 13% dealer fee</description>

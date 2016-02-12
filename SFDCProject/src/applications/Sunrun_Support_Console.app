@@ -7,8 +7,10 @@
     </customApplicationComponents>
     <defaultLandingTab>standard-home</defaultLandingTab>
     <detailPageRefreshMethod>flag</detailPageRefreshMethod>
+    <enableCustomizeMyTabs>false</enableCustomizeMyTabs>
     <enableKeyboardShortcuts>true</enableKeyboardShortcuts>
     <enableMultiMonitorComponents>true</enableMultiMonitorComponents>
+    <enablePinTabs>true</enablePinTabs>
     <isServiceCloudConsole>true</isServiceCloudConsole>
     <keyboardShortcuts>
         <defaultShortcut>
@@ -116,6 +118,51 @@
             <active>false</active>
             <keyCommand>SHIFT+K</keyCommand>
         </defaultShortcut>
+        <defaultShortcut>
+            <action>FOCUS_MACRO</action>
+            <active>false</active>
+            <keyCommand>M</keyCommand>
+        </defaultShortcut>
+        <defaultShortcut>
+            <action>FOCUS_FOOTER_PANEL</action>
+            <active>false</active>
+            <keyCommand>F</keyCommand>
+        </defaultShortcut>
+        <defaultShortcut>
+            <action>TOGGLE_LIST_VIEW</action>
+            <active>false</active>
+            <keyCommand>SHIFT+N</keyCommand>
+        </defaultShortcut>
+        <defaultShortcut>
+            <action>TOGGLE_LEFT_SIDEBAR</action>
+            <active>false</active>
+            <keyCommand>SHIFT+LEFT ARROW</keyCommand>
+        </defaultShortcut>
+        <defaultShortcut>
+            <action>TOGGLE_RIGHT_SIDEBAR</action>
+            <active>false</active>
+            <keyCommand>SHIFT+RIGHT ARROW</keyCommand>
+        </defaultShortcut>
+        <defaultShortcut>
+            <action>TOGGLE_TOP_SIDEBAR</action>
+            <active>false</active>
+            <keyCommand>SHIFT+UP ARROW</keyCommand>
+        </defaultShortcut>
+        <defaultShortcut>
+            <action>TOGGLE_BOTTOM_SIDEBAR</action>
+            <active>false</active>
+            <keyCommand>SHIFT+DOWN ARROW</keyCommand>
+        </defaultShortcut>
+        <defaultShortcut>
+            <action>TOGGLE_APP_LEVEL_COMPONENTS</action>
+            <active>false</active>
+            <keyCommand>Z</keyCommand>
+        </defaultShortcut>
+        <defaultShortcut>
+            <action>REOPEN_LAST_TAB</action>
+            <active>false</active>
+            <keyCommand>SHIFT+C</keyCommand>
+        </defaultShortcut>
     </keyboardShortcuts>
     <label>Sunrun Support Console</label>
     <listPlacement>
@@ -149,9 +196,18 @@
     <tab>Asset__c</tab>
     <tab>SalesComp</tab>
     <tab>Custom_Search</tab>
-    <tab>Partner_Api_Field__c</tab>
+    <tab>FS_Dispatch__c</tab>
+    <tab>Appointment__c</tab>
+    <tab>Guided_Sales_Question__c</tab>
+    <tab>Investor_Data__c</tab>
+    <tab>Investor_Contracts</tab>
     <tab>InContact_Lead_Management__c</tab>
+    <tab>DocuSign_Template__c</tab>
+    <tab>DocuSign_Tab_Management__c</tab>
     <workspaceMappings>
+        <mapping>
+            <tab>Appointment__c</tab>
+        </mapping>
         <mapping>
             <fieldName>ServiceContract__c</fieldName>
             <tab>Asset__c</tab>
@@ -168,10 +224,25 @@
             <tab>Custom_Search</tab>
         </mapping>
         <mapping>
+            <tab>DocuSign_Tab_Management__c</tab>
+        </mapping>
+        <mapping>
+            <tab>DocuSign_Template__c</tab>
+        </mapping>
+        <mapping>
+            <tab>FS_Dispatch__c</tab>
+        </mapping>
+        <mapping>
+            <tab>Guided_Sales_Question__c</tab>
+        </mapping>
+        <mapping>
             <tab>InContact_Lead_Management__c</tab>
         </mapping>
         <mapping>
-            <tab>Partner_Api_Field__c</tab>
+            <tab>Investor_Contracts</tab>
+        </mapping>
+        <mapping>
+            <tab>Investor_Data__c</tab>
         </mapping>
         <mapping>
             <fieldName>Service_Contract__c</fieldName>

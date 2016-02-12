@@ -285,9 +285,12 @@ public class LeadApiTest {
     static void insertSettings() {
         RestServiceDto.insertFieldMapping('Lead Api', 'Lead', 'prospectId=Prospect_Id__c,customerFirstName=FirstName,customerLastName=LastName,company=Company,customerEmail=Email,avgMonthlyElectricityBill=Average_Monthly_Electric_Bill__c,autoDialerOptIn=Auto_dialer_Opt_in__c,customerPhone=Phone,leadOrgLocationId=Lead_Organization_Location_2__c,leadQualifier=Lead_Qualifier__c,decUsage=Dec_Usage__c,prospectId=Prospect_Id__c');
        	RestServiceDto.setRequiredFields('Lead Api', 'Lead', new String[]{'customerFirstName', 'customerLastName'});
+       	RestServiceDto.setSummaryFields('Lead Api', new String[]{'prospectId', 'customerFirstName'});
+        
         RestServiceDto.insertFieldMapping('Opty Api', 'Opportunity', 'prospectId=Prospect_Id__c,name=Name,leadStage=StageName,leadStatus=Opportunity_Status__c,closeDate=CloseDate');
         RestServiceDto.insertFieldMapping('Opty Api', 'Account', 'customerCompany=Name,customerStreet=BillingStreet,customerCity=BillingCity,customerState=BillingState,customerZipCode=BillingPostalCode');
         RestServiceDto.insertFieldMapping('Opty Api', 'Contact', 'customerFirstName=FirstName,customerLastName=LastName,customerPrimaryPhone=Phone,customerEmail=Email');
+       	RestServiceDto.setSummaryFields('Opty Api', new String[]{'prospectId', 'customerFirstName'});
 		
         Sf.settingsService.setString('LeadApiSigningPrivateKey', 'Secret123');
     }

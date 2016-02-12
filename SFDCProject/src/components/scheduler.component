@@ -269,7 +269,7 @@
         }
         
         #scheduler {
-            width: 820px;    
+            width: 350px;    
         }
 
         /* Day column */
@@ -643,7 +643,8 @@
                 scrollPast: false,
                 events: null,
                 eventClick: null,
-                timezoneId: 'America/Los_Angeles' //default timezone.
+                timezoneId: 'America/Los_Angeles', //default timezone.
+                numberOfDays: 3,
             },
         
             currentSlide: 0,
@@ -681,9 +682,9 @@
         
                 widget.element.on('beforeChange', function(event, slick, currentSlide, nextSlide, direction){
                     if (direction === 'next') {
-                        widget.startDate.add(1, 'weeks');
+                        widget.startDate.add(widget.options.numberOfDays, 'days');
                     } else {
-                        widget.startDate.subtract(1, 'weeks');
+                        widget.startDate.subtract(widget.options.numberOfDays, 'days');
                     }
                     widget._resetSlide(nextSlide, widget.startDate);
                 });
@@ -697,10 +698,12 @@
             },
             
             _canSlideBack: function() {
-                var newDate = moment(this.startDate);
-                newDate.subtract(6, 'days');
+                var widget = this;
                 
-                if (moment().diff(newDate, 'days') > 0) {
+                var newDate = moment(this.startDate);
+                newDate.subtract(widget.numberOfDays, 'days');
+                
+                if (moment().diff(newDate, 'days') >= 0) {
                     return false;
                 }
                 
@@ -715,7 +718,8 @@
                 widget._resetSlide(widget.currentSlide, widget.startDate);
 
                 if (widget.options.events) {
-                    widget.options.events(widget.startDate, moment(widget.startDate).add(1, 'weeks'), null, function(eventsArray){
+                    //Here we are adding -1 of number of days because end date is inclusive
+                    widget.options.events(widget.startDate, moment(widget.startDate).add(widget.options.numberOfDays - 1, 'days'), null, function(eventsArray){
                         widget._renderEvents(eventsArray);
                     });
                 }
@@ -793,8 +797,10 @@
             },
         
             _createSlideDom: function(slideNum) {
+                var widget = this;
+                
                 var html = '<div class="slide slide' + slideNum + '">';
-                for(var i = 0; i < 7; i++) {
+                for(var i = 0; i < widget.options.numberOfDays; i++) {
                     html += this._createDayDom(slideNum, i);
                 }
                 html += '</div>';

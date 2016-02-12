@@ -10,6 +10,7 @@ public class InContactService {
     @future(callout=true)
     public static void processInContactListUpload(string JsonString ){
         InContactToken contactToken = new InContactToken();
+         App_Log__c log = new App_Log__c();
         InContactResponse InContactRes= new InContactResponse();        
         system.debug('JsonString' +JsonString);
         integer skillID=integer.valueOf(Label.InContactSkillID);
@@ -17,7 +18,6 @@ public class InContactService {
         boolean forceOverWrite=true;
         String Base64ListFile = EncodingUtil.base64Encode(Blob.valueof(JsonString));
         string ListID = Label.InContactListID; 
-         App_Log__c log = new App_Log__c();
         httpResponse response = new httpResponse();
         response=getTokenInfo();
         contactToken =  tokenParse(response.getBody());
@@ -31,8 +31,10 @@ public class InContactService {
                     '&skillId='+ skillID +
                     '&fileName='+ fileName +
                     '&forceOverwrite='+ forceOverWrite);
-        
         HTTPResponse res  =null;
+        
+        system.debug('getBody>' +  req.getBody());
+        system.debug('contactToken>>' +  contactToken.access_token);
         try{
             Http http = new Http();
             res = http.send(req);
@@ -79,18 +81,18 @@ public class InContactService {
     public static string  createCSV(List<LeadFilterClass> LeadList){
       String s ='Lead_Id_18__c,Phone,State,Custom_Lead_Source__c,Lead_Type__c,';
         s+= 'Dial_Status__c,Future_Contact_Date_Time__c,FirstName,LastName,';
-        s+= 'PostalCode,Campaign_Call_Attempts__c,Priority__c,Voicemail__c,Caller_ID__c';
-        //Priority__c
+        s+= 'PostalCode,Campaign_Call_Attempts__c,Priority__c,Voicemail__c,Caller_ID__c';   //,RecordPriority';
+       
         for(LeadFilterClass lead : LeadList) {
             string phone='';
             if( lead.Phone!='' &&  lead.Phone!=null) 
                  phone =lead.Phone.replaceAll('\\W', '');
-                 
+         
             s+='\n'+lead.Lead_Id_18+','+ phone +','+lead.State+','+lead.Lead_Source +',';
             s+= lead.Lead_Type+','+ lead.Dial_Status+','+ lead.Future_Contact_Date_Time.format('M/d/yyyy h:mm') +',' ;
             s+= lead.FirstName+','+ lead.LastName+','+ lead.PostalCode+',' +lead.Campaign_Call_Attempts+',';
             s+= lead.InContact_Priority+ ',' ;
-            s+= lead.voicemail +','+ lead.Caller_ID ;
+            s+= lead.voicemail +','+ lead.Caller_ID;
             
         }        
         return s;
@@ -129,17 +131,17 @@ public class InContactService {
     
     public class LeadFilterClass
     { 
-        public string Phone;    
-        public string State;    
+        public string Phone;	
+        public string State;	
         public string Lead_Source;
         public string Lead_Type;
-        public string Dial_Status;  
+        public string Dial_Status;	
         public datetime Future_Contact_Date_Time;
         public string FirstName;
         public string LastName;
         public string PostalCode;
         public decimal Campaign_Call_Attempts;
-        public boolean InContact_Priority;  
+        public boolean InContact_Priority;	
         public string Voicemail;
         public string Caller_ID;
         public string  Lead_Id_18;
@@ -163,11 +165,11 @@ public class InContactService {
         public InContactresultSet resultSet;
     }
     public class InContactresultSet {
-        public String listId;   //4811
-        public String importStatus; //true
-        public String procRecords;  //1
-        public String validRecords; //0
-        public String invalidRecords;   //1
+        public String listId;	//4811
+        public String importStatus;	//true
+        public String procRecords;	//1
+        public String validRecords;	//0
+        public String invalidRecords;	//1
         //public  String  errorResults;
     }
    

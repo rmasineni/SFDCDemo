@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
     <customSettingsType>List</customSettingsType>
-    <customSettingsVisibility>Public</customSettingsVisibility>
     <description>This is the custom settings that consumed by Common Scheduler, which runs every 5 minutes.</description>
     <enableFeeds>false</enableFeeds>
     <fields>
@@ -95,6 +94,7 @@
     <fields>
         <fullName>Delay_Until_Time__c</fullName>
         <externalId>false</externalId>
+        <inlineHelpText>If specified, job will be delayed until this time has passed. This can be used to simulate a delayed execution.</inlineHelpText>
         <label>Delay Until Time</label>
         <required>false</required>
         <trackTrending>false</trackTrending>
@@ -168,4 +168,5 @@
         <unique>false</unique>
     </fields>
     <label>Common Scheduler</label>
+    <visibility>Public</visibility>
 </CustomObject>

@@ -35,6 +35,10 @@
     <tab>Appointment__c</tab>
     <tab>Opportunity_Team__c</tab>
     <tab>SalesComp</tab>
-    <tab>Partner_Api_Field__c</tab>
+    <tab>Guided_Sales_Question__c</tab>
+    <tab>Investor_Data__c</tab>
+    <tab>Investor_Contracts</tab>
     <tab>InContact_Lead_Management__c</tab>
+    <tab>DocuSign_Template__c</tab>
+    <tab>DocuSign_Tab_Management__c</tab>
 </CustomApplication>

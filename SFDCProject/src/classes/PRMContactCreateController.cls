@@ -100,7 +100,6 @@ public class PRMContactCreateController {
     string AEElabel = label.AEE_Label;
     User u = [select id, User_Division_Custom__c from User where Id =: UserInfo.getUserId()];
     isAEEUser = u.User_Division_Custom__c.contains(AEElabel)?True:False;
-    system.debug('==>isAEEUser'+isAEEUser);
     return isAEEUser;
     }
     

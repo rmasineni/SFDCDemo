@@ -89,16 +89,14 @@ public class NewCustomOpportunityController {
          oldaccountObj = new Account();
          
          if(OpptyId != null && OpptyId != ''){
-             Opportunity opptyobj = [select Id,Site_Visit_Date_Time__c,Deal_ID__c,Offer_Promotion_Name__c,Referral_Promotion_Name__c,Offer__c,
-                                     Sales_rep_of_referrer__c,Referral__c,lead_qualifier__c,Designer__c,Opportunity_Source_Type__c,ownerid,Opportunity_Status__c,Reason__c,Consultation_Time__c,
-                                     SalesRep__c,ready_for__c, Best_way_to_reach__c,Sales_Contact_Method__c,Home_Type__c ,Over_2_stories__c,HOA__c ,Unable_to_create_proposal__c,Date_and_time_request__c,Date_and_time_response__c,
+             Opportunity opptyobj = [select Id,Site_Visit_Date_Time__c,Deal_ID__c,Offer_Promotion_Name__c,Referral_Promotion_Name__c,Offer__c,Sales_rep_of_referrer__c,Referral__c,lead_qualifier__c,Designer__c,Opportunity_Source_Type__c,ownerid,Opportunity_Status__c,Reason__c,Consultation_Time__c,SalesRep__c,ready_for__c, Best_way_to_reach__c,Sales_Contact_Method__c,Home_Type__c ,Over_2_stories__c,HOA__c ,Unable_to_create_proposal__c,Date_and_time_request__c,Date_and_time_response__c,
                             Reason_for_not_generating_proposal__c,Reason_for_redesign__c,Request_redesign__c,Name,square_footage__c, county__c,Prospect_Id__c,Homeowner_First_Name__c,Homeowner_Last_Name__c,Homeowner_Email__c,Street__c,
                             city__c,state__c,phone__c,CloseDate,Alternate_Phone__c,Email_Opt_Out__c,zip_code__c,StageName,Sales_Representative__c,Site_Design_Priority__c,Site_Design_Status__c,Site_Designer__c ,
                             Utility_Company__c,Why_Closed_Lost__c,Competitive_Deal__c,Why_Unqualified__c,Partner_notes__c,Notes__c,Average_Monthly_Electric_Bill__c,
                             CDYNE_Status__c, Zip_6__c,Territory__c,Competitor__c,Why_Inactive__c,Why_Postponed__c,Average_Monthly_Electricity_Usage__c,
                             Jan_Usage__c,Feb_Usage__c,Mar_Usage__c,Apr_Usage__c,May_Usage__c,Jun_Usage__c,Void_Proposals__c,Energy_Storage_Applicable__c,
                             Jul_Usage__c,Aug_Usage__c,Sep_Usage__c,Oct_Usage__c, Nov_Usage__c,Dec_Usage__c,Purchased_Thru__c,
-                            Installation_Type__c,Roof_Azimuth__c,Shading__c,Age_of_Roof__c,Roofing_Type__c,AccountId,usage_option__c,Rate_Schedule__c,Hawaii_NEM_Approved__c,Division                     
+                            Installation_Type__c,Roof_Azimuth__c,Shading__c,Age_of_Roof__c,Roofing_Type__c,AccountId,usage_option__c,Rate_Schedule__c,Hawaii_NEM_Approved__c,Division                    
                             from Opportunity where id =: OpptyId limit 1];
             List<OpportunityContactRole> OpptyRoleobjlist = [SELECT id, ContactId, OpportunityId, Role, isPrimary FROM OpportunityContactRole WHERE OpportunityId =: OpptyId and isPrimary = true limit 1 ];
             OpportunityContactRole OpptyRoleobj = new OpportunityContactRole();
@@ -133,10 +131,12 @@ public class NewCustomOpportunityController {
                   energyStorage = lstEnergyStorage[0];
               else
                  energyStorage = new Energy_Storage__c(Opportunity__c=OpptyId);
-              
+         
              string OptyDivision = opptyobj.Division;
+             system.debug('==>Opty Div'+OptyDivision);
              string AEEDiv = label.AEE_label;
-             isAEEUser = OptyDivision.EqualsIgnoreCase(AEEDiv)?true:false;   
+             isAEEUser = OptyDivision.EqualsIgnoreCase(AEEDiv)?true:false;
+             system.debug('===> AEE User :'+isAEEuser);
          }
          
          if(editOppty == true){

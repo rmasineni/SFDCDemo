@@ -26,7 +26,7 @@
                            
             <!--  <apex:pageMessage summary="Reminder: The 'Block Project' button will mark all the tasks as Blocked" severity="warning" strength="2" rendered="true" /> -->
 	            <apex:pageBlockButtons style="align:center;" location="top">
-	                <apex:actionStatus id="blckProject">
+                     <apex:actionStatus id="blckProject">
                      <apex:facet name="stop">
 	                <apex:commandButton action="{!blockProject}" id="block" value="Block Project"  rendered="{!showBlockButton}"  oncomplete="location.reload()" status="blckProject"/>
                      </apex:facet>
@@ -51,7 +51,8 @@
                             </apex:outputPanel>
                        </apex:facet>    
                       </apex:actionStatus>    
-            </apex:pageBlockButtons>
+                    
+	           		</apex:pageBlockButtons>
 				
             <apex:outputpanel styleClass="blue" >
                   <apex:pageBlockSection title="Open tasks" id="opentasks" columns="1" >
@@ -68,5 +69,4 @@
      	</apex:pageBlock>
     </apex:form>  
 	</apex:outputPanel>
-  
 </apex:page>

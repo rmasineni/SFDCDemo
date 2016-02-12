@@ -3,9 +3,6 @@
     <doesSendEmailToMembers>true</doesSendEmailToMembers>
     <name>Products &amp; Pricing</name>
     <queueSobject>
-        <sobjectType>BMCServiceDesk__Category__c</sobjectType>
-    </queueSobject>
-    <queueSobject>
         <sobjectType>BMCServiceDesk__Incident__c</sobjectType>
     </queueSobject>
 </Queue>

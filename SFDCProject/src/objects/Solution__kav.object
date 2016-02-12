@@ -21,7 +21,7 @@
     <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
     <deploymentStatus>Deployed</deploymentStatus>
     <description>Solutions to common SunRun Customer issues.</description>
-    <enableFeeds>true</enableFeeds>
+    <enableFeeds>false</enableFeeds>
     <enableHistory>false</enableHistory>
     <fields>
         <fullName>Article_Body__c</fullName>

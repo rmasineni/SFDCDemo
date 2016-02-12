@@ -332,8 +332,10 @@ public with sharing class WorkflowManagement {
 			}
 			
 			if(!openTask){
+                System.debug('taskObj.status__c ' + taskObj.status__c);
 				taskObj.status__c = wfUtil.INACTIVE;
 				taskObj.start_date__c = null;
+                System.debug('taskObj.status__c--2 ' + taskObj.status__c);
 			}else{
 				System.debug('taskObj.Name: ' + taskObj.Name);
 				taskObj.status__c = wfUtil.OPEN;
@@ -565,45 +567,42 @@ public with sharing class WorkflowManagement {
 
 	public void startChildTasksImpl(Set<Id> parentTaskIds){	
 		Set<Id> childTaskIds = new Set<Id>();
-        set<Id> predassorTaskIds = new Set<Id>();
 		String inactiveStr = wfUtil.INACTIVE;
 		string requiredStr = wfUtil.REQUIRED;
 		string blockedStr = wfUtil.BLOCKED;
 		string completedStr = wfUtil.COMPLETE;
- 	
-	for(Task_Dependency__c tdObj : [Select Id, task__c,  parent_task__c, task__r.status__c, task__r.start_date__c
+		
+		for(Task_Dependency__c tdObj : [Select Id, task__c,  parent_task__c, task__r.status__c, task__r.start_date__c
 											from Task_Dependency__c where parent_task__c in :parentTaskIds 
 											and task__c != null and (task__r.status__c =:inactiveStr OR task__r.status__c =:blockedStr) 
 											and task__r.category__c =:requiredStr
 										]){
 			childTaskIds.add(tdObj.task__c);
 		}
-        
-        
 		System.debug('childTaskIds: ' + childTaskIds);
 		List<Task__C> modifiedTasks = new List<Task__C>();
 		for(Task__C taskObj : [Select Id, status__c, Blocked_Start_date__c, Blocked_End_date__c, start_date__c, SLA_In_Hours__c, Expected_Close_Date__c,
 									(Select Id, parent_task__r.status__c, Name, Child_Task__c, Parent_Task__c, parent_task__r.category__c, Task__c 
 										From Task_Dependencys__r  where parent_task__r.status__c != :completedStr and parent_task__r.category__c =:requiredStr) 
 								from Task__c where Id in :childTaskIds]) {
-			if( taskObj.Task_Dependencys__r == null || ( taskObj.Task_Dependencys__r != null && taskObj.Task_Dependencys__r.isEmpty())){
+			if(taskObj.Task_Dependencys__r == null || (taskObj.Task_Dependencys__r != null && taskObj.Task_Dependencys__r.isEmpty())){
 				taskObj.status__c = wfUtil.OPEN;
 				taskObj.start_date__c =  (taskObj.start_date__c == null) ? Datetime.now() : taskObj.start_date__c ;
 				taskObj.end_date__c = null;
 				if(taskObj.Blocked_Start_date__c != null){
 					taskObj.Blocked_End_date__c = Datetime.now();
-				}	
+				}
 				System.debug('SLA_In_Hours__c : ' + taskObj.SLA_In_Hours__c);
 				System.debug('Expected_Close_Date__c : ' + taskObj.Expected_Close_Date__c);
 				if(taskObj.SLA_In_Hours__c > 0 && taskObj.Expected_Close_Date__c == null){
 					setSLAEndTimeImpl(taskObj);
 				}
-				
+                else if(taskObj.Status__c == wfUtil.INACTIVE )  
+                    continue;                         
+                else {taskObj.status__c = wfUtil.BLOCKED;}                        
+              
+				modifiedTasks.add(taskObj);
 			}
-            else if(taskObj.Status__c == wfUtil.INACTIVE )  
-                continue;                         
-            else {taskObj.status__c = wfUtil.BLOCKED;}                        
-              modifiedTasks.add(taskObj);                                                 
 		}
 		
 		if(!modifiedTasks.isEmpty()){
@@ -653,9 +652,6 @@ public with sharing class WorkflowManagement {
 
 	public String updateTaskCategoryImpl(Task__c parentTaskObj, String actionName, String reasonStr){	
 		System.debug('actionName: ' + actionName);
-        	System.debug('reasonStr: ' + reasonStr);
-        
-         system.debug('updateTaskCategoryImplparentTaskObj>>>' +  parentTaskObj);
 		String result = '';
 		Savepoint savePoint1; 
 		String requiredStr = wfUtil.REQUIRED;
@@ -680,12 +676,13 @@ public with sharing class WorkflowManagement {
 				if(parentTaskObj.Phase__r.Project__c != null){
 					projectIds.add(tempParentTask.Phase__r.Project__c);
 				}
-                system.debug('actionName>>.' +  actionName);
-                system.debug('tempParentTask.Task_Dependencys__r' +  tempParentTask.Task_Dependencys__r);
 				if(actionName == wfUtil.CATEGORY_CHANGE || actionName == wfUtil.REQUIRED){
 					tempParentIds.add(tempParentTask.Id);
 					tempParentTask.category__c = wfUtil.REQUIRED;
+                    system.debug('>>tempParentTask.category__c' + tempParentTask.category__c);
+                    system.debug('>>tempParentTask.Status__c' + tempParentTask.status__c);
 					if(tempParentTask.Task_Dependencys__r == null || tempParentTask.Task_Dependencys__r.isEmpty()){
+                        system.debug('>>tempParentTask.Status__c2::' + tempParentTask.status__c);
 						tempParentTask.status__c = wfUtil.OPEN; 
 						tempParentTask.start_date__c = Datetime.now();
 						tempParentTask.end_date__c = null;
@@ -693,14 +690,10 @@ public with sharing class WorkflowManagement {
 							setSLAEndTimeImpl(tempParentTask);
 						}
 					}
-                    else {
-                       // tempParentTask.status__c = wfUtil.BLOCKED; 
-                    }
 					modifiedTasks.put(tempParentTask.Id, tempParentTask);	
-                    
-                       system.debug('modifiedTasks>>>' +  modifiedTasks);
+                    system.debug('>>tempParentTask.Status__c33::' + tempParentTask.status__c);
 				}		
-			}	
+			}
 			
 			/*
 			//Following code makes the dependent tasks also as REQUIRED
@@ -881,121 +874,113 @@ public with sharing class WorkflowManagement {
 		}
 		return result;
 	}
-	//@future
-    public static void updateSuccessorTasks(set<Id> parentIds){
-        String requiredStr = wfUtil.REQUIRED;
-        String closedStr = wfUtil.CLOSED;
-        String optionalStr = wfUtil.OPTIONAL;
-        Savepoint savePoint1; 
-        try{
-            savePoint1 = Database.setSavepoint();
-            //for(Id parentId : parentIds){
-            Map<Id, Task__C> modifiedTasks = new Map<Id, Task__C>();
-            Set<Id> projectIds = new Set<Id>();
-            for(Task__c taskObj : [Select Id,SLA_In_Hours__c, Reopen__C, category__c, status__c, start_date__c, end_date__c, Expected_Close_Date__c, Phase__r.Project__c,
-                                   (Select Id, task__c, parent_task__r.Id, parent_task__r.category__c from Task_Dependencys__r 
-                                    where task__c != null and parent_task__r.category__c =:requiredStr and parent_task__r.status__c != :closedStr)
-                                   from Task__c where Id in :parentIds ]){
-                                       if(taskObj.Phase__r.Project__c != null){
-                                           projectIds.add(taskObj.Phase__r.Project__c);
-                                       }
-                                       system.debug('projectIds>>' +  projectIds);  
-                                       system.debug('taskObj>>>' +  taskObj);
-                                       if(taskObj.category__c == requiredStr){
-                                           if(taskObj.Task_Dependencys__r != null && !taskObj.Task_Dependencys__r.isEmpty() 
-                                              && isTaskEligbleForBlocked(taskObj)){
-                                                  taskObj.status__c = wfUtil.BLOCKED; 
-                                                  taskObj.Blocked_start_date__c = Datetime.now() ;
-                                                  taskObj.Blocked_Reason__c = 'Created Adhoc Task' ;
-                                                  system.debug('taskObjsucs'+  taskObj);
-                                                  modifiedTasks.put(taskObj.Id, taskObj);
-                                              }else if(taskObj.Task_Dependencys__r == null || taskObj.Task_Dependencys__r.isEmpty()){
-                                                  taskObj.status__c = wfUtil.OPEN; 
-                                                  taskObj.Blocked_end_date__c = (taskObj.Blocked_start_date__c != null) ? Datetime.now() : null;
-                                                  taskObj.end_date__c = null;
-                                                  if(taskObj.SLA_In_Hours__c > 0 && taskObj.Expected_Close_Date__c == null){
-                                                      Datetime slaDateTime = getSLATime(Datetime.now(), Integer.valueOf(taskObj.SLA_In_Hours__c));
-                                                      taskObj.Expected_Close_Date__c = slaDateTime;
-                                                  }
-                                                  modifiedTasks.put(taskObj.Id, taskObj);							
-                                              }
-                                       }	
-                                       
-                                   }
-            
-            Map<Id, Task__C> tasksMap = new Map<Id, Task__C>();
-            Map<Id, Set<Id>> taskIds = new Map<Id, Set<Id>>();
-            for(Task__c taskObj : [Select Id, status__c, start_date__c, Expected_Close_Date__c, Phase__r.Project__c,
-                                   Blocked_start_date__c, Blocked_Reason__c, category__c,
-                                   //(Select Id, task__c, parent_task__r.Id, parent_task__r.category__c from Task_Dependencys__r 
-                                   //where task__c != null and parent_task__r.category__c =:requiredStr and parent_task__r.status__c != :closedStr), 
-                                   (Select Id, task__c, parent_task__r.Id, parent_task__r.category__c from Task_Dependencies1__r 
-                                    where task__c != null and parent_task__r.category__c =:requiredStr) 
-                                   from Task__c where Phase__r.Project__c in :projectIds]){
-                                       
-                                       system.debug('taskObjtaskObjtaskObj>'+ taskObj);                     
-                                       
-                                       Set<Id> childTaskIds = taskIds.containsKey(taskObj.Id) ? taskIds.get(taskObj.Id) : new Set<Id>();
-                                       if(taskObj.Task_Dependencies1__r != null){
-                                           for(Task_Dependency__c tskDependency : taskObj.Task_Dependencies1__r){
-                                               childTaskIds.add(tskDependency.task__c);
-                                           }
-                                       }
-                                       taskIds.put(taskObj.Id, childTaskIds);
-                                       tasksMap.put(taskObj.Id, taskObj);
-                                   }
-            
-            
-            Boolean condition = true;
-            Set<Id> tempChildIds = new Set<Id>();
-            Set<Id> tempParentIds = new Set<Id>();
-            //tempParentIds.add(parentId);
-            while(condition){
-                system.debug('condition>>>' +  condition);
-                for(Id taskParentId : parentIds){
-                    tempChildIds = new Set<Id>();
-                    for(Id childTaskId : taskIds.get(taskParentId)){
-                        Task__c tempTaskObj = tasksMap.get(childTaskId);
-                        Task__c tempParentTskObj = tasksMap.get(taskParentId);
-                        if(tempParentTskObj.category__c == requiredStr){
-                            //tempTaskObj.category__c = wfUtil.REQUIRED;
-                            system.debug('tempTaskObj>>>' +  tempTaskObj);
-                            if(tempParentTskObj.status__c != wfUtil.CLOSED && 
-                               (isTaskEligbleForBlocked(tempTaskObj))){
-                                   tempTaskObj.status__c = wfUtil.BLOCKED; 
-                                   // tempTaskObj.status__c = wfUtil.INACTIVE;
-                                   tempTaskObj.Blocked_start_date__c = Datetime.now() ;
-                                   tempTaskObj.Blocked_Reason__c = 'Created Adhoc Task' ;
-                                   tempChildIds.add(tempTaskObj.Id);
-                                   modifiedTasks.put(tempTaskObj.Id, tempTaskObj);
-                               }
-                            modifiedTasks.put(tempTaskObj.Id, tempTaskObj);	
-                        }
-                    }
-                }
-                System.debug('tempChildIds: ' + tempChildIds);
-                if(tempChildIds != null && !tempChildIds.isEmpty()){
-                    tempParentIds = new Set<Id>();
-                    tempParentIds.addall(tempChildIds);
-                }else{
-                    break;
-                }
-            }
-            
-            if(!modifiedTasks.isEmpty()){
-                update modifiedTasks.values();
-            }
-            //}
-            
-        }catch(Exception expObj){
-            System.debug('From Catch ' + expObj);
-            System.debug('Cause: ' + expObj.getCause());
-            System.debug('LineNumber: ' + expObj.getLineNumber());
-            Database.rollback(savePoint1);
-        }
-    }
-  
 	
+	//@future
+	public static void updateSuccessorTasks(set<Id> parentIds){
+		String requiredStr = wfUtil.REQUIRED;
+		String closedStr = wfUtil.CLOSED;
+		String optionalStr = wfUtil.OPTIONAL;
+		Savepoint savePoint1; 
+		try{
+			savePoint1 = Database.setSavepoint();
+			for(Id parentId : parentIds){
+				Map<Id, Task__C> modifiedTasks = new Map<Id, Task__C>();
+				Set<Id> projectIds = new Set<Id>();
+				for(Task__c taskObj : [Select Id,SLA_In_Hours__c, Reopen__C, category__c, status__c, start_date__c, end_date__c, Expected_Close_Date__c, Phase__r.Project__c,
+										(Select Id, task__c, parent_task__r.Id, parent_task__r.category__c from Task_Dependencys__r 
+											where task__c != null and parent_task__r.category__c =:requiredStr and parent_task__r.status__c != :closedStr)
+										from Task__c where Id = :parentId ]){
+					if(taskObj.Phase__r.Project__c != null){
+						projectIds.add(taskObj.Phase__r.Project__c);
+					}
+					if(taskObj.category__c == requiredStr){
+						if(taskObj.Task_Dependencys__r != null && !taskObj.Task_Dependencys__r.isEmpty() 
+							&& isTaskEligbleForBlocked(taskObj)){
+								taskObj.status__c = wfUtil.BLOCKED; 
+								taskObj.Blocked_start_date__c = Datetime.now() ;
+								taskObj.Blocked_Reason__c = 'Created Adhoc Task' ;
+								modifiedTasks.put(taskObj.Id, taskObj);
+						}else if(taskObj.Task_Dependencys__r == null || taskObj.Task_Dependencys__r.isEmpty()){
+                           
+							taskObj.status__c = wfUtil.OPEN; 
+							taskObj.Blocked_end_date__c = (taskObj.Blocked_start_date__c != null) ? Datetime.now() : null;
+							taskObj.end_date__c = null;
+							if(taskObj.SLA_In_Hours__c > 0 && taskObj.Expected_Close_Date__c == null){
+								Datetime slaDateTime = getSLATime(Datetime.now(), Integer.valueOf(taskObj.SLA_In_Hours__c));
+								taskObj.Expected_Close_Date__c = slaDateTime;
+							}
+							modifiedTasks.put(taskObj.Id, taskObj);							
+						}
+					}
+								
+				}
+	
+				Map<Id, Task__C> tasksMap = new Map<Id, Task__C>();
+				Map<Id, Set<Id>> taskIds = new Map<Id, Set<Id>>();
+				for(Task__c taskObj : [Select Id, status__c, start_date__c, Expected_Close_Date__c, Phase__r.Project__c,
+										Blocked_start_date__c, Blocked_Reason__c, category__c,
+										//(Select Id, task__c, parent_task__r.Id, parent_task__r.category__c from Task_Dependencys__r 
+											//where task__c != null and parent_task__r.category__c =:requiredStr and parent_task__r.status__c != :closedStr), 
+										(Select Id, task__c, parent_task__r.Id, parent_task__r.category__c from Task_Dependencies1__r 
+											where task__c != null and parent_task__r.category__c =:requiredStr) 
+										from Task__c where Phase__r.Project__c in :projectIds]){
+		
+					Set<Id> childTaskIds = taskIds.containsKey(taskObj.Id) ? taskIds.get(taskObj.Id) : new Set<Id>();
+					if(taskObj.Task_Dependencies1__r != null){
+						for(Task_Dependency__c tskDependency : taskObj.Task_Dependencies1__r){
+							childTaskIds.add(tskDependency.task__c);
+						}
+					}
+					taskIds.put(taskObj.Id, childTaskIds);
+					tasksMap.put(taskObj.Id, taskObj);
+				}
+						
+				Boolean condition = true;
+				Set<Id> tempChildIds = new Set<Id>();
+				Set<Id> tempParentIds = new Set<Id>();
+				tempParentIds.add(parentId);
+				while(condition){
+					for(Id taskParentId : tempParentIds){
+						tempChildIds = new Set<Id>();
+						for(Id childTaskId : taskIds.get(taskParentId)){
+							Task__c tempTaskObj = tasksMap.get(childTaskId);
+							Task__c tempParentTskObj = tasksMap.get(taskParentId);
+							if(tempParentTskObj.category__c == requiredStr){
+								tempTaskObj.category__c = wfUtil.REQUIRED;
+								if(tempParentTskObj.status__c != wfUtil.CLOSED && 
+									(isTaskEligbleForBlocked(tempTaskObj))){
+									tempTaskObj.status__c = wfUtil.BLOCKED; 
+									tempTaskObj.Blocked_start_date__c = Datetime.now() ;
+									tempTaskObj.Blocked_Reason__c = 'Created Adhoc Task' ;
+									tempChildIds.add(tempTaskObj.Id);
+									modifiedTasks.put(tempTaskObj.Id, tempTaskObj);
+								}
+								modifiedTasks.put(tempTaskObj.Id, tempTaskObj);	
+							}
+						}
+					}
+					System.debug('tempChildIds: ' + tempChildIds);
+					if(tempChildIds != null && !tempChildIds.isEmpty()){
+						tempParentIds = new Set<Id>();
+						tempParentIds.addall(tempChildIds);
+					}else{
+						break;
+					}
+				}
+				
+				if(!modifiedTasks.isEmpty()){
+					update modifiedTasks.values();
+				}
+			}
+			
+		}catch(Exception expObj){
+			System.debug('From Catch ' + expObj);
+        	System.debug('Cause: ' + expObj.getCause());
+        	System.debug('LineNumber: ' + expObj.getLineNumber());
+			Database.rollback(savePoint1);
+		}
+	}
+
 	/*
 	** This method is not in use ....
 	**

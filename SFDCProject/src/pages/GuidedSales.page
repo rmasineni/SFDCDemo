@@ -1,0 +1,107 @@
+<apex:page standardController="Lead" extensions="GuidedSalesController" standardStylesheets="true" showHeader="false" sidebar="false">
+    <apex:includeScript value="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"/>
+		<link rel="stylesheet" href="https://cdn.rawgit.com/shagstrom/split-pane/master/split-pane.css" />
+		<!-- The style sheet below is not part of the split-pane plugin. Feel free to use it, or style things your own way. -->
+		<link rel="stylesheet" href="https://cdn.rawgit.com/shagstrom/split-pane/master/pretty-split-pane.css" />
+		<script src="https://cdn.rawgit.com/shagstrom/split-pane/master/split-pane.js"></script>
+
+		<style type="text/css">
+
+			html, body {
+				height: 100%;
+				min-height: 100%;
+				margin: 0;
+				padding: 0;
+			}
+
+			#top-component {
+				bottom: 70%;
+				margin-bottom: 5px;
+				min-height: 5em;
+			}
+
+			#vertical-divider {
+				bottom: 70%;
+				height: 5px;
+			}
+
+			#bottom-component {
+				height: 70%;
+				min-height: 10em;
+			}
+
+        	#left-component {
+                right: 50%;
+				margin-right: 5px;
+            }
+        
+            #horizontal-divider {
+                right: 50%;
+				width: 5px;
+    			background-color: #B7B2B2;
+            }
+        
+            #right-component {
+                width: 50%;
+            }
+            
+           	.pretty-split-pane-component-inner {
+            	padding: 0; 
+            }
+    
+		    .pane-content {
+                padding: 10px;
+        	}
+    
+    		.dynamic-content, .gs-output-text {
+            	font-size: 20px;
+            }
+		</style>
+
+		<script>
+			$(function() {
+				$('div.split-pane').splitPane();
+				$('button:first').on('click', function() {
+					$('div.split-pane').splitPane('lastComponentSize', 200);
+				});
+				$('button:last').on('click', function() {
+					$('div.split-pane').splitPane('firstComponentSize', 0);
+				});
+			});
+		</script>
+		<div class="pretty-split-pane-frame">
+			<div class="split-pane horizontal-percent">
+				<div class="split-pane-component" id="top-component">
+					<div class="pretty-split-pane-component-inner">
+                        <apex:detail subject="{!sobjId}"/>
+                    </div>
+				</div>
+				<div class="split-pane-divider" id="vertical-divider"></div>
+				<div class="split-pane-component" id="bottom-component">
+					<div class="pretty-split-pane-component-inner">
+            			<div class="split-pane fixed-right">
+                            <div class="split-pane-component" id="left-component">
+                                <div class="pretty-split-pane-component-inner">
+	                                <div class="pane-content">
+                                        <apex:form >
+                                            <apex:pageMessages />
+                                        	<apex:dynamicComponent componentValue="{!nextPage}"/>
+                                        </apex:form>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="split-pane-divider" id="horizontal-divider"></div>
+                            <div class="split-pane-component" id="right-component">
+                                <div class="pretty-split-pane-component-inner">
+	                                <div class="pane-content">
+	                                    <apex:outputText styleClass="dynamic-content" value="{!dynamicContent}"></apex:outputText>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>                        
+                    </div>
+				</div>
+			</div>
+		</div>
+
+</apex:page>

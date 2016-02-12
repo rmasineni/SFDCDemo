@@ -44,6 +44,7 @@
         <actionName>View</actionName>
         <type>Default</type>
     </actionOverrides>
+    <allowInChatterGroups>false</allowInChatterGroups>
     <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
     <deploymentStatus>Deployed</deploymentStatus>
     <description>This represents a proposal to an opportunity with pricing information and other meta information related to the issuing of the proposal.</description>
@@ -3481,7 +3482,7 @@ NOT(ISBLANK(Additional_Customer_Credit__c))
     <fields>
         <fullName>ExpirationDate__c</fullName>
         <externalId>false</externalId>
-        <label>Loan Expiration Date</label>
+        <label>Expiration Date</label>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
@@ -4719,6 +4720,20 @@ TRUE, FALSE)</formula>
         <fullName>Number_of_Active_Bank_Approval_Documents__c</fullName>
         <externalId>false</externalId>
         <label>Number of Active Bank Approval Documents</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Number_of_Appointments__c</fullName>
+        <externalId>false</externalId>
+        <formula>Opportunity__r.Number_of_Appointments__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Number of Appointments</label>
         <precision>18</precision>
         <required>false</required>
         <scale>0</scale>
@@ -6047,6 +6062,15 @@ TRUE, FALSE)</formula>
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>Revised_Customer_SignOff_Date__c</fullName>
+        <externalId>false</externalId>
+        <label>Revised Customer Signoff</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>DateTime</type>
+    </fields>
+    <fields>
         <fullName>Revised_Proposal1__c</fullName>
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
@@ -7240,7 +7264,7 @@ TRUE, FALSE)</formula>
     <fields>
         <fullName>Sunrun_Loan_Draw_Amount__c</fullName>
         <externalId>false</externalId>
-        <inlineHelpText>Accounting. The actual amounts drawn will be calculated from ERP</inlineHelpText>
+        <inlineHelpText>Accounting. The actual amounts drawn will be calculated from ERP.</inlineHelpText>
         <label>Sunrun Loan Draw Amount</label>
         <precision>18</precision>
         <required>false</required>
@@ -7994,6 +8018,35 @@ TRUE, FALSE)</formula>
         <language>en_US</language>
     </listViews>
     <listViews>
+        <fullName>Credit_View4</fullName>
+        <columns>NAME</columns>
+        <columns>Date_Time_Finance_Received_Proposal__c</columns>
+        <columns>Stage__c</columns>
+        <columns>Assigne__c</columns>
+        <columns>Sales_Partner__c</columns>
+        <columns>Partner_Name__c</columns>
+        <columns>State__c</columns>
+        <columns>Utility__c</columns>
+        <columns>EDP_Phase__c</columns>
+        <columns>Pending_Comments__c</columns>
+        <columns>Revised_Proposal__c</columns>
+        <columns>Total_Solar_Prepay_Required__c</columns>
+        <columns>Change_Order__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Sales_Partner__c</field>
+            <operation>contains</operation>
+            <value>LGCY</value>
+        </filters>
+        <filters>
+            <field>Install_Partner__c</field>
+            <operation>equals</operation>
+            <value>Sunrun Direct</value>
+        </filters>
+        <label>Credit View - Anne</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
         <fullName>Credit_View_Pending_Tasks_completed_sam</fullName>
         <columns>Generation_Asset__c</columns>
         <columns>NAME</columns>
@@ -8023,6 +8076,7 @@ TRUE, FALSE)</formula>
         <columns>State__c</columns>
         <columns>Utility__c</columns>
         <columns>EDP_Phase__c</columns>
+        <columns>Pending_Comments__c</columns>
         <columns>Revised_Proposal__c</columns>
         <columns>Total_Solar_Prepay_Required__c</columns>
         <columns>Change_Order__c</columns>
@@ -8033,29 +8087,6 @@ TRUE, FALSE)</formula>
             <value>SR Credit Review,SR Ops Reviewed</value>
         </filters>
         <label>Credit View - Sam</label>
-        <language>en_US</language>
-    </listViews>
-    <listViews>
-        <fullName>Credit_View_Sam1</fullName>
-        <columns>NAME</columns>
-        <columns>Date_Time_Finance_Received_Proposal__c</columns>
-        <columns>Stage__c</columns>
-        <columns>Assigne__c</columns>
-        <columns>Homeowner_Name__c</columns>
-        <columns>Partner_Name__c</columns>
-        <columns>State__c</columns>
-        <columns>Utility__c</columns>
-        <columns>Revised_Proposal__c</columns>
-        <columns>Change_Order__c</columns>
-        <columns>Pending_Comments__c</columns>
-        <columns>Sales_Partner_Name__c</columns>
-        <filterScope>Everything</filterScope>
-        <filters>
-            <field>Stage__c</field>
-            <operation>equals</operation>
-            <value>SR Credit Review,SR Ops Reviewed</value>
-        </filters>
-        <label>Credit View - Ethiopia</label>
         <language>en_US</language>
     </listViews>
     <listViews>
@@ -8156,16 +8187,12 @@ TRUE, FALSE)</formula>
         <filters>
             <field>Homeowner_Name__c</field>
             <operation>contains</operation>
-            <value>Test,Fake</value>
+            <value>Test</value>
         </filters>
         <filters>
             <field>Stage__c</field>
-            <operation>notEqual</operation>
-            <value>Created,Expired,Inactive,Voided,Withdrawn,Ready for Submission,Replaced</value>
-        </filters>
-        <filters>
-            <field>Stage__c</field>
-            <operation>notEqual</operation>
+            <operation>equals</operation>
+            <value>Submitted</value>
         </filters>
         <label>11. Test Training Proposals</label>
         <language>en_US</language>
@@ -8202,7 +8229,6 @@ TRUE, FALSE)</formula>
     </listViews>
     <listViews>
         <fullName>X01_New_Deal_Submitted2</fullName>
-        <booleanFilter>1 AND 2</booleanFilter>
         <columns>NAME</columns>
         <columns>Sales_Partner__c</columns>
         <columns>Install_Partner__c</columns>
@@ -8211,26 +8237,41 @@ TRUE, FALSE)</formula>
         <columns>Homeowner_Name__c</columns>
         <columns>Homeowner_Address__c</columns>
         <columns>Utility__c</columns>
-        <columns>Change_Order_Information__c</columns>
+        <columns>Cost_Stack__c</columns>
         <columns>Date_Time_Submitted__c</columns>
-        <columns>Purchased_Thru__c</columns>
+        <columns>Primary_Title__c</columns>
+        <columns>Change_Order__c</columns>
         <columns>Original_Proposal_SR_Signoff__c</columns>
-        <columns>Original_Proposal_Welcome_Email_Sent__c</columns>
+        <columns>Name_on_Credit__c</columns>
         <filterScope>Everything</filterScope>
         <filters>
             <field>Stage__c</field>
             <operation>equals</operation>
-            <value>Submitted,SR Ops Received</value>
+            <value>Submitted</value>
         </filters>
         <filters>
-            <field>Date_Submitted__c</field>
-            <operation>notEqual</operation>
-            <value>LAST_N_DAYS:5</value>
+            <field>Original_Proposal_SR_Signoff__c</field>
+            <operation>equals</operation>
         </filters>
-        <label>Submitted - Stuck in Never-Never-Land</label>
+        <filters>
+            <field>SR_Signoff__c</field>
+            <operation>equals</operation>
+        </filters>
+        <filters>
+            <field>Original_Proposal_Welcome_Email_Sent__c</field>
+            <operation>equals</operation>
+            <value>0</value>
+        </filters>
+        <filters>
+            <field>Opportunity_StageName__c</field>
+            <operation>notEqual</operation>
+            <value>7. Closed Won</value>
+        </filters>
+        <label>01. New Deal - Submitted</label>
         <language>en_US</language>
         <sharedTo>
             <allInternalUsers></allInternalUsers>
+            <group>Operations_Group</group>
         </sharedTo>
     </listViews>
     <listViews>
@@ -8612,6 +8653,74 @@ TRUE, FALSE)</formula>
         </sharedTo>
     </listViews>
     <listViews>
+        <fullName>X08_Change_Order_Submitted</fullName>
+        <booleanFilter>((1 AND 2) OR (2 AND 9) OR (1 AND 7) OR 3 OR (4 AND 5)) AND 6 AND 8</booleanFilter>
+        <columns>NAME</columns>
+        <columns>Sales_Partner__c</columns>
+        <columns>Install_Partner__c</columns>
+        <columns>Cost_Stack__c</columns>
+        <columns>Mode_Name__c</columns>
+        <columns>Assigne__c</columns>
+        <columns>Stage__c</columns>
+        <columns>Pending_Proposal_Reason__c</columns>
+        <columns>Homeowner_Name__c</columns>
+        <columns>Homeowner_Address__c</columns>
+        <columns>Date_Time_Submitted__c</columns>
+        <columns>Change_Order__c</columns>
+        <columns>Revised_Proposal__c</columns>
+        <columns>Submitted_By__c</columns>
+        <columns>Change_Order_Information__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>NAME</field>
+            <operation>startsWith</operation>
+            <value>H</value>
+        </filters>
+        <filters>
+            <field>Original_Proposal_SR_Signoff__c</field>
+            <operation>notEqual</operation>
+        </filters>
+        <filters>
+            <field>NAME</field>
+            <operation>startsWith</operation>
+            <value>C</value>
+        </filters>
+        <filters>
+            <field>NAME</field>
+            <operation>startsWith</operation>
+            <value>P</value>
+        </filters>
+        <filters>
+            <field>Revised_Proposal__c</field>
+            <operation>equals</operation>
+            <value>1</value>
+        </filters>
+        <filters>
+            <field>Stage__c</field>
+            <operation>equals</operation>
+            <value>Pending Task Completed,Submitted</value>
+        </filters>
+        <filters>
+            <field>Original_Proposal_SR_Signoff__c</field>
+            <operation>equals</operation>
+        </filters>
+        <filters>
+            <field>Assigne__c</field>
+            <operation>notContain</operation>
+            <value>Dona Tomanpos,Anne Mariano,Sam Viduya,SR Finance</value>
+        </filters>
+        <filters>
+            <field>Change_Order__c</field>
+            <operation>equals</operation>
+            <value>1</value>
+        </filters>
+        <label>07. Change Order - Submitted</label>
+        <language>en_US</language>
+        <sharedTo>
+            <group>Operations_Group</group>
+        </sharedTo>
+    </listViews>
+    <listViews>
         <fullName>X09_Change_Orders_Ops_Received</fullName>
         <booleanFilter>((1 AND 2) OR 3 OR (4 AND 5) OR (2 AND 7)) AND 6 AND 7</booleanFilter>
         <columns>NAME</columns>
@@ -8732,7 +8841,6 @@ TRUE, FALSE)</formula>
         <columns>NAME</columns>
         <columns>Sales_Partner__c</columns>
         <columns>Install_Partner__c</columns>
-        <columns>Date_Time_Pending_Task_Resolved__c</columns>
         <columns>Cost_Stack__c</columns>
         <columns>Mode_Name__c</columns>
         <columns>Assigne__c</columns>
@@ -8842,8 +8950,7 @@ $User.Id &lt;&gt; &apos;005600000046gQ4&apos;,
 $User.Id &lt;&gt; &apos;00560000003KtpG&apos;, 
 $User.Id &lt;&gt; &apos;00560000001Pfen&apos;, 
 $User.Id &lt;&gt; &apos;00560000002G4QB&apos;, 
-$User.Id &lt;&gt; &apos;005600000046gQE&apos;,
-$User.Id &lt;&gt; &apos;00560000001P2RL&apos;
+$User.Id &lt;&gt; &apos;005600000046gQE&apos; 
 )</errorConditionFormula>
         <errorDisplayField>X1st_Customer_Payment_Terms__c</errorDisplayField>
         <errorMessage>Opportunity associated with proposal can not be edited.</errorMessage>
@@ -8927,7 +9034,7 @@ AND(NOT(INCLUDES(PRIORVALUE(Pending_Proposal_Reason__c),&quot;Failed cr, need cr
     </validationRules>
     <validationRules>
         <fullName>Finance_Type_Field_restrictions</fullName>
-        <active>false</active>
+        <active>true</active>
         <errorConditionFormula>AND(
 
 ISCHANGED (Finance_Type__c),
@@ -9015,13 +9122,10 @@ NOT(ISPICKVAL(PRIORVALUE(Stage__c),&quot;Withdrawn&quot;))
     <validationRules>
         <fullName>SR_Ops_Reviewed_or_SR_Approved</fullName>
         <active>true</active>
-        <description>Added for BSKY-7157 1/15/2016</description>
-        <errorConditionFormula>AND($Profile.Name == &apos;Operations - PPM&apos;,
-ISCHANGED(Stage__c),
-(OR(ISPICKVAL(Stage__c,&quot;SR Ops Reviewed&quot;),
-ISPICKVAL(Stage__c,&quot;SR Approved&quot;)))
-
-
+        <errorConditionFormula>AND(($Profile.Name = &apos;System Administrator&apos;),
+ISCHANGED(SR_Ops_Actions__c),
+(OR(ISPICKVAL(PRIORVALUE(SR_Ops_Actions__c),&quot;SR Ops Reviewed&quot;),
+ISPICKVAL(PRIORVALUE(SR_Ops_Actions__c),&quot;SR Approved&quot;)))
 )</errorConditionFormula>
         <errorMessage>Users in this profile are not allowed to make this change</errorMessage>
     </validationRules>
@@ -9171,13 +9275,13 @@ else
 }</url>
     </webLinks>
     <webLinks>
-        <fullName>Drawloop</fullName>
+        <fullName>DrawLoop</fullName>
         <availability>online</availability>
         <displayType>button</displayType>
         <encodingKey>UTF-8</encodingKey>
         <height>600</height>
         <linkType>url</linkType>
-        <masterLabel>Drawloop</masterLabel>
+        <masterLabel>DrawLoop</masterLabel>
         <openType>noSidebar</openType>
         <protected>false</protected>
         <url>/apex/loop__looplus?eid={!Proposal__c.Id}&amp;sessionid={!$Api.Session_ID}</url>
@@ -9284,12 +9388,12 @@ try{
 	var proposalStage = &apos;{!Proposal__c.Stage__c}&apos;;
 	var objectTypeValue = &apos;Proposal&apos;; 
 	var prospectIdValue = &apos;0&apos;;
-        var proposalStatusReason = &apos;{!Proposal__c.Status_Reason__c }&apos;; 
+        var ProposalStatusReason = &apos;{!Proposal__c.Status_Reason__c }&apos;;
 
 	if(proposalSource == null || proposalSource != &apos;BB&apos;){
 		alert(&apos;This is not a valid proposal for modification.&apos;);
 	}else{
-		if(proposalStage == null || (proposalStage == &apos;Voided&apos; &amp;&amp; (proposalStatusReason != &apos;ACCOUNT ADDRESS CHANGE&apos; &amp;&amp; proposalStatusReason != &apos;CONTACT NAME CHANGE&apos; &amp;&amp; proposalStatusReason != &apos;UTILITY CHANGE&apos; &amp;&amp; proposalStatusReason != &apos;MONTHLY USAGE CHANGE&apos; )) || proposalStage == &apos;Inactive&apos; || proposalStage == &apos;Replaced&apos;){
+		if(proposalStage == null || (proposalStage == &apos;Voided&apos;  &amp;&amp; (ProposalStatusReason != &apos;ACCOUNT ADDRESS CHANGE&apos; &amp;&amp; ProposalStatusReason != &apos;CONTACT NAME CHANGE&apos; &amp;&amp; ProposalStatusReason != &apos;UTILITY CHANGE&apos; &amp;&amp; ProposalStatusReason != &apos;MONTHLY USAGE CHANGE&apos; )) || (proposalStage == &apos;Inactive&apos;) || proposalStage == &apos;Replaced&apos;){
 			alert(&apos;This is not an active proposal to modify the design documents.&apos;);
 		}else{
               var selectedDesignVal = &apos;Modify Proposal&apos;;              
@@ -9348,62 +9452,62 @@ try{
         <availability>online</availability>
         <displayType>button</displayType>
         <linkType>javascript</linkType>
-        <masterLabel>Submit Proposal</masterLabel>
+        <masterLabel>New Submit Proposal</masterLabel>
         <openType>onClickJavaScript</openType>
         <protected>false</protected>
-        <url>{!REQUIRESCRIPT(&quot;/soap/ajax/20.0/connection.js&quot;)} 
-{!REQUIRESCRIPT(&quot;/soap/ajax/20.0/apex.js&quot;)} 
+        <url>{!REQUIRESCRIPT(&quot;/soap/ajax/20.0/connection.js&quot;)}
+{!REQUIRESCRIPT(&quot;/soap/ajax/20.0/apex.js&quot;)}
 
 var baseUrl = &apos;{!$Api.Partner_Server_URL_260}&apos;;
 var ptrPrefix = &apos;&apos;;
 if(baseUrl != &apos;&apos; &amp;&amp; baseUrl.indexOf(&apos;/partner/&apos;) &gt;= 0){
-   ptrPrefix = &apos;/partner&apos;;
+ptrPrefix = &apos;/partner&apos;;
 }
 
-try{ 
+try{
 
 
-	var showModalWindow = {!IF( OR(ISPICKVAL(Proposal__c.Stage__c,&apos;Created&apos;), ISPICKVAL(Proposal__c.Stage__c,&apos;Ready for Submission&apos;)), &apos;true&apos;, &apos;false&apos;)}; 
+var showModalWindow = {!IF( OR(ISPICKVAL(Proposal__c.Stage__c,&apos;Created&apos;), ISPICKVAL(Proposal__c.Stage__c,&apos;Ready for Submission&apos;)), &apos;true&apos;, &apos;false&apos;)};
 
-	if(showModalWindow == false){ 
-		var isApproved = {!IF( OR(ISPICKVAL(Proposal__c.Stage__c,&apos;SR Ops Approved&apos;)) , &apos;true&apos;, &apos;false&apos;)}; 
-		if(isApproved == true){ 
-			alert(&apos;This is an approved proposal. You can not resubmit it again&apos;); 
-		}else{ 
-			alert(&apos;Invalid proposal stage for submission&apos;); 
-		} 
+if(showModalWindow == false){
+var isApproved = {!IF( OR(ISPICKVAL(Proposal__c.Stage__c,&apos;SR Ops Approved&apos;)) , &apos;true&apos;, &apos;false&apos;)};
+if(isApproved == true){
+alert(&apos;This is an approved proposal. You can not resubmit it again&apos;);
+}else{
+alert(&apos;Invalid proposal stage for submission&apos;);
+}
 
-	}else{ 
+}else{
 
-		var isCOBFdetailFilled = {!IF((AND (
-					ISPICKVAL(Proposal__c.Agreement_Type__c, &apos;Customer Owned - Bank Financed&apos;),
-						OR(ISBLANK(Proposal__c.Shopping_Pass__c),
-						ISBLANK(Proposal__c.CVV__c),ISBLANK(Proposal__c.Max_Loan_Amount__c),
-						ISBLANK(Proposal__c.Dealer_Fee__c),
-						ISBLANK (Proposal__c.ExpirationDate__c),
-						ISBLANK(TEXT(Proposal__c.Shopping_Pass_Expiration_Month__c)), 
-						ISBLANK(TEXT(Proposal__c.Shopping_Pass_Expiration_Year__c)))
-					)), &apos;true&apos;, &apos;false&apos; )};
+var isCOBFdetailFilled = {!IF((AND (Proposal__c.Sales_Partner__c == $Label.Sunrun_Inc_Id,
+ISPICKVAL(Proposal__c.Agreement_Type__c, &apos;Customer Owned - Bank Financed&apos;),
+OR(ISBLANK(Proposal__c.Shopping_Pass__c),
+ISBLANK(Proposal__c.CVV__c),ISBLANK(Proposal__c.Max_Loan_Amount__c),
+ISBLANK(Proposal__c.Dealer_Fee__c),
+ISBLANK (Proposal__c.ExpirationDate__c),
+ISBLANK(TEXT(Proposal__c.Shopping_Pass_Expiration_Month__c)),
+ISBLANK(TEXT(Proposal__c.Shopping_Pass_Expiration_Year__c)))
+)), &apos;true&apos;, &apos;false&apos; )};
 
-		if( isCOBFdetailFilled == true){
-			alert(&apos;Customer Owned Bank Financed proposal needs Max Loan Amount, Dealer Fee,Shopping Pass,Shopping Pass Expiration Year, Shopping Pass Expiration Month, Loan Expiration Date and CVV number for Submission&apos;);
-		}else { 
-			var urlvalue = ptrPrefix + &apos;/apex/SubmitProposal?Id={!Proposal__c.Id}&apos;;
-			var popup = window.open(urlvalue , &apos;window&apos;, &apos;toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,resizable=no,width=850,height=200,left=400,top =300&apos;);			
-		} 
-	} 
-}catch(exceptionObj){ 
-	if(exceptionObj.faultstring != null){ 
-		var faultStr = exceptionObj.faultstring; 
-		var n = faultStr.indexOf(&quot;no access allowed to this class&quot;); 
-		if( n &gt;= 0){ 
-			alert(&apos;You don\&apos;t have sufficient access to invoke this service&apos;); 
-		}else{ 
-			alert(exceptionObj.faultstring); 
-		} 
-	}else{ 
-		alert(exceptionObj); 
-	} 
+if( isCOBFdetailFilled == true){
+alert(&apos;Customer Owned Bank Financed proposal needs Max Loan Amount, Dealer Fee,Shopping Pass,Shopping Pass Expiration Year, Shopping Pass Expiration Month, Loan Expiration Date and CVV number for Submission&apos;);
+}else {
+var urlvalue = ptrPrefix + &apos;/apex/SubmitProposal?Id={!Proposal__c.Id}&apos;;
+var popup = window.open(urlvalue , &apos;window&apos;, &apos;toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,resizable=no,width=850,height=200,left=400,top =300&apos;);
+}
+}
+}catch(exceptionObj){
+if(exceptionObj.faultstring != null){
+var faultStr = exceptionObj.faultstring;
+var n = faultStr.indexOf(&quot;no access allowed to this class&quot;);
+if( n &gt;= 0){
+alert(&apos;You don\&apos;t have sufficient access to invoke this service&apos;);
+}else{
+alert(exceptionObj.faultstring);
+}
+}else{
+alert(exceptionObj);
+}
 }</url>
     </webLinks>
     <webLinks>

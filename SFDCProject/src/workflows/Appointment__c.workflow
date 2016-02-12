@@ -13,21 +13,7 @@
     <rules>
         <fullName>24 hr appt reminder</fullName>
         <active>true</active>
-        <formula>AND ( 
-OR( 
-ISPICKVAL(Appointment_Type__c, &apos;Phone Consultation&apos;), 
-ISPICKVAL(Appointment_Type__c, &apos;Field Consultation&apos;),
-ISPICKVAL(Appointment_Type__c, &apos;Home Visit&apos;), 
-ISPICKVAL(Appointment_Type__c, &apos;Home Visit Follow up&apos;), 
-ISPICKVAL(Appointment_Type__c, &apos;Phone Call&apos;), 
-ISPICKVAL(Appointment_Type__c, &apos;Phone Call Follow up&apos;)  
-), 
-
-Appointment_Date_Time__c - NOW() &gt; 1,
-
-Text_Opt_Out__c &lt;&gt; TRUE 
-
-)</formula>
+        <formula>AND (  OR(  ISPICKVAL(Appointment_Type__c, &apos;Phone Consultation&apos;),  ISPICKVAL(Appointment_Type__c, &apos;Field Consultation&apos;)  ),    Text_Opt_Out__c &lt;&gt; TRUE   )</formula>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
         <workflowTimeTriggers>
             <actions>

@@ -112,7 +112,9 @@ public class eSignServiceNew {
 			modifiedSRAttachment = srAttachment;
 		}
 
-    	system.debug('srAttachmentsrAttachment>' +  srAttachment);                                                    
+    	system.debug('srAttachmentsrAttachment>' +  srAttachment);  
+                                                         
+                                                        
                                                         
 		Boolean includeTabs = true;
 		String requestBody = '';
@@ -700,7 +702,9 @@ public class eSignServiceNew {
         public string hostEmail;
         public string esignOption;
         public string proposalId;
-         public boolean utilityAgreement;
+        public boolean utilityAgreement;
+        public string sunrunRecipientName;
+        public string sunrunRecipientEmail;
     }
     
     

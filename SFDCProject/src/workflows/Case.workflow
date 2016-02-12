@@ -379,11 +379,11 @@
     </fieldUpdates>
     <fieldUpdates>
         <fullName>Field_Update_Partner_Concierge</fullName>
-        <description>Automatically Changes the Case Record Type to &quot;Partner Help&quot; when a Case record is moved into the Partner Concierge queue</description>
+        <description>Automatically Changes the Case Record Type to &quot;Partner Concierge&quot; when a Case record is moved into the Partner Concierge queue</description>
         <field>RecordTypeId</field>
-        <lookupValue>Partner_Help</lookupValue>
+        <lookupValue>Partner_Concierge</lookupValue>
         <lookupValueType>RecordType</lookupValueType>
-        <name>Field Update - Partner Help</name>
+        <name>Field Update - Partner Concierge</name>
         <notifyAssignee>false</notifyAssignee>
         <operation>LookupValue</operation>
         <protected>false</protected>
@@ -400,17 +400,6 @@
         <operation>LookupValue</operation>
         <protected>false</protected>
         <reevaluateOnChange>true</reevaluateOnChange>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>Help_Desk_Partner_Portal</fullName>
-        <description>Update Owner to Partner Help Queue when Case Origin=Partner Portal.</description>
-        <field>OwnerId</field>
-        <lookupValue>Partner_Help</lookupValue>
-        <lookupValueType>Queue</lookupValueType>
-        <name>Help Desk - Partner Portal</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>LookupValue</operation>
-        <protected>false</protected>
     </fieldUpdates>
     <fieldUpdates>
         <fullName>Phone_Tag_Case_Origin</fullName>
@@ -440,25 +429,6 @@
         <name>Sungevity Cases</name>
         <notifyAssignee>false</notifyAssignee>
         <operation>LookupValue</operation>
-        <protected>false</protected>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>Update_Case_Origin_for_Internal_Transfer</fullName>
-        <description>for use with workflow: Help Desk - Transfers from SR</description>
-        <field>Origin</field>
-        <literalValue>Transfer from Internal</literalValue>
-        <name>Update Case Origin for Internal Transfer</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Literal</operation>
-        <protected>false</protected>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>Update_Case_Origin_for_Voicemail</fullName>
-        <field>Origin</field>
-        <literalValue>Call</literalValue>
-        <name>Update Case Origin for Voicemail</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Literal</operation>
         <protected>false</protected>
     </fieldUpdates>
     <rules>
@@ -647,11 +617,6 @@
             <operation>equals</operation>
             <value>Partner Help</value>
         </criteriaItems>
-        <criteriaItems>
-            <field>Case.Origin</field>
-            <operation>notEqual</operation>
-            <value>Call</value>
-        </criteriaItems>
         <description>Assign the case created by partner users to &quot;partner help&quot; queue</description>
         <triggerType>onCreateOnly</triggerType>
     </rules>
@@ -671,7 +636,7 @@
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
-        <fullName>Auto Assign Case Record Type %28Partner Help%29</fullName>
+        <fullName>Auto Assign Case Record Type %28Partner Concierge%29</fullName>
         <actions>
             <name>Field_Update_Partner_Concierge</name>
             <type>FieldUpdate</type>
@@ -680,10 +645,15 @@
         <criteriaItems>
             <field>Case.OwnerId</field>
             <operation>equals</operation>
-            <value>Partner Help</value>
+            <value>Partner Concierge Queue</value>
         </criteriaItems>
-        <description>Automatically Changes the Case Record Type to &quot;Partner Help&quot; when a Case record is moved into the Partner Help Queue</description>
-        <triggerType>onCreateOnly</triggerType>
+        <criteriaItems>
+            <field>Case.RecordTypeId</field>
+            <operation>notEqual</operation>
+            <value>Invoice</value>
+        </criteriaItems>
+        <description>Automatically Changes the Case Record Type to &quot;Partner Concierge&quot; when a Case record is moved into the Partner Concierge queue</description>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
         <fullName>CCNOTIFICATIONDELETE</fullName>
@@ -727,11 +697,7 @@
             <type>FieldUpdate</type>
         </actions>
         <active>true</active>
-        <formula>OR
-(
-ISCHANGED( Compensated__c ),
-AND(ISNEW(), NOT (ISBLANK(Compensated__c))) 
-)</formula>
+        <formula>OR ( ISCHANGED( Compensated__c ), AND(ISNEW(), NOT (ISBLANK(Compensated__c)))  )</formula>
         <triggerType>onAllChanges</triggerType>
     </rules>
     <rules>
@@ -798,7 +764,7 @@ AND(ISNEW(), NOT (ISBLANK(Compensated__c)))
             <name>Email_Account_Manager_when_Case_for_Partner_Created</name>
             <type>Alert</type>
         </actions>
-        <active>false</active>
+        <active>true</active>
         <criteriaItems>
             <field>Case.RecordTypeId</field>
             <operation>equals</operation>
@@ -817,7 +783,7 @@ AND(ISNEW(), NOT (ISBLANK(Compensated__c)))
             <name>Email_Account_Manager_when_Case_for_their_Partner_is_Closed</name>
             <type>Alert</type>
         </actions>
-        <active>false</active>
+        <active>true</active>
         <criteriaItems>
             <field>Case.RecordTypeId</field>
             <operation>equals</operation>
@@ -1048,92 +1014,6 @@ Lehman)</description>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
-        <fullName>Help Desk - Call</fullName>
-        <active>false</active>
-        <criteriaItems>
-            <field>Case.RecordTypeId</field>
-            <operation>equals</operation>
-            <value>Partner Help</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Origin</field>
-            <operation>equals</operation>
-            <value>Call</value>
-        </criteriaItems>
-        <description>When help desk members create case to log call, assign the user as the owner, rather than the queue.</description>
-        <triggerType>onCreateOnly</triggerType>
-    </rules>
-    <rules>
-        <fullName>Help Desk - Partner Portal Origin</fullName>
-        <actions>
-            <name>Help_Desk_Partner_Portal</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>true</active>
-        <criteriaItems>
-            <field>Case.RecordTypeId</field>
-            <operation>equals</operation>
-            <value>Partner Help</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Origin</field>
-            <operation>equals</operation>
-            <value>Partner Portal</value>
-        </criteriaItems>
-        <description>Assign cases that come through Partner Portal to the Partner Help Queue, rather than having the creator be the owner.</description>
-        <triggerType>onCreateOnly</triggerType>
-    </rules>
-    <rules>
-        <fullName>Help Desk - Transfers from SR</fullName>
-        <actions>
-            <name>Update_Case_Origin_for_Internal_Transfer</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>true</active>
-        <criteriaItems>
-            <field>Case.SuppliedEmail</field>
-            <operation>contains</operation>
-            <value>@sunrun</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.RecordTypeId</field>
-            <operation>equals</operation>
-            <value>Partner Help</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Subject</field>
-            <operation>notContain</operation>
-            <value>Fwd: ShoreTel voice message from</value>
-        </criteriaItems>
-        <description>When case is created and has Record Type=Partner Help, and the web email is a Sunrun email address, we mark it as a transfer in order to distinguish it from other emails we receive through email-to-case.</description>
-        <triggerType>onCreateOnly</triggerType>
-    </rules>
-    <rules>
-        <fullName>Help Desk - Voicemail</fullName>
-        <actions>
-            <name>Update_Case_Origin_for_Voicemail</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>false</active>
-        <criteriaItems>
-            <field>Case.SuppliedEmail</field>
-            <operation>startsWith</operation>
-            <value>justin.hustrulid</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.RecordTypeId</field>
-            <operation>equals</operation>
-            <value>Partner Help</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Subject</field>
-            <operation>startsWith</operation>
-            <value>Fwd: ShoreTel voice message from</value>
-        </criteriaItems>
-        <description>When voicemail is forwarded from the Help Desk phone workgroup to SFDC, mark it as a Call</description>
-        <triggerType>onCreateOnly</triggerType>
-    </rules>
-    <rules>
         <fullName>Partner Concierge%3A Case Created Email</fullName>
         <actions>
             <name>Email_Case_Contact_when_Partner_Concierge_Case_Created</name>
@@ -1190,11 +1070,6 @@ $RecordType.Name  = &quot;Partner Concierge&quot;  &amp;&amp;  (ISPICKVAL(Priori
             <operation>equals</operation>
             <value>Partner Help</value>
         </criteriaItems>
-        <criteriaItems>
-            <field>Case.Origin</field>
-            <operation>notEqual</operation>
-            <value>Call</value>
-        </criteriaItems>
         <triggerType>onCreateOnly</triggerType>
     </rules>
     <rules>
@@ -1228,7 +1103,7 @@ $RecordType.Name  = &quot;Partner Concierge&quot;  &amp;&amp;  (ISPICKVAL(Priori
             <name>Partner_Help_Email_Creator_of_Case_Closure</name>
             <type>Alert</type>
         </actions>
-        <active>false</active>
+        <active>true</active>
         <criteriaItems>
             <field>Case.RecordTypeId</field>
             <operation>equals</operation>

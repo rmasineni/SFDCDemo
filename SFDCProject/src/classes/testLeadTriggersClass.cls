@@ -241,10 +241,27 @@ private class testLeadTriggersClass {
     L4.Channel__c = 'Co-Marketing';
     L4.Custom_Lead_Source__c = 'Co-Marketing: Comcast';
     L4.Lead_Type__c = 'Web';
-    listLead.add(L4);    
+    listLead.add(L4);  
+     // adding for API
+        Lead L5 = new Lead();
+        L5.State='CA';
+        L5.Company = 'Test Company 8';
+        L5.Phone = '7856423490';
+        L5.LastName = 'contactAPI';
+        L5.FirstName = 'InContact';
+        L5.Channel__c = '3rd Party';
+        L5.Custom_Lead_Source__c = '3rd Party: B Green';
+        L5.Lead_Type__c = 'Live Transfer';
+        L5.Status = 'Created';
+        L5.Lead_Status__c = 'Open';
+        L5.Campaign_Call_Attempts__c=1;
+ listLead.add(L5);          
+        
+        
     insert listLead;
     //
     //Update Leads to fire trigger
+    L5.Campaign_Call_Attempts__c=2;
     L1.Referred_by_Contact__c = c2.Id;
     //L2.Referred_by_Contact__c = null;
     L3.Status = Label.Lead_Status_Duplicate;
@@ -253,6 +270,8 @@ private class testLeadTriggersClass {
     listLeadUpdates.add(L1);
     listLeadUpdates.add(L2);
     listLeadUpdates.add(L3);
+    listLeadUpdates.add(L5);
+
     update listLeadUpdates;
     //
     //Convert Lead

@@ -18,7 +18,7 @@ public class SCETriggerClass{
         Set<Id> sceIdSet = new Set<Id>();
         Integer daysInPastLimit = 0; 
         map<Id,List<String>> sceBCCRecipientMap = new map<Id,List<String>>();
-        map<Id,List<String>> sceToAddrRecipientMap = new map<Id,List<String>>();                                                                                      
+        map<Id,List<String>> sceToAddrRecipientMap = new map<Id,List<String>>();
 
         daysInPastLimit = Integer.valueOf(SCE_Email_Status__c.getValues('Install Scheduled').No_Of_Days_In_Past_Limit__c);
         System.debug('No. of Days in Past: ' +daysInPastLimit);        
@@ -572,7 +572,7 @@ public class SCETriggerClass{
         Integer daysInPastLimit = 0;
         
         daysInPastLimit = Integer.valueOf(SCE_Email_Status__c.getValues('CAP').No_Of_Days_In_Past_Limit__c);
-        
+        System.debug('>> list_sce' + list_sce  );
         for(Service_Contract_Event__c sce : list_sce){
             if(sce.CAP_date_approved__c != null && sce.CAP_date_approved__c >= (date.today()-daysInPastLimit) &&
                !checkRecursive.capids.contains(sce.id) &&
@@ -588,11 +588,11 @@ public class SCETriggerClass{
                       Service_Contract__r.Opportunity__r.Opportunity_Source_Type__c, Service_Contract__r.Utility_Company__c,
                       Service_Contract__r.Opportunity__r.Salesrep__c, Service_Contract__r.Opportunity__r.Salesrep__r.Email,
                       Service_Contract__r.Opportunity__r.Sales_Representative__c, Service_Contract__r.Opportunity__r.Sales_Representative__r.Email,
-                      Service_Contract__r.Opportunity__r.Preferred_Language__c,
+                      Service_Contract__r.Opportunity__r.Preferred_Language__c,AutoCap__c,
                       Opportunity__c
                       From Service_Contract_Event__c
                       Where Id in : sceIdset];
-        
+            System.debug('>> SceList:' + scelist);
           if(!scelist.isEmpty()){
               sceProjectTypeMap = getProjectType(scelist);
               sceToRecipientMap = getToRecipientList(scelist);
@@ -608,11 +608,38 @@ public class SCETriggerClass{
                                                               'Sunrun Project Planner', sceIdPPEmailIdMap.get(sce.Id), null); 
                }
                else{    
-                if(sceProjectTypeMap.get(sce.Id) == 'Direct' && sceIdPPEmailIdMap.containsKey(sce.Id)){
-                 CustomEmailManager.communicateScheduledEvent(sceWhereClauseFieldValueMap.get(sce.Id),
-                                                              'CAP Direct', sceToRecipientMap.get(sce.Id), sceCCRecipientMap.get(sce.Id),
-                                                              'Sunrun Project Planner', sceIdPPEmailIdMap.get(sce.Id), null);
-                }
+               // if(sceProjectTypeMap.get(sce.Id) == 'Direct' && sceIdPPEmailIdMap.containsKey(sce.Id)){
+                // CustomEmailManager.communicateScheduledEvent(sceWhereClauseFieldValueMap.get(sce.Id),
+                //                                              'CAP Direct', sceToRecipientMap.get(sce.Id), sceCCRecipientMap.get(sce.Id),
+                //                                              'Sunrun Project Planner', sceIdPPEmailIdMap.get(sce.Id), null);
+                //}
+                   if(sceProjectTypeMap.get(sce.Id) == 'Direct'){
+                       System.debug('Inside Direct ');
+                       if(sceIdPPEmailIdMap.containsKey(sce.Id)){
+                           if(sce.AutoCap__c == 'AutoCap'){
+                               System.debug('Inside AutoCap ');
+                               CustomEmailManager.communicateScheduledEvent(sceWhereClauseFieldValueMap.get(sce.Id),
+                                                             'Auto CAP', sceToRecipientMap.get(sce.Id), sceCCRecipientMap.get(sce.Id),
+                                                             'Sunrun Project Planner', sceIdPPEmailIdMap.get(sce.Id), null);
+                           }else if( sce.AutoCap__c == 'Customer approved plan'){
+                               CustomEmailManager.communicateScheduledEvent(sceWhereClauseFieldValueMap.get(sce.Id),
+                                                             'CAP Approved', sceToRecipientMap.get(sce.Id), sceCCRecipientMap.get(sce.Id),
+                                                             'Sunrun Project Planner', sceIdPPEmailIdMap.get(sce.Id), null);     
+                           }
+                               
+                       } else {
+                           if(sce.AutoCap__c == 'AutoCap'){
+                               CustomEmailManager.communicateScheduledEvent(sceWhereClauseFieldValueMap.get(sce.Id),
+                                                             'Auto CAP No PP', sceToRecipientMap.get(sce.Id), sceCCRecipientMap.get(sce.Id),
+                                                             null, null, 'pc@sunrun.com');
+                           }else if( sce.AutoCap__c == 'Customer approved plan'){
+                               CustomEmailManager.communicateScheduledEvent(sceWhereClauseFieldValueMap.get(sce.Id),
+                                                             'CAP Approved No PP', sceToRecipientMap.get(sce.Id), sceCCRecipientMap.get(sce.Id),
+                                                             null, null, 'pc@sunrun.com');     
+                           }
+                           
+                       }
+                   } 
                 else{
                  CustomEmailManager.communicateScheduledEvent(sceWhereClauseFieldValueMap.get(sce.Id),
                                                               'CAP EPC', sceToRecipientMap.get(sce.Id), sceCCRecipientMap.get(sce.Id),
@@ -818,7 +845,7 @@ public class SCETriggerClass{
         System.debug('sceWhereClauseFieldValueMap :' +sceWhereClauseFieldValueMap);
         return sceWhereClauseFieldValueMap;
     }
-
+    
     /* BSKY-6575 logic start */
     
     public static void CancellationStatus(Map<Id,ServiceContract> ServiceContractMap){
@@ -850,14 +877,14 @@ public class SCETriggerClass{
             // CustomEmailManager.CancelEvent(sceToRecipientMap.get(sce.Id),sceBCCRecipientMap.get(sce.Id),sceToAddrRecipientMap.get(sce.Id));
             
             CustomEmailManager.CommunicateCancelEvent(sceWhereClauseFieldValueMap.get(sce.Id),'Customer Agreement Cancellation',
-                                                    sceToRecipientMap.get(sce.Id),sceToAddrRecipientMap.get(sce.Id),'Cancellations', 'cancellations@sunrun.com', null );
+                                                      sceToRecipientMap.get(sce.Id),sceToAddrRecipientMap.get(sce.Id),'Cancellations', 'cancellations@sunrun.com', null );
             
         }
     }
     
     /**********************************************************************************************************************
-		This method gets the list of (TO) recipients for each Service Contract when service contract status is Deal Cancelled
-	************************************************************************************************************************/
+This method gets the list of (TO) recipients for each Service Contract when service contract status is Deal Cancelled
+************************************************************************************************************************/
     private static map<Id,List<Id>> getToAddrRecipientList(List<Service_Contract_Event__c> sceList){
         List<Id> recipientList = new List<String>(); 
         List<Id> tempRecipientList = new List<String>();
@@ -865,17 +892,19 @@ public class SCETriggerClass{
         
         for(Service_Contract_Event__c sce: sceList){
             
-            /* if(sce.Customer_s_Email__c != Null){
-				recipientList.add(sce.Customer_s_Email__c);           
-			} */
+           /* if(sce.Customer_s_Email__c != Null){
+                recipientList.add(sce.Customer_s_Email__c);           
+            } */
             
             if(sce.Service_Contract__r.Install_Partner__c == 'Sunrun'){
                 if(sce.Sales_Rep_Email__c != null)
-                    recipientList.add(sce.Sales_Rep_Email__c);
+                recipientList.add(sce.Sales_Rep_Email__c);
                 if(sce.Project_Manager_Email__c != null)
-                    recipientList.add(sce.Project_Manager_Email__c);
+                recipientList.add(sce.Project_Manager_Email__c);
             } 
-            
+           else   
+              if(!(sce.Sales_Rep_Email__c == Null || sce.Sales_Rep_Email__c == '' )) recipientList.add(sce.Sales_Rep_Email__c); /* BSKY-7272 */
+              
             tempRecipientList = recipientList.clone();   
             sceCCRecipientMap.put(sce.id,tempRecipientList);
             recipientList.clear();
@@ -886,5 +915,7 @@ public class SCETriggerClass{
     
     
     /* BSKY-6575 logic End */
+    
+
 
 }

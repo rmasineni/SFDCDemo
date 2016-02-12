@@ -439,11 +439,11 @@ public class SRAttachmentManager {
         }
         String documentSource = srAttachmentObj.Document_Source__c;
         String sunrunS3ProxySettingName = getSunRunS3ProxySettingsName(srAttachmentObj, masterDoc);
-        //system.debug('sunrunS3ProxySettingName' + sunrunS3ProxySettingName);
-        //SunRunS3RestConnection.proxySetting = sunrunS3ProxySettingName;
+      //  system.debug('sunrunS3ProxySettingName' + sunrunS3ProxySettingName);
+       // SunRunS3RestConnection.proxySetting = sunrunS3ProxySettingName;
         SunRunS3RestConnection conn = new SunRunS3RestConnection(sunrunS3ProxySettingName); 
-        //system.debug('proposalNamegetDocumentFromS3' +  proposalName);
-        //system.debug('fileNamegetDocumentFromS3' +  fileName);
+        system.debug('proposalNamegetDocumentFromS3' +  proposalName);
+        system.debug('fileNamegetDocumentFromS3' +  fileName);
         conn.makeRequest('GET', proposalName , fileName);
         return conn;
     }   
@@ -516,7 +516,7 @@ public class SRAttachmentManager {
         soqlStr += ' Document_Classification__r.ESignature_allowed__c, Proposal__r.proposal_source__c, Document_Classification__r.Category__c, ';
         soqlStr += ' Proposal__r.Signed__c, Proposal__r.Change_Order_Information__c, Opportunity__r.Id, Opportunity__r.Prospect_Id__c, Opportunity__r.name, Opportunity__c,';
 		soqlStr += ' Proposal__R.Opportunity__r.Sales_Partner__c, Proposal__R.Opportunity__r.Account.BillingCity, ';
-		soqlStr += ' proposal__r.Sales_Partner__c, proposal__r.Install_Partner__c, proposal__r.Agreement_Type__c,  proposal__r.Program_Type__c  FROM SR_Attachment__c  ';
+		soqlStr += ' proposal__r.Sales_Partner__c, proposal__r.Sales_Partner_Name__c, proposal__r.Install_Partner__c, proposal__r.Agreement_Type__c,  proposal__r.Program_Type__c,proposal__r.Utility__c  FROM SR_Attachment__c  ';
         return soqlStr;
     }
     

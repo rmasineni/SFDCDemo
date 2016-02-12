@@ -1,8 +1,4 @@
-<apex:page id="page" controller="customizeProposalTaskView" sidebar="false" showHeader="false">
-
-<link href='/partner/resource/PartnerPortalResources/css/partnerportal-styles.css' rel='stylesheet' type='text/css'/>
-
-
+<apex:page id="page" controller="customizeProposalTaskView" sidebar="false" showHeader="false" >
 <apex:pageMessages />
     <apex:form >
     <apex:pageblock mode="Edit" id="ViewDetails" >
@@ -26,20 +22,26 @@
     <apex:pageblocksection columns="1">
         <apex:pageBlockTable value="{!lstTask}" var="Tsk">
             <apex:column headerValue="Status" value="{!Tsk.Status}"/>
-            <apex:column headerValue="Due Date" value="{!Tsk.ActivityDate}"/>
-            <apex:column headerValue="Assigned To" value="{!Tsk.OwnerId}"/>
-            
-            <apex:column headerValue="Proposal ID">
+             <apex:column headerValue="Proposal ID">
                 <apex:outputLink id="parent" target="_parent" value="/{!Tsk.Whatid}">
                 <apex:outputText value="{!Tsk.What.Name}"/>
                 </apex:outputLink>
             </apex:column>
-                        
+            <apex:column headerValue="Pending Reason" value="{!Tsk.Pending_Proposal_Reason__c }"/>
+            <!-- <apex:column headerValue="Due Date" value="{!Tsk.ActivityDate}"/>-->
+            <apex:column headerValue="Assigned To" value="{!Tsk.OwnerId}"/>
+            <!--                                   
             <apex:column headerValue="Subject">
                 <apex:outputLink target="_parent" value="/{!Tsk.id}">
                 <apex:outputText value="{!Tsk.Subject}"/>
                 </apex:outputLink>
             </apex:column>
+             -->
+           <apex:column headerValue="Created">
+            <apex:outputText value="Today" rendered="{!DATEVALUE(Tsk.createddate)==TODAY()}"/>  
+            <apex:outputText value="Yesterday" rendered="{!DATEVALUE(Tsk.createddate)==TODAY()-1}"/> 
+            <apex:outputText value="{!TODAY()-DATEVALUE(Tsk.createddate)} DAYS AGO" rendered="{!DATEVALUE(Tsk.createddate)<TODAY()-1}"/>  
+           </apex:column>           
         </apex:pageBlockTable>
    </apex:pageblocksection>
             <apex:outputPanel layout="block" styleClass="pSearchShowMore" id="otpNavTop">

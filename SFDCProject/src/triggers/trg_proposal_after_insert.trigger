@@ -13,15 +13,15 @@ trigger trg_proposal_after_insert on Proposal__c (after insert, after update) {
         Map<Id, String> projectTypeMap = new Map<Id, String>(); 
         Map<Id, Set<Id>> optyProposalMap2 = new Map<Id, Set<Id>>();
     
-		Map<String, Partners_For_Proposal_Upload__c> partnersForProposalUpload = Partners_For_Proposal_Upload__c.getAll();
-		Map<Id, Id> opportunityToSalesPartner = new Map<Id, Id>();
-		Map<Id, Id> opportunityToInstallPartner = new Map<Id, Id>();
-		String salesPartnerId = (Trigger.new[0].Sales_Partner__c != null) ? Trigger.new[0].Sales_Partner__c + '' : '';
-		if( (Trigger.new[0].Mode_Name__c != null && Trigger.new[0].Mode_Name__c == 'Sungevity - Bulk Load Only')){
-        	//Code changes for Bob's project
-		}else{
-			
-			Set<Id> signedProposalIds = new Set<Id>();
+        Map<String, Partners_For_Proposal_Upload__c> partnersForProposalUpload = Partners_For_Proposal_Upload__c.getAll();
+        Map<Id, Id> opportunityToSalesPartner = new Map<Id, Id>();
+        Map<Id, Id> opportunityToInstallPartner = new Map<Id, Id>();
+        String salesPartnerId = (Trigger.new[0].Sales_Partner__c != null) ? Trigger.new[0].Sales_Partner__c + '' : '';
+        if( (Trigger.new[0].Mode_Name__c != null && Trigger.new[0].Mode_Name__c == 'Sungevity - Bulk Load Only')){
+            //Code changes for Bob's project
+        }else{
+            
+            Set<Id> signedProposalIds = new Set<Id>();
             Map<Id, Id> proposalToGenAssetMap = new Map<Id, Id>();
             Map<Id, Proposal__c> scProposalMap = new Map<Id, Proposal__c>();
             Map<Id, Id> proposalToOptyMap = new Map<Id, Id>();
@@ -45,50 +45,47 @@ trigger trg_proposal_after_insert on Proposal__c (after insert, after update) {
                     }
                     
                     if(proposalObj.Original_Proposal_ID__c == null){
-                    	Set<Id> tempIds = optyProposalMap2.containsKey(proposalObj.Opportunity__c) ? optyProposalMap2.get(proposalObj.Opportunity__c) : new Set<Id>();
-                    	tempIds.add(proposalObj.Id);
-                    	optyProposalMap2.put(proposalObj.Opportunity__c, tempIds);
+                        Set<Id> tempIds = optyProposalMap2.containsKey(proposalObj.Opportunity__c) ? optyProposalMap2.get(proposalObj.Opportunity__c) : new Set<Id>();
+                        tempIds.add(proposalObj.Id);
+                        optyProposalMap2.put(proposalObj.Opportunity__c, tempIds);
                     }
-				}
+                }
 
-				if(trigger.isInsert || (trigger.isUpdate && trigger.oldmap.get(proposalObj.id).Opportunity__c != proposalObj.Opportunity__c)){
-	              	optyIdsForNewProposal.add(proposalObj.opportunity__c);
-					Set<Id> tempIds = optyProposalMap2.containsKey(proposalObj.Opportunity__c) ? optyProposalMap2.get(proposalObj.Opportunity__c) : new Set<Id>();
-					tempIds.add(proposalObj.Id);
-					optyProposalMap2.put(proposalObj.Opportunity__c, tempIds);
-	            }
+                if(trigger.isInsert || (trigger.isUpdate && trigger.oldmap.get(proposalObj.id).Opportunity__c != proposalObj.Opportunity__c)){
+                  optyIdsForNewProposal.add(proposalObj.opportunity__c);
+                }
         
-				Proposal__c oldProposalObj;
+                Proposal__c oldProposalObj;
                 if(Trigger.isUpdate){
                     oldProposalObj = Trigger.oldMap.get(proposalObj.Id);
-          			if(oldProposalObj.Opportunity__c != proposalObj.Opportunity__c){
-                		optyIdsForCustOffer.add(proposalObj.Opportunity__c);
-                		optyIdsForCustOffer.add(oldProposalObj.Opportunity__c);
-              		}
+                    if(oldProposalObj.Opportunity__c != proposalObj.Opportunity__c){
+                        optyIdsForCustOffer.add(proposalObj.Opportunity__c);
+                        optyIdsForCustOffer.add(oldProposalObj.Opportunity__c);
+                    }
 
-          			if(oldProposalObj.Customer_Offer__c != proposalObj.Customer_Offer__c &&  proposalObj.Customer_Offer__c == true){
-						CustOfferIds.add(proposalObj.id);
-						optyIdsForCustOffer.add(proposalObj.opportunity__c);
-              		}else if(oldProposalObj.Customer_Offer__c != proposalObj.Customer_Offer__c &&  proposalObj.Customer_Offer__c == false){
-						optyIdsModifiedCustOffer.add(proposalObj.opportunity__c);
-					}
+                    if(oldProposalObj.Customer_Offer__c != proposalObj.Customer_Offer__c &&  proposalObj.Customer_Offer__c == true){
+                        CustOfferIds.add(proposalObj.id);
+                        optyIdsForCustOffer.add(proposalObj.opportunity__c);
+                    }else if(oldProposalObj.Customer_Offer__c != proposalObj.Customer_Offer__c &&  proposalObj.Customer_Offer__c == false){
+                        optyIdsModifiedCustOffer.add(proposalObj.opportunity__c);
+                    }
           
-					System.debug('proposalObj.signed__c: ' + proposalObj.signed__c);
-					if((oldProposalObj.signed__c != proposalObj.signed__c &&  proposalObj.signed__c == true) 
-						|| (oldProposalObj.Create_Workflow_Project__c != proposalObj.Create_Workflow_Project__c &&  proposalObj.Create_Workflow_Project__c == true) 
-						|| (proposalObj.Proposal_Source__c != ProposalUtil.BLACK_BIRD && oldProposalObj != null && oldProposalObj.Stage__c != proposalObj.Stage__c 
-						&& proposalObj.Stage__c == EDPUtil.SUBMITTED)){
-					    //TODO: 
-					    System.debug('proposalObj.Opportunity_Install_Partner__c: ' + proposalObj.Opportunity_Install_Partner__c);
-					    System.debug('proposalObj.Opportunity_Install_Branch__c: ' + proposalObj.Opportunity_Install_Branch__c);
-					    if(wfUtil.eligibleForWFProject(proposalObj.Opportunity_Install_Partner__c, proposalObj.Opportunity_Install_Branch__c)){
-					      optyProposalMap.put(proposalObj.Opportunity__c, proposalObj.Id);
-					      String projectType = (proposalObj.install_partner__c == System.Label.Sunrun_Inc_Id) ? 'Direct' : 'Channel' ;
-					      projectTypeMap.put(proposalObj.Opportunity__c, projectType);
-					    }
-					}
-					System.debug('projectTypeMap: ' + projectTypeMap);
-				}
+                    System.debug('proposalObj.signed__c: ' + proposalObj.signed__c);
+                    if((oldProposalObj.signed__c != proposalObj.signed__c &&  proposalObj.signed__c == true) 
+                        || (oldProposalObj.Create_Workflow_Project__c != proposalObj.Create_Workflow_Project__c &&  proposalObj.Create_Workflow_Project__c == true) 
+                        || (proposalObj.Proposal_Source__c != ProposalUtil.BLACK_BIRD && oldProposalObj != null && oldProposalObj.Stage__c != proposalObj.Stage__c 
+                        && proposalObj.Stage__c == EDPUtil.SUBMITTED)){
+                        //TODO: 
+                        System.debug('proposalObj.Opportunity_Install_Partner__c: ' + proposalObj.Opportunity_Install_Partner__c);
+                        System.debug('proposalObj.Opportunity_Install_Branch__c: ' + proposalObj.Opportunity_Install_Branch__c);
+                        if(wfUtil.eligibleForWFProject(proposalObj.Opportunity_Install_Partner__c, proposalObj.Opportunity_Install_Branch__c)){
+                          optyProposalMap.put(proposalObj.Opportunity__c, proposalObj.Id);
+                          String projectType = (proposalObj.install_partner__c == System.Label.Sunrun_Inc_Id) ? 'Direct' : 'Channel' ;
+                          projectTypeMap.put(proposalObj.Opportunity__c, projectType);
+                        }
+                    }
+                    System.debug('projectTypeMap: ' + projectTypeMap);
+                }
                 
                 if(proposalObj.Proposal_Source__c != ProposalUtil.BLACK_BIRD && proposalObj.Install_Partner__c != null && (Trigger.isInsert || 
                     (oldProposalObj != null && oldProposalObj.Install_Partner__c != proposalObj.Install_Partner__c))){
@@ -104,27 +101,27 @@ trigger trg_proposal_after_insert on Proposal__c (after insert, after update) {
                 ProposalUtil.processNewlyCreatedBBProposals(newNodeProposalMap, signedProposalMap, false, false);
             }
       
-			if(optyIdsModifiedCustOffer != null && !optyIdsModifiedCustOffer.isEmpty()){
-				Set<Id> optyIdsWithCustOffer = ProposalUtil.getoptyIdsWithCustOffer(optyIdsModifiedCustOffer);
-				Proposal__c oldProposalObj;
+            if(optyIdsModifiedCustOffer != null && !optyIdsModifiedCustOffer.isEmpty()){
+                Set<Id> optyIdsWithCustOffer = ProposalUtil.getoptyIdsWithCustOffer(optyIdsModifiedCustOffer);
+                Proposal__c oldProposalObj;
                 if(Trigger.isUpdate){
-					for(Proposal__c proposalObj: Trigger.new){
-						oldProposalObj = Trigger.oldMap.get(proposalObj.Id);
-						if(oldProposalObj.Customer_Offer__c != proposalObj.Customer_Offer__c 
-							&&  proposalObj.Customer_Offer__c == false && !optyIdsWithCustOffer.contains(proposalObj.opportunity__c)){
-							proposalObj.addError(SunrunErrorMessage.getErrorMessage('ERROR_000031').error_message__c); 
-						}
-					}
-				}
-			}
-			
-			System.debug('optyProposalMap2: ' + optyProposalMap2);
-			if(!optyProposalMap2.isEmpty() && !Test.isRunningTest()){
-				ProposalUtil.copySRAttachmentsToProposal(optyProposalMap2);
-			}
-			
+                    for(Proposal__c proposalObj: Trigger.new){
+                        oldProposalObj = Trigger.oldMap.get(proposalObj.Id);
+                        if(oldProposalObj.Customer_Offer__c != proposalObj.Customer_Offer__c 
+                            &&  proposalObj.Customer_Offer__c == false && !optyIdsWithCustOffer.contains(proposalObj.opportunity__c)){
+                            proposalObj.addError(SunrunErrorMessage.getErrorMessage('ERROR_000031').error_message__c); 
+                        }
+                    }
+                }
+            }
+            
+            System.debug('optyProposalMap2: ' + optyProposalMap2);
+            if(!optyProposalMap2.isEmpty()){
+                ProposalUtil.copySRAttachmentsToProposal(optyProposalMap2);
+            }
+            
             Map<Id, ServiceContract> modifiedServiceContractMap = new Map<Id, ServiceContract>();
-            Set<Id> VoidProposalId = new Set <Id>();
+           // Set<Id> VoidProposalId = new Set <Id>(); // commented this line as per BSKY-7291 user story
             Set<Id> contractOptyIds = new Set <Id>();
             Set<Id> pendingServiceContractProposalIds = new Set <Id>(); 
             Set<Id> pendingServiceContractOptyIds = new Set <Id>(); 
@@ -145,9 +142,9 @@ trigger trg_proposal_after_insert on Proposal__c (after insert, after update) {
                     if (proposalobj.Stage__c != null && proposalobj.Stage__c.equals('Voided')
                         && proposalobj.Status_Reason__c != null && proposalobj.Status_Reason__c != ''  
                         && inactiveProposalStages.contains(proposalobj.Status_Reason__c.touppercase())){    
-                        VoidProposalId.add(proposalobj.id);
+                      //  VoidProposalId.add(proposalobj.id);  // commented this line as per BSKY-7291 user story
                         contractOptyIds.add(proposalobj.Opportunity__c);
-                    }
+                    } 
                     
                     if(oldProposalObj != null && oldProposalObj.Signed__c != proposalObj.Signed__c && proposalObj.Signed__c == true){
                         contractOptyIds.add(proposalobj.Opportunity__c);
@@ -241,13 +238,13 @@ trigger trg_proposal_after_insert on Proposal__c (after insert, after update) {
                     List <ServiceContract> lSC = serviceContractMap.get(objectId);
                     for(ServiceContract contractObj : lSC){
                         System.debug('contractObj.proposal__c : ' + contractObj.proposal__c);
-                        
-                        if(contractObj.proposal__c != null){
+                        // Below code commented as per BSKY-7291 user story
+                       /* if(contractObj.proposal__c != null){
                             if(voidProposalId.contains(contractObj.proposal__c)){
                                 contractObj.Service_Contract_Status__c = 'Inactive';
                                 modifiedServiceContractMap.put(contractObj.Id, contractObj);
                             }
-                        }
+                        } */
                         System.debug('contractObj.Opportunity__c : ' + contractObj.Opportunity__c);
                         if(contractObj.Opportunity__c != null){
               Set<String> contractStages = new Set<String>();

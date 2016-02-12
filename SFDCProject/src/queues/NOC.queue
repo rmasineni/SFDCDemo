@@ -3,10 +3,13 @@
     <doesSendEmailToMembers>true</doesSendEmailToMembers>
     <name>NOC</name>
     <queueSobject>
-        <sobjectType>BMCServiceDesk__Category__c</sobjectType>
+        <sobjectType>BMCServiceDesk__Change_Request__c</sobjectType>
     </queueSobject>
     <queueSobject>
         <sobjectType>BMCServiceDesk__Incident__c</sobjectType>
+    </queueSobject>
+    <queueSobject>
+        <sobjectType>BMCServiceDesk__Problem__c</sobjectType>
     </queueSobject>
     <queueSobject>
         <sobjectType>BMCServiceDesk__Task__c</sobjectType>

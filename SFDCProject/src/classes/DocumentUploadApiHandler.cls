@@ -51,10 +51,12 @@ public class DocumentUploadApiHandler extends ProposalBaseHandler{
 			jsonWriterObj.with(i);
 		    for(String key : tempMap.keySet()){
 		    	Object value = tempMap.get(key);
-		    	if(key == 'contentType'){
-		    		continue;
-		    	}
-		    	
+		    	//if(key == 'contentType'){
+		    	//	continue;
+		    	//}
+		    	System.debug('key: ' + key);
+                System.debug('value: ' + value);
+                
 		    	if(key == 'documentType'){
 		    		System.debug('key: ' + key);
 		    		value = getS3FolderNameByDocumentType('', '');

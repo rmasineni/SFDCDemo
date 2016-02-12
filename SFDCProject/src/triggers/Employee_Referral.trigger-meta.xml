@@ -3,7 +3,7 @@
     <apiVersion>33.0</apiVersion>
     <packageVersions>
         <majorNumber>1</majorNumber>
-        <minorNumber>49</minorNumber>
+        <minorNumber>39</minorNumber>
         <namespace>Ambassador</namespace>
     </packageVersions>
     <status>Active</status>

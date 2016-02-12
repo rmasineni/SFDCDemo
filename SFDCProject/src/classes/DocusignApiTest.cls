@@ -39,7 +39,7 @@ public class DocusignApiTest {
         													Document_Source__c ='eSign', Parent_Proposal_Name__c=proposal.Name);
         insert srAttachment;		
 		
-		Test.startTest();
+	 	Test.startTest();
 			Test.setMock(HttpCalloutMock.class, new DocuSignInpersonUrlMockResponse());		
 			BaseApiTest.setRequest('/v2/eSign/inPersonUrl');
 			BaseApiTest.setParam('envelopeId', '73D3C540-6164-46C6-B669-AE07622FB239');
@@ -132,12 +132,8 @@ public class DocusignApiTest {
         
         insert srAttachment;		
 		BaseApiTest.setRequest('/v2/eSign', '{"action" : "void","documentType" : "Customer Agreement","proposalId" : "'+ proposal.name + '","eSignatureType" : "EMAIL"}');
-		try{
-			DocusignApiESignEndpoint.httpPost();
-			//JsonReader reader = BaseApiTest.assertSuccessResponse();
-		}catch(Exception exp){
-			
-		}
+		DocusignApiESignEndpoint.httpPost();
+		JsonReader reader = BaseApiTest.assertSuccessResponse();
     }
 
     testmethod public static void testDocuSignVoidESignature2() {

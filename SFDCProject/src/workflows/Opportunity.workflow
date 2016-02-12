@@ -268,6 +268,15 @@
         <protected>false</protected>
     </fieldUpdates>
     <fieldUpdates>
+        <fullName>In_Progress_To_Open</fullName>
+        <field>Site_Design_Status__c</field>
+        <literalValue>Open</literalValue>
+        <name>In Progress To Open</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
         <fullName>In_Progress_To_Open2</fullName>
         <field>Site_Design_Status__c</field>
         <literalValue>Open</literalValue>
@@ -275,6 +284,7 @@
         <notifyAssignee>false</notifyAssignee>
         <operation>Literal</operation>
         <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
     </fieldUpdates>
     <fieldUpdates>
         <fullName>Opportunity_Square_Footage_0</fullName>
@@ -749,6 +759,16 @@ The endpoint url is not valid and needs to be updated to a real out endpoint url
             <value>Partner: Legacy</value>
         </criteriaItems>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>Site Design Requested Date %26Time</fullName>
+        <actions>
+            <name>Site_Design_Requested_Date_Time</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <formula>AND(ISCHANGED( Site_Design_Priority__c ), NOT(ISPICKVAL(Site_Design_Priority__c, &apos;&apos;)))</formula>
+        <triggerType>onAllChanges</triggerType>
     </rules>
     <rules>
         <fullName>Site Design Requested Date%2FTime</fullName>

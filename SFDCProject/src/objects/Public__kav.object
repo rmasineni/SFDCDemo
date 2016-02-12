@@ -21,7 +21,7 @@
     <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
     <deploymentStatus>Deployed</deploymentStatus>
     <description>Sunrun Public Knowledge Base</description>
-    <enableFeeds>true</enableFeeds>
+    <enableFeeds>false</enableFeeds>
     <enableHistory>false</enableHistory>
     <fields>
         <fullName>Article_Body__c</fullName>
@@ -65,6 +65,15 @@
         <label>Attachment 5</label>
         <required>false</required>
         <type>File</type>
+    </fields>
+    <fields>
+        <fullName>Tags_Keyword__c</fullName>
+        <externalId>false</externalId>
+        <label>Tags_Keyword</label>
+        <length>50</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
     </fields>
     <label>Public</label>
     <pluralLabel>Public</pluralLabel>

@@ -350,11 +350,8 @@ function close_window() {
     <apex:outputField styleClass="auditheaderdata" id="score" value="{!Install_Audit__c.Score__c}" />
 </td>
 <td width="16%">    
-    <apex:outputLabel style="font-weight:bold" styleClass="auditheaderheading" for="priorityMissed" value="Priority Criteria Failed: " ></apex:outputLabel>  
+    <apex:outputLabel style="font-weight:bold" styleClass="auditheaderheading" for="priorityMissed" value="Priority Criteria Missed: " ></apex:outputLabel>  
     <apex:outputText styleClass="auditheaderdata" id="priorityMissed" value="{!Install_Audit__c.Priority_Criteria_Missed__c}" /></td>
-<td width="16%">    
-    <apex:outputLabel style="font-weight:bold" styleClass="auditheaderheading" for="criteriaMissing" value="Priority Criteria Missing: " ></apex:outputLabel>  
-    <apex:outputText styleClass="auditheaderdata" id="criteriaMissing" value="{!Install_Audit__c.Priority_Criteria_Missing__c}" /></td>
 <td width="16%">    
     <apex:outputLabel style="font-weight:bold" styleClass="auditheaderheading" for="epcDisc" value="EPC Discrepancies: " ></apex:outputLabel>  
     <apex:outputText styleClass="auditheaderdata" id="epcDisc" value="{!Install_Audit__c.EPC_Discrepancies__c}" /></td>
@@ -363,13 +360,10 @@ function close_window() {
     <apex:outputText styleClass="auditheaderdata" id="partnerMetric" value="{!Install_Audit__c.Partner_Metric__c}" /></td>
 <td width="14%">    
     <apex:outputLabel style="font-weight:bold" styleClass="auditheaderheading" for="firmName5" value="Corporate Metric: " rendered="{!NOT(ISPICKVAL($User.UserType,'PowerPartner'))}"></apex:outputLabel>  
-    <apex:outputText styleClass="auditheaderdata" id="corpMetric" value="{!Install_Audit__c.Corporate_Metric__c}" rendered="{!NOT(ISPICKVAL($User.UserType,'PowerPartner'))}"/></td> 
-<td width="16%">    
-    <apex:outputLabel style="font-weight:bold" styleClass="auditheaderheading" for="priorityMissed" value="Criteria Missing: " ></apex:outputLabel>  
-    <apex:outputText styleClass="auditheaderdata" id="criteriaMissed" value="{!Install_Audit__c.Criteria_Missing__c}" /></td>
+    <apex:outputText styleClass="auditheaderdata" id="corpMetric" value="{!Install_Audit__c.Corporate_Metric__c}" rendered="{!NOT(ISPICKVAL($User.UserType,'PowerPartner'))}"/></td>    
 </tr>
 </table>
-    </apex:pageBlock>
+</apex:pageblock>
 
 
 <c:GenericHistoryComponent recordLimit1="50" myObject1="{!Install_Audit__c}" rendered="{!IsSunrun || UserType == 'Admin'}"/>

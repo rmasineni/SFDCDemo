@@ -112,19 +112,36 @@
                     <apex:outputLabel value="Mobile Phone" />
                         <apex:inputfield id="MobilePhone" value="{!contactObj.MobilePhone}">
                         </apex:inputfield>                    
-                </apex:pageBlockSectionItem>                
+                </apex:pageBlockSectionItem> 
+                               
                 <apex:repeat value="{!$ObjectType.Opportunity.FieldSets.Opportunity_Detail}"
                     var="field">
+                    
                     <apex:inputField value="{!OpptyObj[field]}" rendered="{!NOT(OR(field=='OwnerId',field=='Energy_Storage_Applicable__c'))}">
                     </apex:inputField>
                     <apex:inputField value="{!OpptyObj.Energy_Storage_Applicable__c}" rendered="{!(field=='Energy_Storage_Applicable__c')}">
                     <apex:actionSupport reRender="ESA" event="onchange" action="{!onChangeEnergyApplicable}"/>
-                    </apex:inputField>   
+                        
+                    </apex:inputField>  
                     <apex:outputField value="{!OpptyObj[field]}" rendered="{!(field=='OwnerId')}">
-                    </apex:outputField>    
-                </apex:repeat>               
+                    </apex:outputField>  
+                        
+                </apex:repeat> 
+                
+                            
+                          
             </apex:pageBlockSection>
+           <!--  <apex:outputPanel >
+                <apex:pageblocksection columns="1">                 
+                    <apex:inputfield id="notes" value="{!opptyObj.Notes__c}">
+                    </apex:inputfield>  
+                    <apex:outputfield id="SiteDesinger" value="{!opptyObj.Site_Designer__c}">
+                    </apex:outputfield> 
+                </apex:pageblocksection>
+             </apex:outputPanel> -->
             <apex:outputPanel id="retOP">
+                       
+                
             <apex:pageBlockSection title="Retail">
                 <apex:repeat value="{!$ObjectType.Opportunity.FieldSets.Retail}"
                     var="field">
@@ -177,19 +194,23 @@
             <apex:pageBlockSection title="Opportunity Record Information" >
                 <apex:repeat value="{!$ObjectType.Opportunity.FieldSets.Opportunity_Record_Information}"
                     var="field">
-                    <apex:inputField value="{!OpptyObj[field]}">
+                    <apex:inputField value="{!OpptyObj[field]}" rendered="{!NOT((field=='Energy_Storage_Applicable__c'))}">
                     </apex:inputField>    
+                  <!--  <apex:inputField value="{!OpptyObj.Energy_Storage_Applicable__c}" rendered="{!(field=='Energy_Storage_Applicable__c')}">
+                    <apex:actionSupport reRender="oriOP" event="onchange" action="{!onChangeEnergyApplicable}"/>
+                    </apex:inputField> -->
                 </apex:repeat>
             </apex:pageBlockSection>
             </apex:outputPanel>
+            
             <apex:outputPanel id="ESA">
-           <!-- <apex:pageBlockSection title="Consumption Meter" rendered="{!OpptyObj.Energy_Storage_Applicable__c}"> 
-            </apex:pageBlockSection>  -->   
+          <!--  <apex:pageBlockSection title="Consumption Meter" rendered="{!OpptyObj.Energy_Storage_Applicable__c}"> 
+            </apex:pageBlockSection> -->    
             
             <apex:outputText rendered="{!!IsEngStApplicable}">
                                 <script type="text/javascript">
                                //  var errorMessageStr = '{!IsEngStApplicable} Energy Storage Applicable is unchecked that data will deleted?{!OpptyObj.Energy_Storage_Applicable__c}';
-                                   var errorMessageStr = 'Consumption Metering data will be deleted when unchecked. Are you sure?';
+                                   var errorMessageStr = 'Energy Storage Applicable is unchecked that data will deleted';
                                 alert(errorMessageStr);
                                 </script>
                     </apex:outputText>
@@ -208,6 +229,8 @@
                 </apex:inputfield>
                 <apex:inputfield id="CurrentBlendedUtilityRate" value="{!energyStorage.Current_Blended_Utility_Rate__c}">
                 </apex:inputfield>
+                
+                
                 
             </apex:pageBlockSection>   
             <apex:pageBlockSection title="PV+ES calculator outputs" rendered="{!OpptyObj.Energy_Storage_Applicable__c}">
@@ -232,8 +255,7 @@
                 </apex:inputfield>
             </apex:pageBlockSection>  
             <apex:pageBlockSection title="Consumption Meter Documents" rendered="{!OpptyObj.Energy_Storage_Applicable__c}" columns="1">
-              <!--  <apex:iframe src="/apex/Opportunity_eSignDocuments?id={!OpptyId}&OpptyEdit={!editMode}"/> -->
-                <apex:iframe src="/apex/Opportunity_eSignDocuments?id={!OpptyId}&OpptyEdit=False}" height="200"/>                   
+                <apex:iframe src="/apex/Opportunity_eSignDocuments?id={!OpptyId}"/>                
             </apex:pageBlockSection>  
                  
             </apex:outputPanel>
@@ -394,18 +416,19 @@
                 </apex:pageBlockSectionItem> 
                 <apex:repeat value="{!$ObjectType.Opportunity.FieldSets.Opportunity_Detail}"
                     var="field">
-                    <!--  <apex:outputField value="{!OpptyObj[field]}">
+                  <!--  <apex:outputField value="{!OpptyObj[field]}">
                     </apex:outputField> -->   
                     <apex:outputField value="{!OpptyObj[field]}" rendered="{!NOT(OR(field=='OwnerId',field=='Energy_Storage_Applicable__c'))}">
                     </apex:outputField>
                     <apex:outputField value="{!OpptyObj.Energy_Storage_Applicable__c}" rendered="{!(field=='Energy_Storage_Applicable__c')}">
                    <!-- <apex:actionSupport reRender="ESA" event="onchange" action="{!onChangeEnergyApplicable}"/> -->
                     <apex:inlineEditSupport disabled="true"/>   
-                    </apex:outputField>    
+                    </apex:outputField> 
                 </apex:repeat>                
             </apex:pageBlockSection>
             </apex:outputPanel>
             <apex:outputPanel id="retailOp" styleClass="red">
+                  
             <apex:pageBlockSection title="Retail">
                 <apex:repeat value="{!$ObjectType.Opportunity.FieldSets.Retail}"
                     var="field">
@@ -427,7 +450,7 @@
              -->           
              <apex:outputPanel layout="block" style="text-align: center;">         
                 <apex:outputLabel value="Appointment Category: " style="font-weight:bold"/>
-                <apex:inputField id="actionId" value="{!opptyObj.Appointment_category__c}"/>              
+                <apex:inputField id="actionId" value="{!opptyObj.Appointment_Category__c}"/>              
                 <apex:commandLink value="Create Appointment" onclick="return processUserActions('{!$Component.actionId}')" action="{!showScheduler}" target="_blank" styleClass="btn" style="text-decoration:none;padding:2px;" />
             </apex:outputPanel>
                      
@@ -439,21 +462,12 @@
                     <apex:outputField value="{!ap.Appointment_Type__c}">
                     </apex:outputField>
                 </apex:column>                
+
                 <apex:column headervalue="Appointment Date/Time">
                     <apex:outputField value="{!ap.Appointment_Date_Time__c}">
                      <apex:inlineEditSupport disabled="true"/>
                     </apex:outputField>
                 </apex:column>               
-                <apex:column headervalue="Appointment Time Local">
-                    <apex:outputField value="{!ap.Appointment_Time_Local__c}">
-                     <apex:inlineEditSupport disabled="true"/>
-                    </apex:outputField>
-                </apex:column>   
-                <apex:column headervalue="Duration">
-                    <apex:outputField value="{!ap.Duration__c}">
-                     <apex:inlineEditSupport disabled="true"/>
-                    </apex:outputField>
-                </apex:column>   
                 <apex:column headervalue="Event Assigned To">
                     <apex:outputField value="{!ap.Event_Assigned_To__c}">
                      <apex:inlineEditSupport disabled="true"/>
@@ -578,10 +592,10 @@
                     </apex:outputField>    
                 </apex:repeat>
             </apex:pageBlockSection>
-            </apex:outputPanel>
-          <!--  <apex:outputPanel id="dESA" styleClass="red" rendered="{!OpptyObj.Energy_Storage_Applicable__c}" > -->  
-           <apex:outputPanel id="dESA1" styleClass="red" rendered="{!OpptyObj.Energy_Storage_Applicable__c}" >
-            <apex:pageBlockSection title="Demographics and bill inputs" rendered="{!OpptyObj.Energy_Storage_Applicable__c}" collapsible="true" >
+            </apex:outputPanel>    
+          <!--  <apex:outputPanel id="dESA" styleClass="red" rendered="{!OpptyObj.Energy_Storage_Applicable__c}" > -->
+            <apex:outputPanel id="dESA1" styleClass="red" rendered="{!OpptyObj.Energy_Storage_Applicable__c}" >
+            <apex:pageBlockSection title="Demographics and bill inputs" rendered="{!OpptyObj.Energy_Storage_Applicable__c}" collapsible="true">
                 <apex:outputfield id="YearlykWhconsumption" value="{!energyStorage.Yearly_kWh_consumption__c}">
                 </apex:outputfield>
                 <apex:outputfield id="Numberofadultshomeduringtheday" value="{!energyStorage.Number_of_adults_home_during_the_day__c}">
@@ -595,10 +609,10 @@
                 <apex:outputfield id="PVTurnkey" value="{!energyStorage.PV_Turnkey__c}">
                 </apex:outputfield>
                 <apex:outputfield id="CurrentBlendedUtilityRate" value="{!energyStorage.Current_Blended_Utility_Rate__c}">
-                </apex:outputfield>                               
+                </apex:outputfield> 
                 
             </apex:pageBlockSection>   
-             </apex:outputPanel> 
+            </apex:outputPanel>    
             <apex:outputPanel id="dESA2" styleClass="red" rendered="{!OpptyObj.Energy_Storage_Applicable__c}" >
             <apex:pageBlockSection title="PV+ES calculator outputs" rendered="{!OpptyObj.Energy_Storage_Applicable__c}" collapsible="true">
                 <apex:outputfield id="PVkWdc" value="{!energyStorage.PV_kWdc__c}">
@@ -615,21 +629,20 @@
                 </apex:outputfield>
                     
             </apex:pageBlockSection>
-             </apex:outputPanel>
+            </apex:outputPanel>    
             <apex:outputPanel id="dESA3" styleClass="red" rendered="{!OpptyObj.Energy_Storage_Applicable__c}" >
             <apex:pageBlockSection title="Consumption Meter" rendered="{!OpptyObj.Energy_Storage_Applicable__c}" collapsible="true">
                 <apex:outputfield id="MeterSensorID" value="{!energyStorage.Meter_Sensor_ID__c}">
                 </apex:outputfield>
                 <apex:outputfield id="DateofMeterInstall" value="{!energyStorage.Date_of_Meter_Instal__c}">
                 </apex:outputfield>
-            </apex:pageBlockSection>  
-             </apex:outputPanel>
-            <apex:outputPanel id="dESA4" styleClass="red" rendered="{!OpptyObj.Energy_Storage_Applicable__c}" >
+            </apex:pageBlockSection>
+            </apex:outputPanel>    
+            <apex:outputPanel id="dESA4" styleClass="red" rendered="{!OpptyObj.Energy_Storage_Applicable__c}" >    
             <apex:pageBlockSection title="Consumption Meter Documents" rendered="{!OpptyObj.Energy_Storage_Applicable__c}" columns="1" collapsible="true">
-               <!-- <apex:iframe src="/apex/Opportunity_eSignDocuments?id={!OpptyId}&OpptyEdit={!editMode}"/> -->
-                 <apex:iframe src="/apex/Opportunity_eSignDocuments?id={!OpptyId}&OpptyEdit={!editMode}" height="200"/>
-            </apex:pageBlockSection>    
-            </apex:outputPanel>
+                <apex:iframe src="/apex/Opportunity_eSignDocuments?id={!OpptyId}"/> 
+            </apex:pageBlockSection>     
+            </apex:outputPanel> 
              <span  style="display:none;">
                 <apex:outputfield value="{!OpptyObj.State__c}" style="display:none"
                     styleClass="page-address-state" />  
@@ -644,21 +657,21 @@
             var a=document.getElementById('{!$Component.detailPb.addressOp}').getElementsByTagName('img')[0];  
             var b=document.getElementById('{!$Component.detailPb.siteOp}').getElementsByTagName('img')[0]; 
             var c=document.getElementById('{!$Component.detailPb.opptyDetailOP}').getElementsByTagName('img')[0];  
-            var d=document.getElementById('{!$Component.detailPb.appointOp}').getElementsByTagName('img')[0];  
+            var d=document.getElementById('{!$Component.detailPb.appointOp}').getElementsByTagName('img')[0];
             var e=document.getElementById('{!$Component.detailPb.dESA1}').getElementsByTagName('img')[0];
             var f=document.getElementById('{!$Component.detailPb.dESA2}').getElementsByTagName('img')[0];
             var g=document.getElementById('{!$Component.detailPb.dESA3}').getElementsByTagName('img')[0];
-            var h=document.getElementById('{!$Component.detailPb.dESA4}').getElementsByTagName('img')[0];          
+            var h=document.getElementById('{!$Component.detailPb.dESA4}').getElementsByTagName('img')[0];
             x.getAttributeNode("style").value="background-color:grey !important";   
             y.getAttributeNode("style").value="background-color:grey !important";
             a.getAttributeNode("style").value="background-color:grey !important"; 
             z.getAttributeNode("style").value="background-color:grey !important";   
             c.getAttributeNode("style").value="background-color:grey !important";   
-            d.getAttributeNode("style").value="background-color:grey !important";  
+            d.getAttributeNode("style").value="background-color:grey !important"; 
             e.getAttributeNode("style").value="background-color:grey !important";
             f.getAttributeNode("style").value="background-color:grey !important";
             g.getAttributeNode("style").value="background-color:grey !important";
-            h.getAttributeNode("style").value="background-color:grey !important"; 
+            h.getAttributeNode("style").value="background-color:grey !important";
             twistSection(document.getElementById('{!$Component.detailPb.ORIop}').getElementsByTagName('img')[0]);
             twistSection(document.getElementById('{!$Component.detailPb.promoOp}').getElementsByTagName('img')[0]);
           <!--  twistSection(document.getElementById('{!$Component.detailPb.retailOp}').getElementsByTagName('img')[0]);  -->            
@@ -708,8 +721,9 @@
            <apex:relatedList list="Proposals__r" rendered="{!NOT(editMode)}"/>  
            <apex:relatedList list="OpportunityContactRoles" rendered="{!NOT(editMode)}"/>  
            <apex:relatedList list="ActivityHistories" rendered="{!NOT(editMode)}"/>           
-           <apex:relatedList list="Payment_transactions__r" rendered="{!NOT(editMode)}"/>
-      <!-- <apex:relatedList list="Energy_Storages__r" rendered="{!NOT(editMode)}"/> -->
+           <apex:relatedList list="Payment_transactions__r" rendered="{!NOT(editMode)}"/>  
+         <!--  <apex:relatedList list="Energy_Storages__r" rendered="{!NOT(editMode)}"/> -->
+
     <script> 
          function processUserActions(actionId){
             var result = true;
@@ -724,4 +738,5 @@
             //return true;
          }
     </script>
+    
 </apex:page>

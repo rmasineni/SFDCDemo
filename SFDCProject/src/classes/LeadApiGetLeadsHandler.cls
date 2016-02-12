@@ -35,11 +35,12 @@ public with sharing class LeadApiGetLeadsHandler extends RestService {
         }
 
         Map<String, String> leadSummaryFields = getLeadSummaryFields();
+        Map<String, String> optySummaryFields = getOptySummaryFields();
         
         List<Lead> leads = queryLeads(salesRepId, startTime, endTime, page, pageSize, leadSummaryFields, req, resp);
         info('Queried leads ' + leads);
         
-        List<Opportunity> optys = queryOptys(salesRepId, startTime, endTime, page, pageSize, leadSummaryFields, req, resp);
+        List<Opportunity> optys = queryOptys(salesRepId, startTime, endTime, page, pageSize, optySummaryFields, req, resp);
         info('Queried optys ' + optys);
 
         if (leads.isEmpty() && optys.isEmpty()) {
@@ -59,7 +60,7 @@ public with sharing class LeadApiGetLeadsHandler extends RestService {
             for (Integer i = 0; i < optys.size(); i++) {
                 outputIndex++;
                 resp.jsonWriter.newWith(outputIndex);
-                optyReadHandler.addOptyToResponse(optys.get(i), leadSummaryFields, req, resp);
+                optyReadHandler.addOptyToResponse(optys.get(i), optySummaryFields, req, resp);
             }
         }
     }
@@ -93,11 +94,11 @@ public with sharing class LeadApiGetLeadsHandler extends RestService {
     }
     
     public List<Opportunity> queryOptys(String salesRepId, DateTime startTime, DateTime endTime, Integer page, Integer pageSize,
-			Map<String, String> leadSummaryFields, RestServiceDto.Request req, RestServiceDto.Response resp) {
+			Map<String, String> optySummaryFields, RestServiceDto.Request req, RestServiceDto.Response resp) {
 		List<String> fields = new List<String>();
 		Map<String, String> optyFieldMapping = OptyApiDto.getOptyApiOptyFieldMapping();        
         for (String restField : optyFieldMapping.keySet()) {
-            if (leadSummaryFields == null || leadSummaryFields.containsKey(restField)) {
+            if (optySummaryFields == null || optySummaryFields.containsKey(restField)) {
                 fields.add(optyFieldMapping.get(restField));
             }
         }
@@ -106,7 +107,7 @@ public with sharing class LeadApiGetLeadsHandler extends RestService {
         fields.add('Account.Id');
         Map<String, String> optyAccountFieldMapping = OptyApiDto.getOptyApiAccountFieldMapping();
         for(String restField : optyAccountFieldMapping.keyset()) {
-            if (leadSummaryFields == null || leadSummaryFields.containsKey(restField)) {
+            if (optySummaryFields == null || optySummaryFields.containsKey(restField)) {
                 fields.add('Account.' + optyAccountFieldMapping.get(restField));
             }
         }
@@ -116,7 +117,7 @@ public with sharing class LeadApiGetLeadsHandler extends RestService {
         Map<String, String> optyContactFieldMapping = OptyApiDto.getOptyApiContactFieldMapping();
         List<String> contactFields = new List<String>();
         for(String restField : optyContactFieldMapping.keySet()) {
-            if (leadSummaryFields == null || leadSummaryFields.containsKey(restField)) {
+            if (optySummaryFields == null || optySummaryFields.containsKey(restField)) {
 		        contactFields.add('Contact.' + optyContactFieldMapping.get(restField));
             }
         }
@@ -142,7 +143,10 @@ public with sharing class LeadApiGetLeadsHandler extends RestService {
     }
 
     public Map<String, String> getLeadSummaryFields() {
-		//return getStringMap(Sf.settingsService.getStringList('LeadApiLeadSummaryFields', new List<String>()));
-		return null;
+        return getStringMap(RestServiceDto.getSummaryFields('Lead Api'));
+    }
+
+    public Map<String, String> getOptySummaryFields() {
+        return getStringMap(RestServiceDto.getSummaryFields('Opty Api'));
     }
 }

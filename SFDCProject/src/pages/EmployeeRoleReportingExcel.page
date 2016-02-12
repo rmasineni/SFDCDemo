@@ -1,0 +1,81 @@
+<apex:page controller="EmployeeRoleReporting" readOnly="true" action="{!buildOrgChart}" contentType="txt/xml#EmployeeReport.xls">
+
+
+<apex:outputText value="{!xlsHeader}"/>
+<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet"
+ xmlns:o="urn:schemas-microsoft-com:office:office"
+ xmlns:x="urn:schemas-microsoft-com:office:excel"
+ xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet"
+ xmlns:html="http://www.w3.org/TR/REC-html40">
+ <Styles>
+ <Style ss:ID="s1">
+ <Alignment/>
+ <Borders/>
+ <Font ss:Bold="1"/>
+ <Interior/>
+ <NumberFormat/>
+ <Protection/>
+ </Style>
+ </Styles>
+ <apex:repeat value="{!grandListMap}"  var="x">
+ <Worksheet ss:Name='{!username[x]}'>
+ <Table x:FullColumns="1" x:FullRows="1">
+ <Column ss:Width="170"/>
+ <Row>
+ <Cell ss:StyleID="s1"><Data ss:Type="String" >User Id</Data></Cell>
+ <Cell ss:StyleID="s1"><Data ss:Type="String" >Name</Data></Cell>
+ <Cell ss:StyleID="s1"><Data ss:Type="String" >Email</Data></Cell>
+ <Cell ss:StyleID="s1"><Data ss:Type="String" >Manager</Data></Cell>
+ <Cell ss:StyleID="s1"><Data ss:Type="String" >License Type</Data></Cell>
+ </Row>
+ <apex:repeat value="{!grandListMap[x]}" var="u1">
+ <Row>
+ <Cell><Data ss:Type="String">{!u1.id}</Data></Cell>
+ <Cell><Data ss:Type="String">{!u1.Name}</Data></Cell>
+ <Cell><Data ss:Type="String">{!u1.Email}</Data></Cell>
+ <Cell><Data ss:Type="String">{!u1.Manager.Name}</Data></Cell>
+ <Cell><Data ss:Type="String">{!u1.profile.UserLicense.name}</Data></Cell>
+ </Row>
+ </apex:repeat>
+ </Table>
+ </Worksheet>
+
+ </apex:repeat>
+ 
+ <Worksheet ss:Name="Summary">
+
+ <Table x:FullColumns="1" x:FullRows="1">
+ <Column ss:Width="170"/>
+ 
+ <Row>
+ <Cell ss:StyleID="s1"><Data ss:Type="String" >Executive</Data></Cell>
+ <Cell ss:StyleID="s1"><Data ss:Type="String" >Used Licenses</Data></Cell>
+ <Cell ss:StyleID="s1"><Data ss:Type="String" >Salesforce</Data></Cell>
+ <Cell ss:StyleID="s1"><Data ss:Type="String" >Salesforce Platform</Data></Cell>
+ </Row>
+ 
+ <apex:repeat value="{!summaryMap}" var="sm">
+ <apex:repeat value="{!username[sm]}" var="un">
+ <Row>
+ <Cell ss:StyleID="s1"><Data ss:Type="String" >{!un}</Data></Cell>
+ <Cell ss:StyleID="s1"><Data ss:Type="Number" >{!summaryMap[sm]}</Data></Cell>
+ <Cell ss:StyleID="s1"><Data ss:Type="Number" >{!licenseMap1[sm]}</Data></Cell>
+ <Cell ss:StyleID="s1"><Data ss:Type="Number" >{!licenseMap2[sm]}</Data></Cell>
+ </Row> 
+ 
+ </apex:repeat>
+ </apex:repeat>
+<!--
+ <Row>
+    <Cell ss:StyleID="s1"><Data ss:Type="String" >Total Licenses Used</Data></Cell>
+     <Cell ss:StyleID="s1"><Data ss:Type="Number" >{!totalLicencesUsed}</Data></Cell>
+ </Row>
+-->
+ </Table>
+
+ </Worksheet>
+ 
+</Workbook>
+ 
+
+</apex:page>

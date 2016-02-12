@@ -22,6 +22,11 @@ public abstract class OptyApiBaseHandler extends RestService {
         for(String contactField : OptyApiDto.getOptyApiContactFieldMapping().values()) {
 	        contactFields.add('Contact.' + contactField);
         }
+        
+        //These fields are additional fields which are not managed as api mapping but required in payment related apis.
+        fields.add('Payment_Request_Url__c');
+        fields.add('Payment_Request_Token_Status__c');
+        
 		fields.add('(select ' + join(contactFields, ', ') + ' from OpportunityContactRoles where IsPrimary=true)');
         
         String soql = createSoqlWithAuditFields(fields, 'Opportunity', 'prospect_id__c in :prospectIds or external_Id__c in :prospectIds');

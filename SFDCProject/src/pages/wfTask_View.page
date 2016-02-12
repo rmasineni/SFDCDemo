@@ -1,7 +1,7 @@
 <apex:page standardcontroller="Task__c" extensions="WorkflowTask"  tabstyle="Task__c">
     <apex:composition template="wfTask_Template">
         <apex:define name="TaskHeader">
-            <apex:sectionHeader title="Task Information" subtitle="{!taskObj.name}"/>
+            <apex:sectionHeader title="Task Inf	ormation" subtitle="{!taskObj.name}"/>
         </apex:define>
 
         <apex:define name="ProjectDetails">
@@ -98,9 +98,9 @@
  
             <div class="contenetDiv24">
 				<span style="margin-top:25px;">
-
-					<apex:commandButton onclick="return toggleCategroyConfirm('{!categroyLabel}');" action="{!toggleTaskCategory}" rendered="{!( Not(showReopen) && Not (isStandardTask) )}" 
-                                        styleclass="buttons" value="{!categroyLabel}" id="category"/>
+	<!-- rendered="{!IF(!(showReopen) && taskObj.Type__c != 'Standard', true, false)}" -->
+					<apex:commandButton onclick="return toggleCategroyConfirm('{!categroyLabel}');" action="{!toggleTaskCategory}" 
+                                      rendered="{!( Not(showReopen) && Not (isStandardTask) )}"   styleclass="buttons" value="{!categroyLabel}" id="category"/>
                     &nbsp;
 					
 					<apex:commandButton onclick="showBlockTask('{!BaseURL}', '{!taskId}'); return false;" rendered="{!showBlock}" 

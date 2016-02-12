@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <HomePageComponent xmlns="http://soap.sforce.com/2006/04/metadata">
-    <height>400</height>
+    <height>500</height>
     <page>CustomHomePageComponent</page>
     <pageComponentType>visualforcePage</pageComponentType>
     <showLabel>false</showLabel>

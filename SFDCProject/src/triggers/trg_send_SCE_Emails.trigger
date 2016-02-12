@@ -29,6 +29,7 @@ trigger trg_send_SCE_Emails on Service_Contract_Event__c (After Update, After In
                        SCETriggerClass.checkPTODate(trigger.new,trigger.isinsert,trigger.isupdate,trigger.oldMap); 
                     }
                     if(SCE_Email_Status__c.getValues('CAP').Active__c == 'Yes'){
+                        System.debug('>> Calling CAP method');
                        SCETriggerClass.checkCAPDate(trigger.new,trigger.isinsert,trigger.isupdate,trigger.oldMap);
                     }
                }catch(Exception ex) {

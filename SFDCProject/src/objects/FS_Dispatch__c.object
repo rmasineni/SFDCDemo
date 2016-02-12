@@ -44,6 +44,7 @@
         <actionName>View</actionName>
         <type>Default</type>
     </actionOverrides>
+    <allowInChatterGroups>false</allowInChatterGroups>
     <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
     <deploymentStatus>Deployed</deploymentStatus>
     <description>Captures information about each instance of a Field Service Dispatch - when a resource is sent to an on-site visit</description>
@@ -716,7 +717,7 @@ Renamed as per [SFDC-400] - 2012.08.08</description>
         <externalId>false</externalId>
         <inlineHelpText>Check to Reject the Findings</inlineHelpText>
         <label>Reject Findings</label>
-        <trackHistory>true</trackHistory>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
     </fields>
@@ -1010,6 +1011,7 @@ Renamed as per [SFDC-400] - 2012.08.08</description>
         <columns>FS_Dispatch_State__c</columns>
         <columns>FS_Time_Dispatched__c</columns>
         <columns>FS_Time_Submitted__c</columns>
+        <columns>FS_Dispatch_To__c</columns>
         <filterScope>Everything</filterScope>
         <filters>
             <field>FS_Dispatch_State__c</field>
@@ -1017,6 +1019,7 @@ Renamed as per [SFDC-400] - 2012.08.08</description>
             <value>Dispatch Accepted,Dispatch Findings Rejected</value>
         </filters>
         <label>ACTIVE</label>
+        <language>en_US</language>
         <sharedTo>
             <allInternalUsers></allInternalUsers>
             <allPartnerUsers></allPartnerUsers>

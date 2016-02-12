@@ -1,4 +1,4 @@
-public class NearbyCustomersViewerServiceImpl extends BaseClass {
+public class NearbyCustomersViewerServiceImpl extends BaseClass implements NearbyCustomersViewerService {
 
     /**
      * Queries the given lead with basic lead and address related details.
@@ -71,7 +71,19 @@ public class NearbyCustomersViewerServiceImpl extends BaseClass {
         return optiesWithDistance;
     }
     
+    public List<NearbyCustomersViewerServiceDto.ContractWithDistance> findContractsWithinDistance(Decimal lat, Decimal lng) {
+        return findContractsWithinDistance(null, null, lat, lng);
+    }
+    
     public List<NearbyCustomersViewerServiceDto.ContractWithDistance> findContractsWithinDistance(Integer maxRecords, Double withinDistanceInMiles, Decimal lat, Decimal lng) {
+        if (maxRecords == null) {
+            maxRecords = Sf.settingsService.getInteger('NearbyCustomersViewerMaxRecords', 100);
+        }
+        
+        if (withinDistanceInMiles == null) {
+            withinDistanceInMiles = Sf.settingsService.getDouble('NearbyCustomersViewerMaxDistance', 15.0d);
+        }
+
         String soql = 'select id, '
             	+ ' Status__c, Name, Customer_Name__c, Customer_Phone__c, '
             	+ ' Sales_Organization_Id__r.Name, Sales_Rep_Email__c, System_Size_DC__c, '

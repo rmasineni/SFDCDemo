@@ -4,8 +4,6 @@ public class NearbyCustomersViewerController extends BaseClass {
     public List<NearbyCustomersViewerServiceDto.OptyWithDistance> opties {get;set;}
     public List<NearbyCustomersViewerServiceDto.ContractWithDistance> contracts {get;set;}
     
-    private NearbyCustomersViewerServiceImpl nearbyCustomersViewerService = new NearbyCustomersViewerServiceImpl();
-    
     public Decimal referenceLat {get;set;}
     public Decimal referenceLng {get;set;}
     public String referenceObjName {get;set;}
@@ -29,7 +27,7 @@ public class NearbyCustomersViewerController extends BaseClass {
             validReference = false;
             
             if (referenceObjName == 'Lead') {
-    			Lead lead = nearbyCustomersViewerService.queryLeadWithAddressDetails(referenceObjRecordId);
+    			Lead lead = Sf.nearbyCustomersViewerService.queryLeadWithAddressDetails(referenceObjRecordId);
                 
                 info('Reference lead ' +lead);
                 
@@ -42,7 +40,7 @@ public class NearbyCustomersViewerController extends BaseClass {
                 referencePostalCode = lead.PostalCode;
 
             } else if (referenceObjName == 'Opportunity') {
-    			Opportunity opty = nearbyCustomersViewerService.queryOptyWithAddressDetails(referenceObjRecordId);
+    			Opportunity opty = Sf.nearbyCustomersViewerService.queryOptyWithAddressDetails(referenceObjRecordId);
                 
                 info('Reference opty ' +opty);
                 
@@ -81,7 +79,7 @@ public class NearbyCustomersViewerController extends BaseClass {
     public PageReference loadOpportunities() {
         try {
             if (opties == null) {
-                opties = nearbyCustomersViewerService.findOptiesWithinDistance(maxRecords, withInDistance, referenceLat, referenceLng);
+                opties = Sf.nearbyCustomersViewerService.findOptiesWithinDistance(maxRecords, withInDistance, referenceLat, referenceLng);
             }
         } catch (Exception e) {
             addErrorMessage(getStackTrace(e));
@@ -92,7 +90,7 @@ public class NearbyCustomersViewerController extends BaseClass {
     public PageReference loadContracts() {
         try {
             if (contracts == null) {
-				contracts = nearbyCustomersViewerService.findContractsWithinDistance(maxRecords, withInDistance, referenceLat, referenceLng);
+				contracts = Sf.nearbyCustomersViewerService.findContractsWithinDistance(maxRecords, withInDistance, referenceLat, referenceLng);
             }
         } catch (Exception e) {
             addErrorMessage(getStackTrace(e));
@@ -103,7 +101,7 @@ public class NearbyCustomersViewerController extends BaseClass {
     public PageReference loadLeads() {
         try {
             if (leads == null) {
-				leads = nearbyCustomersViewerService.findLeadsWithinDistance(maxRecords, withInDistance, referenceLat, referenceLng, referenceObjRecordId);
+				leads = Sf.nearbyCustomersViewerService.findLeadsWithinDistance(maxRecords, withInDistance, referenceLat, referenceLng, referenceObjRecordId);
             }
         } catch (Exception e) {
             addErrorMessage(getStackTrace(e));

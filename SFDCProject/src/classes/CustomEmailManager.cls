@@ -1,5 +1,5 @@
 public class CustomEmailManager {
-  
+
   @future
   public static void communicateScheduledEvent(Map<String, String> whereClauseFieldValueMap, String templateName,  
                                                 List<Id> toRecipientIdList, List<String> ccRecipientList, String fromDisplayName, String replyToEmailId, String fromEmailId) {
@@ -28,7 +28,6 @@ public class CustomEmailManager {
             sendEmail(recipientId, ccRecipientList, subject, htmlBody, fromEmailId, fromDisplayName, replyToEmailId);             
         }
   }
-  
    public static void communicateScheduledEvent_Costco(Map<String, String> whereClauseFieldValueMap, String templateName,  
                                                             List<Id> toRecipientIdList, List<String> ccRecipientList, String fromDisplayName, String replyToEmailId, String fromEmailId, List<Service_Contract_Event__c> sceList) {
                      System.debug('This is WhereClause :' + whereClauseFieldValueMap); 
@@ -348,7 +347,6 @@ public class CustomEmailManager {
             }
         }   
   }
-  
    public static void sendEmailCostco(Id targetObjectId, List<String> ccRecipientList, String subject, String htmlBody, String fromEmailId, String fromDisplayName, String replyToEmailId, List<Service_Contract_Event__c> sceList){   
                 
                     for(Service_Contract_Event__c event : sceList)
@@ -410,6 +408,7 @@ public class CustomEmailManager {
                     } 
                   }
                 }
+    
     /* BSKY-6575 logic start */
     public static void CommunicateCancelEvent(Map<String, String> whereClauseFieldValueMap, String templateName,List<Id> toRecipientIdList, List<String> ToAddrRecipientList,String fromDisplayName, String fromEmailId, String replyToEmailId)
     {

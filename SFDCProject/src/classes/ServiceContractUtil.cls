@@ -114,7 +114,7 @@ public class ServiceContractUtil {
         if(objectIds != null && !objectIds.isEmpty()){
             String soqlStr;
             soqlStr = getServiceContractSQLStr();
-             if(objectName != null && objectName == 'scforvoidprops'){
+            if(objectName != null && objectName == 'scforvoidprops'){
                 soqlStr += ' where Opportunity__c in :objectIds ';
             } else { 
                 soqlStr += ' where Service_Contract_Status__c != :inactiveStr ';  
@@ -300,7 +300,7 @@ public class ServiceContractUtil {
         soqlString += ' Process_Install_Date__c, ';
         soqlString += ' (Select Id,M1_Status__c, M2_Status__c, M1_proof_panel_inverter_delivery__c, M3_Status__c, name, M1_Proof_Upload_Date__c, M2_Proof_Upload_Date__c, ';
         soqlString += ' Customer_Signoff__c, Revised_SR_Signoff__c, SR_Signoff__c,  ';
-        soqlString += ' Partner_PTO_proof_date__c, M3_Proof_Upload_Date__c, M1_Proof_Count__c, M2_Proof_Count__c, M3_Proof_Count__c, M2_proof_substantial_completion__c, Meter_Registration_Date__c, Rebate_Form_Sent__c, NTP_Granted__c,PTO__c from Service_Contract_Events__r), ';
+        soqlString += ' Partner_PTO_proof_date__c, M3_Proof_Upload_Date__c, M1_Proof_Count__c, M2_Proof_Count__c, M3_Proof_Count__c, M2_proof_substantial_completion__c, Meter_Registration_Date__c, Rebate_Form_Sent__c, NTP_Granted__c,PTO__c,Completion_of_Construction__c from Service_Contract_Events__r), ';
         soqlString += ' (Select Id, Status__c, name, Asset__c, System_Size_DC__c, Manufacturer__c, Model__c, Serial_Number__c, Type__c from Assets__r where Serial_Number__c !=null and Status__c = \'Active\' ) ';
         soqlString += ' From ServiceContract  ';
         
@@ -584,7 +584,7 @@ public class ServiceContractUtil {
     public static String getServiceContractEventSOQL(){
        String scEventSQLQuery = ' Select Id, name, Service_Contract__r.Id, Service_Contract__r.name, Service_Contract__r.Account.Id,  Service_Contract__r.EPC_Price__c, Service_Contract__r.Large_system_NTP_form__c,  ' ;
         scEventSQLQuery += ' Service_Contract__r.Agreement_Number__c ,Service_Contract__r.install_partner__c,Service_Contract__r.Account.Name, Service_Contract__r.Home_Address__c, Service_Contract__r.Customer_Name__c, Service_Contract__r.Cust_Ref_Num__c, Service_Contract__r.Customer_Mailing_Address__c, ';
-        scEventSQLQuery += ' NTP_Granted__c, PTO__c, Meter_Registration_Date__c ,M1_Proof_Upload_Date__c, M2_Proof_Upload_Date__c, M3_Proof_Upload_Date__c, M1_proof_panel_inverter_delivery__c, M2_proof_substantial_completion__c,Meter_Test_Date__c ';
+        scEventSQLQuery += ' NTP_Granted__c, PTO__c, Meter_Registration_Date__c ,M1_Proof_Upload_Date__c, M2_Proof_Upload_Date__c, M3_Proof_Upload_Date__c, M1_proof_panel_inverter_delivery__c, M2_proof_substantial_completion__c,Meter_Test_Date__c,Completion_of_Construction__c';
         scEventSQLQuery += ' from Service_Contract_Event__c ';
         return scEventSQLQuery;
     }
@@ -1074,8 +1074,11 @@ public class ServiceContractUtil {
      set<Id> scIds = new Set<Id>();
      list<ServiceContract> updateSClist = new List<ServiceContract>();
      for(Service_Contract_Event__c sce : sceList){
-        if(sce.M1_proof_panel_inverter_delivery__c != null && sce.M1_proof_panel_inverter_delivery__c != old_map.get(sce.Id).M1_proof_panel_inverter_delivery__c ){ //
-           scIds.add(sce.Service_Contract__c);        
+       // if(sce.M1_proof_panel_inverter_delivery__c != null && sce.M1_proof_panel_inverter_delivery__c != old_map.get(sce.Id).M1_proof_panel_inverter_delivery__c ){ //
+        if((sce.M1_proof_panel_inverter_delivery__c != null && sce.M1_proof_panel_inverter_delivery__c != old_map.get(sce.Id).M1_proof_panel_inverter_delivery__c )||(sce.M2_proof_substantial_completion__c != null && sce.M2_proof_substantial_completion__c != old_map.get(sce.Id).M2_proof_substantial_completion__c)) {
+           scIds.add(sce.Service_Contract__c);
+           system.debug('inside M1 proof panel inverter---->'+scIds);  
+           system.debug('inside M2_proof_substantial_completion__c value chnage--->'+sce.M2_proof_substantial_completion__c);   
         }
      }
      if(!scIds.isempty()){

@@ -702,6 +702,14 @@ public with sharing class ServiceContractMilestoneProof {
     
         public PageReference attachFile()
         {
+        system.debug('Install partner details--->'+selServiceContractRec.Install_Partner__c);
+        system.debug('Milestone proof type details---->'+milestoneProofType);
+        system.debug('Completion_of_Construction__c details---->'+scEventObj.Completion_of_Construction__c);
+            if(selServiceContractRec.Install_Partner__c == 'Sunrun' && milestoneProofType == 'M2 Proof' && scEventObj.Completion_of_Construction__c == NULL)
+            {
+             ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, 'Completion of construction value should not be blank'));
+             return NULL;
+            }
             if (selectedAssetsList == null || selectedAssetsList.size() <=  0)
             {
                 errorPageDetails = 'To Upload a Milestone Proof, you must first select a Service Contract.';
@@ -1177,7 +1185,7 @@ public with sharing class ServiceContractMilestoneProof {
                                           }
             
             for(ServiceContract sc: ServiceContractList){
-            	 If(sc.Proposal__r.Customer_Signoff_Date__c!=null){
+                 If(sc.Proposal__r.Customer_Signoff_Date__c!=null){
                     If(sc.Customer_Signoff__c!=null && sc.Customer_Signoff__c!=''){
                         system.debug('sc.Customer_Signoff__c>>' +  sc.Customer_Signoff__c);
                         Datetime customerSign=  datetime.valueOf(sc.Customer_Signoff__c);

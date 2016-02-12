@@ -8,7 +8,7 @@ public class CustomerCreditUtil {
 	public static String CPASS = 'CPASS' ;
 	public static String MANUAL = 'MANUAL' ;
 	public static String PROCEED = 'PROCEED' ;
-    	
+  	
 	public static void processCreditEmail(Map<Id, Customer_Credit__c> newMap, Map<Id, Customer_Credit__c> oldMap){
 		Set<String> DealCreditSet = New Set<String>();
 	    List<Opportunity> OppDealIdList = New List<Opportunity>();
@@ -163,7 +163,7 @@ public class CustomerCreditUtil {
 		cc.Date_Pulled__c = cc.Date_Run2__c;
 		cc.fico__c = cc.fico2__c;
 		cc.Reason__c = cc.Transunion_Reason__c;
-		//modifying
+
 		cc.Banky_Outcome__c = cc.Transunion_Banky_Outcome__c ;
 		cc.Mortgage_Outcome__c = cc.Transunion_Mortgage_Outcome__c ;
 
@@ -181,9 +181,7 @@ public class CustomerCreditUtil {
 	
 	public static void calculateCreditScore(List<Customer_Credit__c> customerCreditList){
 		for(Customer_Credit__c cc : customerCreditList){
-            system.debug('cccc>>>' +  cc);
 			calculateCreditScore(cc);
-            
 		}
 	}
 		
@@ -200,10 +198,6 @@ public class CustomerCreditUtil {
 			Integer ficoNumber1 = getFicoNumber(cc.fico1__c);
 			Integer ficoNumber2 = getFicoNumber(cc.fico2__c);
 			Integer ficoNumber3 = getFicoNumber(cc.fico3__c);
-        
-        	system.debug('ficoNumber1>>' + ficoNumber1);
-        system.debug('ficoNumber2>>' + ficoNumber2);
-        system.debug('ficoNumber3>>' + ficoNumber3);
 			
 			if(ficoNumber1 > ficoNumber2){
 				if(ficoNumber1 >= ficoNumber3){
@@ -342,15 +336,16 @@ public class CustomerCreditUtil {
 			
 			System.debug('1. creditStatusObj.Sunrun_Credit_Status__c: ' + creditStatusObj.Sunrun_Credit_Status__c);
 			System.debug('1. creditStatusObj.Status__c: ' + creditStatusObj.Status__c);
-			system.debug('creditStatusObj.Banky_Outcome__c>>' +  creditStatusObj.Banky_Outcome__c);
+             system.debug('creditStatusObj.Banky_Outcome__c>>' +  creditStatusObj.Banky_Outcome__c);
             system.debug('ficoNumber>>' +  ficoNumber);
               system.debug('ficoScoreFail>>' +  ficoScoreFail);
               system.debug('creditStatusObj.Mortgage_Outcome__c>>' +  creditStatusObj.Mortgage_Outcome__c);
-              //adding logic for BSKY-6722
-            if(ficoNumber <= ficoScoreFail &&( creditStatusObj.Banky_Outcome__c==FAIL || creditStatusObj.Mortgage_Outcome__c==FAIL)){
-                creditStatusObj.Sunrun_Credit_Status__c = MANUAL;
+			system.debug('creditStatusObj.State__c ' +  creditStatusObj.State__c );
+			system.debug('ficoScoreCPass' +  ficoScoreCPass);
+            //adding logic for BSKY-6722
+            if(ficoNumber <= ficoScoreFail &&( creditStatusObj.Banky_Outcome__c== FAIL || creditStatusObj.Mortgage_Outcome__c==FAIL)){
+                creditStatusObj.Sunrun_Credit_Status__c = MANUAL ;
             }
-            
             
 			//Lucid chart & BSKY-3582
 			else if(ficoNumber <= ficoScoreFail){
@@ -365,9 +360,10 @@ public class CustomerCreditUtil {
 						creditStatusObj.Sunrun_Credit_Status__c = PASS;
 						System.debug('PASS 1: ' + PASS);
 					}else{ // > 650	
-						if((creditStatusObj.State__c != null && creditStatusObj.State__c != '' 
-								&& stateList.contains(creditStatusObj.State__c)) || 
-								(ficoNumber > ficoScoreCPass)){ 
+                         /*(creditStatusObj.State__c != null && creditStatusObj.State__c != '' 
+								&& stateList.contains(creditStatusObj.State__c)
+                           ) || */
+						if((ficoNumber > ficoScoreCPass)){ 
 							creditStatusObj.Sunrun_Credit_Status__c = CPASS;
 							System.debug('PASS 2.1: ' + CPASS);
 						}

@@ -44,6 +44,7 @@
         <actionName>View</actionName>
         <type>Default</type>
     </actionOverrides>
+    <allowInChatterGroups>false</allowInChatterGroups>
     <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
     <deploymentStatus>Deployed</deploymentStatus>
     <enableActivities>false</enableActivities>
@@ -397,11 +398,6 @@
             <picklistValues>
                 <fullName>Central Hudson</fullName>
                 <controllingFieldValues>NY</controllingFieldValues>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Choptank Electric</fullName>
-                <controllingFieldValues>MD</controllingFieldValues>
                 <default>false</default>
             </picklistValues>
             <picklistValues>

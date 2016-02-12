@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomSite xmlns="http://soap.sforce.com/2006/04/metadata">
+    <active>true</active>
+    <allowHomePage>false</allowHomePage>
+    <allowStandardAnswersPages>false</allowStandardAnswersPages>
+    <allowStandardIdeasPages>false</allowStandardIdeasPages>
+    <allowStandardLookups>false</allowStandardLookups>
+    <allowStandardSearch>false</allowStandardSearch>
+    <authorizationRequiredPage>CommunitiesLogin</authorizationRequiredPage>
+    <bandwidthExceededPage>BandwidthExceeded</bandwidthExceededPage>
+    <clickjackProtectionLevel>AllowAllFraming</clickjackProtectionLevel>
+    <fileNotFoundPage>FileNotFound</fileNotFoundPage>
+    <genericErrorPage>Exception</genericErrorPage>
+    <inMaintenancePage>CommunitiesLogin</inMaintenancePage>
+    <inactiveIndexPage>CommunitiesLanding</inactiveIndexPage>
+    <indexPage>CommunitiesLogin</indexPage>
+    <masterLabel>Sunrun Community Portal</masterLabel>
+    <requireHttps>true</requireHttps>
+    <requireInsecurePortalAccess>false</requireInsecurePortalAccess>
+    <selfRegPage>CommunitiesSelfReg</selfRegPage>
+    <siteAdmin>pveloori@sunrunhome.com</siteAdmin>
+    <siteTemplate>SiteTemplate</siteTemplate>
+    <siteType>ChatterNetwork</siteType>
+    <subdomain>devmaj</subdomain>
+    <urlPathPrefix>partner</urlPathPrefix>
+</CustomSite>

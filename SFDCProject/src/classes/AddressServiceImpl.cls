@@ -827,6 +827,10 @@ public with sharing class AddressServiceImpl extends BaseClass implements Addres
      * Don't specify the client id or client secret as part of the parameters.
      */ 
     public String googleMapsHttpGet(String url, Map<String, String> params) {
+		List<String> googleCredentials = getGoogleClientCredentials();		
+		String clientId = googleCredentials.get(0);
+        String clientSecret = googleCredentials.get(1);
+        
         url = replaceMergeTokensWithUrlEncode(url, params);
         
         //Add client id.
@@ -836,18 +840,17 @@ public with sharing class AddressServiceImpl extends BaseClass implements Addres
             url += '?';
         }
         
-        url += 'client=' + Sf.settingsService.getString('GoogleMapsClientId');
+        url += 'client=' + clientId;
         
         //We need to sign as specified at https://developers.google.com/maps/documentation/business/webservices/auth#digital_signatures
         //Remove the base path.
         String signUrl = url.substringAfter('https://maps.googleapis.com');
-        String signature = urlSafeBase64Encode(Crypto.generateMac('hmacSHA1', Blob.valueOf(signUrl), EncodingUtil.base64Decode(Sf.settingsService.getString('GoogleMapsClientSecretKey'))));
+        String signature = urlSafeBase64Encode(Crypto.generateMac('hmacSHA1', Blob.valueOf(signUrl), EncodingUtil.base64Decode(clientSecret)));
         
         url += '&signature=' + signature;
         
         return httpGet(url);
     }
-    
     public String createAddressToken(AddressServiceDto.Address address) {
         String token = normalizeAddressComponent(address.country);
         
@@ -1230,5 +1233,21 @@ public with sharing class AddressServiceImpl extends BaseClass implements Addres
         
         return sublists;
     }
-    
+ 	
+    /**
+     * Goes through the list of configured client id and client secrets and randomly picks one
+     * of the credentials pair.
+     * 
+     * Credentials are stored in the settings as GoogleMapsClientCredentials=key1|secret1,key2|secret2
+     * 
+     * This is to support addtional capacity to invoke google services.
+     */ 
+    public List<String> getGoogleClientCredentials() {
+        List<String> credentials = Sf.settingsService.getStringList('GoogleMapsClientCredentials');
+        if (credentials.isEmpty()) {
+            throw new SystemException('Google maps credentials are not configured in GoogleMapsClientCredentials settings.');
+        }
+        String credential = credentials.get(getRandomInteger(credentials.size() - 1));
+        return credential.split('\\|');
+    }
 }

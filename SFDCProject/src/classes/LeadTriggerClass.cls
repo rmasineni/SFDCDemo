@@ -14,6 +14,51 @@ public class LeadTriggerClass{
         
         return null;
     }
+    
+    
+   //Added for BSKY-7120 and BSKY-7251 Incontact Hard Coded Values/Update Call Center when Sales Partner = Sunrun
+    
+    public static void UpdateCallCenterCheckbox(Map<id, Lead> map_oldLead, List<Lead> lst_Leads, Boolean isInsert, Boolean isUpdate)
+    {
+        //Checking if the Lead list is empty to avoid null pointer exception
+        if(lst_Leads.isEmpty()) 
+            {
+                    return;
+            }
+            
+            //Checking 7120 criteria to enable the call center checkbox
+            for(Lead ldtemp :lst_Leads)
+            {
+                if(!ldtemp.Call_Center__c)
+                {
+                    if(isInsert || (isUpdate && (ldtemp.Sales_Partner__C!= map_oldLead.get(ldtemp.Id).Sales_Partner__C)))
+                    {
+                        if((ldtemp.Lead_Gen_Partner__c!=null && ldtemp.Lead_Gen_Partner__c==System.label.BrightCurrent) 
+                            || ldtemp.DoNotCall  
+                            || (ldtemp.LastName!=null && ldtemp.LastName.containsIgnoreCase('test'))
+                            || (ldtemp.FirstName!=null && ldtemp.FirstName.containsIgnoreCase('test')) 
+                            || (ldtemp.Company!=null && ldtemp.Company.containsIgnoreCase('test')) 
+                            || ldtemp.Sales_Partner__c==null
+                            || ldtemp.Sales_Partner__c!=System.label.Sunrun_inc_id 
+                            || (ldtemp.Lead_Status__c!=null && ldtemp.Lead_Status__c.equalsIgnoreCase('Passed to Partner')))
+                        {                          
+                            ldtemp.Call_Center__c = false;                          
+                        }
+                        else
+                        {
+                            ldtemp.Call_Center__c = True;   
+                        }
+                    }
+                    
+                }
+                //BSKY-7292
+                if(ldtemp.Status!=null && ldtemp.Status=='Closed Lost') {
+                    ldtemp.Dial_Status__c='FINAL';
+                }
+                
+            }
+    }
+
     public static void InsertSouthRecords(List<Lead> lst_SouthLeads){
         String ConnectionName = System.Label.SunRunConnectionName;
         Id networkId = getConnectionId(ConnectionName); 
@@ -201,7 +246,7 @@ public static void  trg_lead_before_insert(Map<Id, Lead> map_oldLead, Map<Id, Le
             || Trigger.isInsert)) */
         if(newlead.Lead_Division_Custom__c==null||(isupdate&&map_oldLead.get(newlead.id).Division!=newlead.Division)){
             newlead.Lead_Division_Custom__c=newlead.Division;
-        }    
+        }     
         if( (isInsert && newlead.LastName != '' && newlead.LastName != null) ||    
             (isUpdate && !newlead.Auto_Unqualified__c && isKeyFieldChanged(newlead, map_oldLead))    
           )
@@ -459,7 +504,7 @@ public static void  trg_lead_before_insert(Map<Id, Lead> map_oldLead, Map<Id, Le
                           }
                   System.debug('This is Search Key'+ SearchKey); 
         
-         If(
+          If(
            ((newlead.Channel__c!=Null )||
             (newlead.Lead_Type__c!=Null)||
             (newlead.Custom_Lead_Source__c!=Null )||
@@ -511,10 +556,10 @@ public static void  trg_lead_before_insert(Map<Id, Lead> map_oldLead, Map<Id, Le
             }
             
            If(
-           ((newlead.Channel__c==Null ||newlead.Channel__c=='' )&&
+           ((newlead.Channel__c==Null ||newlead.Channel_Last__c=='' )&&
             (newlead.Lead_Type__c==Null || newlead.Lead_Type__c=='' )&& 
             (newlead.Custom_Lead_Source__c==Null ||newlead.Custom_Lead_Source__c=='')&&
-            (newlead.Campaign__c==Null || newlead.Campaign__c=='' )&& 
+            (newlead.Campaign__c==Null || newlead.Campaign__c==Null )&& 
             (newlead.Keywords__c==Null|| newlead.Keywords__c=='')&&
             (newlead.Content__c==Null || newlead.Content__c=='' )&&
             (newlead.Technology__c==Null || newlead.Technology__c=='' )
@@ -1617,7 +1662,7 @@ Description: This trigger creates a referral input based on the Lead data,
             }           
             List < Opportunity> opplist = new List<Opportunity>();
             if(!convertedOpportunityIds.isempty()){
-            oppList=[Select Id,Name,StageName,Opportunity_Status__c from Opportunity where Id IN :convertedOpportunityIds];
+            oppList=[Select Id,Name,StageName,Opportunity_Status__c,Sales_Partner__c,Site_Design_Priority__c,Sales_Partner__r.Quick_Design_Access__c,Sales_Partner__r.name from Opportunity where Id IN :convertedOpportunityIds];
             }
             Map <Id,Opportunity> oppmap = new Map <Id,Opportunity>(opplist);
                 If(!oppmap.isEmpty()){
@@ -1640,6 +1685,10 @@ Description: This trigger creates a referral input based on the Lead data,
                             if(ld.Install_Partner__c!= System.Label.Sunrun_Inc_Id){
                              oppr.Install_Branch_Id__c = null;
                             }
+                            //BSKY-7262
+                            if(oppr.Sales_Partner__r.Quick_Design_Access__c != null && oppr.Sales_Partner__r.Quick_Design_Access__c.equalsIgnoreCase('Auto')){
+                               oppr.Site_Design_Priority__c = 'Normal';
+                            }
                             updateOpportunity.add(oppr);
                             //system.debug('Printing Opportunity Stage and Add'+oppr.StageName+'   and    '+oppr.Opportunity_Status__c);
                         }
@@ -1652,6 +1701,10 @@ Description: This trigger creates a referral input based on the Lead data,
                             if(ld.Install_Partner__c!= System.Label.Sunrun_Inc_Id){
                              oppr.Install_Branch_Id__c = null;
                             }
+                            //BSKY-7262
+                            if(oppr.Sales_Partner__r.Quick_Design_Access__c != null && oppr.Sales_Partner__r.Quick_Design_Access__c.equalsIgnoreCase('Auto')){
+                               oppr.Site_Design_Priority__c = 'Normal';
+                            }                            
                             updateOpportunity.add(oppr);  
                             //system.debug('Printing Opportunity Stage and Add'+oppr.StageName);
                         }
@@ -1662,6 +1715,10 @@ Description: This trigger creates a referral input based on the Lead data,
                             if(ld.Install_Partner__c!= System.Label.Sunrun_Inc_Id){
                              oppr.Install_Branch_Id__c = null;
                             }
+                            //BSKY-7262
+                            if(oppr.Sales_Partner__r.Quick_Design_Access__c != null && oppr.Sales_Partner__r.Quick_Design_Access__c.equalsIgnoreCase('Auto')){
+                               oppr.Site_Design_Priority__c = 'Normal';
+                            }                            
                             updateOpportunity.add(oppr);                            
                         }
                     }                    
@@ -1672,7 +1729,50 @@ Description: This trigger creates a referral input based on the Lead data,
                 update updateOpportunity;
             }
     }
-       
+    
+    
+/*    
+    //BSKY-7262 - Update Site Design Priority at opportunity creation - Logic start
+    List <Opportunity> updateOpportunitySite = new List<Opportunity>();
+    If(!oppmap.isEmpty()){  
+    
+            for(Lead ld:lst_newLead)
+            {
+            
+                if(ld.convertedOpportunityId!=null && ld.Status =='Converted')
+                    {
+                    
+                        Opportunity optyObj = oppmap.get(ld.convertedOpportunityId);
+                        
+                         if(optyObj.Sales_Partner__c == label.Sunrun_Inc_Id 
+                            && (optyObj.Sales_Partner__r.Quick_Design_Access__c != null && optyObj.Sales_Partner__r.Quick_Design_Access__c.equalsIgnoreCase('Auto')))
+                         {
+                          
+                             optyObj.Site_Design_Priority__c = 'Normal';
+                             updateOpportunitySite.add(optyObj);
+                             
+                           
+                         }
+                         if((optyObj.Sales_Partner__r.name != null && optyObj.Sales_Partner__r.name.equalsIgnoreCase('Horizon Solar Power')) && ((optyObj.Sales_Partner__r.Quick_Design_Access__c != null && optyObj.Sales_Partner__r.Quick_Design_Access__c.equalsIgnoreCase('Manual'))||optyObj.Sales_Partner__r.Quick_Design_Access__c == null))
+                         {
+                            
+                             optyObj.Site_Design_Priority__c = null;
+                             updateOpportunitySite.add(optyObj);
+                             
+
+                           
+                         }
+                    }
+            }           
+    }
+    if(!updateOpportunitySite.isEmpty())
+            {
+                update updateOpportunitySite;
+                
+
+            }
+    //BSKY-7262 - Update Site Design Priority at opportunity creation - Logic End
+ */      
  }
     public static void ConversionScript(List<Lead> lst_oldLead , List<Lead> lst_newLead){
         if(!lst_oldLead.isEmpty() && lst_oldLead.size() ==1){
@@ -1708,7 +1808,10 @@ Description: This trigger creates a referral input based on the Lead data,
         }
     }
     public static void trg_before_insert_fillLeadGeneratedByAftUp(List<Lead> lst_Leads){
-        for(lead l:lst_Leads){                    
+        for(lead l:lst_Leads){
+            if(l.Field_Marketing_Branch__c==null){
+                l.Field_Marketing_Branch__c=l.Field_Marketing_Branch_Formula__c;
+            }
             if(l.Sales_Partner__c!=null&&l.Retail_Sales_Partner_Assigned__c==false){
             l.Partner_for_Lead_Passing__c=l.Sales_Partner__c;
             l.Retail_Sales_Partner_Assigned__c=true;
@@ -1766,15 +1869,12 @@ Description: This trigger creates a referral input based on the Lead data,
             leadSourceSet.add(pma.Lead_Source__c);
           }
           for(lead l:lst_Leads){      
-           //System.debug('l.SalesRep_contact__c : ' +l.SalesRep_contact__c);
            if(ContactPreferenceList.isempty()&&l.channel__c!=null&&l.custom_lead_source__c!=null&&l.SalesRep_contact__c==null&&l.custom_lead_source__c!='Partner: Legacy'&&!leadSourceSet.contains(l.custom_lead_source__c)&&(l.lock_assignment__c==false||map_oldLead.get(l.id).custom_lead_source__c!=l.custom_lead_source__c||map_oldLead.get(l.id).salesrep__c!=l.salesrep__c||map_oldLead.get(l.id).postalcode!=l.postalcode)&&!l.isConverted &&!checkRecursive.leadsetIds.contains(l.id)&&!l.Sunrun_South__c&&!(l.phone==null&&l.email==null&&l.Alternate_Phone__c==null&&l.MobilePhone==null)){                    
           if(l.Synchronous_Assignment__c||(map_oldLead.get(l.id).salesrep__c!=l.salesrep__c)){
             SynchronousIds.add(l.id);
-            //System.debug('Adding Lead Id to SynchronousIds');
           }
           else{
           ids.add(l.id);
-          //System.debug('Adding Lead Id to non-SynchronousIds');
           }
           checkRecursive.leadsetIds.add(l.id);
           }      
@@ -1784,7 +1884,6 @@ Description: This trigger creates a referral input based on the Lead data,
         Lead_Assignment.Lead_Assignment(ids);    
         }
         if(!SynchronousIds.isempty()&&!test.isrunningtest()){
-        //System.debug('Calling Lead Assignment synchronously');  
         Lead_Assignment.Lead_Assignment_Immediate(SynchronousIds);  
         }
       
@@ -2018,6 +2117,7 @@ Description: This trigger creates a referral input based on the Lead data,
         l.Market_Assignment_Sales__c=null;
         }
         l.Sales_Partner__c=c.AccountId;
+        system.debug('==>Division'+c.Contact_Division_Custom__c);
         if(c.Division == label.AEE_label){
           l.Install_partner__c = l.Sales_Partner__c;
         }
@@ -2055,8 +2155,12 @@ Description: This trigger creates a referral input based on the Lead data,
          }  
         }  
       
+         /*if(l.division == label.AEE_label){
+         l.install_partner__c = l.sales_partner__c;
+         system.debug('==>install partner'+l.install_partner__c);
+         }*/
       }
-          
+           
     }
     
     }
@@ -2180,12 +2284,53 @@ Description: This trigger creates a referral input based on the Lead data,
      }
 
 
+
+//Added for BSKY-7120 Incontact Hard Coded Values
+    
+    public static void UpdateCallCenterCheckbox(List<Lead> lst_Leads){
+    
+            
+        //Checking if the Lead list is empty to avoid null pointer exception
+        if(lst_Leads.isEmpty()) 
+            {
+                    return;
+            }
+            
+            //Checking 7120 criteria to enable the call center checkbox
+            for(Lead ldtemp :lst_Leads)
+            {
+            if(ldtemp.Call_Center__c != True){
+                if(!((ldtemp.Lead_Gen_Partner__r.name!=null && ldtemp.Lead_Gen_Partner__r.name.equalsIgnoreCase('BrightCurrent')) || ldtemp.DoNotCall == TRUE 
+                    || (ldtemp.Call_Consent__c!=null && ldtemp.Call_Consent__c.equalsIgnoreCase('NO'))|| (ldtemp.LastName!=null && ldtemp.LastName.contains('test'))
+                    || (ldtemp.FirstName!=null && ldtemp.FirstName.contains('test')) || (ldtemp.Company!=null && ldtemp.Company.contains('test')) 
+                    || (ldtemp.Sales_Partner__r.name!=null && !ldtemp.Sales_Partner__r.name.equalsIgnoreCase('SUNRUN')) 
+                    || (ldtemp.Lead_Type__c!=null && ldtemp.Lead_Type__c.equalsIgnoreCase('Partner')) || system.today() > (ldtemp.CreatedDate + 90) 
+                    || (ldtemp.Status!=null && ldtemp.Status.equalsIgnoreCase('Converted')) || (ldtemp.Status!=null && ldtemp.Status.equalsIgnoreCase('Closed Lost')) 
+                    || (ldtemp.Status!=null && ldtemp.Status.equalsIgnoreCase('Duplicate')) || (ldtemp.Status!=null && ldtemp.Status.equalsIgnoreCase('Unqualified'))
+                    || (ldtemp.Status!=null && ldtemp.Status.equalsIgnoreCase('Out of Market')) || (ldtemp.Status!=null && ldtemp.Lead_Status__c.equalsIgnoreCase('Passed to Partner'))))
+                {
+                    
+                    ldtemp.Call_Center__c = True;
+                    
+                }
+                
+                
+            }
+            
+        }
+               
+    }
+
     public static void LeadPromoCodePopulateBeforeInsert(List<Lead> lst_Leads){
     
-    Default_Promotion_Code__c defPromo = Default_Promotion_Code__c.getValues('Referral Promo1');
-    String promoCode = defPromo.Promotion_Code__c;
+    //Default_Promotion_Code__c defPromo = Default_Promotion_Code__c.getValues('Referral Promo1');
+    //String promoCode = defPromo.Promotion_Code__c;
 
-    Promotion__c DefaultCustPromo = [Select Id,Name from Promotion__c where Promotion_Code__c =: promoCode AND Primary_Promotion__c= True]; 
+     Promotion__c DefaultCustPromo;
+     try{
+         DefaultCustPromo = [Select Id,Name,Promotion_Code__c from Promotion__c where Primary_Promotion__c= True order by createddate desc limit 1]; 
+     }
+     catch(exception e){}  
             
     Set<Id> PromotionIdsSet = new Set<Id>();   
     PromotionIdsSet.add(DefaultCustPromo.Id);     
@@ -2217,7 +2362,7 @@ Description: This trigger creates a referral input based on the Lead data,
                 if(ldtemp.Promotion_Name__c == null){
                 if(DefaultCustPromo != null ){
                 ldtemp.Promotion_Name__c = DefaultCustPromo.Id;
-                ldtemp.Promotion_Code__c = promoCode;
+                ldtemp.Promotion_Code__c = DefaultCustPromo.Promotion_Code__c;
                 }
                 /*
                 if(ldtemp.Custom_Lead_Source__c!=null&&ldtemp.Custom_Lead_Source__c.containsIgnoreCase(System.label.Mickey_Account)){
@@ -2229,18 +2374,18 @@ Description: This trigger creates a referral input based on the Lead data,
     } 
     
     public static void LeadPromoCodePopulateBeforeUpdate(List<Lead> lst_Leads,Map<id,Lead> oldMap){
-    Default_Promotion_Code__c defPromo = Default_Promotion_Code__c.getValues('Referral Promo1');
+    //Default_Promotion_Code__c defPromo = Default_Promotion_Code__c.getValues('Referral Promo1');
     
-    String promoCode;
-    if(defPromo!=null)
-    promoCode = defPromo.Promotion_Code__c;
+    //String promoCode;
+    //if(defPromo!=null)
+    //promoCode = defPromo.Promotion_Code__c;
 
-    Promotion__c DefaultCustPromo;
-    try{
-    if(checkrecursive.runPromotionOnce())  
-    DefaultCustPromo = [Select Id,Name from Promotion__c where Promotion_Code__c =: promoCode and Primary_Promotion__c=true]; 
-    }
-    catch(exception e){}
+       Promotion__c DefaultCustPromo;
+        try{
+         if(checkrecursive.runPromotionOnce())  
+         DefaultCustPromo = [Select Id,Name from Promotion__c where Primary_Promotion__c=true order by createddate limit 1]; 
+        }
+        catch(exception e){}
         if(DefaultCustPromo!=null){ 
         String DefaultCustPromoName = DefaultCustPromo.Name;
         Id DefaultCustPromoID = DefaultCustPromo.Id;
@@ -2374,9 +2519,7 @@ Description: This trigger creates a referral input based on the Lead data,
                       //l.Lead_Gen_Partner__c = MickeyAcct.Id;
                       l.Lead_Gen_Partner__c = System.label.Comcast_Account_Id;
                     }
-                    if(l.External_Source__c != null && !l.External_Source__c.containsIgnoreCase('Comcast_Lead')){
-                      l.External_Source__c = System.label.Mickey_Account; 
-                    }
+                    l.External_Source__c = System.label.Mickey_Account; 
                     leadIdSet.add(l.Id);  
                     //System.debug('Adding Lead :' +l.Id);
                   }else if(!map_oldLead.isEmpty() && map_oldLead.containsKey(l.id) && map_oldLead.get(l.id).External_Source__c == System.label.Mickey_Account){
@@ -2446,7 +2589,7 @@ Description: This trigger creates a referral input based on the Lead data,
                 l.Purchased_Thru__c = ' ';
             }
          } 
-    }
+    }    
    public static void doReferralStagesUpdate(list<Lead> list_Lead,Map<id,Lead> old_Map){
       Set<id> closedLostIds=new Set<id>();
       Set<id> convertedIds=new Set<id>();
@@ -2486,8 +2629,8 @@ Description: This trigger creates a referral input based on the Lead data,
             }
         }
     }
-  }  
-          
+  } 
+        
   public static void ProcessCostcoLead(List<Lead> lst_Leads) 
    {
         Map<Id,String> AcntIDAndNameMap = New Map<Id,String>();
@@ -2559,7 +2702,7 @@ Description: This trigger creates a referral input based on the Lead data,
            if(
                 (newLead.Referred_By_Contact__c != null && newLead.email!= null && isInsert)
              || (isUpdate && map_oldLead.get(newLead.Id).Referred_By_Contact__c == null && newLead.Referred_By_Contact__c !=  null && newLead.email!= null)
-             &&!checkRecursive.AmbassadorReferralLeadIds.contains(newLead.id)  
+             &&!checkRecursive.AmbassadorReferralLeadIds.contains(newLead.id)
              && NewLead.Lead_Division_Custom__c != label.AEE_label
              )  
           //   If(NewLead.Email!=null && NewLead.Referee_Email_Sent__c==False && NewLead.Referred_By_Contact__c!=null && NewLead.Channel__c!=null && NewLead.Channel__c!='' && NewLead.Channel__c.contains('Referral') && (!checkRecursive.AmbassadorReferralLeadIds.contains(NewLead.id)))
@@ -2643,8 +2786,9 @@ Description: This trigger creates a referral input based on the Lead data,
         }    
          
         return LeadWhereClauseFieldValueMap;
-    } 
- //adding logic to update lead information based inContact data
+    }
+    
+    //adding logic to update lead information based inContact data
     public static void updateInContactInfoOnLead(Map<id, Lead> map_oldLead, List<Lead> lst_newLead, Boolean isInsert, Boolean isUpdate){
         Set<String> channelSet =  new Set<String>();
         
@@ -2661,112 +2805,115 @@ Description: This trigger creates a referral input based on the Lead data,
         list<Lead> leadAPIList = new  list<Lead>();
         if(!clmMap.isEmpty() && !lst_newLead.isEmpty() ){
             for(lead lead: lst_newLead){
-                if(IsInsert || (IsUpdate && (lead.Call_Center__c!= map_oldLead.get(lead.Id).Call_Center__c 
-                                             || lead.Campaign_Call_Attempts__c!=map_oldLead.get(lead.Id).Campaign_Call_Attempts__c
-                                             || lead.Channel__c !=map_oldLead.get(lead.Id).Channel__c
-                                             || lead.Lead_Status__c!=map_oldLead.get(lead.Id).Lead_Status__c
-                                             || lead.Status!=map_oldLead.get(lead.Id).Status
-                                             || lead.Lead_Type__c!=map_oldLead.get(lead.Id).Lead_Type__c
-                                             || lead.Callback_Disposition__c!=map_oldLead.get(lead.Id).Callback_Disposition__c))){
-                                                 for(Id key :clmMap.keySet()){
-                                                     if(clmMap.get(key).Channel__c == lead.Channel__c 
-                                                        && clmMap.get(key).Lead_Type__c == lead.Lead_Type__c
-                                                        && clmMap.get(key).Campaign_Call_Attempts_c__c == lead.Campaign_Call_Attempts__c
-                                                        && clmMap.get(key).Stage__c == lead.Status){
-                                                            system.debug('clmmap>>' + clmMap);
-                                                            system.debug('isUpdate' +  IsUpdate);
-                                                            If(IsUpdate){ 
-                                                                if(clmMap.get(key).Use_API__c!=true){
-                                                                    lead.inContact_Priority__c = clmMap.get(key).Priority__c;
-                                                                    if(clmMap.get(key).Wait__c!=null){
-                                                                        lead.Future_Contact_Date_Time__c  = system.Datetime.now().addMinutes(Integer.valueof(clmMap.get(key).Wait__c));
-                                                                    } else{
-                                                                        lead.Future_Contact_Date_Time__c=null;
+                if(lead.Call_Center__c== true){
+                    if(IsInsert || (IsUpdate && (lead.Call_Center__c!= map_oldLead.get(lead.Id).Call_Center__c 
+                                                 || lead.Campaign_Call_Attempts__c!=map_oldLead.get(lead.Id).Campaign_Call_Attempts__c
+                                                 || lead.Channel__c !=map_oldLead.get(lead.Id).Channel__c
+                                                 || lead.Lead_Status__c!=map_oldLead.get(lead.Id).Lead_Status__c
+                                                 || lead.Status!=map_oldLead.get(lead.Id).Status
+                                                 || lead.Lead_Type__c!=map_oldLead.get(lead.Id).Lead_Type__c
+                                                 || lead.Callback_Disposition__c!=map_oldLead.get(lead.Id).Callback_Disposition__c))){
+                                                     // researching on solution to avoid  the for loop second time .. 
+                                                     for(Id key :clmMap.keySet()){
+                                                         if(clmMap.get(key).Channel__c == lead.Channel__c 
+                                                            && clmMap.get(key).Lead_Type__c == lead.Lead_Type__c
+                                                            && clmMap.get(key).Campaign_Call_Attempts_c__c == lead.Campaign_Call_Attempts__c
+                                                            && clmMap.get(key).Stage__c == lead.Status){
+                                                                system.debug('clmmap>>' + clmMap);
+                                                                system.debug('isUpdate' +  IsUpdate);
+                                                                If(IsUpdate){ 
+                                                                    if(clmMap.get(key).Use_API__c!=true){
+                                                                        lead.inContact_Priority__c = clmMap.get(key).Priority__c;
+                                                                        if(clmMap.get(key).Wait__c!=null){
+                                                                            lead.Future_Contact_Date_Time__c  = system.Datetime.now().addMinutes(Integer.valueof(clmMap.get(key).Wait__c));
+                                                                        } else{
+                                                                            lead.Future_Contact_Date_Time__c=null;
+                                                                        }
+                                                                        lead.Call_Center__c=clmMap.get(key).Call_Center__c;
+                                                                        lead.Status= clmMap.get(key).To_Stage__c;
+                                                                        lead.Voicemail__c= clmMap.get(key).Voicemail__c;
+                                                                        lead.Caller_Id__c= clmMap.get(key).Caller_Id__c;
+                                                                        lead.Lead_Status__c= clmMap.get(key).To_Status__c;
+                                                                        system.debug('leadlead>'+ lead);
+                                                                        lead.Dial_Status__c=clmMap.get(key).Dail_Status__c; 
+                                                                        lead.Lead_Type__c=clmMap.get(key).Lead_Type__c;
                                                                     }
-                                                                    lead.Call_Center__c=clmMap.get(key).Call_Center__c;
-                                                                    lead.Status= clmMap.get(key).To_Stage__c;
-                                                                    lead.Voicemail__c= clmMap.get(key).Voicemail__c;
-                                                                    lead.Caller_Id__c= clmMap.get(key).Caller_Id__c;
-                                                                    lead.Lead_Status__c= clmMap.get(key).To_Status__c;
-                                                                    system.debug('leadlead>'+ lead);
-                                                                    lead.Dial_Status__c=clmMap.get(key).Dail_Status__c; 
-                                                                    lead.Lead_Type__c=clmMap.get(key).Lead_Type__c;
+                                                                    if(clmMap.get(key).Use_API__c==true){
+                                                                        lead.inContact_Priority__c = clmMap.get(key).Priority__c;
+                                                                        if(clmMap.get(key).Wait__c!=null){
+                                                                            lead.Future_Contact_Date_Time__c  = system.Datetime.now().addMinutes(Integer.valueof(clmMap.get(key).Wait__c));
+                                                                        } else{
+                                                                            lead.Future_Contact_Date_Time__c=null;
+                                                                        }
+                                                                        lead.Call_Center__c=clmMap.get(key).Call_Center__c;
+                                                                        lead.Status= clmMap.get(key).To_Stage__c;
+                                                                        lead.Voicemail__c= clmMap.get(key).Voicemail__c;
+                                                                        lead.Caller_Id__c= clmMap.get(key).Caller_Id__c;
+                                                                        lead.Lead_Status__c= clmMap.get(key).To_Status__c;
+                                                                        system.debug('leadlead>'+ lead);
+                                                                        lead.Dial_Status__c=clmMap.get(key).Dail_Status__c; 
+                                                                        lead.Lead_Type__c=clmMap.get(key).Lead_Type__c;
+                                                                        leadAPIList.add(lead);
+                                                                    }
+                                                                    
                                                                 }
-                                                                if(clmMap.get(key).Use_API__c==true){
-                                                                    lead.inContact_Priority__c = clmMap.get(key).Priority__c;
-                                                                    if(clmMap.get(key).Wait__c!=null){
-                                                                        lead.Future_Contact_Date_Time__c  = system.Datetime.now().addMinutes(Integer.valueof(clmMap.get(key).Wait__c));
-                                                                    } else{
-                                                                        lead.Future_Contact_Date_Time__c=null;
+                                                                else If (IsInsert){
+                                                                    Lead newlead = new Lead();       
+                                                                    if(clmMap.get(key).Use_API__c!=true){ 
+                                                                        newlead.inContact_Priority__c = clmMap.get(key).Priority__c;
+                                                                        if(clmMap.get(key).Wait__c!=null){
+                                                                            newlead.Future_Contact_Date_Time__c  = system.Datetime.now().addMinutes(Integer.valueof(clmMap.get(key).Wait__c));
+                                                                        } else{
+                                                                            newlead.Future_Contact_Date_Time__c=null;
+                                                                        }
+                                                                        newlead.Call_Center__c=clmMap.get(key).Call_Center__c;
+                                                                        newlead.Status= clmMap.get(key).To_Stage__c;
+                                                                        newlead.Voicemail__c= clmMap.get(key).Voicemail__c;
+                                                                        newlead.Caller_Id__c= clmMap.get(key).Caller_Id__c;
+                                                                        newlead.Lead_Status__c= clmMap.get(key).To_Status__c;
+                                                                        newlead.Dial_Status__c=clmMap.get(key).Dail_Status__c; 
+                                                                        newlead.Lead_Type__c=clmMap.get(key).Lead_Type__c;
+                                                                        newlead.Id= lead.Id;
+                                                                        newlead.LastName= lead.LastName;
+                                                                        newlead.FirstName=lead.FirstName;
+                                                                        newlead.State=lead.State;
+                                                                        newlead.phone =  lead.Phone;
+                                                                        newlead.Custom_Lead_Source__c =  lead.Custom_Lead_Source__c;
+                                                                        newlead.PostalCode=lead.PostalCode;
+                                                                        newlead.Campaign_Call_Attempts__c= lead.Campaign_Call_Attempts__c;
+                                                                        LeadList.add(newlead);
+                                                                    } 
+                                                                    else{
+                                                                        newlead.inContact_Priority__c = clmMap.get(key).Priority__c;
+                                                                        if(clmMap.get(key).Wait__c!=null){
+                                                                            newlead.Future_Contact_Date_Time__c  = system.Datetime.now().addMinutes(Integer.valueof(clmMap.get(key).Wait__c));
+                                                                        } else{
+                                                                            newlead.Future_Contact_Date_Time__c=null;
+                                                                        }
+                                                                        newlead.Call_Center__c=clmMap.get(key).Call_Center__c;
+                                                                        newlead.Status= clmMap.get(key).To_Stage__c;
+                                                                        newlead.Voicemail__c= clmMap.get(key).Voicemail__c;
+                                                                        newlead.Caller_Id__c= clmMap.get(key).Caller_Id__c;
+                                                                        newlead.Lead_Status__c= clmMap.get(key).To_Status__c;
+                                                                        newlead.Dial_Status__c=clmMap.get(key).Dail_Status__c; 
+                                                                        newlead.Lead_Type__c=clmMap.get(key).Lead_Type__c;
+                                                                        newlead.Id= lead.Id;
+                                                                        newlead.LastName= lead.LastName;
+                                                                        newlead.FirstName=lead.FirstName;
+                                                                        newlead.State=lead.State;
+                                                                        newlead.phone =  lead.Phone;
+                                                                        newlead.Custom_Lead_Source__c =  lead.Custom_Lead_Source__c;
+                                                                        newlead.PostalCode=lead.PostalCode;
+                                                                        newlead.Campaign_Call_Attempts__c= lead.Campaign_Call_Attempts__c;
+                                                                        leadAPIList.add(newlead);
                                                                     }
-                                                                    lead.Call_Center__c=clmMap.get(key).Call_Center__c;
-                                                                    lead.Status= clmMap.get(key).To_Stage__c;
-                                                                    lead.Voicemail__c= clmMap.get(key).Voicemail__c;
-                                                                    lead.Caller_Id__c= clmMap.get(key).Caller_Id__c;
-                                                                    lead.Lead_Status__c= clmMap.get(key).To_Status__c;
-                                                                    system.debug('leadlead>'+ lead);
-                                                                    lead.Dial_Status__c=clmMap.get(key).Dail_Status__c; 
-                                                                    lead.Lead_Type__c=clmMap.get(key).Lead_Type__c;
-                                                                    leadAPIList.add(lead);
+                                                                    
                                                                 }
                                                                 
-                                                            }
-                                                            else If (IsInsert){
-                                                                Lead newlead = new Lead();       
-                                                                if(clmMap.get(key).Use_API__c!=true){ 
-                                                                    newlead.inContact_Priority__c = clmMap.get(key).Priority__c;
-                                                                    if(clmMap.get(key).Wait__c!=null){
-                                                                        newlead.Future_Contact_Date_Time__c  = system.Datetime.now().addMinutes(Integer.valueof(clmMap.get(key).Wait__c));
-                                                                    } else{
-                                                                        newlead.Future_Contact_Date_Time__c=null;
-                                                                    }
-                                                                    newlead.Call_Center__c=clmMap.get(key).Call_Center__c;
-                                                                    newlead.Status= clmMap.get(key).To_Stage__c;
-                                                                    newlead.Voicemail__c= clmMap.get(key).Voicemail__c;
-                                                                    newlead.Caller_Id__c= clmMap.get(key).Caller_Id__c;
-                                                                    newlead.Lead_Status__c= clmMap.get(key).To_Status__c;
-                                                                    newlead.Dial_Status__c=clmMap.get(key).Dail_Status__c; 
-                                                                    newlead.Lead_Type__c=clmMap.get(key).Lead_Type__c;
-                                                                    newlead.Id= lead.Id;
-                                                                    newlead.LastName= lead.LastName;
-                                                                    newlead.FirstName=lead.FirstName;
-                                                                    newlead.State=lead.State;
-                                                                    newlead.phone =  lead.Phone;
-                                                                    newlead.Custom_Lead_Source__c =  lead.Custom_Lead_Source__c;
-                                                                    newlead.PostalCode=lead.PostalCode;
-                                                                    newlead.Campaign_Call_Attempts__c= lead.Campaign_Call_Attempts__c;
-                                                                    LeadList.add(newlead);
-                                                                } 
-                                                                else{
-                                                                    newlead.inContact_Priority__c = clmMap.get(key).Priority__c;
-                                                                    if(clmMap.get(key).Wait__c!=null){
-                                                                        newlead.Future_Contact_Date_Time__c  = system.Datetime.now().addMinutes(Integer.valueof(clmMap.get(key).Wait__c));
-                                                                    } else{
-                                                                        newlead.Future_Contact_Date_Time__c=null;
-                                                                    }
-                                                                    newlead.Call_Center__c=clmMap.get(key).Call_Center__c;
-                                                                    newlead.Status= clmMap.get(key).To_Stage__c;
-                                                                    newlead.Voicemail__c= clmMap.get(key).Voicemail__c;
-                                                                    newlead.Caller_Id__c= clmMap.get(key).Caller_Id__c;
-                                                                    newlead.Lead_Status__c= clmMap.get(key).To_Status__c;
-                                                                    newlead.Dial_Status__c=clmMap.get(key).Dail_Status__c; 
-                                                                    newlead.Lead_Type__c=clmMap.get(key).Lead_Type__c;
-                                                                    newlead.Id= lead.Id;
-                                                                    newlead.LastName= lead.LastName;
-                                                                    newlead.FirstName=lead.FirstName;
-                                                                    newlead.State=lead.State;
-                                                                    newlead.phone =  lead.Phone;
-                                                                    newlead.Custom_Lead_Source__c =  lead.Custom_Lead_Source__c;
-                                                                    newlead.PostalCode=lead.PostalCode;
-                                                                    newlead.Campaign_Call_Attempts__c= lead.Campaign_Call_Attempts__c;
-                                                                    leadAPIList.add(newlead);
-                                                                }
-                                                                
-                                                            }
-                                                            
-                                                        } 
-                                                 }   
-                                             }
+                                                            } 
+                                                     }   
+                                                 }
+                }
             }
         }
         

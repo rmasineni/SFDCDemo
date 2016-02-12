@@ -44,6 +44,7 @@
         <actionName>View</actionName>
         <type>Default</type>
     </actionOverrides>
+    <allowInChatterGroups>false</allowInChatterGroups>
     <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
     <deploymentStatus>Deployed</deploymentStatus>
     <enableActivities>false</enableActivities>
@@ -804,10 +805,6 @@
         <label>Group Name</label>
         <picklist>
             <picklistValues>
-                <fullName>Branch Coordinator</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
                 <fullName>Branch Manager</fullName>
                 <default>false</default>
             </picklistValues>
@@ -861,10 +858,6 @@
             </picklistValues>
             <picklistValues>
                 <fullName>Interconnection</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Loan Administrator</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>

@@ -133,7 +133,7 @@ global class CDYNEStandardButtonCall {
                 return 'Success';    
     }
     webservice static string callOpportunity(Id opptyId){               
-                Opportunity o=[select id,Account.Latitude__c,Account.Longitude__c,Account.BillingState,Account.County__c,Square_footage__c,channel_2__c,Lead_Source_2__c,Home_Type__c,Jan_Usage__c,Feb_Usage__c,Mar_Usage__c,Apr_Usage__c,May_Usage__c,Jun_Usage__c,Jul_Usage__c,Aug_Usage__c,Sep_Usage__c,Oct_Usage__c,Nov_Usage__c,Dec_Usage__c,Average_Monthly_Electric_Bill__c,Number_of_Proposals__c,Sales_Partner__c,Install_Partner__c,Market_Assignment_Sales__c,Market_Assignment_Install__c,Address_Validation_Status__c,SalesRep__c,Annual_kWh_usage__c,Utility_Company__c,Territory__c,Opportunity_Source_Type__c,Usage_Option__c,Purchased_Thru__c,Opportunity_Division_Custom__c from opportunity where id=:opptyId];
+                Opportunity o=[select id,Account.Latitude__c,Account.Longitude__c,Account.BillingState,Account.County__c,Square_footage__c,channel_2__c,Lead_Source_2__c,Home_Type__c,Jan_Usage__c,Feb_Usage__c,Mar_Usage__c,Apr_Usage__c,May_Usage__c,Jun_Usage__c,Jul_Usage__c,Aug_Usage__c,Sep_Usage__c,Oct_Usage__c,Nov_Usage__c,Dec_Usage__c,Average_Monthly_Electric_Bill__c,Number_of_Proposals__c,Sales_Partner__c,Install_Partner__c,Market_Assignment_Sales__c,Market_Assignment_Install__c,Address_Validation_Status__c,SalesRep__c,Annual_kWh_usage__c,Utility_Company__c,Territory__c,Opportunity_Source_Type__c,Usage_Option__c,Purchased_Thru__c,Opportunity_Division_Custom__c,Design_Only__c from opportunity where id=:opptyId];
                 OpportunityContactRole ocr;
                 Contact con;        
                 Partner_Role__c prSales;
@@ -167,29 +167,33 @@ global class CDYNEStandardButtonCall {
                 if(o.Opportunity_Source_Type__c!='BB' && o.Number_of_Proposals__c>0){
                     return 'Opportunities created by Proposal Tool are not eligible for design in BrightPath.';
                 }                
-                else if((o.Square_footage__c==null||o.Square_footage__c==0)
+                
+               /* else if(!o.Design_Only__c && ((o.Square_footage__c==null||o.Square_footage__c==0)
                 &&((o.Annual_kWh_usage__c==null||o.Annual_kWh_usage__c==0)||(o.Annual_kWh_usage__c>0&&(o.Jan_Usage__c==null||o.Feb_Usage__c==null||o.Mar_Usage__c==null
                 ||o.Apr_Usage__c==null||o.Mar_Usage__c==null||o.May_Usage__c==null||o.Jun_Usage__c==null||o.Jul_Usage__c==null||o.Aug_Usage__c==null
-                ||o.Sep_Usage__c==null||o.Oct_Usage__c==null||o.Oct_Usage__c==null||o.Nov_Usage__c==null||o.Dec_Usage__c==null)))){
+                ||o.Sep_Usage__c==null||o.Oct_Usage__c==null||o.Oct_Usage__c==null||o.Nov_Usage__c==null||o.Dec_Usage__c==null))))){
                 return 'Monthly Usage or Square Footage is required to create design'; 
-                }   
-                else if(o.Jan_Usage__c==0&&o.Feb_Usage__c==0&&o.Mar_Usage__c==0
+                } 
+                
+                else if(!o.Design_Only__c && (o.Jan_Usage__c==0&&o.Feb_Usage__c==0&&o.Mar_Usage__c==0
                 &&o.Apr_Usage__c==0&&o.Mar_Usage__c==0&&o.May_Usage__c==0&&o.Jun_Usage__c==0&&o.Jul_Usage__c==0&&o.Aug_Usage__c==0
-                &&o.Sep_Usage__c==0&&o.Oct_Usage__c==0&&o.Oct_Usage__c==0&&o.Nov_Usage__c==0&&o.Dec_Usage__c==0){
+                &&o.Sep_Usage__c==0&&o.Oct_Usage__c==0&&o.Oct_Usage__c==0&&o.Nov_Usage__c==0&&o.Dec_Usage__c==0)){
                 return 'All monthly usage cannot be zero';
-                }              
+                } */
+                              
                 else if(o.channel_2__c==null||o.Lead_Source_2__c==null){
                 return 'Channel & Lead Source is required to create design';    
                 }
                 else if(ocr==null){
                 return 'Primary contact is required to create design';  
                 }
-                else if(Userinfo.getUserType()!='PowerPartner' && o.Sales_Partner__c==System.label.Sunrun_Inc_Id && (o.Purchased_Thru__c == ' ' || o.Purchased_Thru__c == null)){
+                
+                /*else if(!o.Design_Only__c && (Userinfo.getUserType()!='PowerPartner' && o.Sales_Partner__c==System.label.Sunrun_Inc_Id && (o.Purchased_Thru__c == ' ' || o.Purchased_Thru__c == null))){
                 return 'Purchased Thru is required to create design';       
                 }
-                else if(o.Purchased_Thru__c == 'Costco' && (con.Member_ID__c == null || con.Member_ID__c == '')){
+                else if(!o.Design_Only__c && (o.Purchased_Thru__c == 'Costco' && (con.Member_ID__c == null || con.Member_ID__c == ''))){
                 return 'Costco Member Id is required on primary contact';
-                }
+                }*/
                 /*
                 else if(o.Annual_kWh_usage__c==null||o.Annual_kWh_usage__c==0){
                     return 'Annual kWh use is required to continue to system design';
@@ -210,12 +214,10 @@ global class CDYNEStandardButtonCall {
                 }
                 else if(o.home_type__c==null){
                 return 'Home type is required to create design';    
-                }
-                /*              
+                }            
                 else if((o.Account.Latitude__c==null||o.Account.Longitude__c==null)||(o.Account.Latitude__c==0.000000000000000&&o.Account.Longitude__c==0.000000000000000)){
-                    return 'We do not recognize the address, please re-enter the address or move the address marker to the correct house.';
-                }
-                */               
+                    return 'This opportunity does not have a lat/long. Please move the pin on the google map to ensure a lat/long is created.';
+                }                
                 /*
                 else if(o.Average_Monthly_Electric_Bill__c<50){
                 return 'Please enter Monthly Electricity Bill >= $50';  
@@ -233,15 +235,21 @@ global class CDYNEStandardButtonCall {
                 else if(o.Sales_Partner__c==null||o.Install_Partner__c==null){
                     return 'Sales Partner & Install Partner are required to create design';
                 }  
-                else if(prSales==null||(prSales!=null&&(prSales.Sales_Rep_Email__c==null&&prSales.Sales_Rep_Phone__c==null))){
+                /*else if(!o.Design_Only__c && (prSales==null||(prSales!=null&&(prSales.Sales_Rep_Email__c==null&&prSales.Sales_Rep_Phone__c==null)))){
                     return 'Sales Rep Message';
                 }
-                else if(Userinfo.getUserType()!='PowerPartner'&&prSales!=null&&prSales.Sales_Rep_Division__c==null&&!(o.channel_2__c=='Partner')){
+                else if(!o.Design_Only__c && (Userinfo.getUserType()!='PowerPartner'&&prSales!=null&&prSales.Sales_Rep_Division__c==null&&!(o.channel_2__c=='Partner'))){
                     return 'Sales Rep Division Message';
-                }                                 
+                }  */                               
                 else if((o.Account.County__c==null||o.Account.County__c==''||o.Account.County__c=='NA')&&(o.account.billingstate!=null&&(o.account.billingstate.equalsIgnoreCase('NY')||o.account.billingstate.equalsIgnoreCase('New York')))){
                     return 'County Message';
                 }
+                
+                //BSKY-7265
+                else if(o.Design_Only__c){
+                    System.debug('Design_Only__c = true');
+                    return 'Design Only Message'; 
+                } 
                 }
                 return 'Success';
     }

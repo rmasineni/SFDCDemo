@@ -231,25 +231,10 @@ public with sharing class Test_PartnerOpportunityCreateExt {
 
     public static testMethod void testRedirectDesignToolMethodPRM() {
 
-        setupOptyDataPRM();        
+        setupOptyDataPRM();
+  
         Test.startTest();
         setupPowerPartnerData();
-        List<AccountShare> ashareList=new List<AccountShare>();        
-        AccountShare aShare1=new AccountShare();
-        aShare1.AccountId = iAccount.Id;
-        aShare1.UserOrGroupId = powerPartnerUser.id;
-        aShare1.AccountAccessLevel = 'Edit';
-        aShare1.ContactAccessLevel = 'Edit';
-        aShare1.OpportunityAccessLevel = 'Edit';
-        AccountShare aShare2=new AccountShare();
-        aShare2.AccountId = sAccount.Id;
-        aShare2.UserOrGroupId = powerPartnerUser.id;
-        aShare2.AccountAccessLevel = 'Edit';
-        aShare2.ContactAccessLevel = 'Edit';
-        aShare2.OpportunityAccessLevel = 'Edit';
-        ashareList.add(aShare1);
-        ashareList.add(aShare2);
-        insert ashareList;
         System.runAs(powerPartnerUser) {
             System.assert(UserInfo.getUserId() == powerPartnerUser.Id);
             System.debug(LoggingLevel.INFO,'powerPartnerUser.Id : '+powerPartnerUser.Id);
@@ -304,18 +289,11 @@ public with sharing class Test_PartnerOpportunityCreateExt {
             PartnerOpportunityCreateExtObj.redirectDesignTool();
     
             System.assert(PartnerOpportunityCreateExtObj.redirectURL.containsIgnoreCase('lightmile'));
-            
-            PartnerOpportunityCreateExtObj.showScheduler();
-            PartnerOpportunityCreateExtObj.declineTermsandConditions();
-            PartnerOpportunityCreateExtObj.acceptTermsandConditions();
-            PartnerOpportunityCreateExtObj.getPartnerTermsConditions();
-            PartnerOpportunityCreateExtObj.partnerSungevity();
-            PartnerOpportunityCreateExtObj.getApptCategories();
+
         } 
 
     }     
-    
-    
+
     static void setupOptyData(){
         Id accountRecTypeId = [select Id from RecordType where Name = 'Partner' and SobjectType = 'Account' limit 1].Id;
           

@@ -413,7 +413,7 @@ public class CreateServiceContractController{
         serviceContractFields += ', Proposal__r.Id, Proposal__r.Stage__c ';
       serviceContractFields += ', (select Id, Name, Status__c, type__c, System_Size_CEC_AC__c from Assets__r where Status__c =:activeStr ) ';
     serviceContractFields += ', (select Id, Type__c, Contact__c from Service_Contract_Contact_Rels__r) ';
-    serviceContractFields += ', (select Id, Account__c, Type__c from Service_Contract_Partner_Rels__r) ';
+    serviceContractFields += ', (select Id, Account__c, Type__c from Service_Contract_Partner_Rels__r) ';// 
         serviceContractFields += ' from ServiceContract where Service_Contract_Status__c =:activeStr and Opportunity__c =:opportunityId ';      
         List<ServiceContract> activeServiceContracts = Database.query(serviceContractFields);  
         if(activeServiceContracts != null && !activeServiceContracts.isEmpty()){
@@ -739,17 +739,31 @@ public class CreateServiceContractController{
         }
         
         DateTime customerSignOffDate = serviceContractEventObj.Customer_Signoff__c;   
+        DateTime revisedCustSignOffDateValue = serviceContractEventObj.Revised_Customer_SignOff__c;
         DateTime srSignOffDate = serviceContractEventObj.SR_Signoff__c;   
         DateTime revisedSignOffDate = serviceContractEventObj.Revised_SR_Signoff__c;   
-         
+        string  custSignOffDate = 'Customer_Signoff__c';
+         string  revisedcustSignOffDateField = 'Revised_Customer_SignOff__c';
         Set<String> proposalSCEventFields = ProposalToServiceContractGenerationUtil.getProposalFieldsForSCEvent();  
     for (String proposalField: proposalSCEventFields) {
             String scEventField = ProposalToServiceContractGenerationUtil.getProposalFieldMapToSCEvent(proposalField);
             Object proposalFieldValue = proposal.get(proposalField);
             Object scEventFieldValue = serviceContractEventObj.get(scEventField);
-            if(proposalFieldValue == null)
+      
+        if(proposalFieldValue == null && !scEventField.equalsIgnoreCase(revisedcustSignOffDateField) )
                 serviceContractEventObj.put(scEventField, null);
-            else
+            else if ( scEventField.equalsIgnoreCase(custSignOffDate)  && scEventFieldValue != null ) 
+                continue;
+        
+           	 else if ( scEventField.equalsIgnoreCase(revisedcustSignOffDateField)  && scEventFieldValue != null 
+                      && proposalFieldValue == null ){
+                        if(  proposal.Customer_Signoff_Date__c != null && proposal.Customer_Signoff_Date__c >= revisedCustSignOffDateValue ) 
+                        { 
+                            system.debug( 'ScEvent Feild Name' + scEventField + '--ProposalField Name' + proposalField );	
+                            serviceContractEventObj.put(scEventField, proposal.get('Customer_Signoff_Date__c'));
+                        }
+                      }
+        	else
                 serviceContractEventObj.put(scEventField, proposalFieldValue);
         } 
     serviceContractEventObj.Customer_Signoff__c = (serviceContractEventObj.Customer_Signoff__c != null) ? serviceContractEventObj.Customer_Signoff__c : customerSignOffDate; 

@@ -1181,11 +1181,11 @@ public without sharing class LeadDeDupServiceImpl extends BaseClass implements L
                                                                              Opportunity.Last_Modified_Date_Last_Click__c 
                                                                         from OpportunityContactRole  
                                                                        where IsPrimary = true 
-                                                                         and (Contact.Phone in :phoneSet 
-                                                                          or Contact.Email in :emailSet)
+                                                                         and ((Contact.Phone !=null and Contact.Phone in :phoneSet) 
+                                                                          or (Contact.Email !=null and Contact.Email in :emailSet))
                                                                     order by CreatedDate desc limit 10];
         }
-        else   if(phoneSet !=null && phoneSet.size()>0){
+        else if(phoneSet !=null && phoneSet.size()>0){
                possibleMatchingOpptysList = [select OpportunityId, Opportunity.Channel_2__c, Opportunity.Lead_Source_2__c, 
                                                                              Opportunity.Lead_Type__c, Opportunity.StageName, Opportunity.Opportunity_Status__c, Opportunity.Reason__c, 
                                                                              Contact.Phone, Contact.Email, Opportunity.CreatedDate, 
@@ -1193,7 +1193,7 @@ public without sharing class LeadDeDupServiceImpl extends BaseClass implements L
                                                                              Opportunity.Last_Modified_Date_Last_Click__c 
                                                                         from OpportunityContactRole  
                                                                        where IsPrimary = true
-                                                                         and Contact.Phone in :phoneSet order by CreatedDate desc limit 10];
+                                                                         and (Contact.Phone !=null and Contact.Phone in :phoneSet) order by CreatedDate desc limit 10];
         }
          else if(emailSet !=null && emailSet.size()>0){
                possibleMatchingOpptysList = [select OpportunityId, Opportunity.Channel_2__c, Opportunity.Lead_Source_2__c, 
@@ -1203,7 +1203,7 @@ public without sharing class LeadDeDupServiceImpl extends BaseClass implements L
                                                                              Opportunity.Last_Modified_Date_Last_Click__c 
                                                                         from OpportunityContactRole 
                                                                         where IsPrimary = true
-                                                                         and Contact.Email in :emailSet order by CreatedDate desc limit 10];
+                                                                         and (Contact.Email !=null and Contact.Email in :emailSet) order by CreatedDate desc limit 10];
         }       
 
            return possibleMatchingOpptysList;                                       

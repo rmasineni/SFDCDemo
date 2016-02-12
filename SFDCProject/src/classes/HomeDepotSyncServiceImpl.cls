@@ -431,7 +431,17 @@ public class HomeDepotSyncServiceImpl extends BaseClass implements HomeDepotSync
         
         try{
             System.debug('lookupLeads---> 2');
-            JsonReader reader = homeDepotHttpPost(getLeadLookupUrl(), getLookupLeadRequestBody(batchNumber, prospectId));
+            JsonReader reader;
+            DateTime TimeNow = Datetime.Now();
+            DateTime OAuthTokenTime = DateTime.ValueOf(Sf.settingsService.getString('HomeDepotOAuthTokenTime'));
+            DateTime OAuthTokenExpiryTime = OAuthTokenTime.addMinutes(Integer.ValueOf(Sf.settingsService.getString('HomeDepotOAuthTokenExpiryTime')));
+            if(TimeNow > OAuthTokenExpiryTime){
+              reader = homeDepotHttpPost(getLeadLookupUrl(), getLookupLeadRequestBody(batchNumber, prospectId));
+            }
+            else{
+              reader = homeDepotHttpPostLookup(getLeadLookupUrl(), getLookupLeadRequestBody(batchNumber, prospectId));
+            }
+            
             HomeDepotLeadLookupDto lookupDTO = new HomeDepotLeadLookupDto(reader);
             System.debug('lookupLeads---> 3');
             if(lookupDTO != null){
@@ -674,7 +684,16 @@ public class HomeDepotSyncServiceImpl extends BaseClass implements HomeDepotSync
         try{
             
             //JsonReader reader = homeDepotHttpPost(getErrorLogUrl(), getErrorLogRequestBody(batchNumber, createdDate));
-            JsonReader reader = homeDepotHttpPost(getErrorLogUrl(), getErrorLogRequestBody(createdDate));
+            JsonReader reader;
+            DateTime TimeNow = Datetime.Now();
+            DateTime OAuthTokenTime = DateTime.ValueOf(Sf.settingsService.getString('HomeDepotOAuthTokenTime'));
+            DateTime OAuthTokenExpiryTime = OAuthTokenTime.addMinutes(Integer.ValueOf(Sf.settingsService.getString('HomeDepotOAuthTokenExpiryTime')));
+            if(TimeNow > OAuthTokenExpiryTime){
+              reader = homeDepotHttpPost(getErrorLogUrl(), getErrorLogRequestBody(createdDate));
+            }
+            else{
+              reader = homeDepotHttpPostLookup(getErrorLogUrl(), getErrorLogRequestBody(createdDate));
+            }
             system.debug('My Reader'+reader);
             HomeDepotErrorLookupDto ErrorlookupDTO = new HomeDepotErrorLookupDto(reader);
             if(ErrorlookupDTO != null){
@@ -1067,8 +1086,33 @@ public class HomeDepotSyncServiceImpl extends BaseClass implements HomeDepotSync
         }
         authToken = getOAuth2AccessToken(getOAuth2AuthzUrl(), Sf.settingsService.getString('HomeDepotOAuth2ClientId'),
             Sf.settingsService.getString('HomeDepotOAuth2ClientSecret'));
+        if (authToken != null) {
+            Sf.settingsService.setString('HomeDepotOAuthToken',authToken);
+        }
+        DateTime SyncOAuthTokenTime = DateTime.now();
+        String OAuthTokenTimeStr = String.ValueOf(SyncOAuthTokenTime);
+        Sf.settingsService.setString('HomeDepotOAuthTokenTime',OAuthTokenTimeStr);
         
         return authToken;
+    }
+    
+    public JsonReader homeDepotHttpPostLookup(String url, String body) {
+        String userId = Sf.settingsService.getString('HomeDepotUserId');
+        String password = Sf.settingsService.getString('HomeDepotPassword');
+        String HDAuthToken = Sf.settingsService.getString('HomeDepotOAuthToken');
+        Map<String, String> headers = new Map<String, String>{
+            'appToken' => HDAuthToken,
+            'x-clientid' => base64Encode(userId +':'+ password),
+            'Content-Type' => 'application/json'
+        };
+        HttpDetails details = httpPostDetails(url, body, headers, 60000);        
+        JsonReader jsonReader = new JsonReader(details.response.getBody());
+        system.debug('-->jsonreader'+jsonreader);
+        if(jsonReader.getString('Fault.faultCode') != null) {
+            throw new UnsuccessfulHttpResponseException(details.request, details.response, details.requestHeaders);
+        }
+        
+        return jsonReader;
     }
     
     public Boolean isHomeDepotLeadSyncEnabled() {
@@ -1545,7 +1589,16 @@ public class HomeDepotSyncServiceImpl extends BaseClass implements HomeDepotSync
         
         try{
             System.debug('lookupSCE---> 2');
-            JsonReader reader = homeDepotHttpPost(getLeadLookupUrl(), getLookupLeadRequestBody(batchNumber, prospectId));
+            JsonReader reader;
+            DateTime TimeNow = Datetime.Now();
+            DateTime OAuthTokenTime = DateTime.ValueOf(Sf.settingsService.getString('HomeDepotOAuthTokenTime'));
+            DateTime OAuthTokenExpiryTime = OAuthTokenTime.addMinutes(Integer.ValueOf(Sf.settingsService.getString('HomeDepotOAuthTokenExpiryTime')));
+            if(TimeNow > OAuthTokenExpiryTime){
+              reader = homeDepotHttpPost(getLeadLookupUrl(), getLookupLeadRequestBody(batchNumber, prospectId));
+            }
+            else{
+              reader = homeDepotHttpPostLookup(getLeadLookupUrl(), getLookupLeadRequestBody(batchNumber, prospectId));
+            }
             HomeDepotSCELookupDto lookupDTO = new HomeDepotSCELookupDto(reader);
             System.debug('lookupSCE---> 3');
             if(lookupDTO != null){

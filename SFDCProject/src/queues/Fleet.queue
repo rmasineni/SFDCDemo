@@ -3,10 +3,10 @@
     <doesSendEmailToMembers>false</doesSendEmailToMembers>
     <name>Fleet</name>
     <queueSobject>
-        <sobjectType>BMCServiceDesk__Category__c</sobjectType>
+        <sobjectType>BMCServiceDesk__Incident__c</sobjectType>
     </queueSobject>
     <queueSobject>
-        <sobjectType>BMCServiceDesk__Incident__c</sobjectType>
+        <sobjectType>BMCServiceDesk__Problem__c</sobjectType>
     </queueSobject>
     <queueSobject>
         <sobjectType>BMCServiceDesk__Task__c</sobjectType>

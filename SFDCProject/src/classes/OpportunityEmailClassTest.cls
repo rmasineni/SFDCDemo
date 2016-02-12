@@ -4,6 +4,7 @@ public class OpportunityEmailClassTest {
 
     public static testmethod void SiteAuditScheduleOpptyTest(){
         
+        UnitTest_ProposalUtil.disableExternalServices();
         Account acc1 = new Account();
         acc1.Name = 'Test Acc1';
         insert acc1;

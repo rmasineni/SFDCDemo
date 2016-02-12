@@ -44,6 +44,7 @@
         <actionName>View</actionName>
         <type>Default</type>
     </actionOverrides>
+    <allowInChatterGroups>false</allowInChatterGroups>
     <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
     <deploymentStatus>Deployed</deploymentStatus>
     <description>Generic object used to log exceptions and other information related to code or api.</description>
@@ -52,7 +53,7 @@
     <enableDivisions>false</enableDivisions>
     <enableFeeds>false</enableFeeds>
     <enableHistory>false</enableHistory>
-    <enableReports>true</enableReports>
+    <enableReports>false</enableReports>
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
     <externalSharingModel>ReadWrite</externalSharingModel>
@@ -75,7 +76,7 @@
         <length>131072</length>
         <trackTrending>false</trackTrending>
         <type>LongTextArea</type>
-        <visibleLines>3</visibleLines>
+        <visibleLines>10</visibleLines>
     </fields>
     <fields>
         <fullName>Details3__c</fullName>
@@ -265,18 +266,7 @@
         <columns>Record__c</columns>
         <columns>CREATED_DATE</columns>
         <columns>Record_Id__c</columns>
-        <columns>Sobject__c</columns>
         <filterScope>Everything</filterScope>
-        <filters>
-            <field>Module__c</field>
-            <operation>contains</operation>
-            <value>CoreLogic</value>
-        </filters>
-        <filters>
-            <field>Record_Id__c</field>
-            <operation>contains</operation>
-            <value>0013200001Dq2jdAAB</value>
-        </filters>
         <label>All</label>
         <language>en_US</language>
     </listViews>
@@ -332,6 +322,43 @@
             <value>Error</value>
         </filters>
         <label>All Api Request errors</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>All_Api_Requests</fullName>
+        <columns>NAME</columns>
+        <columns>Type__c</columns>
+        <columns>Details2__c</columns>
+        <columns>Module__c</columns>
+        <columns>Action__c</columns>
+        <columns>Message__c</columns>
+        <columns>Record__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Module__c</field>
+            <operation>equals</operation>
+            <value>Api</value>
+        </filters>
+        <label>All Api Requests</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>All_Aws_Sqs_Sync</fullName>
+        <columns>NAME</columns>
+        <columns>Module__c</columns>
+        <columns>Action__c</columns>
+        <columns>Type__c</columns>
+        <columns>Message__c</columns>
+        <columns>Sobject__c</columns>
+        <columns>Record__c</columns>
+        <columns>UPDATEDBY_USER</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Module__c</field>
+            <operation>equals</operation>
+            <value>AwsSqsSync</value>
+        </filters>
+        <label>All Aws Sqs Sync</label>
         <language>en_US</language>
     </listViews>
     <listViews>
@@ -413,24 +440,13 @@
     <listViews>
         <fullName>All_GoogleCalendarSync</fullName>
         <columns>NAME</columns>
-        <columns>Module__c</columns>
-        <columns>Action__c</columns>
-        <columns>Type__c</columns>
-        <columns>Message__c</columns>
-        <columns>Sobject__c</columns>
-        <columns>Record__c</columns>
         <filterScope>Everything</filterScope>
         <filters>
             <field>Module__c</field>
             <operation>equals</operation>
             <value>GoogleCalendarSync</value>
         </filters>
-        <filters>
-            <field>Type__c</field>
-            <operation>equals</operation>
-            <value>Error</value>
-        </filters>
-        <label>All Google Calendar Sync Errors</label>
+        <label>All GoogleCalendarSync</label>
         <language>en_US</language>
     </listViews>
     <listViews>
@@ -491,6 +507,25 @@
         <language>en_US</language>
     </listViews>
     <listViews>
+        <fullName>All_Today</fullName>
+        <columns>NAME</columns>
+        <columns>Type__c</columns>
+        <columns>Module__c</columns>
+        <columns>Action__c</columns>
+        <columns>Message__c</columns>
+        <columns>Record__c</columns>
+        <columns>CREATEDBY_USER</columns>
+        <columns>LAST_UPDATE</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>CREATED_DATE</field>
+            <operation>equals</operation>
+            <value>TODAY</value>
+        </filters>
+        <label>All Today</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
         <fullName>Drive_Time</fullName>
         <columns>NAME</columns>
         <columns>Type__c</columns>
@@ -533,30 +568,6 @@
         <language>en_US</language>
     </listViews>
     <listViews>
-        <fullName>LGCY_errors</fullName>
-        <columns>NAME</columns>
-        <columns>Type__c</columns>
-        <columns>Module__c</columns>
-        <columns>Action__c</columns>
-        <columns>Message__c</columns>
-        <columns>Record__c</columns>
-        <columns>CREATEDBY_USER</columns>
-        <columns>LAST_UPDATE</columns>
-        <filterScope>Everything</filterScope>
-        <filters>
-            <field>CREATED_DATE</field>
-            <operation>equals</operation>
-            <value>TODAY</value>
-        </filters>
-        <filters>
-            <field>CREATEDBY_USER</field>
-            <operation>contains</operation>
-            <value>Lgcy ApiUser</value>
-        </filters>
-        <label>LGCY errors</label>
-        <language>en_US</language>
-    </listViews>
-    <listViews>
         <fullName>QAUser</fullName>
         <columns>NAME</columns>
         <columns>Type__c</columns>
@@ -570,7 +581,7 @@
         <filters>
             <field>Message__c</field>
             <operation>contains</operation>
-            <value>Oleszewski</value>
+            <value>12049 Dunblane</value>
         </filters>
         <label>QAUser</label>
         <language>en_US</language>
@@ -638,78 +649,6 @@
             <value>YESTERDAY</value>
         </filters>
         <label>00532000004p6xg</label>
-        <language>en_US</language>
-    </listViews>
-    <listViews>
-        <fullName>X12677_Via_Colmenar_92129</fullName>
-        <columns>NAME</columns>
-        <columns>Type__c</columns>
-        <columns>Module__c</columns>
-        <columns>Action__c</columns>
-        <columns>Message__c</columns>
-        <columns>Record__c</columns>
-        <columns>CREATED_DATE</columns>
-        <columns>Record_Id__c</columns>
-        <filterScope>Everything</filterScope>
-        <filters>
-            <field>Message__c</field>
-            <operation>contains</operation>
-            <value>12677 Via Colmenar</value>
-        </filters>
-        <filters>
-            <field>CREATED_DATE</field>
-            <operation>equals</operation>
-            <value>12/20/2015 12:00 AM</value>
-        </filters>
-        <label>12677 Via Colmenar-92129</label>
-        <language>en_US</language>
-    </listViews>
-    <listViews>
-        <fullName>X2124_College_St_29205</fullName>
-        <columns>NAME</columns>
-        <columns>Type__c</columns>
-        <columns>Module__c</columns>
-        <columns>Action__c</columns>
-        <columns>Message__c</columns>
-        <columns>Record__c</columns>
-        <columns>CREATED_DATE</columns>
-        <columns>Record_Id__c</columns>
-        <filterScope>Everything</filterScope>
-        <filters>
-            <field>Message__c</field>
-            <operation>contains</operation>
-            <value>2124 College St</value>
-        </filters>
-        <filters>
-            <field>CREATED_DATE</field>
-            <operation>equals</operation>
-            <value>TODAY</value>
-        </filters>
-        <label>2124 College St-29205</label>
-        <language>en_US</language>
-    </listViews>
-    <listViews>
-        <fullName>iknock_logs_today</fullName>
-        <columns>NAME</columns>
-        <columns>Type__c</columns>
-        <columns>Module__c</columns>
-        <columns>Action__c</columns>
-        <columns>Message__c</columns>
-        <columns>Record__c</columns>
-        <columns>CREATEDBY_USER</columns>
-        <columns>LAST_UPDATE</columns>
-        <filterScope>Everything</filterScope>
-        <filters>
-            <field>CREATED_DATE</field>
-            <operation>greaterThan</operation>
-            <value>12/11/2015 12:00 AM</value>
-        </filters>
-        <filters>
-            <field>CREATEDBY_USER</field>
-            <operation>contains</operation>
-            <value>iknock ApiUser</value>
-        </filters>
-        <label>iknock logs today</label>
         <language>en_US</language>
     </listViews>
     <nameField>

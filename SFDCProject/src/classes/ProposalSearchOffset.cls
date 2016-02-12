@@ -36,6 +36,8 @@ public with sharing class ProposalSearchOffset {
     public  Integer total_size = 2000;
     private Integer list_size = 10; //Number of rows per page
     public Integer counter = 0; //Offset counter
+    public Map<String,String> CustCreditContMap;
+    public String custParam{set;get;}
     
     public ProposalSearchOffset(){
         total_size = 0;
@@ -115,6 +117,7 @@ public with sharing class ProposalSearchOffset {
         public Proposals(){
         }
         public Proposal__c proposalObj{get;set;}   
+        public string ccObj{get;set;}
     }
     
     //Following is to get the list of proposals based on the View and Search String
@@ -135,6 +138,9 @@ public with sharing class ProposalSearchOffset {
         for(Proposal__c proposalObj : proposalList){
             tempProposals = new Proposals();
             tempProposals.proposalObj  = proposalObj;
+            if(CustCreditContMap.containsKey(proposalObj.primary_customer__c)){     
+                tempProposals.ccObj= CustCreditContMap.get(proposalObj.primary_customer__c);        
+            }
             tempProposalList.add(tempProposals);
         }
         return tempProposalList;
@@ -273,9 +279,9 @@ public with sharing class ProposalSearchOffset {
         }             
         //String expirationDays = (Label.Proposal_Expiration_Days != null && Label.Proposal_Expiration_Days != '') ? Label.Proposal_Expiration_Days : '60';
         
-        String soqlQuery = 'Select ID,Name,Original_Proposal_ID__c,Original_Proposal_ID__r.name,Change_Order_ID__c,Change_Order_ID__r.name,Stage__c,CreatedDate,'; 
+        String soqlQuery = 'Select ID,Name,Primary_Customer__c,Opportunity__c,Opportunity__r.name,Current_Customer_Credit_Report__r.Sunrun_Credit_Status__c,Opportunity_Name__c,Original_Proposal_ID__c,Original_Proposal_ID__r.name,Change_Order_ID__c,Change_Order_ID__r.name,Stage__c,CreatedDate,'; 
         soqlQuery += ' Homeowner_Name__c,Homeowner_Phone__c,Customer_Address__c, User_Name__c, Agreement_Type__c, Proposal_Name__c, ';
-        soqlQuery += ' Original_Proposal_ID__r.createdDate, LastModifiedDate  from proposal__c ';
+        soqlQuery += ' Original_Proposal_ID__r.createdDate, LastModifiedDate,(select id,Customer_Signature_Status__c from sr_docs__r order by createddate desc)  from proposal__c ';
         soqlQuery += ' where stage__c in :proposalStages AND status__c = \'Valid\' ';
         soqlQuery += ' and (createdDate >= :partnerGoLiveDate) ';
         if(loginPartnerAccountId != null){
@@ -331,8 +337,8 @@ public with sharing class ProposalSearchOffset {
         
         system.debug('Entering function getProposalsForSelectedView:  '+QueryString);
         
-        String[] squery1 = QueryString.split('from');
-        String QueryStringcount = 'Select count() from ' + squery1[1];
+        String[] squery1 = QueryString.split('from proposal__c');
+        String QueryStringcount = 'Select count() from proposal__c' + squery1[1];
         String[] squery2 = QueryStringcount.split('ORDER BY');
         QueryStringcount = squery2[0] + ' LIMIT :plimit';
         system.debug('Count QueryString  '+QueryStringcount);
@@ -346,10 +352,31 @@ public with sharing class ProposalSearchOffset {
         System.debug('Offset Query is    '+QueryStringOffset);
             propListnew = Database.query(QueryStringOffset);
             system.debug('Proposals list size   '+propListnew.size());
+            doCustomerCredit(propListnew);
             propListdisp = getProposals();
       system.debug('Proposals object list size   '+propListdisp.size());
         
         
+    }
+    private void doCustomerCredit(List<Proposal__c> prop_list){     
+            Set<String> CustCont=new Set<String>();     
+            CustCreditContMap=new Map<String,String>();     
+            for(proposal__c prop:prop_list){        
+                if(prop.primary_customer__c!=null)      
+                CustCont.add(prop.primary_customer__c);     
+            }                           
+            for(Customer_Credit__c ccObj:[select Sunrun_Credit_Status__c,Contact__c from Customer_Credit__c where Contact__c in:CustCont]){     
+                CustCreditContMap.put(ccObj.Contact__c,ccObj.Sunrun_Credit_Status__c);      
+            }                       
+     }      
+    public string getCustomerCredit(){      
+            system.debug('--custparam'+custparam);      
+            if(custParam!=null){        
+            if(CustCreditContMap.containsKey(custParam)){       
+                return CustCreditContMap.get(custParam);        
+            }       
+            }       
+            return '';      
     }
     //Following is to built the Search condition based on the viwes selected
     private String getSearchConditionByViewName(String userId, String userName){

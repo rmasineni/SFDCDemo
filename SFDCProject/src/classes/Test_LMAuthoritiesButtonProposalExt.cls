@@ -54,6 +54,7 @@ public class Test_LMAuthoritiesButtonProposalExt {
         
         //LightMile_User__c lightmuser =  LightMile_User__c.getValues('LightMile User');     
         LightMile_User__c lightmuser =  LightMile_User__c.getValues('Sunrun CRM');     
+        
         if(lightmuser !=null){
             sysAdminUser=new User(id=lightmuser.user_id__c);
         

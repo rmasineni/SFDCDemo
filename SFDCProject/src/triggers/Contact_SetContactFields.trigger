@@ -13,7 +13,7 @@ trigger Contact_SetContactFields on Contact (before insert, before update) {
   Boolean skipValidations = False;
   skipValidations = SkipTriggerValidation.performTriggerValidations();
   if(skipValidations == false){
-    
+   
     try{
     
     User loginUser = PRMContactUtil.getLoginUser();
@@ -73,12 +73,12 @@ trigger Contact_SetContactFields on Contact (before insert, before update) {
                 conNullMemberIDSet.add(contactObj.id);
                 conIdRecMap.put(contactObj.id, contactObj);     
             }
+        }
     }
-    }
-  
-  System.debug('contactIdsForProposals: ' + contactIdsForProposals);
+    
+    System.debug('contactIdsForProposals: ' + contactIdsForProposals);
     if(contactIdsForProposals.size() > 0){
-        Map<Id, Boolean> contactToContractResultMap = ServiceContractUtil.checkForCompletedServiceContracts('Contact', contactIdsForProposals);
+            Map<Id, Boolean> contactToContractResultMap = ServiceContractUtil.checkForCompletedServiceContracts('Contact', contactIdsForProposals);
         for(Id contactId : contactToContractResultMap.keySet()){
             Boolean result = contactToContractResultMap.get(contactId);
             if(result == true && loginUser.contactId != null){
@@ -187,21 +187,21 @@ trigger Contact_SetContactFields on Contact (before insert, before update) {
     
     Map<String, Customer_Credit__c> ccMap = new Map<String, Customer_Credit__c>();
     if(emailSet != null && !emailSet.isEmpty()){
-      for(Customer_Credit__c ccObj : [Select Id, Customer_Email__c, Contact__c, type__c, Sunrun_Credit_Status__c,Credit_Decision_on_Portal__c, status__c, Date_Pulled__c, Date_Approved__c, Date_Submitted__c from 
-                                          Customer_Credit__c where Customer_Email__c in :emailSet and type__c != 'Sunrun' ]){
-          if(ccMap.containsKey(ccObj.Customer_Email__c)){
-              Customer_Credit__c ccObj1 = ccMap.get(ccObj.Customer_Email__c);
-              if(ccObj.Date_Approved__c != null && ccObj1.Date_Approved__c != null
-                  && ccObj.Date_Approved__c > ccObj1.Date_Approved__c){
-                  ccMap.put(ccObj.Customer_Email__c, ccObj);
-              }else if(ccObj.Date_Pulled__c > ccObj1.Date_Pulled__c){
-                  ccMap.put(ccObj.Customer_Email__c, ccObj);
-              }
-              
-          }else{
-              ccMap.put(ccObj.Customer_Email__c, ccObj);
-          }
-      }
+        for(Customer_Credit__c ccObj : [Select Id, Customer_Email__c, Contact__c, type__c, Sunrun_Credit_Status__c,Credit_Decision_on_Portal__c, status__c, Date_Pulled__c, Date_Approved__c, Date_Submitted__c from 
+                                            Customer_Credit__c where Customer_Email__c in :emailSet and type__c != 'Sunrun' ]){
+            if(ccMap.containsKey(ccObj.Customer_Email__c)){
+                Customer_Credit__c ccObj1 = ccMap.get(ccObj.Customer_Email__c);
+                if(ccObj.Date_Approved__c != null && ccObj1.Date_Approved__c != null
+                    && ccObj.Date_Approved__c > ccObj1.Date_Approved__c){
+                    ccMap.put(ccObj.Customer_Email__c, ccObj);
+                }else if(ccObj.Date_Pulled__c > ccObj1.Date_Pulled__c){
+                    ccMap.put(ccObj.Customer_Email__c, ccObj);
+                }
+                
+            }else{
+                ccMap.put(ccObj.Customer_Email__c, ccObj);
+            }
+        }
     }
     
     for(Contact tempContact: contactList){
@@ -210,13 +210,13 @@ trigger Contact_SetContactFields on Contact (before insert, before update) {
             tempContact.Credit_Status__c = ccObj1.status__c;
             tempContact.credit_received__c = ccObj1.Date_Pulled__c;
             tempContact.credit_submitted__c = ccObj1.Date_Submitted__c;
-      tempContact.Sunrun_Credit_Status__c = ccObj1.Sunrun_Credit_Status__c;
+            tempContact.Sunrun_Credit_Status__c = ccObj1.Sunrun_Credit_Status__c;
            // tempContact.Credit_Status_on_Portal__c = ccObj1.Credit_Decision_on_Portal__c;
-      if(tempContact.credit_submitted__c != null 
-        && (tempContact.credit_status__c == null || tempContact.credit_status__c == '')){
-        tempContact.credit_status__c = 'Sent';  
-      }
-    }
+            if(tempContact.credit_submitted__c != null 
+                && (tempContact.credit_status__c == null || tempContact.credit_status__c == '')){
+                tempContact.credit_status__c = 'Sent';  
+            }
+        }
         System.debug('Credit Status: ' + tempContact.Credit_Status__c);
     }
 
@@ -315,5 +315,6 @@ trigger Contact_SetContactFields on Contact (before insert, before update) {
             contactObj.adderror(expObj.getMessage());
         }
     }
-  }  
+
+  }
 }

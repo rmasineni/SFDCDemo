@@ -44,6 +44,7 @@
         <actionName>View</actionName>
         <type>Default</type>
     </actionOverrides>
+    <allowInChatterGroups>false</allowInChatterGroups>
     <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
     <deploymentStatus>Deployed</deploymentStatus>
     <enableActivities>true</enableActivities>
@@ -540,6 +541,25 @@ IF(DATEVALUE(ServiceContract__r.Proposal__r.Original_Proposal_ID__r.CreatedDate)
                 <default>true</default>
             </values>
         </picklistValues>
+        <picklistValues>
+            <picklist>Vendor__c</picklist>
+            <values>
+                <fullName>ABB</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Enphase</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Locus</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SolarEdge</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
     </recordTypes>
     <recordTypes>
         <fullName>Energy_Storage_System</fullName>
@@ -595,6 +615,25 @@ IF(DATEVALUE(ServiceContract__r.Proposal__r.Original_Proposal_ID__r.CreatedDate)
                 <default>true</default>
             </values>
         </picklistValues>
+        <picklistValues>
+            <picklist>Vendor__c</picklist>
+            <values>
+                <fullName>ABB</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Enphase</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Locus</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SolarEdge</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
     </recordTypes>
     <recordTypes>
         <fullName>Inverter</fullName>
@@ -647,6 +686,25 @@ IF(DATEVALUE(ServiceContract__r.Proposal__r.Original_Proposal_ID__r.CreatedDate)
             <values>
                 <fullName>Inverter</fullName>
                 <default>true</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Vendor__c</picklist>
+            <values>
+                <fullName>ABB</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Enphase</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Locus</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SolarEdge</fullName>
+                <default>false</default>
             </values>
         </picklistValues>
     </recordTypes>
@@ -780,6 +838,25 @@ IF(DATEVALUE(ServiceContract__r.Proposal__r.Original_Proposal_ID__r.CreatedDate)
                 <default>true</default>
             </values>
         </picklistValues>
+        <picklistValues>
+            <picklist>Vendor__c</picklist>
+            <values>
+                <fullName>ABB</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Enphase</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Locus</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SolarEdge</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
     </recordTypes>
     <recordTypes>
         <fullName>Monitoring_Service</fullName>
@@ -834,32 +911,8 @@ IF(DATEVALUE(ServiceContract__r.Proposal__r.Original_Proposal_ID__r.CreatedDate)
         <picklistValues>
             <picklist>Type__c</picklist>
             <values>
-                <fullName>Asset</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Energy Storage System</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Inverter</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Meter</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Microinverter</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Monitoring Service</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Panel</fullName>
-                <default>false</default>
+                <default>true</default>
             </values>
         </picklistValues>
         <picklistValues>
@@ -933,6 +986,25 @@ IF(DATEVALUE(ServiceContract__r.Proposal__r.Original_Proposal_ID__r.CreatedDate)
             <values>
                 <fullName>Panel</fullName>
                 <default>true</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Vendor__c</picklist>
+            <values>
+                <fullName>ABB</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Enphase</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Locus</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SolarEdge</fullName>
+                <default>false</default>
             </values>
         </picklistValues>
     </recordTypes>

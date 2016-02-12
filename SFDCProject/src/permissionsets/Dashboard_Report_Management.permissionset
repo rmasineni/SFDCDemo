@@ -37,6 +37,10 @@
         <visible>false</visible>
     </applicationVisibilities>
     <applicationVisibilities>
+        <application>Scheduling_Console</application>
+        <visible>false</visible>
+    </applicationVisibilities>
+    <applicationVisibilities>
         <application>SunRun_Finance</application>
         <visible>false</visible>
     </applicationVisibilities>
@@ -237,6 +241,10 @@
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>AppointmentScheduledConfirmationEmail</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>AppointmentTypes</apexClass>
         <enabled>false</enabled>
     </classAccesses>
@@ -349,6 +357,14 @@
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>BaseClassDto</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>BaseClassTempTestDoNotDeployToProd</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>BaseClassTest</apexClass>
         <enabled>false</enabled>
     </classAccesses>
@@ -362,6 +378,10 @@
     </classAccesses>
     <classAccesses>
         <apexClass>BaseSyncJob</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>BaseTimezone</apexClass>
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
@@ -526,6 +546,10 @@
     </classAccesses>
     <classAccesses>
         <apexClass>CommonSchedulerTestBatch</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>CommonSchedulerTestJob</apexClass>
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
@@ -809,6 +833,14 @@
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>CreditVerification</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>CreditVerificationHandler</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>CustomContactLookup</apexClass>
         <enabled>false</enabled>
     </classAccesses>
@@ -917,6 +949,14 @@
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>DocusignApiBaseHandler</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>DocusignApiDto</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>DocusignApiESignEndpoint</apexClass>
         <enabled>false</enabled>
     </classAccesses>
@@ -981,6 +1021,38 @@
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>EmployeeRoleCustomSetting</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>EmployeeRoleReporting</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>EmployeeRoleReporting1</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>Employee_MasterBatch</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>Employee_MasterDeactivatedUsers</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>Employee_MasterDeactivatedUsersTest</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>Employee_MasterUtil</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>Employee_MasterUtilTest</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>Employee_ReferralTest</apexClass>
         <enabled>false</enabled>
     </classAccesses>
@@ -998,6 +1070,10 @@
     </classAccesses>
     <classAccesses>
         <apexClass>ExceptionsDeletionBatchTest</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>FSDAppointmentTypes</apexClass>
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
@@ -1089,6 +1165,10 @@
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>GoogleCalendarServiceTest2</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>GoogleCalendarSfdcEventsDeltaSyncBatch</apexClass>
         <enabled>false</enabled>
     </classAccesses>
@@ -1129,6 +1209,10 @@
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>GuidedSalesController</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>HelpRedirectorController</apexClass>
         <enabled>false</enabled>
     </classAccesses>
@@ -1137,7 +1221,15 @@
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>HomeDepotBatchjobTest</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>HomeDepotErrorLookupDto</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>HomeDepotErrorLookupDtoTest</apexClass>
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
@@ -1173,6 +1265,14 @@
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>HomeDepotLeadLookupSchedule</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>HomeDepotLeadLookupScheduler</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>HomeDepotLeadScheduleBatch</apexClass>
         <enabled>false</enabled>
     </classAccesses>
@@ -1185,6 +1285,10 @@
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>HomeDepotLeadSyncScheduler</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>HomeDepotOpportunityLookupBatch</apexClass>
         <enabled>false</enabled>
     </classAccesses>
@@ -1193,7 +1297,19 @@
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>HomeDepotOpptyLookupSchedule</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>HomeDepotOpptySyncSchedule</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>HomeDepotOpptySyncService</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>HomeDepotOpptySyncServiceImpl</apexClass>
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
@@ -1222,6 +1338,10 @@
     </classAccesses>
     <classAccesses>
         <apexClass>HomeDepotSyncServiceTest</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>HttpCalloutException</apexClass>
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
@@ -1309,6 +1429,14 @@
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>JurisdictionOnOppty</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>JurisdictionOnOpptyTest</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>LMAuthoritiesButtonProposalExt</apexClass>
         <enabled>false</enabled>
     </classAccesses>
@@ -1357,6 +1485,10 @@
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>LeadApiGetNearbyCustomersHandler</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>LeadApiLeadEndpoint</apexClass>
         <enabled>false</enabled>
     </classAccesses>
@@ -1366,6 +1498,10 @@
     </classAccesses>
     <classAccesses>
         <apexClass>LeadApiLeadsV1Endpoint</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>LeadApiNearbyCustomersEndpoint</apexClass>
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
@@ -1481,6 +1617,18 @@
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>LightningForgotPasswordController</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>LightningLoginFormController</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>LightningSelfRegisterController</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>LogzUploaderJob</apexClass>
         <enabled>false</enabled>
     </classAccesses>
@@ -1549,6 +1697,10 @@
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>NearbyCustomersViewerService</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>NearbyCustomersViewerServiceDto</apexClass>
         <enabled>false</enabled>
     </classAccesses>
@@ -1562,6 +1714,14 @@
     </classAccesses>
     <classAccesses>
         <apexClass>NetExamWebServiceAPIHelper7</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>NetExamWebServiceAPIHelper73</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>NetExamWebServiceAPIHelper73Test</apexClass>
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
@@ -1673,6 +1833,10 @@
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>OptyApiCreatePaymentUrlHandler</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>OptyApiDto</apexClass>
         <enabled>false</enabled>
     </classAccesses>
@@ -1697,7 +1861,15 @@
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>OptyApiGetPaymentUrlHandler</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>OptyApiOptyAppointmentsEndpoint</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>OptyApiOptyContactEndpoint</apexClass>
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
@@ -1721,11 +1893,19 @@
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>OptyApiPaymentUrlEndpoint</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>OptyApiReadOptyHandler</apexClass>
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>OptyApiTest</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>OptyApiUpdateOptyContactHandler</apexClass>
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
@@ -1738,6 +1918,10 @@
     </classAccesses>
     <classAccesses>
         <apexClass>OptyPaymentControllerTest</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>OrgChartImpl</apexClass>
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
@@ -1993,6 +2177,10 @@
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>ProposalApiProposalsEndPoint</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>ProposalApiSRAttachmentsTest</apexClass>
         <enabled>false</enabled>
     </classAccesses>
@@ -2214,6 +2402,14 @@
     </classAccesses>
     <classAccesses>
         <apexClass>SalesRepRedirectExt</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>Sample1</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>SanthoshTempTestDoNotPushToProd</apexClass>
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
@@ -2477,6 +2673,10 @@
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>SrvcCon_CustomSearchTab</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>StopWatch</apexClass>
         <enabled>false</enabled>
     </classAccesses>
@@ -2501,7 +2701,15 @@
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>SunRunS3RestConnectionAsync</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>SunrunErrorMessage</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>SyncData</apexClass>
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
@@ -2673,6 +2881,10 @@
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>Test_EmployeeRole</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>Test_FSDispatchSearch</apexClass>
         <enabled>false</enabled>
     </classAccesses>
@@ -2690,10 +2902,6 @@
     </classAccesses>
     <classAccesses>
         <apexClass>Test_InContactAPI</apexClass>
-        <enabled>false</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>Test_IncontactUtilityManager</apexClass>
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
@@ -3253,10 +3461,6 @@
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>Unittest_AppointmentTypes</apexClass>
-        <enabled>false</enabled>
-    </classAccesses>
-    <classAccesses>
         <apexClass>UnsuccessfulHttpResponseException</apexClass>
         <enabled>false</enabled>
     </classAccesses>
@@ -3274,6 +3478,10 @@
     </classAccesses>
     <classAccesses>
         <apexClass>UtilClassForTestCoverage</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>WR_BPM_TriggersTests</apexClass>
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
@@ -3393,6 +3601,10 @@
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>opptyUpdateLastClickQueueable</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>projTaskHelper</apexClass>
         <enabled>false</enabled>
     </classAccesses>
@@ -3402,6 +3614,18 @@
     </classAccesses>
     <classAccesses>
         <apexClass>quickFsDispatch</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>scInvestorDetailClass</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>scInvestorPartnerUtil</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>scInvestorSearchClass</apexClass>
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
@@ -3426,6 +3650,10 @@
     </classAccesses>
     <classAccesses>
         <apexClass>srvcCon_RelatedObjCompController</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>srvcCon_paginationCompContrl</apexClass>
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
@@ -3525,10 +3753,6 @@
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>testwfAdhocTaskCompController</apexClass>
-        <enabled>false</enabled>
-    </classAccesses>
-    <classAccesses>
         <apexClass>webservicesNetexamComUserservice7</apexClass>
         <enabled>false</enabled>
     </classAccesses>
@@ -3550,6 +3774,10 @@
     </classAccesses>
     <classAccesses>
         <apexClass>wfAdhocTaskCompController</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>wfAdhocTaskModifyClass</apexClass>
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
@@ -3628,6 +3856,31 @@ Report Builder
 Run Reports
 Schedule Reports
 View Setup and Configuration</description>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>AHJ_Database__c.City__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>AHJ_Database__c.County__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>AHJ_Database__c.Incorporation_Status__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>AHJ_Database__c.Jurisdiction_Name__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>AHJ_Database__c.State__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>API_Request_Log__c.External_Created_DateTime__c</field>
@@ -3831,6 +4084,11 @@ View Setup and Configuration</description>
     <fieldPermissions>
         <editable>false</editable>
         <field>Appointment_Region__c.Territory__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Appointment_Territory__c.Appointment_Region__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -4051,6 +4309,16 @@ View Setup and Configuration</description>
     <fieldPermissions>
         <editable>false</editable>
         <field>Appointment__c.Opportunity_Sales_Branch__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Appointment__c.Opportunity_Sales_Rep_Title__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Appointment__c.Opportunity_Sales_Rep__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -4481,6 +4749,41 @@ View Setup and Configuration</description>
     <fieldPermissions>
         <editable>false</editable>
         <field>Assignment_Order__c.Order__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Async_Process_Queue__c.Object_Name__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Async_Process_Queue__c.Rec_ID__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Async_Process_Queue__c.Request_End_Time__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Async_Process_Queue__c.Request_Start_Time__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Async_Process_Queue__c.Request_Status__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Async_Process_Queue__c.Request_Type__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Async_Process_Queue__c.Response_Details__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -5890,11 +6193,6 @@ View Setup and Configuration</description>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Customer_Credit__c.Sales_Organization_Name__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
         <field>Customer_Credit__c.Sales_Rep_Email_Calculated__c</field>
         <readable>false</readable>
     </fieldPermissions>
@@ -6145,6 +6443,21 @@ View Setup and Configuration</description>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Debug_Log__c.Description1__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Debug_Log__c.Description2__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Debug_Log__c.Event_Name__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Design_Option__c.KWH_KWP__c</field>
         <readable>false</readable>
     </fieldPermissions>
@@ -6215,6 +6528,46 @@ View Setup and Configuration</description>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>DocuSign_Tab_Management__c.Customer_Type__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>DocuSign_Tab_Management__c.DocuSign_Tag__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>DocuSign_Tab_Management__c.Tab_Category__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>DocuSign_Template__c.Document_Type__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>DocuSign_Template__c.End_Date__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>DocuSign_Template__c.Start_Date__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>DocuSign_Template__c.State__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>DocuSign_Template__c.Utility_Name__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Document_Classification__c.Allow_To_Over_Write__c</field>
         <readable>false</readable>
     </fieldPermissions>
@@ -6256,6 +6609,76 @@ View Setup and Configuration</description>
     <fieldPermissions>
         <editable>false</editable>
         <field>Document_Classification__c.category__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Employee_Master__c.Deactivate__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Employee_Master__c.EMPLOYEE_MOBILE_NUMBER__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Employee_Master__c.EMPLOYEE_NUMBER__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Employee_Master__c.EMPLOYEE_PRIMARY_WORK_NUMBER__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Employee_Master__c.EMPLOYEE_SECONDARY_WORK_NUMBER__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Employee_Master__c.FIRST_NAME__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Employee_Master__c.JOB__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Employee_Master__c.LAST_NAME__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Employee_Master__c.LOCATION__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Employee_Master__c.ORGANIZATION_NAME__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Employee_Master__c.SUPERVISOR_EMAIL_ADDRESS__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Employee_Master__c.SUPERVISOR_EMPLOYEE_NUMBER__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Employee_Master__c.SUPERVISOR_FULL_NAME__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Employee_Master__c.Termination_Status__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -9105,6 +9528,56 @@ View Setup and Configuration</description>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Guided_Sales_Answer__c.Answer_Text__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Guided_Sales_Answer__c.Next_Question__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Guided_Sales_Answer__c.Order__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Guided_Sales_Question__c.Question_Text__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Guided_Sales_Question__c.Type__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Guided_Sales_Response_Group__c.Lead__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Guided_Sales_Response__c.Answer_Text__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Guided_Sales_Response__c.Answer__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Guided_Sales_Response__c.Question_Text__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Guided_Sales_Response__c.Question__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Help__kav.Help_Content__c</field>
         <readable>false</readable>
     </fieldPermissions>
@@ -9381,6 +9854,436 @@ View Setup and Configuration</description>
     <fieldPermissions>
         <editable>false</editable>
         <field>Install_Audit__c.Total_Points_Possible__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Investor_Data__c.ACH_Payment__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Investor_Data__c.Address__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Investor_Data__c.Agreement_Number__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Investor_Data__c.Asset_Status__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Investor_Data__c.Billings_Lags__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Investor_Data__c.City__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Investor_Data__c.ContractNumber__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Investor_Data__c.Contract_Degradation__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Investor_Data__c.Contract_Type__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Investor_Data__c.County__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Investor_Data__c.Cumulative_Production__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Investor_Data__c.Current_Period_PBI_Payment_Amount__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Investor_Data__c.Current_Product_Type__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Investor_Data__c.Customer_Name__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Investor_Data__c.Customer_Signoff__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Investor_Data__c.Degradation__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Investor_Data__c.Estimated_Annual_Prod__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Investor_Data__c.FICO_Score__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Investor_Data__c.First_Payment_Due_Date__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Investor_Data__c.Full_System_Cost__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Investor_Data__c.Fund__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Investor_Data__c.Generation_PPA_Billing_Type__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Investor_Data__c.Generation__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Investor_Data__c.Guaranteed_Production_Cumulative_kWh__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Investor_Data__c.In_Service_Date__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Investor_Data__c.In_TE_Fund__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Investor_Data__c.Installer__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Investor_Data__c.Inverter_Manufacturer__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Investor_Data__c.Inverter_Model__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Investor_Data__c.Inverter_Type__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Investor_Data__c.Last_PBI_Date__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Investor_Data__c.Last_Payment_Due_Date__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Investor_Data__c.Last_Period_PBI_Payment_Amount__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Investor_Data__c.Lease_Payment_1_Year__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Investor_Data__c.Lease_Payment__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Investor_Data__c.Lease_Rate_Per_KW__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Investor_Data__c.M0_Amount__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Investor_Data__c.M0_Payment_Date__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Investor_Data__c.M1_Amount__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Investor_Data__c.M1_Payment_Date__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Investor_Data__c.M1_Proof_Date__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Investor_Data__c.M2_Payment_Date__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Investor_Data__c.M2_Proof_Date__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Investor_Data__c.M3_Amount__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Investor_Data__c.M3_Payment_Date__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Investor_Data__c.M3_Proof_Date__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Investor_Data__c.M4_Amount__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Investor_Data__c.M4_Payment_Date__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Investor_Data__c.Meter_Type__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Investor_Data__c.Net_Metering__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Investor_Data__c.Next_Payment_Due_Date__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Investor_Data__c.Original_Product_Type__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Investor_Data__c.Original_Term_of_Agreements__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Investor_Data__c.PBI_Rate_Escalator__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Investor_Data__c.PBI_Rate__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Investor_Data__c.PBI_Remaining_Term_months__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Investor_Data__c.PBI_Terms__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Investor_Data__c.PPA_Rate__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Investor_Data__c.Panel_Manufacturer__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Investor_Data__c.Panel_Model__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Investor_Data__c.Payment_Frequency__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Investor_Data__c.Payment_Type__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Investor_Data__c.Price_PerKW_Adj_Date__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Investor_Data__c.Price_PerKW__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Investor_Data__c.Production_Guarantee_Level__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Investor_Data__c.Rebate_Type__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Investor_Data__c.Refund_Rate_kWh__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Investor_Data__c.Remaining_Term_of_Agreements__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Investor_Data__c.SR_Signoff__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Investor_Data__c.Seasoning_of_Months_Since_PTO__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Investor_Data__c.State__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Investor_Data__c.System_Size__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Investor_Data__c.Total_Upfront_Payment__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Investor_Data__c.Type__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Investor_Data__c.Utility__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Investor_Data__c.Yr_1_Avoided_Power_Cost__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Investor_Data__c.Zipcode__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Investor_Mapping__c.Borrower__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Investor_Mapping__c.Name__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Investor_Mapping__c.TE_Fund_Name__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Jurisdictions__c.City__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Jurisdictions__c.County__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Jurisdictions__c.Incorporation_Status__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Jurisdictions__c.Jurisdiction_Name__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Jurisdictions__c.Local__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Jurisdictions__c.State__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -9965,27 +10868,27 @@ View Setup and Configuration</description>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Partner_Api_Default_Value__c.Active__c</field>
+        <field>Partner_API_Default_Value__c.API__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Partner_Api_Default_Value__c.Api__c</field>
+        <field>Partner_API_Default_Value__c.Active__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Partner_Api_Default_Value__c.Input_Value__c</field>
+        <field>Partner_API_Default_Value__c.Input_Value__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Partner_Api_Default_Value__c.Output_Value__c</field>
+        <field>Partner_API_Default_Value__c.Output_Value__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Partner_Api_Default_Value__c.Type__c</field>
+        <field>Partner_API_Default_Value__c.Type__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -10006,6 +10909,11 @@ View Setup and Configuration</description>
     <fieldPermissions>
         <editable>false</editable>
         <field>Partner_Api_Field__c.Required__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Partner_Api_Field__c.Summary_Field__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -11000,6 +11908,11 @@ View Setup and Configuration</description>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Project__c.Electrical_Engineer__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Project__c.End_Date__c</field>
         <readable>false</readable>
     </fieldPermissions>
@@ -11126,6 +12039,11 @@ View Setup and Configuration</description>
     <fieldPermissions>
         <editable>false</editable>
         <field>Project__c.Status__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Project__c.Structural_Engineer__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -13250,6 +14168,11 @@ View Setup and Configuration</description>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Proposal__c.Number_of_Appointments__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Proposal__c.Number_of_Inverters__c</field>
         <readable>false</readable>
     </fieldPermissions>
@@ -13681,6 +14604,11 @@ View Setup and Configuration</description>
     <fieldPermissions>
         <editable>false</editable>
         <field>Proposal__c.Retail_PO__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Proposal__c.Revised_Customer_SignOff_Date__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -14271,6 +15199,11 @@ View Setup and Configuration</description>
     <fieldPermissions>
         <editable>false</editable>
         <field>Public__kav.Attachment_5__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Public__kav.Tags_Keyword__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -15625,6 +16558,11 @@ View Setup and Configuration</description>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Release_Management_Record__c.Already_available_in_Majdev__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Release_Management_Record__c.Already_available_in_Majqa__c</field>
         <readable>false</readable>
     </fieldPermissions>
@@ -16046,6 +16984,21 @@ View Setup and Configuration</description>
     <fieldPermissions>
         <editable>false</editable>
         <field>SR_Gen_Asset_Attachment__c.Wet_Sign_Status__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>SampleObject1__c.Field1__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>SampleObject1__c.Field2__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>SampleObject1__c.Field3__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -17430,6 +18383,11 @@ View Setup and Configuration</description>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Service_Contract_Event__c.Random_Cohort__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Service_Contract_Event__c.Rate_Modification_Date__c</field>
         <readable>false</readable>
     </fieldPermissions>
@@ -17560,7 +18518,17 @@ View Setup and Configuration</description>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Service_Contract_Event__c.Retail_Loan_Draw_Date__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Service_Contract_Event__c.Return_to_Sales_Date__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Service_Contract_Event__c.Revised_Customer_SignOff__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -17796,6 +18764,11 @@ View Setup and Configuration</description>
     <fieldPermissions>
         <editable>false</editable>
         <field>Service_Contract_Event__c.SunRun_NTP_Costco_PO_Issued__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Service_Contract_Event__c.Sunrun_Loan_Draw_Date__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -20745,6 +21718,16 @@ View Setup and Configuration</description>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>SunRun__kav.File_Attachment__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>SunRun__kav.Rich_Description_Area__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Sunrun_Audit_Trail__c.API_Name__c</field>
         <readable>false</readable>
     </fieldPermissions>
@@ -21491,6 +22474,26 @@ View Setup and Configuration</description>
     <fieldPermissions>
         <editable>false</editable>
         <field>Survey__c.X78M_What_Sunrun_can_do_to_stay_10__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Sync_Data__c.Data__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Sync_Data__c.Record_Id__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Sync_Data__c.Sobject__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Sync_Data__c.Type__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -22366,6 +23369,11 @@ View Setup and Configuration</description>
     <fieldPermissions>
         <editable>false</editable>
         <field>Task__c.Customer_Full_Name__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Task__c.Delay_Until__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -23564,6 +24572,10 @@ View Setup and Configuration</description>
         <enabled>false</enabled>
     </pageAccesses>
     <pageAccesses>
+        <apexPage>CASEWorkflow</apexPage>
+        <enabled>false</enabled>
+    </pageAccesses>
+    <pageAccesses>
         <apexPage>CDYNESynchronousCallForLead</apexPage>
         <enabled>false</enabled>
     </pageAccesses>
@@ -23589,6 +24601,10 @@ View Setup and Configuration</description>
     </pageAccesses>
     <pageAccesses>
         <apexPage>CallcenterOptyScheduler</apexPage>
+        <enabled>false</enabled>
+    </pageAccesses>
+    <pageAccesses>
+        <apexPage>CallcenterSchedulingDemo</apexPage>
         <enabled>false</enabled>
     </pageAccesses>
     <pageAccesses>
@@ -23704,6 +24720,34 @@ View Setup and Configuration</description>
         <enabled>false</enabled>
     </pageAccesses>
     <pageAccesses>
+        <apexPage>EmployeeMaster</apexPage>
+        <enabled>false</enabled>
+    </pageAccesses>
+    <pageAccesses>
+        <apexPage>EmployeeRoleCustomSettingExcel</apexPage>
+        <enabled>false</enabled>
+    </pageAccesses>
+    <pageAccesses>
+        <apexPage>EmployeeRoleReporting</apexPage>
+        <enabled>false</enabled>
+    </pageAccesses>
+    <pageAccesses>
+        <apexPage>EmployeeRoleReportingExcel</apexPage>
+        <enabled>false</enabled>
+    </pageAccesses>
+    <pageAccesses>
+        <apexPage>EmployeeRoleReportingExcel1</apexPage>
+        <enabled>false</enabled>
+    </pageAccesses>
+    <pageAccesses>
+        <apexPage>EmployeeTest</apexPage>
+        <enabled>false</enabled>
+    </pageAccesses>
+    <pageAccesses>
+        <apexPage>EmployeeTest2</apexPage>
+        <enabled>false</enabled>
+    </pageAccesses>
+    <pageAccesses>
         <apexPage>Exception</apexPage>
         <enabled>false</enabled>
     </pageAccesses>
@@ -23749,6 +24793,18 @@ View Setup and Configuration</description>
     </pageAccesses>
     <pageAccesses>
         <apexPage>GoogleCalendarSyncUserSetup</apexPage>
+        <enabled>false</enabled>
+    </pageAccesses>
+    <pageAccesses>
+        <apexPage>GuidedSales</apexPage>
+        <enabled>false</enabled>
+    </pageAccesses>
+    <pageAccesses>
+        <apexPage>GuidedSales2</apexPage>
+        <enabled>false</enabled>
+    </pageAccesses>
+    <pageAccesses>
+        <apexPage>GuidedSales3</apexPage>
         <enabled>false</enabled>
     </pageAccesses>
     <pageAccesses>
@@ -23933,6 +24989,10 @@ View Setup and Configuration</description>
     </pageAccesses>
     <pageAccesses>
         <apexPage>MilestoneManagement</apexPage>
+        <enabled>false</enabled>
+    </pageAccesses>
+    <pageAccesses>
+        <apexPage>MonitoringSiteIDSubmitform</apexPage>
         <enabled>false</enabled>
     </pageAccesses>
     <pageAccesses>
@@ -24180,6 +25240,10 @@ View Setup and Configuration</description>
         <enabled>false</enabled>
     </pageAccesses>
     <pageAccesses>
+        <apexPage>PartnerPortalLoginSunrun</apexPage>
+        <enabled>false</enabled>
+    </pageAccesses>
+    <pageAccesses>
         <apexPage>PartnerPortalNeedHelp</apexPage>
         <enabled>false</enabled>
     </pageAccesses>
@@ -24273,6 +25337,10 @@ View Setup and Configuration</description>
     </pageAccesses>
     <pageAccesses>
         <apexPage>RequestForOptyPayment</apexPage>
+        <enabled>false</enabled>
+    </pageAccesses>
+    <pageAccesses>
+        <apexPage>SCInvestorSearchPage</apexPage>
         <enabled>false</enabled>
     </pageAccesses>
     <pageAccesses>
@@ -24492,6 +25560,10 @@ View Setup and Configuration</description>
         <enabled>false</enabled>
     </pageAccesses>
     <pageAccesses>
+        <apexPage>scInvestorDetail</apexPage>
+        <enabled>false</enabled>
+    </pageAccesses>
+    <pageAccesses>
         <apexPage>srvcCon_CustomSearch</apexPage>
         <enabled>false</enabled>
     </pageAccesses>
@@ -24501,6 +25573,14 @@ View Setup and Configuration</description>
     </pageAccesses>
     <pageAccesses>
         <apexPage>srvcCon_OnSelectRelatedSearch</apexPage>
+        <enabled>false</enabled>
+    </pageAccesses>
+    <pageAccesses>
+        <apexPage>wfAdhocTaskModify</apexPage>
+        <enabled>false</enabled>
+    </pageAccesses>
+    <pageAccesses>
+        <apexPage>wfAdhocTaskModifyComp</apexPage>
         <enabled>false</enabled>
     </pageAccesses>
     <pageAccesses>
@@ -24529,6 +25609,10 @@ View Setup and Configuration</description>
     </pageAccesses>
     <pageAccesses>
         <apexPage>wfProjectDetails</apexPage>
+        <enabled>false</enabled>
+    </pageAccesses>
+    <pageAccesses>
+        <apexPage>wfProjectDetails_New</apexPage>
         <enabled>false</enabled>
     </pageAccesses>
     <pageAccesses>
@@ -24611,6 +25695,18 @@ View Setup and Configuration</description>
         <recordType>Survey__c.Field_Service</recordType>
         <visible>false</visible>
     </recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <recordType>User_Group__c.Non_Operational_Group</recordType>
+        <visible>false</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <recordType>User_Group__c.Operational_Group</recordType>
+        <visible>false</visible>
+    </recordTypeVisibilities>
+    <tabSettings>
+        <tab>AHJ_Database__c</tab>
+        <visibility>None</visibility>
+    </tabSettings>
     <tabSettings>
         <tab>API_Request_Log__c</tab>
         <visibility>None</visibility>
@@ -24661,6 +25757,10 @@ View Setup and Configuration</description>
     </tabSettings>
     <tabSettings>
         <tab>Assignment_Order__c</tab>
+        <visibility>None</visibility>
+    </tabSettings>
+    <tabSettings>
+        <tab>Async_Process_Queue__c</tab>
         <visibility>None</visibility>
     </tabSettings>
     <tabSettings>
@@ -24728,6 +25828,14 @@ View Setup and Configuration</description>
         <visibility>None</visibility>
     </tabSettings>
     <tabSettings>
+        <tab>DocuSign_Tab_Management__c</tab>
+        <visibility>None</visibility>
+    </tabSettings>
+    <tabSettings>
+        <tab>DocuSign_Template__c</tab>
+        <visibility>None</visibility>
+    </tabSettings>
+    <tabSettings>
         <tab>Document_Classification__c</tab>
         <visibility>None</visibility>
     </tabSettings>
@@ -24737,6 +25845,14 @@ View Setup and Configuration</description>
     </tabSettings>
     <tabSettings>
         <tab>ERP_Referrals_File</tab>
+        <visibility>None</visibility>
+    </tabSettings>
+    <tabSettings>
+        <tab>Employee_Master__c</tab>
+        <visibility>None</visibility>
+    </tabSettings>
+    <tabSettings>
+        <tab>Energy_Storage__c</tab>
         <visibility>None</visibility>
     </tabSettings>
     <tabSettings>
@@ -24772,6 +25888,10 @@ View Setup and Configuration</description>
         <visibility>None</visibility>
     </tabSettings>
     <tabSettings>
+        <tab>Guided_Sales_Question__c</tab>
+        <visibility>None</visibility>
+    </tabSettings>
+    <tabSettings>
         <tab>InContact_Lead_Management__c</tab>
         <visibility>None</visibility>
     </tabSettings>
@@ -24781,6 +25901,14 @@ View Setup and Configuration</description>
     </tabSettings>
     <tabSettings>
         <tab>Installation_Audits</tab>
+        <visibility>None</visibility>
+    </tabSettings>
+    <tabSettings>
+        <tab>Investor_Contracts</tab>
+        <visibility>None</visibility>
+    </tabSettings>
+    <tabSettings>
+        <tab>Investor_Data__c</tab>
         <visibility>None</visibility>
     </tabSettings>
     <tabSettings>
@@ -24852,11 +25980,11 @@ View Setup and Configuration</description>
         <visibility>None</visibility>
     </tabSettings>
     <tabSettings>
-        <tab>Partner_Administration</tab>
+        <tab>Partner_API_Default_Value__c</tab>
         <visibility>None</visibility>
     </tabSettings>
     <tabSettings>
-        <tab>Partner_Api_Default_Value__c</tab>
+        <tab>Partner_Administration</tab>
         <visibility>None</visibility>
     </tabSettings>
     <tabSettings>
@@ -24961,6 +26089,22 @@ View Setup and Configuration</description>
     </tabSettings>
     <tabSettings>
         <tab>SalesComp</tab>
+        <visibility>None</visibility>
+    </tabSettings>
+    <tabSettings>
+        <tab>SalesComp_Dashboard</tab>
+        <visibility>None</visibility>
+    </tabSettings>
+    <tabSettings>
+        <tab>SalesComp_Incentive_Management</tab>
+        <visibility>None</visibility>
+    </tabSettings>
+    <tabSettings>
+        <tab>SalesComp_Reports</tab>
+        <visibility>None</visibility>
+    </tabSettings>
+    <tabSettings>
+        <tab>Scheduling__c</tab>
         <visibility>None</visibility>
     </tabSettings>
     <tabSettings>

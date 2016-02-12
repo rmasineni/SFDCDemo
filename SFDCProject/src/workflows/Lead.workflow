@@ -352,6 +352,24 @@
         <protected>false</protected>
     </fieldUpdates>
     <fieldUpdates>
+        <fullName>Invoca_Channel_Update</fullName>
+        <field>Channel_Last__c</field>
+        <formula>Invoca_Channel_new__c</formula>
+        <name>Invoca_Channel_Update</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Invoca_Field_Update</fullName>
+        <field>Lead_Source_Last__c</field>
+        <formula>Invoca_Lead_Source_new__c</formula>
+        <name>Invoca_LeadSource_Update</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
         <fullName>Lead</fullName>
         <description>Make Usage Option to NA if the Utility Company is not equal to PG&amp;E/SMUD/SCE/SDG&amp;E</description>
         <field>Usage_Option__c</field>
@@ -549,6 +567,15 @@
         <name>Update Sales Rep Phone (Lead)</name>
         <notifyAssignee>false</notifyAssignee>
         <operation>Formula</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Sync_Status_Field</fullName>
+        <field>External_Sync_Status__c</field>
+        <literalValue>Sync Not Applicable</literalValue>
+        <name>Update Sync Status Field</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
         <protected>false</protected>
     </fieldUpdates>
     <rules>
@@ -814,6 +841,21 @@
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
+        <fullName>Invoca_Updated_Picklist</fullName>
+        <actions>
+            <name>Invoca_Channel_Update</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>Invoca_Field_Update</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>false</active>
+        <description>A workflow to trigger every time the Invoca fields are updated that pushes those values to our standard channel last, type last, and source last fields.</description>
+        <formula>ISCHANGED(Invoca_Channel_new__c)  ||  ISCHANGED( Invoca_Lead_Source_new__c )  ||  ISCHANGED( Invoca_Lead_Type_new__c )</formula>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
         <fullName>Lead Email - Missed Call %231 Online Lead Company</fullName>
         <actions>
             <name>Send_01_Missed_Call_1_Email_Online_Lead_Company</name>
@@ -1059,14 +1101,7 @@
             <type>Alert</type>
         </actions>
         <active>true</active>
-        <formula>(ISNEW()&amp;&amp; (CreatedById != OwnerId ) ) &amp;&amp; NOT( ISPICKVAL(Channel__c, &quot;Partner&quot;)) &amp;&amp; NOT( ISPICKVAL(Lead_Type__c,&quot;Partner&quot;)) 
-|| 
-(ISCHANGED(OwnerId) &amp;&amp; ISPICKVAL( Status , &apos;Follow Up Needed&apos;)) &amp;&amp; 
-(OR(Future_Contact_Date__c &lt; Today() , ISNULL(Future_Contact_Date__c))) 
-&amp;&amp; NOT( ISPICKVAL(Channel__c, &quot;Partner&quot;)) &amp;&amp; NOT( ISPICKVAL(Lead_Type__c,&quot;Partner&quot;)) 
-|| 
-((CreatedById = &apos;00560000001OMoo&apos;) &amp;&amp; (CreatedById = LastModifiedById)) &amp;&amp; NOT(ISPICKVAL( Channel__c ,&apos;Partner&apos;))&amp;&amp;(NOT(ISPICKVAL(Custom_Lead_Source__c,&apos;Partner: Legacy&apos;))&amp;&amp; 
-NOT( External_Source__c = &quot;SUNRUN SOUTH&quot;)) &amp;&amp; NOT( ISPICKVAL(Lead_Type__c,&quot;Partner&quot;))</formula>
+        <formula>(ISNEW()&amp;&amp; (CreatedById != OwnerId ) )  &amp;&amp;  NOT(  ISPICKVAL(Channel__c, &quot;Partner&quot;))  &amp;&amp;   NOT(  ISPICKVAL(Lead_Type__c,&quot;Partner&quot;)) ||  (ISCHANGED(OwnerId) &amp;&amp; ISPICKVAL( Status , &apos;Follow Up Needed&apos;) &amp;&amp; Future_Contact_Date__c &lt; Today() ) &amp;&amp;  NOT(  ISPICKVAL(Channel__c, &quot;Partner&quot;))   &amp;&amp;   NOT(  ISPICKVAL(Lead_Type__c,&quot;Partner&quot;)) ||  ((CreatedById = &apos;00560000001OMoo&apos;) &amp;&amp; (CreatedById = LastModifiedById)) &amp;&amp; NOT(ISPICKVAL( Channel__c ,&apos;Partner&apos;))&amp;&amp;(NOT(ISPICKVAL(Custom_Lead_Source__c,&apos;Partner: Legacy&apos;))&amp;&amp;  NOT( External_Source__c = &quot;SUNRUN SOUTH&quot;))  &amp;&amp;   NOT(  ISPICKVAL(Lead_Type__c,&quot;Partner&quot;))</formula>
         <triggerType>onAllChanges</triggerType>
     </rules>
     <rules>
@@ -1300,6 +1335,36 @@ NOT( External_Source__c = &quot;SUNRUN SOUTH&quot;)) &amp;&amp; NOT( ISPICKVAL(L
             <operation>equals</operation>
         </criteriaItems>
         <triggerType>onCreateOnly</triggerType>
+    </rules>
+    <rules>
+        <fullName>Update Lead to Invoke Lookup Callout</fullName>
+        <active>false</active>
+        <criteriaItems>
+            <field>Lead.External_Sync_InProgress__c</field>
+            <operation>equals</operation>
+            <value>True</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Lead.External_Sync_System__c</field>
+            <operation>equals</operation>
+            <value>Home Depot</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Lead.IsConverted</field>
+            <operation>equals</operation>
+            <value>False</value>
+        </criteriaItems>
+        <description>This WF will update field Extenal Sync Status on Lead which will invoke the HD lookup callout using the trigger code</description>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+        <workflowTimeTriggers>
+            <actions>
+                <name>Update_Sync_Status_Field</name>
+                <type>FieldUpdate</type>
+            </actions>
+            <offsetFromField>Lead.Trigger_Time__c</offsetFromField>
+            <timeLength>1</timeLength>
+            <workflowTimeTriggerUnit>Hours</workflowTimeTriggerUnit>
+        </workflowTimeTriggers>
     </rules>
     <rules>
         <fullName>Web Lead Round Robin 2 - Karen Cleland</fullName>

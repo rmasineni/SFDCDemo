@@ -321,9 +321,14 @@ trigger trg_before_ins_upd_oppty on Opportunity (after insert, after update) {
                 } 
             }           
          }
-          if(!scelist.isempty()){
-        update scelist;
-              }          
+
+		if(!scelist.isempty()){
+			try{
+        		update scelist;
+			}catch (Exception e){
+				System.debug(e.getTypeName() + ' - ' + e.getCause() + ': ' + e.getMessage());
+			} 
+		}          
       
         if((o.Sales_Representative__c != null) 
           &&(trigger.isInsert || o.Sales_Representative__c != oldOpportunity.Sales_Representative__c))

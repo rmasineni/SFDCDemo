@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Queue xmlns="http://soap.sforce.com/2006/04/metadata">
-    <doesSendEmailToMembers>true</doesSendEmailToMembers>
-    <name>Transfer to Spanish Care</name>
+    <doesSendEmailToMembers>false</doesSendEmailToMembers>
+    <name>Transfer_to_Spanish_Care</name>
     <queueSobject>
         <sobjectType>Case</sobjectType>
     </queueSobject>

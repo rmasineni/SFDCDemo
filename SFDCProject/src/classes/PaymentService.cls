@@ -88,4 +88,8 @@ public interface PaymentService {
      */
     Opportunity queryOptyForPaymentAndAllContactRoles(Id optyId);
     
+    /**
+     * Creates a payment url for specified opty for specified payment mode and returns the details.
+     */
+    Opportunity createPaymentUrl(String optyId, String paymentMode);
 }

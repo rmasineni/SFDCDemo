@@ -1,0 +1,20 @@
+<apex:page controller="EmployeeRoleReporting" action="{!buildOrgChart}" readOnly="true" contentType="application/vnd.ms-excel#ConsignmentSearchData.csv">
+ <!--
+ <Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet"
+ xmlns:o="urn:schemas-microsoft-com:office:office"
+ xmlns:x="urn:schemas-microsoft-com:office:excel"
+ xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet"
+ xmlns:html="http://www.w3.org/TR/REC-html40">
+   <Worksheet ss:Name="user1">
+  <apex:repeat value="{!userlist3}" var="x">
+       {!x.id}
+  </apex:repeat>
+  </worksheet>
+   <Worksheet ss:Name="user2">
+  <apex:repeat value="{!userlist2}" var="x">
+       {!x.id}
+  </apex:repeat>
+  </worksheet>
+  </workbook>
+  --> 
+</apex:page>

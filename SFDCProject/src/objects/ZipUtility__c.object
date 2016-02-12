@@ -44,13 +44,14 @@
         <actionName>View</actionName>
         <type>Default</type>
     </actionOverrides>
+    <allowInChatterGroups>false</allowInChatterGroups>
     <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
     <deploymentStatus>Deployed</deploymentStatus>
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
     <enableDivisions>false</enableDivisions>
     <enableFeeds>false</enableFeeds>
-    <enableHistory>true</enableHistory>
+    <enableHistory>false</enableHistory>
     <enableReports>true</enableReports>
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
@@ -61,7 +62,6 @@
         <label>City</label>
         <length>30</length>
         <required>false</required>
-        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -72,7 +72,6 @@
         <label>County</label>
         <length>30</length>
         <required>false</required>
-        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -212,7 +211,6 @@
             </picklistValues>
             <sorted>true</sorted>
         </picklist>
-        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
     </fields>
@@ -221,7 +219,6 @@
         <externalId>false</externalId>
         <label>Notes</label>
         <required>false</required>
-        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>TextArea</type>
     </fields>
@@ -264,7 +261,6 @@
             </picklistValues>
             <sorted>true</sorted>
         </picklist>
-        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>MultiselectPicklist</type>
         <visibleLines>5</visibleLines>
@@ -284,7 +280,6 @@
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
-        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
     </fields>
@@ -415,7 +410,6 @@
             </picklistValues>
             <sorted>true</sorted>
         </picklist>
-        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
     </fields>
@@ -638,7 +632,6 @@
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
-        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
     </fields>
@@ -829,7 +822,6 @@
             </picklistValues>
             <sorted>true</sorted>
         </picklist>
-        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
     </fields>
@@ -924,10 +916,6 @@
             </picklistValues>
             <picklistValues>
                 <fullName>Central Hudson Gas &amp; Elec Corp</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Choptank Electric</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
@@ -1416,7 +1404,6 @@
             </picklistValues>
             <sorted>true</sorted>
         </picklist>
-        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
     </fields>
@@ -1426,7 +1413,6 @@
         <label>Zip Code</label>
         <length>5</length>
         <required>false</required>
-        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -1504,7 +1490,6 @@
     <nameField>
         <displayFormat>Z-{0000}</displayFormat>
         <label>ZipUtility Name</label>
-        <trackHistory>true</trackHistory>
         <type>AutoNumber</type>
     </nameField>
     <pluralLabel>ZipUtility</pluralLabel>

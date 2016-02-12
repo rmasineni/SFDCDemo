@@ -3,13 +3,7 @@
     <doesSendEmailToMembers>false</doesSendEmailToMembers>
     <name>Field Marketing Service Center</name>
     <queueSobject>
-        <sobjectType>BMCServiceDesk__Category__c</sobjectType>
-    </queueSobject>
-    <queueSobject>
         <sobjectType>BMCServiceDesk__Incident__c</sobjectType>
-    </queueSobject>
-    <queueSobject>
-        <sobjectType>BMCServiceDesk__KM_KnowledgeArticle__c</sobjectType>
     </queueSobject>
     <queueSobject>
         <sobjectType>BMCServiceDesk__Task__c</sobjectType>

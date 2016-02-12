@@ -3,9 +3,9 @@ trigger trg_sc_before_update on ServiceContract (before update, before insert) {
     Boolean skipValidations = false;
     skipValidations = SkipTriggerValidation.performTriggerValidations();    
     List<servicecontract> scList = new List<servicecontract>();
-    Map<Id,ServiceContract> ServiceContractMap = new Map<Id,ServiceContract>();
     Integer counter = 0;
     Integer dealIdCount = 0;
+    Map<Id,ServiceContract> ServiceContractMap = new Map<Id,ServiceContract>();
     for(servicecontract sc : Trigger.new){
         if((sc.Name == null || sc.Name == '') || (sc.Name != null && sc.Name == 'Sunrun Contract')){
             counter++;
@@ -54,22 +54,20 @@ trigger trg_sc_before_update on ServiceContract (before update, before insert) {
         }
         
     } 
- 
     
     //Comment below code for Phase-1 migration.
 
     if(skipValidations == false){
         ServiceContractUtil.updateServiceContract(trigger.isInsert, trigger.isUpdate, Trigger.new, Trigger.newMap, Trigger.oldmap);
-    }  
-    //update M0,M1,M2,M3
+    } 
     
-    /* BSKY-6792 user story Logic Start */
+      /* BSKY-6792 user story Logic Start */
     If(Trigger.isUpdate)
     {
     // Map<Id,ServiceContract> ServiceContractMap = new Map<Id,ServiceContract>();
      for (ServiceContract sc: Trigger.New) 
      {
-      if (((Trigger.oldMap.get(sc.ID).Status__c == 'Deal Cancelled' || Trigger.oldMap.get(sc.ID).Status__c =='Deal Cancelled due to credit') && (sc.Status__c !='Deal Cancelled' && sc.Status__c != 'Deal Cancelled due to credit')) ) 
+      if (((Trigger.oldMap.get(sc.ID).Status__c == 'Deal Cancelled' || Trigger.oldMap.get(sc.ID).Status__c =='Deal Cancelled due to credit') && (sc.Status__c !='Deal Cancelled' || sc.Status__c != 'Deal Cancelled due to credit')) ) 
       {
          ServiceContractMap.put(sc.Id, sc);
       }
@@ -79,6 +77,5 @@ trigger trg_sc_before_update on ServiceContract (before update, before insert) {
       ProjectStatusUpdateClass.ScProjectStatUpdate(ServiceContractMap);
      }
     }
-    /* BSKY-6792 user story Logic End */ 
-  
+    /* BSKY-6792 user story Logic End */  
 }

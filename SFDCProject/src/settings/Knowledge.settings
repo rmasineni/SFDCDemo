@@ -4,7 +4,7 @@
         <enableArticleCreation>false</enableArticleCreation>
     </answers>
     <cases>
-        <assignTo>leeg@sunrunhome.com</assignTo>
+        <assignTo>madhu.gurusamy@sunrunhome.com</assignTo>
         <defaultContributionArticleType>Question</defaultContributionArticleType>
         <editor>simple</editor>
         <enableArticleCreation>true</enableArticleCreation>
@@ -16,8 +16,8 @@
     <enableCreateEditOnArticlesTab>true</enableCreateEditOnArticlesTab>
     <enableExternalMediaContent>false</enableExternalMediaContent>
     <enableKnowledge>true</enableKnowledge>
-    <showArticleSummariesCustomerPortal>false</showArticleSummariesCustomerPortal>
+    <showArticleSummariesCustomerPortal>true</showArticleSummariesCustomerPortal>
     <showArticleSummariesInternalApp>true</showArticleSummariesInternalApp>
-    <showArticleSummariesPartnerPortal>false</showArticleSummariesPartnerPortal>
+    <showArticleSummariesPartnerPortal>true</showArticleSummariesPartnerPortal>
     <showValidationStatusField>false</showValidationStatusField>
 </KnowledgeSettings>

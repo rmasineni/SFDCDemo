@@ -24,10 +24,11 @@ public class SunRunS3RestConnection {
     public SunRunS3Proxy_Settings__c sunrunS3ProxySetting {get;set;}
     public string s3ProxySettingName {get;set;}
 
-    public string getSecretKey(){ return sunrunS3ProxySetting.Secret_Key__c; }
-    public string getAccessKey(){ return sunrunS3ProxySetting.Access_Key__c; }
-    public string getSunrunS3FolderName(){ return sunrunS3ProxySetting.Folder_Name__c; }
-
+    public  string getSecretKey(){ return sunrunS3ProxySetting.Secret_Key__c; }
+    public  string getAccessKey(){ return sunrunS3ProxySetting.Access_Key__c; }
+    public  string getSunrunS3FolderName(){ return sunrunS3ProxySetting.Folder_Name__c; }
+   
+    
     public string proposalName {get;set;}
     public string fileName {get;set;}
     
@@ -39,14 +40,21 @@ public class SunRunS3RestConnection {
     public HTTPResponse getResponse() { return res; }
     private Map<String,String> headers = new Map<String, String>{};
     public void setHeaders(Map<String, String> h) {headers = h.clone();}
-    public blob documentBlob{get;set;}
+    
+       private static Map<String,String> headersstatic = new Map<String, String>{};
+    public static void setHeadersstatic(Map<String, String> hs) {headersstatic = hs.clone();}
+    
+    public  blob documentBlob{get;set;}
     public String errorMessage {get;set;}
-	public static string proxySetting{get;set;}
+    public static blob documentBlobFuture{get;set;}
+	 public static String errorMessageFuture {get;set;}
+    public static string proxySetting{get;set;}
     public SunRunS3RestConnection(){
 
     }
 
     public SunRunS3RestConnection(String proxySettingsNameStr){
+       // proxySetting =proxySettingsNameStr; 
         if(proxySettingsNameStr != null && proxySettingsNameStr != ''){
             initializeProxySettings(proxySettingsNameStr);
         }
@@ -58,6 +66,32 @@ public class SunRunS3RestConnection {
         if(debug>3) system.debug(timeFormat);
         return timeFormat; 
     }
+    
+    public static string formatDateStringstatic(DateTime d) {
+        //d.addSeconds(-5);
+        String timeFormat = d.formatGmt('EEE, dd MMM yyyy HH:mm:ss') + ' GMT';
+        return timeFormat; 
+    }
+    
+    
+    public static string getAuthorizationPathstatic(string proposalName, string fileName){
+         SunRunS3Proxy_Settings__c sunrunS3ProxySetting = sunrunS3ProxySettings.get(proxySetting);
+        String authorizationPath = '';
+        authorizationPath += (sunrunS3BucketName != null) ? sunrunS3BucketName  : ''; 
+        authorizationPath += (sunrunS3ProxySetting.Folder_Name__c != null) ? ('/' + sunrunS3ProxySetting.Folder_Name__c ) : ''; 
+        
+        String tempFilePath = '';
+        tempFilePath += (proposalName != null) ? ('/' + proposalName) : ''; 
+        tempFilePath += '/' ; 
+        authorizationPath += EncodingUtil.urlEncode(tempFilePath, 'UTF-8');
+        //authorizationPath += fileName.replaceAll(' ', '%20');
+        authorizationPath += encodeFileName(fileName);
+        
+        
+        return authorizationPath;
+    }
+
+    
     
     public string getAuthorizationPath(){
         String authorizationPath = '';
@@ -98,6 +132,32 @@ public class SunRunS3RestConnection {
         
         req.setHeader('authorization','AWS '+getAccessKey()+':'+signature);
     }
+    
+     private static void setAuthHeaderstatic(HTTPRequest req, string datestr, string proposalName, string fileName) { 
+         system.debug('setAuthHeaderstatic enter');
+         SunRunS3Proxy_Settings__c sunrunS3ProxySetting = sunrunS3ProxySettings.get(proxySetting);
+         SunRunS3RestConnection suncon = new   SunRunS3RestConnection();
+        string buf = make_canonicalBufferstatic(req.getMethod(),datestr,new string[]{},proposalName, fileName);
+        //if(debug>2) system.debug ('>'+buf +'<');
+        system.debug('bufbufbuf>' +  buf);
+        string signature  = make_sigstatic(buf);      
+        
+        req.setHeader('authorization','AWS '+sunrunS3ProxySetting.Access_Key__c +':'+signature);
+         system.debug('reqreqreq' + req);
+    }
+   
+    
+     private static string make_sigstatic(string canonicalBuffer) {
+        system.debug(canonicalBuffer);
+        String macUrl ;
+        SunRunS3Proxy_Settings__c sunrunS3ProxySetting = sunrunS3ProxySettings.get(proxySetting);
+        Blob mac = Crypto.generateMac('HMacSHA1', blob.valueof(canonicalBuffer),blob.valueof(sunrunS3ProxySetting.Secret_Key__c));  
+        macUrl = EncodingUtil.base64Encode(mac);        
+        //if (debug > 1) system.debug(macUrl);
+        return macUrl;
+    }   
+    
+    
 
     private string make_sig(string canonicalBuffer) {
         system.debug(canonicalBuffer);
@@ -113,7 +173,29 @@ public class SunRunS3RestConnection {
         if (debug > 1) system.debug(macUrl);
         return macUrl;
     }   
+   private static String make_canonicalBufferstatic(string method, string datestr, string[] aws_headers, string proposalName, string fileName) {
+        String canonicalBuffer = method + '\n';
+        canonicalBuffer += '\n';
+        if ( method == 'PUT' ) { 
+            canonicalBuffer += headersstatic.get('content-type') + '\n';
+            headersstatic.remove('content-type');
+        } else {
+            canonicalBuffer += '\n';
+        }
+        canonicalBuffer += datestr + '\n';
+        if (!headersstatic.isEmpty() ) { 
+            for(string k:headersstatic.keySet() ) {
+                canonicalBuffer += k + ':' + headersstatic.get(k) + '\n';
+            }
+        }
+        canonicalBuffer += '/' + getAuthorizationPathstatic(proposalName,fileName);
+        System.debug('canonicalBuffer: ' + canonicalBuffer);
+        return  canonicalBuffer;
+    }
 
+                                      
+                                      
+                                      
     private String make_canonicalBuffer(string method, string datestr, string[] aws_headers) {
         String canonicalBuffer = method + '\n';
         canonicalBuffer += '\n';
@@ -134,6 +216,11 @@ public class SunRunS3RestConnection {
         return  canonicalBuffer;
     }
 
+    //adding
+    //
+    
+   
+    
     public void makeRequest(String method, String proposalName, String fileName, Blob blobValue, Map<String, String> headers) {
         this.proposalName = proposalName; 
         System.debug('proposalName1:' + proposalName);  
@@ -148,7 +235,57 @@ public class SunRunS3RestConnection {
     public void makeRequest(string method, String proposalName, String fileName) {
         this.proposalName = proposalName;   
         this.fileName = fileName;
-        makeRequest( method);       
+        makeRequest( method);    
+    	//makeRequestFuture(method,  proposalName,  fileName);
+    }
+
+	public void makeRequest(string method, String proposalName, String fileName, string proxyString) {
+        this.proposalName = proposalName;   
+        this.fileName = fileName;
+       // makeRequest( method);    
+    	makeRequestFuture(method,  proposalName,  fileName, proxyString);
+    }
+
+    
+   @Future(callout=true)
+    public static void makeRequestFuture(string method, String proposalName, String fileName, string proxy){
+        SunRunS3RestConnection sunruncon=  new SunRunS3RestConnection();
+        proxySetting=proxy;
+        system.debug('proxySetting' +  proxySetting);
+         SunRunS3Proxy_Settings__c sunrunS3ProxySetting = sunrunS3ProxySettings.get(proxy);
+        system.debug('sunrunS3ProxySetting>>' +  sunrunS3ProxySetting );
+        sunruncon.proposalName = proposalName;   
+        sunruncon.fileName = fileName;
+         HttpRequest req = new HttpRequest(); 
+        HttpResponse res = new HttpResponse();
+         String endPoint = '';
+        endPoint += (proxyEndpoint != null) ? proxyEndpoint + '/' : ''; 
+        endPoint +=  sunrunS3ProxySetting.Folder_Name__c + '/' ;
+        endPoint += (proposalName != null) ? proposalName + '/' : ''; 
+        //endPoint += (fileName != null) ? fileName.replaceAll(' ', '%20') : '';
+        endPoint += (fileName != null) ? encodeFileName(fileName) : '';
+        system.debug('endPoint' +  endPoint);
+        req.setEndpoint(endPoint);
+        req.setMethod(method);
+       if(method == 'PUT'){
+          req.setBodyAsBlob(sunruncon.documentBlob); 
+       }
+        req.setHeader('Date',formatDateStringstatic(System.now().addSeconds(-5))); 
+        setAuthHeaderstatic(req, formatDateStringstatic(System.now().addSeconds(-5)),proposalName,fileName);   
+        Http http = new Http();
+        system.debug('reqreqreq>>' + req);
+        res = http.send(req); 
+        if(method == 'GET') { 
+            system.debug('res>>' +  res.getBodyAsBlob());
+            documentBlobFuture = res.getBodyAsBlob();
+        }
+        else{
+            res = new HttpResponse();
+            String myString = 'StringToBlob';
+            sunruncon.documentBlob = Blob.valueof(myString);
+            res.setBodyAsBlob(sunruncon.documentBlob );            
+            res.setStatusCode(200);
+        }
     }
     
     public void makeRequest(string method) {
@@ -189,7 +326,9 @@ public class SunRunS3RestConnection {
 
             If(!Test.isRunningTest()){
                 system.debug(req);
-                res = http.send(req);   
+                 system.debug('reqsunruns3>>' + req);
+                res = http.send(req); 
+                system.debug('reqsunruns3>>' + req);
                 if (debug > 1) {
                     //system.debug(res.toString());
                     //System.debug('BODY: '+res.getBody());
@@ -205,6 +344,7 @@ public class SunRunS3RestConnection {
                 res.setStatusCode(200);
             }
         } catch(System.CalloutException e) {
+            system.debug('eeeeeeeee' +  e);
             if (res != null && res.getStatus()=='OK') { 
                 system.debug(res.toString()); // for some reason HEAD ends up here
             } else { 
@@ -286,7 +426,7 @@ public class SunRunS3RestConnection {
         if(sunrunS3ProxySetting == null){
         	sunrunS3ProxySetting = sunrunS3ProxySettings.get(UPLOADED_DOCS_SETTINGS_NAME);
         }
-        
+
         String serviceEndPoint = getServiceEndPoint(sunrunS3ProxySetting.Folder_Name__c, proposalName, fileName);
         String encodedPath = getEncodedPathForSignature(sunrunS3ProxySetting.Folder_Name__c, proposalName, fileName);
         
@@ -381,20 +521,14 @@ public class SunRunS3RestConnection {
         System.debug('modifiedFileName: ' + modifiedFileName);
         return modifiedFileName;
     }
-
     
 	public static String getAccessKey(String proxySettingsNameStr){
-		String result = '';
 		SunRunS3Proxy_Settings__c sunrunS3ProxySetting = sunrunS3ProxySettings.get(proxySettingsNameStr);
-		result =  (sunrunS3ProxySetting != null) ? sunrunS3ProxySetting.Access_Key__c : 'AKIAIU2BKN3RTR3GCBFQ';
-		return result;
+		return sunrunS3ProxySetting.Access_Key__c;
 	}
 
 	public static String getSecretKey(String proxySettingsNameStr){
-		String result = '';
 		SunRunS3Proxy_Settings__c sunrunS3ProxySetting = sunrunS3ProxySettings.get(proxySettingsNameStr);
-		result =  (sunrunS3ProxySetting != null) ? sunrunS3ProxySetting.Secret_Key__c : 'DealDocManager-secretAccessKey-inbound-production';
-		return result;
+		return sunrunS3ProxySetting.Secret_Key__c;
 	}
-	
 }

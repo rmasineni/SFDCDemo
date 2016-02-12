@@ -1,7 +1,7 @@
 <apex:page standardController="Lead" extensions="LeadPageExtension" 
     action="{!onload}" title="Lead: {!Lead.firstName} {!Lead.lastname}">    
-    <apex:includeScript value="/soap/ajax/15.0/connection.js"/>
-    <apex:includeScript value="/soap/ajax/15.0/apex.js"/>
+    <apex:includeScript value="/soap/ajax/35.0/connection.js"/>
+    <apex:includeScript value="/soap/ajax/35.0/apex.js"/>
     <link
         href='https://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/themes/smoothness/jquery-ui.css'
         rel='stylesheet' type='text/css' />
@@ -112,8 +112,13 @@
             <apex:pageBlockSection title="Lead Origination">
                 <apex:repeat value="{!$ObjectType.Lead.FieldSets.Lead_Generation}"
                     var="field">
-                    <apex:inputField value="{!LeadObj[field]}"
-                        required="{!OR(field.required,field.dbrequired)}" />
+                   <!-- <apex:inputField value="{!LeadObj[field]}"
+                        required="{!OR(field.required,field.dbrequired)}" />  -->
+                        <apex:inputField value="{!LeadObj[field]}" required="{!OR(field.required,field.dbrequired)}">
+                        <apex:outputPanel layout="block" styleClass="requiredInput">
+                        </apex:outputPanel>
+                    </apex:inputField> 
+
                     <apex:outputpanel rendered="{!field=='Lead_Qualifier__c'}"/> 
                 </apex:repeat>
             </apex:pageBlockSection> 
@@ -129,7 +134,7 @@
             <apex:pageBlockSection title="" collapsible="false" showheader="false">
                 <apex:repeat value="{!$ObjectType.Lead.FieldSets.Site}" var="field">
                     <apex:inputField value="{!LeadObj[field]}"
-                        required="{!field.required}" rendered="{!OR(AND(ISNULL(leadid),NOT(OR(field=='Utility_Company__c',field=='Rate_Schedule__c', field=='Territory__c',field=='Usage_Option__c'))),NOT(ISNULL(leadid)))}"/>                       
+                        required="{!field.required}" rendered="{!OR(AND(ISNULL(leadid),NOT(OR(field=='Utility_Company__c', field=='Territory__c',field=='Usage_Option__c'))),NOT(ISNULL(leadid)))}"/>                       
                 </apex:repeat>
             </apex:pageBlockSection>  
              <apex:outputpanel id="leadstOp">

@@ -20,7 +20,7 @@
     </articleTypeChannelDisplay>
     <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
     <deploymentStatus>Deployed</deploymentStatus>
-    <enableFeeds>true</enableFeeds>
+    <enableFeeds>false</enableFeeds>
     <enableHistory>false</enableHistory>
     <fields>
         <fullName>Attachment_1__c</fullName>
@@ -64,6 +64,15 @@
         <length>32000</length>
         <type>Html</type>
         <visibleLines>25</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Tags_KeyWord__c</fullName>
+        <externalId>false</externalId>
+        <label>Tags_KeyWord</label>
+        <length>40</length>
+        <required>true</required>
+        <type>Text</type>
+        <unique>false</unique>
     </fields>
     <fields>
         <fullName>Talking_Points_and_Templates__c</fullName>

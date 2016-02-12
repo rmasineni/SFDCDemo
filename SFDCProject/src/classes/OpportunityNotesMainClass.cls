@@ -14,8 +14,8 @@ public with sharing class OpportunityNotesMainClass {
     public Opportunity OpportunityObj;
     public string whichOrgValue;
     public Boolean ispartnerUser;
+    public string editNoteError{get { return editNoteError = CustomErrorMessages.EDIT_NOTE;} set;}
     public Boolean isAEEUser; 
-    public string editNoteError{get { return editNoteError = CustomErrorMessages.EDIT_NOTE;} set;} 
     
     
     public OpportunityNotesMainClass(ApexPages.StandardController stdController) { 

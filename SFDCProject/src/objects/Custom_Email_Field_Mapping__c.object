@@ -44,6 +44,7 @@
         <actionName>View</actionName>
         <type>Default</type>
     </actionOverrides>
+    <allowInChatterGroups>false</allowInChatterGroups>
     <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
     <deploymentStatus>Deployed</deploymentStatus>
     <enableActivities>false</enableActivities>
@@ -129,7 +130,7 @@
     </fields>
     <label>Custom Email Field Mapping</label>
     <listViews>
-        <fullName>All</fullName>
+        <fullName>Site_Audit</fullName>
         <columns>NAME</columns>
         <columns>Record_Type__c</columns>
         <columns>Email_Field_Name__c</columns>
@@ -150,7 +151,7 @@
             <operation>equals</operation>
             <value>{{Site Audit Scheduled}}</value>
         </filters>
-        <label>All</label>
+        <label>Site Audit</label>
         <language>en_US</language>
     </listViews>
     <nameField>

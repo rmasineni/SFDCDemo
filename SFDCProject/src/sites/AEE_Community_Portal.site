@@ -6,7 +6,7 @@
     <allowStandardIdeasPages>false</allowStandardIdeasPages>
     <allowStandardLookups>false</allowStandardLookups>
     <allowStandardSearch>false</allowStandardSearch>
-    <authorizationRequiredPage>CommunitiesLogin</authorizationRequiredPage>
+    <authorizationRequiredPage>PartnerPortalLogin</authorizationRequiredPage>
     <bandwidthExceededPage>BandwidthExceeded</bandwidthExceededPage>
     <clickjackProtectionLevel>SameOriginOnly</clickjackProtectionLevel>
     <fileNotFoundPage>FileNotFound</fileNotFoundPage>
@@ -15,9 +15,11 @@
     <inactiveIndexPage>CommunitiesLogin</inactiveIndexPage>
     <indexPage>CommunitiesLanding</indexPage>
     <masterLabel>AEE Community Portal</masterLabel>
+    <requireHttps>true</requireHttps>
     <requireInsecurePortalAccess>false</requireInsecurePortalAccess>
-    <siteAdmin>raghu.puchala@sunrun.com</siteAdmin>
+    <selfRegPage>CommunitiesSelfReg</selfRegPage>
+    <siteAdmin>sunruncrm@sunrunhome.com</siteAdmin>
     <siteType>ChatterNetwork</siteType>
-    <subdomain>sunruncommunity</subdomain>
+    <subdomain>devmaj</subdomain>
     <urlPathPrefix>aeepartner</urlPathPrefix>
 </CustomSite>

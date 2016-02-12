@@ -126,21 +126,14 @@ public class WorkflowTask {
   }
 
   public PageReference toggleTaskCategory(){
-     
-     
     PageReference returnValue = null;
     try{
-         system.debug('taskObj.category__c>>>' + taskObj.category__c);
       if(taskObj.category__c == wfUtil.OPTIONAL){
-                    
         taskObj.category__c = wfUtil.REQUIRED;
         WorkflowManagement wfObj = new WorkflowManagement();
         String actionName =  wfUtil.CATEGORY_CHANGE;
         String reasonStr = 'Task category has been modified from Optional to Required';
         String result = wfObj.updateTaskCategoryImpl(taskObj, actionName, reasonStr);
-         Set<Id> taskIds = new Set<Id>();
-         taskIds.add(taskObj.Id);
-		WorkflowManagement.updateSuccessorTasks(taskIds);
         if(result != null && result != ''){
           ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.Error, result));
           System.debug('TEST1 ....');
@@ -154,13 +147,11 @@ public class WorkflowTask {
         taskObj.Expected_Close_Date__c = null;
         taskObj.Expected_Close_Date2__c = null;
         update taskObj;
-          
-          
 
-      /*	Set<Id> taskIds = new Set<Id>();
-        taskIds.add(taskObj.Id);
-        WorkflowManagement wfObj = new WorkflowManagement();
-        wfObj.startChildTasksImpl(taskIds);*/
+        //Set<Id> taskIds = new Set<Id>();
+        //taskIds.add(taskObj.Id);
+        //WorkflowManagement wfObj = new WorkflowManagement();
+        //wfObj.startChildTasksImpl(taskIds);
       }
       returnValue = viewTask();
     }catch(Exception exceptionObj){

@@ -44,6 +44,7 @@
         <actionName>View</actionName>
         <type>Default</type>
     </actionOverrides>
+    <allowInChatterGroups>false</allowInChatterGroups>
     <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
     <deploymentStatus>Deployed</deploymentStatus>
     <enableActivities>true</enableActivities>
@@ -1569,17 +1570,6 @@ TEXT (Status__c)
         <length>100</length>
         <required>false</required>
         <trackHistory>true</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>Text</type>
-        <unique>false</unique>
-    </fields>
-    <fields>
-        <fullName>Sales_Organization_Name__c</fullName>
-        <externalId>false</externalId>
-        <label>Sales Organization Name</label>
-        <length>255</length>
-        <required>false</required>
-        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>

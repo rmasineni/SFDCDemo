@@ -9,6 +9,16 @@
         <operation>Formula</operation>
         <protected>false</protected>
     </fieldUpdates>
+    <fieldUpdates>
+        <fullName>MOUDocStatusUpdate</fullName>
+        <field>Active__c</field>
+        <literalValue>0</literalValue>
+        <name>MOUDocStatusUpdate</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
     <rules>
         <fullName>EOP Temp Bug Fix - Missing period for pdfs</fullName>
         <actions>
@@ -16,9 +26,17 @@
             <type>FieldUpdate</type>
         </actions>
         <active>false</active>
-        <formula>AND( 
-CONTAINS(Document_Name__c, &quot;pdf&quot;), 
-NOT(CONTAINS(Document_Name__c, &quot;.pdf&quot;)))</formula>
+        <formula>AND(  CONTAINS(Document_Name__c, &quot;pdf&quot;),  NOT(CONTAINS(Document_Name__c, &quot;.pdf&quot;)))</formula>
         <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>Inactivate MOU doc</fullName>
+        <actions>
+            <name>MOUDocStatusUpdate</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <formula>AND(Opportunity__r.Energy_Storage_Applicable__c=False,  ISBLANK(Folder_Name__c))</formula>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
 </Workflow>
