@@ -1,0 +1,138 @@
+<apex:component >
+    <apex:attribute name="taskObj" description="Task__c value for the component" type="Task__c" required="true"/>
+    <apex:attribute name="baseURL" description="BaseURL for modal window" type="String" required="true"/>
+	<apex:attribute name="contactObj" description="Contact value for the component" type="Contact" required="true"/>
+    <apex:outputPanel styleClass="blue" layout="block">
+        <apex:pageblocksection collapsible="false" title="Task Details" columns="2">
+			<apex:pageBlockSectionItem labelStyle="text-align:right; width: 49% max-width: 49%; border:none;" dataStyle="border: none; text-align:left; width: 51% max-width: 51%">
+                <apex:outputLabel value="Project" /> 
+                <apex:outputLink target="_parent" value="/{!taskObj.Phase__r.Project__r.Id}">
+                                <apex:outputText value="{!taskObj.Phase__r.Project__r.Name}"/>
+                            </apex:outputLink>
+			</apex:pageBlockSectionItem>
+    
+            <apex:pageBlockSectionItem labelStyle="text-align:right; width: 49% max-width: 49%; border: none;" dataStyle="border: none; text-align:left; width: 51% max-width: 51%">
+                <apex:outputLabel value="Type" /> 
+                <apex:outputfield value="{!taskObj.Type__c}"/>  
+            </apex:pageBlockSectionItem>
+             
+            <apex:pageBlockSectionItem labelStyle="text-align:right; width: 49% max-width: 49%; border: none;" dataStyle="border: none; text-align:left; width: 51% max-width: 51%">
+                <apex:outputLabel value="Opportunity" /> 
+                <apex:outputLink target="_parent" value="/{!taskObj.phase__r.project__r.Opportunity__c}">
+                                <apex:outputText value="{!taskObj.phase__r.project__r.Opportunity_Name__c}"/>
+                            </apex:outputLink>
+            </apex:pageBlockSectionItem>                            
+
+            <apex:pageBlockSectionItem labelStyle="text-align:right; width: 49% max-width: 49%; border: none;" dataStyle="border: none; text-align:left; width: 51% max-width: 51%">
+                <apex:outputLabel value="Proposal" /> 
+                <apex:outputLink target="_parent" value="/{!taskObj.phase__r.project__r.Proposal__c}">
+                                <apex:outputText value="{!taskObj.phase__r.project__r.Proposal_Name__c}"/>
+                            </apex:outputLink>
+            </apex:pageBlockSectionItem> 
+
+            <apex:pageBlockSectionItem labelStyle="text-align:right; width: 49% max-width: 49%; border: none;" dataStyle="border: none; text-align:left; width: 51% max-width: 51%">
+                <apex:outputLabel value="Service Contract" /> 
+                <apex:outputLink target="_parent" value="/{!taskObj.phase__r.project__r.Service_Contract__c}">
+                                <apex:outputText value="{!taskObj.phase__r.project__r.Service_Contract_Name__c}"/>
+                            </apex:outputLink>
+            </apex:pageBlockSectionItem>  
+
+            <apex:pageBlockSectionItem labelStyle="text-align:right; width: 49% max-width: 49%; border: none;" dataStyle="border: none; text-align:left; width: 51% max-width: 51%">
+                <apex:outputLabel value="Service Contract Event" /> 
+                <apex:outputLink target="_parent" value="/{!taskObj.phase__r.project__r.Service_Contract_Event__c}">
+                                <apex:outputText value="{!taskObj.phase__r.project__r.Service_Contract_Event_Name__c}"/>
+                            </apex:outputLink>
+            </apex:pageBlockSectionItem> 
+
+    
+            <apex:pageBlockSectionItem labelStyle="text-align:right; width: 49% max-width: 49%; border: none;" dataStyle="border: none; text-align:left; width: 51% max-width: 51%">
+                <apex:outputLabel value="Customer" /> 
+                <apex:outputLink target="_parent" value="/{!contactObj.Id}">
+                                <apex:outputText value="{!contactObj.name}"/>
+                            </apex:outputLink>
+            </apex:pageBlockSectionItem> 
+            
+            <apex:pageBlockSectionItem labelStyle="text-align:right; width: 49% max-width: 49%; border: none;" dataStyle="border: none; text-align:left; width: 51% max-width: 51%">
+                <apex:outputLabel value="Phase" /> 
+                <apex:outputfield value="{!taskObj.Phase__r.name}"/>    
+            </apex:pageBlockSectionItem>
+    
+            <apex:pageBlockSectionItem labelStyle="text-align:right; width: 49% max-width: 49%; border: none;" dataStyle="border: none; text-align:left; width: 51% max-width: 51%">
+                <apex:outputLabel value="Group" /> 
+                <apex:outputfield value="{!taskObj.Group_Name__c}"/>    
+            </apex:pageBlockSectionItem>                            
+    
+            <apex:pageBlockSectionItem labelStyle="text-align:right; width: 49% max-width: 49%; border: none;" dataStyle="border: none; text-align:left; width: 51% max-width: 51%">
+                <apex:outputLabel value="{!$ObjectType.Task__c.fields.Task_Owner__c.label}" /> 
+                <apex:outputfield value="{!taskObj.Task_Owner__c}"/>    
+            </apex:pageBlockSectionItem>
+            
+            <apex:pageBlockSectionItem labelStyle="text-align:right; width: 49% max-width: 49%; border: none;" dataStyle="border: none; text-align:left; width: 51% max-width: 51%">
+                <apex:outputLabel value="Task Status" /> 
+                <apex:outputfield value="{!taskObj.Status__c}"/>    
+            </apex:pageBlockSectionItem>
+            <apex:pageBlockSectionItem labelStyle="text-align:right; width: 49% max-width: 49%; border: none;" dataStyle="border: none; text-align:left; width: 51% max-width: 51%">
+                <apex:outputLabel value="Start Date" /> 
+                <apex:outputfield value="{!taskObj.Start_Date__c}"/>    
+            </apex:pageBlockSectionItem>
+
+            <apex:pageBlockSectionItem labelStyle="text-align:right; width: 49% max-width: 49%; border: none;" dataStyle="border: none; text-align:left; width: 51% max-width: 51%">
+                <apex:outputLabel value="End Date" /> 
+                <apex:outputfield value="{!taskObj.End_Date__c}"/>    
+            </apex:pageBlockSectionItem>
+    
+            <apex:pageBlockSectionItem rendered="{!IF(taskObj.Type__c != 'Adhoc', true, false)}"  labelStyle="text-align:right; width: 49% max-width: 49%; border: none;" dataStyle="border: none; text-align:left; width: 51% max-width: 51%">
+                <apex:outputLabel value="SLA Status" /> 
+                <apex:outputtext value="{!taskObj.SLA_Status__c}"/>
+            </apex:pageBlockSectionItem>
+    
+            <apex:pageBlockSectionItem rendered="{!IF(taskObj.Type__c != 'Adhoc', true, false)}"  labelStyle="text-align:right; width: 49% max-width: 49%; border: none;" dataStyle="border: none; text-align:left; width: 51% max-width: 51%">
+                <apex:outputLabel value="SLA (in hours)" /> 
+                <apex:outputfield value="{!taskObj.SLA_In_Hours__c}"/>  
+            </apex:pageBlockSectionItem>
+
+            <apex:pageBlockSectionItem labelStyle="text-align:right; width: 49% max-width: 49%; border: none;" dataStyle="border: none; text-align:left; width: 51% max-width: 51%">
+                <apex:outputLabel value="Reopened" /> 
+                <apex:outputfield value="{!taskObj.Reopen__c}"/>  
+            </apex:pageBlockSectionItem>
+
+            <apex:pageBlockSectionItem labelStyle="text-align:right; width: 49% max-width: 49%; border: none;" dataStyle="border: none; text-align:left; width: 51% max-width: 51%">
+                <apex:outputLabel value="Category" /> 
+                <apex:outputfield value="{!taskObj.Category__c}"/>  
+            </apex:pageBlockSectionItem>
+			
+			<apex:pageBlockSectionItem labelStyle="text-align:right; width: 49% max-width: 49%; border: none;" dataStyle="border: none; text-align:left; width: 51% max-width: 51%">
+                <apex:outputLabel value="Job Code" /> 
+                <apex:outputfield value="{!taskObj.phase__r.project__r.Job_Code__c}"/>  
+            </apex:pageBlockSectionItem>
+            
+            <apex:pageBlockSectionItem rendered="{!IF(taskObj.Type__c == 'Adhoc', true, false)}" labelStyle="text-align:right; width: 49% max-width: 49%; border: none;" dataStyle="border: none; text-align:left; width: 51% max-width: 51%">
+                <apex:outputLabel value="Task Reason" /> 
+                <apex:outputfield value="{!taskObj.Reason__c}"/>                
+            </apex:pageBlockSectionItem>
+            
+            <apex:pageBlockSectionItem rendered="{!IF(taskObj.Type__c == 'Adhoc', true, false)}" labelStyle="text-align:right; width: 49% max-width: 49%; border: none;" dataStyle="border: none; text-align:left; width: 51% max-width: 51%">
+                <apex:outputLabel value="Task Sub-Reason" /> 
+                <apex:outputfield value="{!taskObj.Sub_Reason__c}"/>                
+            </apex:pageBlockSectionItem>
+			
+			<apex:pageBlockSectionItem labelStyle="text-align:right; width: 49% max-width: 49%; border: none;" dataStyle="border: none; text-align:left; width: 51% max-width: 51%">
+                <apex:outputLabel value="Task History" /> 
+                <apex:outputLink onclick="showHistory('{!baseURL}', '{!taskObj.Id}'); return false;">
+					<apex:outputText value="{!taskObj.Name}"/>
+				</apex:outputLink>
+            </apex:pageBlockSectionItem> 
+
+            <apex:pageBlockSectionItem rendered="{!IF(taskObj.Status__c == 'On-Hold', true, false)}" labelStyle="text-align:right; width: 49% max-width: 49%; border: none;" dataStyle="border: none; text-align:left; width: 51% max-width: 51%">
+                <apex:outputLabel value="On Hold End Date" /> 
+                <apex:outputfield value="{!taskObj.OnHoldEndDate__c}"/>  
+            </apex:pageBlockSectionItem>
+			
+			<apex:pageBlockSectionItem rendered="{!IF(taskObj.Status__c != 'On-Hold', true, false)}" labelStyle="text-align:right; width: 49% max-width: 49%; border: none;" dataStyle="border: none; text-align:left; width: 51% max-width: 51%">
+			</apex:pageBlockSectionItem>
+
+            
+        </apex:Pageblocksection>
+    </apex:outputPanel>     
+
+</apex:component>

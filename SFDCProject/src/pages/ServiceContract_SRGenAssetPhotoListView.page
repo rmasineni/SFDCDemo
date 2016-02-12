@@ -1,0 +1,104 @@
+<apex:page id="SRGAPhotos" sidebar="false" showHeader="false" tabStyle="ServiceContract" StandardController="ServiceContract" extensions="ServiceContractPhotoUploaderComponent">
+<script>
+function showPhotoAlbum(GenAssetIdVal, canAttachDocs){
+            if(canAttachDocs == false){
+                alert('Invalid stage to Upload Documents');
+            }else{
+                var phototype= document.getElementById('{!$Component.form.hdPhototype}').value;
+                  var tempURL = '/ShowAlbum?id=' + GenAssetIdVal +'&&'+'photoType='+ phototype; 
+                tempURL  = '/apex' + tempURL ;
+                var newwindow = window.open(tempURL, '', 'toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=yes,resizable=yes');                 
+                newwindow.focus();
+            }
+        }
+        
+        function attachGenAssetPhotos(GenAssetIdVal, canAttachDocs){
+            
+            if(canAttachDocs == false){
+                alert('Invalid stage to Upload Documents');
+            }else{
+               var phototype= document.getElementById('{!$Component.form.hdPhototype}').value;
+                var tempURL = '/ServiceContract_PhotoUploader?id=' + GenAssetIdVal+'&&'+'photoType='+ phototype;
+                tempURL  = '/apex' + tempURL ;
+                //var newwindow = window.open(tempURL, '', 'toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=950,height=465,left=150,top=150');
+                var newwindow = window.open(tempURL, '', 'toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=yes,resizable=yes'); 
+                
+                newwindow.focus();
+            }
+            return true;
+        } 
+    function populatePhotoType(value){
+       
+        document.getElementById('{!$Component.form.hdPhototype}').value=value;
+      
+        
+    }
+
+</script>
+<apex:form id="form" >
+    <apex:inputHidden id="hdPhototype" value="{!actionName}" />
+   
+    <apex:outputpanel style="height:10px;background-color:#FFFFFF;" >
+        <!-- <div style="padding-left:30%;padding-bottom:0.5%;background-color:#FFFFFF;" align="left"> -->
+        <div style="padding-bottom:0.5%;background-color:#FFFFFF;" align="center">
+            <apex:outputLabel style="font-weight:bold;" >Actions</apex:outputLabel>
+            &nbsp;
+            <apex:selectList value="{!actionName}" id="actionId" size="1" onchange="populatePhotoType(this.value)">
+                <apex:selectOptions value="{!Actions}" />
+            </apex:selectList>
+            &nbsp;&nbsp;
+            <apex:commandButton onclick="return processUserActions('{!$Component.actionId}')"  value="  Go  " 
+                                action="{!userActions}" />                  
+        </div>
+      
+    </apex:outputpanel> 
+   
+<apex:pageBlock >
+<apex:pageBlockButtons >
+<apex:commandButton value="Update Status" action="{!SaveChangesToAllUploadedPhotos}"/>
+<apex:commandButton value="Upload Photos" onclick="attachGenAssetPhotos('{!Id}',true); return true;" />
+<apex:commandButton value="Show Album" onclick="showPhotoAlbum('{!Id}',true); return true;" />
+</apex:pageBlockButtons>
+     <div>
+   	    Installation: &nbsp;<apex:outputText value="{!InstallCount}" style="font-size:14px;font-weight:bold" />&nbsp;
+        Quality: &nbsp;<apex:outputText value="{!QualityCount}" style="font-size:14px;font-weight:bold"/> &nbsp; 
+        Field Service: &nbsp;<apex:outputText value="{!FieldServiceCount}" style="font-size:14px;font-weight:bold"/>&nbsp;
+        Site Audit-Partner: &nbsp;<apex:outputText value="{!SiteAuditPartnerCount}" style="font-size:14px;font-weight:bold"/>
+    </div>
+    <br/>
+<apex:pageBlockTable value="{!AllAttachedPhotos}" var="p">
+    <apex:column headerValue="Photo Type">
+ <apex:outputText value="{!p.PhotoType}"/>
+</apex:column> 
+    
+
+<apex:column headerValue="Attachment Record">
+ <apex:outputText >
+ <a href="/{!p.id}" target="_parent">{!p.name}</a>
+ </apex:outputText>
+</apex:column>
+<apex:column headerValue="File Name">
+ <apex:outputText >
+ <a href="{!p.thumbnail}" target="_blank">{!p.filename}</a>
+ </apex:outputText>
+</apex:column>
+<apex:column headerValue="File Size">
+ <apex:outputText value="{!p.filesize}"/>
+</apex:column>
+<!--
+<apex:column headerValue="Thumbnail">
+          <a href="{!p.thumbnail}" target="_blank">          
+           <img alt="User-added image" height="37" width="50" src="{!p.thumbnail}"></img>
+          </a>  
+</apex:column>
+
+-->
+
+<apex:column headerValue="File Status">
+ <apex:inputCheckbox value="{!p.filestatus}"/>
+</apex:column>
+
+</apex:pageBlockTable>
+</apex:pageBlock>
+</apex:form>
+</apex:page>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Portal xmlns="http://soap.sforce.com/2006/04/metadata">
+    <active>false</active>
+    <admin>sunruncrm@sunrunhome.com</admin>
+    <description>Portal for SunRun Partners to use to see Gen Assets report</description>
+    <emailSenderAddress>operations@sunrunhome.com</emailSenderAddress>
+    <emailSenderName>operations@sunrunhome.com</emailSenderName>
+    <enableSelfCloseCase>false</enableSelfCloseCase>
+    <forgotPassTemplate>Sales_Partner_Concierge/Partner_Portal_Password_Reset_old_portal</forgotPassTemplate>
+    <isSelfRegistrationActivated>false</isSelfRegistrationActivated>
+    <logoDocument>SharedDocuments/SunRun_Logo.png</logoDocument>
+    <newPassTemplate>Sales_Partner_Concierge/Partner_Portal_Password_Reset_old_portal</newPassTemplate>
+    <newUserTemplate>Sales_Partner_Concierge/New_User_Partner_Portal_old_portal</newUserTemplate>
+    <showActionConfirmation>false</showActionConfirmation>
+    <type>Partner</type>
+</Portal>

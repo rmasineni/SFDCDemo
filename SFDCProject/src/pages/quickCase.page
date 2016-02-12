@@ -1,0 +1,126 @@
+<apex:page standardController="Generation_Assets__c" extensions="quickCase" sidebar="true" id="quickCasePage">
+    <script>
+
+        function confirmCancel() 
+        {
+            var isCancel = confirm("Are you sure you wish to cancel?");
+            if (isCancel) return true;
+            return false;
+        }
+
+        function checkSelection() 
+        {
+            try
+            {
+                var inputElem = document.getElementsByTagName("input");
+                var checkedCount = 0;
+                var noEmailAddressCount = 0;
+                for(var i=0; i<inputElem.length; i++)
+                {
+                    if(inputElem[i].id.indexOf("checkedOne")!=-1)
+                    {
+                        if (inputElem[i].checked == true)
+                        {
+                            checkedCount++;
+                        }
+                    }
+                }
+                if (checkedCount <= 0)
+                {
+                    alert("Please select atleast one template.");
+                    return false;
+                }
+                else if (checkedCount > 1)
+                {
+                    alert("Please limit your selection to only one template.");
+                    return false;
+                }
+                return true;
+            }                    
+            catch(e)
+            {
+                alert(e);
+                return false;
+            }
+            return true;
+        }
+    </script>
+
+    <apex:sectionHeader title="Select Quick Case Template"/>
+    <apex:form id="quickCaseForm">
+        <apex:pageBlock mode="edit" id="block">
+        	<apex:pageMessages />
+            <apex:pageBlockButtons >
+                <apex:commandButton action="{!createCase}" value="Create Case" immediate="true" onClick="return checkSelection()"/>
+                <apex:commandButton action="{!cancel}" value="Cancel" onclick="return confirmCancel()" immediate="true" tabindex="1"/>
+            </apex:pageBlockButtons>
+			<apex:pageBlockSection id="filterPBSection">            
+				<apex:pageBlockSectionitem id="item1">
+					<apex:outputPanel >  
+						<apex:panelGrid columns="2">
+							<apex:outputLabel value="Case Reason" for="srchCaseReasonField" styleClass="labelCol first"/>
+							<apex:selectList id="srchCaseReasonField" value="{!srchCaseReason}" size="1">
+								<apex:selectOptions value="{!CaseReasons}"/>
+								<apex:actionSupport event="onchange" action="{!refreshTemplates}" rerender="theTable"/> 
+							</apex:selectList>
+						</apex:panelGrid>
+					</apex:outputPanel>
+				</apex:pageBlockSectionitem>
+			</apex:pageBlockSection>            
+            <apex:pageBlockTable value="{!qCaseTemplates}" var="l" id="theTable" rowClasses="odd,even" styleClass="tableClass">
+                <apex:column >
+                    <apex:inputCheckbox value="{!l.recSelected}" id="checkedOne" >
+                        <apex:actionSupport event="onclick" action="{!GetSelectedTemplate}"/>
+                    </apex:inputCheckbox>
+                </apex:column>
+<!--                 
+                <apex:column headervalue="Template" value="{!l.qCaseTemplateRec.Name}" />                    
+                <apex:column headervalue="Case Reason" value="{!l.qCaseTemplateRec.Case_Reason__c}" />                    
+                <apex:column headervalue="Subset Reason" value="{!l.qCaseTemplateRec.Subset_Reason__c}" />                    
+                <apex:column headervalue="Case Origin" value="{!l.qCaseTemplateRec.Case_Origin__c}" />
+                <apex:column headervalue="Subject" value="{!l.qCaseTemplateRec.Subject__c}" />
+ -->     
+				<apex:column >
+                   <apex:facet name="header">
+                       <apex:commandLink value="Template" action="{!doSort}" rerender="block">
+                           <apex:param name="sortField" value="Name" assignTo="{!sortField}"/>
+                       </apex:commandLink>
+                   </apex:facet>
+                   <apex:outputText value="{!l.qCaseTemplateRec.Name}"/>
+				</apex:column>
+				<apex:column >
+                   <apex:facet name="header">
+                       <apex:commandLink value="Case Reason" action="{!doSort}" rerender="block">
+                           <apex:param name="sortField" value="Case_Reason__c" assignTo="{!sortField}"/>
+                       </apex:commandLink>
+                   </apex:facet>
+                   <apex:outputText value="{!l.qCaseTemplateRec.Case_Reason__c}"/>
+				</apex:column>
+				<apex:column >
+                   <apex:facet name="header">
+                       <apex:commandLink value="Subset Reason" action="{!doSort}" rerender="block">
+                           <apex:param name="sortField" value="Subset_Reason__c" assignTo="{!sortField}"/>
+                       </apex:commandLink>
+                   </apex:facet>
+                   <apex:outputText value="{!l.qCaseTemplateRec.Subset_Reason__c}"/>
+				</apex:column>
+				<apex:column >
+                   <apex:facet name="header">
+                       <apex:commandLink value="Case Origin" action="{!doSort}" rerender="block">
+                           <apex:param name="sortField" value="Case_Origin__c" assignTo="{!sortField}"/>
+                       </apex:commandLink>
+                   </apex:facet>
+                   <apex:outputText value="{!l.qCaseTemplateRec.Case_Origin__c}"/>
+				</apex:column>
+				<apex:column >
+                   <apex:facet name="header">
+                       <apex:commandLink value="Subject" action="{!doSort}" rerender="block">
+                           <apex:param name="sortField" value="Subject__c" assignTo="{!sortField}"/>
+                       </apex:commandLink>
+                   </apex:facet>
+                   <apex:outputText value="{!l.qCaseTemplateRec.Subject__c}"/>
+				</apex:column>
+            </apex:pageBlockTable>
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>

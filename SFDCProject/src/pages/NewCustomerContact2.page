@@ -1,0 +1,275 @@
+<apex:page id="ContactEditId" sidebar="false" showHeader="false" StandardController="Contact" extensions="NewCustomerContactOverridden" >
+<style>
+        #filesTableId {
+            background-color: whiteSmoke;
+            border-radius: 6px;
+            -webkit-border-radius: 6px;
+            -moz-border-radius: 6px;
+        }
+        
+        #filesTableId td, #filesTableId th {
+            
+        }
+
+        #filesTableId th {
+            color: #333;
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            font-style: normal;
+            font-weight: bold;
+            text-align: left;
+            
+            padding-left: 0;
+            padding-right: 0;
+        }
+        
+        }
+        #filesTableId td {
+            padding: 0 20px;
+            line-height: 12px;
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            border-bottom: 1px solid #fff;
+            border-top: 1px solid #fff;
+        }
+        #filesTableId td:hover {
+            background-color: #fff;
+        }
+
+        #dropbox {
+            background: rgba(128, 128, 128, 0.14);
+            border: black dashed 1px;
+            width: 85%;
+            padding: 20px;
+            height: 120px;
+            text-align: center;
+            color: blue;
+            border-radius: 10PX;        
+            margin-left: auto;
+            margin-right: auto;
+            margin-top: 20px;
+        }
+ 
+        #progress_bar {
+          width: 200px;
+          height: 5px !important;
+          margin: 1px 0;
+          padding: 0 0 !important;
+          
+          font-size: 14px;
+          clear: both;
+          opacity: 0;
+          -moz-transition: opacity 1s linear;
+          -o-transition: opacity 1s linear;
+          -webkit-transition: opacity 1s linear;
+        }
+        #progress_bar.loading {
+          opacity: 1.0;
+          height: 5px !important;
+           padding: 0 0 !important;
+           background-color: #333333 !important;
+            border: 0px !important;
+        }
+        
+        .loading {
+             background-color:whiteSmoke  !important;
+              border: 0px !important;
+              font-weight: normal !important;
+         }
+        .percent {
+          background-color: #99ccff;
+          height: auto;
+          width: 0;
+        }
+        
+        .deleteButton{
+            background-color: red;
+            width: 150px;
+            height: 40px;
+        }
+
+        .headerLogo {
+            margin:1px 1px 1px 1px;
+            border:0;
+            padding-left:15px;
+            padding-top:10px;
+            padding-bottom:1px;
+            #height: 30px;
+            #width: 90px;
+        }
+        #fileUploadDiv {
+        overflow:auto;
+        width:800px;
+        }
+    </style>
+    
+    <div align="left" width="100%">
+        <img src="{!$Resource.PartnerPortalHeader32}" class="headerLogo"/>
+    </div>
+    <apex:sectionHeader title="{!title}"/>  
+    <apex:form id="formId" >
+        <apex:pageMessages escape="false" id="pgmsg"/>
+        <apex:pageblock id="pageblockId" Rendered="{!showEditSec}">
+            <apex:pageBlockSection id="pageblockSectionId" title="Contact Information" columns="2" Rendered="{!showEditSec}">
+                <apex:pageBlockSectionItem id="sectionItemFirstNameId">
+                    <apex:outputLabel value="First Name" />
+                    <apex:outputPanel id="panelFirstNameId" layout="block" styleClass="requiredInput">
+                    <apex:outputPanel layout="block" styleClass="requiredBlock"/>
+                        <apex:inputfield id="FirstNameId" value="{!addCon.Firstname}">
+                        </apex:inputfield>
+                    </apex:outputPanel>
+                </apex:pageBlockSectionItem>                
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="Last Name" />
+                    <apex:outputPanel layout="block" styleClass="requiredInput">
+                    <apex:outputPanel layout="block" styleClass="requiredBlock"/>
+                        <apex:inputtext id="LastName" value="{!lastName}">
+                        </apex:inputtext>
+                    </apex:outputPanel>
+                </apex:pageBlockSectionItem> 
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="Email" />
+                    <apex:outputPanel layout="block" styleClass="requiredInput">
+                    <apex:outputPanel layout="block" styleClass="requiredBlock"/>
+                        <apex:inputfield id="Email" value="{!addCon.Email}">
+                        </apex:inputfield>
+                    </apex:outputPanel>
+                </apex:pageBlockSectionItem>
+               <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="Phone" for="Phone" />
+                    <apex:outputPanel layout="block" >
+                        <apex:outputPanel layout="block"/>
+                        <apex:inputfield id="Phone" value="{!addCon.phone}"  onkeydown="javascript:backspacerDOWN(this,event);" onkeyup="javascript:backspacerUP(this,event);" />
+                    </apex:outputPanel>
+                </apex:pageBlockSectionItem>  
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="Preferred Language" />
+                    <apex:outputPanel layout="block" styleClass="requiredInput">
+                    <apex:outputPanel layout="block" styleClass="requiredBlock"/>
+                        <apex:inputfield id="Email" value="{!addCon.Preferred_Language__c}">
+                        </apex:inputfield>
+                    </apex:outputPanel>
+                </apex:pageBlockSectionItem>
+               <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="Mobile" for="Mobile" />
+                    <apex:outputPanel layout="block" >
+                        <apex:outputPanel layout="block"/>
+                        <apex:inputfield id="HomePhone" value="{!addCon.mobilephone}"  onkeydown="javascript:backspacerDOWN(this,event);" onkeyup="javascript:backspacerUP(this,event);" />
+                    </apex:outputPanel>
+                </apex:pageBlockSectionItem> 
+                
+                <!-- 
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="Other Phone" />
+                    <apex:outputPanel layout="block">
+                        <apex:inputfield id="HomePhone" value="{!addCon.homephone}">
+                        </apex:inputfield>
+                    </apex:outputPanel>
+                </apex:pageBlockSectionItem>
+                                                
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="Mobile" />
+                    <apex:outputPanel layout="block">
+                        <apex:inputfield id="HomePhone" value="{!addCon.mobilephone}">
+                        </apex:inputfield>
+                    </apex:outputPanel>
+                </apex:pageBlockSectionItem>                
+                 -->
+                
+                <apex:pageBlockSectionItem rendered="{!showOptyDetails}">
+                    <apex:outputLabel value="Opportunity" />
+                    <apex:outputtext value="{!opportunityName}"/>
+                </apex:pageBlockSectionItem>
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="Contact Role" />
+                    <apex:selectList value="{!roleName}" id="roleId" size="1" >
+                        <apex:selectOptions value="{!ContactRoles}" />
+                    </apex:selectList>
+                </apex:pageBlockSectionItem>
+                
+            </apex:pageblocksection>
+        </apex:pageblock>
+
+
+        <apex:pageblock Id="ShowAddress" Rendered="{!showReadSec}">
+            <apex:pageblocksection title="Contact Information" Rendered="{!showReadSec}">
+                    <apex:pageBlockSectionItem >
+                        <apex:outputLabel value="First Name" />
+                        <apex:outputtext value="{!addCon.Firstname}"/>
+                    </apex:pageBlockSectionItem>                
+                    <apex:pageBlockSectionItem >
+                        <apex:outputLabel value="Last Name" />
+                        <apex:outputtext value="{!lastName}"/>
+                    </apex:pageBlockSectionItem>                
+                    <apex:pageBlockSectionItem >
+                        <apex:outputLabel value="Email" />
+                        <apex:outputtext value="{!addCon.Email}"/>
+                    </apex:pageBlockSectionItem>                
+                    <apex:pageBlockSectionItem >
+                        <apex:outputLabel value="Phone" />
+                        <apex:outputtext value="{!addCon.phone}"/>
+                    </apex:pageBlockSectionItem> 
+                    <apex:pageBlockSectionItem />
+                    <apex:pageBlockSectionItem >
+                        <apex:outputLabel value="Mobile" />
+                        <apex:outputtext value="{!addCon.mobilephone}"/>
+                    </apex:pageBlockSectionItem> 
+            </apex:pageblocksection>
+        </apex:pageblock> 
+
+        <div align="center">
+            <apex:actionStatus id="mySaveStatus1" >
+             <apex:facet name="stop">
+                 <apex:commandButton value="  Save "  Rendered="{!showEditSec && NOT(enableConfirmSave)}"
+                    action="{!saveContact}" rerender="formId"
+                     status="mySaveStatus1"/>
+                
+             </apex:facet>
+             <apex:facet name="start">
+                <apex:outputtext value="In progress ..." />
+                 <apex:outputPanel >
+                       <apex:image value="/img/loading32.gif" style="height: 15px;"/>
+                       <apex:commandButton value="Processing..." status="mySaveStatus1" disabled="true"/>
+                   </apex:outputPanel>
+               </apex:facet>
+            </apex:actionStatus>
+            <apex:actionStatus id="mySaveStatus2" >
+             <apex:facet name="stop">
+                 <apex:commandButton value="  Confirm " Rendered="{!enableConfirmSave}"
+                    action="{!confirmSave}" rerender="formId"
+                     status="mySaveStatus2"/>
+                
+             </apex:facet>
+             <apex:facet name="start">
+                <apex:outputtext value="In progress ..." />
+                 <apex:outputPanel >
+                       <apex:image value="/img/loading32.gif" style="height: 15px;"/>
+                       <apex:commandButton value="Processing..." status="mySaveStatus2" disabled="true"/>
+                   </apex:outputPanel>
+               </apex:facet>
+            </apex:actionStatus>
+            &nbsp;
+            <apex:commandButton Onclick="closeWindow('{!BaseURL}', '{!inputOptyId}');window.top.close();" value="Cancel" rendered="{!NOT(showReadSec)}"/>
+            <apex:commandButton Onclick="closeAndRefreshparent('{!BaseURL}', '{!inputOptyId}');window.top.close();" value="Close" rendered="{!(showReadSec)}"/>
+            <!-- <apex:commandButton onclick="closeAndRefreshparent('{!BaseURL}', '{!inputOptyId}');window.top.close();" value="Cancel" rendered="{!showOptyDetails}"/>
+             -->                        
+        </div>
+         <c:CustomPhoneNumber />
+    </apex:form>
+    
+    <script>
+            //var optyId = '{!inputOptyId}' ;
+            //var baseURL = '{!BaseURL}' ;
+            function closeWindow(baseURL, optyId)
+            {
+                window.top.close();
+            }
+            
+            function closeAndRefreshparent(baseURL, optyId)
+            {
+                var parentWindowUrl = baseURL + '/' + optyId;
+                window.top.close();
+                window.opener.parent.location.href = parentWindowUrl;
+                var win = window.open('','_parent','');
+                win.close();
+            }
+    </script>
+</apex:page>

@@ -1,0 +1,56 @@
+<apex:page title="Sunrun Partner Portal Need Help Signing in?" sidebar="false" showHeader="false" controller="PartnerPortalLogin">
+	<apex:composition template="PartnerPortalSiteTemplate">
+		<apex:define name="mainContent">
+			<apex:outputpanel layout="block" styleclass="grid_2">
+				<div class="needHelpDiv1">
+				</div>
+			</apex:outputpanel>
+			<apex:outputpanel layout="block" styleclass="grid_8">
+				<div class="needHelpDiv2">
+                    <div><BR>&nbsp;</BR><BR>&nbsp;</BR></div>
+            		
+            		<div>
+	                    <div style="">
+							<h1 class="NeedHelp">Authorization Required</h1>
+							<p/><p/>
+	                    </div>
+						<apex:outputText style="font-size:120%" value="{!$Label.site.login_or_register_first}"/>
+						<br/>
+						<apex:outputText style="font-size:120%" value="{!$Label.site.click_forget_password}"/>            		
+             		</div>
+             		<p/>
+					<apex:form id="theForm" forceSSL="true">
+						<font style="wordwrap" color="red" weight="bold"><apex:messages styleClass="wordwrap" /></font>
+						<apex:outputPanel >
+							<apex:outputLabel value="Username:    " for="username" style="font-size:120%" />
+							<apex:inputtext id="username" value="{!username}">
+							</apex:inputtext>
+						</apex:outputPanel>
+						<p/>
+						<apex:outputPanel >
+							<apex:outputLabel value="Password: " for="password" style="font-size:120%;padding:0px 2px 0px 0px;"/>
+							<apex:inputSecret id="password" value="{!password}">
+							</apex:inputSecret>
+						</apex:outputPanel>
+						<p/>
+						<apex:outputPanel >
+							<span style="margin-left:33px;width:0px;">
+								<apex:commandButton styleclass="buttons" action="{!login}" value="    Log In    " id="theButton1"/>
+							</span>
+						</apex:outputPanel>
+						<p/>
+
+						<BR>&nbsp;</BR>
+						<apex:outputPanel >
+							<span style="margin-left:0px;width:0px;">
+								<apex:commandLink style="font-size:110%;"
+									action="{!forgotPasswordPage}" 
+									title="Need Help Signing in?" value="Need Help Signing in?"/>    
+							</span>
+						</apex:outputPanel>				
+					</apex:form>
+				</div>
+			</apex:outputpanel>
+		</apex:define>
+	</apex:composition>
+</apex:page>

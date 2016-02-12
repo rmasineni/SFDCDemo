@@ -1,0 +1,206 @@
+<apex:component >
+    <apex:attribute name="status" type="String" description=""/>
+    <apex:attribute name="street" type="String" required="false" description=""/>
+    <apex:attribute name="city" type="String" required="false" description=""/>
+    <apex:attribute name="state" type="Schema.sObjectField" required="false" description=""/>
+    <apex:attribute name="postalCode" type="String" required="false" description=""/>
+    <apex:attribute name="latitude" type="String" required="false" description=""/>
+    <apex:attribute name="longitude" type="String" required="false" description=""/>
+    <apex:attribute name="country" type="String" required="false" description=""/>
+    <apex:attribute name="edit" type="Boolean" required="false" description=""/>
+    <apex:attribute name="style" type="String" required="false" description=""/>
+
+    <apex:includescript value="https://cdn.jsdelivr.net/jquery/2.0.3/jquery-2.0.3.min.js"/>
+    <apex:includescript value="https://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"/>
+    
+    <apex:includescript value="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=places"/>
+    <apex:includescript value="https://cdnjs.cloudflare.com/ajax/libs/gmaps.js/0.4.5/gmaps.min.js"/>
+    
+    <apex:includescript value="{!URLFOR($Resource.GoogleMapsResources, 'js/google-maps-address.js')}"/>
+    <link rel="stylesheet" type="text/css" href="{!URLFOR($Resource.GoogleMapsResources, 'css/google-maps-address.css')}"/>
+    
+    <style>
+.ui-button-text-only .ui-button-text {
+    padding: 1px !Important;
+    font-weight: bold;
+}
+
+.maps-controls a, .maps-controls img {
+    outline: none;
+}
+    </style>
+    
+    <script>
+    $(document).ready(function(){
+        $("#address-lookup").click(function(){
+            $( "#address-lookup-content").dialog({
+              modal: true,
+              height: 500,
+              width: 800,
+              open: initMaps,
+              resizeStop: srun.GMapsAddress.resizeMap,
+              buttons: {
+                <apex:outputPanel rendered="{!edit}" layout="none">
+                    "Select Address": function() {
+                        if (srun.GMapsAddress.selectAddress()) {
+                            $(this).dialog("close");
+                        }
+                     },
+                </apex:outputPanel>
+                    Close: function() {
+                        $(this).dialog("close");
+                    }
+                 }
+            });
+       });
+       $(".address-state").change(function(){
+           $(".page-address-state").val($(".address-state").val());
+           $(".page-address-state").change();
+       });
+       
+       srun.GMapsAddress.initComponent();
+    });
+    
+    function initMaps() {
+        srun.GMapsAddress.initMaps($('.address-lat').val(), $('.address-lng').val(), $('.address-line1').val() + ' ' + $('.address-city').val() + ' ' + $('.address-state').val() + ' ' + $('.address-zip').val(), {!edit});
+        srun.GMapsAddress.resizeMap();
+    }
+    </script>
+    
+    <apex:outputPanel rendered="{!edit}"  styleClass="address-components" >     
+               
+        <div> 
+
+            <apex:outputPanel >
+            <apex:outputPanel layout="inline" styleClass="requiredInput">
+                 <apex:outputPanel layout="inline" styleClass="myrequiredBlock"/>
+                 <apex:inputText value="{!street}" styleClass="address-line1" html-placeholder="Street"/>  
+            </apex:outputPanel>
+            <a href="#" title="Address Lookup" id="address-lookup">
+                <img src="/s.gif" alt="Address Lookup" class="lookupIcon" 
+                    onblur="this.className = 'lookupIcon';" onfocus="this.className = 'lookupIconOn';" 
+                    onmouseout="this.className = 'lookupIcon';this.className = 'lookupIcon';" 
+                    onmouseover="this.className = 'lookupIconOn';this.className = 'lookupIconOn';" title="Address Lookup" style="position: relative; top:3px"/>
+            </a>
+            </apex:outputPanel>                     
+        </div>
+        <div>                          
+        <apex:outputPanel layout="inline" styleClass="requiredInput">
+            <apex:outputPanel layout="inline" styleClass="myrequiredBlock"/>
+            <apex:inputText styleClass="address-city"  value="{!city}" html-placeholder="City"/>
+            </apex:outputpanel>                 
+            
+            <apex:selectList styleClass="address-state" value="{!state}" size="1">
+                <apex:selectOption itemValue="" itemLabel="  "/>
+                <apex:selectOption itemValue="AL" itemLabel="AL"/>
+                <apex:selectOption itemValue="AR" itemLabel="AR"/>
+                <apex:selectOption itemValue="AZ" itemLabel="AZ"/>
+                <apex:selectOption itemValue="CA" itemLabel="CA"/>
+                <apex:selectOption itemValue="CO" itemLabel="CO"/>
+                <apex:selectOption itemValue="CT" itemLabel="CT"/>
+                <apex:selectOption itemValue="DC" itemLabel="DC"/>
+                <apex:selectOption itemValue="DE" itemLabel="DE"/>
+                <apex:selectOption itemValue="FL" itemLabel="FL"/>
+                <apex:selectOption itemValue="GA" itemLabel="GA"/>
+                <apex:selectOption itemValue="HI" itemLabel="HI"/>
+                <apex:selectOption itemValue="IA" itemLabel="IA"/>
+                <apex:selectOption itemValue="ID" itemLabel="ID"/>
+                <apex:selectOption itemValue="IL" itemLabel="IL"/>
+                <apex:selectOption itemValue="IN" itemLabel="IN"/>
+                <apex:selectOption itemValue="KS" itemLabel="KS"/>
+                <apex:selectOption itemValue="KY" itemLabel="KY"/>
+                <apex:selectOption itemValue="LA" itemLabel="LA"/>
+                <apex:selectOption itemValue="MA" itemLabel="MA"/>
+                <apex:selectOption itemValue="MD" itemLabel="MD"/>
+                <apex:selectOption itemValue="ME" itemLabel="ME"/>
+                <apex:selectOption itemValue="MI" itemLabel="MI"/>
+                <apex:selectOption itemValue="MN" itemLabel="MN"/>
+                <apex:selectOption itemValue="MO" itemLabel="MO"/>
+                <apex:selectOption itemValue="MS" itemLabel="MS"/>
+                <apex:selectOption itemValue="MT" itemLabel="MT"/>
+                <apex:selectOption itemValue="NC" itemLabel="NC"/>
+                <apex:selectOption itemValue="ND" itemLabel="ND"/>
+                <apex:selectOption itemValue="NE" itemLabel="NE"/>
+                <apex:selectOption itemValue="NH" itemLabel="NH"/>
+                <apex:selectOption itemValue="NJ" itemLabel="NJ"/>
+                <apex:selectOption itemValue="NM" itemLabel="NM"/>
+                <apex:selectOption itemValue="NV" itemLabel="NV"/>
+                <apex:selectOption itemValue="NY" itemLabel="NY"/>
+                <apex:selectOption itemValue="OH" itemLabel="OH"/>
+                <apex:selectOption itemValue="OK" itemLabel="OK"/>
+                <apex:selectOption itemValue="OR" itemLabel="OR"/>
+                <apex:selectOption itemValue="PA" itemLabel="PA"/>
+                <apex:selectOption itemValue="RI" itemLabel="RI"/>
+                <apex:selectOption itemValue="SC" itemLabel="SC"/>
+                <apex:selectOption itemValue="SD" itemLabel="SD"/>
+                <apex:selectOption itemValue="TN" itemLabel="TN"/>
+                <apex:selectOption itemValue="TX" itemLabel="TX"/>
+                <apex:selectOption itemValue="UT" itemLabel="UT"/>
+                <apex:selectOption itemValue="VA" itemLabel="VA"/>
+                <apex:selectOption itemValue="VT" itemLabel="VT"/>
+                <apex:selectOption itemValue="WA" itemLabel="WA"/>
+                <apex:selectOption itemValue="WI" itemLabel="WI"/>
+                <apex:selectOption itemValue="WV" itemLabel="WV"/>
+                <apex:selectOption itemValue="WY" itemLabel="WY"/>
+            </apex:selectList>                  
+            <apex:inputText styleClass="address-zip" value="{!postalCode}" html-placeholder="Zip"/>
+            <apex:inputText style="display:none" styleClass="address-lat" value="{!latitude}"/>
+            <apex:inputText style="display:none" styleClass="address-lng" value="{!longitude}"/>
+            <apex:inputText style="display:none" styleClass="address-status" value="{!status}"/>
+        </div>
+    </apex:outputPanel>
+
+    <apex:outputPanel rendered="{!Not(edit)}">
+        <div>
+            <span>{!street}</span>
+            <a href="#" title="Address Lookup" id="address-lookup">
+                <img src="/s.gif" alt="Address Lookup" class="lookupIcon" 
+                    onblur="this.className = 'lookupIcon';" onfocus="this.className = 'lookupIconOn';" 
+                    onmouseout="this.className = 'lookupIcon';this.className = 'lookupIcon';" 
+                    onmouseover="this.className = 'lookupIconOn';this.className = 'lookupIconOn';" title="Address Lookup" style="position: relative; top: 5px"/>
+            </a>
+        </div>
+        <div>
+            <span>{!city} {!state} {!postalCode}</span>
+        </div>
+    </apex:outputPanel>
+
+    <div id="address-lookup-content" style="display: none">
+        <div class="maps-controls">
+            <apex:outputPanel layout="none"  rendered="{!edit}">
+                <input id="address-autocomplete" class="controls" placeholder="Enter Address" html-type="search"/>
+            </apex:outputPanel>
+            <apex:outputPanel layout="none"  rendered="{!Not(edit)}">
+                <label id="address-autocomplete" class="controls" placeholder="Enter Address">Loading...</label>
+            </apex:outputPanel>
+            <span>
+                <a href="javascript:void(0)" id="center-marker2"><img src="{!URLFOR($Resource.GoogleMapsResources, 'images/spotlight-poi.png')}" title="Center the Maps with marker"/></a>
+                <a href="javascript:void(0)" id="open-google-maps"><img src="{!URLFOR($Resource.GoogleMapsResources, 'images/maps.png')}" title="Open the Address in Google Maps"/></a>
+            </span>
+        </div>
+        <div id="map-canvas" style="{!style} width:100%;height:calc(100% - 60px)"></div>
+    </div>
+   <style>
+   
+.address-line1 {
+    width: 300px !Important;
+}
+   .address-city {
+    min-width: 20px !Important;
+    width: 195px !Important;
+}
+.address-state {
+    min-width: 20px !Important;
+    width: 50px !Important;
+}
+.address-zip {
+    min-width: 20px !Important;
+    width: 65px !Important;
+}
+
+#address-lookup {
+    padding-left: 100px;
+}
+
+    </style>   
+</apex:component>

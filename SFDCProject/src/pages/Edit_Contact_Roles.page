@@ -1,0 +1,103 @@
+<apex:page id="RolePageId" sidebar="false" showHeader="false" tabStyle="Opportunity" StandardController="Opportunity" 
+    Extensions="CustomOptyContactRole"> 
+    <style>
+        .headerLogo {
+            margin:1px 1px 1px 1px;
+            border:0;
+            padding-left:10px;
+            padding-bottom:10px;
+            #height: 30px;
+            #width: 90px;
+        }
+
+        .bPageTitle, .apexp{
+            margin-left: 15px;
+            margin-right: 20px;
+            width: 97%;
+        }
+    </style>
+    <script>          
+       var selectedChkbox;
+       var tableIdCount = 0;
+       function deSelectOthers(chkBox) {
+          // if (chkBox.checked) {
+            //    if ((chkBox != selectedChkbox) && (selectedChkbox != null)) {
+          //          selectedChkbox.checked = false;
+           //     }
+           //     selectedChkbox = chkBox;
+           // }            
+        }        
+    </script> 
+    <apex:outputPanel rendered="{!!isAEEUser}">
+    <div align="left" width="85%">
+        <img src="{!$Resource.PartnerPortalHeader32}" class="headerLogo"/>
+        &nbsp;&nbsp;
+    </div> 
+    </apex:outputPanel>
+    <apex:sectionHeader title="Edit Contact Roles"/>
+    
+    <apex:form id="RoleFormId">
+        <apex:pageMessages escape="false" id="pgmsg"/>
+        <apex:pageBlock id="PageBlockId" >
+            <apex:pageBlockSection id="SectionId" columns="1">  
+                <apex:pageBlockTable id="PageBlockTableId" value="{!contactRoleWrapperList}" var="contactRoleWrapper" rowClasses="odd,even" styleClass="tableClass">
+                    <apex:column headerValue="Role" value="{!contactRoleWrapper.contactObj.Name}" />
+                    <apex:column headerValue="Role">
+                        <apex:selectList value="{!contactRoleWrapper.contactRoleObj.role}" id="roleId" size="1" >
+                            <apex:selectOptions value="{!ContactRoles}" />
+                        </apex:selectList>
+                    </apex:column>
+                    
+                    <apex:column headerValue="Primary"> 
+                        <apex:inputCheckBox value="{!contactRoleWrapper.contactRoleObj.isPrimary}" id="CheckBoxId" onclick="deSelectOthers(this)" disabled="true"/> 
+                        <script>
+                            //if ("{!contactRoleWrapper.contactRoleObj.isPrimary}" == "true") {
+                                //var idForSelectedBox = "RolePageId:RoleFormId:PageBlockId:SectionId:PageBlockTableId:"+tableIdCount+":CheckBoxId";
+                                //selectedChkbox = document.getElementById(idForSelectedBox);
+                            //}
+                            tableIdCount++;
+                        </script>                         
+                    </apex:column> 
+                </apex:pageBlockTable>                                  
+                <apex:outputPanel layout="block" styleClass="noRecordsFound" rendered="{!ContactRoleWrapperListSize == 0}">
+                    No records to display
+                </apex:outputPanel>
+            </apex:pageBlockSection> 
+        </apex:pageBlock>
+        <apex:outputPanel id="thePanel">
+        
+        </apex:outputPanel>
+                &nbsp; 
+        <div align="Center">
+            <apex:commandButton rendered="{!NOT(confirmMode) && NOT(enableConfirmSave)}" action="{!saveContactRoles}" value=" Save " 
+                rerender="RoleFormId" oncomplete="closeAndRefreshparent('{!confirmMode}', '{!opportunityId}');" />
+            <apex:commandButton rendered="{!NOT(confirmMode) && enableConfirmSave}" action="{!ConfirmSaveContactRoles}" value=" Confirm " 
+                rerender="RoleFormId" oncomplete="closeAndRefreshparent('{!confirmMode}', '{!opportunityId}');" />
+            &nbsp;
+            <apex:commandButton onClick="window.close();" value="Cancel" title="Click to Cancel Edit" action="{!cancel}"/> 
+        </div>
+    </apex:form>
+    <script> 
+        function closeAndRefreshparent(confirmMode, opportunityIdVal)
+        {
+            if(confirmMode != 'true'){
+                return;
+            }
+            var tempURL = '/apex/partneropportunitycreate?id=' + opportunityIdVal; 
+            var isPartner = "{!IsPartnerUser}";
+            var isAEEUser = "{!isAEEUser}";
+            if(isPartner == 'true' && isAEEUser == 'false')
+            {
+                tempURL = '/partner' + tempURL;
+            }
+            else if(isAEEUser == 'true'){
+                tempURL = '/aeepartner' + tempURL;
+            } 
+            window.top.close();
+            window.opener.parent.location.href = tempURL;
+            var win = window.open('','_parent','');
+            win.close();
+        }
+    </script>
+
+</apex:page>

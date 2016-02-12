@@ -1,0 +1,88 @@
+<apex:page standardController="FS_Action__c" extensions="fsAction" sidebar="true" id="fsAction">
+    <script language="javascript">  
+        function fixElements(tagn,attrib) 
+        {       
+            var tags = document.getElementsByTagName(tagn);     
+            var ti;     
+            var pos;        
+            // Since Salesforce builds a complex Id using the Id's of previous elements, we need        
+            // to find the one that we want.        
+            // Note: this means we're searching for tags like:      
+            // apex:inputfield id="tabIndex4" ....>     
+            var pat = /:tabIndex[0-9]+/;        
+            for (var i=0; i < tags.length; i++) 
+            {           
+                if (tags[i].getAttribute(attrib) != null) 
+                {               
+                    pos = tags[i].getAttribute(attrib).search(pat);             
+                    if (pos != -1) 
+                    {                   
+                        ti = tags[i].getAttribute(attrib).slice(pos+9);                 
+                        tags[i].setAttribute('tabIndex',ti);                
+                    }           
+                }       
+            }   
+        }       
+        fixElements("input","id");  
+        fixElements("select","id");
+    </script> 
+    <apex:messages />
+    <apex:sectionHeader title="FS Action Detail"/>
+    <apex:form id="fsActionForm">
+        
+        <apex:pageBlock mode="edit" id="fsActionBlock">
+            <apex:pageBlockButtons >
+                <apex:commandButton action="{!save}" value="Save"/>
+<!--                 
+                <apex:commandButton action="{!saveAndNew}" value="Save & New"/>
+ -->                
+                <apex:commandButton action="{!cancel}" value="Cancel"/>
+            </apex:pageBlockButtons>
+            <apex:pageBlockSection title="{!informationSectionHdr}" columns="2">
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="Action Code"/>
+                    <apex:outputPanel >
+                        <apex:selectList value="{!fsActionRec.FS_Action_Code__c}" size="1">
+                            <apex:selectOptions id="tabIndex1" value="{!ActionCode}" />
+                            <apex:actionSupport event="onchange" action="{!refreshSectionHeaders}" rerender="fsActionBlock"/>
+                        </apex:selectList>
+                    </apex:outputPanel>
+                </apex:pageBlockSectionItem>            
+                <apex:outputField value="{!fsActionRec.FS_Dispatch__c}"/>
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="Component Code"/>
+                    <apex:outputPanel >
+                        <apex:selectList id="tabIndex2" value="{!fsActionRec.FS_Component_Code__c}" size="1">
+                            <apex:selectOptions value="{!ComponentCode}"/>
+                            <apex:actionSupport event="onchange" action="{!refreshSectionHeaders}" rerender="fsActionBlock"/>
+                        </apex:selectList>
+                    </apex:outputPanel>
+                </apex:pageBlockSectionItem>            
+                <apex:outputField value="{!fsActionRec.Name}"/>                                          
+<!--                 
+                <apex:inputField id="tabIndex3" value="{!fsActionRec.FS_Action_Date__c}"/>
+-->             
+            </apex:pageBlockSection>
+            <apex:pageBlockSection title="{!addDetailsSectionHdr}" columns="2">
+                <apex:repeat value="{!$ObjectType.FS_Action__c.FieldSets.Additional_Details}" var="fs2">
+                    <apex:inputField value="{!fsActionRec[fs2]}"/>
+                </apex:repeat>
+            </apex:pageBlockSection>
+            <apex:pageBlockSection title="{!oldComponentSectionHdr}" columns="2">
+            <apex:inputField id="tabIndex1" value="{!fsActionRec.Inverter_Reading__c}"/>
+            <apex:inputField id="tabIndex2" value="{!fsActionRec.Meter_Failure_Reason__c}"/>
+            <apex:inputField id="tabIndex3" value="{!fsActionRec.Inverter_Failure_Reason__c}"/>
+            <apex:inputField id="tabIndex4" value="{!fsActionRec.Panel_Failure_Reason__c}"/>
+                <apex:repeat value="{!$ObjectType.FS_Action__c.FieldSets.Existing_Or_Removed_Component}" var="fs3">
+                    <apex:inputField value="{!fsActionRec[fs3]}"/>
+                    
+                </apex:repeat>
+            </apex:pageBlockSection>
+            <apex:pageBlockSection title="{!newComponentSectionHdr}" columns="2">
+                <apex:repeat value="{!$ObjectType.FS_Action__c.FieldSets.New_Or_Replacement_Component}" var="fs4">
+                    <apex:inputField value="{!fsActionRec[fs4]}"/>
+                </apex:repeat>
+            </apex:pageBlockSection>
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>

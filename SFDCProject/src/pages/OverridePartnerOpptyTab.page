@@ -1,0 +1,3 @@
+<apex:page standardcontroller="Opportunity" recordSetVar="c" Extensions="OverridePartnerOpptyTab"  
+                tabstyle="Opportunity" action="{!redirectOpptyTab}">
+</apex:page>

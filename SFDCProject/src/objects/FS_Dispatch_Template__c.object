@@ -1,0 +1,262 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Follow</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <description>Used to create templates for quick creating FS Dispatch records</description>
+    <enableActivities>false</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableDivisions>false</enableDivisions>
+    <enableEnhancedLookup>true</enableEnhancedLookup>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>false</enableHistory>
+    <enableReports>false</enableReports>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <externalSharingModel>ReadWrite</externalSharingModel>
+    <fields>
+        <fullName>Bill_To__c</fullName>
+        <externalId>false</externalId>
+        <label>Bill To</label>
+        <picklist>
+            <controllingField>Financial_Responsibility__c</controllingField>
+            <picklistValues>
+                <fullName>Not Billable to Third Party</fullName>
+                <controllingFieldValues>Sunrun</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Installer</fullName>
+                <controllingFieldValues>Sunrun</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Customer</fullName>
+                <controllingFieldValues>Sunrun</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>System Owner / Fund</fullName>
+                <controllingFieldValues>Sunrun</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Prior Service Partner</fullName>
+                <controllingFieldValues>Sunrun</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Do_Not_Send_Survey__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>when checked, the trigger email alert &apos;FS Customer Survey&apos; is disabled.</description>
+        <externalId>false</externalId>
+        <label>Do Not Send Survey</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Don_t_send_dispatch_email_to_customer__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Don&apos;t send dispatch email to customer</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>FS_Dispatch_Constraint__c</fullName>
+        <description>Dispatch Constraint to be used for creating the new FS Dispatch</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Select the Dispatch Constraint to be used for creating the new FS Dispatch</inlineHelpText>
+        <label>FS Dispatch Constraint</label>
+        <picklist>
+            <picklistValues>
+                <fullName>N/A</fullName>
+                <default>true</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>FS_Dispatch_Instructions__c</fullName>
+        <description>FS Dispatch Instructions to be used for the new FS Dispatch</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Enter the FS Dispatch Instructions to be used for the new FS Dispatch</inlineHelpText>
+        <label>FS Dispatch Instructions</label>
+        <length>4000</length>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>FS_Dispatch_Phase__c</fullName>
+        <description>Dispatch Phase for the new FS Dispatch</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Select the Dispatch Phase for the new FS Dispatch</inlineHelpText>
+        <label>FS Dispatch Phase</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Discover</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Resolve</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Discover and Resolve</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>FS_Dispatch_State__c</fullName>
+        <description>FS Dispatch State for the new FS Dispatch record</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Select the FS Dispatch State for the new FS Dispatch record</inlineHelpText>
+        <label>FS Dispatch State</label>
+        <picklist>
+            <picklistValues>
+                <fullName>New</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Dispatched</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Dispatch Declined</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Dispatch Accepted</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Dispatch Findings Reported</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Dispatch Findings Approved</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Dispatch Findings Rejected</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Financial_Responsibility__c</fullName>
+        <description>Party who is financially responsible for this FS Ticket</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Select the party who will be financially responsible for this FS Ticket</inlineHelpText>
+        <label>Financial Responsibility</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Customer</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Partner</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Sunrun</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>true</sorted>
+        </picklist>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <label>FS Dispatch Template</label>
+    <listViews>
+        <fullName>All</fullName>
+        <columns>NAME</columns>
+        <columns>Financial_Responsibility__c</columns>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+        <language>en_US</language>
+    </listViews>
+    <nameField>
+        <label>FS Dispatch Template Name</label>
+        <type>Text</type>
+    </nameField>
+    <pluralLabel>Fs Dispatch Templates</pluralLabel>
+    <searchLayouts>
+        <customTabListAdditionalFields>FS_Dispatch_Phase__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>FS_Dispatch_State__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>FS_Dispatch_Constraint__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>FS_Dispatch_Instructions__c</customTabListAdditionalFields>
+        <lookupDialogsAdditionalFields>FS_Dispatch_Phase__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>FS_Dispatch_State__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>FS_Dispatch_Constraint__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>FS_Dispatch_Instructions__c</lookupDialogsAdditionalFields>
+        <searchFilterFields>NAME</searchFilterFields>
+        <searchFilterFields>FS_Dispatch_Phase__c</searchFilterFields>
+        <searchFilterFields>FS_Dispatch_State__c</searchFilterFields>
+        <searchFilterFields>FS_Dispatch_Constraint__c</searchFilterFields>
+        <searchResultsAdditionalFields>FS_Dispatch_Phase__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>FS_Dispatch_State__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>FS_Dispatch_Constraint__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>FS_Dispatch_Instructions__c</searchResultsAdditionalFields>
+    </searchLayouts>
+    <sharingModel>ReadWrite</sharingModel>
+    <startsWith>Vowel</startsWith>
+</CustomObject>

@@ -1,0 +1,8 @@
+<apex:page standardController="Appointment__c" tabStyle="Appointment__c" >
+    <apex:pageBlock >
+        <apex:PageMessage summary="You are not allowed to create a new appointment. Please use the Scheduling Tool."
+            severity="Warning"
+            strength="3"/>
+        <apex:pageMessages />
+    </apex:pageBlock>
+</apex:page>

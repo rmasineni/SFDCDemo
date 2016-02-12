@@ -1,0 +1,21 @@
+<apex:page >
+  <div id="dropbox" style="height:70%;">
+<iframe id="frameId1" src="/apex/PartnerPortalHomeComponent" frameborder="0" height="400px" width="100%">
+</iframe>
+<script>  
+   var homepageURL = document.URL;
+    if(homepageURL.indexOf('/partner') > -1)
+    {       
+      document.getElementById('frameId1').src = '/partner/apex/PartnerPortalHomeComponent';  
+    }
+    else if(homepageURL.indexOf('/aeepartner') > -1)
+    {       
+      document.getElementById('frameId1').src = '/aeepartner/apex/PartnerPortalHomeComponentAEE';  
+    }    
+    else
+    {  
+    document.getElementById('frameId1').src =  '/apex/PartnerPortalHomeComponent';  
+    } 
+  </script>
+</div>
+</apex:page>

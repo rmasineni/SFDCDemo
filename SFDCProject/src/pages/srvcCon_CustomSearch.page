@@ -1,0 +1,96 @@
+<apex:page controller="srvcCon_CustomSearchController" showHeader="false"  sidebar="false">
+<style type="text/css">
+    .col1 {width:20%; text-align:left; valign:top}
+    .col2 {width:80%; text-align:left;valign:top}       
+</style>
+<apex:includeScript value="/support/console/22.0/integration.js"/>
+
+<script type="text/javascript"> 
+function OpenSubtab(RecId, objName, recName) {  
+   
+    sforce.console.getEnclosingPrimaryTabId(function openSubtab(result) { 
+     
+    var primaryTabId = result.id; 
+     sforce.console.openSubtab(primaryTabId , '/apex/srvcCon_OnSelectRelatedSearch?recId='+RecId+'&objType='+objName+'&recName='+recName, true, 
+                                    'Related Records', null, function openSuccess(result) { }, 'salesforceSubtab'); 
+    }); 
+  
+} 
+       
+	function noenter(e){               
+		if(window.event){                    
+			key = window.event.keyCode;     //IE               
+		} 
+		else{                    
+			key = e.which;     //firefox               
+		}               
+		if(key == 13) {                    
+			var ele=document.getElementById("{!$Component.searchForm.searchPage.searchButton}");							                                 
+			ele.click();                     
+			return false;               
+		} else{                    
+			return true;               
+		}          
+	}     
+		
+
+    
+</script> 
+<apex:form id="searchForm" >
+   <apex:pageBlock id="searchPage">
+		<apex:sectionHeader subtitle="Search Results"   />
+ 
+        <apex:panelGrid width="100%" columns="2" columnClasses="col1, col2, col3" border="0" cellpadding="5" cellspacing="5">
+                        
+            <apex:outputPanel id="leftCol">
+                
+                <apex:outputLabel value="Records" style="   font: italic bold 12px/30px Georgia, serif;"/>  <br/>
+                 <apex:outputText value="Service Contracts" /> (<apex:outputText value="{!countSC}" />) <br/>
+                <apex:outputText value="Cases" /> (<apex:outputText value="{!countCases}" />) <br/>
+                <apex:outputText value="FS Distpatch" /> (<apex:outputText value="{!countFSD}" />) <br/>   
+                 <apex:outputText value="Contacts" /> (<apex:outputText value="{!countContacts}" />) <br/>
+              <!--  <apex:outputText value="Opportunities" /> (<apex:outputText value="{!countOpp}" />) <br/>
+                <apex:outputText value="Accounts" /> (<apex:outputText value="{!countAccounts}" />) <br/> -->
+           
+               
+            </apex:outputPanel>
+            <apex:outputPanel id="rightCol">
+                <apex:inputText id="Search" value="{!searchString}" html-placeholder="Search..." onkeypress="return noenter(event)" />
+                
+                <apex:commandButton id="searchButton" value="Search All" action="{!searchsObject}" status="actStatusId"  rerender="p2,leftCol,rightCol2"> <!--  rerender="p2,leftCol,rightCol,accBlock,contBlock,caseBlock,acc2Block,cnt2Block" -->
+                    
+                </apex:commandButton> <!--accBlock,contBlock,caseBlock,acc2Block,cnt2Block   rerender="p2,leftCol,rightCol,rightCol2,acc2Block,accpanel"-->
+                <apex:actionStatus id="actStatusId"  >
+                    <apex:facet name="start" >
+                        <img src="/img/loading.gif" />                    
+                    </apex:facet>
+                </apex:actionStatus>
+            </apex:outputPanel>
+       </apex:panelGrid>
+       <apex:outputPanel id="accpanel" >
+           
+       </apex:outputPanel>
+      
+       
+        <apex:panelGrid width="100%" columns="2" id="p2" columnClasses="col1, col2, col3" border="0" cellpadding="5" cellspacing="5">
+            <apex:outputPanel id="leftCol1">
+                <br/>
+            </apex:outputPanel>
+            <apex:outputPanel id="rightCol2"> 
+  
+                <c:srvcCon_sObjPaginationComp id="scBlock" records="{!scSearchList}" fields="{!scSearchFieldLst}" objType="ServiceContract" refresh="true" headerVal="{!scSearchHeaderNames}"  title="Service Contracts"> </c:srvcCon_sObjPaginationComp>
+                <c:srvcCon_sObjPaginationComp id="caseBlock" records="{!caseSearchList}" fields="{!caseSearchFieldLst}" objType="Case"  refresh="true" headerVal="{!caseSearchHeaderNames}"  title="Cases" > </c:srvcCon_sObjPaginationComp>
+                <c:srvcCon_sObjPaginationComp id="FSD" records="{!FSDSearchList}" fields="{!FSDSearchFieldLst}" objType="FSDispatch"  refresh="true" headerVal="{!FSDSearchHeaderNames}"  title="FS Dispatches"> </c:srvcCon_sObjPaginationComp>
+                <c:srvcCon_sObjPaginationComp id="cntBlock" records="{!cntSearchList}" fields="{!cntSearchFieldLst}" objType="Contact"  refresh="true" headerVal="{!cntSearchHeaderNames}"  title="Contacts" > </c:srvcCon_sObjPaginationComp>
+               <!-- <c:srvcCon_sObjPaginationComp id="oppBlock" records="{!oppSearchList}" fields="{!oppSearchFieldLst}" objType="Opportunity" refresh="true" headerVal="{!oppSearchHeaderNames}"   title="Opportunities" > </c:srvcCon_sObjPaginationComp>   
+                <c:srvcCon_sObjPaginationComp id="accBlock" records="{!accSearchList}" fields="{!accSearchFieldLst}" objType="Account" refresh="true" headerVal="{!accSearchHeaderNames}" title="Accounts"  />    
+        		-->
+            </apex:outputPanel>
+        </apex:panelGrid>
+        
+    </apex:pageBlock>
+    
+</apex:form>
+    
+
+</apex:page>

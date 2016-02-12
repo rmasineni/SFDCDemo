@@ -1,0 +1,185 @@
+<apex:page controller="AuditPhotoUploaderController"  action="{!init}" sidebar="false" showHeader="false" standardStylesheets="false">
+<style>
+.thumbnail-small {
+    width: 80px;
+    height: 60px;
+    border: 5px solid black;
+    box-shadow: 5px 5px 5px #888888;    
+}
+
+.thumbnail-medium {
+    width: 140px;
+    height: 100px;
+    border: 5px solid black;
+    box-shadow: 5px 5px 5px #888888;    
+}
+
+.thumbnail-large {
+    width: 200px;
+    height: 150px;
+    border: 5px solid black;
+    box-shadow: 5px 5px 5px #888888;    
+}
+.text-right {
+      text-align: right;
+}
+.text-center {
+      text-align: center;
+}
+
+h1 {
+    font-size: 3rem;
+}
+h2 {
+      font-size: 3rem;
+      font-size: 35px;
+}
+</style>
+<link class="user" href="https://ajax.aspnetcdn.com/ajax/jquery.ui/1.8.23/themes/smoothness/jquery-ui.css" rel="stylesheet" type="text/css" />
+<link class="user" href="https://cdn.jsdelivr.net/prettyphoto/3.1.5/css/prettyPhoto.css" rel="stylesheet" type="text/css" />
+
+<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.0.min.js" type="text/javascript"></script>
+<script src="https://ajax.aspnetcdn.com/ajax/jquery.ui/1.8.23/jquery-ui.min.js" type="text/javascript"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.4.2/underscore-min.js" type="text/javascript"></script>
+<script src="https://cdn.jsdelivr.net/prettyphoto/3.1.5/js/jquery.prettyPhoto.js" type="text/javascript"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-noty/2.0.3/jquery.noty.js" type="text/javascript"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-noty/2.0.3/layouts/topRight.js" type="text/javascript"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-noty/2.0.3/themes/default.js" type="text/javascript"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.transit/0.9.9/jquery.transit.min.js" type="text/javascript"></script>
+
+<script>
+var iPhoto = 0;
+var resultOfMod = 0;
+var htmlString = '';
+var pixperrow = 3;
+var colwidth = Math.round(100/pixperrow);
+
+function showphoto(thumbsrc, newrowint){
+   var writeRow = '';
+   if(newrowint == 0)
+   { 
+      writeRow += '<tr>';
+   }
+   writeRow += '<td width="' + colwidth + '%;">';
+<!--   writeRow += '<a href="https://cs17.salesforce.com/apex/PhotoViewer?thumbnail=' + qs + '">';-->
+   writeRow += '<a prettyPhoto[Gallary] href="' + thumbsrc + '">';
+   writeRow += '<img alt="User-added image" height="108" width="144" class="thumbnail-large thumbnail-zoom" src="' + thumbsrc + '"></img>';
+   writeRow += '</a>';      
+   writeRow += '</td>';
+   if(newrowint == pixperrow-1)
+   {
+      writeRow += '</tr>';
+   }
+   htmlString += writeRow;
+}
+function initTable(sz){
+   if(sz >= pixperrow)
+   {
+     sz = pixperrow;
+   }
+   var begintable = '<table cellspacing="0" cellpadding="10px;" width="100%">';
+   begintable += '<tr>';
+   for (var i=0; i<sz; i++)
+   {
+      begintable += '<th width="' + colwidth + '%;"></th>';
+   }           
+   begintable += '</tr>';
+   htmlString += begintable;
+}
+function endTable(mod){
+   var endtable = '';
+   if(mod < 6)
+   {
+      for(var i=1; i<(pixperrow-mod); i++)
+      {
+         endtable += '<td width="' + colwidth + '%;"></td>';
+      }
+      endtable += '</tr>';
+   }
+   endtable += '</table>';
+   htmlString += endtable;
+}
+function close_window() {
+  if (confirm("Close Window?")) {
+    close();
+  }
+}
+</script>
+<h3>Photos For Installation Audit on <apex:outputText value="{0,date, MM'/'dd'/'yyyy}"><apex:param value="{!installAuditObj.Site_Visit_Date__c}"/></apex:outputText> @ {!accountName}</h3>
+ 
+Total Photo Count: {!GenAssetPhotoCount}
+<apex:form >
+   <apex:actionFunction reRender="AttachedPhotos" name="nextPhotosPage" action="{!nextPhotosPage}" status="waiting" />
+   <apex:actionFunction reRender="AttachedPhotos" name="previousPhotosPage" action="{!previousPhotosPage}" status="waiting" />       
+<apex:messages />      
+<apex:pageBlock id="AttachedPhotos" mode="edit" title="">       
+<div align="right" style="display:{!IF(NOT(ISNULL(attPhotos)),'block','none')}"> 
+<font size="1pt">
+  Page #:&nbsp;
+  <apex:outputLabel value="{!photosPageNumber}"/>&nbsp;
+   out of&nbsp;
+  <apex:outputLabel value="{!photosTotalPageNumber}"/>
+   &nbsp;&nbsp;&nbsp;
+ </font>
+  
+<apex:commandButton value="Previous" action="{!previousPhotosPage}"
+ rendered="{!hasPreviousPhotos}"/>
+<apex:commandButton value="Next" action="{!nextPhotosPage}" 
+ rendered="{!hasNextPhotos}" />
+ &nbsp;&nbsp;
+</div>        
+       
+       
+<script>
+ initTable('{!attPhotos.size}');
+</script>
+<!--<a href="javascript:if(confirm('Close window?'))self.close(); return false;">Close Album</a>-->
+   <apex:outputText value="There are no active photos uploaded for this Installation Audit." rendered="{!if(attPhotos.size==0,true,false)}"/>
+   <apex:repeat value="{!attPhotos}" var="p">
+     <script>     
+      resultOfMod = iPhoto % pixperrow;
+      showphoto('{!p.thumbnail}', resultOfMod);      
+      iPhoto++;
+     </script>
+   </apex:repeat>
+ </apex:pageBlock>
+<script>
+ endTable(resultOfMod);
+ document.write(htmlString);
+// alert(htmlString);
+</script>    
+
+    <script charset="utf-8" type="text/javascript">
+   $(document).ready(function(){
+   
+    $('.thumbnail-zoom').each(function(i, val){
+     var imgElement = $(val);
+     var wrapHtml = '<a href="' + imgElement.attr('src') + '" rel="prettyPhoto[Gallary]"></a>';
+     //var wrapHtml = '<a href="javascript:void(0)" rel="prettyPhoto[Gallary]"></a>';
+     imgElement.wrap(wrapHtml);
+    });
+    
+     $("a[rel^='prettyPhoto']").prettyPhoto({
+      social_tools:false,
+   theme: 'pp_default' /* pp_default/ light_rounded / dark_rounded / light_square / dark_square / facebook */      
+     });
+   });
+ </script>
+<!--<a href="javascript:if(confirm('Close window?'))self.close(); return false;">Close Album</a>-->
+<div align="right" style="display:{!IF(NOT(ISNULL(attPhotos)),'block','none')}"> 
+<font size="1pt">
+  Page #:&nbsp;
+  <apex:outputLabel value="{!photosPageNumber}"/>&nbsp;
+   out of&nbsp;
+  <apex:outputLabel value="{!photosTotalPageNumber}"/>
+   &nbsp;&nbsp;&nbsp;
+ </font>
+  
+<apex:commandButton value="Previous" action="{!previousPhotosPage}"
+ rendered="{!hasPreviousPhotos}"/>
+<apex:commandButton value="Next" action="{!nextPhotosPage}" 
+ rendered="{!hasNextPhotos}" />
+ &nbsp;&nbsp;
+</div> 
+</apex:form>
+</apex:page>

@@ -1,0 +1,76 @@
+<!-- 
+*********************************************************************************
+*   Author      : Chandrika Dasaradharaman (chandrikad@sunrunhome.com)          *
+*   Date        : April 2013                                                    *
+*   Name        : OpportunityNewNotePage.page                                   *
+*   Description : This page is used to Add New Opportunity Notes                * 
+*                                                                               *
+*********************************************************************************
+-->
+<apex:page standardController="Opportunity" extensions="OpportunityNewNoteClass" sidebar="false" showHeader="false"> 
+    <style>
+        .headerLogo {
+            margin:1px 1px 1px 1px;
+            border:0;
+            padding-left:10px;
+            height: 35px; 
+            width: 90px;
+        }
+        .bPageTitle, .apexp{
+            margin-left: 15px;
+            margin-right: 20px;
+            width: 97%;
+        }
+    </style>
+    
+    <apex:OutputPanel rendered="{!!isAEEUser}">
+    <div align="left" width="85%">
+        <img src="{!$Resource.PartnerPortalHeader2}" class="headerLogo"/>
+        &nbsp;&nbsp;
+    </div> 
+    </apex:OutputPanel>
+    <apex:sectionHeader title="Opportunity New Note"/>
+    
+    <apex:form id="newNote">
+        <div align="Center">
+            <apex:actionStatus id="mySaveStatus1" >
+                <apex:facet name="stop">
+                        <apex:commandButton value="Save" action="{!saveForm}" onComplete="closeAndRefreshparent('{!parentURL}', '{!isSaved}')" reRender="thePanel" Rendered="{!showEditSec}" status="mySaveStatus1"/>
+                </apex:facet>
+                <apex:facet name="start">
+                    <apex:outputtext value="In progress ..." />
+                    <apex:outputPanel >
+                       <apex:image value="/img/loading32.gif" style="height: 15px;"/>
+                       <apex:commandButton value="Processing..." status="mySaveStatus1" disabled="true"/>
+                    </apex:outputPanel>
+               </apex:facet>
+            </apex:actionStatus>                    
+            &nbsp; 
+            <apex:commandButton onClick="window.close();" value="Cancel" title="Click to Cancel Edit"/> 
+        </div>
+        &nbsp;  
+        <apex:pageBlock >
+            <apex:pageBlockSection id="item1" columns="1" >
+                <div align="Center">
+                    <apex:pageBlockSectionitem >
+                        <apex:outputlabel value="Notes"/>
+                        <apex:inputTextarea style="height:60px; width:400px" id="noteValue" value="{!noteValue}"/>           
+                    </apex:pageBlockSectionitem>
+                </div>
+            </apex:pageBlockSection> 
+        </apex:pageBlock>
+        <apex:outputPanel id="thePanel">
+            <script> 
+                function closeAndRefreshparent(parentWindowUrl, isSavedVal)
+                {
+                    if(isSavedVal == 'true'){
+                    window.top.close();
+                    window.opener.parent.location.href = parentWindowUrl;
+                    var win = window.open('','_parent','');
+                    win.close();
+                    }
+                }
+             </script>
+        </apex:outputPanel>
+    </apex:form>
+</apex:page>

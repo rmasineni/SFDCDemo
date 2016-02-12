@@ -1,0 +1,165 @@
+<apex:page controller="SobjectAuditViewerController" sidebar="false" showHeader="false" >
+<!--<apex:page controller="SobjectAuditViewerController" >  -->
+    <style>
+        .headerLogo {
+            margin:1px 1px 1px 1px;
+            border:0;
+            padding-left:10px;
+            padding-bottom:10px;
+            padding-top:10px;
+        }
+
+        .bPageTitle, .apexp{
+            margin-left: 15px;
+            margin-right: 20px;
+            width: 97%;
+        }
+
+        ul {
+        	padding-left: 0px;
+            margin: 3px 0 3px 0;
+        }
+        
+    	ul li {
+        	list-style-type: none;
+        	margin-left: 0;
+        }
+        
+        .old-value, .new-value {
+        	font-weight: bold;
+        }
+        
+        .field {
+        	font-weight: bold;
+       	}
+        
+        .title {
+        	margin: 10px 0 10px 0;
+        }
+        
+        .title h1 {
+        	font-size: 27px;
+        	display: block;
+        	font-weight: normal;
+        	margin: 0;
+        }
+        
+        .title span, .reference-info div {
+        	font-size: 15px;
+        	display: block;
+        	font-weight: normal;
+        	margin: 0;
+        }
+        
+        .reference-info div {
+        	margin: 5px 0 5px 0;
+        }
+        
+        
+        .reference-info h2 {
+        	font-size: 15px;
+        	display: block;
+        }
+        
+        .audit-change-row {
+        	padding-top: 5px;
+        	padding-bottom: 2px;
+        	margin-bottom: 2px;
+        }
+        
+        .audit-change-row:hover {
+        	background-color: #C8E2F5
+        }
+    </style>
+    
+	<div align="left" width="100%">
+		<img src="{!$Resource.PartnerPortalHeader32}" class="headerLogo"/>
+    </div>
+    <div class="title">
+        <h1>
+           <!-- <img src="/img/icon/contracts32.png"/> Audit History of {!objectName} <a href="/{!$CurrentPage.parameters.id}">{!recordName}</a> --> 
+           <img src="/img/icon/contracts32.png"/> Audit History for {!recordName}
+        </h1>
+    	<span>Below tables shows the audit history of selected {!objectName} record</span>
+    </div>
+
+    <apex:pageBlock >
+        <apex:pageMessages />
+        
+        <apex:outputPanel rendered="{!sobjectAudits.size == 0}">
+            There is no audit history for selected record.
+        </apex:outputPanel>
+        
+    	<apex:pageBlockTable value="{!sobjectAudits}" var="record" rendered="{!sobjectAudits.size != 0}">
+            <apex:column >
+				<apex:facet name="header">Created Date</apex:facet>
+                <apex:outputField value="{!record.auditRecord.createdDate}"/>
+            </apex:column>
+            <apex:column >
+				<apex:facet name="header">User</apex:facet>
+                <a href="/{!record.auditRecord.OwnerId}">{!record.auditRecord.Owner.Name}</a>
+            </apex:column>
+            <apex:column >
+				<apex:facet name="header">Actions</apex:facet>
+                <apex:outputPanel layout="none" rendered="{!record.auditRecord.Action__c == 'Insert'}">
+                    <span class="field">Created record with following values:</span>
+                    <ul>
+                        <apex:repeat value="{!record.fieldAudits}" var="field">
+							<!-- If the field is reference type -->
+                            <apex:outputPanel layout="none" rendered="{!Not(IsBlank(field.newId))}">
+                                <li class="audit-change-row"><span class="field">{!field.label}</span> with value <span class="new-value"><c:recordLink recordId="{!field.newId}" label="{!field.newReferenceDisplayValue}" target="_newTab" idPrefix="{!record.auditRecord.id}"/></span></li>
+                            </apex:outputPanel>
+							<!-- If the field is not a reference type -->
+                            <apex:outputPanel layout="none" rendered="{!IsBlank(field.newId)}">
+                        		<li class="audit-change-row"><span class="field">{!field.label}</span> with value <span class="new-value">{!field.newValue}</span></li>
+                            </apex:outputPanel>
+                        </apex:repeat>
+                    </ul>
+                </apex:outputPanel> 
+                <apex:outputPanel layout="none" rendered="{!record.auditRecord.Action__c == 'Update'}">
+                    <span class="field">Changed following fields:</span>
+                    <ul>
+                        <apex:repeat value="{!record.fieldAudits}" var="field">
+							<!-- If the field is reference type. -->
+                            <apex:outputPanel layout="none" rendered="{!Or(Not(IsBlank(field.oldId)), Not(IsBlank(field.newId)))}">
+	                            <li class="audit-change-row"><span class="field">{!field.label}</span> 
+                                    	from 
+                                    	<span class="old-value">
+                                            <apex:outputPanel layout="none" rendered="{!IsNull(field.oldId)}">null</apex:outputPanel>
+                                            <apex:outputPanel layout="none" rendered="{!Not(IsNull(field.oldId))}"><c:recordLink recordId="{!field.oldId}" label="{!field.oldReferenceDisplayValue}" target="_newTab" idPrefix="{!record.auditRecord.id}"/></apex:outputPanel>
+                                    	</span>
+                                    	to 
+                                    	<span class="new-value">
+                                            <apex:outputPanel layout="none" rendered="{!IsNull(field.newId)}">null</apex:outputPanel>
+                                            <apex:outputPanel layout="none" rendered="{!Not(IsNull(field.newId))}"><c:recordLink recordId="{!field.newId}" label="{!field.newReferenceDisplayValue}" target="_newTab" idPrefix="{!record.auditRecord.id}"/></apex:outputPanel>
+                                    	</span>
+                               	</li>
+                            </apex:outputPanel>
+							<!-- If the field is not a reference type -->
+                            <apex:outputPanel layout="none" rendered="{!And(IsBlank(field.oldId), IsBlank(field.newId))}">
+	                            <li class="audit-change-row"><span class="field">{!field.label}</span> from <span class="old-value">{!If(IsNull(field.oldValue), 'null', field.oldValue)}</span> to <span class="new-value">{!If(IsNull(field.newValue), 'null', field.newValue)}</span></li>
+                            </apex:outputPanel>
+
+                        </apex:repeat>
+                    </ul>
+                </apex:outputPanel>
+                <apex:outputPanel layout="none" rendered="{!record.auditRecord.Action__c == 'Delete'}">
+                    <span class="field">Deleted record with following values:</span>
+                    <ul>
+                        <apex:repeat value="{!record.fieldAudits}" var="field">
+							<!-- If the field is reference type. -->
+                            <apex:outputPanel layout="none" rendered="{!Not(IsBlank(field.oldId))}">
+                                <li class="audit-change-row"><span class="field">{!field.label}</span> with value <span class="old-value"><c:recordLink recordId="{!field.oldId}" label="{!field.oldReferenceDisplayValue}" target="_newTab" idPrefix="{!record.auditRecord.id}"/></span></li>
+                            </apex:outputPanel>
+							<!-- If the field is not a reference type -->
+                            <apex:outputPanel layout="none" rendered="{!IsBlank(field.oldId)}">
+	                            <li class="audit-change-row"><span class="field">{!field.label}</span> with value <span class="old-value">{!field.oldValue}</span></li>
+                            </apex:outputPanel>
+                        </apex:repeat>
+                    </ul>
+                </apex:outputPanel> 
+                
+            </apex:column>
+        </apex:pageBlockTable>
+    </apex:pageBlock>
+</apex:page>

@@ -1,0 +1,927 @@
+<apex:page standardController="Lead" extensions="PartnerLeadCreate" tabstyle="Lead" ShowHeader="true">
+    <style>     
+        .producterror { color: red; font-weight: strong;
+            background-color: #FFFFCC;
+            border-style: solid;
+            border-width: 1px;
+            padding: 6px 8px 6px 6px;
+            border-color: #FF9900;
+            font-size: 100%;
+            margin-left: 15px;
+            margin-right: 20px;
+        }
+        .glyphicon{
+            font-family:Glyphicons Halflings !Important;                
+        } 
+        .requiredInput{                     
+            display:inline-table;
+            width:180px !Important;
+        }        
+        #address-lookup{
+            padding-top:1px !Important;
+            color: white !Important;
+        }                     
+               
+    </style>
+    <script type="text/javascript">
+        //var elementFocus = document.getElementById('{!$Component.AverageMonthlyElectricBill}').id; 
+        function  storeFocus()
+        {
+            
+            alert('Attempting to find current focus: ' +elementFocus );
+        }
+        
+        function retainFocus()
+        {
+
+            document.getElementById('{!$Component.calculatebutton}').focus();
+
+        }
+       
+        function closeAndRefreshparent(parentWindowUrl)
+            {
+                window.top.close();
+                window.opener.parent.location.href = parentWindowUrl;
+                var win = window.open('','_parent','');
+                win.close();
+            }       
+    </script>
+    
+    <apex:sectionHeader title="{!title}" />     
+    <apex:messages id="pmId" styleClass="producterror" />  
+    <apex:form id="formId" >        
+        <div align="center">
+            <apex:actionRegion >
+            <apex:commandButton title="Save" value="  Save " action="{!saveLead}" Rendered="{!showEditSec}"/>
+            </apex:actionRegion>   
+            &nbsp;
+            <apex:commandButton value="Cancel" action="{!doCancel}" immediate="true" Rendered="{!showEditSec}"/>
+            &nbsp;
+           
+       </div> 
+       
+       &nbsp;  
+       <div align = "Right">
+       <apex:pageblock >
+
+                <apex:outputPanel layout="block" styleClass="requiredInput">
+                        <apex:outputPanel layout="block" styleClass="redrequired" />
+                        <apex:outputtext value=" = Required to save lead"></apex:outputtext>
+                </apex:outputPanel>
+                
+                <apex:outputPanel layout="block" styleClass="requiredInput">
+                        <apex:outputPanel layout="block" styleClass="bluerequired" />
+                        <apex:outputtext value=" = Required to create design"></apex:outputtext>
+                </apex:outputPanel>
+
+       </apex:pageblock> 
+       </div>
+       
+        <apex:pageblock Rendered="{!showEditSec}" id="inputblock">
+                          
+            <apex:pageBlockSection title="Customer Information" columns="2" Rendered="{!showEditSec}">
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="{!$ObjectType.Lead.fields.Firstname.label}" for="FirstName" />
+                    <apex:outputPanel layout="block" styleClass="requiredInput">
+                        <apex:outputPanel layout="block" styleClass="requiredBlock"/>
+                        <apex:inputfield id="FirstName" value="{!addLead.Firstname}" />
+                    </apex:outputPanel>
+                </apex:pageBlockSectionItem> 
+                <apex:pageBlockSectionItem >                
+                    <apex:outputLabel value="{!$ObjectType.Lead.fields.lastName.label}" for="LastName" />
+                    <apex:outputPanel layout="block" styleClass="requiredInput">
+                        <apex:outputPanel layout="block" styleClass="requiredBlock"/>
+                        <apex:inputfield id="LastName" value="{!addLead.lastName}" />
+                    </apex:outputPanel>
+                </apex:pageBlockSectionItem> 
+                 <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="Address" for="gmapsAddress" />
+                    <!-- <c:gmapAddress id="gmapsAddress" street="{!addLead.Street}" city="{!addLead.city}" state="{!addLead.State__c}" postalCode="{!addLead.postalCode}" country="{!addLead.country}" latitude="{!addLead.Latitude__c}" longitude="{!addLead.Longitude__c}" status="{!addLead.Address_Standardization_Status__c}" edit="true"></c:gmapAddress>-->
+                    <c:gmapsLeadAddress id="gmapsAddress" street="{!addLead.Street}" city="{!addLead.city}" state="{!addLead.State__c}" postalCode="{!addLead.postalCode}" country="{!addLead.country}" latitude="{!addLead.Latitude__c}" longitude="{!addLead.Longitude__c}" status="{!addLead.Address_Standardization_Status__c}" edit="true"></c:gmapsLeadAddress>                    
+                </apex:pageBlockSectionItem>
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="{!$ObjectType.Lead.fields.County__c.label}" for="county" />
+                    <apex:outputPanel layout="block" >
+                        <apex:inputfield id="county" value="{!addLead.County__c}" />
+                    </apex:outputPanel>
+                </apex:pageBlockSectionItem>
+                <apex:pageBlockSectionItem >   
+                 <apex:outputLabel value="{!$ObjectType.Lead.fields.Home_Type__c.label}" for="homeType" />
+                    <apex:outputPanel layout="block" >
+                        <apex:inputfield id="homeType" value="{!addLead.Home_Type__c}"   onkeydown="javascript:backspacerDOWN(this,event);" onkeyup="javascript:backspacerUP(this,event);"/>
+                    </apex:outputPanel>
+                </apex:pageBlockSectionItem>   
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="{!$ObjectType.Lead.fields.Phone.label}" for="Phone" />
+                    <apex:outputPanel layout="block" styleClass="requiredInput">
+                        <apex:outputPanel layout="block" styleClass="myrequiredBlock" />
+                        <apex:inputfield id="Phone" value="{!addLead.Phone}"  onkeydown="javascript:backspacerDOWN(this,event);" onkeyup="javascript:backspacerUP(this,event);" />
+                    </apex:outputPanel>
+                </apex:pageBlockSectionItem>    
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="{!$ObjectType.Lead.fields.Alternate_Phone__c.label}" for="altPhone" />
+                    <apex:outputPanel layout="block" >
+                        <apex:inputfield id="altPhone" value="{!addLead.Alternate_Phone__c}"   onkeydown="javascript:backspacerDOWN(this,event);" onkeyup="javascript:backspacerUP(this,event);"/>
+                    </apex:outputPanel>
+                </apex:pageBlockSectionItem>  
+                <apex:pageBlockSectionItem >
+                   <apex:outputLabel value="{!$ObjectType.Lead.fields.Email.label}" for="email" />
+                    <apex:outputPanel layout="block" styleClass="requiredInput">
+                        <apex:outputPanel layout="block" styleClass="myrequiredBlock" />
+                        <apex:inputfield id="email" value="{!addLead.Email}" />
+                    </apex:outputPanel>
+                </apex:pageBlockSectionItem>                  
+                               
+                <apex:pageBlockSectionItem >   
+                 <apex:outputLabel value="{!$ObjectType.Lead.fields.Best_way_to_reach__c.label}" for="Bestwaytoreach" />
+                    <apex:outputPanel layout="block" >
+                        <apex:inputfield id="Bestwaytoreach" value="{!addLead.Best_way_to_reach__c}"   onkeydown="javascript:backspacerDOWN(this,event);" onkeyup="javascript:backspacerUP(this,event);"/>
+                    </apex:outputPanel>
+                </apex:pageBlockSectionItem>   
+                <apex:pageBlockSectionItem >   
+                 <apex:outputLabel value="{!$ObjectType.Lead.fields.Best_time_to_Contact__c.label}" for="Bestimetocontact" />
+                    <apex:outputPanel layout="block" >
+                        <apex:inputfield id="Bestimetocontact" value="{!addLead.Best_time_to_Contact__c}" />
+                    </apex:outputPanel>
+                </apex:pageBlockSectionItem>
+              
+                <apex:pageBlockSectionItem >   
+                    <apex:outputLabel value="{!$ObjectType.Lead.fields.Preferred_Language__c.label}" for="PreferredLanguage" />
+                    <apex:outputPanel layout="block" >
+                        <apex:inputfield id="PreferredLanguage" value="{!addLead.Preferred_Language__c}" />
+                    </apex:outputPanel>
+                </apex:pageBlockSectionItem>       
+               
+                <!-- 3/20/15 Modified by MA Start -->    
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="{!$ObjectType.Lead.fields.HasOptedOutOfEmail.label}" for="HasOptedOutOfEmail" />
+                    <apex:outputPanel layout="block" >
+                    <apex:inputfield id="HasOptedOutOfEmail" value="{!addLead.HasOptedOutOfEmail}"   onkeydown="javascript:backspacerDOWN(this,event);" onkeyup="javascript:backspacerUP(this,event);"/>
+                    </apex:outputPanel>
+                </apex:pageBlockSectionItem>
+                
+                <apex:pageBlockSectionItem rendered="{!!isAEEUser}">   
+                    <apex:outputLabel value="{!$ObjectType.Lead.fields.Hawaii_NEM_Approved__c.label}" for="HawaiiNEM" />
+                    <apex:outputPanel layout="block" >
+                        <apex:inputfield id="HawaiiNEM" value="{!addLead.Hawaii_NEM_Approved__c}" />
+                    </apex:outputPanel>
+                </apex:pageBlockSectionItem>
+                    
+              <!-- 3/20/15 Modified by MA End -->  
+               <!-- <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="{!$ObjectType.Lead.fields.mobilePhone.label}" for="mobPhone" />
+                    <apex:outputPanel layout="block" >
+                        <apex:inputfield id="mobPhone" value="{!addLead.mobilephone}"   onkeydown="javascript:backspacerDOWN(this,event);" onkeyup="javascript:backspacerUP(this,event);"/>
+                    </apex:outputPanel>
+                </apex:pageBlockSectionItem>-->    
+                <apex:pageBlockSectionItem helpText="{!$ObjectType.Lead.Fields.Status.inlineHelpText}" >
+                     <apex:outputLabel value="{!$ObjectType.Lead.fields.Partner_Notes__c.label}" for="Notes" />
+                    <apex:outputPanel layout="block">
+                         <apex:inputTextarea id="Notes" style="height: 53px;width: 224px;" value="{!PartnerNotes}" />
+                    </apex:outputPanel>
+                </apex:pageBlockSectionItem>
+                <!--<apex:pageBlockSectionItem >
+                    <apex:outputLabel value="{!$ObjectType.Lead.fields.Sales_Contact_Method__c.label}" for="appTypeReq" />
+                    <apex:outputPanel layout="block" >
+                        <apex:inputfield id="appTypeReq" value="{!addLead.Sales_Contact_Method__c}"   onkeydown="javascript:backspacerDOWN(this,event);" onkeyup="javascript:backspacerUP(this,event);"/>
+                    </apex:outputPanel>
+                </apex:pageBlockSectionItem> -->            
+            </apex:pageblocksection>
+            
+
+            <apex:outputpanel id="address" rendered="{!IsBlank($CurrentPage.parameters.gmaps)}">
+            <apex:pageblocksection id="addressSection" title="Address Information" columns="2" Rendered="{!showEditSec}">
+                <apex:pageBlockSectionItem >
+                     <apex:outputLabel value="{!$ObjectType.Lead.fields.Street.label}" for="street" />
+                    <apex:outputPanel layout="block" styleClass="requiredInput"> 
+                      <apex:outputPanel layout="block" styleClass="myrequiredBlock" />
+                        <apex:inputfield id="street" style="width: 155px; height: 45px;"  value="{!addLead.Street}" />
+                    </apex:outputPanel>
+                </apex:pageBlockSectionItem>
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="Address Validation Status" />
+                     <apex:outputPanel layout="block" styleClass="requiredInput"> 
+                      <apex:outputPanel layout="block" styleClass="myrequiredBlock" />
+                    <apex:outputtext value="{!AddValidStateVal}"/>
+                    </apex:outputPanel>
+                </apex:pageBlockSectionItem>                                
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="{!$ObjectType.Lead.fields.City.label}" for="city" />
+                    <apex:outputPanel layout="block" styleClass="requiredInput"> 
+                      <apex:outputPanel layout="block" styleClass="myrequiredBlock" />
+                        <apex:inputfield id="city" value="{!addLead.City}" />
+                    </apex:outputPanel>
+                </apex:pageBlockSectionItem>
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="Zip+6" />
+                    <apex:outputPanel layout="block" styleClass="requiredInput"> 
+                      <apex:outputPanel layout="block" styleClass="myrequiredBlock" />
+                    <apex:outputtext value="{!Zip6Val}"/>
+                     </apex:outputPanel>
+                </apex:pageBlockSectionItem>                
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="State" for="state" />
+                    <apex:outputPanel layout="block" styleClass="requiredInput"> 
+                      <apex:outputPanel layout="block" styleClass="myrequiredBlock" />
+                        <apex:inputfield id="state" value="{!addLead.State__c}" />
+                    </apex:outputPanel>
+                </apex:pageBlockSectionItem>
+                <apex:pageBlockSectionItem />
+                
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="Zip Code" for="postalCode" />
+                    <apex:outputPanel layout="block" styleClass="requiredInput"> 
+                      <apex:outputPanel layout="block" styleClass="myrequiredBlock" />
+                        <apex:inputfield id="postalCode" value="{!addLead.PostalCode}" />
+                    </apex:outputPanel>
+                </apex:pageBlockSectionItem> 
+                <!-- 
+                <apex:pageblocksectionitem >
+                    <apex:outputLabel value="Zip Code" for="postalCode" />
+                     <apex:outputPanel layout="block" styleClass="requiredInput"> 
+                      <apex:outputPanel layout="block" styleClass="myrequiredBlock" />
+                        <apex:inputField value="{!addLead.postalcode}">
+                            <apex:actionSupport rerender="utiId" event="onblur" action="{!getUtilities}"/>
+                        </apex:inputField>
+                      </apex:outputPanel>
+                </apex:pageblocksectionitem>    
+                -->
+                <apex:pageBlockSectionItem />
+                 
+                <!--
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="{!$ObjectType.Lead.fields.Country.label}" for="country" />                  
+                   <apex:outputText id="country" value=" USA "/>
+                </apex:pageBlockSectionItem>
+                -->
+                
+                 <apex:pageBlockSectionItem >
+                  &nbsp;  &nbsp; &nbsp;
+
+                   <apex:commandButton id="cbValidate" value="Validate Address" action="{!validateAddress}" oncomplete="document.getElementById('{!$Component.formId.inputblock.utilityPbs.utilityPbsi.UtilityCompany}').focus();" reRender="pmId,addressSection"/> 
+
+                </apex:pageBlockSectionItem>
+            </apex:pageblocksection>
+            </apex:outputpanel>
+
+            <apex:outputpanel id="address1" rendered="{!Not(IsBlank($CurrentPage.parameters.gmaps))}">
+            <!--<apex:pageblocksection title="Address Information" columns="1" Rendered="{!showEditSec}">
+                <apex:pageBlockSectionItem >
+                        <apex:outputLabel value="Address" for="gmapsAddress" />
+                    <c:gmapAddress id="gmapsAddress" street="{!addLead.Street}" city="{!addLead.city}" state="{!addLead.State__c}" postalCode="{!addLead.postalCode}" country="{!addLead.country}" status="{!addLead.Address_Batch_Status__c}" edit="true"></c:gmapAddress>                    
+                </apex:pageBlockSectionItem>
+                <apex:pageBlockSectionItem >
+                    <apex:outputlabel value="County"/>
+                    <apex:inputfield value="{!addLead.County__c}"/>
+                </apex:pageBlockSectionItem>
+            </apex:pageblocksection>-->
+
+                <apex:inputfield value="{!addLead.State__c}" style="display:none" styleClass="page-address-state"/>
+            </apex:outputPanel>
+                        
+            
+            <apex:pageblocksection id="utilityPbs" title="Utility Information" columns="2"  Rendered="{!showEditSec}">
+                 
+                <apex:pageBlockSectionItem id="utilityPbsi" helpText="{!$ObjectType.Lead.Fields.Utility_Company__c.inlineHelpText}" rendered="{!NOT(ISNULL(leadId))}">
+                    <apex:outputLabel value="{!$ObjectType.Lead.fields.Utility_Company__c.label}" for="UtilityCompany" />                    
+                        <apex:inputfield id="UtilityCompany" value="{!addLead.Utility_Company__c}" />                                       
+                </apex:pageBlockSectionItem>    
+                <!--
+                <apex:pageblocksectionitem id="Utilpbsi" helpText="{!$ObjectType.Lead.Fields.Utility_Company__c.inlineHelpText}">
+                    <apex:outputLabel value="{!$ObjectType.Lead.fields.Utility_Company__c.label}" for="UtilityCompany" />
+                    <apex:outputPanel layout="block" styleClass="requiredInput"> 
+                      <apex:outputPanel layout="block" styleClass="myrequiredBlock" />
+                        <apex:selectList id="utiId" size="1" value="{!addLead.Utility_Company__c}">                     
+                            <apex:selectOptions value="{!PickLstValue}"/>
+                        </apex:selectList>
+                     </apex:outputPanel>    
+                </apex:pageblocksectionitem>
+                -->
+                <apex:pageBlockSectionItem id="terrPb" helpText="{!$ObjectType.Lead.Fields.Territory__c.inlineHelpText}" rendered="{!NOT(ISNULL(leadId))}">
+                    <apex:outputLabel value="{!$ObjectType.Lead.fields.Territory__c.label}" for="territory" />                    
+                        <apex:inputfield id="territory" value="{!addLead.Territory__c}" />                   
+                </apex:pageBlockSectionItem> 
+                <apex:pageBlockSectionItem helpText="{!$ObjectType.Lead.Fields.Usage_Option__c.inlineHelpText}" rendered="{!NOT(ISNULL(leadId))}">
+                    <apex:outputLabel value="{!$ObjectType.Lead.fields.Usage_Option__c.label}"/>                    
+                        <apex:inputfield id="usageOption" value="{!addLead.Usage_Option__c}" />                  
+                </apex:pageBlockSectionItem>
+               <!-- <apex:pageBlockSectionItem helpText="{!$ObjectType.Lead.Fields.Status.inlineHelpText}">
+                     <apex:outputLabel value="{!$ObjectType.Lead.fields.Status.label}" for="leadStatus" />
+                    <apex:outputPanel layout="block">
+                        <apex:inputField id="leadStatus" value="{!addLead.Status}" />
+                    </apex:outputPanel>
+                </apex:pageBlockSectionItem> -->
+                                                                                  
+                <apex:pageBlockSectionItem id="ratePb" helpText="{!$ObjectType.Lead.Fields.Rate_Schedule__c.inlineHelpText}" rendered="{!NOT(ISNULL(leadId))}">
+                    <apex:outputLabel value="{!$ObjectType.Lead.fields.Rate_Schedule__c.label}" for="rateSchedule" />                    
+                    <apex:inputfield id="rateSchedule" value="{!addLead.Rate_Schedule__c}" />                   
+                </apex:pageBlockSectionItem>
+                 
+                    
+              <!--  <apex:pageblocksectionItem rendered="{!NOT(ISNULL(leadId))}" /> -->
+                    
+                    <!-- 
+                    <apex:pageBlockSectionItem >
+                    &nbsp;&nbsp;&nbsp;&nbsp;                 
+                    <apex:commandButton id="calculatebutton" value="Calculate Monthly kWh Usage" action="{!calculateMonUsage}" reRender="utilityPbs,pmId" oncomplete="document.getElementById('{!$Component.formId.saveButton}').focus();">                    
+                    </apex:commandButton>
+                    </apex:pageBlockSectionItem>
+                    <apex:pageblocksectionItem />
+                
+                <apex:pageblocksectionItem />
+                <apex:pageblocksectionItem />
+                -->
+                <apex:pageBlockSectionItem id="jan" helpText="{!$ObjectType.Lead.Fields.Jan_Usage__c.inlineHelpText}" >
+                    <apex:outputLabel value="{!$ObjectType.Lead.fields.Jan_Usage__c.label}" for="JanUsage" />
+                    <apex:outputPanel layout="block" styleClass="requiredInput"> 
+                      <apex:outputPanel layout="block" styleClass="myrequiredBlock" />
+                        <apex:inputField id="JanUsage" value="{!addLead.Jan_Usage__c}" />
+                    </apex:outputPanel>
+                </apex:pageBlockSectionItem>
+                <apex:pageBlockSectionItem helpText="{!$ObjectType.Lead.Fields.Feb_Usage__c.inlineHelpText}" >
+                    <apex:outputLabel value="{!$ObjectType.Lead.fields.Feb_Usage__c.label}" for="FebUsage" />
+                    <apex:outputPanel layout="block" styleClass="requiredInput"> 
+                      <apex:outputPanel layout="block" styleClass="myrequiredBlock" />
+                        <apex:inputField id="FebUsage" value="{!addLead.Feb_Usage__c}" />
+                    </apex:outputPanel>
+                </apex:pageBlockSectionItem>
+                <apex:pageBlockSectionItem helpText="{!$ObjectType.Lead.Fields.Mar_Usage__c.inlineHelpText}" >
+                    <apex:outputLabel value="{!$ObjectType.Lead.fields.Mar_Usage__c.label}" for="MarUsage" />
+                    <apex:outputPanel layout="block" styleClass="requiredInput"> 
+                      <apex:outputPanel layout="block" styleClass="myrequiredBlock" />
+                        <apex:inputField id="MarUsage" value="{!addLead.Mar_Usage__c}" />
+                    </apex:outputPanel>
+                </apex:pageBlockSectionItem>
+                <apex:pageBlockSectionItem helpText="{!$ObjectType.Lead.Fields.Apr_Usage__c.inlineHelpText}" >
+                    <apex:outputLabel value="{!$ObjectType.Lead.fields.Apr_Usage__c.label}" for="AprUsage" />
+                    <apex:outputPanel layout="block" styleClass="requiredInput"> 
+                      <apex:outputPanel layout="block" styleClass="myrequiredBlock" />
+                        <apex:inputField id="AprUsage" value="{!addLead.Apr_Usage__c}" />
+                    </apex:outputPanel>
+                </apex:pageBlockSectionItem>
+                <apex:pageBlockSectionItem helpText="{!$ObjectType.Lead.Fields.May_Usage__c.inlineHelpText}" >
+                    <apex:outputLabel value="{!$ObjectType.Lead.fields.May_Usage__c.label}" for="MayUsage" />
+                    <apex:outputPanel layout="block" styleClass="requiredInput"> 
+                      <apex:outputPanel layout="block" styleClass="myrequiredBlock" />
+                        <apex:inputField id="MayUsage" value="{!addLead.May_Usage__c}" />
+                    </apex:outputPanel>
+                </apex:pageBlockSectionItem>
+                 <apex:pageBlockSectionItem helpText="{!$ObjectType.Lead.Fields.Jun_Usage__c.inlineHelpText}" >
+                    <apex:outputLabel value="{!$ObjectType.Lead.fields.Jun_Usage__c.label}" for="JunUsage" />
+                    <apex:outputPanel layout="block" styleClass="requiredInput"> 
+                      <apex:outputPanel layout="block" styleClass="myrequiredBlock" />
+                        <apex:inputField id="JunUsage" value="{!addLead.Jun_Usage__c}" />
+                    </apex:outputPanel>
+                </apex:pageBlockSectionItem>
+                <apex:pageBlockSectionItem helpText="{!$ObjectType.Lead.Fields.Jul_Usage__c.inlineHelpText}" >
+                    <apex:outputLabel value="{!$ObjectType.Lead.fields.Jul_Usage__c.label}" for="JulUsage" />
+                    <apex:outputPanel layout="block" styleClass="requiredInput"> 
+                      <apex:outputPanel layout="block" styleClass="myrequiredBlock" />
+                        <apex:inputField id="JulUsage" value="{!addLead.Jul_Usage__c}" />
+                    </apex:outputPanel>
+                </apex:pageBlockSectionItem>                
+                <apex:pageBlockSectionItem helpText="{!$ObjectType.Lead.Fields.Aug_Usage__c.inlineHelpText}" >
+                    <apex:outputLabel value="{!$ObjectType.Lead.fields.Aug_Usage__c.label}" for="AugUsage" />
+                    <apex:outputPanel layout="block" styleClass="requiredInput"> 
+                      <apex:outputPanel layout="block" styleClass="myrequiredBlock" />
+                        <apex:inputField id="AugUsage" value="{!addLead.Aug_Usage__c}" />
+                    </apex:outputPanel>
+                </apex:pageBlockSectionItem>                
+                <apex:pageBlockSectionItem helpText="{!$ObjectType.Lead.Fields.Sep_Usage__c.inlineHelpText}" >
+                   <apex:outputLabel value="{!$ObjectType.Lead.fields.Sep_Usage__c.label}" for="SepUsage" />
+                    <apex:outputPanel layout="block" styleClass="requiredInput"> 
+                      <apex:outputPanel layout="block" styleClass="myrequiredBlock" />
+                        <apex:inputField id="SepUsage" value="{!addLead.Sep_Usage__c}" />
+                    </apex:outputPanel>
+                </apex:pageBlockSectionItem>                
+                <apex:pageBlockSectionItem helpText="{!$ObjectType.Lead.Fields.Oct_Usage__c.inlineHelpText}" >
+                    <apex:outputLabel value="{!$ObjectType.Lead.fields.Oct_Usage__c.label}" for="OctUsage" />
+                    <apex:outputPanel layout="block" styleClass="requiredInput"> 
+                      <apex:outputPanel layout="block" styleClass="myrequiredBlock" />
+                        <apex:inputField id="OctUsage" value="{!addLead.Oct_Usage__c}" />
+                    </apex:outputPanel>
+                </apex:pageBlockSectionItem>                
+                <apex:pageBlockSectionItem helpText="{!$ObjectType.Lead.Fields.Nov_Usage__c.inlineHelpText}" >
+                    <apex:outputLabel value="{!$ObjectType.Lead.fields.Nov_Usage__c.label}" for="NovUsage" />
+                    <apex:outputPanel layout="block" styleClass="requiredInput"> 
+                      <apex:outputPanel layout="block" styleClass="myrequiredBlock" />
+                        <apex:inputField id="NovUsage" value="{!addLead.Nov_Usage__c}" />
+                    </apex:outputPanel>
+                </apex:pageBlockSectionItem>               
+                <apex:pageBlockSectionItem helpText="{!$ObjectType.Lead.Fields.Dec_Usage__c.inlineHelpText}" >
+                    <apex:outputLabel value="{!$ObjectType.Lead.fields.Dec_Usage__c.label}" for="DecUsage" />
+                    <apex:outputPanel layout="block" styleClass="requiredInput"> 
+                      <apex:outputPanel layout="block" styleClass="myrequiredBlock" />
+                        <apex:inputField id="DecUsage" value="{!addLead.Dec_Usage__c}" />
+                    </apex:outputPanel>
+                </apex:pageBlockSectionItem>
+                <apex:pageBlockSectionItem >
+                   <apex:outputLabel value="{!$ObjectType.Lead.fields.Square_footage__c.label}" for="squarefootage" />
+                    <apex:outputPanel layout="block">
+                        <apex:inputField id="squarefootage" value="{!addLead.Square_footage__c}" />
+                    </apex:outputPanel>
+               </apex:pageBlockSectionItem>   
+     <!--          <apex:pageBlockSectionItem helpText="{!$ObjectType.Lead.Fields.Average_Monthly_Electric_Bill__c.inlineHelpText}" >
+                    <apex:outputLabel value="{!$ObjectType.Lead.fields.Average_Monthly_Electric_Bill__c.label}" for="AverageMonthlyElectricBill" />                    
+                        <apex:inputfield id="AverageMonthlyElectricBill" value="{!addLead.Average_Monthly_Electric_Bill__c}" >
+                        </apex:inputfield>                    
+             </apex:pageBlockSectionItem>   -->
+            </apex:pageblocksection>
+
+        
+       <!--  <apex:pageBlockSection title="Site Information" columns="2" Rendered="{!showEditSec}">
+           <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="{!$ObjectType.Lead.fields.Roofing_Type__c.label}" for="roofType" />
+                    <apex:outputPanel layout="block" >
+                        <apex:inputfield id="roofType" value="{!addLead.Roofing_Type__c}"   onkeydown="javascript:backspacerDOWN(this,event);" onkeyup="javascript:backspacerUP(this,event);"/>
+                    </apex:outputPanel>
+                </apex:pageBlockSectionItem>  
+                <apex:pageBlockSectionItem >   
+                 <apex:outputLabel value="{!$ObjectType.Lead.fields.Age_of_Roof__c.label}" for="ageOfRoof" />
+                    <apex:outputPanel layout="block" >
+                        <apex:inputfield id="ageOfRoof" value="{!addLead.Age_of_Roof__c}"   onkeydown="javascript:backspacerDOWN(this,event);" onkeyup="javascript:backspacerUP(this,event);"/>
+                    </apex:outputPanel>
+                </apex:pageBlockSectionItem>   
+               
+                <apex:pageBlockSectionItem >   
+                 <apex:outputLabel value="{!$ObjectType.Lead.fields.Over_2_stories__c.label}" for="over2stories" />
+                    <apex:outputPanel layout="block" >
+                        <apex:inputfield id="over2stories" value="{!addLead.Over_2_stories__c}"   onkeydown="javascript:backspacerDOWN(this,event);" onkeyup="javascript:backspacerUP(this,event);"/>
+                    </apex:outputPanel>
+                </apex:pageBlockSectionItem> 
+                
+                <apex:pageBlockSectionItem >   
+                 <apex:outputLabel value="{!$ObjectType.Lead.fields.HOA__c.label}" for="HOA" />
+                    <apex:outputPanel layout="block" >
+                        <apex:inputfield id="HOA" value="{!addLead.HOA__c}"   onkeydown="javascript:backspacerDOWN(this,event);" onkeyup="javascript:backspacerUP(this,event);"/>
+                    </apex:outputPanel>
+                </apex:pageBlockSectionItem>   
+                     <apex:pageBlockSectionItem >
+                       <apex:outputLabel value="{!$ObjectType.Lead.fields.Installation_Type__c.label}" for="installationType" />
+                         <apex:outputPanel layout="block" >
+                        <apex:inputfield id="installationType" value="{!addLead.Installation_Type__c}"   onkeydown="javascript:backspacerDOWN(this,event);" onkeyup="javascript:backspacerUP(this,event);"/>
+                    </apex:outputPanel>
+                </apex:pageBlockSectionItem>  
+               </apex:pageblocksection>   
+               
+               <apex:pageBlockSection title="Appointment" columns="2" Rendered="{!showEditSec}">
+               <apex:pageBlockSectionItem >   
+                 <apex:outputLabel value="{!$ObjectType.Lead.fields.Consultation_Date_and_Time__c.label}" for="conDate" />
+                    <apex:outputPanel layout="block" >
+                        <apex:inputfield id="conDate" value="{!addLead.Consultation_Date_and_Time__c}"   onkeydown="javascript:backspacerDOWN(this,event);" onkeyup="javascript:backspacerUP(this,event);"/>
+                    </apex:outputPanel>
+                </apex:pageBlockSectionItem>   
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="{!$ObjectType.Lead.fields.Consultation_Time__c.label}" for="conTime" />
+                    <apex:outputPanel layout="block" >
+                        <apex:inputfield id="conTime" value="{!addLead.Consultation_Time__c}"   onkeydown="javascript:backspacerDOWN(this,event);" onkeyup="javascript:backspacerUP(this,event);"/>
+                    </apex:outputPanel>
+                </apex:pageBlockSectionItem>  
+                <apex:pageBlockSectionItem >   
+                 <apex:outputLabel value="{!$ObjectType.Lead.fields.SalesRep__c.label}" for="salesRep" />
+                    <apex:outputPanel layout="block" >
+                        <apex:inputfield id="salesRep" value="{!addLead.SalesRep__c}"   onkeydown="javascript:backspacerDOWN(this,event);" onkeyup="javascript:backspacerUP(this,event);"/>
+                    </apex:outputPanel>
+                </apex:pageBlockSectionItem> 
+                
+               </apex:pageblocksection>   -->
+               
+               <apex:pageBlockSection title="Lead Information" columns="2" Rendered="{!showEditSec}">
+               <apex:pageBlockSectionItem >   
+                 <apex:outputLabel value="{!$ObjectType.Lead.fields.SalesRep__c.label}" for="salesRep" />
+                    <apex:outputPanel layout="block" >
+                        <apex:inputfield id="salesRep" value="{!addLead.SalesRep__c}" />
+                    </apex:outputPanel>
+                </apex:pageBlockSectionItem> 
+        <!--      <apex:pageBlockSectionItem >   
+                 <apex:outputLabel value="{!$ObjectType.Lead.fields.Status.label}" for="Stage" />
+                    <apex:outputPanel layout="block" >
+                        <apex:inputfield id="Stage" value="{!addLead.Status}" />
+                    </apex:outputPanel>
+                </apex:pageBlockSectionItem>    --> 
+               <apex:pageBlockSectionItem helpText="{!$ObjectType.Lead.Fields.ownerid.inlineHelpText}">
+                   <apex:outputLabel value="Lead Owner"/>
+                  <apex:outputField value="{!addLead.ownerid}" label="Lead Owner">
+                  </apex:outputField>
+               </apex:pageBlockSectionItem>  
+               <apex:pageBlockSectionItem helpText="{!$ObjectType.Lead.Fields.Lead_Organization_Location_2__c.inlineHelpText}" rendered="{!isLGCYUser}">
+                   <apex:outputLabel value="Lead Organization Location"/>
+                  <apex:inputField value="{!addLead.Lead_Organization_Location_2__c}" label="Lead Organization Location">
+                  </apex:inputField>
+               </apex:pageBlockSectionItem> 
+       <!--        <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="{!$ObjectType.Lead.fields.Lead_Status__c.label}" for="Status" />
+                    <apex:outputPanel layout="block" >
+                        <apex:inputfield id="Status" value="{!addLead.Lead_Status__c}" />
+                    </apex:outputPanel>
+                </apex:pageBlockSectionItem>   --> 
+               
+               <!-- <apex:pageBlockSectionItem >   
+                 <apex:outputLabel value="{!$ObjectType.Lead.fields.Reason__c.label}" for="reason" />
+                    <apex:outputPanel layout="block" >
+                        <apex:inputfield id="reason" value="{!addLead.Reason__c}"   onkeydown="javascript:backspacerDOWN(this,event);" onkeyup="javascript:backspacerUP(this,event);"/>
+                    </apex:outputPanel>
+                </apex:pageBlockSectionItem> 
+                <apex:pageBlockSectionItem >   
+                 <apex:outputLabel value="{!$ObjectType.Lead.fields.Prospect_Id__c.label}" for="prospectId" />
+                    <apex:outputPanel layout="block" >
+                        <apex:inputfield id="prospectId" value="{!addLead.Prospect_Id__c}"   onkeydown="javascript:backspacerDOWN(this,event);" onkeyup="javascript:backspacerUP(this,event);"/>
+                    </apex:outputPanel>
+                </apex:pageBlockSectionItem> -->
+               
+     <!--           <apex:pageBlockSectionItem >   
+                 <apex:outputLabel value="{!$ObjectType.Lead.fields.Lead_Qualifier__c.label}" for="LeadQualifier" />
+                    <apex:outputPanel layout="block" >
+                        <apex:inputfield id="LeadQualifier" value="{!addLead.Lead_Qualifier__c}" />
+                    </apex:outputPanel>
+                </apex:pageBlockSectionItem>  -->
+                
+               </apex:pageblocksection>   
+               <!-- 
+               <apex:pageBlockSection title="Promotion Information" columns="2" Rendered="{!showEditSec}">
+               <apex:pageBlockSectionItem >   
+                 <apex:outputLabel value="{!$ObjectType.Lead.fields.Offer_Promo_Name__c.label}" for="offerPromoName" />
+                    <apex:outputPanel layout="block" >
+                        <apex:inputfield id="offerPromoName" value="{!addLead.Offer_Promo_Name__c}" />
+                    </apex:outputPanel>
+                </apex:pageBlockSectionItem>   
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="{!$ObjectType.Lead.fields.Promotion_Name__c.label}" for="refPromoName" />
+                    <apex:outputPanel layout="block" >
+                        <apex:inputfield id="refPromoName" value="{!addLead.Promotion_Name__c}" />
+                    </apex:outputPanel>
+                </apex:pageBlockSectionItem>  
+                <apex:pageBlockSectionItem >   
+                 <apex:outputLabel value="{!$ObjectType.Lead.fields.Offer__c.label}" for="Offer" />
+                    <apex:outputPanel layout="block" >
+                        <apex:inputfield id="Offer" value="{!addLead.Offer__c}" />
+                    </apex:outputPanel>
+                </apex:pageBlockSectionItem> 
+                
+                <apex:pageBlockSectionItem >   
+                 <apex:outputLabel value="{!$ObjectType.Lead.fields.Referred_By_Contact__c.label}" for="refByContact" />
+                    <apex:outputPanel layout="block" >
+                        <apex:inputfield id="refByContact" value="{!addLead.Referred_By_Contact__c}" />
+                    </apex:outputPanel>
+                </apex:pageBlockSectionItem> 
+                <apex:pageBlockSectionItem >   
+                 <apex:outputLabel value="{!$ObjectType.Lead.fields.Sales_rep_of_referrer__c.label}" for="salesrepOfReferrer" />
+                    <apex:outputPanel layout="block" >
+                        <apex:inputfield id="salesrepOfReferrer" value="{!addLead.Sales_rep_of_referrer__c}" />
+                    </apex:outputPanel>
+                </apex:pageBlockSectionItem> 
+                <apex:pageBlockSectionItem >   
+                 <apex:outputLabel value="{!$ObjectType.Lead.fields.Referral_Input__c.label}" for="referral" />
+                    <apex:outputPanel layout="block" >
+                        <apex:inputfield id="referral" value="{!addLead.Referral_Input__c}" />
+                    </apex:outputPanel>
+                </apex:pageBlockSectionItem> 
+               </apex:pageblocksection>   
+                --> 
+                
+                    
+               
+                           
+            
+            </apex:pageblock>
+          
+        <!-- 
+        <apex:detail relatedList="true"></apex:detail>
+        <apex:pageblock id="DOcustomlist" title="Design Estimate" >
+            <apex:pageblocktable Value="{!leadDesignOption}" var="LDO" >
+                
+                <apex:column headervalue="Make Module" title="Make Module Name">
+                    <apex:outputfield value="{!LDO.Module__c}"/>
+                </apex:column>
+                <apex:column headervalue="KWP" title="Kilo Watts Peak ">
+                    <apex:outputfield value="{!LDO.KWP__c}"/>
+                </apex:column>                
+                <apex:column headervalue="KWH/KWP" title="Kilowatt hour/Kilo Watts Peak ">
+                    <apex:outputfield value="{!LDO.KWH_KWP__c}"/>
+                </apex:column>
+                <apex:column headervalue="Usage %" title=" % of Usage ">
+                    <apex:outputfield value="{!LDO.Usage__c}"/>
+                </apex:column>
+                <apex:column headervalue="Cost / Year (kWh)" title=" Cost per Year">
+                    <apex:outputfield value="{!LDO.costPerYearkWh__c}"/>
+                </apex:column>
+            </apex:pageblocktable>
+        </apex:pageblock>
+        -->
+        <!--  <apex:detail relatedList="true"></apex:detail>
+        <apex:pageblock id="customlist" title="Note" >
+            <apex:pageblocktable Value="{!leadNotes}" var="notes" >
+                <apex:column >
+                   <apex:facet name="header">Notes</apex:facet>
+                    <a style="text-decoration:underline;" class="tooltip" onclick = "redirectToEdit('{!notes.Id}')">{!left(notes.Notes__c,30)}
+                    <span>
+                    {!notes.Notes__c}
+                    </span>
+                    </a>
+                </apex:column>
+                <apex:column headervalue="Created Organization">
+                    <apex:outputfield value="{!notes.Notes_Added_By__c}"/>
+                </apex:column>
+                <apex:column headervalue="LastModified By">
+                    <apex:outputfield value="{!notes.LastModifiedById}"/>
+                </apex:column>
+                <apex:column headervalue="LastModified Date">
+                    <apex:outputfield value="{!notes.LastModifiedDate}"/>
+                </apex:column>
+            </apex:pageblocktable>
+    
+        </apex:pageblock> -->
+                
+        <div align="center">
+            <apex:commandButton id="saveButton" title="Save" value="  Save " action="{!saveLead}" Rendered="{!showEditSec}"/>   
+            &nbsp;
+            <apex:commandButton value="Cancel" action="{!doCancel}" immediate="true" Rendered="{!showEditSec}"/>
+            
+        </div>
+    </apex:form>
+    <!-- <apex:include pageName="LeadNotesMainPage" Rendered="{!showReadSec}"/> -->
+    <script language="javascript">
+    
+        function redirectToEdit(noteID)
+        {   
+            var tempURL = '/partner/apex/LeadEditNotePage?Id='+ noteID; 
+     
+            var newwindow = window.open(tempURL, '', 'toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,resizable=yes,width=650,height=390,left=150,top=150'); 
+            newwindow.focus();
+        }
+    
+
+
+<!-- This script is based on the javascript code of Roman Feldblum (web.developer@programmer.net) -->
+<!-- Original script : http://javascript.internet.com/forms/format-phone-number.html -->
+<!-- Original script is revised by Eralper Yilmaz (http://www.eralper.com) -->
+<!-- Revised script : http://www.kodyaz.com -->
+<!-- Format : "(123) 456-7890" -->
+
+var zChar = new Array(' ', '(', ')', '-', '.');
+var maxphonelength = 14;
+var phonevalue1;
+var phonevalue2;
+var cursorposition;
+
+function ParseForNumber1(object){
+  phonevalue1 = ParseChar(object.value, zChar);
+}
+
+function ParseForNumber2(object){
+  phonevalue2 = ParseChar(object.value, zChar);
+}
+
+function backspacerUP(object,e) { 
+  if(e){ 
+    e = e 
+  } else {
+    e = window.event 
+  } 
+  if(e.which){ 
+    var keycode = e.which 
+  } else {
+    var keycode = e.keyCode 
+  }
+
+  ParseForNumber1(object)
+
+  if(keycode >= 48){
+    ValidatePhone(object)
+  }
+}
+
+function backspacerDOWN(object,e) { 
+  if(e){ 
+    e = e 
+  } else {
+    e = window.event 
+  } 
+  if(e.which){ 
+    var keycode = e.which 
+  } else {
+    var keycode = e.keyCode 
+  }
+  ParseForNumber2(object)
+} 
+
+function GetCursorPosition(){
+
+  var t1 = phonevalue1;
+  var t2 = phonevalue2;
+  var bool = false
+  for (i=0; i<t1.length; i++)
+  {
+    if (t1.substring(i,1) != t2.substring(i,1)) {
+      if(!bool) {
+        cursorposition=i
+        window.status=cursorposition
+        bool=true
+      }
+    }
+  }
+}
+
+function ValidatePhone(object){
+
+  var p = phonevalue1
+
+  p = p.replace(/[^\d]*/gi,"")
+
+  if (p.length < 3) {
+    object.value=p
+  } else if(p.length==3){
+    pp=p;
+    d4=p.indexOf('(')
+    d5=p.indexOf(')')
+    if(d4==-1){
+      pp="("+pp;
+    }
+    if(d5==-1){
+      pp=pp+")";
+    }
+    object.value = pp;
+  } else if(p.length>3 && p.length < 7){
+    p ="(" + p; 
+    l30=p.length;
+    p30=p.substring(0,4);
+    p30=p30+") " 
+
+    p31=p.substring(4,l30);
+    pp=p30+p31;
+
+    object.value = pp; 
+
+  } else if(p.length >= 7){
+    p ="(" + p; 
+    l30=p.length;
+    p30=p.substring(0,4);
+    p30=p30+") " 
+
+    p31=p.substring(4,l30);
+    pp=p30+p31;
+
+    l40 = pp.length;
+    p40 = pp.substring(0,9);
+    p40 = p40 + "-"
+
+    p41 = pp.substring(9,l40);
+    ppp = p40 + p41;
+
+    object.value = ppp.substring(0, maxphonelength);
+  }
+
+  GetCursorPosition()
+
+  if(cursorposition >= 0){
+    if (cursorposition == 0) {
+      cursorposition = 2
+    } else if (cursorposition <= 2) {
+      cursorposition = cursorposition + 1
+    } else if (cursorposition <= 4) {
+      cursorposition = cursorposition + 3
+    } else if (cursorposition == 5) {
+      cursorposition = cursorposition + 3
+    } else if (cursorposition == 6) { 
+      cursorposition = cursorposition + 3 
+    } else if (cursorposition == 7) { 
+      cursorposition = cursorposition + 4 
+    } else if (cursorposition == 8) { 
+      cursorposition = cursorposition + 4
+      e1=object.value.indexOf(')')
+      e2=object.value.indexOf('-')
+      if (e1>-1 && e2>-1){
+        if (e2-e1 == 4) {
+          cursorposition = cursorposition - 1
+        }
+      }
+    } else if (cursorposition == 9) {
+      cursorposition = cursorposition + 4
+    } else if (cursorposition < 11) {
+      cursorposition = cursorposition + 3
+    } else if (cursorposition == 11) {
+      cursorposition = cursorposition + 1
+    } else if (cursorposition == 12) {
+      cursorposition = cursorposition + 1
+    } else if (cursorposition >= 13) {
+      cursorposition = cursorposition
+    }
+
+    var txtRange = object.createTextRange();
+    txtRange.moveStart( "character", cursorposition);
+    txtRange.moveEnd( "character", cursorposition - object.value.length);
+    txtRange.select();
+  }
+
+}
+
+function ParseChar(sStr, sChar)
+{
+
+  if (sChar.length == null) 
+  {
+    zChar = new Array(sChar);
+  }
+    else zChar = sChar;
+
+  for (i=0; i<zChar.length; i++)
+  {
+    sNewStr = "";
+
+    var iStart = 0;
+    var iEnd = sStr.indexOf(sChar[i]);
+
+    while (iEnd != -1)
+    {
+      sNewStr += sStr.substring(iStart, iEnd);
+      iStart = iEnd + 1;
+      iEnd = sStr.indexOf(sChar[i], iStart);
+    }
+    sNewStr += sStr.substring(sStr.lastIndexOf(sChar[i]) + 1, sStr.length);
+
+    sStr = sNewStr;
+  }
+
+  return sNewStr;
+}
+
+    </script>
+        
+    <style type="text/css">
+        .address-zip{                       
+            width:54px !Important;
+         }  
+         .address-state, .address-zip {
+             margin-left: 3px !Important;
+        }
+        .address-line1 {
+            min-width:210px !Important;
+            width:210px !Important;
+        }
+        .address-city {
+            width: 180px !Important;
+        }            
+         .paginatorWrap{
+            //background: url("/img/alohaSkin/listFooter.png") repeat-x scroll 0 0 #F2F2F2;
+            //border: 1px solid #EAEAEA;
+            //background-color: #F3F3F3;
+            //border-top: 1px solid #FFFFFF;
+            padding: 3px;
+        }
+        .noRecordsFound{
+            border: 1px solid #D4DADC;
+            padding: 4px;
+        }
+        a:hover {
+            background:#ffffff; /*BG color is a must for IE6*/
+            text-decoration:none;
+            
+        } 
+        a.tooltip span {
+            display:none; 
+            padding:2px 3px; 
+            margin-left:8px; 
+            width:300px;
+            height:70px;
+            opacity: 12.3;
+        }
+        a.tooltip:hover span{
+            display:inline; 
+            position:absolute; 
+            background:#EEF1F5; 
+            border:2px solid #cccccc; 
+            color:#000000;
+        }
+        
+    .myrequiredBlock {
+        background-color: #3300FF !important;
+        bottom: 1px;
+        left: -4px;
+        position: absolute;
+        top: 1px;
+        width: 3px;
+    }
+    
+    .redrequired {
+        background-color: #CC0000 !important;
+        bottom: 1px;
+        //left: 0px;
+        position: absolute;
+        right: 180px !Important;
+        top: 1px;
+        width: 3px;
+    }
+    
+    .bluerequired {
+        background-color: #3300FF !important;
+        bottom: 1px;
+        //left: 0px;
+        position: absolute;
+        right: 180px !Important;
+        top: 1px;
+        width: 3px;
+    }
+
+
+    </style> 
+</apex:page>

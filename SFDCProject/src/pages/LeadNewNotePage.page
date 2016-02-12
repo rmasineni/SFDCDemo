@@ -1,0 +1,87 @@
+<!-- 
+*********************************************************************************
+*   Author      : Chandrika Dasaradharaman (chandrikad@sunrunhome.com)          *
+*   Date        : April 2013                                                    *
+*   Name        : LeadNewNotePage.page                                          *
+*   Description : This page is used to Add New Lead Notes                       * 
+*                                                                               *
+*********************************************************************************
+-->
+<apex:page standardController="Lead" extensions="LeadNewNoteClass" sidebar="false" showHeader="false"> 
+    <style>
+        .headerLogo {
+            margin:1px 1px 1px 1px;
+            border:0;
+            padding-left:50px;
+            padding-bottom:10px;
+            #height: 30px;
+            #width: 90px;
+        }
+        
+        .bPageTitle, .apexp{
+            margin-left: 15px;
+            margin-right: 20px;
+            width: 97%;
+        }
+        
+        .producterror { color: red; font-weight: strong;
+            background-color: #FFFFCC;
+            border-style: solid;
+            border-width: 1px;
+            padding: 6px 8px 6px 6px;
+            border-color: #FF9900;
+            font-size: 100%;
+            margin-left: 15px;
+            margin-right: 20px;
+        }
+    </style>
+    
+    <div align="left" width="100%">
+        <img src="{!$Resource.PartnerPortalHeader32}" class="headerLogo"/>
+        &nbsp;&nbsp;
+        <apex:sectionHeader title="Lead New Note"/>
+    </div> 
+
+    <apex:form id="newNote">
+        <apex:messages styleClass="producterror" /> 
+        <div align="Center">
+            <apex:actionStatus id="mySaveStatus1" >
+               <apex:facet name="stop">
+                  <apex:commandButton value="Save" action="{!saveForm}" onComplete="closeAndRefreshparent('{!parentURL}', '{!isSaved}');" reRender="thePanel" Rendered="{!showEditSec}" status="mySaveStatus1"/>
+            </apex:facet>
+            <apex:facet name="start">
+                <apex:outputtext value="In progress ..." />
+                 <apex:outputPanel >
+                       <apex:image value="/img/loading32.gif" style="height: 15px;"/>
+                       <apex:commandButton value="Processing..." status="mySaveStatus1" disabled="true"/>
+                   </apex:outputPanel>
+               </apex:facet>
+            </apex:actionStatus>
+            &nbsp; 
+            <apex:commandButton onClick="window.close();" value="Cancel" title="Click to Cancel Edit"/> 
+        </div>
+        &nbsp;  
+        <apex:pageBlock >
+            <apex:pageBlockSection id="item1" columns="1" >
+                <div align="Center">
+                    <apex:pageBlockSectionitem >
+                        <apex:outputlabel value="Notes"/>
+                        <apex:inputTextarea style="height:60px; width:400px" id="noteValue" value="{!noteValue}"/>           
+                    </apex:pageBlockSectionitem>
+                </div>
+            </apex:pageBlockSection> 
+        </apex:pageBlock>
+
+    </apex:form>
+    <script> 
+        function closeAndRefreshparent(parentWindowUrl, isSavedVal)
+        {
+            if(isSavedVal == 'true'){
+            window.top.close();
+            window.opener.parent.location.href = parentWindowUrl;
+            var win = window.open('','_parent','');
+            win.close();
+            } 
+        }
+    </script>
+</apex:page>

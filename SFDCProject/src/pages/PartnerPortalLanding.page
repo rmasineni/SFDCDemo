@@ -1,0 +1,70 @@
+<apex:page title="SunRun Partner Portal" sidebar="false" showHeader="false" controller="PartnerPortalLanding">
+<apex:pagemessages />
+    <apex:composition template="PartnerPortalSiteTemplate">
+        <apex:define name="mainContent">
+            <c:PartnerPortalLandingArticles1 content="{!accountMessage}"/>
+            <!-- Content from Knowledge Base    -->                    
+            <apex:outputpanel layout="block" styleclass="grid_6">
+                <div class="contenetDiv21">
+                    <p></p>
+                    <h1 class="loginHeader">Related Links</h1>
+                    <p></p>
+                    <apex:form id="theForm" forceSSL="true">
+                     <a href="/partner/apex/Partner_Dashboard">Dashboard</a><br/>
+                     <a href="/partner/00O/o">Reports</a>
+                     <br/><br/>
+                     <a href="/partner/001/o">Account List</a><br/>
+                     <a href="/partner/003/o">Contact List</a>
+                     <br/><br/>
+                     <a href="">My Tasks</a><br/>
+                     <a href="/partner/00Q/o">My Leads</a><br/>
+                     <a href="/partner/006/o">My Opportunities</a><br/>
+                     <a href="/partner/a08/o">My Proposals</a><br/>
+                     <a href="/partner/a07/o">My Assets</a><br/>  
+                    </apex:form>                    
+                </div>
+            </apex:outputpanel>
+            
+            <c:PartnerPortalLandingArticles2 content="{!accountMessage2}"/>
+            <!--Content from Knowledge Base-->
+        </apex:define>
+    </apex:composition>
+    
+    <apex:includeScript value="{!URLFOR($Resource.jqueryui_181, 'development-bundle/jquery-1.7.1.js')}"  />
+    <apex:includeScript value="{!URLFOR($Resource.jqueryui_181, 'development-bundle/external/jquery.bgiframe-2.1.2.js')}"  />
+    <apex:includeScript value="{!URLFOR($Resource.jqueryui_181, 'development-bundle/ui/jquery.ui.core.js')}"  />
+    <apex:includeScript value="{!URLFOR($Resource.jqueryui_181, 'development-bundle/ui/jquery.ui.widget.js')}"  />
+    <apex:includeScript value="{!URLFOR($Resource.jqueryui_181, 'development-bundle/ui/jquery.ui.mouse.js')}"  />
+    <apex:includeScript value="{!URLFOR($Resource.jqueryui_181, 'development-bundle/ui/jquery.ui.button.js')}"  />
+    <apex:includeScript value="{!URLFOR($Resource.jqueryui_181, 'development-bundle/ui/jquery.ui.draggable.js')}"  />
+    <apex:includeScript value="{!URLFOR($Resource.jqueryui_181, 'development-bundle/ui/jquery.ui.position.js')}"  />
+    <apex:includeScript value="{!URLFOR($Resource.jqueryui_181, 'development-bundle/ui/jquery.ui.dialog.js')}"  />
+
+    <script>
+        function test1(){
+
+        }
+        
+        $(function() {
+            $('#resizeDiv1').draggable();
+            $('#resizeDiv2').draggable();
+        });
+        
+    </script>
+    
+    <style>
+        div.contenetDiv4{
+            position: relative;
+            border: 10px;
+            text-align: center;
+            background: #edd;
+            box-shadow:1px 1px 1px none;
+            border-radius:10px; 
+            height: 100px;
+            width: 50x;
+            margin-bottom: 15px;
+            border: 1px solid #E5E5E5;
+        }
+    </style>
+    
+</apex:page>

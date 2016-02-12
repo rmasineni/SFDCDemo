@@ -1,0 +1,374 @@
+<apex:page controller="milestoneProof" sidebar="false" id="msProof" tabstyle="Milestone_Management__tab">
+    <script>
+    function hideButtons(){
+      var updoc = document.getElementById('msProof:genAssetSearchForm:block:results:uploadDoc');
+      var spalbum = document.getElementById('msProof:genAssetSearchForm:block:results:showPhotoAlbum');
+      var upphoto = document.getElementById('msProof:genAssetSearchForm:block:results:uploadPhotos');      
+      var updoc2 = document.getElementById('msProof:genAssetSearchForm:block:results:uploadProof');            
+      updoc.className = "btnDisabled btn";    
+      spalbum.className = "btnDisabled btn";
+      upphoto.className = "btnDisabled btn";
+      updoc2.className = "btnDisabled btn";    
+      return true;
+    }
+
+    function showButtons(){
+      var updoc = document.getElementById('msProof:genAssetSearchForm:block:results:uploadDoc');
+      var spalbum = document.getElementById('msProof:genAssetSearchForm:block:results:showPhotoAlbum');
+      var upphoto = document.getElementById('msProof:genAssetSearchForm:block:results:uploadPhotos');                  
+      var updoc2 = document.getElementById('msProof:genAssetSearchForm:block:results:uploadProof');                  
+      updoc.className = "btn";   
+      spalbum.className = "btn";
+      upphoto.className = "btn";      
+      updoc2.className = "btn";  
+      return true;  
+    }
+    
+    window.onload=function(){hideButtons();}; 
+   
+     function processUserActions(useraction, gaid){
+            var relatedObjectId = gaid;                     
+            var actionText = useraction;                    
+            if('Upload' == useraction && relatedObjectId != null && relatedObjectId != ''){
+                attachGenAssetPhotos(relatedObjectId, true);
+                return false;
+            }
+            return false;
+        }
+
+        function attachGenAssetPhotos(GenAssetIdVal, canAttachDocs){
+            
+            if(canAttachDocs == false){
+                alert('Invalid stage to Upload Documents');
+            }else{
+                var tempURL = '/GenAsset_PhotoUploader?id=' + GenAssetIdVal; 
+                var isPartner = "{!IsPartnerUser}";
+                if(isPartner == 'true')
+                {
+                    tempURL = '/partner' + tempURL;  //change to /partner later
+                }   
+                else
+                {
+                   tempURL  = '/apex' + tempURL ;
+                }
+                //var newwindow = window.open(tempURL, '', 'toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=950,height=465,left=150,top=150');
+                var newwindow = window.open(tempURL, '', 'toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=yes,resizable=yes'); 
+                
+                newwindow.focus();
+            }
+            return true;
+        }
+        
+   function showPhotoAlbum(GenAssetIdVal, canAttachDocs){
+            if(canAttachDocs == false){
+                alert('Invalid stage to Upload Documents');
+            }else{
+                var tempURL = '/ShowAlbum?id=' + GenAssetIdVal; 
+                var isPartner = "{!IsPartnerUser}";
+                if(isPartner == 'true')
+                {
+                    tempURL = '/partner' + tempURL;  //change to /partner later
+                }   
+                else
+                {
+                   tempURL  = '/apex' + tempURL ;
+                }
+                var newwindow = window.open(tempURL, '', 'toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=yes,resizable=yes'); 
+                
+                newwindow.focus();
+            }
+        }
+        
+        function getCount()
+        {
+        
+         var inputElem = document.getElementsByTagName("input");
+                var checkedCount = 0;
+                var noEmailAddressCount = 0;
+                for(var i=0; i<inputElem.length; i++)
+                {
+                    if(inputElem[i].id.indexOf("checkedOne")!=-1)
+                    {
+                        if (inputElem[i].checked == true)
+                        {
+                            checkedCount++;
+                        }
+                    }                    
+                }
+                return checkedCount;
+        }
+                
+        function checkSelection() 
+        {
+            try
+            {
+                var inputElem = document.getElementsByTagName("input");
+                var checkedCount = 0;
+                var noEmailAddressCount = 0;
+                for(var i=0; i<inputElem.length; i++)
+                {
+                    if(inputElem[i].id.indexOf("checkedOne")!=-1)
+                    {
+                        if (inputElem[i].checked == true)
+                        {
+                            checkedCount++;
+                        }
+                    }                    
+                }
+                if(checkedCount == 1)
+                {
+                   showButtons();                   
+                }
+                else
+                {
+                   hideButtons();
+                }
+/*                
+                if (checkedCount <= 0)
+                {
+                    alert("Please select a generation asset that the Milestone Proof upload is to be attached to!!!");
+                    return false;
+                }
+                else if (checkedCount > 1)
+                {
+                    alert("Please limit your selection to a maximum of 1 generation asset!!!");
+                    return false;
+                }
+*/                
+                return true;
+            }                    
+            catch(e)
+            {
+                alert(e);
+                return false;
+            }
+        }
+    </script>
+    <apex:sectionHeader title="Search Generation Assets"/>
+    <apex:form id="genAssetSearchForm">
+        <apex:pageBlock mode="edit" id="block">
+            <apex:pageBlockSection id="genAssetSearchPBSection">
+<!--                
+                <apex:pageBlockSectionitem id="item1">
+                    <apex:outputLabel value="Account"/>
+                    <apex:outputPanel >
+                        <apex:inputField value="{!srchGenAssetRec.Account_Name__c}"/>
+                    </apex:outputPanel>
+                </apex:pageBlockSectionitem>
+                <apex:pageBlockSectionitem id="item2">
+                    <apex:outputLabel value="Account Name"/>
+                    <apex:outputPanel >
+                        <apex:inputText value="{!acctName}"/>
+                    </apex:outputPanel>
+                </apex:pageBlockSectionitem>
+-->
+                <apex:pageBlockSectionitem id="item1">
+                    <apex:outputLabel value="Customer Name"/>
+                    <apex:outputPanel >
+                        <apex:inputText value="{!acctName}"/>
+                    </apex:outputPanel>
+                </apex:pageBlockSectionitem>
+                <br></br>
+                <apex:pageBlockSectionitem id="item2">
+                    <apex:outputLabel value="Cust Ref Num"/>
+                    <apex:outputPanel >
+                        <apex:inputText value="{!custRefNum}"/>
+                    </apex:outputPanel>
+                </apex:pageBlockSectionitem>
+                <br></br>
+                <apex:pageBlockSectionitem id="item3">
+                    <apex:outputLabel value="Customer Mailing Address"/>
+                    <apex:outputPanel >
+                        <apex:inputText value="{!custMailAddress}"/>
+                    </apex:outputPanel>
+                </apex:pageBlockSectionitem>
+                <apex:pageBlockSectionitem id="item4">
+                     <apex:selectRadio id="srchFilter" value="{!srchOptionFilter}" layout="pageDirection">
+                         <apex:selectOptions value="{!SearchOption}" />
+                                 <apex:actionSupport event="onchange" rerender="genAssetSearchPBSection"/> 
+                     </apex:selectRadio>
+                </apex:pageBlockSectionitem>
+                <br></br>
+            </apex:pageBlockSection>
+            <div style="text-align: center; font-size: 15px;" >
+                <apex:commandButton action="{!doSearch}" value="Search Generation Assets" status="status1" title="Click this button to Search for Generation Assets"/>
+                <apex:actionStatus id="status1" startText="requesting..."/>
+            </div>
+            
+            
+            <apex:outputPanel layout="block" style="overflow:auto;width:80%;height:300px" >
+                <apex:pageBlockSection title="Search Results - Click on any row to see the list of cases related to the selected Generation Asset" id="results" columns="1">
+                    <apex:panelGrid id="pg1" width="30%" columns="6">
+                        <apex:commandLink id="uploadDoc" onClick="if(getCount() != 1){return false;} return checkSelection();" action="{!uploadDocument}" value="Upload Proof(s)"  styleClass="btn" style="padding:2px 5px 2px 5px; text-decoration:none;left:0px;position:relative;" title="Click this button to upload proof(s)" status="status2">
+                            <apex:param assignTo="{!docType}" value="M1"/>
+                            <apex:actionStatus id="status2" startText="Please Wait..."/>
+                        </apex:commandLink>                       
+                        
+                        <apex:commandLink id="uploadPhotos" onclick="if(getCount() != 1){return false;}" oncomplete="processUserActions('Upload', '{!currentAssetId}'); return true;" value="Upload Photos" action="{!uploadPhotos}" styleClass="btn" style="padding:2px 5px 2px 5px; text-decoration:none;left:40px;position:relative;"/>  
+                        <apex:commandLink id="showPhotoAlbum" onclick="if(getCount() != 1){return false;}" oncomplete="showPhotoAlbum('{!currentAssetId}', true); return true;" value="Show Album" action="{!showAlbum}" styleClass="btn" style="padding:2px 5px 2px 5px; text-decoration:none;left:40px;position:relative;"/>
+                        
+                        <apex:commandLink action="{!assetPreviousBtnClick}" value="Previous Page"  styleClass="btn" style="padding:2px 5px 2px 5px; text-decoration:none;left:240px;position:relative;" rendered="{!NOT(assetPreviousButtonEnabled)}" reRender="block"/>
+                        <apex:commandLink action="{!assetNextBtnClick}" value="Next Page"  styleClass="btn" style="padding:2px 5px 2px 5px; text-decoration:none;left:260px;position:relative;" rendered="{!NOT(assetNextButtonDisabled)}" reRender="block"/>
+                    </apex:panelGrid>
+                    <apex:pageBlockTable value="{!pagedAssetList}" var="l" id="theTable" rendered="{!NOT(ISNULL(searchedAssetsList))}" rowClasses="odd,even" styleClass="tableClass">
+                        <apex:actionSupport event="onRowClick" action="{!doSearchCase}" rerender="caseDetails">
+                            <apex:param assignTo="{!currentAssetId}" value="{!l.genAssetRec.Id}" name="currAssetId"/>
+                        </apex:actionSupport>               
+                        <apex:column >
+                            <apex:inputCheckbox value="{!l.recSelected}" id="checkedOne" onclick="checkSelection();">
+<!--                                 <apex:actionSupport event="onclick" action="{!GetSelectedAsset}"/>  onchange="checkSelection(); return true;"-->
+                            </apex:inputCheckbox>
+                        </apex:column>
+                        
+
+                        <apex:column >
+                            <apex:facet name="header">
+                                <apex:commandLink value="Install Partner" action="{!doAssetSort}" rerender="block">
+                                    <apex:param name="sortField" value="Install_Partner__c" assignTo="{!sortField}"/>
+                                </apex:commandLink>
+                            </apex:facet>
+                            <apex:outputText value="{!l.genAssetRec.Install_Partner__c}"/> 
+                        </apex:column>
+                        <apex:column >
+                            <apex:facet name="header">
+                                <apex:commandLink value="Customer Name" action="{!doAssetSort}" rerender="block">
+                                    <apex:param name="sortField" value="Customer_Name_Formula__c" assignTo="{!sortField}"/>
+                                </apex:commandLink>
+                            </apex:facet>
+    <!--                        <apex:outputText value="{!l.genAssetRec.Customer_Name_Formula__c}"/> 
+    -->
+                            <apex:outputLink target="_parent" value="/{!l.genAssetRec.Id}">{!l.genAssetRec.Customer_Name_Formula__c}</apex:outputLink>
+                        </apex:column>
+                        <apex:column >
+                            <apex:facet name="header">
+                                <apex:commandLink value="Home Address" action="{!doAssetSort}" rerender="block">
+                                    <apex:param name="sortField" value="Home_Address__c" assignTo="{!sortField}"/>
+                                </apex:commandLink>
+                            </apex:facet>
+                            <apex:outputText value="{!l.genAssetRec.Home_Address__c}"/>
+                        </apex:column>
+                        <apex:column >
+                            <apex:facet name="header">
+                                <apex:commandLink value="Cust Ref Num" action="{!doAssetSort}" rerender="block">
+                                    <apex:param name="sortField" value="Cust_Ref_Num__c" assignTo="{!sortField}"/>
+                                </apex:commandLink>
+                            </apex:facet>
+                            <apex:outputText value="{!l.genAssetRec.Cust_Ref_Num__c}"/>
+                        </apex:column>
+                        <apex:column >
+                            <apex:facet name="header">
+                                <apex:commandLink value="M1 Upload Date" action="{!doAssetSort}" rerender="block">
+                                    <apex:param name="sortField" value="M1_Proof_Upload_Date__c" assignTo="{!sortField}"/>
+                                </apex:commandLink>
+                            </apex:facet>
+                            <apex:outputText value="{0, date,  MM/dd/yyyy}" >
+                                <apex:param value="{!l.genAssetRec.M1_Proof_Upload_Date__c}" />
+                            </apex:outputText>
+                        </apex:column>
+                        <apex:column >
+                            <apex:facet name="header">
+                                <apex:commandLink value="M2 Upload Date" action="{!doAssetSort}" rerender="block">
+                                    <apex:param name="sortField" value="M2_Proof_Upload_Date__c" assignTo="{!sortField}"/>
+                                </apex:commandLink>
+                            </apex:facet>
+                            <apex:outputText value="{0, date,  MM/dd/yyyy}" >
+                                <apex:param value="{!l.genAssetRec.M2_Proof_Upload_Date__c}" />
+                            </apex:outputText>
+                        </apex:column>
+                        <apex:column >
+                            <apex:facet name="header">
+                                <apex:commandLink value="M3 Upload Date" action="{!doAssetSort}" rerender="block">
+                                    <apex:param name="sortField" value="M3_Proof_Upload_Date__c" assignTo="{!sortField}"/>
+                                </apex:commandLink>
+                            </apex:facet>
+                            <apex:outputText value="{0, date,  MM/dd/yyyy}" >
+                                <apex:param value="{!l.genAssetRec.M3_Proof_Upload_Date__c}" />
+                            </apex:outputText>
+                        </apex:column>
+                        <apex:column >
+                            <apex:facet name="header">
+                                <apex:commandLink value="M1 Proof:Panel/Inverter Delivery" action="{!doAssetSort}" rerender="block">
+                                    <apex:param name="sortField" value="M1_proof_panel_inverter_delivery__c" assignTo="{!sortField}"/>
+                                </apex:commandLink>
+                            </apex:facet>
+                            <apex:outputText value="{0, date,  MM/dd/yyyy}" >
+                                <apex:param value="{!l.genAssetRec.M1_proof_panel_inverter_delivery__c}" />
+                            </apex:outputText>
+                        </apex:column>
+                        <apex:column >
+                            <apex:facet name="header">
+                                <apex:commandLink value="M2 Proof:Substantial Completion" action="{!doAssetSort}" rerender="block">
+                                    <apex:param name="sortField" value="M2_proof_substantial_completion__c" assignTo="{!sortField}"/>
+                                </apex:commandLink>
+                            </apex:facet>
+                            <apex:outputText value="{0, date,  MM/dd/yyyy}" >
+                                <apex:param value="{!l.genAssetRec.M2_proof_substantial_completion__c}" />
+                            </apex:outputText>
+                        </apex:column>
+                        <apex:column >
+                            <apex:facet name="header">
+                                <apex:commandLink value="Meter Test Date" action="{!doAssetSort}" rerender="block">
+                                    <apex:param name="sortField" value="Meter_Test_Date__c" assignTo="{!sortField}"/>
+                                </apex:commandLink>
+                            </apex:facet>
+                            <apex:outputText value="{0, date,  MM/dd/yyyy}" >
+                                <apex:param value="{!l.genAssetRec.Meter_Test_Date__c}" />
+                            </apex:outputText>
+                        </apex:column>
+                        <apex:column >
+                            <apex:facet name="header">
+                                <apex:commandLink value="Rebate Form Sent Date" action="{!doAssetSort}" rerender="block">
+                                    <apex:param name="sortField" value="Rebate_Form_Sent__c" assignTo="{!sortField}"/>
+                                </apex:commandLink>
+                            </apex:facet>
+                            <apex:outputText value="{0, date,  MM/dd/yyyy}" >
+                                <apex:param value="{!l.genAssetRec.Rebate_Form_Sent__c}" />
+                            </apex:outputText>
+                        </apex:column>
+                        <apex:column >
+                            <apex:facet name="header">
+                                <apex:commandLink value="PTO Date" action="{!doAssetSort}" rerender="block">
+                                    <apex:param name="sortField" value="PTO__c" assignTo="{!sortField}"/>
+                                </apex:commandLink>
+                            </apex:facet>
+                            <apex:outputText value="{0, date,  MM/dd/yyyy}" >
+                                <apex:param value="{!l.genAssetRec.PTO__c}" />
+                            </apex:outputText>
+                        </apex:column>
+                    </apex:pageBlockTable>
+                    <apex:panelGrid columns="6">
+                        <apex:commandLink id="uploadProof" onClick="if(getCount() != 1){return false;} return checkSelection();" action="{!uploadDocument}" value="Upload Proof(s)"  styleClass="btn" style="padding:2px 5px 2px 5px; text-decoration:none;left:0px;position:relative;" title="Click this button to upload M1 proof(s)">
+                            <apex:param assignTo="{!docType}" value="M1"/>
+                        </apex:commandLink>
+                        <apex:commandLink action="{!assetPreviousBtnClick}" value="Previous Page"  styleClass="btn" style="padding:2px 5px 2px 5px; text-decoration:none;left:240px;position:relative;" rendered="{!NOT(assetPreviousButtonEnabled)}" reRender="block"/>
+                        <apex:commandLink action="{!assetNextBtnClick}" value="Next Page"  styleClass="btn" style="padding:2px 5px 2px 5px; text-decoration:none;left:260px;position:relative;" rendered="{!NOT(assetNextButtonDisabled)}" reRender="block"/>
+                    </apex:panelGrid>
+                </apex:pageBlockSection>
+            </apex:outputPanel>
+            <apex:pageBlockSection title="Cases" id="pbCaseDetails" columns="1">
+                <apex:pageBlockTable value="{!caseList}" var="c" id="caseDetails" rowClasses="odd,even" styleClass="tableClass">
+                    <apex:column headerValue="Case Number">
+                        <apex:outputLink target="_parent" value="/{!c.Id}">{!c.caseNumber}</apex:outputLink>
+                    </apex:column>
+<!-- 
+                    <apex:column headerValue="Case Number" >                
+                        {!c.caseNumber} 
+                    </apex:column>
+-->
+                    <apex:column headerValue="Milestone Proof Type" >                 
+                        {!c.Milestone_Proof_Type__c} 
+                    </apex:column>     
+                    <apex:column headerValue="Status" >                 
+                        {!c.status} 
+                    </apex:column>     
+                    <apex:column style="text-align:left;">
+                        <apex:facet name="header" >Approval Date</apex:facet>
+                        <apex:outputText value="{0,date,MM/dd/yyyy}" >
+                            <apex:param value="{!c.Milestone_Proof_Approval_Date__c}" />
+                        </apex:outputText>
+                    </apex:column>
+                </apex:pageBlockTable>
+            </apex:pageBlockSection>            
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>

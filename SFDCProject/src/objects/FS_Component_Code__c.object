@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Follow</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <description>Codes used for reporting the components in FS Action records.</description>
+    <enableActivities>false</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableDivisions>false</enableDivisions>
+    <enableEnhancedLookup>true</enableEnhancedLookup>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>false</enableHistory>
+    <enableReports>true</enableReports>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <externalSharingModel>ReadWrite</externalSharingModel>
+    <fields>
+        <fullName>FS_Component_Active__c</fullName>
+        <defaultValue>true</defaultValue>
+        <description>Check to show that this code can be used to create or edit FS Action records.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Check to show that this code can be used to create or edit FS Action records.</inlineHelpText>
+        <label>FS Component Active</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>FS_Component_Description__c</fullName>
+        <description>Description of the component to be reported</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Enter the description of the component to be reported</inlineHelpText>
+        <label>FS Component Description</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>FS_GET_Qty__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Check if you want to collect Quantity information in the FS Action record for this component</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Check if you want to collect Quantity information in the FS Action record for this component</inlineHelpText>
+        <label>FS GET Qty</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>FS_Get_Desc__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Check if the Description field should be entered when using this component code</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Check if the Description field should be entered when using this component code</inlineHelpText>
+        <label>FS Get Desc</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>FS_Get_KwH__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Check if the Unit KwH Reading field should be entered when using this component code</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Check if the Unit KwH Reading field should be entered when using this component code</inlineHelpText>
+        <label>Get Energy Reading</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>FS_Get_Manufacturer__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Check if the Unit Manufacturer field should be entered when using this component code</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Check if the Unit Manufacturer field should be entered when using this component code</inlineHelpText>
+        <label>FS Get Manufacturer</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>FS_Get_Model__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Check if the Unit Model field should be entered when using this component code</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Check if the Unit Model field should be entered when using this component code</inlineHelpText>
+        <label>FS Get Model</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>FS_Get_Serial__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Check if the Unit Serial field should be entered when using this component code</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Check if the Unit Serial field should be entered when using this component code</inlineHelpText>
+        <label>FS Get Serial</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>FS_Get_Signal_Strength_Code__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Check this checkbox to make Signal Strength Code mandatory</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Check this checkbox to make Signal Strength Code mandatory</inlineHelpText>
+        <label>FS_Get_Signal_Strength_Code</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>FS_Get_Signal_Strength__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Check if the Unit Signal Strength field should be entered when using this component code</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Check if the Unit Signal Strength field should be entered when using this component code</inlineHelpText>
+        <label>FS Get Signal Strength</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>FS_Get_Voltage_Test__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Check this box to make Voltage Test mandatory</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Check this box to make Voltage Test mandatory</inlineHelpText>
+        <label>FS_Get_Voltage_Test</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <label>FS Component Code</label>
+    <listViews>
+        <fullName>All</fullName>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+    </listViews>
+    <nameField>
+        <label>FS Component Code</label>
+        <type>Text</type>
+    </nameField>
+    <pluralLabel>FS Component Codes</pluralLabel>
+    <searchLayouts>
+        <customTabListAdditionalFields>FS_Component_Description__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>FS_Component_Active__c</customTabListAdditionalFields>
+        <lookupDialogsAdditionalFields>FS_Component_Description__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>FS_Component_Active__c</lookupDialogsAdditionalFields>
+        <searchFilterFields>NAME</searchFilterFields>
+        <searchResultsAdditionalFields>FS_Component_Description__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>FS_Component_Active__c</searchResultsAdditionalFields>
+    </searchLayouts>
+    <sharingModel>ReadWrite</sharingModel>
+    <startsWith>Vowel</startsWith>
+</CustomObject>

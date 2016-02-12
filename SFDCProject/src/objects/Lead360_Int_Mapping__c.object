@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customSettingsType>List</customSettingsType>
+    <customSettingsVisibility>Public</customSettingsVisibility>
+    <description>Has list of values to be mapped to Lead360 for integration</description>
+    <enableFeeds>false</enableFeeds>
+    <fields>
+        <fullName>Lead360_Value__c</fullName>
+        <externalId>false</externalId>
+        <label>Lead360 Value</label>
+        <length>100</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Lookup_Field__c</fullName>
+        <externalId>false</externalId>
+        <label>Lookup Field</label>
+        <length>100</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>SF_Value__c</fullName>
+        <externalId>false</externalId>
+        <label>SF Value</label>
+        <length>100</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <label>Lead360 Integration Mapping</label>
+</CustomObject>

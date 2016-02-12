@@ -1,0 +1,987 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Follow</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <enableActivities>true</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableDivisions>false</enableDivisions>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>true</enableHistory>
+    <enableReports>true</enableReports>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <externalSharingModel>ControlledByParent</externalSharingModel>
+    <fields>
+        <fullName>Asset__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Asset</label>
+        <referenceTo>Asset__c</referenceTo>
+        <relationshipLabel>Assets</relationshipLabel>
+        <relationshipName>Assets</relationshipName>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Collar_Serial_Num2__c</fullName>
+        <externalId>false</externalId>
+        <label>Collar Serial Num2</label>
+        <length>25</length>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Collar_Serial_Num__c</fullName>
+        <caseSensitive>false</caseSensitive>
+        <externalId>false</externalId>
+        <label>Collar Serial Num</label>
+        <length>25</length>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>true</unique>
+    </fields>
+    <fields>
+        <fullName>External_Source__c</fullName>
+        <externalId>false</externalId>
+        <label>External Source</label>
+        <length>50</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>External_id__c</fullName>
+        <externalId>true</externalId>
+        <label>External id</label>
+        <length>50</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Manufacturer__c</fullName>
+        <externalId>false</externalId>
+        <label>Manufacturer</label>
+        <length>80</length>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Meter_Price__c</fullName>
+        <externalId>false</externalId>
+        <formula>CASE(1, 
+
+IF(AND( ServiceContract__r.Install_Partner__c = &quot;Sungevity&quot;, DATEVALUE(ServiceContract__r.Proposal__r.CreatedDate) &gt;= DATE(2015,04,14), 
+ISBLANK(ServiceContract__r.Proposal__r.Original_Proposal_ID__c)),1,0), 244, 
+
+IF(AND( ServiceContract__r.Install_Partner__c = &quot;Sungevity&quot;,DATEVALUE(ServiceContract__r.Proposal__r.CreatedDate) &lt; DATE(2015,04,14), 
+ISBLANK(ServiceContract__r.Proposal__r.Original_Proposal_ID__c)),1,0), 0, 
+
+IF(AND( ServiceContract__r.Install_Partner__c = &quot;Sungevity&quot;, DATEVALUE(ServiceContract__r.Proposal__r.Original_Proposal_ID__r.CreatedDate) &gt;= DATE(2015,04,14)),1,0), 244, 
+
+IF(AND(DATEVALUE(ServiceContract__r.Proposal__r.CreatedDate) &gt;= DATE(2015,04,01),
+ISBLANK(ServiceContract__r.Proposal__r.Original_Proposal_ID__c)),1,0), 244, 
+
+IF(AND(DATEVALUE(ServiceContract__r.Proposal__r.CreatedDate) &lt; DATE(2015,04,01),
+ISBLANK(ServiceContract__r.Proposal__r.Original_Proposal_ID__c)),1,0), 0,
+
+IF(DATEVALUE(ServiceContract__r.Proposal__r.Original_Proposal_ID__r.CreatedDate) &gt;= DATE(2015,04,01),1,0), 244, 0)</formula>
+        <label>Meter Price In EPC</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Meter_Type__c</fullName>
+        <externalId>false</externalId>
+        <label>Meter Type</label>
+        <picklist>
+            <picklistValues>
+                <fullName>SS iTRon</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>SS Elster</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>SS GE</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Locus</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Metrum AL</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>AMD</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>UMD</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>AT&amp;T</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Model__c</fullName>
+        <externalId>false</externalId>
+        <label>Model</label>
+        <length>80</length>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Monitoring_Site_ID__c</fullName>
+        <externalId>false</externalId>
+        <label>Monitoring Site ID</label>
+        <length>40</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Number_of_Meters__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Number of meters sent for the installation</inlineHelpText>
+        <label>Number of Meters</label>
+        <precision>2</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Number_of_Sunrun_Owned_Modules__c</fullName>
+        <externalId>false</externalId>
+        <label>Number of Sunrun-Owned Panels</label>
+        <precision>3</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Original_System_Size_CEC_AC__c</fullName>
+        <externalId>false</externalId>
+        <label>Original System Size CEC AC</label>
+        <precision>14</precision>
+        <required>false</required>
+        <scale>4</scale>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Panel_Serial_Number__c</fullName>
+        <externalId>false</externalId>
+        <label>Panel Serial Number</label>
+        <length>32768</length>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>10</visibleLines>
+    </fields>
+    <fields>
+        <fullName>RedeployedFrom__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Redeployed From</label>
+        <referenceTo>ServiceContract</referenceTo>
+        <relationshipLabel>Assets (Service Contract)</relationshipLabel>
+        <relationshipName>RedeployedFrom</relationshipName>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>RedeployedTo__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Redeployed To</label>
+        <referenceTo>ServiceContract</referenceTo>
+        <relationshipLabel>Assets (Service Contract)</relationshipLabel>
+        <relationshipName>RedeployedTo</relationshipName>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>SSI_Code__c</fullName>
+        <externalId>false</externalId>
+        <label>SSI Code</label>
+        <length>20</length>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Serial_Number__c</fullName>
+        <externalId>false</externalId>
+        <label>Serial Number</label>
+        <length>80</length>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>ServiceContract__c</fullName>
+        <externalId>false</externalId>
+        <label>ServiceContract</label>
+        <referenceTo>ServiceContract</referenceTo>
+        <relationshipLabel>Assets</relationshipLabel>
+        <relationshipName>Assets</relationshipName>
+        <relationshipOrder>0</relationshipOrder>
+        <reparentableMasterDetail>false</reparentableMasterDetail>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>MasterDetail</type>
+        <writeRequiresMasterRead>false</writeRequiresMasterRead>
+    </fields>
+    <fields>
+        <fullName>Service_Contract_Event__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Service Contract Event</label>
+        <referenceTo>Service_Contract_Event__c</referenceTo>
+        <relationshipLabel>Assets</relationshipLabel>
+        <relationshipName>Assets</relationshipName>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Site_ID_Registration_Date__c</fullName>
+        <externalId>false</externalId>
+        <label>Site ID Registration Date</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Status__c</fullName>
+        <externalId>false</externalId>
+        <label>Status</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Active</fullName>
+                <default>true</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Inactive</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>System_Size_CEC_AC__c</fullName>
+        <externalId>false</externalId>
+        <label>System Size CEC AC</label>
+        <precision>14</precision>
+        <required>false</required>
+        <scale>4</scale>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>System_Size_DC__c</fullName>
+        <externalId>false</externalId>
+        <label>System Size DC</label>
+        <precision>14</precision>
+        <required>false</required>
+        <scale>4</scale>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Test__c</fullName>
+        <externalId>false</externalId>
+        <label>Test</label>
+        <summaryForeignKey>Asset_Activity__c.Asset__c</summaryForeignKey>
+        <summaryOperation>count</summaryOperation>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Summary</type>
+    </fields>
+    <fields>
+        <fullName>Type__c</fullName>
+        <externalId>false</externalId>
+        <label>Type</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Asset</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Inverter</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Panel</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Meter</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Microinverter</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Energy Storage System</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Monitoring Service</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Unique_Asset__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(AND(ISPICKVAL(Status__c,&apos;Active&apos;),ISPICKVAL(Type__c,&apos;Meter&apos;), Serial_Number__c!=null),TEXT( Type__c )+ TEXT( Meter_Type__c ) +  Serial_Number__c + TEXT( Status__c ),&apos;&apos;)</formula>
+        <label>Unique Asset</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Vendor__c</fullName>
+        <externalId>false</externalId>
+        <label>Vendor</label>
+        <picklist>
+            <picklistValues>
+                <fullName>ABB</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Enphase</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Locus</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>SolarEdge</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <label>Asset</label>
+    <nameField>
+        <displayFormat>A{00000000}</displayFormat>
+        <label>Asset Name</label>
+        <trackHistory>true</trackHistory>
+        <type>AutoNumber</type>
+    </nameField>
+    <pluralLabel>Assets</pluralLabel>
+    <recordTypeTrackHistory>true</recordTypeTrackHistory>
+    <recordTypes>
+        <fullName>Asset</fullName>
+        <active>true</active>
+        <label>Asset</label>
+        <picklistValues>
+            <picklist>Meter_Type__c</picklist>
+            <values>
+                <fullName>AMD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Locus</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Metrum AL</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SS Elster</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SS GE</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SS iTRon</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>UMD</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Status__c</picklist>
+            <values>
+                <fullName>Active</fullName>
+                <default>true</default>
+            </values>
+            <values>
+                <fullName>Inactive</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Type__c</picklist>
+            <values>
+                <fullName>Asset</fullName>
+                <default>true</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
+    <recordTypes>
+        <fullName>Energy_Storage_System</fullName>
+        <active>true</active>
+        <description>battery, controller, ect</description>
+        <label>Energy Storage System</label>
+        <picklistValues>
+            <picklist>Meter_Type__c</picklist>
+            <values>
+                <fullName>AMD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Locus</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Metrum AL</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SS Elster</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SS GE</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SS iTRon</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>UMD</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Status__c</picklist>
+            <values>
+                <fullName>Active</fullName>
+                <default>true</default>
+            </values>
+            <values>
+                <fullName>Inactive</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Type__c</picklist>
+            <values>
+                <fullName>Energy Storage System</fullName>
+                <default>true</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
+    <recordTypes>
+        <fullName>Inverter</fullName>
+        <active>true</active>
+        <label>Inverter</label>
+        <picklistValues>
+            <picklist>Meter_Type__c</picklist>
+            <values>
+                <fullName>AMD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Locus</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Metrum AL</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SS Elster</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SS GE</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SS iTRon</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>UMD</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Status__c</picklist>
+            <values>
+                <fullName>Active</fullName>
+                <default>true</default>
+            </values>
+            <values>
+                <fullName>Inactive</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Type__c</picklist>
+            <values>
+                <fullName>Inverter</fullName>
+                <default>true</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
+    <recordTypes>
+        <fullName>Meter</fullName>
+        <active>true</active>
+        <label>Meter</label>
+        <picklistValues>
+            <picklist>Meter_Type__c</picklist>
+            <values>
+                <fullName>AMD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>AT%26T</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Locus</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Metrum AL</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SS Elster</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SS GE</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SS iTRon</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>UMD</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Status__c</picklist>
+            <values>
+                <fullName>Active</fullName>
+                <default>true</default>
+            </values>
+            <values>
+                <fullName>Inactive</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Type__c</picklist>
+            <values>
+                <fullName>Meter</fullName>
+                <default>true</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Vendor__c</picklist>
+            <values>
+                <fullName>ABB</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Enphase</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Locus</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SolarEdge</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
+    <recordTypes>
+        <fullName>Microinverter</fullName>
+        <active>true</active>
+        <label>Microinverter</label>
+        <picklistValues>
+            <picklist>Meter_Type__c</picklist>
+            <values>
+                <fullName>AMD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Locus</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Metrum AL</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SS Elster</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SS GE</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SS iTRon</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>UMD</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Status__c</picklist>
+            <values>
+                <fullName>Active</fullName>
+                <default>true</default>
+            </values>
+            <values>
+                <fullName>Inactive</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Type__c</picklist>
+            <values>
+                <fullName>Microinverter</fullName>
+                <default>true</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
+    <recordTypes>
+        <fullName>Monitoring_Service</fullName>
+        <active>true</active>
+        <label>Monitoring Service</label>
+        <picklistValues>
+            <picklist>Meter_Type__c</picklist>
+            <values>
+                <fullName>AMD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>AT%26T</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Locus</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Metrum AL</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SS Elster</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SS GE</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SS iTRon</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>UMD</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Status__c</picklist>
+            <values>
+                <fullName>Active</fullName>
+                <default>true</default>
+            </values>
+            <values>
+                <fullName>Inactive</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Type__c</picklist>
+            <values>
+                <fullName>Asset</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Energy Storage System</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Inverter</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Meter</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Microinverter</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Monitoring Service</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Panel</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Vendor__c</picklist>
+            <values>
+                <fullName>ABB</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Enphase</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Locus</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SolarEdge</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
+    <recordTypes>
+        <fullName>Panel</fullName>
+        <active>true</active>
+        <label>Panel</label>
+        <picklistValues>
+            <picklist>Meter_Type__c</picklist>
+            <values>
+                <fullName>AMD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Locus</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Metrum AL</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SS Elster</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SS GE</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SS iTRon</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>UMD</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Status__c</picklist>
+            <values>
+                <fullName>Active</fullName>
+                <default>true</default>
+            </values>
+            <values>
+                <fullName>Inactive</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Type__c</picklist>
+            <values>
+                <fullName>Panel</fullName>
+                <default>true</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
+    <searchLayouts/>
+    <sharingModel>ControlledByParent</sharingModel>
+    <validationRules>
+        <fullName>Type_and_record_type_of_Meter_Asset</fullName>
+        <active>true</active>
+        <errorConditionFormula>AND(
+$User.Id &lt;&gt; &apos;005600000046gQE&apos;,
+$User.Id &lt;&gt; &apos;005600000046gQ4&apos;,
+$User.Id &lt;&gt; &apos;00560000003KtpG&apos;,
+$User.Id &lt;&gt; &apos;00560000002G4QB&apos;,
+$User.Id &lt;&gt; &apos;00560000001Pfen&apos;,
+$Profile.Name &lt;&gt; &apos;System Administrator&apos;,
+OR( 
+AND( 
+ISPICKVAL(Type__c, &apos;Meter&apos;), 
+RecordType.Name != &apos;Meter&apos; 
+),
+AND( 
+NOT(ISPICKVAL(Type__c, &apos;Meter&apos;)), 
+RecordType.Name = &apos;Meter&apos; 
+) 
+)
+)</errorConditionFormula>
+        <errorMessage>Meter asset should have Type and Record Type BOTH set as Meter</errorMessage>
+    </validationRules>
+    <webLinks>
+        <fullName>Service_Contract_Summary</fullName>
+        <availability>online</availability>
+        <displayType>button</displayType>
+        <linkType>javascript</linkType>
+        <masterLabel>Service Contract Summary</masterLabel>
+        <openType>onClickJavaScript</openType>
+        <protected>false</protected>
+        <url>{!REQUIRESCRIPT(&quot;/soap/ajax/20.0/connection.js&quot;)}
+{!REQUIRESCRIPT(&quot;/soap/ajax/20.0/apex.js&quot;)}
+
+var contractId = &apos;{!Asset__c.ServiceContractId__c}&apos;; 
+
+if(contractId != null &amp;&amp; contractId != &apos;&apos;){
+var urlvalue = &apos;apex/ContractSummary?contractId=&apos; + contractId  + &apos;&amp;parenturl=&apos; + window.location.href ;
+		
+var popup = window.open(urlvalue,  &apos;&apos;,   &apos;toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=yes,resizable=no,width=800,height=730,left=550,top =50&apos;);
+			popup.focus();
+
+}else{
+      alert(&apos;The Asset is not associated with a valid Service Contract&apos;);
+}</url>
+    </webLinks>
+</CustomObject>

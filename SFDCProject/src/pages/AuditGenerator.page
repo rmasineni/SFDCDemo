@@ -1,0 +1,2 @@
+<apex:page standardController="Generation_Assets__c" extensions="CreateInstallAuditController" action="{!create}" >
+</apex:page>

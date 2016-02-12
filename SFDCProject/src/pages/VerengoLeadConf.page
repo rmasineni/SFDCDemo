@@ -1,0 +1,15 @@
+<apex:page standardController="Lead" extensions="lead360Controller" sidebar="true">
+    <script>
+    </script>
+    <apex:sectionHeader title="Lead to Verengo"/>
+    <apex:form >
+        <apex:pageBlock mode="view" id="pbConfirm">
+            <apex:pageBlockButtons id="pbButtons">
+                <apex:commandButton action="{!cancel}" value="OK" immediate="true"/>
+            </apex:pageBlockButtons>
+            <apex:outputPanel > 
+                <apex:outputLabel style="font-size:100%;font-weight:bold;font-family: 'Verdana','Geneva',sans-serif;" value="{!errorPageDetails}"/>                    
+            </apex:outputPanel>
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>

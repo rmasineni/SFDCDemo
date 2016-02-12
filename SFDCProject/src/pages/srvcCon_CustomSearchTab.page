@@ -1,0 +1,27 @@
+<apex:page showHeader="false" sidebar="false" >
+<apex:includeScript value="/support/console/22.0/integration.js"/>
+<script type="text/javascript">
+
+       function OpenSearchTab() {
+           
+           var primaryTabName = 'Search All';
+           if (sforce.console.isInConsole())
+           {
+               sforce.console.openPrimaryTab(null, '/apex/srvcCon_CustomSearch', true, 'Search', null, primaryTabName );
+           }
+           else
+           {
+                
+                window.location.href= '/apex/SrvcCon_CustomSearch';
+           }
+        }
+
+       var previousOnload = window.onload;       
+       window.onload = function() {
+           if (previousOnload) {
+                previousOnload();
+            }               
+        OpenSearchTab();
+       }
+</script>
+</apex:page>

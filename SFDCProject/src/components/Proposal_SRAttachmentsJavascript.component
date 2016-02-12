@@ -1,0 +1,39 @@
+<apex:component >
+    <script>
+        function adjustHeight(){
+
+            //var element = parent.document.getElementById("lookup0066000000M4SmP00N60000001aEf1");
+            //if(element != null){
+            //  element.parentNode.removeChild(element);
+            //}
+            
+            try{
+        
+                var masterDocsElement = document.getElementById('SRMasterDocs:SRMasterDocsComponent:srAttachmentsComponent:srAttachmentsForm');
+                var eSignrDocsElement = document.getElementById('SRESignDocs:SRESignDocsComponent:srAttachmentsComponent:srAttachmentsForm');
+                //var otherDocsElement =  document.getElementById('SROtherDocs:SROtherDocsComponent:srAttachmentsComponent:srAttachmentsForm');
+                var notesElement =  document.getElementById('ProposalNotes:NotesFormId');
+                
+                var iframes = parent.document.getElementsByTagName("iframe");
+                if(iframes[1] != null && masterDocsElement != null && masterDocsElement.offsetHeight > 0){
+                    iframes[1].height= masterDocsElement.offsetHeight - 8;
+                }
+                
+                if(iframes[2] != null && eSignrDocsElement != null && eSignrDocsElement.offsetHeight > 0){
+                    iframes[2].height= eSignrDocsElement.offsetHeight - 8;
+                }
+                
+                //if(iframes[2] != null && otherDocsElement != null && otherDocsElement.offsetHeight > 0){
+                //  iframes[2].height = otherDocsElement.offsetHeight - 8;
+                //}
+                
+                if(iframes[3] != null && notesElement != null && notesElement.offsetHeight > 0){
+                    iframes[3].height = notesElement.offsetHeight + 10;
+                }
+            }catch(exceptionObj){
+            
+            }
+        }
+        adjustHeight();
+    </script>
+</apex:component>

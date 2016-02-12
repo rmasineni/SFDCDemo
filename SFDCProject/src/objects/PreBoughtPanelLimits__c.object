@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customSettingsType>List</customSettingsType>
+    <customSettingsVisibility>Public</customSettingsVisibility>
+    <description>Min/Max on PreBought Panels by Panel Type
+
+Panel Type	Min	Max	Comments
+LG245M1C-G2	60	70	New high/low limits as per BSKY-566
+LG245S1C-G2	60	70	New high/low limits as per BSKY-566
+LG250S1C-G2	35	45	New high/low limits as per BSKY-566
+LG255S1C-G2	35	45	New high/low limits as per BSKY-566
+SW235 Poly	35	45	Use current default high/low limits
+SW255 Mono	35	45	Use current default high/low limits
+YL235P-29b	n/a	n/a	Follows existing Rule: YingLi cannot be on Split Deals!
+YL240P-29b	n/a	n/a	Follows existing Rule: YingLi cannot be on Split Deals!</description>
+    <enableEnhancedLookup>false</enableEnhancedLookup>
+    <enableFeeds>false</enableFeeds>
+    <fields>
+        <fullName>MaxPreBoughtPercentage__c</fullName>
+        <externalId>false</externalId>
+        <label>MaxPreBoughtPercentage</label>
+        <precision>3</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>MinPreBoughtPercentage__c</fullName>
+        <externalId>false</externalId>
+        <label>MinPreBoughtPercentage</label>
+        <precision>3</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Panel_Type__c</fullName>
+        <description>LG245M1C-G2
+LG245S1C-G2
+LG250S1C-G2
+LG255S1C-G2
+SW235 Poly
+SW255 Mono
+YL235P-29b
+YL240P-29b</description>
+        <externalId>false</externalId>
+        <label>Panel Type</label>
+        <length>50</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <label>PreBoughtPanelLimits</label>
+</CustomObject>

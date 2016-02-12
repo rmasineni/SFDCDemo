@@ -1,0 +1,12 @@
+<apex:component >
+    <apex:outputPanel layout="none" rendered="{!BEGINS($Site.Prefix, '/aeepartner')}"> 
+        <div class="grid_12">
+            <apex:outputLink value="{!$Page.PartnerPortalLoginAee}"><img src="{!URLFOR($Resource.CommunityResourcesAee, 'images/aee-logo.png')}" class="headerLogo"/></apex:outputLink>
+        </div>
+    </apex:outputPanel>
+    <apex:outputPanel layout="none" rendered="{!BEGINS($Site.Prefix, '/partner')}"> 
+        <div class="grid_12">
+            <apex:outputLink value="{!$Page.PartnerPortalLogin}"><img src="{!$Resource.PartnerPortalHeader32}" class="headerLogo"/></apex:outputLink>
+        </div>
+    </apex:outputPanel>
+</apex:component>

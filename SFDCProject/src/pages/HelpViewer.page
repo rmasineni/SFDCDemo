@@ -1,0 +1,21 @@
+<apex:page standardController="Help__kav" sidebar="false" showHeader="false" standardStylesheets="false">
+	<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,600,700" rel="stylesheet" type="text/css" />
+    	
+    <style>
+    	* {
+        	font-family: 'Open Sans'
+        }
+        
+        body {
+        	padding: 5px 10px 0 10px;
+        }
+    </style>
+    <div>
+        <h1>
+		    <apex:outputText escape="false" value="{!Help__kav.Title}"></apex:outputText>
+        </h1>
+        <div class="help-content">
+		    <apex:outputText escape="false" value="{!Help__kav.Help_Content__c}"></apex:outputText>
+        </div>
+    </div>
+</apex:page>

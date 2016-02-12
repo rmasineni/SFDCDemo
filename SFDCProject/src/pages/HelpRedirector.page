@@ -1,0 +1,5 @@
+<apex:page controller="HelpRedirectorController" action="{!redirect}" sidebar="false" showHeader="false">
+   <h1>
+        There is no help created for section={!$CurrentPage.parameters.section} and target={!$CurrentPage.parameters.target}. Please goto Knowledge management and create an article of type "Help" with this section and target values and try again.
+    </h1> 
+</apex:page>

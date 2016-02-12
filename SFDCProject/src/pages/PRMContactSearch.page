@@ -1,0 +1,467 @@
+<apex:page controller="PRMContactSearch" tabStyle="Partner_Administration__tab" sidebar="false">
+    <!--  <apex:sectionHeader title="Manage Partner Contacts" /> -->
+
+    <apex:pageMessages />
+    <apex:form >
+        <apex:pageblock mode="Edit" id="AccountDetails" >
+        <apex:outputpanel rendered="{!NOT(isPartnerConcierge)}">
+            <div align="center">
+                <apex:outputLabel style="font-weight:bold;">Actions</apex:outputLabel>
+                &nbsp;
+                <apex:selectList value="{!actionName}" id="actionId" size="1">
+                    <apex:selectOptions value="{!Actions}" />
+                </apex:selectList>
+                &nbsp;&nbsp;
+                <apex:commandButton onclick="return confirmAdminAction('{!$Component.actionId}')" action="{!userActions}" value="  Go  " />  
+                 
+            </div>
+        </apex:outputpanel>
+            <apex:pageBlockSection rendered="{!NOT(isPartnerConcierge)}">
+            <apex:outputpanel rendered="{!NOT(isPartnerConcierge)}">
+            <apex:commandButton value="Manage Build Cost" action="{!redirectAVLCosts}" rerender="popup" rendered="{!accessibleUser}">          
+            </apex:commandButton>
+            <!-- 
+            <apex:commandButton value="ManagingPartnerAVLPrices" action="{!redirectAVLPrices}" rerender="popup">            
+            </apex:commandButton>
+            -->
+            </apex:outputpanel>
+            </apex:pageBlockSection>
+             <apex:outputPanel id="popup">
+
+              <apex:outputText rendered="{!displayAVLPopup}">
+                <script type="text/javascript">
+                    var errorMessageStr = '{!displayAVLPopupMessage}';
+                    alert(errorMessageStr);
+                </script>
+            </apex:outputText>                         
+        </apex:outputPanel>
+        <!-- 
+        <apex:outputPanel id="popup">
+        <apex:outputPanel styleClass="popupBackground" layout="block" rendered="{!displayAVLPopup}"/>
+            <apex:outputPanel styleClass="custPopup" layout="block" rendered="{!displayAVLPopup}">
+                {!displayAVLPopupMessage}
+                <apex:commandButton value="OK" action="{!closePopup}" rerender="popup"/>
+            </apex:outputPanel>
+        </apex:outputPanel>
+        -->
+            <!--  
+            <apex:pageBlock title="Account Details" rendered="{!NOT(isPartnerConcierge)}" >
+                <apex:pageBlockSection >
+                    <apex:outputField value="{!AccountObj.name}"/>
+                    <apex:outputField value="{!AccountObj.OwnerId}"/>
+                    <apex:outputField value="{!AccountObj.Partner_Status__c}"/>            
+                </apex:pageBlockSection>
+            </apex:pageBlock>          
+            -->
+           <apex:pageblocksection rendered="{!isPartnerConcierge}" collapsible="true" title="Select Partner Account" columns="2">
+                <apex:inputfield id="account" value="{!customLookup.Account__c}">
+                    <apex:actionSupport />
+                </apex:inputfield>
+                <apex:pageblocksectionItem >
+                <apex:outputpanel >
+
+                <div>
+                <table align="left" >
+                    <tr>
+                       
+                        <td  align="center" width="100%">
+                            <apex:outputLabel style="font-weight:bold" value="Search By " />
+                                <apex:selectList value="{!searchColumnName}" id="searchColumnName" size="1">
+                                    <apex:selectOptions value="{!SearchBy}" />
+                                </apex:selectList>    
+                                &nbsp;&nbsp;&nbsp;
+                                <apex:inputText id="searchValue" value="{!searchValue}" />   
+                                &nbsp;&nbsp;&nbsp;
+
+                          
+                        </td>
+                    </tr> 
+                </table>
+                </div>
+                </apex:outputpanel>
+                </apex:pageblocksectionItem>
+                
+                <apex:pageblocksectionitem >
+                    <apex:outputLabel value="Active Employee " for="activeContacts" />
+                    <apex:inputCheckbox onclick="toggleSelection(this)" id="activeContacts" value="{!activeContacts}" />  
+                </apex:pageblocksectionitem>
+                <apex:pageblocksectionitem >
+                <apex:outputpanel >
+                                    <div>
+                <table align="left">
+                    <tr>
+                       
+                        <td  align="center" width="100%">
+                            <apex:outputLabel style="font-weight:bold" for="exactSearch"  value="Exact Search" />
+                            <apex:inputCheckbox onclick="toggleSelection(this)" id="exactSearch" value="{!exactSearch}" />  
+                        </td>
+                    </tr> 
+                </table>
+                </div>
+                </apex:outputpanel>
+                </apex:pageblocksectionitem>                            
+                
+                <apex:outputpanel >
+                <div align="right">
+                <apex:commandButton action="{!applySearchFilter}" value="  Search  " /> 
+                </div>          
+                </apex:outputpanel>
+            </apex:pageblocksection>
+        </apex:pageblock>   
+        
+        <apex:pageblock title="Partner Contacts" id="ContactList">
+            <apex:pageblocksection columns="1">
+            <apex:outputpanel rendered="{!isPartnerConcierge}" >
+            <div align="center">
+                <apex:outputLabel style="font-weight:bold;">Actions</apex:outputLabel>
+                &nbsp;
+                <apex:selectList value="{!actionName}" id="actionId" size="1">
+                    <apex:selectOptions value="{!Actions}" />
+                </apex:selectList>
+                &nbsp;&nbsp;
+                <apex:commandButton onclick="return confirmAdminAction('{!$Component.actionId}')" action="{!userActions}" value="  Go  " />  
+                 
+            </div>            
+            </apex:outputpanel>
+            
+            <apex:outputpanel rendered="{!NOT(isPartnerConcierge)}" >
+            <div>
+                <table width="100%">
+                    <tr>
+                        <td align="right">&nbsp;</td>
+                        <td  align="center" width="100%">
+                            <apex:outputLabel style="font-weight:bold" value="Search By " />
+                                <apex:selectList value="{!searchColumnName}" id="searchColumnName" size="1">
+                                    <apex:selectOptions value="{!SearchBy}" />
+                                </apex:selectList>    
+                                
+                            &nbsp;&nbsp;&nbsp;
+                            <apex:inputText id="searchValue" value="{!searchValue}" />   
+                            &nbsp;&nbsp;&nbsp;
+                            
+                            <apex:inputCheckbox onclick="toggleSelection(this)" id="exactSearch" value="{!exactSearch}" />  
+                            <apex:outputLabel value="Exact Search" for="exactSearch" />
+                            &nbsp;&nbsp;&nbsp;
+                            <apex:inputCheckbox onclick="toggleSelection(this)" id="activeContacts" value="{!activeContacts}" />  
+                            <apex:outputLabel value="Active Employee " for="activeContacts" />
+                            &nbsp;&nbsp;&nbsp;                                             
+                            <apex:commandButton action="{!applySearchFilter}" value="  Search  " />                          
+                        </td>
+                    </tr>
+                </table>
+             <div align="right">
+             </div>
+            </div>
+            </apex:outputpanel>
+            </apex:pageblocksection>
+            
+            <apex:pageblocksection columns="1">
+                <apex:pageBlockTable value="{!PRMContacts}" var="PRMContact">  
+                    <apex:column >
+                    <apex:facet name="header"> 
+                        <apex:inputCheckbox >
+                            <apex:actionSupport event="onclick" onsubmit="checkAll(this)" rerender="Selected_PBS"/>
+                            </apex:inputCheckbox></apex:facet>
+                            <apex:inputCheckbox rendered="{!PRMContact.displayCheckBox}" value="{!PRMContact.selected}" id="checkedone">
+                        </apex:inputCheckbox>
+                    </apex:column>            
+                    <apex:column headerValue="Employee Name">
+                        <apex:outputLink value="/apex/PRMViewContact?contactId={!PRMContact.contactObj.Id}"><apex:outputText value="{!PRMContact.contactObj.name}"/></apex:outputLink>
+                    </apex:column>
+                    <apex:column headerValue="Email" value="{!PRMContact.contactObj.email}"/> 
+                   
+                   <apex:column width="20" style="text-align: center"
+                         headerValue="Proposal Tool" value="{!PRMContact.contactObj.Proposal_Tool_Access__c}" rendered="{!!isSPOCUser}">
+                   </apex:column>  
+                    <apex:column headerValue="Partner Portal" value="{!PRMContact.contactObj.Partner_Portal_Access__c}"/>
+                    <apex:column headerValue="Design Tool" value="{!PRMContact.contactObj.Design_Tool_Access__c}" rendered="{!!isSPOCUser}"/> 
+                    <apex:column headerValue="Can Run Change Orders" value="{!PRMContact.contactObj.Can_Run_Change_Orders__c}"/>
+                    <apex:column headerValue="e-Sign Agreements" value="{!PRMContact.contactObj.e_sign_documents_access__c}"/>
+                    <apex:column headerValue="Profile" value="{!PRMContact.contactObj.Profile__c}"/>
+                    
+                    <!---- Santosh ----->
+                    <!--
+                    <apex:column headerValue="Design New Proposal" value="{!PRMContact.contactObj.Design_New_Proposal__c}"/>
+                    <apex:column headerValue="Modify" value="{!PRMContact.contactObj.Modify_Proposal__c}"/>
+                    <apex:column headerValue="Manual Design" value="{!PRMContact.contactObj.Manual_Design__c}"/>
+                    <apex:column headerValue="As Built" value="{!PRMContact.contactObj.As_Built__c}"/>
+                    <apex:column headerValue="eAudit" value="{!PRMContact.contactObj.eAudit__c}"/>
+                    <apex:column headerValue="ePermitting" value="{!PRMContact.contactObj.ePermitting__c}"/>
+                    <apex:column headerValue="Managing Partner AVL Costs" value="{!PRMContact.contactObj.Managing_Partner_AVL_Costs__c}"/>
+                    <apex:column headerValue="Managing Partner AVL Prices" value="{!PRMContact.contactObj.Managing_Partner_AVL_Prices__c}"/>
+                    -->
+                    <!---  End ---------->
+                    <apex:column headerValue="Active Employee" value="{!PRMContact.Active}" /> 
+                </apex:pageBlockTable> 
+            </apex:pageblocksection>
+            
+            <apex:outputPanel layout="block" styleClass="pSearchShowMore" id="otpNavTop">
+                Total Records Found: <apex:outputText rendered="{!IF(Con.resultSize==10000,true,false)}">10000 +</apex:outputText><apex:outputText rendered="{!IF(Con.resultSize < 10000,true,false)}">{!Con.resultSize}</apex:outputText>  
+                <apex:image url="/img/search_prevarrow_disabled.gif" styleClass="prevArrow" rendered="{!NOT(Con.HasPrevious)}"/>  
+                <apex:image url="/img/search_prevarrow.gif" title="First Page" styleClass="prevArrow" rendered="{!Con.HasPrevious}"/>  
+                <apex:commandLink action="{!first}" title="First Page" value="First Page" rendered="{!Con.HasPrevious}"/>  
+                <apex:outputPanel styleClass="pShowLess noLink" style="color:grey" rendered="{!NOT(Con.HasPrevious)}">First Page</apex:outputPanel>           
+
+                <apex:image url="/img/search_prevarrow_disabled.gif" styleClass="prevArrow" rendered="{!NOT(Con.HasPrevious)}"/>  
+                <apex:image url="/img/search_prevarrow.gif" title="Previous Page" styleClass="prevArrow" rendered="{!Con.HasPrevious}"/>  
+                <apex:commandLink action="{!Previous}" title="Previous Page" value="Previous Page" rendered="{!Con.HasPrevious}"/>  
+                <apex:outputPanel styleClass="pShowLess noLink" style="color:grey" rendered="{!NOT(Con.HasPrevious)}">Previous Page</apex:outputPanel>           
+                &nbsp;({!IF(Con.PageNumber == 1,1,((Con.PageNumber -1) * Con.PageSize)+1)}-{!IF(Con.resultSize < Con.PageSize,Con.resultSize,Con.PageNumber * Con.pageSize)})&nbsp;  
+                <apex:outputPanel styleClass="pShowLess noLink" style="color:grey" rendered="{!NOT(Con.HasNext)}">Next Page</apex:outputPanel>           
+                <apex:commandLink title="Next Page" value="Next Page" rendered="{!Con.HasNext}" action="{!Next}"/>&nbsp;  
+                <apex:image url="/img/search_nextarrow.gif" title="Next Page" styleClass="nextArrow" rendered="{!Con.HasNext}"/>  
+                <apex:image url="/img/search_nextarrow_disabled.gif" rendered="{!NOT(Con.HasNext)}"/>            
+                <apex:outputPanel styleClass="pShowLess noLink" style="color:grey" rendered="{!NOT(Con.HasNext)}">Last Page</apex:outputPanel>           
+                <apex:commandLink title="Last Page" value="Last Page" rendered="{!Con.HasNext}" action="{!last}"/>&nbsp;  
+                <apex:image url="/img/search_nextarrow.gif" title="Last Page" styleClass="nextArrow" rendered="{!Con.HasNext}"/>  
+                <apex:image url="/img/search_nextarrow_disabled.gif" rendered="{!NOT(Con.HasNext)}"/>
+            </apex:outputPanel> 
+            
+        </apex:pageblock>
+
+        <!--         <apex:pageBlock >
+            <apex:outputPanel id="tstpopup">
+            <apex:outputPanel styleClass="popupBackground" layout="block" rendered="{!displayErrorPopup}"/>
+            <apex:outputPanel styleClass="custPopup" layout="block" rendered="{!displayErrorPopup}"> 
+                <apex:pageblock title="Select an user for deactivation">
+                    <table>                        
+                        <tr>
+                            <td>
+                                &nbsp;&nbsp;&nbsp;              
+                            </td>
+                            <td align="center" width="100%">
+                                <apex:commandButton value="Close" action="{!closePopup}" styleClass="closeButton" rerender="tstpopup"/>                            
+                            </td>
+                        </tr>
+                    </table>
+                </apex:pageBlock>           
+             </apex:outputPanel>
+            <apex:outputPanel styleClass="popupBackground" layout="block" rendered="{!displayReasonPopup}"/>
+            <apex:outputPanel styleClass="custPopup" layout="block" rendered="{!displayReasonPopup}">                
+                <apex:pageblock title="Enter Deactivation Reason">
+                    <table>
+                        <tr>
+                            <td>
+                                <apex:outputLabel style="font-weight:bold" value="Deactivation Reason" />
+                                &nbsp;&nbsp;&nbsp;
+                                <apex:selectList value="{!deactivationReason}" id="deactivationReason" size="1">
+                                    <apex:selectOptions value="{!DeactivationReasons}" />
+                                </apex:selectList>                              
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                            <apex:outputLabel style="font-weight:bold" value="Comments" for="deactivationcomments"/>
+                            </td>
+                        </tr>                       
+                        <tr>
+                            <td>
+                            <apex:inputTextarea cols="78" id="comments" value="{!deactivationcomments}"/>                           
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                    &nbsp;&nbsp;&nbsp;              
+                            </td>
+                        </tr>
+                            <tr>
+                                <td align="center" width="100%">
+                                <apex:commandButton value="  Ok  " action="{!deactivateUserNew}" styleClass="closeButton" rerender="popup"/>                            
+                                <apex:commandButton value="Cancel" action="{!closePopup}" styleClass="closeButton" rerender="tstpopup"/>                            
+                            </td>
+                        </tr>
+                    </table>
+                </apex:pageBlock>
+            </apex:outputPanel>
+            </apex:outputPanel>
+        </apex:pageBlock> -->
+        <div id="dialog-form" title="Confirm Deactivation" style="font-size: 80.5%;">
+            <div>
+                <apex:outputLabel value="Deactivation Reason " />
+                <apex:selectList value="{!deactivationReason}" id="Reason" size="1">
+                    <script> var reasonId = document.getElementById("{!$Component.Reason}"); </script>
+                    <apex:selectOptions value="{!DeactivationReasons}" />
+                </apex:selectList>      
+            </div>
+            <div>
+                &nbsp;&nbsp;
+            </div>
+            <div>
+                <div>
+                    <apex:outputLabel value="Comments" for="deactivationComments" />
+                </div>
+                <apex:inputTextarea value="{!deactivationComments}" cols="50" id="Comment"  styleClass="text ui-widget-content ui-corner-all"/>
+                <script> var commentId = document.getElementById("{!$Component.Comment}"); </script> 
+            </div>
+        </div>
+        <apex:actionFunction name="deactivateFunction" action="{!deactivateUserNew}" reRender="resultPanel">
+            <apex:param name="firstParam" value="" assignTo="{!deactivationReason}"/>
+            <apex:param name="secondParam" value="" assignTo="{!deactivationComments}"/>
+        </apex:actionFunction> 
+    </apex:form>
+    <style type="text/css">
+        .custPopup{
+            background-color: white;           
+            border-width: 2px;
+            border-style: solid;
+            z-index: 9999;
+            left: 50%;
+            padding:10px;
+            position: absolute;
+            width: 500px;
+            margin-left: -250px;
+            top:100px;
+        }
+        .popupBackground{
+            background-color:black;
+            opacity: 0.50;
+            filter: alpha(opacity = 20);
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: 9998;
+        }
+    </style>
+
+   <style type="text/css">
+        .pointer
+        {
+            cursor:pointer;
+            border:1px solid #ccc;
+            padding:5px;
+        }
+
+        body { font-size: 75.5%; }
+        custombody { font-size: 50.5%; }
+        fieldset { padding:0; border:0; margin-top:25px; }
+        input.text { margin-bottom:12px; width:95%; padding: .4em; }
+        h1 { font-size: 1.2em; margin: .6em 0; }
+        div#users-contain { width: 750px; margin: 20px 0; }
+        div#users-contain table { margin: 1em 0; border-collapse: collapse; width: 100%; }
+        div#users-contain table td, div#users-contain table th { border: 1px solid #eee; padding: .6em 10px; text-align: left; }
+        .ui-dialog .ui-state-error { padding: .3em; }
+        .validateTips { border: 1px solid transparent; padding: 0.3em; }
+    </style> 
+
+    <apex:includeScript value="{!URLFOR($Resource.jqueryui_181, 'development-bundle/jquery-1.7.1.js')}"  />
+    <apex:includeScript value="{!URLFOR($Resource.jqueryui_181, 'development-bundle/external/jquery.bgiframe-2.1.2.js')}"  />
+    <apex:includeScript value="{!URLFOR($Resource.jqueryui_181, 'development-bundle/ui/jquery.ui.core.js')}"  />
+    <apex:includeScript value="{!URLFOR($Resource.jqueryui_181, 'development-bundle/ui/jquery.ui.widget.js')}"  />
+    <apex:includeScript value="{!URLFOR($Resource.jqueryui_181, 'development-bundle/ui/jquery.ui.mouse.js')}"  />
+    <apex:includeScript value="{!URLFOR($Resource.jqueryui_181, 'development-bundle/ui/jquery.ui.button.js')}"  />
+    <apex:includeScript value="{!URLFOR($Resource.jqueryui_181, 'development-bundle/ui/jquery.ui.draggable.js')}"  />
+    <apex:includeScript value="{!URLFOR($Resource.jqueryui_181, 'development-bundle/ui/jquery.ui.position.js')}"  />
+    <apex:includeScript value="{!URLFOR($Resource.jqueryui_181, 'development-bundle/ui/jquery.ui.dialog.js')}"  />
+
+    <apex:stylesheet value="{!URLFOR($Resource.jqueryui_181, 'development-bundle/demos/demos.css')}"  />
+    <apex:stylesheet value="{!URLFOR($Resource.jqueryui_181, 'development-bundle/themes/base/jquery.ui.base.css')}"  />
+    <apex:stylesheet value="{!URLFOR($Resource.jqueryui_181, 'development-bundle/themes/base/jquery.ui.all.css')}"  />
+    <apex:stylesheet value="{!URLFOR($Resource.jqueryui_181, 'development-bundle/themes/base/jquery.ui.theme.css')}"  />
+
+    <link rel="stylesheet"  type="text/css" href="{!$Resource.fakebutton_css}" />
+
+
+    <script>
+
+        function test1(){
+            alert('sgfsaffafas');
+            //var txtVal1 = document.getElementById("{!$Component.frm.Reason}").value;
+            //var txtVal2 = document.getElementById("{!$Component.frm.Comment}").value;
+            //deactivateFunction(txtVal1, txtVal2);
+        }
+        
+        $(function() {
+            $( "#dialog:ui-dialog" ).dialog( "destroy" );
+            $( "#dialog-form" ).dialog({
+                autoOpen: false,
+                height: 200,
+                width: 380,
+                modal: true,
+                buttons: {
+                    "Deactivate": function() {
+                        //alert(reasonId);
+                        var reason = '';
+                        var comments = '';
+                        if(reasonId != null){
+                            reason = reasonId.value;
+                        }
+                        if(commentId != null){
+                            comments = commentId.value;
+                        }
+
+                        //var txtVal1 = document.getElementById(reasonId).value;
+                        //var txtVal2 = document.getElementById(commentId).value;
+                        deactivateFunction(reason, comments);
+                        $( this ).dialog( "close" );
+                    },
+                    Cancel: function() {
+                        $( this ).dialog( "close" );
+                    }
+                },
+                close: function() {
+                    //allFields.val( "" ).removeClass( "ui-state-error" );
+                }
+            });
+        });
+
+
+        function checkAll(cb)
+        {
+            var inputElem = document.getElementsByTagName("input");
+            for(var i=0; i<inputElem.length; i++)
+            {
+                if(inputElem[i].id.indexOf("checkedone")!=-1)
+                    inputElem[i].checked = cb.checked;
+                //alert('inputElem[i].checked: ' + inputElem[i].checked);
+            }
+        }
+        
+        function confirmAdminAction(actionId) {
+            var actionText = document.getElementById(actionId).value;
+            if('create' == actionText){
+                return true;
+            }else if('' == actionText){
+                alert('Select an action to perform');
+                return false;
+            }
+            
+            var inputElem = document.getElementsByTagName("input");
+            var itemsChecked = false;
+            for(var i=0; i<inputElem.length; i++)
+            {
+                if(inputElem[i].id != null && 
+                    ((inputElem[i].id.indexOf('activeContacts') >= 0) 
+                    || (inputElem[i].id.indexOf('exactSearch') >= 0))){
+                    continue;
+                }   
+                if(inputElem[i].checked == true){
+                    itemsChecked = true;
+                    break;
+                }
+                    
+            }   
+            
+            if(itemsChecked == false){
+                window.alert('Select an employee to ' + actionText);
+                return false;
+            }       
+        
+            var isCancel;
+            if(actionText == 'deactivate' || actionText == 'activate'){
+                isCancel = window.confirm("Are you sure you wish to " + actionText + " the selected users?");
+
+                if(isCancel == true && actionText == 'deactivate'){
+                    $( "#dialog-form" ).dialog( "open" );
+                    return false;
+                }
+            }else{
+                isCancel = window.confirm("Are you sure you wish to " + actionText + " for selected users?");           
+            }
+                        
+            if (isCancel) return true;
+                return false;
+        }          
+    </script>
+</apex:page>

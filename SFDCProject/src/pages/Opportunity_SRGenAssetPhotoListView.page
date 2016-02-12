@@ -1,0 +1,62 @@
+<apex:page id="SRGAPhotos" sidebar="false" showHeader="false" tabStyle="Opportunity" StandardController="Opportunity" extensions="OpportunityPhotoUploaderComponent">
+	<script>
+	function showPhotoAlbum(GenAssetIdVal, canAttachDocs){
+	            if(canAttachDocs == false){
+	                alert('Invalid stage to Upload Documents');
+	            }else{
+	                var tempURL = '/ShowAlbum?id=' + GenAssetIdVal; 
+	                tempURL  = '/apex' + tempURL ;
+	                var newwindow = window.open(tempURL, '', 'toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=yes,resizable=yes');                 
+	                newwindow.focus();
+	            }
+	        }
+	        
+	        function attachGenAssetPhotos(GenAssetIdVal, canAttachDocs){
+	            
+	            if(canAttachDocs == false){
+	                alert('Invalid stage to Upload Documents');
+	            }else{
+	                var tempURL = '/Opportunity_PhotoUploader?id=' + GenAssetIdVal; 
+	                tempURL  = '/apex' + tempURL ;
+	                //var newwindow = window.open(tempURL, '', 'toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=950,height=465,left=150,top=150');
+	                var newwindow = window.open(tempURL, '', 'toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=yes,resizable=yes'); 
+	                
+	                newwindow.focus();
+	            }
+	            return true;
+	        }        
+	</script>
+	<apex:form >
+		<apex:pageBlock >
+			<apex:pageBlockButtons >
+				<apex:commandButton value="Update Status" action="{!SaveChangesToAllUploadedPhotos}"/>
+				<!-- <apex:commandButton value="Upload Photos" onclick="attachGenAssetPhotos('{!Id}',true); return true;" /> -->
+				<apex:commandButton value="Show Album" onclick="showPhotoAlbum('{!Id}',true); return true;" />
+			</apex:pageBlockButtons>
+			
+			<apex:pageBlockTable value="{!AllAttachedPhotos}" var="p">
+                <apex:column width="13" headerValue="Id">
+                    <apex:outputLink target="_parent" value="/{!p.id}">
+                        <apex:outputText value="{!p.id}"/>
+                    </apex:outputLink>
+                </apex:column>
+
+				<apex:column headerValue="File Name" width="300">
+					<apex:outputText >
+						<a href="{!p.thumbnail}" target="_blank">{!p.filename}</a>
+					</apex:outputText>
+				</apex:column>
+				
+				<apex:column headerValue="Notes">
+					<apex:outputText value="{!p.description}"/>
+				</apex:column>
+				<apex:column headerValue="File Size" width="5">
+					<apex:outputText value="{!p.filesize}"/>
+				</apex:column>
+				<apex:column headerValue="File Status">
+					<apex:inputCheckbox value="{!p.filestatus}"/>
+				</apex:column>
+			</apex:pageBlockTable>
+		</apex:pageBlock>
+	</apex:form>
+</apex:page>

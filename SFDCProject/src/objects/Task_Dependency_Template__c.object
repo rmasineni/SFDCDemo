@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Follow</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <enableActivities>false</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableDivisions>false</enableDivisions>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>true</enableHistory>
+    <enableReports>false</enableReports>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <externalSharingModel>ReadWrite</externalSharingModel>
+    <fields>
+        <fullName>Child_Task_Template__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Child Task Template</label>
+        <referenceTo>Task_Template__c</referenceTo>
+        <relationshipLabel>Task Dependency Templates (Child Task Template)</relationshipLabel>
+        <relationshipName>Task_Dependency_Templates2</relationshipName>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Dependent_Task_Number__c</fullName>
+        <externalId>false</externalId>
+        <formula>Task_Template__r.Task_Number__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Dependent Task Number</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Dependent_Task_Project_Template__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Dependent Task Project Template</label>
+        <referenceTo>Project_Template__c</referenceTo>
+        <relationshipLabel>Task Dependency Templates</relationshipLabel>
+        <relationshipName>Task_Dependency_Templates4</relationshipName>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Parent_Task_Number__c</fullName>
+        <externalId>false</externalId>
+        <formula>Parent_Task_Template__r.Task_Number__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Parent Task Number</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Parent_Task_Project_Template__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Parent Task Project Template</label>
+        <referenceTo>Project_Template__c</referenceTo>
+        <relationshipLabel>Task Dependency Templates (Parent Task Project Template)</relationshipLabel>
+        <relationshipName>Task_Dependency_Templates</relationshipName>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Parent_Task_Template__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Parent Task Template</label>
+        <referenceTo>Task_Template__c</referenceTo>
+        <relationshipLabel>Successor Task Templates</relationshipLabel>
+        <relationshipName>Task_Dependency_Templates1</relationshipName>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Project_Template__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Project Template</label>
+        <referenceTo>Project_Template__c</referenceTo>
+        <relationshipLabel>Task Dependency Templates (Project Template)</relationshipLabel>
+        <relationshipName>Task_Dependency_Templates1</relationshipName>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Task_Template__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Dependent Task Template</label>
+        <lookupFilter>
+            <active>false</active>
+            <errorMessage>You may only select tasks within the same Project Template.</errorMessage>
+            <filterItems>
+                <field>$Source.Dependent_Task_Project_Template__c</field>
+                <operation>equals</operation>
+                <valueField>$Source.Parent_Task_Project_Template__c</valueField>
+            </filterItems>
+            <isOptional>false</isOptional>
+        </lookupFilter>
+        <referenceTo>Task_Template__c</referenceTo>
+        <relationshipLabel>Predecessor Task Templates</relationshipLabel>
+        <relationshipName>Task_Dependency_Templates</relationshipName>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <label>Task Dependency Template</label>
+    <nameField>
+        <displayFormat>PT{00000}</displayFormat>
+        <label>Task Template Name</label>
+        <trackHistory>true</trackHistory>
+        <type>AutoNumber</type>
+    </nameField>
+    <pluralLabel>Task Dependency Templates</pluralLabel>
+    <searchLayouts/>
+    <sharingModel>ReadWrite</sharingModel>
+    <validationRules>
+        <fullName>Parent_and_Child_Task_Same_Project</fullName>
+        <active>false</active>
+        <description>The Parent and Child Task must be from the same Project Template</description>
+        <errorConditionFormula>Parent_Task_Template__r.Project_Template__c !=  Task_Template__r.Project_Template__c</errorConditionFormula>
+        <errorDisplayField>Task_Template__c</errorDisplayField>
+        <errorMessage>Parent and Child Task must be from the same project template.</errorMessage>
+    </validationRules>
+</CustomObject>

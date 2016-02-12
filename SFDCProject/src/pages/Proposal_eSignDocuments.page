@@ -1,0 +1,4 @@
+<apex:page id="SRESignDocs" sidebar="false" showHeader="false" tabStyle="Opportunity" StandardController="Proposal__c">
+    <c:SRAttachmentsListViewComponent id="SRESignDocsComponent" relatedObject="{!Id}" displaySignedDocuments="true" displayGeneralDocuments="false"/>
+    <c:Proposal_SRAttachmentsJavascript />
+</apex:page>

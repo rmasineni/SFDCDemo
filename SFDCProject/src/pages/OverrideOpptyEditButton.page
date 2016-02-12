@@ -1,0 +1,3 @@
+<apex:page standardcontroller="Opportunity" Extensions="OverrideOpptyEditButton"  
+                tabstyle="Opportunity" action="{!redirectEditPage}">
+</apex:page>

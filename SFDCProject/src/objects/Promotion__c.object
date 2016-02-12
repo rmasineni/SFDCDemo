@@ -1,0 +1,1118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Follow</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <enableActivities>false</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableDivisions>false</enableDivisions>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>true</enableHistory>
+    <enableReports>true</enableReports>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <externalSharingModel>ReadWrite</externalSharingModel>
+    <fields>
+        <fullName>At_Stage1__c</fullName>
+        <externalId>false</externalId>
+        <label>At Stage</label>
+        <picklist>
+            <controllingField>Referral_Payout_on1__c</controllingField>
+            <picklistValues>
+                <fullName>Converted</fullName>
+                <controllingFieldValues>Lead</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>NTP</fullName>
+                <controllingFieldValues>Asset</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>M1</fullName>
+                <controllingFieldValues>Asset</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>M2</fullName>
+                <controllingFieldValues>Asset</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>PTO Granted, Facility Active</fullName>
+                <controllingFieldValues>Asset</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>At_Stage2__c</fullName>
+        <externalId>false</externalId>
+        <label>At Stage</label>
+        <picklist>
+            <controllingField>Referral_Payout_on2__c</controllingField>
+            <picklistValues>
+                <fullName>Converted</fullName>
+                <controllingFieldValues>Lead</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>NTP</fullName>
+                <controllingFieldValues>Asset</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>M1</fullName>
+                <controllingFieldValues>Asset</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>M2</fullName>
+                <controllingFieldValues>Asset</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>PTO Granted, Facility Active</fullName>
+                <controllingFieldValues>Asset</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>At_Stage3__c</fullName>
+        <externalId>false</externalId>
+        <label>At Stage</label>
+        <picklist>
+            <controllingField>Referral_Payout_on3__c</controllingField>
+            <picklistValues>
+                <fullName>Converted</fullName>
+                <controllingFieldValues>Lead</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>NTP</fullName>
+                <controllingFieldValues>Asset</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>M1</fullName>
+                <controllingFieldValues>Asset</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>M2</fullName>
+                <controllingFieldValues>Asset</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>PTO Granted, Facility Active</fullName>
+                <controllingFieldValues>Asset</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Business_Unit_Allocation__c</fullName>
+        <externalId>false</externalId>
+        <label>Business Unit Allocation</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Direct Sales</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Channel Sales</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Marketing</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Sales Only</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>End_Date__c</fullName>
+        <externalId>false</externalId>
+        <label>End Date</label>
+        <required>true</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Expires_after_usage__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Please specify # of times a promotion can be used. For example, if a promotion can be used 4 times in 3 weeks, please specify 4 here.</inlineHelpText>
+        <label>Expires after # usage</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>In_Time_Duration_Length__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Please specify time duration restriction on # of times a promotion can be used. For example, if a promotion can be used 4 times in 3 weeks, please specify 3 here.</inlineHelpText>
+        <label>In Time Duration Length</label>
+        <precision>3</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>In_Time_Duration_Unit__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Please specify unit of time duration restriction on # of times a promotion can be used. For example, if a promotion can be used 4 times in 3 weeks, please select &quot;weeks&quot; as a picklist value.</inlineHelpText>
+        <label>In Time Duration Unit</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Weeks</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Months</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Years</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Notes__c</fullName>
+        <externalId>false</externalId>
+        <label>Notes</label>
+        <length>32768</length>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Primary_Promotion__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Primary Promotion</label>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Promotion_Active__c</fullName>
+        <externalId>false</externalId>
+        <formula>If(End_Date__c &gt;= TODAY() , &quot;Active&quot;, &quot;Inactive&quot;)</formula>
+        <label>Promotion Active?</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Promotion_Code__c</fullName>
+        <externalId>false</externalId>
+        <label>Promotion Code</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Promotion_ID__c</fullName>
+        <externalId>false</externalId>
+        <formula>Id</formula>
+        <label>Promotion ID</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Promotion_Type__c</fullName>
+        <externalId>false</externalId>
+        <label>Promotion Type</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Customer</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Lead-Gen Partner</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Non-Customer Referral</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Offer</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Sales Partner</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Sunrun</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>true</sorted>
+        </picklist>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Referee_Amount__c</fullName>
+        <externalId>false</externalId>
+        <label>Referee Amount</label>
+        <precision>9</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Referee_Non_Monetary_Compensation_1__c</fullName>
+        <externalId>false</externalId>
+        <label>Referee Non-Monetary Compensation</label>
+        <length>50</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Referee_Non_Monetary_Compensation_2__c</fullName>
+        <externalId>false</externalId>
+        <label>Referee Non-Monetary Compensation</label>
+        <length>50</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Referee_Non_Monetary_Compensation_3__c</fullName>
+        <externalId>false</externalId>
+        <label>Referee Non-Monetary Compensation</label>
+        <length>50</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Referee_Payment_Amount1__c</fullName>
+        <defaultValue>0</defaultValue>
+        <externalId>false</externalId>
+        <label>Referee Payment Amount</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Referee_Payment_Amount2__c</fullName>
+        <defaultValue>0</defaultValue>
+        <externalId>false</externalId>
+        <label>Referee Payment Amount</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Referee_Payment_Amount3__c</fullName>
+        <defaultValue>0</defaultValue>
+        <externalId>false</externalId>
+        <label>Referee Payment Amount</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Referee_Payment_Option1__c</fullName>
+        <externalId>false</externalId>
+        <label>Referee Payment Option</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Check / Credit on Monthly Bill</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>N/A</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Referee_Payment_Option2__c</fullName>
+        <externalId>false</externalId>
+        <label>Referee Payment Option</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Check / Credit on Monthly Bill</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>N/A</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Referee_Payment_Option3__c</fullName>
+        <externalId>false</externalId>
+        <label>Referee Payment Option</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Check / Credit on Monthly Bill</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>N/A</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Referral_Payout_on1__c</fullName>
+        <externalId>false</externalId>
+        <label>Referral Payout on</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Lead</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Asset</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Referral_Payout_on2__c</fullName>
+        <externalId>false</externalId>
+        <label>Referral Payout on</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Lead</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Asset</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Referral_Payout_on3__c</fullName>
+        <externalId>false</externalId>
+        <label>Referral Payout on</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Lead</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Asset</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Referred_Amount__c</fullName>
+        <externalId>false</externalId>
+        <label>Referred Amount</label>
+        <precision>9</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Referrer_Non_Monetary_Compensation_1__c</fullName>
+        <externalId>false</externalId>
+        <label>Referrer Non-Monetary Compensation</label>
+        <length>50</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Referrer_Non_Monetary_Compensation_2__c</fullName>
+        <externalId>false</externalId>
+        <label>Referrer Non-Monetary Compensation</label>
+        <length>50</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Referrer_Non_Monetary_Compensation_3__c</fullName>
+        <externalId>false</externalId>
+        <label>Referrer Non-Monetary Compensation</label>
+        <length>50</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Referrer_Payment_Amount1__c</fullName>
+        <defaultValue>0</defaultValue>
+        <externalId>false</externalId>
+        <label>Referrer Payment Amount</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Referrer_Payment_Amount2__c</fullName>
+        <defaultValue>0</defaultValue>
+        <externalId>false</externalId>
+        <label>Referrer Payment Amount</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Referrer_Payment_Amount3__c</fullName>
+        <defaultValue>0</defaultValue>
+        <externalId>false</externalId>
+        <label>Referrer Payment Amount</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Referrer_Payment_Option1__c</fullName>
+        <externalId>false</externalId>
+        <label>Referrer Payment Option</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Check / Credit on Monthly Bill</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>N/A</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Referrer_Payment_Option2__c</fullName>
+        <externalId>false</externalId>
+        <label>Referrer Payment Option</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Check / Credit on Monthly Bill</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>N/A</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Referrer_Payment_Option3__c</fullName>
+        <externalId>false</externalId>
+        <label>Referrer Payment Option</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Check / Credit on Monthly Bill</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>N/A</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Start_Date__c</fullName>
+        <externalId>false</externalId>
+        <label>Start Date</label>
+        <required>true</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>State__c</fullName>
+        <externalId>false</externalId>
+        <label>State</label>
+        <picklist>
+            <picklistValues>
+                <fullName>AZ</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>CA</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>CO</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>HI</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>MA</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>MD</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>NJ</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>NY</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>OR</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>PA</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>MultiselectPicklist</type>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Total_Amount__c</fullName>
+        <externalId>false</externalId>
+        <formula>Total_Source_Amount__c +  Total_Target_Amount__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Total Amount</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Total_Source_Amount__c</fullName>
+        <externalId>false</externalId>
+        <formula>Referrer_Payment_Amount1__c +  Referrer_Payment_Amount2__c +  Referrer_Payment_Amount3__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Total Source Amount</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Total_Target_Amount__c</fullName>
+        <externalId>false</externalId>
+        <formula>Referee_Payment_Amount1__c +  Referee_Payment_Amount2__c + Referee_Payment_Amount3__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Total Target Amount</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Utility__c</fullName>
+        <externalId>false</externalId>
+        <label>Utility</label>
+        <picklist>
+            <picklistValues>
+                <fullName>ACE</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Allegheny</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Anaheim</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>APS</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>BGE</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Concord</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>ConEdison</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Delmarva</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>HECO</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>HELCO</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>JCP&amp;L</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>LADWP</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>MECO</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Met-Ed</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>National Grid</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>NSTAR</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>NYSEG</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>O&amp;R</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Other</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Pacific Gas &amp; Electric (PG&amp;E)</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Pacific Power</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Pasadena Water &amp; Power (PWP)</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>PECO</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Pepco</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Portland General Electric Co</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>PPL</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>PSE&amp;G</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Rockland Electric Company</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Salt River Project (SRP)</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>San Diego Gas &amp; Electric (SDG&amp;E)</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>KIUC</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>SMECO</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>SMUD</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Southern California Edison (SCE)</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>TEP</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>UNITIL</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Unknown</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>WMECO</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>XCEL</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>MultiselectPicklist</type>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <label>Promotion</label>
+    <listViews>
+        <fullName>All_Promotions</fullName>
+        <columns>NAME</columns>
+        <columns>Promotion_Code__c</columns>
+        <columns>Primary_Promotion__c</columns>
+        <columns>LAST_UPDATE</columns>
+        <columns>CREATED_DATE</columns>
+        <columns>End_Date__c</columns>
+        <filterScope>Everything</filterScope>
+        <label>All Promotions</label>
+        <language>en_US</language>
+    </listViews>
+    <nameField>
+        <label>Promotion Name</label>
+        <trackHistory>true</trackHistory>
+        <type>Text</type>
+    </nameField>
+    <pluralLabel>Promotions</pluralLabel>
+    <searchLayouts>
+        <customTabListAdditionalFields>Promotion_Code__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>CREATED_DATE</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Promotion_Type__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Primary_Promotion__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Start_Date__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>End_Date__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Total_Amount__c</customTabListAdditionalFields>
+        <excludedStandardButtons>Forward</excludedStandardButtons>
+        <excludedStandardButtons>Accept</excludedStandardButtons>
+        <excludedStandardButtons>ChangeOwner</excludedStandardButtons>
+        <lookupDialogsAdditionalFields>Promotion_Code__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Promotion_Type__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Primary_Promotion__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Start_Date__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>End_Date__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Total_Source_Amount__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Total_Target_Amount__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Total_Amount__c</lookupDialogsAdditionalFields>
+        <searchFilterFields>NAME</searchFilterFields>
+        <searchFilterFields>Primary_Promotion__c</searchFilterFields>
+        <searchFilterFields>Promotion_Code__c</searchFilterFields>
+        <searchFilterFields>Promotion_Type__c</searchFilterFields>
+        <searchFilterFields>Start_Date__c</searchFilterFields>
+        <searchFilterFields>End_Date__c</searchFilterFields>
+        <searchResultsAdditionalFields>Promotion_Code__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Promotion_Type__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Primary_Promotion__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Start_Date__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>End_Date__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Total_Amount__c</searchResultsAdditionalFields>
+    </searchLayouts>
+    <sharingModel>ReadWrite</sharingModel>
+    <validationRules>
+        <fullName>ExpiresAfterUsagePositiveInteger</fullName>
+        <active>true</active>
+        <errorConditionFormula>if( Expires_after_usage__c &lt;= 0,true,false)</errorConditionFormula>
+        <errorDisplayField>Expires_after_usage__c</errorDisplayField>
+        <errorMessage>You must enter a value greater than zero.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>IfReferrerPayment1IsNotNullRequireOther</fullName>
+        <active>true</active>
+        <errorConditionFormula>IF( 
+AND( 
+NULLVALUE(Referrer_Payment_Amount1__c,0)&gt;0, 
+TEXT(At_Stage1__c)=&apos;&apos;, 
+TEXT(Referral_Payout_on1__c)=&apos;&apos;, 
+TEXT(Referrer_Payment_Option1__c)=&apos;&apos;) 
+,true,false)</errorConditionFormula>
+        <errorDisplayField>Referral_Payout_on1__c</errorDisplayField>
+        <errorMessage>If you enter a Referrer Amount, you also need to enter values for Payout On, At Stage, and Payment Option.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>IfReferrerPayment2IsNotNullRequireOther</fullName>
+        <active>true</active>
+        <errorConditionFormula>IF( 
+AND( 
+NULLVALUE(Referrer_Payment_Amount2__c,0)&gt;0, 
+TEXT(At_Stage2__c)=&apos;&apos;, 
+TEXT(Referral_Payout_on2__c)=&apos;&apos;, 
+TEXT(Referrer_Payment_Option2__c)=&apos;&apos;)
+,true,false)</errorConditionFormula>
+        <errorDisplayField>Referral_Payout_on2__c</errorDisplayField>
+        <errorMessage>If you enter a Referrer Amount, you also need to enter values for Payout On, At Stage, and Payment Option.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>IfReferrerPayment3IsNotNullRequireOther</fullName>
+        <active>true</active>
+        <errorConditionFormula>IF( 
+AND( 
+NULLVALUE(Referrer_Payment_Amount3__c,0)&gt;0, 
+TEXT(At_Stage3__c)=&apos;&apos;, 
+TEXT(Referral_Payout_on3__c)=&apos;&apos;, 
+TEXT(Referrer_Payment_Option3__c)=&apos;&apos;) 
+,true,false)</errorConditionFormula>
+        <errorDisplayField>Referral_Payout_on3__c</errorDisplayField>
+        <errorMessage>If you enter a Referrer Amount, you also need to enter values for Payout On, At Stage, and Payment Option.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>InTimeDurationLengthPositiveValue</fullName>
+        <active>true</active>
+        <errorConditionFormula>IF( In_Time_Duration_Length__c &lt;= 0,true,false)</errorConditionFormula>
+        <errorDisplayField>In_Time_Duration_Length__c</errorDisplayField>
+        <errorMessage>You must enter an In Time Duration Length greater than zero.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>MustEnterAtLeastOneRule</fullName>
+        <active>false</active>
+        <errorConditionFormula>If( AND(
+NULLVALUE(Referrer_Payment_Amount1__c,0)=0,
+NULLVALUE(Referrer_Payment_Amount2__c,0)=0,
+NULLVALUE(Referrer_Payment_Amount3__c,0)=0),true,false)</errorConditionFormula>
+        <errorMessage>You must enter at least one amount for a referrer payment</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>RefereePayment1GreaterThanOrEqualToZero</fullName>
+        <active>true</active>
+        <errorConditionFormula>If(Referee_Payment_Amount1__c &lt; 0, true, false)</errorConditionFormula>
+        <errorDisplayField>Referee_Payment_Amount1__c</errorDisplayField>
+        <errorMessage>Payment Amount must be greater than zero</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>RefereePayment2GreaterThanZero</fullName>
+        <active>true</active>
+        <errorConditionFormula>IF( Referee_Payment_Amount2__c &lt; 0, true, false)</errorConditionFormula>
+        <errorDisplayField>Referee_Payment_Amount1__c</errorDisplayField>
+        <errorMessage>Payment amount must be greater than zero.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>RefereePayment3GreaterThanZero</fullName>
+        <active>true</active>
+        <errorConditionFormula>IF( Referee_Payment_Amount3__c &lt; 0, true,false)</errorConditionFormula>
+        <errorDisplayField>Referee_Payment_Amount3__c</errorDisplayField>
+        <errorMessage>Payment amount must be greater than zero</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>ReferrerPayment1GreaterThanZero</fullName>
+        <active>false</active>
+        <errorConditionFormula>IF( Referrer_Payment_Amount1__c &lt; 0, true, false)</errorConditionFormula>
+        <errorDisplayField>Referrer_Payment_Amount1__c</errorDisplayField>
+        <errorMessage>Payment amount must be greater than zero.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>ReferrerPayment2GreaterThanZero</fullName>
+        <active>true</active>
+        <errorConditionFormula>if( Referrer_Payment_Amount2__c&lt;0 ,true,false)</errorConditionFormula>
+        <errorDisplayField>Referrer_Payment_Amount2__c</errorDisplayField>
+        <errorMessage>Payment amount must be greater than zero.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>ReferrerPayment3GreaterThanZero</fullName>
+        <active>true</active>
+        <errorConditionFormula>IF( Referrer_Payment_Amount3__c &lt;0,true,false)</errorConditionFormula>
+        <errorDisplayField>Referrer_Payment_Amount3__c</errorDisplayField>
+        <errorMessage>Payment amount must be greater than zero.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>RuleCriteriaNeedsAllThree</fullName>
+        <active>true</active>
+        <errorConditionFormula>IF(
+AND(NOT(ISNULL(Expires_after_usage__c )),
+OR(ISNULL(In_Time_Duration_Length__c) ,ISPICKVAL(In_Time_Duration_Unit__c,&apos;&apos;))),true,
+IF(
+AND(NOT(ISNULL(In_Time_Duration_Length__c)),
+OR(ISNULL(Expires_after_usage__c ) ,ISPICKVAL(In_Time_Duration_Unit__c,&apos;&apos;))),true,
+IF(
+AND(NOT(ISPICKVAL(In_Time_Duration_Unit__c,&apos;&apos;)),
+OR(ISNULL(In_Time_Duration_Length__c) ,ISNULL(Expires_after_usage__c ))),true,
+false)))</errorConditionFormula>
+        <errorMessage>If you enter a value for one of the following: Expires after # usage, In Time Duration Length, or In Time Duration Unit, then all three must have a value entered.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Start_date_should_be_lesser_than_enddate</fullName>
+        <active>true</active>
+        <errorConditionFormula>Start_Date__c &gt; End_Date__c</errorConditionFormula>
+        <errorMessage>Start Date should be less than or equal to the End Date</errorMessage>
+    </validationRules>
+</CustomObject>

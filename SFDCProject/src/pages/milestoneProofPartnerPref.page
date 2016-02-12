@@ -1,0 +1,26 @@
+<apex:page controller="milestoneProofPartnerPreferences" sidebar="false" id="msProofPartnerPrefPage">
+	<apex:messages />
+    <apex:sectionHeader title="Milestone Proof Upload Partner Preferences"/>
+    <apex:form id="msProofPartnerPrefForm">
+        <apex:pageBlock mode="edit" id="block">
+        	<apex:pageBlockButtons >
+        		<apex:commandButton action="{!savePreferences}" value="Save"/>
+        	</apex:pageBlockButtons>
+            <apex:pageBlockSection id="msProofPartnerPrefPBSection">
+                <apex:pageBlockSectionitem id="item1">
+                    <apex:outputLabel value="Enable Notifications for Milestone Proof Uploads"/>
+                    <apex:outputPanel >
+                        <apex:inputField value="{!partnerPreference.Notify_Milestone_Proof_Upload__c}"/>
+                    </apex:outputPanel>
+                </apex:pageBlockSectionitem>
+                <br></br>
+                <apex:pageBlockSectionitem id="item2">
+                    <apex:outputLabel value="Email Addresses to Receive Milestone Proof Upload Notifications (separate email addresses with commas)"/>
+                    <apex:outputPanel >
+                        <apex:inputField value="{!partnerPreference.Emails_To_Notify_Milestone_Proof_Upload__c}"/>
+                    </apex:outputPanel>
+                </apex:pageBlockSectionitem>
+            </apex:pageBlockSection>
+		</apex:pageBlock>
+	</apex:form>
+</apex:page>

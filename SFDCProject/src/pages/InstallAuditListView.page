@@ -1,0 +1,162 @@
+<apex:page controller="InstallAuditExtension">
+
+
+<apex:form >
+
+<apex:pageBlock id="block1">
+<apex:pageMessages id="message"/>
+<table width="100%" cellpadding="5" >
+<tr>
+<td colspan="2">
+<apex:outputLabel for="vw" value="View:">
+<apex:selectList id="vw" value="{!strView}" title="View" size="1" rendered="{!IsSunrun || UserType == 'Admin'}" >
+  <apex:actionSupport event="onchange" action="{!srchAudits}" reRender="audits,opPanel" /> 
+  <apex:selectOption itemValue="All Audits Last Week" itemLabel="All Audits Last Week"/>  
+  <apex:selectOption itemValue="All Audits Last 30 Days" itemLabel="All Audits Last 30 Days"/>
+  <apex:selectOption itemValue="All Audits Last 60 Days" itemLabel="All Audits Last 60 Days"/>  
+  <apex:selectOption itemValue="All Audits Last 90 Days" itemLabel="All Audits Last 90 Days"/>  
+  <apex:selectOption itemValue="All Audits All Time" itemLabel="All Audits All Time"/>
+</apex:selectList>
+<apex:selectList id="vwAuditor" value="{!strView}" title="View" size="1" rendered="{!NOT(IsSunrun) && UserType != 'Admin'}">
+  <apex:actionSupport event="onchange" action="{!srchAudits}" reRender="audits,opPanel"/> 
+  <apex:selectOption itemValue="My Audits Last Week" itemLabel="My Audits Last Week"/>  
+  <apex:selectOption itemValue="My Audits Last 30 Days" itemLabel="My Audits Last 30 Days"/>
+  <apex:selectOption itemValue="My Audits All Time" itemLabel="My Audits All Time"/>
+</apex:selectList>
+</apex:outputLabel>
+</td></tr>
+<tr><td width="15%">     
+<apex:actionRegion > 
+    <apex:outputLabel for="sb" value="Search By:" />
+    <apex:selectList id="sb" value="{!srchType}" title="Search By" size="1">
+         <apex:selectOption itemValue="SRH" itemLabel="SRH"/>
+         <apex:selectOption itemValue="Name" itemLabel="Name" />
+         <apex:selectOption itemValue="Address" itemLabel="Address"/>
+         <apex:selectOption itemValue="Auditor" itemLabel="Auditor" rendered="{!(IsSunrun || UserType == 'Admin')}"/>
+         <apex:selectOption itemValue="Installer" itemLabel="Installer" rendered="{!NOT(IsPartner) && NOT(IsAuditor)}"/>
+         <apex:selectOption itemValue="Audit Type" itemLabel="Audit Type"/> 
+         <apex:selectOption itemValue="Status" itemLabel="Status" rendered="{!NOT(IsPartner)}"/>  
+    <apex:actionSupport event="onchange" reRender="block1,messages,search1,searchAuditors" status="status" />        
+    </apex:selectList>
+    </apex:actionRegion>
+</td><td width="80%">
+<apex:outputLabel for="search1" value="Value:">
+<apex:inputText id="search1" value="{!srchString}" rendered="{!srchType == 'Name' || srchType == 'SRH' || srchType == 'Address'}" />
+<apex:selectList id="searchAuditors" value="{!srchStringAuditor}" rendered="{!srchType == 'Auditor'}" size="1" style="width:156px">
+    <apex:selectOptions value="{!auditorOptions}" />
+</apex:selectList>
+<apex:selectList id="searchInstaller" value="{!srchString}" rendered="{!srchType == 'Installer'}" size="1">
+    <apex:selectOptions value="{!installerOptions}" />
+</apex:selectList>
+<apex:selectList id="searchStatus" value="{!srchString}" rendered="{!srchType == 'Status'}" size="1">
+    <apex:selectOptions value="{!statusOptions}" />
+</apex:selectList>
+<apex:selectList id="searchAuditType" value="{!srchString}" rendered="{!srchType == 'Audit Type'}" size="1">
+    <apex:selectOptions value="{!auditTypeOptions}" />
+</apex:selectList>
+</apex:outputLabel>
+
+<apex:commandButton value="Go" action="{!srchAudits}" reRender="audits,message,opPanel"/>
+
+</td></tr></table>
+
+<apex:pageBlockTable id="audits" value="{!iaList}" var="a" width="100%">
+
+
+<apex:column headerValue="SRH">
+  <apex:facet name="header">   
+      <apex:commandLink action="{!SortBySRH}" value="SRH{!IF(sortedBy=='SRH',IF(sortAscending,'▼','▲'),'')}" id="cmdSort">
+      </apex:commandLink>
+  </apex:facet>
+  <!-- 
+   <apex:outputPanel rendered="{!((a.Generation_Asset__r.Id != null) && (LEFT($CurrentPage.URL,FIND('/',$CurrentPage.URL,9)) != $Label.SunrunPortalSiteURL))}">
+      <a href="/apex/InstallAudit?id={!a.Id}">{!a.Generation_Asset__r.Name}</a>
+  </apex:outputPanel>
+  <apex:outputPanel rendered="{!((a.Generation_Asset__r.Id != null) && (LEFT($CurrentPage.URL,FIND('/',$CurrentPage.URL,9)) == $Label.SunrunPortalSiteURL))}">
+      <a href="{!LEFT($CurrentPage.URL,FIND('/',$CurrentPage.URL,9))}partner/apex/InstallAudit?id={!a.Id}">{!a.Generation_Asset__r.Name}</a>  
+  </apex:outputPanel>
+
+    <apex:outputPanel rendered="{!((a.Service_Contract__r.Id != null) && (LEFT($CurrentPage.URL,FIND('/',$CurrentPage.URL,9)) != $Label.SunrunPortalSiteURL)) }">
+      <a href="/apex/InstallAudit?id={!a.Id}">{!a.Service_Contract__r.Name}</a>
+  </apex:outputPanel> 
+   -->
+ 	<apex:outputPanel rendered="{!((a.Service_Contract__r.Id != null))}">
+		<a href="{!urlPrefix}/apex/InstallAudit?id={!a.Id}">{!a.Service_Contract__r.Name}</a>  
+	</apex:outputPanel>
+
+</apex:column>
+
+<apex:column headerValue="Name">
+  <apex:facet name="header">   
+      <apex:commandLink action="{!SortByAccount}" value="Name{!IF(sortedBy=='Account',IF(sortAscending,'▼','▲'),'')}" id="cmdSortAccount"></apex:commandLink>
+  </apex:facet>
+ <!-- <apex:outputField rendered="{!(a.Generation_Asset__r.Id != null)}" value="{!a.Generation_Asset__r.Customer_Contact__c}" /> -->
+  <!-- 
+	<apex:outputField rendered="{!(a.Service_Contract__r.Id != null)}" value="{!a.Service_Contract__r.Contact}" /> 
+   -->
+  <!--  
+  <apex:outputPanel rendered="{!((a.Service_Contract__r.Id != null) && (LEFT($CurrentPage.URL,FIND('/',$CurrentPage.URL,9)) != $Label.SunrunPortalSiteURL)) }">
+      <a href="/{!a.Service_Contract__r.Contact.Id}">{!a.Service_Contract__r.Customer_Name__c}</a>
+  </apex:outputPanel>
+  -->
+  <apex:outputPanel rendered="{!((a.Service_Contract__r.Id != null))}">
+      <a href="{!urlPrefix}/{!a.Service_Contract__r.Contact.Id}">{!a.Service_Contract__r.Customer_Name__c}</a>  
+  </apex:outputPanel>
+
+</apex:column>
+
+<apex:column headerValue="Address">
+  <apex:facet name="header">   
+      <apex:commandLink action="{!SortByAddress}" value="Address{!IF(sortedBy=='Address',IF(sortAscending,'▼','▲'),'')}" id="cmdSortAddress"></apex:commandLink>
+  </apex:facet>
+ <!--<apex:outputText rendered="{!(a.Generation_Asset__r.Id != null)}" value="{!a.Generation_Asset__r.Home_Address__c}" />  --> 
+  <apex:outputText rendered="{!(a.Service_Contract__r.Id!= null)}" value="{!a.Service_Contract__r.Home_Address__c}" />
+</apex:column>
+
+<apex:column headerValue="Installer" rendered="{!NOT(IsAuditor) && NOT(IsPartner)}">
+  <apex:facet name="header">   
+      <apex:commandLink action="{!SortByInstaller}" value="Installer{!IF(sortedBy=='Installer',IF(sortAscending,'▼','▲'),'')}" id="cmdSortInstaller"></apex:commandLink>
+  </apex:facet>
+  <!--  <apex:outputField rendered="{!(a.Generation_Asset__r.Id != null)}" value="{!a.Generation_Asset__r.Installer__c}" />   -->
+  <apex:outputField rendered="{!(a.Service_Contract__r.Id != null)}" value="{!a.Service_Contract__r.Install_Partner__c}" />
+
+</apex:column>
+
+<apex:column headerValue="Auditor" rendered="{!NOT(IsAuditor) && NOT(IsPartner)}">
+  <apex:facet name="header">   
+      <apex:commandLink action="{!SortByAuditor}" value="Auditor{!IF(sortedBy=='Auditor',IF(sortAscending,'▼','▲'),'')}" id="cmdSortAuditor"></apex:commandLink>
+  </apex:facet>
+  <apex:outputField value="{!a.Auditor_Account__c}" />
+</apex:column>
+
+<apex:column headerValue="Status" >
+  <apex:facet name="header">   
+      <apex:commandLink action="{!SortByStatus}" value="Status{!IF(sortedBy=='Status',IF(sortAscending,'▼','▲'),'')}" id="cmdSortStatus"></apex:commandLink>
+  </apex:facet>
+  <apex:outputText value="{!a.Status__c}" />
+</apex:column>
+<apex:column headerValue="Audit Type" >
+  <apex:facet name="header">   
+      <apex:commandLink action="{!SortByAuditType}" value="Audit Type{!IF(sortedBy=='Audit Type',IF(sortAscending,'▼','▲'),'')}" id="cmdSortOnsite"></apex:commandLink>
+  </apex:facet>
+  <apex:outputText value="{!a.Install_Audit_Type__c}" />
+</apex:column>
+
+</apex:pageBlockTable>
+<apex:outputPanel id="opPanel" >
+<div align="right"> 
+<font size="1pt">
+
+  <apex:outputLabel value="Page #:" rendered="{!iaTotalPageNumber > 1}"/>&nbsp;
+  <apex:outputLabel value="{!iaPageNumber}" rendered="{!iaTotalPageNumber > 1}"/>&nbsp;
+  <apex:outputLabel value="out of" rendered="{!iaTotalPageNumber > 1}"/>&nbsp;  
+  <apex:outputLabel value="{!iaTotalPageNumber}" rendered="{!iaTotalPageNumber > 1}"/>
+   &nbsp;&nbsp;&nbsp;
+ </font>
+
+<apex:commandButton value="Previous" action="{!previousInstallAuditPage}" rendered="{!prev}" /><apex:commandButton value="Next" action="{!nextInstallAuditPage}"  rendered="{!next}"/>
+</div>
+</apex:outputPanel>
+</apex:pageBlock>
+</apex:form>
+</apex:page>

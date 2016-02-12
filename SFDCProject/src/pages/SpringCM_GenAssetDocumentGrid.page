@@ -1,0 +1,4 @@
+<apex:page standardController="Generation_Assets__c">
+
+<apex:iframe frameborder="0" width="100%" src="https://www.springcm.com/atlas/SForce/GetSFAccountDocs.aspx?sfoid={!Generation_Assets__c.Id}&sfsid={!$Api.Session_ID}&sfapiurl={!$Api.Partner_Server_URL_180}&sfreturl={!URLFOR($Action.Generation_Assets__c.View, Generation_Assets__c.id)}&sfon={!Generation_Assets__c.Deal_ID__c}&popup=true" ></apex:iframe>
+</apex:page>

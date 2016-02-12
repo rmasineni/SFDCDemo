@@ -1,0 +1,37 @@
+<apex:page title="Sunrun Partner Portal Need Help Signing in?" sidebar="false" showHeader="false">
+    <apex:composition template="PartnerPortalSiteTemplate">
+        <apex:define name="mainContent">
+            <apex:outputpanel layout="block" styleclass="grid_2">
+                <div class="needHelpDiv1">
+                </div>
+            </apex:outputpanel>
+            <apex:outputpanel layout="block" styleclass="grid_8">
+                <div class="needHelpDiv2">
+                    <div>
+                        <BR>&nbsp;</BR><BR>&nbsp;</BR>
+                        <BR>&nbsp;</BR><BR>&nbsp;</BR>
+                        <BR>&nbsp;</BR>
+                    </div>
+
+                    <div  class="pbHeader">
+                        <span style="margin-left:40px;width:0px;">
+                            <apex:outputText style="font-size:17px; font-weight: 800; color:black;" 
+                                            value="Sunrun Milestone Portal is down for maintenance from Friday, June 7th at 9:00 AM PST through Monday, June 10th at 6:00 AM PST"/>
+                        </span>
+                        <br/>
+                        <span style="margin-left:40px;width:0px;">
+                            <apex:outputText style="font-size:14px; color:black;" 
+                                value=""/>
+                        </span>
+                    </div>  
+                    <p></p>
+
+                    <div>
+                        <BR>&nbsp;</BR>
+                    </div>
+                    
+                </div>
+            </apex:outputpanel>
+        </apex:define>
+    </apex:composition>
+</apex:page>

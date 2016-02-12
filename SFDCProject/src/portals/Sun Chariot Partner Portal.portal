@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Portal xmlns="http://soap.sforce.com/2006/04/metadata">
+    <active>true</active>
+    <admin>sunruncrm@sunrunhome.com</admin>
+    <defaultLanguage>en_US</defaultLanguage>
+    <description>Sun Chariot Partner Portal</description>
+    <emailSenderAddress>grayson@sunrunhome.com</emailSenderAddress>
+    <emailSenderName>grayson@sunrunhome.com</emailSenderName>
+    <enableSelfCloseCase>false</enableSelfCloseCase>
+    <forgotPassTemplate>Special_Lead_Source/ChangePwdEmail</forgotPassTemplate>
+    <isSelfRegistrationActivated>false</isSelfRegistrationActivated>
+    <newPassTemplate>Special_Lead_Source/ChangePwdEmail</newPassTemplate>
+    <newUserTemplate>Special_Lead_Source/NewUserEmail</newUserTemplate>
+    <showActionConfirmation>false</showActionConfirmation>
+    <type>Partner</type>
+</Portal>

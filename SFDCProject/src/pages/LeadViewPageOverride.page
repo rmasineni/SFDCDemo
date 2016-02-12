@@ -1,0 +1,2 @@
+<apex:page standardController="Lead" extensions="LeadOverride" action="{!goRedirectCustomLeadEdit}">
+</apex:page>

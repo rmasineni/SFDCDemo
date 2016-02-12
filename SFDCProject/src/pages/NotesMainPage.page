@@ -1,0 +1,173 @@
+<!-- 
+*********************************************************************************
+*	Author  	: Chandrika Dasaradharaman (chandrikad@sunrunhome.com)			*
+*	Date    	: March 2012													*
+*	Name		: NotesMainPage.page											*
+*	Description	: This page is used to display the Notes section as a 			* 
+*				  related list for a Proposal									*
+*																				*
+*********************************************************************************
+-->
+<apex:page id="ProposalNotes" standardController="Proposal__c" extensions="NotesMaincls" showheader="false"> 
+	<apex:form id="NotesFormId">
+		<div style="padding-bottom:0.5%;background-color:#FFFFFF;"  align = "Center">
+			<apex:commandButton onclick="launchForNew()"  value="New Note" styleClass="btn"/>
+		</div>
+		<apex:pageblock id="allnotes" >
+			<apex:pageblocktable id="allnotes" value="{!AllNotes}" var="allnote">
+ 
+		        <apex:column >
+        		   <apex:facet name="header">Notes</apex:facet>
+                   <apex:commandlink title="Click to Read Full Notes/Edit Notes " onclick="redirect('{!allnote.Id}')"><apex:outputtext value="{!left(allnote.Notes__c,30)}"></apex:outputtext></apex:commandlink>
+                </apex:column>
+				<apex:column headervalue="Created Organization">
+		           	<apex:outputfield value="{!allnote.Notes_Added_By__c}"/>
+	           	</apex:column>
+		       	<apex:column headervalue="LastModified By">
+		           	<apex:outputfield value="{!allnote.LastModifiedById}"/>
+		        </apex:column>
+		        <apex:column headervalue="LastModified Date">
+		           	<apex:outputfield value="{!allnote.LastModifiedDate}"/>
+	         	</apex:column>
+           	</apex:pageblocktable>
+           	
+           	<!-- Show notice if related list has no records -->
+                    <apex:outputPanel layout="block" styleClass="noRecordsFound" rendered="{!Con.resultSize == 0}">
+                        No records to display
+                    </apex:outputPanel>
+                    <!-- Add pagination toolbar to bottom of table if pageSize is defined -->
+                    <apex:outputPanel layout="block" styleClass="paginatorWrap" rendered="{!AND(Con.resultSize > 0, NOT(ISNULL(Con.pageSize)))}">
+                        <div class="paginator">
+                            <span class="prevNextLinks">
+                                <!-- First Button -->
+                                <span class="prevNext">
+                                    <!-- Show first button if page set has previous page-->
+                                    <apex:commandLink value="" action="{!Con.first}" rendered="{!Con.pageNumber != 1}" rerender="pageBlock" title="First">
+                                        <img class="first" src="/s.gif" alt="" />
+                                    </apex:commandLink>
+                                    
+                                    <!-- Show disabled first button page set is on page 1-->
+                                    <apex:outputPanel rendered="{!NOT(Con.hasPrevious)}">
+                                        <img class="firstoff" src="/s.gif" alt="" />
+                                    </apex:outputPanel>
+                                </span>
+                                
+                                <!-- Previous Button -->
+                                <span class="prevNext">
+                                    <!-- Show previous button page set has previous page-->
+                                    <apex:commandLink value="" action="{!Con.previous}" rendered="{!Con.hasPrevious}" rerender="pageBlock">
+                                        <img class="prev" src="/s.gif" alt="" />Previous
+                                    </apex:commandLink>
+                                    
+                                    <!-- Show disabled first button page set is on page 1-->
+                                    <apex:outputPanel rendered="{!NOT(Con.hasPrevious)}">
+                                        <img class="prevoff" src="/s.gif" alt="" />Previous
+                                    </apex:outputPanel>
+                                </span>
+                                
+                                <!-- Next Button -->
+                                <span class="prevNext">
+                                    <!-- Show next button if page set has next -->
+                                    <apex:commandLink value="" action="{!Con.next}" rendered="{!Con.hasNext}" rerender="pageBlock">
+                                        Next<img class="next" alt="Next" title="Next" src="/s.gif" />
+                                    </apex:commandLink>
+                                    
+                                    <!-- Show disabled next button if page set has no next -->
+                                    <apex:outputPanel rendered="{!NOT(Con.hasNext)}">
+                                        Next<img class="nextOff" alt="Next" title="Next" src="/s.gif" />
+                                    </apex:outputPanel>
+                                </span>
+                                
+                                <!-- Last Button -->
+                                <span class="prevNext">
+                                    <!-- Show last button if page set has next -->
+                                    <apex:commandLink value="" action="{!Con.last}" rendered="{!Con.hasNext}" rerender="pageBlock" title="Last">
+                                        <img class="last" src="/s.gif" alt="" />
+                                    </apex:commandLink>
+                                    
+                                    <!-- Show disabled last button if page set has no next -->
+                                    <apex:outputPanel rendered="{!NOT(Con.hasNext)}">
+                                        <img class="lastoff" src="/s.gif" alt="" />
+                                    </apex:outputPanel>
+                                </span>
+                            </span>
+                            <span class="right">
+                                <!-- allow user to input page number of page set for direct navigation -->
+                                Page&nbsp;
+                                <apex:inputText value="{!Con.pageNumber}" styleClass="pageInput">
+                                    <apex:actionSupport event="onchange" rerender="allnotes"/>
+                                </apex:inputText>of {!CEILING(Con.ResultSize / Con.pageSize)}
+                            </span>
+                        </div>
+                    </apex:outputPanel>
+
+		</apex:pageblock> 
+	</apex:form>
+	<c:Proposal_SRAttachmentsJavascript />
+	<script type="text/javascript"> 
+		var NoteId = '';
+		var baseURL = '{!BaseURL}' ;
+		
+    	function closeWindow()
+    	{
+           opener.location.reload(); 
+           window.close(); 
+   		}
+    
+    	function setSelectedId(id)
+    	{
+       		NoteId  = id;
+    
+	    }
+    	
+    	function launchForEdit()
+    	{
+        	if(NoteId) {
+        		var tempURL = baseURL + '/apex/ProposalEditNotePage?Id='+ NoteId + '&mode=Edit';
+        		var isPartner = "{!IsPartnerUser}";       
+        		var newwindow = window.open(tempURL, '', 'toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=650,height=390,left=150,top=150'); 
+        		newwindow.focus();
+        	}
+        	else {
+        		var editNoteError = "{!editNoteError}";
+           		alert(editNoteError);
+       		 }
+        	return false;
+    	}
+    	
+    	function launchForNew()
+    	{   
+        	var tempURL = baseURL + "/apex/ProposalNewNotePage?Id={!PId}";
+        	var isPartner = "{!IsPartnerUser}";        
+        	var newwindow = window.open(tempURL, '', 'toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,resizable=yes,width=650,height=390,left=150,top=150'); 
+        	newwindow.focus();
+    	}
+	
+	
+		function redirect(obj)
+   		{	
+    		var tempURL = '/apex/ProposalEditNotePage?Id='+ obj; 
+        	var isPartner = "{!IsPartnerUser}";
+       	 	if(isPartner == 'true')
+        	{
+                tempURL = '/partner' + tempURL;
+        	}        
+        	var newwindow = window.open(tempURL, '', 'toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,resizable=yes,width=650,height=390,left=150,top=150'); 
+        	newwindow.focus();
+   		}		
+	</script>
+	<style type="text/css">
+	     .paginatorWrap{
+            //background: url("/img/alohaSkin/listFooter.png") repeat-x scroll 0 0 #F2F2F2;
+            //border: 1px solid #EAEAEA;
+            //background-color: #F3F3F3;
+            //border-top: 1px solid #FFFFFF;
+            padding: 3px;
+        }
+        .noRecordsFound{
+            border: 1px solid #D4DADC;
+            padding: 4px;
+        }
+	</style> 
+
+</apex:page>

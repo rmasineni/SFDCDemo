@@ -1,0 +1,72 @@
+<apex:page standardcontroller="Opportunity" extensions="SalesRepRedirectExt">
+    <apex:form >
+    <apex:pageMessage summary="{!message}" severity="warning" strength="3" />
+     <apex:pageMessages /> 
+    <div align="center" draggable="false">        
+    <apex:commandbutton value="Ok" action="{!redirectToDesign}">
+    </apex:commandbutton>    			
+    <apex:commandbutton value="Cancel" action="{!returnBack}">
+    </apex:commandbutton> 
+     </div>
+        
+     <apex:outputPanel id="TermsandConditions">
+         <apex:outputPanel styleClass="popupBg" layout="block" rendered="{!displayTandCURL}"/>
+         <apex:outputPanel styleClass="popup" layout="block" rendered="{!displayTandCURL}">
+                <apex:pageBlock title="Terms and Conditions">
+                    <apex:pageBlockButtons location="bottom">
+                        <apex:commandButton action="{!acceptTermsandConditions}" value="Accept"/>
+                        <apex:commandButton action="{!declineTermsandConditions}" value="Decline"/>
+                    </apex:pageBlockButtons>
+                    <apex:pageBlockSection columns="1"> 
+                        <apex:dataTable value="{!PartnerTermsConditions}" var="PartnerTermsCondition">
+                            <apex:column >
+                                <apex:outputText value="{!PartnerTermsCondition.TermsConditionsInfo__c}" escape="false"/>
+                            </apex:column>
+                        </apex:dataTable>
+                    </apex:pageBlockSection>
+                </apex:pageBlock>
+         </apex:outputPanel>
+         
+         <apex:outputPanel rendered="{!displayURL}">
+         	<apex:outputText rendered="{!displayURL}">
+                <script type="text/javascript">
+                    
+                    window.top.location.href = '{!redirectUrl}';
+                </script>
+            </apex:outputText> 
+         </apex:outputPanel>
+    </apex:outputPanel>
+
+    </apex:form>
+    <style>
+        .popup
+        {
+        background-color: white;
+        border-width: 6px;
+        border-style: solid;
+        z-index: 9999;
+        left: 30%;
+        padding:10px;
+        position: absolute;
+        width: 70%;
+        margin-left: -210px;
+        top:80px;
+        height: 500px;
+        overflow: scroll;
+        }
+        
+        .popupBg
+        {
+        background-color:black;
+        opacity: 0.20;
+        filter: alpha(opacity = 70);
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        z-index: 9998;
+        }
+        
+    </style>
+</apex:page>

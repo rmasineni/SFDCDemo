@@ -1,0 +1,47 @@
+<apex:page title="Sunrun Partner Portal Need Help Signing in?" sidebar="false" showHeader="false" controller="PartnerPortalLogin">
+	<apex:composition template="PartnerPortalSiteTemplate">
+		<apex:define name="mainContent">
+			<apex:outputpanel layout="block" styleclass="grid_2">
+				<div class="needHelpDiv1">
+				</div>
+			</apex:outputpanel>
+			<apex:outputpanel layout="block" styleclass="grid_8">
+				<div class="needHelpDiv2">
+                    <div><BR>&nbsp;</BR><BR>&nbsp;</BR></div>
+                    <div style="">
+						<h1 class="NeedHelp">Need Help Signing in?</h1>
+						<p/>
+                    </div>
+
+                    <apex:form id="theForm" forceSSL="true">
+                     	<BR>&nbsp;</BR>
+ 						<apex:outputPanel layout="none">
+	                  		<apex:commandButton styleclass="buttons2" action="{!showForgotUserName}" value="Forgot Username?" id="userNameHelp"/>
+							<apex:outputtext style="font-size:1.2em;padding-left:3px;" value="Click the button to retrieve Username"/>
+	                    </apex:outputPanel>
+						
+						<BR>&nbsp;</BR>
+						<p></p>
+						<apex:outputPanel layout="none">
+	                     	 <apex:commandButton styleclass="buttons2" action="{!showForgotPassword}" value="Forgot Password?" id="passwordHelp"/>	                     	 
+	                     	 <apex:outputtext style="font-size:1.2em;padding-left:3px;" value="Click the button to retrieve Password"/>
+	                    </apex:outputPanel>
+
+		                <div style="padding-left:0px;">
+							<BR>&nbsp;</BR>
+							<BR>&nbsp;</BR>
+							<apex:outputPanel >
+								<span style="margin-left:0px;width:0px;">
+									<apex:commandLink style="font-size:110%;"
+										action="{!returnTologinPage}" 
+										title="Return to login page" value="Return to login page"/>    
+								</span>
+							</apex:outputPanel>
+		                </div>	               
+                    </apex:form>
+
+				</div>
+			</apex:outputpanel>
+		</apex:define>
+	</apex:composition>
+</apex:page>

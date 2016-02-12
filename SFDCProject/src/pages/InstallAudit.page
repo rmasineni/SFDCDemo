@@ -1,0 +1,379 @@
+<apex:page StandardController="Install_Audit__c" extensions="InstallAuditExtension">
+
+<apex:pagemessages />
+
+<script>
+var iPhoto = 0;
+var resultOfMod = 0;
+var htmlString = '';
+var pixperrow = 12;
+var urlPrefixStr = '{!urlPrefix}' ;
+var colwidth = Math.round(100/pixperrow);
+function setFocusOnLoad() {}
+function showphoto(thumbsrc, newrowint){
+   var writeRow = '';
+   if(newrowint == 0)
+   { 
+      writeRow += '<tr>';
+   }
+   writeRow += '<td width="' + colwidth + '%;">';
+<!--   writeRow += '<a href="https://cs17.salesforce.com/apex/PhotoViewer?thumbnail=' + qs + '">';-->
+   writeRow += '<a prettyPhoto[Gallary] href="' + thumbsrc + '">';
+   writeRow += '<img alt="User-added image" height="54" width="72" class="thumbnail-large thumbnail-zoom" src="' + thumbsrc + '"></img>';
+   writeRow += '</a>';      
+   writeRow += '</td>';
+   if(newrowint == pixperrow-1)
+   {
+      writeRow += '</tr>';
+   }
+   htmlString += writeRow;
+}
+function initTable(sz){
+   if(sz >= pixperrow)
+   {
+     sz = pixperrow;
+   }
+   var begintable = '<table cellspacing="0" cellpadding="10px;" width="100%">';
+   begintable += '<tr>';
+   for (var i=0; i<sz; i++)
+   {
+      begintable += '<th width="' + colwidth + '%;"></th>';
+   }           
+   begintable += '</tr>';
+   htmlString += begintable;
+}
+function endTable(mod){
+   var endtable = '';
+   if(mod < 6)
+   {
+      for(var i=1; i<(pixperrow-mod); i++)
+      {
+         endtable += '<td width="' + colwidth + '%;"></td>';
+      }
+      endtable += '</tr>';
+   }
+   endtable += '</table>';
+   htmlString += endtable;
+}
+function close_window() {
+  if (confirm("Close Window?")) {
+    close();
+  }
+}
+        function showPhotoAlbumPartner(InstallAuditIdVal, canAttachDocs){
+           
+            if(canAttachDocs == false){
+                alert('Invalid stage to Upload Documents');
+            }else{
+                var tempURL = '/ShowAlbum?id=' + InstallAuditIdVal; 
+                tempURL  = urlPrefixStr + '/apex' + tempURL ;
+                var newwindow = window.open(tempURL, '', 'toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=yes,resizable=yes');                 
+                newwindow.focus();
+            }
+        }
+        
+        function showPhotoAlbumAuditorPartner(InstallAuditIdVal, canAttachDocs, partner){
+            if(canAttachDocs == false){
+                alert('Invalid stage to Upload Documents');
+            }else{
+                var tempURL = '/ShowAlbumAuditor?id=' + InstallAuditIdVal; 
+                tempURL  = urlPrefixStr + '/apex' + tempURL ;                
+                var newwindow = window.open(tempURL, '', 'toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=yes,resizable=yes');                 
+                newwindow.focus();
+            }
+        }
+        
+        function attachAuditPhotosPartner(InstallAuditIdVal, canAttachDocs, partner){
+            
+            if(canAttachDocs == false){
+                alert('Invalid stage to Upload Documents');
+            }else{
+                var tempURL = '/Audit_PhotoUploader?id=' + InstallAuditIdVal; 
+                tempURL  = urlPrefixStr + '/apex' + tempURL ;
+                //var newwindow = window.open(tempURL, '', 'toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=950,height=465,left=150,top=150');
+                var newwindow = window.open(tempURL, '', 'toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=yes,resizable=yes'); 
+                
+                newwindow.focus();
+            }
+            return true;
+        }
+
+
+
+        function showPhotoAlbum(InstallAuditIdVal, canAttachDocs){
+           
+            if(canAttachDocs == false){
+                alert('Invalid stage to Upload Documents');
+            }else{
+                var tempURL = '/ShowAlbum?id=' + InstallAuditIdVal; 
+                tempURL  = '/apex' + tempURL ;
+                var newwindow = window.open(tempURL, '', 'toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=yes,resizable=yes');                 
+                newwindow.focus();
+            }
+        }
+        
+        function showPhotoAlbumAuditor(InstallAuditIdVal, canAttachDocs, partner){
+            if(canAttachDocs == false){
+                alert('Invalid stage to Upload Documents');
+            }else{
+                var tempURL = '/ShowAlbumAuditor?id=' + InstallAuditIdVal; 
+                tempURL  = '/apex' + tempURL ;                
+                var newwindow = window.open(tempURL, '', 'toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=yes,resizable=yes');                 
+                newwindow.focus();
+            }
+        }
+        
+        function attachAuditPhotos(InstallAuditIdVal, canAttachDocs, partner){
+            
+            if(canAttachDocs == false){
+                alert('Invalid stage to Upload Documents');
+            }else{
+                var tempURL = '/Audit_PhotoUploader?id=' + InstallAuditIdVal; 
+                tempURL  = '/apex' + tempURL ;
+                //var newwindow = window.open(tempURL, '', 'toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=950,height=465,left=150,top=150');
+                var newwindow = window.open(tempURL, '', 'toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=yes,resizable=yes'); 
+                
+                newwindow.focus();
+            }
+            return true;
+        }        
+</script>
+
+<apex:form >
+ <apex:inputHidden id="ianame" value="{!Install_Audit__c.Name}"/>
+ <apex:actionFunction name="RefreshAuditorContactList" reRender="auditorcontacts,status,statusRO" action="{!findContacts}">
+ </apex:actionFunction>
+
+
+<apex:pageBlock title="Install Audit">
+<table width="100%" >
+<tr><td width="2%"></td><td width="32%"></td><td width="32%"></td><td width="32%"></td><td width="2%"></td></tr>
+<tr><td colspan="5">
+<apex:pageBlockSection title="Site Detail" collapsible="false" columns="5"></apex:pageBlockSection>
+</td></tr>
+<tr><td align="center" colspan="5">
+    <apex:commandButton value="Scorecard" style="width:110px;height:25px;font-size:10px" action="{!showScorecard}" />
+
+    <apex:outputPanel rendered="{!NOT(IsPartnerPortal)}" >
+        <apex:commandButton value="Upload Photos" style="width:110px;height:25px;font-size:10px" rendered="{!IsAuditor && ia.Install_Audit_Type__c != 'Remote' && ia.Status__c != 'SR Approved'}" onclick="attachAuditPhotos('{!Id}',true); return true;"/>  <!--rendered="{!NOT(IsPartner)}"-->
+        <apex:commandButton value="Installer Photos" style="width:110px;height:25px;font-size:10px" onclick="showPhotoAlbum('{!parentObjectId}',true); return true;"/>
+        <apex:commandButton value="Auditor Photos" style="width:110px;height:25px;font-size:10px" onclick="showPhotoAlbumAuditor('{!ia.Id}',true); return true;" />    
+    </apex:outputPanel>
+    <apex:outputPanel rendered="{!IsPartnerPortal}" >
+        <apex:commandButton value="Upload Photos" style="width:110px;height:25px;font-size:10px" rendered="{!IsAuditor && ia.Install_Audit_Type__c != 'Remote' && ia.Status__c != 'SR Approved'}" onclick="attachAuditPhotosPartner('{!Id}',true); return true;"/> 
+        <apex:commandButton value="Installer Photos" style="width:110px;height:25px;font-size:10px" onclick="showPhotoAlbumPartner('{!parentObjectId}',true); return true;"/>
+        <apex:commandButton value="Auditor Photos" style="width:110px;height:25px;font-size:10px" onclick="showPhotoAlbumAuditorPartner('{!ia.Id}',true); return true;" />    
+    </apex:outputPanel>    
+</td></tr>
+
+<tr><td></td></tr>
+<tr><td colspan="5">    
+    <apex:pageBlockSection collapsible="false" columns="2" rendered="{!NOT(isGenAsset)}" >
+        <apex:pageBlockSectionItem id="ganame" >
+            <apex:outputLabel for="ganame" value="SRH#: " style="font-weight:bold;size=10pt;"></apex:outputLabel>
+            <apex:outputField id="ganame" value="{!Install_Audit__c.Service_Contract__r.Name}"  />
+        </apex:pageBlockSectionItem>
+                <apex:pageBlockSectionItem >
+            <apex:outputLabel for="cphone" value="Customer Phone: "> </apex:outputLabel>
+            <apex:outputField id="cphone" value="{!Install_Audit__c.Service_Contract__r.Customer_Phone__c}"/>
+        </apex:pageBlockSectionItem>
+                <apex:pageBlockSectionItem >
+            <apex:outputLabel for="addr" value="Customer Name: " style="font-weight:bold;size=10pt"> </apex:outputLabel>
+             <apex:outputField id="addr" value="{!Install_Audit__c.Service_Contract__r.Customer_Name__c}"/>        
+                
+        </apex:pageBlockSectionItem>
+        <apex:pageBlockSectionItem >
+             <apex:outputLabel for="cemail" value="Customer Email: " style="font-weight:bold;size=10pt"></apex:outputLabel> 
+             <apex:outputField id="cemail" value="{!Install_Audit__c.Service_Contract__r.Customer_Email__c}"/>
+        </apex:pageBlockSectionItem>   
+        <apex:pageBlockSectionItem >
+            <apex:outputLabel for="addr" value="Address: " style="font-weight:bold;size=10pt"> </apex:outputLabel>
+             <apex:outputField id="addr" value="{!Install_Audit__c.Service_Contract__r.Home_Address__c}"/>        
+        </apex:pageBlockSectionItem>
+        <apex:pageBlockSectionItem >
+            <apex:outputLabel for="teFund" value="TE Fund: " rendered="{!IsSunrun}" style="font-weight:bold;size=10pt"></apex:outputLabel> 
+             <apex:outputField id="teFund" value="{!Install_Audit__c.Service_Contract__r.TE_Fund_Name__c}" rendered="{!IsSunrun}"/>
+        </apex:pageBlockSectionItem> 
+        <apex:pageBlockSectionItem >
+            <apex:outputLabel for="city" value="" style="font-weight:bold;size=10pt"></apex:outputLabel> 
+            <apex:outputPanel ><apex:outputField id="city" value="{!Install_Audit__c.Service_Contract__r.City__c}"/></apex:outputPanel>
+        </apex:pageBlockSectionItem>
+        <apex:pageBlockSectionItem >
+        </apex:pageBlockSectionItem>
+    </apex:pageBlockSection>
+    <apex:pageBlockSection collapsible="false" columns="2" rendered="{!isGenAsset}" >
+        <apex:pageBlockSectionItem id="ganame" >
+            <apex:outputLabel for="ganame" value="SRH#: " style="font-weight:bold;size=10pt;"></apex:outputLabel>
+            <apex:outputField id="ganame" value="{!Install_Audit__c.Generation_Asset__r.Name}"  />
+        </apex:pageBlockSectionItem>
+                <apex:pageBlockSectionItem >
+            <apex:outputLabel for="cphone" value="Customer Phone: "> </apex:outputLabel>
+            <apex:outputField id="cphone" value="{!Install_Audit__c.Generation_Asset__r.Customer_Phone__c}"/>
+        </apex:pageBlockSectionItem>
+                <apex:pageBlockSectionItem >
+            <apex:outputLabel for="addr" value="Customer Name: " style="font-weight:bold;size=10pt"> </apex:outputLabel>
+             <apex:outputField id="addr" value="{!Install_Audit__c.Generation_Asset__r.Customer_Contact__c}"/>        
+                
+        </apex:pageBlockSectionItem>
+        <apex:pageBlockSectionItem >
+             <apex:outputLabel for="cemail" value="Customer Email: " style="font-weight:bold;size=10pt"></apex:outputLabel> 
+             <apex:outputField id="cemail" value="{!Install_Audit__c.Generation_Asset__r.Customer_Email_Formula__c}"/>
+        </apex:pageBlockSectionItem>   
+        <apex:pageBlockSectionItem >
+            <apex:outputLabel for="addr" value="Address: " style="font-weight:bold;size=10pt"> </apex:outputLabel>
+             <apex:outputField id="addr" value="{!Install_Audit__c.Generation_Asset__r.Home_Address__c}"/>        
+        </apex:pageBlockSectionItem>
+        <apex:pageBlockSectionItem >
+            <apex:outputLabel for="teFund" value="TE Fund: " rendered="{!IsSunrun}" style="font-weight:bold;size=10pt"></apex:outputLabel> 
+             <apex:outputField id="teFund" value="{!Install_Audit__c.Generation_Asset__r.TE_Fund_name__c}" rendered="{!IsSunrun}"/>
+        </apex:pageBlockSectionItem> 
+        <apex:pageBlockSectionItem >
+            <apex:outputLabel for="city" value="" style="font-weight:bold;size=10pt"></apex:outputLabel> 
+            <apex:outputPanel ><apex:outputField id="city" value="{!Install_Audit__c.Generation_Asset__r.City_State_County__c}"/></apex:outputPanel>
+        </apex:pageBlockSectionItem><apex:pageBlockSectionItem >
+    </apex:pageBlockSectionItem>             
+        </apex:pageBlockSection></td></tr>
+<tr><td colspan = "5">
+<apex:pageblockSection columns="2" title="Audit Detail" collapsible="false" >
+
+        <apex:pageBlockSectionItem rendered="{!(IsSunrun && (Install_Audit__c.Status__c != 'SR Approved' && Install_Audit__c.Status__c !='Submitted' && Install_Audit__c.Status__c != 'Rejected')) || UserType == 'Admin'}">
+            <apex:outputLabel for="auditor" value="Auditor: " style="font-weight:bold;size=10pt"> </apex:outputLabel>
+                 <apex:selectList value="{!Install_Audit__c.Auditor_Account__c}" size="1" onchange="RefreshAuditorContactList();">
+                     <apex:selectOptions value="{!Auditors}" ></apex:selectOptions>    
+                  </apex:selectList>
+            </apex:pageBlockSectionItem>
+            
+            <apex:pageBlockSectionItem rendered="{!(NOT(IsSunrun) || Install_Audit__c.Status__c == 'SR Approved' || Install_Audit__c.Status__c == 'Submitted' || Install_Audit__c.Status__c == 'Rejected' ) && UserType != 'Admin' && NOT(IsPartner)}" >
+            <apex:outputLabel for="auditor" value="Auditor: " style="font-weight:bold;size=10pt"> </apex:outputLabel>
+             <apex:outputField id="auditorReadOnly" value="{!Install_Audit__c.Auditor_Account__c}" />
+            </apex:pageBlockSectionItem>
+            
+        <apex:pageBlockSectionItem rendered="{!(NOT(StatusReadOnly) && IsSunrun) || UserType=='Admin'}" > 
+             <apex:outputLabel for="status" value="Status: " style="font-weight:bold;size=10pt"> </apex:outputLabel>
+             <apex:selectList id="status" value="{!Install_Audit__c.Status__c}" size="1" >
+                 <apex:selectOptions value="{!Statuses}" ></apex:selectOptions>    
+             </apex:selectList>
+        </apex:pageBlockSectionItem>
+        
+        <apex:pageBlockSectionItem rendered="{!NOT(StatusReadOnly) && IsAuditor}" > 
+             <apex:outputpanel >
+                 <apex:outputtext value="*" style="color:red;font-weight:bold"></apex:outputtext>
+                 <apex:outputLabel for="status" value="Status: " style="font-weight:bold;size=10pt"> </apex:outputLabel>
+             </apex:outputpanel>
+             <apex:selectList id="status" value="{!Install_Audit__c.Status__c}" size="1" >
+                 <apex:selectOptions value="{!Statuses}" ></apex:selectOptions>    
+             </apex:selectList>
+        </apex:pageBlockSectionItem>
+
+        <apex:pageBlockSectionItem rendered="{!StatusReadOnly}" > 
+            <apex:outputLabel for="status" value="Status: " style="font-weight:bold;size=10pt"></apex:outputLabel> 
+            <apex:outputField id="statusRO" value="{!Install_Audit__c.Status__c}" /> 
+         </apex:pageBlockSectionItem>         
+         
+        <apex:pageBlockSectionItem rendered="{!((IsSunrun) && (Install_Audit__c.Status__c != 'SR Approved' && Install_Audit__c.Status__c != 'Submitted' && Install_Audit__c.Status__c != 'Rejected')) || UserType = 'Admin'}" >
+            <apex:outputLabel style="font-weight:bold;size=10pt"  for="auditorcontacts" value="Reviewer Name: "></apex:outputLabel>
+            <apex:selectList id="auditorcontacts" size="1" value="{!Install_Audit__c.Auditor_Contact__c}" tabindex="1" rendered="{!NOT(IsPartner)}"> 
+                <apex:selectOptions value="{!auditorAccountContacts}">
+                </apex:selectOptions>
+            </apex:selectList> 
+         </apex:pageBlockSectionItem>        
+                     
+        <apex:pageBlockSectionItem rendered="{!(IsAuditor) && Install_Audit__c.Status__c != 'SR Approved' }" >
+            <apex:outputPanel layout="block">
+                <apex:outputtext value="*" style="color:red;font-weight:bold"></apex:outputtext>
+                <apex:outputLabel style="font-weight:bold;size=10pt"  for="auditorcontacts" value="Reviewer Name: "></apex:outputLabel>
+            </apex:outputPanel>
+            <apex:selectList id="auditorcontacts" size="1" value="{!Install_Audit__c.Auditor_Contact__c}" tabindex="1" rendered="{!NOT(IsPartner)}"> 
+                <apex:selectOptions value="{!auditorAccountContacts}">
+                </apex:selectOptions>
+            </apex:selectList>
+    
+         </apex:pageBlockSectionItem>             
+            
+         <apex:pageBlockSectionItem rendered="{!(NOT(IsPartner) && (IsSunrun && (Install_Audit__c.Status__c == 'SR Approved' || Install_Audit__c.Status__c == 'Submitted' || Install_Audit__c.Status__c == 'Rejected')) || (IsAuditor && Install_Audit__c.Status__c == 'SR Approved') )  && UserType != 'Admin'}" >
+            <apex:outputLabel for="auditor" value="Reviewer Name: " style="font-weight:bold;size=10pt"> </apex:outputLabel>
+             <apex:outputField id="auditorReadOnly" value="{!Install_Audit__c.Auditor_Contact__c}" />
+         </apex:pageBlockSectionItem>   
+         
+            
+        <apex:pageBlockSectionItem rendered="{!(IsAuditor && Install_Audit__c.Status__c != 'SR Approved') || UserType == 'Admin'}"> 
+            <apex:outputPanel layout="block">
+                <apex:outputtext value="*" style="color:red;font-weight:bold" rendered="{!UserType != 'Admin'}"></apex:outputtext>
+                <apex:outputLabel for="svd" value="Site Visit Date: " style="font-weight:bold;size=10pt"></apex:outputLabel> 
+            </apex:outputPanel>
+            <apex:inputField id="svd" value="{!Install_Audit__c.Site_Visit_Date__c}"/>
+        </apex:pageBlockSectionItem>
+        
+        <apex:pageBlockSectionItem rendered="{!(NOT(IsAuditor) || Install_Audit__c.Status__c == 'SR Approved') && UserType != 'Admin'}" > 
+            <apex:outputLabel for="svd" value="Site Visit Date: " style="font-weight:bold;size=10pt"></apex:outputLabel> 
+            <apex:outputText value="{0,date,MM'/'dd'/'yyyy}"  >
+                <apex:param value="{!Install_Audit__c.Site_Visit_Date__c}"/>
+            </apex:outputText>  
+        </apex:pageBlockSectionItem>   
+    <apex:pageBlockSectionItem rendered="{!(IsSunrun && (Install_Audit__c.Status__c != 'SR Approved' && Install_Audit__c.Status__c != 'Denied' && Install_Audit__c.Status__c != 'Submitted' && Install_Audit__c.Status__c != 'Rejected')) || UserType == 'Admin' }">
+    <apex:outputLabel for="onsiteremoteaudit" value="Audit Type: " style="font-weight:bold;size=10pt"></apex:outputLabel> 
+     <apex:inputField id="onsiteremoteaudit" value="{!Install_Audit__c.Install_Audit_Type__c}"/>
+    </apex:pageBlockSectionItem>
+
+    <apex:pageBlockSectionItem rendered="{!(NOT(IsSunrun) || (Install_Audit__c.Status__c == 'SR Approved' || Install_Audit__c.Status__c == 'Denied' || Install_Audit__c.Status__c == 'Submitted' || Install_Audit__c.Status__c == 'Rejected')) && UserType != 'Admin'}">
+    <apex:outputLabel for="onsiteremoteaudit" value="Audit Type: " style="font-weight:bold;size=10pt"></apex:outputLabel> 
+     <apex:outputText id="onsiteRemoteAuditReadOnly" value="{!Install_Audit__c.Install_Audit_Type__c}"/>
+    </apex:pageBlockSectionItem>                          
+</apex:pageblockSection>
+</td></tr>
+        
+<tr><td align="left" colspan="3">
+    <apex:pageBlockSection title="Denied Reason" columns="1" rendered="{!IsDenied}">
+        <apex:pageBlockSectionItem rendered="{!IsAuditor}">
+            <apex:outputLabel for="dreason" value="Denied Reason: " style="font-weight:bold;size=10pt"> </apex:outputLabel>
+            <apex:inputtextarea id="dreason" value="{!Install_Audit__c.Denied_Reason__c}" style="width:625px;height:150px" disabled="false" />
+        </apex:pageBlockSectionItem>
+         <apex:pageBlockSectionItem rendered="{!NOT(IsAuditor)}" >
+            <apex:outputLabel for="dreasonRO" value="Denied Reason: " style="font-weight:bold;size=10pt"> </apex:outputLabel>
+            <apex:inputtextarea id="dreasonRO" value="{!Install_Audit__c.Denied_Reason__c}"  style="width:625px;height:150px"  disabled="true" />
+        </apex:pageBlockSectionItem>   
+    </apex:pageBlockSection>    
+</td></tr>
+<tr><td colspan="5"><div align="center">
+     <apex:commandButton value="Save" style="width:60px" action="{!SaveInstallAudit}" rendered="{!NOT(IsPartner) && Install_Audit__c != 'SR Approved'}"/>
+     <apex:commandButton value="Cancel" style="width:60px" action="{!ReturnToListView}"/></div>
+</td></tr>
+</table>
+<apex:outputtext style="font-weight:bold;color:red;font-size:10px" value="* Required to Proceed to Scorecard" rendered="{!IsAuditor && Install_Audit__c.Status__c != 'SR Approved'}"></apex:outputtext>
+
+</apex:pageBlock>
+<apex:pageBlock title="Scorecard Summary" rendered="{!NOT(IsAuditor)}" > 
+<table width="100%">
+<tr valign="middle">
+<td width="10%">
+    <apex:outputLabel style="font-weight:bold" styleClass="auditheaderheading" for="score" value="Score: " ></apex:outputLabel>  
+    <apex:outputField styleClass="auditheaderdata" id="score" value="{!Install_Audit__c.Score__c}" />
+</td>
+<td width="16%">    
+    <apex:outputLabel style="font-weight:bold" styleClass="auditheaderheading" for="priorityMissed" value="Priority Criteria Failed: " ></apex:outputLabel>  
+    <apex:outputText styleClass="auditheaderdata" id="priorityMissed" value="{!Install_Audit__c.Priority_Criteria_Missed__c}" /></td>
+<td width="16%">    
+    <apex:outputLabel style="font-weight:bold" styleClass="auditheaderheading" for="criteriaMissing" value="Priority Criteria Missing: " ></apex:outputLabel>  
+    <apex:outputText styleClass="auditheaderdata" id="criteriaMissing" value="{!Install_Audit__c.Priority_Criteria_Missing__c}" /></td>
+<td width="16%">    
+    <apex:outputLabel style="font-weight:bold" styleClass="auditheaderheading" for="epcDisc" value="EPC Discrepancies: " ></apex:outputLabel>  
+    <apex:outputText styleClass="auditheaderdata" id="epcDisc" value="{!Install_Audit__c.EPC_Discrepancies__c}" /></td>
+<td width="14%">    
+    <apex:outputLabel style="font-weight:bold" styleClass="auditheaderheading" for="partnerMetric" value="Partner Metric: " ></apex:outputLabel>  
+    <apex:outputText styleClass="auditheaderdata" id="partnerMetric" value="{!Install_Audit__c.Partner_Metric__c}" /></td>
+<td width="14%">    
+    <apex:outputLabel style="font-weight:bold" styleClass="auditheaderheading" for="firmName5" value="Corporate Metric: " rendered="{!NOT(ISPICKVAL($User.UserType,'PowerPartner'))}"></apex:outputLabel>  
+    <apex:outputText styleClass="auditheaderdata" id="corpMetric" value="{!Install_Audit__c.Corporate_Metric__c}" rendered="{!NOT(ISPICKVAL($User.UserType,'PowerPartner'))}"/></td> 
+<td width="16%">    
+    <apex:outputLabel style="font-weight:bold" styleClass="auditheaderheading" for="priorityMissed" value="Criteria Missing: " ></apex:outputLabel>  
+    <apex:outputText styleClass="auditheaderdata" id="criteriaMissed" value="{!Install_Audit__c.Criteria_Missing__c}" /></td>
+</tr>
+</table>
+    </apex:pageBlock>
+
+
+<c:GenericHistoryComponent recordLimit1="50" myObject1="{!Install_Audit__c}" rendered="{!IsSunrun || UserType == 'Admin'}"/>
+
+
+</apex:form>
+</apex:page>

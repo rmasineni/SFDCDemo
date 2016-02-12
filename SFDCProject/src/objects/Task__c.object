@@ -1,0 +1,3158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <content>wfTask_Edit</content>
+        <skipRecordTypeSelect>false</skipRecordTypeSelect>
+        <type>Visualforce</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Follow</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <content>wfTaskRedirect</content>
+        <skipRecordTypeSelect>false</skipRecordTypeSelect>
+        <type>Visualforce</type>
+    </actionOverrides>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <description>This is a generic template for Custom Object.  With this template, you may adjust the default elements and values and add new elements and values.</description>
+    <enableActivities>false</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableDivisions>false</enableDivisions>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>false</enableHistory>
+    <enableReports>true</enableReports>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <externalSharingModel>ControlledByParent</externalSharingModel>
+    <fields>
+        <fullName>Blocked_End_Date__c</fullName>
+        <externalId>false</externalId>
+        <label>Blocked End Date</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>Blocked_Project__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Blocked Project?</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Blocked_Reason__c</fullName>
+        <externalId>false</externalId>
+        <label>Blocked Reason</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Add Values</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Blocked_Start_Date__c</fullName>
+        <externalId>false</externalId>
+        <label>Blocked Start Date</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>Blocked_Status__c</fullName>
+        <externalId>false</externalId>
+        <label>Blocked Status</label>
+        <length>30</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Blocked__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Blocked</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Branch__c</fullName>
+        <externalId>false</externalId>
+        <label>Branch</label>
+        <length>30</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Category__c</fullName>
+        <externalId>false</externalId>
+        <label>Category</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Optional</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Required</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>true</sorted>
+        </picklist>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Completed_Date__c</fullName>
+        <externalId>false</externalId>
+        <label>Completed Date</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>Customer_Full_Name__c</fullName>
+        <externalId>false</externalId>
+        <formula>Phase__r.Project__r.Proposal__r.Homeowner_Name__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Customer Full Name</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Description__c</fullName>
+        <externalId>false</externalId>
+        <label>Description</label>
+        <length>80</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Display_Field10__c</fullName>
+        <externalId>false</externalId>
+        <label>Display Field10</label>
+        <length>80</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Display_Field11__c</fullName>
+        <externalId>false</externalId>
+        <label>Display Field11</label>
+        <length>80</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Display_Field12__c</fullName>
+        <externalId>false</externalId>
+        <label>Display Field12</label>
+        <length>80</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Display_Field13__c</fullName>
+        <externalId>false</externalId>
+        <label>Display Field13</label>
+        <length>80</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Display_Field14__c</fullName>
+        <externalId>false</externalId>
+        <label>Display Field14</label>
+        <length>80</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Display_Field15__c</fullName>
+        <externalId>false</externalId>
+        <label>Display Field15</label>
+        <length>80</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Display_Field16__c</fullName>
+        <externalId>false</externalId>
+        <label>Display Field16</label>
+        <length>80</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Display_Field17__c</fullName>
+        <externalId>false</externalId>
+        <label>Display Field17</label>
+        <length>80</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Display_Field18__c</fullName>
+        <externalId>false</externalId>
+        <label>Display Field18</label>
+        <length>80</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Display_Field19__c</fullName>
+        <externalId>false</externalId>
+        <label>Display Field19</label>
+        <length>80</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Display_Field1__c</fullName>
+        <externalId>false</externalId>
+        <label>Display Field1</label>
+        <length>80</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Display_Field20__c</fullName>
+        <externalId>false</externalId>
+        <label>Display Field20</label>
+        <length>80</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Display_Field2__c</fullName>
+        <externalId>false</externalId>
+        <label>Display Field2</label>
+        <length>80</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Display_Field3__c</fullName>
+        <externalId>false</externalId>
+        <label>Display Field3</label>
+        <length>80</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Display_Field4__c</fullName>
+        <externalId>false</externalId>
+        <label>Display Field4</label>
+        <length>80</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Display_Field5__c</fullName>
+        <externalId>false</externalId>
+        <label>Display Field5</label>
+        <length>80</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Display_Field6__c</fullName>
+        <externalId>false</externalId>
+        <label>Display Field6</label>
+        <length>80</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Display_Field7__c</fullName>
+        <externalId>false</externalId>
+        <label>Display Field7</label>
+        <length>80</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Display_Field8__c</fullName>
+        <externalId>false</externalId>
+        <label>Display Field8</label>
+        <length>80</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Display_Field9__c</fullName>
+        <externalId>false</externalId>
+        <label>Display Field9</label>
+        <length>80</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Display_Object10__c</fullName>
+        <externalId>false</externalId>
+        <label>Display Object10</label>
+        <length>80</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Display_Object11__c</fullName>
+        <externalId>false</externalId>
+        <label>Display Object11</label>
+        <length>80</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Display_Object12__c</fullName>
+        <externalId>false</externalId>
+        <label>Display Object12</label>
+        <length>80</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Display_Object13__c</fullName>
+        <externalId>false</externalId>
+        <label>Display Object13</label>
+        <length>80</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Display_Object14__c</fullName>
+        <externalId>false</externalId>
+        <label>Display Object14</label>
+        <length>80</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Display_Object15__c</fullName>
+        <externalId>false</externalId>
+        <label>Display Object15</label>
+        <length>80</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Display_Object16__c</fullName>
+        <externalId>false</externalId>
+        <label>Display Object16</label>
+        <length>80</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Display_Object17__c</fullName>
+        <externalId>false</externalId>
+        <label>Display Object17</label>
+        <length>80</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Display_Object18__c</fullName>
+        <externalId>false</externalId>
+        <label>Display Object18</label>
+        <length>80</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Display_Object19__c</fullName>
+        <externalId>false</externalId>
+        <label>Display Object19</label>
+        <length>80</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Display_Object1__c</fullName>
+        <externalId>false</externalId>
+        <label>Display Object1</label>
+        <length>80</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Display_Object20__c</fullName>
+        <externalId>false</externalId>
+        <label>Display Object20</label>
+        <length>80</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Display_Object2__c</fullName>
+        <externalId>false</externalId>
+        <label>Display Object2</label>
+        <length>80</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Display_Object3__c</fullName>
+        <externalId>false</externalId>
+        <label>Display Object3</label>
+        <length>80</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Display_Object4__c</fullName>
+        <externalId>false</externalId>
+        <label>Display Object4</label>
+        <length>80</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Display_Object5__c</fullName>
+        <externalId>false</externalId>
+        <label>Display Object5</label>
+        <length>80</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Display_Object6__c</fullName>
+        <externalId>false</externalId>
+        <label>Display Object6</label>
+        <length>80</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Display_Object7__c</fullName>
+        <externalId>false</externalId>
+        <label>Display Object7</label>
+        <length>80</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Display_Object8__c</fullName>
+        <externalId>false</externalId>
+        <label>Display Object8</label>
+        <length>80</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Display_Object9__c</fullName>
+        <externalId>false</externalId>
+        <label>Display Object9</label>
+        <length>80</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>End_Date__c</fullName>
+        <externalId>false</externalId>
+        <label>End Date</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>Expected_Close_Date2__c</fullName>
+        <externalId>false</externalId>
+        <label>Expected Close Date2</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>Expected_Close_Date__c</fullName>
+        <externalId>false</externalId>
+        <label>Expected Close Date</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>Field_Name10__c</fullName>
+        <externalId>false</externalId>
+        <label>Field Name10</label>
+        <length>80</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Field_Name11__c</fullName>
+        <externalId>false</externalId>
+        <label>Field Name11</label>
+        <length>80</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Field_Name12__c</fullName>
+        <externalId>false</externalId>
+        <label>Field Name12</label>
+        <length>80</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Field_Name13__c</fullName>
+        <externalId>false</externalId>
+        <label>Field Name13</label>
+        <length>80</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Field_Name14__c</fullName>
+        <externalId>false</externalId>
+        <label>Field Name14</label>
+        <length>80</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Field_Name15__c</fullName>
+        <externalId>false</externalId>
+        <label>Field Name15</label>
+        <length>80</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Field_Name16__c</fullName>
+        <externalId>false</externalId>
+        <label>Field Name16</label>
+        <length>80</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Field_Name17__c</fullName>
+        <externalId>false</externalId>
+        <label>Field Name17</label>
+        <length>80</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Field_Name18__c</fullName>
+        <externalId>false</externalId>
+        <label>Field Name18</label>
+        <length>80</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Field_Name19__c</fullName>
+        <externalId>false</externalId>
+        <label>Field Name19</label>
+        <length>80</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Field_Name1__c</fullName>
+        <externalId>false</externalId>
+        <label>Field Name1</label>
+        <length>80</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Field_Name20__c</fullName>
+        <externalId>false</externalId>
+        <label>Field Name20</label>
+        <length>80</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Field_Name2__c</fullName>
+        <externalId>false</externalId>
+        <label>Field Name2</label>
+        <length>80</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Field_Name3__c</fullName>
+        <externalId>false</externalId>
+        <label>Field Name3</label>
+        <length>80</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Field_Name4__c</fullName>
+        <externalId>false</externalId>
+        <label>Field Name4</label>
+        <length>80</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Field_Name5__c</fullName>
+        <externalId>false</externalId>
+        <label>Field Name5</label>
+        <length>80</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Field_Name6__c</fullName>
+        <externalId>false</externalId>
+        <label>Field Name6</label>
+        <length>80</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Field_Name7__c</fullName>
+        <externalId>false</externalId>
+        <label>Field Name7</label>
+        <length>80</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Field_Name8__c</fullName>
+        <externalId>false</externalId>
+        <label>Field Name8</label>
+        <length>80</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Field_Name9__c</fullName>
+        <externalId>false</externalId>
+        <label>Field Name9</label>
+        <length>80</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Group_Name__c</fullName>
+        <externalId>false</externalId>
+        <label>Group Name</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Branch Coordinator</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Brea PC</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Change Orders</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Construction Supervisor</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Contract Approval</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Contract Coordinator</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Customer Care</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Design Engineering</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Drafting Team</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Inspection Coordinator</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Installation Review</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Interconnection</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Loan Administrator</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Meter Registration</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Milestone Approvals</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>NTP Team</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Permitting</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Permitting/Design Engineering</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Project Planner</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Project Planner/Brea PC</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Rebates</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Retail Operations</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Retail Payment Manager</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Sales</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Sales Change Orders</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Site Audit</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Specialist Team</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>true</sorted>
+        </picklist>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Has_Dependent_Rules__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Has Dependent Rules</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Install_Branch__c</fullName>
+        <externalId>false</externalId>
+        <formula>Phase__r.Project__r.Opportunity__r.Install_Branch_Id__r.Name</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Install Branch</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Install_Partner__c</fullName>
+        <externalId>false</externalId>
+        <formula>Phase__r.Project__r.Install_Partner__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Install Partner</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Last_Modified_Date__c</fullName>
+        <externalId>false</externalId>
+        <formula>DATEVALUE(LastModifiedDate)</formula>
+        <label>Last Modified Date</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Notify_Owner__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Notify Owner</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Object_Name10__c</fullName>
+        <externalId>false</externalId>
+        <label>Object Name10</label>
+        <length>80</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Object_Name11__c</fullName>
+        <externalId>false</externalId>
+        <label>Object Name11</label>
+        <length>80</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Object_Name12__c</fullName>
+        <externalId>false</externalId>
+        <label>Object Name12</label>
+        <length>80</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Object_Name13__c</fullName>
+        <externalId>false</externalId>
+        <label>Object Name13</label>
+        <length>80</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Object_Name14__c</fullName>
+        <externalId>false</externalId>
+        <label>Object Name14</label>
+        <length>80</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Object_Name15__c</fullName>
+        <externalId>false</externalId>
+        <label>Object Name15</label>
+        <length>80</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Object_Name16__c</fullName>
+        <externalId>false</externalId>
+        <label>Object Name16</label>
+        <length>80</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Object_Name17__c</fullName>
+        <externalId>false</externalId>
+        <label>Object Name17</label>
+        <length>80</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Object_Name18__c</fullName>
+        <externalId>false</externalId>
+        <label>Object Name18</label>
+        <length>80</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Object_Name19__c</fullName>
+        <externalId>false</externalId>
+        <label>Object Name19</label>
+        <length>80</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Object_Name1__c</fullName>
+        <externalId>false</externalId>
+        <label>Object Name1</label>
+        <length>80</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Object_Name20__c</fullName>
+        <externalId>false</externalId>
+        <label>Object Name20</label>
+        <length>80</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Object_Name2__c</fullName>
+        <externalId>false</externalId>
+        <label>Object Name2</label>
+        <length>80</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Object_Name3__c</fullName>
+        <externalId>false</externalId>
+        <label>Object Name3</label>
+        <length>80</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Object_Name4__c</fullName>
+        <externalId>false</externalId>
+        <label>Object Name4</label>
+        <length>80</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Object_Name5__c</fullName>
+        <externalId>false</externalId>
+        <label>Object Name5</label>
+        <length>80</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Object_Name6__c</fullName>
+        <externalId>false</externalId>
+        <label>Object Name6</label>
+        <length>80</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Object_Name7__c</fullName>
+        <externalId>false</externalId>
+        <label>Object Name7</label>
+        <length>80</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Object_Name8__c</fullName>
+        <externalId>false</externalId>
+        <label>Object Name8</label>
+        <length>80</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Object_Name9__c</fullName>
+        <externalId>false</externalId>
+        <label>Object Name9</label>
+        <length>80</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>OnHoldEndDate__c</fullName>
+        <externalId>false</externalId>
+        <label>On Hold End Date</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>On_Hold_End_Date__c</fullName>
+        <externalId>false</externalId>
+        <label>On Hold End Date (old)</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>On_Hold_Reason__c</fullName>
+        <externalId>false</externalId>
+        <label>On Hold Reason</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>On_Hold_Start_Date__c</fullName>
+        <externalId>false</externalId>
+        <label>On Hold Start Date</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>On_Hold__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Was this task ever in &quot;On Hold&quot; status?</description>
+        <externalId>false</externalId>
+        <label>On Hold</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Open_Date__c</fullName>
+        <externalId>false</externalId>
+        <label>Open Date</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>Phase__c</fullName>
+        <externalId>false</externalId>
+        <label>Phase</label>
+        <lookupFilter>
+            <active>true</active>
+            <booleanFilter>1</booleanFilter>
+            <filterItems>
+                <field>Phase__c.Project__c</field>
+                <operation>equals</operation>
+                <valueField>$Source.Project_Name__c</valueField>
+            </filterItems>
+            <isOptional>false</isOptional>
+        </lookupFilter>
+        <referenceTo>Phase__c</referenceTo>
+        <relationshipName>Tasks</relationshipName>
+        <relationshipOrder>0</relationshipOrder>
+        <reparentableMasterDetail>false</reparentableMasterDetail>
+        <trackTrending>false</trackTrending>
+        <type>MasterDetail</type>
+        <writeRequiresMasterRead>false</writeRequiresMasterRead>
+    </fields>
+    <fields>
+        <fullName>Previous_Status__c</fullName>
+        <externalId>false</externalId>
+        <label>Previous Status</label>
+        <length>30</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Project_Name__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Project Name</label>
+        <referenceTo>Project__c</referenceTo>
+        <relationshipName>Tasks</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Project_Number__c</fullName>
+        <externalId>false</externalId>
+        <formula>Project_Name__r.Job_Code__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Project Number</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Project_Open_Date__c</fullName>
+        <externalId>false</externalId>
+        <formula>Phase__r.Project__r.CreatedDate</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Project Open Date</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>Project_Status__c</fullName>
+        <externalId>false</externalId>
+        <formula>TEXT(Project_Name__r.Status__c)</formula>
+        <label>Project Status</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Reason__c</fullName>
+        <externalId>false</externalId>
+        <label>Reason</label>
+        <picklist>
+            <controllingField>Group_Name__c</controllingField>
+            <picklistValues>
+                <fullName>Construction Review</fullName>
+                <controllingFieldValues>Construction Supervisor</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Customer-Facing Request</fullName>
+                <controllingFieldValues>Project Planner</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Design Change Request</fullName>
+                <controllingFieldValues>Design Engineering</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Discrepancy with Documents</fullName>
+                <controllingFieldValues>Customer Care</controllingFieldValues>
+                <controllingFieldValues>Sales</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Incomplete Design Package</fullName>
+                <controllingFieldValues>Design Engineering</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Information Needed</fullName>
+                <controllingFieldValues>Drafting Team</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Jurisdiction Support</fullName>
+                <controllingFieldValues>Design Engineering</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Missing Documents for Review</fullName>
+                <controllingFieldValues>Contract Approval</controllingFieldValues>
+                <controllingFieldValues>Project Planner</controllingFieldValues>
+                <controllingFieldValues>Sales</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Missing for NTP</fullName>
+                <controllingFieldValues>Project Planner</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Offsetting Electricity Use</fullName>
+                <controllingFieldValues>Sales</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Project Audit</fullName>
+                <controllingFieldValues>Design Engineering</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Proposal</fullName>
+                <controllingFieldValues>Contract Approval</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>RTS</fullName>
+                <controllingFieldValues>Sales</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Site Information Needed</fullName>
+                <controllingFieldValues>Site Audit</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Sunrun Delay</fullName>
+                <controllingFieldValues>Project Planner</controllingFieldValues>
+                <controllingFieldValues>Sales</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>System Disqualification</fullName>
+                <controllingFieldValues>Project Planner</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Update Permit</fullName>
+                <controllingFieldValues>Permitting</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <sorted>true</sorted>
+        </picklist>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Related_Task__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Related Task</label>
+        <referenceTo>Task__c</referenceTo>
+        <relationshipName>Tasks</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Reopen_Reason__c</fullName>
+        <externalId>false</externalId>
+        <label>Re-open Reason</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>Reopen__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Re-open</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Reporting_SLA_Status__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(SLA_Status__c = &quot;Green&quot;, &quot;1-Green&quot;, IF(SLA_Status__c = &quot;Yellow&quot;, &quot;2-Yellow&quot;, 
+IF(SLA_Status__c = &quot;Red&quot;, &quot;3-Red&quot;, &quot;0-Blue&quot;)))</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>SLA Status</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Req1__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Req1</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Req2__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Req2</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Req3__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Req3</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Req4__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Req4</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Req5__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Req5</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>SLA_In_Hours__c</fullName>
+        <externalId>false</externalId>
+        <label>SLA (In Hours)</label>
+        <precision>10</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>SLA_Red__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>SLA Red</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>SLA_Status__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF( AND(NOT(ISNULL( Expected_Close_Date__c)), (SLA_In_Hours__c &gt; 0)), 
+       IF(AND(not(ISNULL( End_Date__c)), ((End_Date__c - Expected_Close_Date__c)*24*60 &lt;= 0 ) ), (if( AND(((End_Date__c - Expected_Close_Date2__c)*24*60 &lt;= 0 ) ) , &apos;Green&apos; , &apos;Yellow&apos;)), 
+          IF(AND((( NOW()  - Expected_Close_Date__c)*24*60 &lt;= 0 ) ), (if(AND(( NOW()  - Expected_Close_Date2__c)*24*60 &lt;= 0 ) , &apos;Green&apos; , &apos;Yellow&apos;)), &apos;Red&apos;)) 
+      , &apos;&apos;)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>SLA Status</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Sales_Partner__c</fullName>
+        <externalId>false</externalId>
+        <formula>Phase__r.Project__r.Sales_Partner__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Sales Partner</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Sales_Rep_Division__c</fullName>
+        <externalId>false</externalId>
+        <formula>Phase__r.Project__r.Opportunity__r.Sales_Rep_Division__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Sales Rep Division</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Service_Contract__c</fullName>
+        <externalId>false</externalId>
+        <formula>Project_Name__r.Service_Contract__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Service Contract</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Start_Date_Since_Last_Open__c</fullName>
+        <description>When the Task status changes from any other status to Open, this field captures the date/time value.</description>
+        <externalId>false</externalId>
+        <label>Start Date Since Last Open</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>Start_Date__c</fullName>
+        <externalId>false</externalId>
+        <label>Start Date</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>Start_Time__c</fullName>
+        <externalId>false</externalId>
+        <label>Start Time</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>State__c</fullName>
+        <externalId>false</externalId>
+        <formula>Phase__r.Project__r.Proposal__r.State__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>State</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Status__c</fullName>
+        <externalId>false</externalId>
+        <label>Status</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Blocked</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Cancelled</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Complete</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Inactive</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>On-Hold</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Open</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>true</sorted>
+        </picklist>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Sub_Reason__c</fullName>
+        <externalId>false</externalId>
+        <label>Sub-Reason</label>
+        <picklist>
+            <controllingField>Reason__c</controllingField>
+            <picklistValues>
+                <fullName>AHJ:  Change</fullName>
+                <controllingFieldValues>Jurisdiction Support</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>AHJ Comments/Redlines: Existing Requirements</fullName>
+                <controllingFieldValues>Jurisdiction Support</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>AHJ Comments/Redlines: New Requirements</fullName>
+                <controllingFieldValues>Jurisdiction Support</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Attached Home Approval Form</fullName>
+                <controllingFieldValues>Missing for NTP</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>BOM Update</fullName>
+                <controllingFieldValues>Incomplete Design Package</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Breaker size discrepancy</fullName>
+                <controllingFieldValues>Missing for NTP</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Cancellation request: Verbal</fullName>
+                <controllingFieldValues>RTS</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Cancellation request: written</fullName>
+                <controllingFieldValues>RTS</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Change order: customer rejected</fullName>
+                <controllingFieldValues>RTS</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Change Order Issue</fullName>
+                <controllingFieldValues>Missing for NTP</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Code Compliance</fullName>
+                <controllingFieldValues>Project Audit</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Constructability: electrical panel relocation required</fullName>
+                <controllingFieldValues>RTS</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Constructability: existing permitting issues</fullName>
+                <controllingFieldValues>RTS</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Constructability: minimum system size not met</fullName>
+                <controllingFieldValues>RTS</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Constructability: non-qualifying panel upgrade</fullName>
+                <controllingFieldValues>RTS</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Constructability: poor roof condition</fullName>
+                <controllingFieldValues>RTS</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Constructability: structural issue</fullName>
+                <controllingFieldValues>RTS</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Constructability: unpermitted structures</fullName>
+                <controllingFieldValues>RTS</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Constructability: unsupported roof surface</fullName>
+                <controllingFieldValues>RTS</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Construction Change Request</fullName>
+                <controllingFieldValues>Project Audit</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Contract/ Utility Address Discrepancy</fullName>
+                <controllingFieldValues>Missing Documents for Review</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>CO required</fullName>
+                <controllingFieldValues>Missing Documents for Review</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>County/ Title Discrepancy</fullName>
+                <controllingFieldValues>Missing Documents for Review</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Credit memo or rebate outstanding</fullName>
+                <controllingFieldValues>Missing for NTP</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Customer facing change order required</fullName>
+                <controllingFieldValues>Missing for NTP</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Customer Nonresponsive</fullName>
+                <controllingFieldValues>Sunrun Delay</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Customer rejected change order</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Customer requested cancellation</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Customer Signature Required</fullName>
+                <controllingFieldValues>Sunrun Delay</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Discrepancy within Planset</fullName>
+                <controllingFieldValues>Incomplete Design Package</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Discrepancy with Planset</fullName>
+                <controllingFieldValues>Missing for NTP</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Downsize System</fullName>
+                <controllingFieldValues>Design Change Request</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Existing electrical system</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Existing electrical system is deficient</fullName>
+                <controllingFieldValues>System Disqualification</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Existing Open Permit(s)</fullName>
+                <controllingFieldValues>System Disqualification</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Existing permitting issues (open BP)</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Existing structural issues</fullName>
+                <controllingFieldValues>System Disqualification</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Expired Application</fullName>
+                <controllingFieldValues>Missing Documents for Review</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>HOA (?)</fullName>
+                <controllingFieldValues>RTS</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>HOA did not approve installation</fullName>
+                <controllingFieldValues>System Disqualification</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Home improvement</fullName>
+                <controllingFieldValues>Sunrun Delay</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Homeowner Action Required</fullName>
+                <controllingFieldValues>Customer-Facing Request</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Homeowner Document Required</fullName>
+                <controllingFieldValues>Customer-Facing Request</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Incorrect Bill</fullName>
+                <controllingFieldValues>Discrepancy with Documents</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Incorrect BP</fullName>
+                <controllingFieldValues>Missing Documents for Review</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Incorrect Nem</fullName>
+                <controllingFieldValues>Discrepancy with Documents</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Incorrect Signature</fullName>
+                <controllingFieldValues>Discrepancy with Documents</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Initial deposit outstanding</fullName>
+                <controllingFieldValues>Missing for NTP</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Interconnection</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Inverter/Meter Relocation</fullName>
+                <controllingFieldValues>Design Change Request</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Layout doesn’t match BP design</fullName>
+                <controllingFieldValues>Missing for NTP</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Main Panel Upgrade Review</fullName>
+                <controllingFieldValues>Construction Review</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Minimum System Size Cannot Be Met</fullName>
+                <controllingFieldValues>System Disqualification</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Missing Bill</fullName>
+                <controllingFieldValues>Missing Documents for Review</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Missing BP</fullName>
+                <controllingFieldValues>Missing Documents for Review</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Missing CGS Form</fullName>
+                <controllingFieldValues>RTS</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Missing Deliverables</fullName>
+                <controllingFieldValues>Incomplete Design Package</controllingFieldValues>
+                <controllingFieldValues>Information Needed</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Missing design layout</fullName>
+                <controllingFieldValues>Missing for NTP</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Missing Disclaimer</fullName>
+                <controllingFieldValues>Missing Documents for Review</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Missing Ecert</fullName>
+                <controllingFieldValues>Missing Documents for Review</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Missing electrical diagram</fullName>
+                <controllingFieldValues>Missing for NTP</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Missing HECO Letter</fullName>
+                <controllingFieldValues>Missing for NTP</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Missing Information/Deliverables</fullName>
+                <controllingFieldValues>Site Information Needed</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Missing Insurace Documents</fullName>
+                <controllingFieldValues>Missing Documents for Review</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Missing Insurance Docs</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Missing Loan Docs</fullName>
+                <controllingFieldValues>Missing Documents for Review</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Missing NEM</fullName>
+                <controllingFieldValues>Missing Documents for Review</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Missing plans</fullName>
+                <controllingFieldValues>Missing for NTP</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Missing Project Folder</fullName>
+                <controllingFieldValues>Missing Documents for Review</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Missing PV Verification Test</fullName>
+                <controllingFieldValues>Missing Documents for Review</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Missing Rebate</fullName>
+                <controllingFieldValues>Missing Documents for Review</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Missing shade report</fullName>
+                <controllingFieldValues>Missing for NTP</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Missing Signature</fullName>
+                <controllingFieldValues>Missing Documents for Review</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Missing Valid Proposal</fullName>
+                <controllingFieldValues>Proposal</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Module Relocation</fullName>
+                <controllingFieldValues>Design Change Request</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Need Trust Docs</fullName>
+                <controllingFieldValues>Missing Documents for Review</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Other</fullName>
+                <controllingFieldValues>Construction Review</controllingFieldValues>
+                <controllingFieldValues>RTS</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Outdated PPCP</fullName>
+                <controllingFieldValues>Discrepancy with Documents</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Permit Revision Required</fullName>
+                <controllingFieldValues>Update Permit</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Plans don’t match inputs</fullName>
+                <controllingFieldValues>Missing for NTP</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Plans Don’t Match Proposal</fullName>
+                <controllingFieldValues>Incomplete Design Package</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Reason: Discrepancy with Documents</fullName>
+                <controllingFieldValues>Missing Documents for Review</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Rebate Ext</fullName>
+                <controllingFieldValues>Sunrun Delay</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Revisit Required</fullName>
+                <controllingFieldValues>Site Information Needed</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Roof condition</fullName>
+                <controllingFieldValues>System Disqualification</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Shading does not match inputs</fullName>
+                <controllingFieldValues>Missing for NTP</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Short Circuit (Design Dept Use Only)</fullName>
+                <controllingFieldValues>Project Audit</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Spot Check (Design Dept Use Only)</fullName>
+                <controllingFieldValues>Project Audit</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>System Oversized</fullName>
+                <controllingFieldValues>Offsetting Electricity Use</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Unpermitted Structures</fullName>
+                <controllingFieldValues>System Disqualification</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Unresponsive</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Unresponsive: all other</fullName>
+                <controllingFieldValues>RTS</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Unresponsive: change order</fullName>
+                <controllingFieldValues>RTS</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Unresponsive: site audit scheduling</fullName>
+                <controllingFieldValues>RTS</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Unresponsive to Change Order</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Upsize System</fullName>
+                <controllingFieldValues>Design Change Request</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Utility Comments/Redlines: Existing Requirements</fullName>
+                <controllingFieldValues>Jurisdiction Support</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Utility Comments/Redlines: New Requirements</fullName>
+                <controllingFieldValues>Jurisdiction Support</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Utility Upgrade</fullName>
+                <controllingFieldValues>Sunrun Delay</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Utilty:  Change</fullName>
+                <controllingFieldValues>Jurisdiction Support</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <sorted>true</sorted>
+        </picklist>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Task_Age__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF( ISPICKVAL( Status__c , &quot;Open&quot;), (Today() - DATEVALUE(Start_Date__c) +1 ), 
+IF(ISPICKVAL( Status__c , &quot;Complete&quot;), ( DATEVALUE(End_Date__c ) - DATEVALUE(Start_Date__c )) +1, 
+IF(ISPICKVAL( Project_Name__r.Status__c , &quot;Cancelled&quot;), ( Project_Name__r.End_Date__c - DATEVALUE( Start_Date__c )) +1, 
+(Today() - DATEVALUE(Start_Date__c) +1 ))))</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Task Age</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Task_Description__c</fullName>
+        <externalId>false</externalId>
+        <label>Task Description</label>
+        <length>32768</length>
+        <trackTrending>false</trackTrending>
+        <type>Html</type>
+        <visibleLines>25</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Task_Notes__c</fullName>
+        <externalId>false</externalId>
+        <label>Task Notes</label>
+        <length>100</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Task_Number__c</fullName>
+        <externalId>false</externalId>
+        <label>Task Number</label>
+        <length>10</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Task_Owner__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Owner</label>
+        <referenceTo>User</referenceTo>
+        <relationshipName>Tasks</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Task_Start_Date__c</fullName>
+        <externalId>false</externalId>
+        <formula>TEXT( Start_Date__c )</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Task Start Date</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Task_Time_Since_Last_Open__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF( ISPICKVAL( Status__c , &quot;Open&quot;), (Today() - DATEVALUE(Start_Date_Since_Last_Open__c) +1 ), 
+IF(ISPICKVAL( Status__c , &quot;Complete&quot;), ( DATEVALUE(End_Date__c ) - DATEVALUE(Start_Date_Since_Last_Open__c)) +1, 
+IF(ISPICKVAL( Project_Name__r.Status__c , &quot;Cancelled&quot;), ( Project_Name__r.End_Date__c - DATEVALUE( Start_Date_Since_Last_Open__c )) +1, IF(ISPICKVAL( Status__c , &quot;Blocked&quot;), ( DATEVALUE(Blocked_End_Date__c) - DATEVALUE(Start_Date_Since_Last_Open__c)) +1, IF(ISPICKVAL( Status__c , &quot;On-Hold&quot;), ( OnHoldEndDate__c - DATEVALUE(Start_Date_Since_Last_Open__c)) +1,
+(Today() - DATEVALUE(Start_Date_Since_Last_Open__c) +1 ))))))</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Task Time Since Last Open</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Time_Since_Last_Open_Hours__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF( NOT(ISNULL( Start_Date_Since_Last_Open__c)), 
+IF( ISPICKVAL( Status__c , &quot;Open&quot;), (NOW() - Start_Date_Since_Last_Open__c)*24, 
+NULL),NULL)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Time Since Last Open (Hours)</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Type__c</fullName>
+        <externalId>false</externalId>
+        <label>Type</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Standard</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Non Standard</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Adhoc</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Rework</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Update__c</fullName>
+        <externalId>false</externalId>
+        <label>Update</label>
+        <length>10</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Utility_Delay_Until__c</fullName>
+        <description>created for BSKY-6175 11/4/2014</description>
+        <externalId>false</externalId>
+        <label>Delay Until</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>Utility__c</fullName>
+        <externalId>false</externalId>
+        <formula>TEXT(Project_Name__r.Opportunity__r.Utility_Company__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Utility</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Wait_End_Date__c</fullName>
+        <externalId>false</externalId>
+        <label>Wait_End_Date</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Wait_Reason__c</fullName>
+        <externalId>false</externalId>
+        <label>Wait_Reason</label>
+        <length>10</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Wait_Start_Date__c</fullName>
+        <externalId>false</externalId>
+        <label>Wait_Start_Date</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>req10__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>req10</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>req11__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>req11</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>req12__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>req12</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>req13__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>req13</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>req14__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>req14</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>req15__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>req15</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>req16__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>req16</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>req17__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>req17</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>req18__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>req18</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>req19__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>req19</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>req20__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>req20</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>req6__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>req6</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>req7__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>req7</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>req8__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>req8</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>req9__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>req9</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <label>Workflow Task</label>
+    <listViews>
+        <fullName>Costco_SPO_Tasks_All_Branches</fullName>
+        <columns>NAME</columns>
+        <columns>Install_Branch__c</columns>
+        <columns>Customer_Full_Name__c</columns>
+        <columns>Project_Name__c</columns>
+        <columns>Task_Number__c</columns>
+        <columns>Status__c</columns>
+        <columns>Open_Date__c</columns>
+        <columns>Start_Date__c</columns>
+        <columns>Task_Age__c</columns>
+        <columns>Task_Time_Since_Last_Open__c</columns>
+        <columns>SLA_Status__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>NAME</field>
+            <operation>contains</operation>
+            <value>Secure Costco Greensky</value>
+        </filters>
+        <filters>
+            <field>Category__c</field>
+            <operation>equals</operation>
+            <value>Required</value>
+        </filters>
+        <filters>
+            <field>Status__c</field>
+            <operation>equals</operation>
+            <value>On-Hold,Open</value>
+        </filters>
+        <label>Costco Greensky Tasks</label>
+        <language>en_US</language>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>Costco_SPO_Tasks_for_RFSs_All_Branches</fullName>
+        <columns>NAME</columns>
+        <columns>Install_Branch__c</columns>
+        <columns>Customer_Full_Name__c</columns>
+        <columns>Project_Name__c</columns>
+        <columns>Task_Number__c</columns>
+        <columns>Status__c</columns>
+        <columns>Start_Date__c</columns>
+        <columns>Task_Age__c</columns>
+        <columns>Task_Time_Since_Last_Open__c</columns>
+        <columns>SLA_Status__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>NAME</field>
+            <operation>contains</operation>
+            <value>Costco</value>
+        </filters>
+        <filters>
+            <field>Category__c</field>
+            <operation>equals</operation>
+            <value>Required</value>
+        </filters>
+        <filters>
+            <field>Status__c</field>
+            <operation>equals</operation>
+            <value>On-Hold,Open</value>
+        </filters>
+        <filters>
+            <field>Task_Number__c</field>
+            <operation>equals</operation>
+            <value>Costco.1,Costco.2,Costco.3,Costco.4,Costco.5,Costco.7,Costco.8</value>
+        </filters>
+        <label>Costco SPO Tasks - All Branches</label>
+        <language>en_US</language>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>IC_Apply_for_Interconnection</fullName>
+        <booleanFilter>(1 AND 2 AND 3 AND 4 AND 6 AND 7) OR (1 AND 2 AND 3 AND 5 AND 6 AND 7)</booleanFilter>
+        <columns>NAME</columns>
+        <columns>Utility__c</columns>
+        <columns>Project_Name__c</columns>
+        <columns>Project_Number__c</columns>
+        <columns>Task_Age__c</columns>
+        <columns>SLA_Status__c</columns>
+        <columns>Task_Owner__c</columns>
+        <columns>Reopen__c</columns>
+        <columns>Reopen_Reason__c</columns>
+        <columns>Task_Time_Since_Last_Open__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Group_Name__c</field>
+            <operation>equals</operation>
+            <value>Interconnection</value>
+        </filters>
+        <filters>
+            <field>NAME</field>
+            <operation>equals</operation>
+            <value>Apply for interconnection</value>
+        </filters>
+        <filters>
+            <field>Status__c</field>
+            <operation>equals</operation>
+            <value>Open</value>
+        </filters>
+        <filters>
+            <field>Task_Owner__c</field>
+            <operation>equals</operation>
+        </filters>
+        <filters>
+            <field>Reopen__c</field>
+            <operation>equals</operation>
+            <value>1</value>
+        </filters>
+        <filters>
+            <field>Utility__c</field>
+            <operation>notContain</operation>
+            <value>NV energy</value>
+        </filters>
+        <filters>
+            <field>Project_Status__c</field>
+            <operation>notContain</operation>
+            <value>cancel</value>
+        </filters>
+        <label>IC - Apply for Interconnection</label>
+        <language>en_US</language>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>IC_Submit_Final_Interconnection</fullName>
+        <booleanFilter>(1 AND 2 AND 3 AND 4 AND 6 AND 7) OR (1 AND 2 AND 3 AND 5 AND 6 AND 7)</booleanFilter>
+        <columns>NAME</columns>
+        <columns>Utility__c</columns>
+        <columns>Project_Name__c</columns>
+        <columns>Project_Number__c</columns>
+        <columns>Task_Age__c</columns>
+        <columns>SLA_Status__c</columns>
+        <columns>Reopen__c</columns>
+        <columns>Reopen_Reason__c</columns>
+        <columns>Group_Name__c</columns>
+        <columns>Task_Time_Since_Last_Open__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Group_Name__c</field>
+            <operation>equals</operation>
+            <value>Interconnection,Rebates</value>
+        </filters>
+        <filters>
+            <field>NAME</field>
+            <operation>equals</operation>
+            <value>submit final interconnection</value>
+        </filters>
+        <filters>
+            <field>Status__c</field>
+            <operation>equals</operation>
+            <value>Open</value>
+        </filters>
+        <filters>
+            <field>Task_Owner__c</field>
+            <operation>equals</operation>
+        </filters>
+        <filters>
+            <field>Reopen__c</field>
+            <operation>equals</operation>
+            <value>1</value>
+        </filters>
+        <filters>
+            <field>Utility__c</field>
+            <operation>notContain</operation>
+            <value>NV energy</value>
+        </filters>
+        <filters>
+            <field>Project_Status__c</field>
+            <operation>notContain</operation>
+            <value>cancel</value>
+        </filters>
+        <label>IC - Submit Final Interconnection</label>
+        <language>en_US</language>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>NTP</fullName>
+        <booleanFilter>(1 AND 2 AND 3 AND 4 AND 6) OR (1 AND 2 AND 3 AND 5 AND 6)</booleanFilter>
+        <columns>NAME</columns>
+        <columns>Group_Name__c</columns>
+        <columns>Utility__c</columns>
+        <columns>Install_Branch__c</columns>
+        <columns>Project_Name__c</columns>
+        <columns>Task_Age__c</columns>
+        <columns>SLA_Status__c</columns>
+        <columns>Task_Owner__c</columns>
+        <columns>Reopen__c</columns>
+        <columns>Reopen_Reason__c</columns>
+        <columns>Last_Modified_Date__c</columns>
+        <columns>Task_Time_Since_Last_Open__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Group_Name__c</field>
+            <operation>equals</operation>
+            <value>Change Orders,NTP Team</value>
+        </filters>
+        <filters>
+            <field>NAME</field>
+            <operation>contains</operation>
+            <value>ntp</value>
+        </filters>
+        <filters>
+            <field>Status__c</field>
+            <operation>equals</operation>
+            <value>Open</value>
+        </filters>
+        <filters>
+            <field>Task_Owner__c</field>
+            <operation>equals</operation>
+        </filters>
+        <filters>
+            <field>Reopen__c</field>
+            <operation>equals</operation>
+            <value>1</value>
+        </filters>
+        <filters>
+            <field>Project_Status__c</field>
+            <operation>notContain</operation>
+            <value>Blocked,cancel</value>
+        </filters>
+        <label>Grant NTP</label>
+        <language>en_US</language>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>OC_Sales_Open_Tasks</fullName>
+        <columns>Install_Branch__c</columns>
+        <columns>Customer_Full_Name__c</columns>
+        <columns>NAME</columns>
+        <columns>Status__c</columns>
+        <columns>Project_Status__c</columns>
+        <columns>Sales_Rep_Division__c</columns>
+        <columns>Task_Owner__c</columns>
+        <columns>Update__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Group_Name__c</field>
+            <operation>equals</operation>
+            <value>Sales</value>
+        </filters>
+        <filters>
+            <field>Branch__c</field>
+            <operation>equals</operation>
+        </filters>
+        <filters>
+            <field>Project_Status__c</field>
+            <operation>notEqual</operation>
+            <value>Blocked,Cancelled</value>
+        </filters>
+        <filters>
+            <field>Status__c</field>
+            <operation>equals</operation>
+            <value>Open</value>
+        </filters>
+        <label>Sales Open Tasks</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>Open_Tasks_R_I_to_Sales</fullName>
+        <columns>NAME</columns>
+        <columns>Sales_Rep_Division__c</columns>
+        <columns>Project_Name__c</columns>
+        <columns>Customer_Full_Name__c</columns>
+        <columns>Install_Branch__c</columns>
+        <columns>Group_Name__c</columns>
+        <columns>Status__c</columns>
+        <columns>Task_Age__c</columns>
+        <columns>SLA_Status__c</columns>
+        <columns>Start_Date__c</columns>
+        <columns>Task_Owner__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Status__c</field>
+            <operation>equals</operation>
+            <value>Open</value>
+        </filters>
+        <filters>
+            <field>Group_Name__c</field>
+            <operation>equals</operation>
+            <value>Sales</value>
+        </filters>
+        <filters>
+            <field>Type__c</field>
+            <operation>equals</operation>
+            <value>Adhoc</value>
+        </filters>
+        <label>Open Tasks_R&amp;I to Sales</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>Open_Tasks_R_I_to_Sales_Inside</fullName>
+        <columns>NAME</columns>
+        <columns>Sales_Rep_Division__c</columns>
+        <columns>Project_Name__c</columns>
+        <columns>Customer_Full_Name__c</columns>
+        <columns>Install_Branch__c</columns>
+        <columns>Group_Name__c</columns>
+        <columns>Status__c</columns>
+        <columns>Task_Age__c</columns>
+        <columns>SLA_Status__c</columns>
+        <columns>Start_Date__c</columns>
+        <columns>Task_Owner__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Status__c</field>
+            <operation>equals</operation>
+            <value>Open</value>
+        </filters>
+        <filters>
+            <field>Group_Name__c</field>
+            <operation>equals</operation>
+            <value>Sales</value>
+        </filters>
+        <filters>
+            <field>Type__c</field>
+            <operation>equals</operation>
+            <value>Adhoc</value>
+        </filters>
+        <filters>
+            <field>Sales_Rep_Division__c</field>
+            <operation>equals</operation>
+        </filters>
+        <label>Open Tasks_R&amp;I to Sales_Sales Only</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>Rebates_Confirm_Amount_Create_Final_Clm</fullName>
+        <booleanFilter>(1 AND 2 AND 3 AND 4 AND 6) OR (1 AND 2 AND 3 AND 5 AND 6)</booleanFilter>
+        <columns>NAME</columns>
+        <columns>Utility__c</columns>
+        <columns>Project_Name__c</columns>
+        <columns>Project_Number__c</columns>
+        <columns>Task_Age__c</columns>
+        <columns>SLA_Status__c</columns>
+        <columns>Reopen__c</columns>
+        <columns>Reopen_Reason__c</columns>
+        <columns>Task_Time_Since_Last_Open__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Group_Name__c</field>
+            <operation>equals</operation>
+            <value>Rebates</value>
+        </filters>
+        <filters>
+            <field>NAME</field>
+            <operation>equals</operation>
+            <value>Confirm rebate amount,create final claim</value>
+        </filters>
+        <filters>
+            <field>Status__c</field>
+            <operation>equals</operation>
+            <value>Open</value>
+        </filters>
+        <filters>
+            <field>Task_Owner__c</field>
+            <operation>equals</operation>
+        </filters>
+        <filters>
+            <field>Reopen__c</field>
+            <operation>equals</operation>
+            <value>1</value>
+        </filters>
+        <filters>
+            <field>Utility__c</field>
+            <operation>notContain</operation>
+            <value>NV energy</value>
+        </filters>
+        <label>Rebates-Confirm Amount/Create Final Clm</label>
+        <language>en_US</language>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>Rebates_Submit_Final_Rebate_Claim</fullName>
+        <booleanFilter>(1 AND 2 AND 3 AND 4 AND 6) OR (1 AND 2 AND 3 AND 5 AND 6)</booleanFilter>
+        <columns>NAME</columns>
+        <columns>Utility__c</columns>
+        <columns>Project_Name__c</columns>
+        <columns>Project_Number__c</columns>
+        <columns>Task_Age__c</columns>
+        <columns>SLA_Status__c</columns>
+        <columns>Reopen__c</columns>
+        <columns>Reopen_Reason__c</columns>
+        <columns>Task_Time_Since_Last_Open__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Group_Name__c</field>
+            <operation>equals</operation>
+            <value>Rebates</value>
+        </filters>
+        <filters>
+            <field>NAME</field>
+            <operation>contains</operation>
+            <value>submit final rebate cl</value>
+        </filters>
+        <filters>
+            <field>Status__c</field>
+            <operation>equals</operation>
+            <value>Open</value>
+        </filters>
+        <filters>
+            <field>Task_Owner__c</field>
+            <operation>equals</operation>
+        </filters>
+        <filters>
+            <field>Reopen__c</field>
+            <operation>equals</operation>
+            <value>1</value>
+        </filters>
+        <filters>
+            <field>Utility__c</field>
+            <operation>notContain</operation>
+            <value>NV energy</value>
+        </filters>
+        <label>Rebates - Submit Final Rebate Claim</label>
+        <language>en_US</language>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>Rebates_Submit_Rebate_Application</fullName>
+        <booleanFilter>(1 AND 2 AND 3 AND 4 AND 6) OR (1 AND 2 AND 3 AND 5 AND 6)</booleanFilter>
+        <columns>NAME</columns>
+        <columns>Utility__c</columns>
+        <columns>Project_Name__c</columns>
+        <columns>Project_Number__c</columns>
+        <columns>Task_Age__c</columns>
+        <columns>SLA_Status__c</columns>
+        <columns>Reopen__c</columns>
+        <columns>Reopen_Reason__c</columns>
+        <columns>Task_Time_Since_Last_Open__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Group_Name__c</field>
+            <operation>equals</operation>
+            <value>Interconnection</value>
+        </filters>
+        <filters>
+            <field>NAME</field>
+            <operation>equals</operation>
+            <value>submit rebate application</value>
+        </filters>
+        <filters>
+            <field>Status__c</field>
+            <operation>equals</operation>
+            <value>Open</value>
+        </filters>
+        <filters>
+            <field>Task_Owner__c</field>
+            <operation>equals</operation>
+        </filters>
+        <filters>
+            <field>Reopen__c</field>
+            <operation>equals</operation>
+            <value>1</value>
+        </filters>
+        <filters>
+            <field>Utility__c</field>
+            <operation>notContain</operation>
+            <value>NV energy</value>
+        </filters>
+        <label>Rebates - Submit Rebate Application</label>
+        <language>en_US</language>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>Review_proofs_Tasks_6_9_only</fullName>
+        <columns>NAME</columns>
+        <columns>Install_Branch__c</columns>
+        <columns>Customer_Full_Name__c</columns>
+        <columns>Project_Name__c</columns>
+        <columns>Task_Number__c</columns>
+        <columns>Start_Date__c</columns>
+        <columns>SLA_Status__c</columns>
+        <columns>Task_Age__c</columns>
+        <columns>Task_Time_Since_Last_Open__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>NAME</field>
+            <operation>contains</operation>
+            <value>Costco</value>
+        </filters>
+        <filters>
+            <field>Category__c</field>
+            <operation>equals</operation>
+            <value>Required</value>
+        </filters>
+        <filters>
+            <field>Status__c</field>
+            <operation>equals</operation>
+            <value>Open</value>
+        </filters>
+        <filters>
+            <field>Task_Number__c</field>
+            <operation>equals</operation>
+            <value>Costco.6,Costco.9</value>
+        </filters>
+        <label>Costco SPO Review- Tasks 6 &amp; 9 only</label>
+        <language>en_US</language>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>Sales_Change_Order</fullName>
+        <columns>Project_Name__c</columns>
+        <columns>NAME</columns>
+        <columns>Status__c</columns>
+        <columns>End_Date__c</columns>
+        <columns>Start_Date__c</columns>
+        <columns>SLA_In_Hours__c</columns>
+        <columns>Customer_Full_Name__c</columns>
+        <columns>State__c</columns>
+        <columns>Utility__c</columns>
+        <columns>Install_Branch__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Group_Name__c</field>
+            <operation>equals</operation>
+            <value>Sales Change Orders</value>
+        </filters>
+        <label>Sales Change Orders</label>
+        <language>en_US</language>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>Subcontracting_Additional_SOW_Open_Task</fullName>
+        <booleanFilter>(1 AND 2) AND (3 OR 4)</booleanFilter>
+        <columns>Project_Name__c</columns>
+        <columns>NAME</columns>
+        <columns>Task_Owner__c</columns>
+        <columns>Status__c</columns>
+        <columns>Task_Age__c</columns>
+        <columns>Task_Notes__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Group_Name__c</field>
+            <operation>equals</operation>
+            <value>Contract Coordinator</value>
+        </filters>
+        <filters>
+            <field>Status__c</field>
+            <operation>equals</operation>
+            <value>Open,Blocked</value>
+        </filters>
+        <filters>
+            <field>NAME</field>
+            <operation>equals</operation>
+            <value>Get Electrical Subk Signed</value>
+        </filters>
+        <filters>
+            <field>NAME</field>
+            <operation>equals</operation>
+            <value>Get Solar Waterproofing Subk Signed Subk</value>
+        </filters>
+        <label>Subcontracting-Additional SOW- Open Task</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>WFM_doc_collection</fullName>
+        <columns>NAME</columns>
+        <columns>Customer_Full_Name__c</columns>
+        <columns>On_Hold_Reason__c</columns>
+        <columns>On_Hold_Start_Date__c</columns>
+        <columns>On_Hold_End_Date__c</columns>
+        <columns>Open_Date__c</columns>
+        <columns>Project_Name__c</columns>
+        <columns>Sales_Rep_Division__c</columns>
+        <columns>Task_Age__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Sales_Rep_Division__c</field>
+            <operation>equals</operation>
+            <value>inside sales</value>
+        </filters>
+        <filters>
+            <field>NAME</field>
+            <operation>equals</operation>
+            <value>Missing NEM</value>
+        </filters>
+        <filters>
+            <field>NAME</field>
+            <operation>equals</operation>
+            <value>Missing Rebate</value>
+        </filters>
+        <label>WFM - doc collection</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>X01_NVEnergy_Rebate_Apps_to_be_Submitted</fullName>
+        <columns>NAME</columns>
+        <columns>Task_Start_Date__c</columns>
+        <columns>Customer_Full_Name__c</columns>
+        <columns>Project_Name__c</columns>
+        <columns>Project_Number__c</columns>
+        <columns>Project_Status__c</columns>
+        <columns>Task_Owner__c</columns>
+        <columns>Task_Age__c</columns>
+        <columns>SLA_Status__c</columns>
+        <columns>Task_Time_Since_Last_Open__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>NAME</field>
+            <operation>equals</operation>
+            <value>Submit Rebate Application</value>
+        </filters>
+        <filters>
+            <field>State__c</field>
+            <operation>equals</operation>
+            <value>NV</value>
+        </filters>
+        <filters>
+            <field>Status__c</field>
+            <operation>equals</operation>
+            <value>Open</value>
+        </filters>
+        <filters>
+            <field>Project_Status__c</field>
+            <operation>notEqual</operation>
+            <value>Cancelled</value>
+        </filters>
+        <label>01.NVEnergy_Rebate Apps to be Submitted</label>
+        <language>en_US</language>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>X02_ICF_Creation_cust_signature_needed</fullName>
+        <columns>NAME</columns>
+        <columns>Task_Start_Date__c</columns>
+        <columns>Customer_Full_Name__c</columns>
+        <columns>Project_Name__c</columns>
+        <columns>Project_Number__c</columns>
+        <columns>Project_Status__c</columns>
+        <columns>Task_Owner__c</columns>
+        <columns>Task_Age__c</columns>
+        <columns>SLA_Status__c</columns>
+        <columns>Task_Time_Since_Last_Open__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>NAME</field>
+            <operation>contains</operation>
+            <value>Create Final Rebate Claim</value>
+        </filters>
+        <filters>
+            <field>State__c</field>
+            <operation>equals</operation>
+            <value>NV</value>
+        </filters>
+        <filters>
+            <field>Status__c</field>
+            <operation>equals</operation>
+            <value>Open</value>
+        </filters>
+        <filters>
+            <field>Project_Status__c</field>
+            <operation>notEqual</operation>
+            <value>Cancelled,Blocked</value>
+        </filters>
+        <label>02.NVEnergy_ICF Creation</label>
+        <language>en_US</language>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>X03_NVEnergy_ICF_to_be_Submitted</fullName>
+        <columns>NAME</columns>
+        <columns>Task_Start_Date__c</columns>
+        <columns>Project_Name__c</columns>
+        <columns>Project_Number__c</columns>
+        <columns>Project_Status__c</columns>
+        <columns>Task_Owner__c</columns>
+        <columns>Task_Age__c</columns>
+        <columns>SLA_Status__c</columns>
+        <columns>Task_Time_Since_Last_Open__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>NAME</field>
+            <operation>contains</operation>
+            <value>Submit Final Rebate Claim (C)</value>
+        </filters>
+        <filters>
+            <field>State__c</field>
+            <operation>equals</operation>
+            <value>NV</value>
+        </filters>
+        <filters>
+            <field>Status__c</field>
+            <operation>equals</operation>
+            <value>Open</value>
+        </filters>
+        <filters>
+            <field>Project_Status__c</field>
+            <operation>notEqual</operation>
+            <value>Cancelled,Blocked</value>
+        </filters>
+        <label>03.NVEnergy_ICF to be Submitted</label>
+        <language>en_US</language>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>receive_HIC</fullName>
+        <columns>NAME</columns>
+        <columns>Status__c</columns>
+        <columns>Project_Name__c</columns>
+        <columns>Project_Open_Date__c</columns>
+        <columns>Project_Status__c</columns>
+        <columns>Task_Owner__c</columns>
+        <columns>Group_Name__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>NAME</field>
+            <operation>equals</operation>
+            <value>Receive HIC Approval</value>
+        </filters>
+        <filters>
+            <field>Category__c</field>
+            <operation>equals</operation>
+            <value>Required</value>
+        </filters>
+        <label>receive HIC</label>
+        <language>en_US</language>
+    </listViews>
+    <nameField>
+        <label>Workflow Task Name</label>
+        <type>Text</type>
+    </nameField>
+    <pluralLabel>Workflow Tasks</pluralLabel>
+    <searchLayouts/>
+    <sharingModel>ControlledByParent</sharingModel>
+</CustomObject>

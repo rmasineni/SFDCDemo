@@ -1,0 +1,14 @@
+<apex:page sidebar="false" showHeader="false" controller="InPersonStatus" action="{!processInPersonSigningRequest}">
+	<script>
+		window.moveTo(5,5);
+		window.resizeTo(1200,1200);		
+		var baseURL = '{!BaseURL}' ;
+		var proposalIdStr = '{!proposalId}' ;
+		alert('proposalId ...' + proposalIdStr);
+		if(baseURL != null && baseURL != '' && proposalIdStr != null && proposalIdStr != ''){
+			window.opener.parent.location.href = baseURL + '/' + proposalId;
+			var win = window.open('','_parent','');
+			win.close();		
+		}
+	</script>
+</apex:page>

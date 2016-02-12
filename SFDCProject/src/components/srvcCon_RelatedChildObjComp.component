@@ -1,0 +1,40 @@
+<apex:component controller="srvcCon_RelatedObjCompController" allowDML="true" id="compId23">
+     <apex:attribute name="resultArry" type="sobject[]" id="Columns" Description="Test" assignTo="{!accList}"  />
+    <apex:attribute name="title" type="String" id="title" Description="Test2" assignTo="{!objTitle}"  />
+    <apex:attribute name="headerValue" type="String[]" Description="header" assignTo="{!objHeaderValue}" />
+   <!-- <apex:attribute name="colName" type="String[]" Description="colName" assignTo="{!colNames}" /> -->
+     <apex:attribute name="objType" type="String" id="objType" Description="object Type" assignTo="{!objectType}"  />
+    <apex:attribute name="childRecs" type="sobject[]" id="childRecs" Description="childRecs " assignTo="{!childRecrds}"  />
+    <apex:attribute name="childType" type="string" id="childType" Description="childtype " assignTo="{!childObjType}"  />
+    
+    <apex:outputPanel rendered="{!IF(accList != null , if (childRecrds!=null, true, false), false)}" id="panelPg">
+
+          <apex:outputPanel rendered="{!IF(accList != null , if (childRecrds!=null, true, false), false)}">
+        <apex:pageBlock id="contBlock" title="{!objTitle} ({!RecCount})">
+          <apex:pageBlockTable value="{!childitems}" var="item" id="sObjList">
+                <apex:repeat value="{!ChildObjCols}" var="key">
+                    <!--<apex:column value="{!item[key.sob][key.field]}"/>-->
+                   
+                    <apex:column headerValue="{!key.header}" value="{!item[key.sob][key.field]}" rendered="{!key.field != 'LastName' && key.field != 'CaseNumber' && key.field != 'Name'}"/>
+                    <apex:column headerValue="{!key.field}" rendered="{!key.field == 'LastName' || key.field == 'CaseNumber' || key.field == 'Name'}">
+                    <apex:outputLink value="/{!item[key.sob]['Id']}?nooverride=1" >{!item[key.sob][key.field]} </apex:outputLink>
+                    </apex:column>
+                    
+                </apex:repeat>
+            </apex:pageBlockTable> 
+             <apex:outputPanel rendered="{!if(RecCount > 5, true, false)}">
+              <apex:panelGrid columns="5">
+                 
+                  <apex:commandButton value="First" action="{!con.first}" disabled="{!!con.hasPrevious}" status="pagStatus" reRender="panelPg"/>
+                  <apex:commandButton value="Previous" action="{!con.previous}" disabled="{!!con.hasPrevious}" status="pagStatus" reRender=" panelPg"/>
+                  <apex:commandButton value="Next" action="{!con.next}" disabled="{!!con.hasNext}" status="pagStatus" reRender=" panelPg"/>
+                  <apex:commandButton value="Last" action="{!con.last}" disabled="{!!con.hasNext}" status="pagStatus" reRender=" panelPg"/>
+                  <apex:actionStatus startText="Fetching..." id="pagStatus"/>
+                    
+              </apex:panelGrid>
+           </apex:outputPanel>
+        </apex:pageBlock>
+        </apex:outputPanel>
+   
+    </apex:outputPanel>
+</apex:component>

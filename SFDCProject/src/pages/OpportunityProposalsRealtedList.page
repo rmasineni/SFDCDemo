@@ -1,0 +1,91 @@
+<apex:page standardController="Opportunity"  sidebar="false"  showHeader="false" extensions="OpportunityProposalsRealtedListExt">
+<apex:form >
+ <apex:pageBlock > 
+ <apex:pageBlockSection title="Proposals" columns="1" id="pageBlock">
+	 <apex:pageBlockTable value="{!ProposalList}" var="pro">
+	     <apex:column headervalue="Proposal Id"><apex:outputLink value="/{!pro.id}">{!pro.name}</apex:outputLink></apex:column>    
+	     <apex:column value="{!pro.Proposal_Name__c}"/>
+	     <apex:column value="{!pro.Agreement_Type__c}"/>
+	     <apex:column value="{!pro.Stage__c}"/>
+	     <apex:column value="{!pro.Signed__c}"/>
+	     <apex:column value="{!pro.Equipment_Summary__c}"/>
+	     <apex:column headervalue="Created Date">
+	     	<apex:outputText value="{0,date,MM'/'dd'/'yyyy}">
+	    		<apex:param value="{!pro.createddate}" /> 
+			</apex:outputText>
+	     </apex:column>     
+	 </apex:pageBlockTable>
+ <!-- Add pagination toolbar to bottom of table if pageSize is defined -->
+        <apex:outputPanel layout="block" styleClass="paginatorWrap" rendered="{!AND(Con.resultSize > 0, NOT(ISNULL(pageSize)))}">
+            <div class="paginator">
+                <span class="prevNextLinks">
+                    <!-- First Button -->
+                    <span class="prevNext">
+                        <!-- Show first button if page set has previous page-->
+                        <apex:commandLink value="" action="{!con.first}" rendered="{!con.pageNumber != 1}" rerender="pageBlock" title="First">
+                            <img class="first" src="/s.gif" alt="" />
+                        </apex:commandLink>
+                        
+                        <!-- Show disabled first button page set is on page 1-->
+                        <apex:outputPanel rendered="{!NOT(con.hasPrevious)}">
+                            <img class="firstoff" src="/s.gif" alt="" />
+                        </apex:outputPanel>
+                    </span>
+                    
+                    <!-- Previous Button -->
+                    <span class="prevNext">
+                        <!-- Show previous button page set has previous page-->
+                        <apex:commandLink value="" action="{!con.previous}" rendered="{!con.hasPrevious}" rerender="pageBlock">
+                            <img class="prev" src="/s.gif" alt="" />Previous
+                        </apex:commandLink>
+                        
+                        <!-- Show disabled first button page set is on page 1-->
+                        <apex:outputPanel rendered="{!NOT(con.hasPrevious)}">
+                            <img class="prevoff" src="/s.gif" alt="" />Previous
+                        </apex:outputPanel>
+                    </span>
+                    
+                    <!-- Next Button -->
+                    <span class="prevNext">
+                        <!-- Show next button if page set has next -->
+                        <apex:commandLink value="" action="{!con.next}" rendered="{!con.hasNext}" rerender="pageBlock">
+                            Next<img class="next" alt="Next" title="Next" src="/s.gif" />
+                        </apex:commandLink>
+                        
+                        <!-- Show disabled next button if page set has no next -->
+                        <apex:outputPanel rendered="{!NOT(con.hasNext)}">
+                            Next<img class="nextOff" alt="Next" title="Next" src="/s.gif" />
+                        </apex:outputPanel>
+                    </span>
+                    
+                    <!-- Last Button -->
+                    <span class="prevNext">
+                        <!-- Show last button if page set has next -->
+                        <apex:commandLink value="" action="{!con.last}" rendered="{!con.hasNext}" rerender="pageBlock" title="Last">
+                            <img class="last" src="/s.gif" alt="" />
+                        </apex:commandLink>
+                        
+                        <!-- Show disabled last button if page set has no next -->
+                        <apex:outputPanel rendered="{!NOT(con.hasNext)}">
+                            <img class="lastoff" src="/s.gif" alt="" />
+                        </apex:outputPanel>
+                    </span>
+                </span>
+                <span class="right"> 
+                <!-- allow user to input page number of page set for direct navigation -->
+                    Page&nbsp;                   
+                    <apex:outputText value="{!con.pageNumber}" styleClass="pageInput">
+                    </apex:outputText>of {!CEILING(con.ResultSize / con.pageSize)}
+					<!-- 
+                    <apex:inputText value="{!con.pageNumber}" styleClass="pageInput">
+                        <apex:actionSupport event="onchange" rerender="pageBlock"/>
+                    </apex:inputText>of {!CEILING(con.ResultSize / con.pageSize)}
+                     -->
+                </span>
+            </div>
+        </apex:outputPanel>
+                   
+ </apex:pageBlockSection>
+ </apex:pageBlock>
+ </apex:form>
+ </apex:page>

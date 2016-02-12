@@ -1,0 +1,30 @@
+<apex:page standardController="Opportunity" extensions="OpportunityController" tabStyle="Opportunity" action="{!selectedRecordType}">
+<apex:form >
+    <apex:pageMessages ></apex:pageMessages>
+
+    <apex:pageBlock rendered="{!!isAccessibleUser}">
+        <apex:PageMessage summary="You are not allowed to create a new opportunity. Please create a lead and convert it to opportunity."
+            severity="Warning"
+            strength="3"/>
+        <apex:pageMessages />
+    </apex:pageBlock>
+    
+    <apex:pageBlock title="Select Opportunity Record Type" tabStyle="Opportunity" rendered="{!isAccessibleUser}">
+        <apex:pageblockSection columns="1">
+            <apex:pageblockSectionItem >
+                <apex:outputLabel value="Record Type of new record"></apex:outputLabel>
+                <apex:selectList value="{!selectedRecTypeId}" size="1">
+                    <apex:selectOptions value="{!RecordTypes}"/>
+                </apex:selectList>
+            </apex:pageblockSectionItem>
+        </apex:pageblockSection>
+        
+           
+        
+        <apex:pageblockButtons location="bottom">
+            <apex:commandButton value="Continue" action="{!countinueButtonClick}"/>
+            <apex:commandButton value="Cancel" action="{!cancel}"/>
+        </apex:pageblockButtons>
+    </apex:pageBlock>
+</apex:form>
+</apex:page>

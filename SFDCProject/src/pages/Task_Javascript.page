@@ -1,0 +1,23 @@
+<apex:page sidebar="false" showHeader="false" StandardController="Task">
+	<script>
+		var elements = parent.document.getElementsByClassName('userIcons');
+		if(elements != null && elements[0] != null){
+			var element = elements[0];
+			element.parentNode.removeChild(element);
+		}
+		
+		elements = parent.document.getElementsByClassName('dwmIcons');
+		if(elements != null && elements[0] != null){
+			var element = elements[0];
+			element.parentNode.removeChild(element);
+		}
+
+		elements = parent.document.getElementsByClassName('btn');
+		if(elements != null && elements[0] != null){
+			var element = elements[0];
+			element.parentNode.removeChild(element);
+		}
+	
+	</script>
+
+</apex:page>

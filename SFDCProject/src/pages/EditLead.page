@@ -1,0 +1,359 @@
+<apex:page standardcontroller="Lead" extensions="EditLead" 
+    tabstyle="Lead">
+    
+    <link href='https://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/themes/smoothness/jquery-ui.css' rel='stylesheet' type='text/css'/>
+
+    <apex:sectionHeader title="Lead Edit" subtitle="{!title}"/>
+    <apex:pageMessages escape="false"/>
+    <apex:form >        
+        <apex:pageBlock title="Lead Edit" mode="maindetail" >            
+        <div align = "Right">     
+                <apex:outputPanel layout="block" styleClass="requiredInput">
+                        <apex:outputPanel layout="block" styleClass="redrequired" />
+                        <apex:outputtext value=" = Required to Save Lead"></apex:outputtext>
+                </apex:outputPanel>
+                
+                <apex:outputPanel layout="block" styleClass="requiredInput">
+                        <apex:outputPanel layout="block" styleClass="bluerequired" />
+                        <apex:outputtext value=" = Required to Create Design"></apex:outputtext>
+                </apex:outputPanel>      
+       </div>
+            <apex:pageBlockButtons >
+                <apex:commandButton action="{!saveLead}" value="Save"/>
+                <apex:commandButton action="{!continueLeadEdit}" value="Edit Details"/>
+                <apex:commandButton action="{!Cancel}" value="Cancel"/>
+            </apex:pageBlockButtons>
+                             
+            <apex:pageBlockSection title="Customer Information" columns="2" collapsible="false">                
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="{!$ObjectType.Lead.fields.Firstname.label}" for="FirstName" />
+                    <apex:outputPanel layout="block" styleClass="requiredInput">
+                        <apex:outputPanel layout="block" styleClass="requiredBlock"/>
+                        <apex:inputfield id="FirstName" value="{!leadObj.Firstname}" />
+                    </apex:outputPanel>
+                </apex:pageBlockSectionItem>                 
+                <apex:pageBlockSectionItem >                
+                    <apex:outputLabel value="{!$ObjectType.Lead.fields.lastName.label}" for="LastName" />
+                    <apex:outputPanel layout="block" styleClass="requiredInput">
+                        <apex:outputPanel layout="block" styleClass="requiredBlock"/>
+                        <apex:inputfield id="LastName" value="{!leadObj.lastName}" />
+                    </apex:outputPanel>
+                </apex:pageBlockSectionItem>                       
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="{!$ObjectType.Lead.fields.Email.label}" for="email" />
+                    <apex:outputPanel layout="block" styleClass="requiredInput">
+                        <apex:outputPanel layout="block" styleClass="myrequiredBlock" />
+                        <apex:inputfield id="email" value="{!leadObj.Email}" />
+                    </apex:outputPanel>
+                </apex:pageBlockSectionItem> 
+
+                 <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="{!$ObjectType.Lead.fields.Phone.label}" for="Phone" />
+                    <apex:outputPanel layout="block" styleClass="requiredInput">
+                        <apex:outputPanel layout="block" styleClass="myrequiredBlock" />
+                        <apex:inputfield id="Phone" value="{!leadObj.Phone}"  onkeydown="javascript:backspacerDOWN(this,event);" onkeyup="javascript:backspacerUP(this,event);" />
+                    </apex:outputPanel>
+                </apex:pageBlockSectionItem>    
+                                                        
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="{!$ObjectType.Lead.fields.Alternate_Phone__c.label}" for="altPhone" />
+                    <apex:outputPanel layout="block" >
+                        <apex:inputfield id="altPhone" value="{!leadObj.Alternate_Phone__c}"   onkeydown="javascript:backspacerDOWN(this,event);" onkeyup="javascript:backspacerUP(this,event);"/>
+                    </apex:outputPanel>
+                </apex:pageBlockSectionItem> 
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="{!$ObjectType.Lead.fields.Lock_Assignment__c.label}" for="lockAssign" />
+                    <apex:outputPanel layout="block" >
+                        <apex:inputfield id="lockAssign" value="{!leadObj.Lock_Assignment__c}"  />
+                    </apex:outputPanel>
+                </apex:pageBlockSectionItem> 
+            </apex:pageblocksection>
+            
+            <apex:outputpanel id="address1">
+            <apex:pageblocksection title="Address Information" columns="1" collapsible="false">
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="Address" for="gmapsAddress" />
+                    <c:gmapAddress id="gmapsAddress" street="{!leadObj.Street}" city="{!leadObj.city}" state="{!leadObj.State}" postalCode="{!leadObj.postalCode}" country="{!leadObj.country}" latitude="{!leadObj.Latitude__c}" longitude="{!leadObj.Longitude__c}" status="{!leadObj.Address_Standardization_Status__c}"  edit="true"></c:gmapAddress> 
+                </apex:pageBlockSectionItem>
+            </apex:pageblocksection>
+            </apex:outputPanel>      
+        </apex:pageBlock>
+        
+    </apex:form>    
+<style>
+.ui-button-text-only .ui-button-text {
+    padding: 6px !Important;
+    font-weight: bold;
+}
+
+#address-lookup {
+    padding-left: 6px;
+}
+
+#address-lookup img {
+    top: -2px !Important;
+}
+
+</style>
+    
+    <script type="text/javascript">
+<!-- This script is based on the javascript code of Roman Feldblum (web.developer@programmer.net) -->
+<!-- Original script : http://javascript.internet.com/forms/format-phone-number.html -->
+<!-- Original script is revised by Eralper Yilmaz (http://www.eralper.com) -->
+<!-- Revised script : http://www.kodyaz.com -->
+<!-- Format : "(123) 456-7890" -->
+
+var zChar = new Array(' ', '(', ')', '-', '.');
+var maxphonelength = 14;
+var phonevalue1;
+var phonevalue2;
+var cursorposition;
+
+function ParseForNumber1(object){
+  phonevalue1 = ParseChar(object.value, zChar);
+}
+
+function ParseForNumber2(object){
+  phonevalue2 = ParseChar(object.value, zChar);
+}
+
+function backspacerUP(object,e) { 
+  if(e){ 
+    e = e 
+  } else {
+    e = window.event 
+  } 
+  if(e.which){ 
+    var keycode = e.which 
+  } else {
+    var keycode = e.keyCode 
+  }
+
+  ParseForNumber1(object)
+
+  if(keycode >= 48){
+    ValidatePhone(object)
+  }
+}
+
+function backspacerDOWN(object,e) { 
+  if(e){ 
+    e = e 
+  } else {
+    e = window.event 
+  } 
+  if(e.which){ 
+    var keycode = e.which 
+  } else {
+    var keycode = e.keyCode 
+  }
+  ParseForNumber2(object)
+} 
+
+function GetCursorPosition(){
+
+  var t1 = phonevalue1;
+  var t2 = phonevalue2;
+  var bool = false
+  for (i=0; i<t1.length; i++)
+  {
+    if (t1.substring(i,1) != t2.substring(i,1)) {
+      if(!bool) {
+        cursorposition=i
+        window.status=cursorposition
+        bool=true
+      }
+    }
+  }
+}
+
+function ValidatePhone(object){
+
+  var p = phonevalue1
+
+  p = p.replace(/[^\d]*/gi,"")
+
+  if (p.length < 3) {
+    object.value=p
+  } else if(p.length==3){
+    pp=p;
+    d4=p.indexOf('(')
+    d5=p.indexOf(')')
+    if(d4==-1){
+      pp="("+pp;
+    }
+    if(d5==-1){
+      pp=pp+")";
+    }
+    object.value = pp;
+  } else if(p.length>3 && p.length < 7){
+    p ="(" + p; 
+    l30=p.length;
+    p30=p.substring(0,4);
+    p30=p30+") " 
+
+    p31=p.substring(4,l30);
+    pp=p30+p31;
+
+    object.value = pp; 
+
+  } else if(p.length >= 7){
+    p ="(" + p; 
+    l30=p.length;
+    p30=p.substring(0,4);
+    p30=p30+") " 
+
+    p31=p.substring(4,l30);
+    pp=p30+p31;
+
+    l40 = pp.length;
+    p40 = pp.substring(0,9);
+    p40 = p40 + "-"
+
+    p41 = pp.substring(9,l40);
+    ppp = p40 + p41;
+
+    object.value = ppp.substring(0, maxphonelength);
+  }
+
+  GetCursorPosition()
+
+  if(cursorposition >= 0){
+    if (cursorposition == 0) {
+      cursorposition = 2
+    } else if (cursorposition <= 2) {
+      cursorposition = cursorposition + 1
+    } else if (cursorposition <= 4) {
+      cursorposition = cursorposition + 3
+    } else if (cursorposition == 5) {
+      cursorposition = cursorposition + 3
+    } else if (cursorposition == 6) { 
+      cursorposition = cursorposition + 3 
+    } else if (cursorposition == 7) { 
+      cursorposition = cursorposition + 4 
+    } else if (cursorposition == 8) { 
+      cursorposition = cursorposition + 4
+      e1=object.value.indexOf(')')
+      e2=object.value.indexOf('-')
+      if (e1>-1 && e2>-1){
+        if (e2-e1 == 4) {
+          cursorposition = cursorposition - 1
+        }
+      }
+    } else if (cursorposition == 9) {
+      cursorposition = cursorposition + 4
+    } else if (cursorposition < 11) {
+      cursorposition = cursorposition + 3
+    } else if (cursorposition == 11) {
+      cursorposition = cursorposition + 1
+    } else if (cursorposition == 12) {
+      cursorposition = cursorposition + 1
+    } else if (cursorposition >= 13) {
+      cursorposition = cursorposition
+    }
+
+    var txtRange = object.createTextRange();
+    txtRange.moveStart( "character", cursorposition);
+    txtRange.moveEnd( "character", cursorposition - object.value.length);
+    txtRange.select();
+  }
+
+}
+
+function ParseChar(sStr, sChar)
+{
+
+  if (sChar.length == null) 
+  {
+    zChar = new Array(sChar);
+  }
+    else zChar = sChar;
+
+  for (i=0; i<zChar.length; i++)
+  {
+    sNewStr = "";
+
+    var iStart = 0;
+    var iEnd = sStr.indexOf(sChar[i]);
+
+    while (iEnd != -1)
+    {
+      sNewStr += sStr.substring(iStart, iEnd);
+      iStart = iEnd + 1;
+      iEnd = sStr.indexOf(sChar[i], iStart);
+    }
+    sNewStr += sStr.substring(sStr.lastIndexOf(sChar[i]) + 1, sStr.length);
+
+    sStr = sNewStr;
+  }
+
+  return sNewStr;
+}
+
+    </script>
+        
+    <style type="text/css">
+         .paginatorWrap{
+            //background: url("/img/alohaSkin/listFooter.png") repeat-x scroll 0 0 #F2F2F2;
+            //border: 1px solid #EAEAEA;
+            //background-color: #F3F3F3;
+            //border-top: 1px solid #FFFFFF;
+            padding: 3px;
+        }
+        .noRecordsFound{
+            border: 1px solid #D4DADC;
+            padding: 4px;
+        }
+        a:hover {
+            background:#ffffff; /*BG color is a must for IE6*/
+            text-decoration:none;
+            
+        } 
+        a.tooltip span {
+            display:none; 
+            padding:2px 3px; 
+            margin-left:8px; 
+            width:300px;
+            height:70px;
+            opacity: 12.3;
+        }
+        a.tooltip:hover span{
+            display:inline; 
+            position:absolute; 
+            background:#EEF1F5; 
+            border:2px solid #cccccc; 
+            color:#000000;
+        }
+        
+    .myrequiredBlock {
+        background-color: #3300FF !important;
+        bottom: 1px;
+        left: -4px;
+        position: absolute;
+        top: 1px;
+        width: 3px;
+    }
+    
+    .redrequired {
+        background-color: #CC0000 !important;
+        bottom: 1px;
+        //left: 0px;
+        position: absolute;
+        right: 145px;
+        top: 1px;
+        width: 3px;
+    }
+    
+    .bluerequired {
+        background-color: #3300FF !important;
+        bottom: 1px;
+        //left: 0px;
+        position: absolute;
+        right: 165px;
+        top: 1px;
+        width: 3px;
+    }
+    </style> 
+
+    
+</apex:page>

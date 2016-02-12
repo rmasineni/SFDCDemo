@@ -1,0 +1,868 @@
+<apex:page standardController="Opportunity" extensions="PartnerOpportunityCreateExt" action="{!onLoad}" >
+<chatter:feedWithFollowers entityid="{!Opportunity.id}" rendered="{!isSunrunDivision}"/>
+<apex:form >
+<apex:messages styleClass="producterror"/>
+
+<apex:pageBlock >              
+    <div style="width:700px;margin: 0 auto;text-align: center;">         
+           <apex:outputText style="font-size:130%;font-weight: bold;" value="Navigate BrightPath:" rendered="{!AND(NOT(showConfirm),(BBEligible),DesignTypes.size>1)}"></apex:outputText>
+            <apex:selectList style="min-width:200px;" title="NavigationDD" size="1" value="{!selectedDesign}" multiselect="false" rendered="{!AND(NOT(showConfirm),(BBEligible),DesignTypes.size>1)}">
+                <apex:selectOptions value="{!DesignTypes}"/>
+            </apex:selectList>
+            <apex:commandButton id="NavigationGo" styleClass="btn" value="Go" action="{!redirectDesignTool}" rerender="popup,TermsandConditions" rendered="{!AND(NOT(showConfirm),(BBEligible),DesignTypes.size>1)}"/>
+            <apex:outputPanel id="popup">
+              <apex:outputText rendered="{!displayPopup}">
+                <script type="text/javascript">
+                    var errorMessageStr = '{!displayPopupMessage}';
+                    alert(errorMessageStr);
+                </script>
+            </apex:outputText> 
+            <apex:outputText rendered="{!displayWarningMessage}">
+                <script type="text/javascript">
+                    var alertMessage = '{!displayPopupMessage}';
+                    var isConfirmed = window.confirm(alertMessage);
+                    if(isConfirmed == true){
+                        window.top.location.href = '{!redirectURL}';
+                    }
+                </script>
+            </apex:outputText>   
+            <apex:outputText rendered="{!displayURL}">
+                <script type="text/javascript">
+                    
+                    window.top.location.href = '{!redirectURL}';
+                </script>
+            </apex:outputText>   
+          
+            <apex:outputText rendered="{!displaySalesRepURL}">
+                <script type="text/javascript">
+                    
+                    window.top.location.href = '{!SalesRepURL}';
+                </script>
+            </apex:outputText>                       
+        </apex:outputPanel>    
+        </div>                
+        <div style="width:565px;margin: 0 auto;text-align: center;">
+        <apex:outputPanel rendered="{!!isAEEuser}">
+        <apex:outputpanel rendered="{!BBEligible}">                   
+        <apex:outputText style="font-size:130%;font-weight: bold;" value="Payments:"></apex:outputText>
+            <apex:selectList style="min-width:200px;" title="paymentTransaction" size="1" value="{!selectedPayTransc}" multiselect="false">
+                <apex:selectOptions value="{!PayTransOptions}"/>
+                <apex:actionSupport event="onchange" action="{!partnerSungevity}" reRender="op" />
+            </apex:selectList>
+            <apex:outputPanel id="op">
+        <apex:commandButton value="Go" rerender="out" disabled="{!display}" status="status"  styleClass="btn" action="{!paymentTransactionRedirect}"/>       
+                </apex:outputPanel>
+        </apex:outputpanel>
+        </apex:outputpanel>       
+        </div>  
+        <div style="width:700px;margin: 0 auto;text-align: center;">
+        <apex:outputPanel rendered="{!!isAEEuser}">
+        <apex:outputpanel rendered="{!NOT(BBEligible)}">                      
+        <apex:outputText style="font-size:130%;font-weight: bold;" value="Payments:"></apex:outputText>
+            <apex:selectList style="min-width:200px;" title="paymentTransaction" size="1" value="{!selectedPayTransc}"  multiselect="false">
+                <apex:selectOptions value="{!PayTransOptions}"/>
+                <apex:actionSupport event="onchange" action="{!partnerSungevity}" reRender="op1"/>
+            </apex:selectList>
+             <apex:outputPanel id="op1">
+        <apex:commandButton value="Go" rerender="out" disabled="{!display}" status="status"  styleClass="btn" action="{!paymentTransactionRedirect}"/>      
+                  </apex:outputPanel>
+        </apex:outputpanel>
+        </apex:outputpanel>       
+        </div>  
+
+        <div style="width:840px;margin: 0 auto;text-align: center;">
+            <apex:outputPanel rendered="{!createAppointment}">
+                <apex:outputText style="font-size:130%;font-weight: bold;" value="Create Appointment:"></apex:outputText>         
+                    <apex:selectList id="actionId" style="min-width:200px;" title="apptCategory" size="1" value="{!opp.Appointment_category__c}" multiselect="false">
+                    <apex:selectOptions value="{!apptCategories}"/>
+                </apex:selectList>
+                
+                <!-- <apex:inputField  style="min-width:200px;" id="actionId" value="{!opp.Appointment_category__c}"/>  -->             
+                <apex:commandLink value="Go" onclick="return processSchedUserActions('{!$Component.actionId}')" action="{!showScheduler}" target="_blank" styleClass="btn" style="min-width:58px;"  />
+            </apex:outputPanel>             
+        </div>
+    
+    <apex:pageBlockSection title="Opportunity Detail">
+        <apex:pageBlockSectionItem >
+        <apex:outputLabel value="First Name"/>
+        <apex:outputField value="{!contactObj.firstName}">
+        </apex:outputField>
+        </apex:pageBlockSectionItem>
+         <apex:pageBlockSectionItem >
+        <apex:outputLabel value="Primary Title"/>
+        <apex:outputField value="{!Opportunity.Primary_Title__c}">
+        </apex:outputField>
+        </apex:pageBlockSectionItem>
+        <apex:pageBlockSectionItem >
+        <apex:outputLabel value="Last Name"/>
+        <apex:outputField value="{!contactObj.lastName}">
+        </apex:outputField>
+        </apex:pageBlockSectionItem>
+         <apex:pageBlockSectionItem >
+        <apex:outputLabel value="Secondary Title"/>
+        <apex:outputField value="{!Opportunity.Secondary_Title__c}">
+        </apex:outputField>
+        </apex:pageBlockSectionItem>
+         
+        <apex:pageBlockSectionItem helpText="{!$ObjectType.Opportunity.Fields.Address__c.inlineHelpText}" rendered="{!IsBlank($CurrentPage.parameters.gmaps)}">
+        <apex:outputLabel value="{!$ObjectType.Opportunity.fields.Address__c.label}"/>  
+        <apex:outputText >
+        {!Opportunity.Account.BillingStreet}<br></br>{!Opportunity.Account.BillingCity} {!Opportunity.Account.BillingState} {!Opportunity.Account.BillingPostalCode}    
+        </apex:outputText>
+        </apex:pageBlockSectionItem>  
+        <!--       
+        <apex:pageBlockSectionItem helpText="{!$ObjectType.Opportunity.Fields.Zip_6_Account__c.inlineHelpText}">
+        <apex:outputLabel value="{!$ObjectType.Opportunity.fields.Zip_6_Account__c.label}"/>
+        <apex:outputField value="{!Opportunity.Zip_6_Account__c}">
+        </apex:outputField>
+        </apex:pageBlockSectionItem>
+         -->
+                 
+          <apex:outputpanel id="address1" rendered="{!Not(IsBlank($CurrentPage.parameters.gmaps))}">
+            <apex:pageblocksection title="Address Information" columns="1">
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="Address" for="gmapsAddress" />
+                    <c:gmapAddress id="gmapsAddress" street="{!Opportunity.Account.BillingStreet}" city="{!Opportunity.Account.BillingCity}" state="{!Opportunity.Account.BillingState}" postalCode="{!Opportunity.Account.BillingPostalCode}" country="USA" edit="false"></c:gmapAddress>
+                </apex:pageBlockSectionItem>
+            </apex:pageblocksection>
+           </apex:outputPanel> 
+        <apex:pageBlockSectionItem helpText="{!$ObjectType.Opportunity.Fields.Core_Logic_Land_Type__c.inlineHelpText}">
+        <apex:outputLabel value="{!$ObjectType.Opportunity.fields.Core_Logic_Land_Type__c.label}"/>
+        <apex:outputField value="{!Opportunity.Core_Logic_Land_Type__c}">
+        </apex:outputField>
+        </apex:pageBlockSectionItem>  
+        <apex:pageBlockSectionItem helpText="{!$ObjectType.Opportunity.Fields.Home_Type__c.inlineHelpText}">
+        <apex:outputLabel value="{!$ObjectType.Opportunity.fields.Home_Type__c.label}"/>
+        <apex:outputField value="{!Opportunity.Home_Type__c}">
+        </apex:outputField>
+        </apex:pageBlockSectionItem>
+        <apex:pageBlockSectionItem >
+        <apex:outputLabel value="Phone"/>
+        <apex:outputField value="{!contactObj.Phone}">
+        </apex:outputField>
+        </apex:pageBlockSectionItem>
+        <apex:pageBlockSectionItem >
+        <apex:outputLabel value="Alternate Phone"/>
+        <apex:outputField value="{!contactObj.Alternate_Phone__c}"> 
+        </apex:outputField>
+        </apex:pageBlockSectionItem>   
+        <!--              
+        <apex:pageBlockSectionItem helpText="{!$ObjectType.Opportunity.Fields.stagename.inlineHelpText}">
+        <apex:outputLabel value="{!$ObjectType.Opportunity.fields.stagename.label}"/>
+        <apex:outputField value="{!Opportunity.stagename}">
+        </apex:outputField>
+        </apex:pageBlockSectionItem>
+        -->        
+        <apex:pageBlockSectionItem >
+        <apex:outputLabel value="Email"/>
+        <apex:outputField value="{!contactObj.email}">
+        </apex:outputField>
+        </apex:pageBlockSectionItem>
+        <apex:pageBlockSectionItem >
+        <apex:outputLabel value="Email Opt Out"/>
+        <apex:outputField value="{!contactObj.HasOptedOutOfEmail}">
+        </apex:outputField>
+        </apex:pageBlockSectionItem>
+        <apex:pageBlockSectionItem >
+        <apex:outputLabel value="Best Way To Reach"/>
+        <apex:outputField value="{!Opportunity.Best_way_to_reach__c}">
+        </apex:outputField>
+        </apex:pageBlockSectionItem>
+        <apex:pageBlockSectionItem >
+        <apex:outputLabel value="Preferred Language"/>
+        <apex:outputField value="{!contactObj.Preferred_Language__c}">
+        </apex:outputField>
+        </apex:pageBlockSectionItem>
+        <apex:pageBlockSectionItem rendered="{!!isAEEUser}">        
+        <apex:outputLabel value="Hawaii NEM Approved"/>     
+        <apex:outputField value="{!Opportunity.Hawaii_NEM_Approved__c}">        
+        </apex:outputField>     
+        </apex:pageBlockSectionItem>      
+        <apex:pageBlockSectionItem >
+        <apex:outputLabel value="Notes"/>
+        <apex:outputField value="{!Opportunity.Notes__c}">
+        </apex:outputField>
+        </apex:pageBlockSectionItem>        
+        
+        <!-- 
+        <apex:pageBlockSectionItem helpText="{!$ObjectType.Opportunity.Fields.Probability.inlineHelpText}">
+        <apex:outputLabel value="{!$ObjectType.Opportunity.fields.Probability.label}"/>
+        <apex:outputField value="{!Opportunity.Probability}">
+        </apex:outputField>
+        </apex:pageBlockSectionItem>
+        <apex:pageBlockSectionItem helpText="{!$ObjectType.Opportunity.Fields.Sales_Representative__c.inlineHelpText}">
+        <apex:outputLabel value="{!$ObjectType.Opportunity.fields.Sales_Representative__c.label}"/>
+        <apex:outputField value="{!Opportunity.Sales_Representative__c}">
+        </apex:outputField>
+        </apex:pageBlockSectionItem>
+        <apex:pageBlockSectionItem helpText="{!$ObjectType.Opportunity.Fields.Site_Visit_Date__c.inlineHelpText}">
+        <apex:outputLabel value="{!$ObjectType.Opportunity.fields.Site_Visit_Date__c.label}"/>
+        <apex:outputField value="{!Opportunity.Site_Visit_Date__c}">
+        </apex:outputField>
+        </apex:pageBlockSectionItem>
+        <apex:pageBlockSectionItem helpText="{!$ObjectType.Opportunity.Fields.Deal_Id__c.inlineHelpText}">
+        <apex:outputLabel value="{!$ObjectType.Opportunity.fields.Deal_Id__c.label}"/>
+        <apex:outputField value="{!Opportunity.Deal_Id__c}">
+        </apex:outputField>
+        </apex:pageBlockSectionItem>
+        <apex:pageBlockSectionItem helpText="{!$ObjectType.Opportunity.Fields.Prospect_Id__c.inlineHelpText}">
+        <apex:outputLabel value="{!$ObjectType.Opportunity.fields.Prospect_Id__c.label}"/>
+        <apex:outputField value="{!Opportunity.Prospect_Id__c}">
+        </apex:outputField>
+        </apex:pageBlockSectionItem>
+        <apex:pageBlockSectionItem helpText="{!$ObjectType.Opportunity.Fields.Ready_for__c.inlineHelpText}">
+        <apex:outputLabel value="{!$ObjectType.Opportunity.fields.Ready_for__c.label}"/>
+        <apex:outputField value="{!Opportunity.Ready_for__c}">
+        </apex:outputField>
+        </apex:pageBlockSectionItem>
+        -->
+    </apex:pageBlockSection>
+             
+    <apex:pageBlockSection title="Utility Information">
+        <apex:pageBlockSectionItem helpText="{!$ObjectType.Opportunity.Fields.Utility_Company__c.inlineHelpText}">
+        <apex:outputLabel value="{!$ObjectType.Opportunity.fields.Utility_Company__c.label}"/>
+        <apex:outputField value="{!Opportunity.Utility_Company__c}">
+        </apex:outputField>
+        </apex:pageBlockSectionItem>
+        <apex:pageBlockSectionItem helpText="{!$ObjectType.Opportunity.Fields.Territory__c.inlineHelpText}">
+        <apex:outputLabel value="{!$ObjectType.Opportunity.fields.Territory__c.label}"/>
+        <apex:outputField value="{!Opportunity.Territory__c}">
+        </apex:outputField>
+        </apex:pageBlockSectionItem>
+        <apex:pageBlockSectionItem helpText="{!$ObjectType.Opportunity.Fields.Usage_Option__c.inlineHelpText}">
+        <apex:outputLabel value="{!$ObjectType.Opportunity.fields.Usage_Option__c.label}"/>
+        <apex:outputField value="{!Opportunity.Usage_Option__c}">
+        </apex:outputField>
+        </apex:pageBlockSectionItem>  
+        <apex:pageBlockSectionItem helpText="{!$ObjectType.Opportunity.Fields.Rate_Schedule__c.inlineHelpText}">
+        <apex:outputLabel value="{!$ObjectType.Opportunity.fields.Rate_Schedule__c.label}"/>
+        <apex:outputField value="{!Opportunity.Rate_Schedule__c}">
+        </apex:outputField>
+        </apex:pageBlockSectionItem>            
+        <apex:pageBlockSectionItem helpText="{!$ObjectType.Opportunity.Fields.Jan_Usage__c.inlineHelpText}">
+        <apex:outputLabel value="{!$ObjectType.Opportunity.fields.Jan_Usage__c.label}"/>
+        <apex:outputField value="{!Opportunity.Jan_Usage__c}">
+        </apex:outputField>
+        </apex:pageBlockSectionItem>
+        <apex:pageBlockSectionItem helpText="{!$ObjectType.Opportunity.Fields.Feb_Usage__c.inlineHelpText}">
+        <apex:outputLabel value="{!$ObjectType.Opportunity.fields.Feb_Usage__c.label}"/>
+        <apex:outputField value="{!Opportunity.Feb_Usage__c}">
+        </apex:outputField>
+        </apex:pageBlockSectionItem>
+        <apex:pageBlockSectionItem helpText="{!$ObjectType.Opportunity.Fields.Mar_Usage__c.inlineHelpText}">
+        <apex:outputLabel value="{!$ObjectType.Opportunity.fields.Mar_Usage__c.label}"/>
+        <apex:outputField value="{!Opportunity.Mar_Usage__c}">
+        </apex:outputField>
+        </apex:pageBlockSectionItem>
+        <apex:pageBlockSectionItem helpText="{!$ObjectType.Opportunity.Fields.Apr_Usage__c.inlineHelpText}">        
+        <apex:outputLabel value="{!$ObjectType.Opportunity.fields.Apr_Usage__c.label}"/>
+        <apex:outputField value="{!Opportunity.Apr_Usage__c}">
+        </apex:outputField>
+        </apex:pageBlockSectionItem>
+        <apex:pageBlockSectionItem helpText="{!$ObjectType.Opportunity.Fields.May_Usage__c.inlineHelpText}">
+        <apex:outputLabel value="{!$ObjectType.Opportunity.fields.May_Usage__c.label}"/>
+        <apex:outputField value="{!Opportunity.May_Usage__c}">
+        </apex:outputField>
+        </apex:pageBlockSectionItem>
+        <apex:pageBlockSectionItem helpText="{!$ObjectType.Opportunity.Fields.Jun_Usage__c.inlineHelpText}">
+        <apex:outputLabel value="{!$ObjectType.Opportunity.fields.Jun_Usage__c.label}"/>
+        <apex:outputField value="{!Opportunity.Jun_Usage__c}">
+        </apex:outputField>
+        </apex:pageBlockSectionItem>
+        <apex:pageBlockSectionItem helpText="{!$ObjectType.Opportunity.Fields.Jul_Usage__c.inlineHelpText}">
+        <apex:outputLabel value="{!$ObjectType.Opportunity.fields.Jul_Usage__c.label}"/>
+        <apex:outputField value="{!Opportunity.Jul_Usage__c}">
+        </apex:outputField>
+        </apex:pageBlockSectionItem>
+        <apex:pageBlockSectionItem helpText="{!$ObjectType.Opportunity.Fields.Aug_Usage__c.inlineHelpText}">
+        <apex:outputLabel value="{!$ObjectType.Opportunity.fields.Aug_Usage__c.label}"/>
+        <apex:outputField value="{!Opportunity.Aug_Usage__c}">
+        </apex:outputField>
+        </apex:pageBlockSectionItem>
+        <apex:pageBlockSectionItem helpText="{!$ObjectType.Opportunity.Fields.Sep_Usage__c.inlineHelpText}">
+        <apex:outputLabel value="{!$ObjectType.Opportunity.fields.Sep_Usage__c.label}"/>
+        <apex:outputField value="{!Opportunity.Sep_Usage__c}">
+        </apex:outputField>
+        </apex:pageBlockSectionItem>
+        <apex:pageBlockSectionItem helpText="{!$ObjectType.Opportunity.Fields.Oct_Usage__c.inlineHelpText}">
+        <apex:outputLabel value="{!$ObjectType.Opportunity.fields.Oct_Usage__c.label}"/>
+        <apex:outputField value="{!Opportunity.Oct_Usage__c}">
+        </apex:outputField>
+        </apex:pageBlockSectionItem>
+        <apex:pageBlockSectionItem helpText="{!$ObjectType.Opportunity.Fields.Nov_Usage__c.inlineHelpText}">
+        <apex:outputLabel value="{!$ObjectType.Opportunity.fields.Nov_Usage__c.label}"/>
+        <apex:outputField value="{!Opportunity.Nov_Usage__c}">
+        </apex:outputField>
+        </apex:pageBlockSectionItem>
+        <apex:pageBlockSectionItem helpText="{!$ObjectType.Opportunity.Fields.Dec_Usage__c.inlineHelpText}">
+        <apex:outputLabel value="{!$ObjectType.Opportunity.fields.Dec_Usage__c.label}"/>
+        <apex:outputField value="{!Opportunity.Dec_Usage__c}">
+        </apex:outputField>
+        </apex:pageBlockSectionItem>
+        <apex:pageBlockSectionItem >
+        <apex:outputLabel value="{!$ObjectType.Opportunity.fields.Square_footage__c.label}"/>
+        <apex:outputField value="{!Opportunity.Square_footage__c}">  
+        </apex:outputField>      
+        </apex:pageBlockSectionItem>  
+ <!--       <apex:pageBlockSectionItem helpText="{!$ObjectType.Opportunity.Fields.Average_Monthly_Electric_Bill__c.inlineHelpText}">
+        <apex:outputLabel value="{!$ObjectType.Opportunity.fields.Average_Monthly_Electric_Bill__c.label}"/>
+        <apex:outputField value="{!Opportunity.Average_Monthly_Electric_Bill__c}">
+        </apex:outputField>
+        </apex:pageBlockSectionItem>   -->   
+         <apex:pageBlockSectionItem rendered="{!!isAEEUser}">
+                <apex:outputLabel value="Consumption Meter"/>
+                <apex:outputField value="{!Opportunity.Energy_Storage_Applicable__c}" >
+                </apex:outputField>                                    
+        </apex:pageBlockSectionItem>
+    </apex:pageBlockSection>  
+    <!-- 
+     <apex:pageBlockSection title="Site Information">
+        <apex:pageBlockSectionItem helpText="{!$ObjectType.Opportunity.Fields.Roofing_Type__c.inlineHelpText}">
+        <apex:outputLabel value="{!$ObjectType.Opportunity.fields.Roofing_Type__c.label}"/>
+        <apex:outputField value="{!Opportunity.Roofing_Type__c}">
+        </apex:outputField>
+        </apex:pageBlockSectionItem>
+        <apex:pageBlockSectionItem helpText="{!$ObjectType.Opportunity.Fields.Age_of_Roof__c.inlineHelpText}">
+        <apex:outputLabel value="{!$ObjectType.Opportunity.fields.Age_of_Roof__c.label}"/>
+        <apex:outputField value="{!Opportunity.Age_of_Roof__c}">
+        </apex:outputField>
+        </apex:pageBlockSectionItem>                         
+        <apex:pageBlockSectionItem helpText="{!$ObjectType.Opportunity.Fields.Over_2_stories__c.inlineHelpText}">
+        <apex:outputLabel value="{!$ObjectType.Opportunity.fields.Over_2_stories__c.label}"/>
+        <apex:outputField value="{!Opportunity.Over_2_stories__c}">
+        </apex:outputField>
+        </apex:pageBlockSectionItem>
+        <apex:pageBlockSectionItem helpText="{!$ObjectType.Opportunity.Fields.HOA__c.inlineHelpText}">
+        <apex:outputLabel value="HOA"/>
+        <apex:outputField value="{!Opportunity.HOA__c}">
+        </apex:outputField>
+        </apex:pageBlockSectionItem> 
+        <apex:pageBlockSectionItem helpText="{!$ObjectType.Opportunity.Fields.Installation_Type__c.inlineHelpText}">
+        <apex:outputLabel value="{!$ObjectType.Opportunity.fields.Installation_Type__c.label}"/>
+        <apex:outputField value="{!Opportunity.Installation_Type__c}">
+        </apex:outputField>
+        </apex:pageBlockSectionItem>         
+    </apex:pageBlockSection>     
+     -->
+          
+    <apex:pageBlockSection title="Opportunity Detail">
+    <apex:pageBlockSectionItem helpText="{!$ObjectType.Opportunity.Fields.SalesRep__c.inlineHelpText}">
+        <apex:outputLabel value="{!$ObjectType.Opportunity.fields.SalesRep__c.label}"/>
+        <apex:outputField value="{!Opportunity.SalesRep__c}">
+        </apex:outputField>
+       </apex:pageBlockSectionItem>   
+        <apex:pageBlockSectionItem helpText="{!$ObjectType.Opportunity.Fields.stagename.inlineHelpText}">
+        <apex:outputLabel value="Opportunity Stage"/>
+        <apex:outputField value="{!Opportunity.stagename}">
+        </apex:outputField>
+      </apex:pageBlockSectionItem>
+    
+    <!-- <apex:pageBlockSectionItem helpText="{!$ObjectType.Opportunity.Fields.Ready_for__c.inlineHelpText}">
+        <apex:outputLabel value="{!$ObjectType.Opportunity.fields.Ready_for__c.label}"/>
+        <apex:outputField value="{!Opportunity.Ready_for__c}">
+        </apex:outputField>
+      </apex:pageBlockSectionItem> --> 
+      <apex:pageBlockSectionItem helpText="{!$ObjectType.Opportunity.Fields.Opportunity_Status__c.inlineHelpText}">
+        <apex:outputLabel value="Closed Reason"/>
+        <apex:outputField value="{!Opportunity.Opportunity_Status__c}">
+        </apex:outputField>
+      </apex:pageBlockSectionItem>
+      
+      <apex:pageBlockSectionItem helpText="{!$ObjectType.Opportunity.Fields.Designer__c.inlineHelpText}" rendered="{!!isAEEUser}">
+        <apex:outputLabel value="{!$ObjectType.Opportunity.fields.Designer__c.label}"/>
+        <apex:outputField value="{!Opportunity.Designer__c}">
+        </apex:outputField>
+      </apex:pageBlockSectionItem> 
+ <!--     <apex:pageBlockSectionItem helpText="{!$ObjectType.Opportunity.Fields.Why_Closed_Lost__c.inlineHelpText}">
+        <apex:outputLabel value="{!$ObjectType.Opportunity.fields.Why_Closed_Lost__c.label}"/>
+        <apex:outputField value="{!Opportunity.Why_Closed_Lost__c}">
+        </apex:outputField>
+      </apex:pageBlockSectionItem> -->
+       <apex:pageBlockSectionItem helpText="{!$ObjectType.Opportunity.Fields.ownerid.inlineHelpText}">
+        <apex:outputLabel value="Opportunity Owner"/>
+        <apex:outputField value="{!Opportunity.ownerid}">
+        </apex:outputField>
+      </apex:pageBlockSectionItem>
+      <!-- 
+      <apex:pageBlockSectionItem helpText="{!$ObjectType.Opportunity.Fields.Reason__c.inlineHelpText}">
+        <apex:outputLabel value="{!$ObjectType.Opportunity.fields.Reason__c.label}"/>
+        <apex:outputField value="{!Opportunity.Reason__c}">
+        </apex:outputField>
+      </apex:pageBlockSectionItem>
+       -->
+ <!--     <apex:pageBlockSectionItem helpText="{!$ObjectType.Opportunity.Fields.Lead_Qualifier__c.inlineHelpText}">
+        <apex:outputLabel value="{!$ObjectType.Opportunity.fields.Lead_Qualifier__c.label}"/>
+        <apex:outputField value="{!Opportunity.Lead_Qualifier__c}">
+        </apex:outputField>
+      </apex:pageBlockSectionItem>  -->
+ <!--    <apex:pageBlockSectionItem helpText="{!$ObjectType.Opportunity.Fields.Why_Unqualified__c.inlineHelpText}">
+        <apex:outputLabel value="{!$ObjectType.Opportunity.fields.Why_Unqualified__c.label}"/>
+        <apex:outputField value="{!Opportunity.Why_Unqualified__c}">
+        </apex:outputField>
+      </apex:pageBlockSectionItem>  -->
+       <apex:pageBlockSectionItem helpText="{!$ObjectType.Opportunity.Fields.Opportunity_Source_Type__c.inlineHelpText}">
+        <apex:outputLabel value="{!$ObjectType.Opportunity.fields.Opportunity_Source_Type__c.label}"/>
+        <apex:outputField value="{!Opportunity.Opportunity_Source_Type__c}">
+        </apex:outputField>
+      </apex:pageBlockSectionItem> 
+ <!--     <apex:pageBlockSectionItem helpText="{!$ObjectType.Opportunity.Fields.closedate.inlineHelpText}">
+        <apex:outputLabel value="{!$ObjectType.Opportunity.fields.closedate.label}"/>
+        <apex:outputField value="{!Opportunity.closedate}">
+        </apex:outputField>
+      </apex:pageBlockSectionItem>  -->
+      
+      <apex:pageBlockSectionItem helpText="{!$ObjectType.Opportunity.Fields.Prospect_Id__c.inlineHelpText}">
+        <apex:outputLabel value="{!$ObjectType.Opportunity.fields.Prospect_Id__c.label}"/>
+        <apex:outputField value="{!Opportunity.Prospect_Id__c}">
+        </apex:outputField>
+      </apex:pageBlockSectionItem>  
+      <apex:pageBlockSectionItem helpText="{!$ObjectType.Opportunity.Fields.Deal_Id__c.inlineHelpText}">
+        <apex:outputLabel value="{!$ObjectType.Opportunity.fields.Deal_Id__c.label}"/>
+        <apex:outputField value="{!Opportunity.Deal_Id__c}">
+        </apex:outputField>
+      </apex:pageBlockSectionItem>             
+    </apex:pageBlockSection> 
+     <apex:pageBlockSection title="Design">
+    <apex:pageBlockSectionItem helpText="{!$ObjectType.Opportunity.Fields.Ready_for__c.inlineHelpText}">
+        <apex:outputLabel value="{!$ObjectType.Opportunity.fields.Ready_for__c.label}"/>
+        <apex:outputField value="{!Opportunity.Ready_for__c}">
+        </apex:outputField>
+       </apex:pageBlockSectionItem> 
+        
+        <apex:pageBlockSectionItem helpText="{!$ObjectType.Opportunity.Fields.Site_Design_Status__c.inlineHelpText}" rendered="{!!isAEEUser}">
+            <apex:outputLabel value="{!$ObjectType.Opportunity.fields.Site_Design_Status__c.label}"/>
+            <apex:outputField value="{!Opportunity.Site_Design_Status__c}">
+            </apex:outputField>
+        </apex:pageBlockSectionItem>  
+        
+        <apex:pageBlockSectionItem helpText="{!$ObjectType.Opportunity.Fields.Site_Design_Priority__c.inlineHelpText}" rendered="{!!isAEEUser}">
+        <apex:outputLabel value="{!$ObjectType.Opportunity.fields.Site_Design_Priority__c.label}"/>
+        <apex:outputField value="{!Opportunity.Site_Design_Priority__c}">
+        </apex:outputField>
+      </apex:pageBlockSectionItem>
+    
+      <apex:pageBlockSectionItem helpText="{!$ObjectType.Opportunity.Fields.Site_Designer__c.inlineHelpText}" rendered="{!!isAEEUser}">
+        <apex:outputLabel value="{!$ObjectType.Opportunity.fields.Site_Designer__c.label}"/>
+        <apex:outputField value="{!Opportunity.Site_Designer__c}">
+        </apex:outputField>
+      </apex:pageBlockSectionItem>
+          
+    </apex:pageBlockSection> 
+
+    
+    <apex:outputPanel id="retOP">
+                    
+            <apex:pageBlockSection title="Demographics and bill inputs" rendered="{!Opportunity.Energy_Storage_Applicable__c}">
+                <apex:outputField id="YearlykWhconsumption" value="{!energyStorage.Yearly_kWh_consumption__c}">
+                </apex:outputField>
+                <apex:outputField id="Numberofadultshomeduringtheday" value="{!energyStorage.Number_of_adults_home_during_the_day__c}">
+                </apex:outputField>  
+                <apex:outputField id="Timereturnfromwork" value="{!energyStorage.Time_return_from_work__c}">
+                </apex:outputField>
+                <apex:outputField id="UseAC" value="{!energyStorage.Use_A_C__c}">
+                </apex:outputField>
+                <apex:outputField id="Electricvehiclechargedafter4PM" value="{!energyStorage.Electric_vehicle_charged_after_4PM__c}">
+                </apex:outputField>
+                <apex:outputField id="PVTurnkey" value="{!energyStorage.PV_Turnkey__c}">
+                </apex:outputField>
+                <apex:outputField id="CurrentBlendedUtilityRate" value="{!energyStorage.Current_Blended_Utility_Rate__c}">
+                </apex:outputField>
+            </apex:pageBlockSection>   
+            <apex:pageBlockSection title="PV+ES calculator outputs" rendered="{!Opportunity.Energy_Storage_Applicable__c}">
+                <apex:outputField id="PVkWdc" value="{!energyStorage.PV_kWdc__c}">
+                </apex:outputField>
+                <apex:outputField id="ESkWh" value="{!energyStorage.ES_kWh__c}">
+                </apex:outputField>
+                <apex:outputField id="Monthly20YearPPALeasePayment" value="{!energyStorage.Monthly_20_Year_PPA_Lease_Payment__c}">
+                </apex:outputField>
+                <apex:outputField id="Monthly20YearSavings" value="{!energyStorage.Monthly_20_Year_Savings__c}">
+                </apex:outputField>
+                <apex:outputField id="Prepaid20YearPPALease" value="{!energyStorage.Prepaid_20_Year_PPA_Lease__c}">
+                </apex:outputField>
+                <apex:outputField id="Prepaid20YearPPALeaseSavings" value="{!energyStorage.Prepaid_20_Year_PPA_Lease_Savings__c}">
+                </apex:outputField>
+                    
+            </apex:pageBlockSection>
+            <apex:pageBlockSection title="Consumption Meter" rendered="{!Opportunity.Energy_Storage_Applicable__c}">
+                <apex:outputField id="MeterSensorID" value="{!energyStorage.Meter_Sensor_ID__c}">
+                </apex:outputField>
+                <apex:outputField id="DateofMeterInstall" value="{!energyStorage.Date_of_Meter_Instal__c}">
+                </apex:outputField>
+            </apex:pageBlockSection>  
+            <apex:pageBlockSection title="Consumption Meter Documents" rendered="{!Opportunity.Energy_Storage_Applicable__c}" columns="1">
+              <!-- <apex:iframe src="/apex/Opportunity_eSignDocuments?id={!Opportunity.Id}"/> -->
+                   <apex:iframe src="/partner/Opportunity_eSignDocuments?id={!Opportunity.Id}" height="200"/>
+            </apex:pageBlockSection>    
+            </apex:outputPanel>
+    <!--
+    <apex:pageBlockSection title="Appointment">
+        <apex:pageBlockSectionItem >
+        <apex:outputLabel value="Appointment Type Requested"/>
+        <apex:outputField value="{!Opportunity.Sales_Contact_Method__c}">
+        </apex:outputField>
+        </apex:pageBlockSectionItem>
+      <apex:pageBlockSectionItem helpText="{!$ObjectType.Opportunity.Fields.Site_Visit_Date_Time__c.inlineHelpText}">
+        <apex:outputLabel value="{!$ObjectType.Opportunity.fields.Site_Visit_Date_Time__c.label}"/>
+        <apex:outputField value="{!Opportunity.Site_Visit_Date_Time__c}">
+        </apex:outputField>
+       </apex:pageBlockSectionItem>  
+       <apex:pageBlockSectionItem helpText="{!$ObjectType.Opportunity.Fields.Consultation_Time__c.inlineHelpText}">
+        <apex:outputLabel value="{!$ObjectType.Opportunity.fields.Consultation_Time__c.label}"/>
+        <apex:outputField value="{!Opportunity.Consultation_Time__c}">
+        </apex:outputField>
+       </apex:pageBlockSectionItem>            
+     </apex:pageBlockSection>   
+     --> 
+     <!--
+    <apex:pageBlockSection title="Promotion Information">
+    <apex:pageBlockSectionItem helpText="{!$ObjectType.Opportunity.Fields.Offer_Promotion_Name__c.inlineHelpText}">
+        <apex:outputLabel value="{!$ObjectType.Opportunity.fields.Offer_Promotion_Name__c.label}"/>
+        <apex:outputField value="{!Opportunity.Offer_Promotion_Name__c}">
+        </apex:outputField>
+      </apex:pageBlockSectionItem> 
+      <apex:pageBlockSectionItem helpText="{!$ObjectType.Opportunity.Fields.Referral_Promotion_Name__c.inlineHelpText}">
+        <apex:outputLabel value="{!$ObjectType.Opportunity.fields.Referral_Promotion_Name__c.label}"/>
+        <apex:outputField value="{!Opportunity.Referral_Promotion_Name__c}">
+        </apex:outputField>
+      </apex:pageBlockSectionItem>
+      <apex:pageBlockSectionItem helpText="{!$ObjectType.Opportunity.Fields.Offer__c.inlineHelpText}">
+        <apex:outputLabel value="{!$ObjectType.Opportunity.fields.Offer__c.label}"/>
+        <apex:outputField value="{!Opportunity.Offer__c}">
+        </apex:outputField>
+      </apex:pageBlockSectionItem>      
+      <apex:pageBlockSectionItem helpText="{!$ObjectType.Opportunity.Fields.Sales_rep_of_referrer__c.inlineHelpText}">
+        <apex:outputLabel value="{!$ObjectType.Opportunity.fields.Sales_rep_of_referrer__c.label}"/>
+        <apex:outputField value="{!Opportunity.Sales_rep_of_referrer__c}">
+        </apex:outputField>
+      </apex:pageBlockSectionItem>
+      <apex:pageBlockSectionItem helpText="{!$ObjectType.Opportunity.Fields.Referral__c.inlineHelpText}">
+        <apex:outputLabel value="{!$ObjectType.Opportunity.fields.Referral__c.label}"/>
+        <apex:outputField value="{!Opportunity.Referral__c}">
+        </apex:outputField>
+      </apex:pageBlockSectionItem>
+    </apex:pageBlockSection>
+    -->
+    <!-- 
+    <apex:pageBlockSection title="Additional Information">
+        <apex:pageBlockSectionItem helpText="{!$ObjectType.Opportunity.Fields.Why_Closed_Lost__c.inlineHelpText}">
+        <apex:outputLabel value="{!$ObjectType.Opportunity.fields.Why_Closed_Lost__c.label}"/>
+        <apex:outputField value="{!Opportunity.Why_Closed_Lost__c}">
+        </apex:outputField>
+        </apex:pageBlockSectionItem>
+        <apex:pageBlockSectionItem helpText="{!$ObjectType.Opportunity.Fields.Why_Inactive__c.inlineHelpText}">
+        <apex:outputLabel value="{!$ObjectType.Opportunity.fields.Why_Inactive__c.label}"/>
+        <apex:outputField value="{!Opportunity.Why_Inactive__c}">
+        </apex:outputField>
+        </apex:pageBlockSectionItem>
+        <apex:pageBlockSectionItem helpText="{!$ObjectType.Opportunity.Fields.Why_Unqualified__c.inlineHelpText}">
+        <apex:outputLabel value="{!$ObjectType.Opportunity.fields.Why_Unqualified__c.label}"/>
+        <apex:outputField value="{!Opportunity.Why_Unqualified__c}">
+        </apex:outputField>
+        </apex:pageBlockSectionItem>
+        <apex:pageBlockSectionItem helpText="{!$ObjectType.Opportunity.Fields.Why_Postponed__c.inlineHelpText}">
+        <apex:outputLabel value="{!$ObjectType.Opportunity.fields.Why_Postponed__c.label}"/>
+        <apex:outputField value="{!Opportunity.Why_Postponed__c}">
+        </apex:outputField>
+        </apex:pageBlockSectionItem>
+        <apex:pageBlockSectionItem helpText="{!$ObjectType.Opportunity.Fields.Notes__c.inlineHelpText}">
+        <apex:outputLabel value="{!$ObjectType.Opportunity.fields.Notes__c.label}"/>
+        <apex:outputField value="{!Opportunity.Notes__c}">
+        </apex:outputField>
+        </apex:pageBlockSectionItem>
+    </apex:pageBlockSection>
+     -->
+    
+    
+       
+    <apex:pageBlockButtons >    
+        <apex:commandButton value="Edit" action="{!redirect}">
+        </apex:commandButton>
+        <!-- 
+         <apex:commandButton value="Design New Proposal"
+            oncomplete="return processSchedUserActions('{!responseObj.status}', '{!responseObj.errorMessage}', '{!URL}')" action="{!redirectToDesign}">
+        </apex:commandButton>       
+         -->
+         <!-- 
+         <apex:commandButton value="Design New Proposal" action="{!redirectDesignTool}" rendered="{!AND(NOT(showConfirm),(BBEligible))}" rerender="popup">
+        </apex:commandButton>
+         -->  
+        <apex:commandButton value="Confirm" action="{!confirmRedirectToDesign}" rendered="{!(showConfirm)}">
+        </apex:commandButton>
+        <apex:commandButton value="Cancel" action="{!cancel}" rendered="{!(showConfirm)}">
+        </apex:commandButton>
+         <apex:commandbutton value="Request Credit Check"  onclick="return showCreditManager('{!Opportunity.id}')" rendered="{!!isAEEuser}"/>
+        <!-- <apex:commandbutton value="One Time Payment"  onclick="window.location='PartnerOptyPayment?id={!Opportunity.id}'; return false;"/>
+        <apex:commandbutton value="Enroll for Auto Payment"  onclick="window.location='PartnerOptyAutoPayment?id={!Opportunity.id}'; return false;"/>
+        <apex:commandbutton value="Send Request for Payment Email"  onclick="window.location='RequestForOptyPayment?id={!Opportunity.id}'; return false;"/>
+        <apex:commandbutton value="Send Request for Auto Payment Email"  onclick="window.location='RequestForOptyAutoPayment?id={!Opportunity.id}'; return false;"/>       
+        -->
+        <!-- 
+        <apex:outputText style="color:red;font-weight:normal;font-size:150%" value="Payment Transactions:"></apex:outputText>
+            <apex:selectList title="paymentTransaction" size="1" value="{!selectedPayTransc}" multiselect="false">
+                <apex:selectOptions value="{!PayTransOptions}"/>
+            </apex:selectList>  
+        <apex:commandButton value="Go" action="{!paymentTransactionRedirect}"/>      
+          -->        
+         <!-- Santosh Changes-->
+         <!-- 
+            <apex:outputText style="color:red;font-weight:normal;font-size:150%" value="Navigate BrightPath:" rendered="{!AND(NOT(showConfirm),(BBEligible))}"></apex:outputText>
+            <apex:selectList title="NavigationDD" size="1" value="{!selectedDesign}" multiselect="false" rendered="{!AND(NOT(showConfirm),(BBEligible))}">
+                <apex:selectOptions value="{!DesignTypes}"/>
+            </apex:selectList>
+            <apex:commandButton value="Go" action="{!redirectDesignTool}" rerender="popup,TermsandConditions" rendered="{!AND(NOT(showConfirm),(BBEligible))}"/>
+            <apex:outputPanel id="popup">
+              <apex:outputText rendered="{!displayPopup}">
+                <script type="text/javascript">
+                    var errorMessageStr = '{!displayPopupMessage}';
+                    alert(errorMessageStr);
+                </script>
+            </apex:outputText> 
+            <apex:outputText rendered="{!displayURL}">
+                <script type="text/javascript">
+                    
+                    window.top.location.href = '{!redirectURL}';
+                </script>
+            </apex:outputText>   
+          
+            <apex:outputText rendered="{!displaySalesRepURL}">
+                <script type="text/javascript">
+                    
+                    window.top.location.href = '{!SalesRepURL}';
+                </script>
+            </apex:outputText>                       
+        </apex:outputPanel>
+         -->
+            <!-- End Santosh Changes -->
+            
+    </apex:pageBlockButtons>    
+</apex:pageBlock>
+    
+       <apex:outputPanel id="TermsandConditions">
+            <apex:outputPanel styleClass="popupBg" layout="block" rendered="{!displayTandCURL}"/>
+            <apex:outputPanel styleClass="popup" layout="block" rendered="{!displayTandCURL}">
+                <apex:pageBlock title="Terms and Conditions">
+                    <apex:pageBlockButtons location="bottom">
+                         <apex:commandButton action="{!acceptTermsandConditions}" value="Accept"/>
+                         <apex:commandButton action="{!declineTermsandConditions}" value="Decline"/>
+                   </apex:pageBlockButtons>
+                   <apex:pageBlockSection columns="1"> 
+                          <apex:dataTable value="{!PartnerTermsConditions}" var="PartnerTermsCondition">
+                            <apex:column >
+                                <apex:outputText value="{!PartnerTermsCondition.TermsConditionsInfo__c}" escape="false"/>
+                            </apex:column>
+                          </apex:dataTable>
+                   </apex:pageBlockSection>
+                </apex:pageBlock>
+            </apex:outputPanel>
+        </apex:outputPanel>
+    
+</apex:form>
+<apex:include pageName="OpportunityProposalsRealtedList" rendered="{!!isAEEuser}"/>
+<apex:include pageName="OpportunityContactRoles"/>
+<!-- <apex:include pageName="OpportunityDesignOption"/>-->
+
+<!-- Payment Transactions -->
+    <apex:form rendered="{!!isAEEuser}">
+         <apex:pageBlock >
+         <apex:pageBlockSection Title="Payment Transactions" columns="1">
+            <apex:pageBlockTable value="{!Opp.Payment_Transactions__r}" var="tx">
+                        <apex:column >
+                            <apex:facet name="header">Transaction#</apex:facet>
+                            <a href='/partner/{!tx.ID}' onclick="redirectTo('{!tx.Id}')">
+                            <apex:outputtext value="{!tx.Name}"></apex:outputtext>
+                            </a>
+                        </apex:column>
+                <apex:column headervalue="First Name">
+                    <apex:outputField value="{!tx.First_Name__c}"/>
+                </apex:column>
+                <apex:column headervalue="Last Name">
+                    <apex:outputField value="{!tx.Last_Name__c}"/>
+                </apex:column>               
+                <apex:column headervalue="Payment Mode">
+                    <apex:outputField value="{!tx.Payment_Mode__c}"/>
+                </apex:column>
+                <apex:column headervalue="Payment Type">
+                    <apex:outputField value="{!tx.Payment_Type__c}"/>
+                </apex:column>
+                <apex:column headervalue="Status">
+                    <apex:outputField value="{!tx.Status__c}"/>
+                </apex:column>
+                <apex:column headervalue="Amount">
+                    <apex:outputField value="{!tx.Amount__c}"/>
+                </apex:column>
+                <apex:column headervalue="Transaction Date Time">
+                    <apex:outputField value="{!tx.Transaction_DateTime__c}"/>
+                </apex:column>
+                <!-- 
+                <apex:column headervalue="Transaction#">
+                    <apex:outputField value="{!tx.Name}"/>
+                </apex:column>
+                <apex:column headervalue="Status">
+                    <apex:outputField value="{!tx.Status_Icon__c}"/>
+                </apex:column>
+                <apex:column headervalue="Transaction Type">
+                    <apex:outputField value="{!tx.Transaction_Type__c}"/>
+                </apex:column>
+                <apex:column headervalue="Payment Type">
+                    <apex:outputField value="{!tx.Payment_Type__c}"/>
+                </apex:column>
+                <apex:column headervalue="Amount">
+                    <apex:outputField value="{!tx.Amount__c}"/>
+                </apex:column>
+                <apex:column headervalue="Transaction Date/Time">
+                    <apex:outputField value="{!tx.Transaction_DateTime__c}"/>
+                </apex:column>
+                <apex:column headervalue="Transaction Id">
+                    <apex:outputField value="{!tx.Payment_Gateway_Transaction_Id__c}"/>
+                </apex:column>
+                <apex:column headervalue="Reference#">
+                    <apex:outputField value="{!tx.Payment_Gateway_Reference_Num__c}"/>
+                </apex:column>
+                -->
+            </apex:pageBlockTable>
+         </apex:pageBlockSection>                
+        </apex:pageBlock>
+    </apex:form>
+    <apex:form rendered="{!!isAEEUser}">
+         <apex:pageBlock >
+         <apex:pageBlockSection Title="Appointments" columns="1">
+            <apex:pageBlockTable value="{!Opp.Appointments__r}" var="apt">
+                    <!-- 
+                        <apex:column >
+                            <apex:facet name="header">Transaction#</apex:facet>
+                            <a href='/partner/{!tx.ID}' onclick="redirectTo('{!tx.Id}')">
+                            <apex:outputtext value="{!tx.Name}"></apex:outputtext>
+                            </a>
+                        </apex:column>                  
+                     -->
+
+                <apex:column headervalue="Appointment Name">
+                    <apex:outputField value="{!apt.name}"/>
+                </apex:column>
+                <apex:column headervalue="Appointment Date/Time">
+                    <apex:outputField value="{!apt.Appointment_Date_Time__c}"/>
+                </apex:column>               
+                <apex:column headervalue="Appointment End Date/Time">
+                    <apex:outputField value="{!apt.Appointment_End_Date_Time__c}"/>
+                </apex:column>
+                <apex:column headervalue="Appointment Type">
+                    <apex:outputField value="{!apt.Appointment_Type__c}"/>
+                </apex:column>
+                <apex:column headervalue="Appointment Time Local">
+                    <apex:outputField value="{!apt.Appointment_Time_Local__c}">
+                     <apex:inlineEditSupport disabled="true"/>
+                    </apex:outputField>
+                </apex:column>   
+                <apex:column headervalue="Duration">
+                    <apex:outputField value="{!apt.Duration__c}">
+                     <apex:inlineEditSupport disabled="true"/>
+                    </apex:outputField>
+                </apex:column>
+                <apex:column headervalue="Event Assigned To">
+                    <apex:outputField value="{!apt.Event_Assigned_To__r.name}"/>
+                </apex:column>
+                <apex:column headervalue="Status">
+                    <apex:outputField value="{!apt.Status__c}"/>
+                </apex:column>
+                <apex:column headervalue="Sub Region">
+                    <apex:outputField value="{!apt.Sub_Region__c}"/>
+                </apex:column>
+                <apex:column headervalue="Last Modified Date">
+                    <apex:outputField value="{!apt.lastmodifieddate}"/>
+                </apex:column>
+            </apex:pageBlockTable>
+         </apex:pageBlockSection>                
+        </apex:pageBlock>
+    </apex:form>
+
+<apex:include pageName="OpportunityNotesMainPage"/>    
+<!--
+<apex:relatedList list="Notes__r"/>
+<apex:relatedList list="OpportunityContactRoles"/>
+-->
+<script>
+    function showCreditManager(optyId){
+        //alert('RecordId: ' + optyId);
+        var tempURL = '/apex/OpportunityCustomerCreditManager?id=' + optyId; 
+        var isPartner = "{!IsPartnerUser}";
+        if(isPartner == 'true')
+        {
+            tempURL = '/partner/OpportunityCustomerCreditManager?id=' + optyId;
+        }  
+        var newwindow = window.open(tempURL, '', 'toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=950,height=465,left=150,top=150'); 
+        newwindow.focus();
+        return false;
+    }
+    
+/*
+    function processSchedUserActions(status, errorMessage, url){
+        if(status != null && status == 'Error'){
+            alert(errorMessage);
+        }else{
+            if(status != null && status == 'Warning'){
+                var isConfirmed = window.confirm(responseValue[0].errorMessage);
+                if(isConfirmed == true){
+                    var popup = window.open(responseValue[0].url, '_self');
+                }
+            }else if(status != null && status == 'SUCCESS'){
+                var popup = window.open(url, '_self'); 
+            }
+        }
+    }
+    */
+    function redirectTo(obj){
+            var str = '/partner'+'/'+ obj;
+            window.parent.location = str;
+        }
+    function processResponse(response){
+        var status = response.status;
+        alert(status);
+    }
+
+function processSchedUserActions(actionId){
+   var result = true;
+   var actionText = document.getElementById(actionId).value;
+   if(actionText == null || actionText == "" || actionText == '--None--'){
+       alert('Select an appointment type');
+       result = false;
+   }
+   return result;
+   //var win = window.open(redirectUrl, '_blank');
+   //win.focus();
+   //return true;
+}
+
+</script>
+<style>
+        .popup
+        {
+        background-color: white;
+        border-width: 6px;
+        border-style: solid;
+        z-index: 9999;
+        left: 30%;
+        padding:10px;
+        position: absolute;
+        width: 70%;
+        margin-left: -210px;
+        top:80px;
+        height: 30%;
+        overflow: scroll;
+        }
+        
+        .popupBg
+        {
+        background-color:black;
+        opacity: 0.20;
+        filter: alpha(opacity = 70);
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        z-index: 9998;
+        }
+</style>
+
+
+</apex:page>

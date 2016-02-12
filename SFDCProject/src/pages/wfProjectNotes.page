@@ -1,0 +1,99 @@
+<apex:page sidebar="false" showHeader="false"  controller="WorkflowNotes">
+    <style>
+        .headerLogo {
+            margin:1px 1px 1px 1px;
+            border:0;
+            padding-left:10px;
+            padding-bottom:10px;
+            #height: 30px;
+            #width: 90px;
+        }
+    </style>
+	<div align="left" width="100%">
+		<img src="{!$Resource.PartnerPortalHeader32}" class="headerLogo"/>
+    </div>
+	<c:WorkflowTask_CSS />
+	<apex:pageMessages />
+	<apex:outputPanel layout="block">
+	<apex:pageBlock id="block1">
+		<apex:outputPanel styleClass="blue" layout="block">
+	        <apex:pageBlockSection id="taskDetails">
+	            <apex:pageBlockSectionitem id="item1">
+	                <apex:outputLabel value="Project Name"/>
+	                <apex:outputPanel >
+	                    <apex:outputText value="{!projectObj.Name}"/>
+	                </apex:outputPanel>
+	            </apex:pageBlockSectionitem>
+	            <apex:pageBlockSectionitem id="item2">
+	                <apex:outputLabel value="Opportunity"/>
+	                <apex:outputPanel >                     
+	                    <apex:outputText value="{!projectObj.Opportunity_Name__c}"/>
+	                </apex:outputPanel>
+	            </apex:pageBlockSectionitem>
+	            <apex:pageBlockSectionitem id="item6" rendered="{!isProject}">
+	                <apex:outputLabel value="Project Description" rendered="{!isProject}"/>
+	                <apex:outputPanel rendered="{!isProject}">                     
+	                    <apex:outputfield value="{!projectObj.Description__c}"/>
+	                </apex:outputPanel>
+	            </apex:pageBlockSectionitem>
+				<apex:outputfield value="{!taskObj.Name}" rendered="{!isTask}"/>
+				<apex:outputfield value="{!taskObj.Status__c}" rendered="{!isTask}"/>
+				<apex:outputfield value="{!taskObj.Reopen__c}" rendered="{!isTask}"/>
+	        </apex:pageBlockSection>   
+        </apex:outputPanel>     
+    </apex:pageBlock> 
+    <apex:form id="wfNotesFm">
+        <apex:pageBlock id="notesList" >
+            <apex:pageBlockButtons style="align:center;">
+                <apex:commandButton onclick="closeWindow()" id="cancelButton" value="Close" style="display:none"/>
+            </apex:pageBlockButtons>
+
+            <apex:outputpanel styleClass="blue" >
+                <apex:pageBlockSection columns="1" title="Notes">
+                    <apex:pageblocktable id="listContacts" value="{!wfNotes}" var="notesObj">
+                        <apex:column HeaderValue="Name" >
+                            <apex:outputField value="{!notesObj.name}">
+                            </apex:outputField> 
+                        </apex:column>
+                        <apex:column HeaderValue="Comments" >
+                            <apex:outputField value="{!notesObj.Comments__c}">
+                            </apex:outputField> 
+                        </apex:column>
+                        <apex:column HeaderValue="Critical" >
+                            <apex:outputField value="{!notesObj.Critical__c}">
+                            </apex:outputField> 
+                        </apex:column>
+                        <apex:column HeaderValue="Task Name" >
+                            <apex:outputField value="{!notesObj.Task_Name__c}">
+                            </apex:outputField> 
+                        </apex:column>
+                        <apex:column HeaderValue="Created By" >
+                            <apex:outputField value="{!notesObj.createdBy.name}">
+                            </apex:outputField> 
+                        </apex:column>
+                        <apex:column HeaderValue="Create Date" >
+                            <apex:outputField value="{!notesObj.createddate}">
+                            </apex:outputField> 
+                        </apex:column>                  
+                        <apex:column HeaderValue="Last Modified By" >
+                            <apex:outputField value="{!notesObj.lastmodifiedBy.name}">
+                            </apex:outputField> 
+                        </apex:column>
+                        <apex:column HeaderValue="Last Modified Date" >
+                            <apex:outputField value="{!notesObj.lastmodifieddate}">
+                            </apex:outputField> 
+                        </apex:column>                        
+                    </apex:pageblocktable>
+                </apex:pageblocksection>            
+            </apex:outputpanel>
+        </apex:pageblock>
+    </apex:form>  
+	</apex:outputPanel>
+
+	<script type="text/javascript">
+		function closeWindow(){
+			window.top.close();
+			refreshParentWindow();
+		}
+	</script>
+</apex:page>

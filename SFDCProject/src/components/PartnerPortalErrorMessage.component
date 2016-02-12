@@ -1,0 +1,11 @@
+<apex:component >
+	<style>
+		ul li, ol li {
+			margin-left: -2em;
+    		padding-left: 0;
+		}
+	</style>
+	<font color="red">
+		<apex:messages />
+	</font>
+</apex:component>

@@ -1,0 +1,4 @@
+<apex:page id="SCGenralDocuments" sidebar="false" showHeader="false" tabStyle="ServiceContract" StandardController="ServiceContract">
+	<c:SRAttachmentsListViewComponent id="SCGenralDocumentsComponent" relatedObject="{!Id}" displayGeneralDocuments="true"/>
+	<!-- <c:Proposal_SRAttachmentsJavascript />   -->
+</apex:page>

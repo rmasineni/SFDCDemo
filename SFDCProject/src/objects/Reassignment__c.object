@@ -1,0 +1,1106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Follow</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <description>Manages the transfer of generation assets between contacts</description>
+    <enableActivities>true</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableDivisions>false</enableDivisions>
+    <enableEnhancedLookup>true</enableEnhancedLookup>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>true</enableHistory>
+    <enableReports>true</enableReports>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <externalSharingModel>Private</externalSharingModel>
+    <fields>
+        <fullName>Accepted_with_Savings_Guarantee_Addendum__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Accepted with Savings Guarantee Addendum</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Agreed_Upon_Payment__c</fullName>
+        <description>[Requested in SFDC-340]</description>
+        <externalId>false</externalId>
+        <label>Agreed Upon Payment</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Assignee_Agent__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Assignee Agent</label>
+        <referenceTo>Contact</referenceTo>
+        <relationshipName>AgentReassignments</relationshipName>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Assignee_Now_on_Title__c</fullName>
+        <description>[SFDC-635]</description>
+        <externalId>false</externalId>
+        <inlineHelpText>[Requested in SFDC-635]</inlineHelpText>
+        <label>Date of Title Transfer</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Assignee__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Assignee</label>
+        <referenceTo>Contact</referenceTo>
+        <relationshipName>InboundReassignments</relationshipName>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Assignor_Agent__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Assignor Agent</label>
+        <referenceTo>Contact</referenceTo>
+        <relationshipName>Reassignments</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Assignor__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>The customer who is transferring their generation asset. (Also considered the assignor)</description>
+        <externalId>false</externalId>
+        <label>Assignor</label>
+        <referenceTo>Contact</referenceTo>
+        <relationshipName>OutboundReassignments</relationshipName>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Billing_System_Switch_Complete__c</fullName>
+        <description>A timestamp indicating when the billing system fully migrated the billable accounts from the assignor to the assignee</description>
+        <externalId>false</externalId>
+        <inlineHelpText>A timestamp indicating when the billing system fully migrated the billable accounts from the assignor to the assignee</inlineHelpText>
+        <label>Ops Center Processing Date</label>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>Billing_on_GA__c</fullName>
+        <externalId>false</externalId>
+        <formula>text( Service_Contract__r.Billing_Type__c )</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Billing on SC</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Changed_Contract__c</fullName>
+        <description>[SFDC-413]</description>
+        <externalId>false</externalId>
+        <inlineHelpText>If Changed Contract is YES, please make sure 
+
+The two &quot;PPA Rate&quot; OR &quot;Monthly Payment&quot; fields are filled AND the &quot;Annual Increase&quot;</inlineHelpText>
+        <label>Changed Contract?</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>No</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Contractually_Required_Payment__c</fullName>
+        <description>[Requested in SFDC-340]</description>
+        <externalId>false</externalId>
+        <label>Contractually Required Payment</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Credit_Application_Received__c</fullName>
+        <description>The date we received the credit application</description>
+        <externalId>false</externalId>
+        <label>Credit Application Received</label>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Credit_Application_Reminder_Sent__c</fullName>
+        <description>This field, on setting a date, should trigger a workflow to email the Assignee with a reminder notice to complete and return the credit application.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>This field, on setting a date, should trigger a workflow to email the Assignee with a reminder notice to complete and return the credit application.</inlineHelpText>
+        <label>Credit Application Reminder Sent</label>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Credit_Application_Sent__c</fullName>
+        <description>The first date we sent the credit application to the Assignee.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>The first date we sent the credit application to the Assignee.</inlineHelpText>
+        <label>Credit Application Sent</label>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Credit_Approved_On__c</fullName>
+        <description>If and when we approved credit on the new customer</description>
+        <externalId>false</externalId>
+        <inlineHelpText>If and when we approved credit on the new customer</inlineHelpText>
+        <label>Credit Approved On</label>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Customer_Credit__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Customer Credit</label>
+        <referenceTo>Customer_Credit__c</referenceTo>
+        <relationshipLabel>Service Transfers</relationshipLabel>
+        <relationshipName>Service_Transfers</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Date_Agreed_Upon_Payment_Accepted__c</fullName>
+        <description>Date when the &quot;Agreed Upon Payment&quot; field was filled in by a user.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Date when the &quot;Agreed Upon Payment&quot; field was filled in by a user.</inlineHelpText>
+        <label>Date Agreed Upon Payment Accepted</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Date_Assignor_Purchased_Home__c</fullName>
+        <description>Collected from an external source (e.g.: zillow)</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Collected from an external source (e.g.: zillow)</inlineHelpText>
+        <label>Date Assignor Purchased Home</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Date_Proposed_Payment_Offered__c</fullName>
+        <description>Date when the &quot;Proposed Payment&quot; field was filled in by a user.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Date when the &quot;Proposed Payment&quot; field was filled in by a user.</inlineHelpText>
+        <label>Date Proposed Payment Offered</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Discount_Level__c</fullName>
+        <description>[Requested in SFDC-340]</description>
+        <externalId>false</externalId>
+        <label>Discount Level</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Level 1</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Level 2</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Level 3</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Manager Level 1</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Manager Level 2</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Distressed__c</fullName>
+        <description>[Requested in SFDC-539]
+Changed to Picklist on 2012.10.24 [SFDC-585]</description>
+        <externalId>false</externalId>
+        <label>Distressed</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>No</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Effective_Date__c</fullName>
+        <description>The day the ownership of the generation asset is transferred from the assignor to the assignee in real life.
+[Renamed from Close Date in BSKY-675]</description>
+        <externalId>false</externalId>
+        <inlineHelpText>The day the ownership of the generation asset is transferred from the assignor to the assignee in real life.
+[Renamed from Close Date in BSKY-675]</inlineHelpText>
+        <label>Effective Date</label>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Expected_Case_Outcome__c</fullName>
+        <externalId>false</externalId>
+        <label>Expected Case Outcome</label>
+        <picklist>
+            <picklistValues>
+                <fullName>As is</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Below Level 4</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Level 1</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Level 2</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Level 3</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Level 4</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>NPV+</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Redeployment</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Expected_Close_of_Escrow_Date__c</fullName>
+        <externalId>false</externalId>
+        <label>Expected Close of Escrow Date</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Expecting_Prepayment__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>[Requested in SFDC-340]</description>
+        <externalId>false</externalId>
+        <label>Expecting Prepayment</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Generation_Asset__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Generation Asset</label>
+        <referenceTo>Generation_Assets__c</referenceTo>
+        <relationshipName>Reassignments</relationshipName>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Mandatory_ACH_for_New_Customer__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Mandatory ACH for New Customer</label>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>NPV_Dollar_Impact__c</fullName>
+        <description>[Requested in SFDC-636]</description>
+        <externalId>false</externalId>
+        <inlineHelpText>[Requested in SFDC-636]</inlineHelpText>
+        <label>NPV $ Impact</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>NPV_Impact__c</fullName>
+        <description>[Requested in SFDC-636]</description>
+        <externalId>false</externalId>
+        <inlineHelpText>[Requested in SFDC-636]</inlineHelpText>
+        <label>NPV Impact</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Positive</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Negative</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Zero</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>New_Title_Notice_Filed__c</fullName>
+        <description>[Requested in SFDC-444] - To track AB2869 compliance filing documents for reassigned projects</description>
+        <externalId>false</externalId>
+        <label>New Title Notice Filed</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>No</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>PUC Filed</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>UCC Filed</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>PUC Filed, UCC Not Applicable</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>UCC Filed, PUC Not Applicable</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>PUC, UCC Filed</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Original_Annual_Increase__c</fullName>
+        <description>[Requested in SFDC-340]</description>
+        <externalId>false</externalId>
+        <label>Original Annual Increase</label>
+        <precision>6</precision>
+        <required>false</required>
+        <scale>1</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Percent</type>
+    </fields>
+    <fields>
+        <fullName>Original_Monthly_Payment__c</fullName>
+        <description>[Requested in SFDC-340]</description>
+        <externalId>false</externalId>
+        <label>Original Monthly Payment</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Original_PPA_Rate__c</fullName>
+        <description>This is the original price per kWh called out on the contract.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>This is the original price per kWh called out on the contract.</inlineHelpText>
+        <label>Original PPA Rate</label>
+        <precision>8</precision>
+        <required>false</required>
+        <scale>3</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>PTO_Date__c</fullName>
+        <externalId>false</externalId>
+        <formula>Service_Contract__r.Service_Contract_Event__r.PTO__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>PTO Date</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Prepay_Discount__c</fullName>
+        <description>Changed from &quot;Prepay Discount&quot; [Requested in SFDC-340]</description>
+        <externalId>false</externalId>
+        <inlineHelpText>If the new homebuyer is offered a discount for prepaying, enter the amount here</inlineHelpText>
+        <label>Discount on Contractual Obligation</label>
+        <precision>12</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Prepayment_Received__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>[Requested in SFDC-340]</description>
+        <externalId>false</externalId>
+        <label>Prepayment Received</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Prepayment_Type__c</fullName>
+        <description>[Requested in SFDC-340]</description>
+        <externalId>false</externalId>
+        <label>Prepayment Type</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Full Prepayment</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Partial Prepayment</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Proposed_Payment__c</fullName>
+        <externalId>false</externalId>
+        <label>Proposed Payment</label>
+        <precision>10</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Quality_of_Credit__c</fullName>
+        <externalId>false</externalId>
+        <label>Quality of Credit</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Conditional Pass</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Fail</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Not US Citizen: No Credit Score</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Pass</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Prepaid: Credit Check Not Required</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Retroactive – No Credit Check</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>RA_Closed__c</fullName>
+        <description>Populates with date when Status = Closed</description>
+        <externalId>false</externalId>
+        <label>ST Closed</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Reason_For_Reassignment__c</fullName>
+        <externalId>false</externalId>
+        <label>Reason For Service Transfer</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Foreclosure</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Bankruptcy</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Short-Sale</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Divorce</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Moving</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Death of Assignor</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>New Home</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>MultiselectPicklist</type>
+        <visibleLines>6</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Reassignment_Application_Received__c</fullName>
+        <description>The date we received the reassignment application</description>
+        <externalId>false</externalId>
+        <label>Service Transfer Application Received</label>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Reassignment_Application_Reminder_Sent__c</fullName>
+        <description>When we sent a reminder notice to all parties to complete the reassignment process application. Setting this field should trigger a workflow that performs the email operation.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>When we sent a reminder notice to all parties to complete the reassignment process application. Setting this field should trigger a workflow that performs the email operation.</inlineHelpText>
+        <label>Reassignment Application Reminder Sent</label>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Reassignment_Application_Sent__c</fullName>
+        <description>The first date we sent the reassignment application.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>The first date we sent the reassignment application.</inlineHelpText>
+        <label>Service Transfer Application Sent</label>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Reassignment_Event__c</fullName>
+        <description>[SFDC-413]</description>
+        <externalId>false</externalId>
+        <label>Service Transfer Event</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Retroactive__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>[SFDC-413]</description>
+        <externalId>false</externalId>
+        <inlineHelpText>This is used to indicate if we found out about a customer&apos;s divorce or move after the fact. This field is not typically used for foreclosures and customer death.</inlineHelpText>
+        <label>Retroactive</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Revised_Annual_Increase__c</fullName>
+        <description>[Requested in SFDC-340]</description>
+        <externalId>false</externalId>
+        <label>Revised Annual Increase</label>
+        <precision>6</precision>
+        <required>false</required>
+        <scale>1</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Percent</type>
+    </fields>
+    <fields>
+        <fullName>Revised_Monthly_Payment__c</fullName>
+        <description>[Requested in SFDC-340]</description>
+        <externalId>false</externalId>
+        <label>Revised Monthly Payment</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Revised_PPA_Rate__c</fullName>
+        <description>If the assignee has renegotiated the terms of the generation asset and has resulted in a new ppa rate, this field reflects that new rate. On reassignment, the ppa rate will be populated into the generation asset.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>If the assignee has renegotiated the terms of the generation asset and has resulted in a new ppa rate, this field reflects that new rate. On reassignment, the ppa rate will be populated into the generation asset.</inlineHelpText>
+        <label>Revised PPA Rate</label>
+        <precision>8</precision>
+        <required>false</required>
+        <scale>3</scale>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>SR_Signoff__c</fullName>
+        <description>[SFDC-413]</description>
+        <externalId>false</externalId>
+        <label>SR Signoff</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Service_Contract__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Service Contract</label>
+        <referenceTo>ServiceContract</referenceTo>
+        <relationshipLabel>Service Transfers</relationshipLabel>
+        <relationshipName>Service_Transfers</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Source_of_Prepayment__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>[SFDC-413]</inlineHelpText>
+        <label>Source of Prepayment</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Original Homeowner</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>New Homeowner</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Other</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Realtor</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Sunrun</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>MultiselectPicklist</type>
+        <visibleLines>4</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Source_of_Reassignment__c</fullName>
+        <description>[Requested in BSKY-683]</description>
+        <externalId>false</externalId>
+        <inlineHelpText>[Requested in BSKY-683]</inlineHelpText>
+        <label>Source of Service Transfer</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Seller</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Buyer</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Realtor</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Monitoring Service</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Lender</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Title Company</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>SRI Identified</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Partner</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Escrow Company</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Status__c</fullName>
+        <externalId>false</externalId>
+        <label>Status</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Accounting Actions Complete</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Canceled</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Closed</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Contemplating Sale</fullName>
+                <default>true</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Create Customer Contact in Oracle</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Need to Force Reconciliation</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Negotiation/Sale In Progress</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>New Title Notice Needs to Be Filed</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>On Hold</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Purchase</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Push through Ops Portal</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>RA Forms Received: Awaiting Internal Processing</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Redeploy</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>System Relocated</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Verify Amount Due for Seller/Buyer</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Verify Credit</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Verify Customer Contact in Oracle</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Verify Invoice Sent to New Customer</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Verify Reconciliation Sent</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Welcome Call Needed</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>true</sorted>
+        </picklist>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Switch_Date__c</fullName>
+        <description>The date that the generation asset will switch ownership within SunRun&apos;s internal systems. This informs the billing system of when to issue final invoices for the assignor and the first invoices for the assignee.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>The date that the generation asset will switch ownership within SunRun&apos;s internal systems. This informs the billing system of when to issue final invoices for the assignor and the first invoices for the assignee.</inlineHelpText>
+        <label>Switch Date</label>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Welcome_Call_Completed__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Date the welcome call was made to the assignee or date the welcome email was sent if prior call attempts were not sucessful</inlineHelpText>
+        <label>Welcome Call Completed</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <label>Service Transfer</label>
+    <listViews>
+        <fullName>All</fullName>
+        <columns>Assignor__c</columns>
+        <columns>Assignee__c</columns>
+        <columns>Generation_Asset__c</columns>
+        <columns>NAME</columns>
+        <columns>Reassignment_Application_Sent__c</columns>
+        <columns>Reassignment_Application_Received__c</columns>
+        <columns>Billing_System_Switch_Complete__c</columns>
+        <columns>Switch_Date__c</columns>
+        <columns>Status__c</columns>
+        <columns>Reason_For_Reassignment__c</columns>
+        <columns>Original_PPA_Rate__c</columns>
+        <columns>Revised_PPA_Rate__c</columns>
+        <columns>OWNER.ALIAS</columns>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+    </listViews>
+    <listViews>
+        <fullName>Reassignment</fullName>
+        <columns>Distressed__c</columns>
+        <columns>OBJECT_ID</columns>
+        <columns>Status__c</columns>
+        <columns>NAME</columns>
+        <columns>Assignor__c</columns>
+        <columns>Generation_Asset__c</columns>
+        <filterScope>Everything</filterScope>
+        <label>Reassignment</label>
+    </listViews>
+    <listViews>
+        <fullName>ReassignmentYCl_list</fullName>
+        <columns>Distressed__c</columns>
+        <columns>OBJECT_ID</columns>
+        <columns>Status__c</columns>
+        <columns>NAME</columns>
+        <columns>Assignor__c</columns>
+        <columns>Generation_Asset__c</columns>
+        <columns>Assignee__c</columns>
+        <columns>Changed_Contract__c</columns>
+        <columns>Effective_Date__c</columns>
+        <filterScope>Everything</filterScope>
+        <label>ReassignmentYCl_list</label>
+        <language>en_US</language>
+    </listViews>
+    <nameField>
+        <displayFormat>{0}</displayFormat>
+        <label>Service Transfer</label>
+        <trackHistory>true</trackHistory>
+        <type>AutoNumber</type>
+    </nameField>
+    <pluralLabel>Service Transfers</pluralLabel>
+    <searchLayouts>
+        <customTabListAdditionalFields>Generation_Asset__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Assignor__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Assignee__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Status__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>CREATED_DATE</customTabListAdditionalFields>
+        <searchResultsAdditionalFields>Generation_Asset__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Assignor__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Assignee__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Status__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>CREATED_DATE</searchResultsAdditionalFields>
+    </searchLayouts>
+    <sharingModel>Private</sharingModel>
+    <validationRules>
+        <fullName>Changed_Contract_Annual</fullName>
+        <active>true</active>
+        <description>Checks to see if &quot;Change Contract&quot; is selected, and if so, forces the two &quot;Annual Increase&quot; fields to be filled</description>
+        <errorConditionFormula>ISPICKVAL( Changed_Contract__c , &quot;Yes&quot;) 
+&amp;&amp; 
+(
+(ISBLANK(  Original_Annual_Increase__c ) ||  ISBLANK(   Revised_Annual_Increase__c ) )
+)</errorConditionFormula>
+        <errorDisplayField>Original_Annual_Increase__c</errorDisplayField>
+        <errorMessage>If you select &quot;Changed Contract&quot; you MUST also fill in the two &quot;Annual Increase&quot; fields</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Changed_Contract_PPA_Monthly</fullName>
+        <active>true</active>
+        <description>Checks to see if &quot;Change Contract&quot; is selected, and if so, forces selection of either &quot;PPA&quot; OR &quot;Monthly&quot; payment rate types and filling out of BOTH related fields (&quot;Original&quot; AND &quot;Revised&quot;)</description>
+        <errorConditionFormula>ISPICKVAL( Changed_Contract__c , &quot;Yes&quot;) 
+&amp;&amp; 
+(
+(ISBLANK( Original_PPA_Rate__c ) ||  ISBLANK( Revised_PPA_Rate__c ) )
+&amp;&amp;
+(ISBLANK( Original_Monthly_Payment__c  ) ||  ISBLANK(  Revised_Monthly_Payment__c  ) )
+)</errorConditionFormula>
+        <errorDisplayField>Revised_PPA_Rate__c</errorDisplayField>
+        <errorMessage>If you select &quot;Changed Contract&quot; you MUST also select the &quot;PPA&quot; OR &quot;Monthly&quot; payment rate types and fill out BOTH related fields (&quot;Original&quot; AND &quot;Revised&quot;)</errorMessage>
+    </validationRules>
+</CustomObject>

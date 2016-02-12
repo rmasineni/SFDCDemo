@@ -1,0 +1,153 @@
+<apex:page id="page" controller="CreditCheckController" action="{!init}" showHeader="false" sidebar="false">
+<script>
+  var conArray = [];
+</script>
+<apex:form id="form" >
+ <apex:pageMessages escape="false" id="pgmsg"/>
+<apex:outputText value="{!selCC}" id="selcc" style="visibility:hidden;" />
+   <apex:actionFunction name="setsel" action="{!setSelCon}" reRender="selcc">
+    <apex:param name="firstParam" assignTo="{!selCC}" value=""/>
+   </apex:actionFunction>
+   
+<div id="newcon" style="visibility:hidden; height:0px;" name="newcon">
+  <script>
+    if('{!bAddCon}' == 'true')
+    {
+       document.getElementById('newcon').style.visibility = 'visible';
+       document.getElementById('newcon').style.height= '300px';
+    }
+  </script>
+ <apex:pageBlock title="Add Contact" id="conPB">
+<!-- <apex:pageMessages id="conmsgs"/>  rendered="{!bShowConMsgs}"/>-->
+ <apex:pageBlockSection collapsible="false" columns="2">
+  <apex:inputField value="{!addCon.Salutation}" label="Salutation"/>
+  <apex:inputField value="{!addCon.MailingStreet}" label="Street"/>
+  <apex:inputField value="{!addCon.FirstName}" label="First Name"/>
+  <apex:inputField value="{!addCon.MailingCity}" label="City"/>  
+  <apex:inputField value="{!addCon.LastName}" label="Last Name" required="false"/>
+  <apex:inputField value="{!addCon.MailingState}" label="State"/>
+  <apex:inputField value="{!addCon.Email}" label="Email"/>
+  <apex:inputField value="{!addCon.MailingPostalCode}" label="Postal Code"/>
+  <apex:inputField value="{!addCon.Phone}" label="Phone"/>
+  <apex:inputField value="{!addCon.MailingCountry}" label="Country"/>
+  </apex:pageBlockSection>
+ <apex:pageblockButtons location="bottom">
+   <apex:commandButton id="newCon" reRender="conPB, pgmsg" action="{!CreateContact}" value="Add Contact"/>
+   <!--onclick="document.getElementById('newcon').style.visibility = 'hidden'; return false;"/>-->
+   <apex:commandButton id="cancelCon" action="{!Cancel}" value="Cancel" onclick="document.getElementById('newcon').style.height= '0px'; document.getElementById('newcon').style.visibility = 'hidden'; return false;"/>
+ </apex:pageblockButtons>
+ </apex:pageBlock>
+<a name="newcon"/>
+</div>
+   
+<apex:pageblock id="allOCRspb" title="Available Contacts for Credit Check">
+ <apex:pageblocktable id="allOCRspbt" value="{!listCCC}" var="ocr">
+   <script>conArray.push('{!ocr}');</script> 
+  <apex:column headervalue="Select">      
+    <input id="radioB_{!ocr.ContactId}" name="radioB_{!ocr.ContactId}" value="{!ocr.selected}" checked="" type="radio" onclick="setsel('{!ocr.ContactId}'); setRadio(this);"/>
+    <script>
+     var theid = 'radioB_' + '{!ocr.ContactId}';     
+     if('{!ocr.selected}' == 'true')
+     {
+        document.getElementById(theid).checked = 'checked'; 
+     }     
+    </script>  
+  </apex:column>
+   <apex:column headerValue="Name" value="{!ocr.ContactName}"/>
+   <apex:column headerValue="Role" value="{!ocr.ContactRole}"/>
+   <apex:column headerValue="Has Active Credit Report?" ><apex:inputCheckbox disabled="true" value="{!ocr.bActiveCCExists}"/></apex:column>   
+   <apex:column headerValue="Has Recently Submitted Credit Report?" ><apex:inputCheckbox disabled="true" value="{!ocr.bRecentlySubmittedCCExists}"/></apex:column>   
+   <apex:column headerValue="Email" value="{!ocr.ContactEmail}"/>
+   <apex:column headerValue="Phone" value="{!ocr.ContactPhone}"/>
+ </apex:pageblocktable>
+ <!--<apex:inputHidden id="selectedcreditcheckrecord" value="{!selCC}"/>-->
+ <apex:pageblockButtons location="top">
+  <apex:commandButton id="cancelbtn" value="Cancel" onclick="window.close();"/> <!--action="{!CancelCreditCheck}"/>-->
+  <apex:commandButton id="sccrbtn" value="Request Credit Check" onclick="document.getElementById('newcon').style.visibility = 'hidden'; var retval = callLeaseDimensions(); if(retval=='SUCCESS'){return true;}else{return false;}" action="{!SubmitCreditCheck}" /> <!--action="{!none}"/>-->  
+  <apex:commandButton id="newconbtn" value="Add New Contact" action="{!setbAddCon}"/> <!--onclick="document.getElementById('newcon').style.visibility = 'visible';"/>-->
+ </apex:pageblockButtons>
+</apex:pageblock>
+
+</apex:form>
+<script>
+function callLeaseDimensions()
+{
+    var elemRadio = document.getElementsByTagName('input');
+    var bAtLeaseOneChecked = false;
+    var conid = '';
+    var bValid = true;
+    for(var i=0;i<elemRadio.length;i++)
+    { 
+      if(elemRadio[i].id.indexOf('radioB_') != -1 && elemRadio[i].checked)
+      { 
+         bAtLeaseOneChecked = true;
+         conid = elemRadio[i].id.replace('radioB_','');
+         listCons = '{!listActiveCCCons}';
+         if(listCons.indexOf(conid) != -1)
+         {
+            bValid = false;
+         }
+         listConsSubmitted = '{!listSubmittedCCCons}';
+         if(listConsSubmitted.indexOf(conid) != -1)
+         {
+            bValid = false;
+         }
+         else
+         {
+            //document.getElementById('selectedcreditcheckrecord').value = 'conid';
+         }
+      }
+    }
+    if(bAtLeaseOneChecked)
+    {
+       //
+       if(bValid)
+       {
+          //alert('Issuing call to LeaseDimensions GreenLight...');
+       }
+       else       
+       {
+          alert('This contact already has an active credit report or was recently submitted for review.  You may not request a new one at this time.');
+          return 'FAIL';
+       }
+    }
+    else
+    {
+       alert('You must select a contact in order to request a credit check.');
+       return 'FAIL';
+    }
+    return 'SUCCESS';
+}
+function setRadio(currentselectedOCR)
+{
+  try
+  {
+    var elemRadio = document.getElementsByTagName('input');
+    for(var i=0;i<elemRadio.length;i++)
+    { 
+      if(elemRadio[i].id != currentselectedOCR.id && elemRadio[i].id.indexOf('radioB_') != -1)
+      {
+        elemRadio[i].value = false;  
+        elemRadio[i].checked = false;         
+      }
+      if(elemRadio[i].id == currentselectedOCR.id)
+      {
+        elemRadio[i].checked = true;
+        elemRadio[i].value = true;  
+      }      
+    }
+  }catch(ex)
+  {
+     alert(ex);
+  }
+}  
+function scrollTo(hash) {
+    // window.scrollTo(0, document.body.scrollHeight);
+    window.location = "#" + hash;
+}
+function resizeWindow() {
+          window.resizeTo("900","500");
+}
+resizeWindow();
+</script>
+</apex:page>

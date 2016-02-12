@@ -1,0 +1,416 @@
+<apex:page standardController="Audit_Feedback__c" extensions="AuditFeedbackController" standardStylesheets="true" >
+<!--<apex:stylesheet value="{!URLFOR($Resource.AuditFeedback, 'AuditFeedback.css')}"/> -->
+<script>
+function setFocusOnLoad() {}
+</script>
+<style type="text/css">
+ 
+     .headerClassGrey{
+        text-align:center !important;
+        border-right:1px solid black !important;
+
+    }
+    
+    .headerClassWhite{
+        text-align:center !important;
+       border-right:1px solid black !important;
+    }  
+       
+    .columnBorderWhite{        
+        border-top:1px solid black !important; 
+        border-bottom:0px solid black !important;
+        border-right:1px solid black !important;
+        border-left:0px solid black!important;
+        background-color: white !important;
+
+    }
+    
+    .columnBorderGrey{        
+        border-top:1px solid black !important; 
+        border-bottom:px solid black !important;
+        border-right:1px solid black !important;
+        border-left:0px solid black!important;
+        background-color: lightgray !important;
+
+    }    
+    
+    .columnBorder{        
+        border-top:1px solid black !important; 
+        border-bottom:px solid black !important;
+        border-right:1px solid black !important;
+        border-left:0px solid black!important;
+    }     
+ 
+    .tableBorder{
+        border-top:1px solid black !important; 
+        border-bottom:1px solid black !important;
+        border-right:0px solid black !important;
+        border-left:1px solid black !important; 
+    }
+    
+    .rightColumnHeader{
+        border-right:1px solid black !important;
+        text-align:center !important;
+    }
+
+    .headerClass{
+        text-align:center !important;
+    }
+    
+
+      
+    input:focus {
+       background-color: #fff;
+       font-weight: bold;
+    }
+    
+    .scorecardComments
+    {
+        width:200px !important;
+        height:50px !important;
+        resize: none !important;           
+    }
+    
+    .scorecardComments:focus
+    {
+        background-color: yellow !important;
+        width:200px !important;
+        height:50px !important;
+        resize: none !important;        
+    }
+    
+    .siteCharacteristics
+    {
+        width:75px !important
+    }
+    
+    .siteCharacteristics:focus
+    {
+        background-color: yellow !important;
+    }
+    
+    .scorecardQAScore
+    {
+        width:115px !important;
+    }
+    .scorecardQAScore:focus
+    {
+        background-color: yellow !important;   
+    }
+    .scorecard:focus
+    {
+        background-color: yellow !important;
+    }
+
+    .pbTest {
+        padding:0px !important;
+    }
+
+    .pbTitle {
+        white-space: nowrap !important;
+        font-size: 12px !important;
+        margin-right:0px !important;
+        border:solid 0px !important;
+        padding-right:0px !important;
+        font-weight:bold !important;
+        border-spacing:0px !important;
+    }
+    
+    .pbValue {
+        padding-left:0px !important;
+        align:left !important;
+        font-size:12px !important;
+        border:solid 0px !important;
+        white-space: nowrap !important;
+ 
+    }
+    
+}
+</style>
+
+<apex:form id="feedback" >
+<apex:messages id="messages" />
+<apex:pageBlock rendered="{!NOT(IsAuditor)}" >
+ <apex:inputHidden id="ianame" value="{!installAudit.Auditor_Contact__c}"/>
+<table width="100%" >
+<tr valign="middle">
+<td width="25%">
+    <table><tr><td>
+        <apex:outputLabel styleClass="pbTitle" for="reviewerName" value="Reviewer Name: " rendered="{!NOT(IsPartner)}"/></td>
+    <td>
+        <apex:outputField styleClass="pbValue" id="reviewerName" value="{!installAudit.Auditor_Contact__c}" rendered="{!NOT(IsPartner)}"/>        
+    </td>
+    </tr>
+    <tr><td>
+       <apex:outputLabel styleClass="pbTitle " for="srhNumber" value="SRH Number: "/>  
+    </td>
+    <td>
+        <apex:outputText rendered="{!(installAudit.Generation_Asset__r.Id != null)}" styleClass="pbValue" id="srhNumber1" value="{!installAudit.Generation_Asset__r.Name}"/> 
+        <apex:outputText rendered="{!(installAudit.Service_Contract__r.Id != null)}" styleClass="pbValue" id="srhNumber2" value="{!installAudit.Service_Contract__r.Name}"/>       
+        </td></tr>
+        <tr><td>
+        <apex:outputLabel styleClass="pbTitle" for="criteriaMissing" value="Priority Criteria Missing: " ></apex:outputLabel>  
+    </td>
+    <td>
+        <apex:outputText styleClass="pbValue" id="criteriaMissing" value="{!installAudit.Priority_Criteria_Missing__c}" />
+   </td></tr>
+ </table>
+ </td>
+ <td width="25%" cellpadding="0">
+    <table><tr>
+    <td>
+        <apex:outputLabel styleClass="pbTitle" for="score2" value="Score: " /> 
+    </td>
+    <td>
+        <apex:outputField styleClass="pbValue" id="score2" value="{!installAudit.Score__c}" />
+    </td>   
+    </tr>
+    <tr><td align="right">
+        <apex:outputLabel styleClass="pbTitle" for="criteriaMissed" value="Criteria Missing: " ></apex:outputLabel>  
+    </td>
+    <td>
+        <apex:outputText styleClass="pbValue" id="criteriaMissed" value="{!installAudit.Criteria_Missing__c}" />
+   </td></tr>
+    </table>
+ </td>
+ <td width="25%">
+    <table><tr><td>
+        <apex:outputlabel styleClass="pbTitle" for="priorityMissed" value="Priority Criteria Failed: " ></apex:outputlabel></td>
+      <td> <apex:outputText styleClass="pbValue" id="priorityMissed" value="{!installAudit.Priority_Criteria_Missed__c}" />
+     </td>
+    </tr>
+    <tr><td align="right">
+        <apex:outputLabel styleClass="pbTitle" for="epcDiscrep" value="EPC Discrepancies: " ></apex:outputLabel>  
+    </td>
+    <td>
+        <apex:outputText styleClass="pbValue" id="epcDiscrep" value="{!installAudit.EPC_Discrepancies__c}" />
+   </td></tr>
+    </table>
+ </td>
+  <td width="25%">
+    <table><tr>
+        <td align="right">
+           <apex:outputLabel styleClass="pbTitle" for="partnerMetric" value="Partner Metric: " ></apex:outputLabel>  
+           
+       </td>
+       <td> 
+         <apex:outputText styleClass="pbvalue" id="partnerMetric" value="{!installAudit.Partner_Metric__c}" />     
+       </td>
+    </tr>
+    <tr>
+    <td align="right">
+      <apex:outputLabel styleClass="pbTitle" for="corporateMetric" value="Corporate Metric: " rendered="{!NOT(ISPICKVAL($User.UserType,'PowerPartner'))}"></apex:outputLabel>    
+    </td>
+    <td>
+        <apex:outputText styleClass="pbValue" id="corporateMetric" value="{!installAudit.Corporate_Metric__c}" rendered="{!NOT(ISPICKVAL($User.UserType,'PowerPartner'))}"/>
+   </td></tr>
+    </table>
+ </td>
+ 
+</tr>
+</table>
+</apex:pageBlock>
+
+
+<apex:pageBlock rendered="{!IsAuditor}" >
+ <apex:inputHidden id="ianame" value="{!installAudit.Auditor_Contact__c}"/>
+<table width="100%">
+<tr valign="middle">
+<td width="16%">
+    <apex:outputLabel style="font-weight:bold" styleClass="auditheaderheading" for="reviewerName" value="Reviewer Name: "></apex:outputLabel>
+    <apex:outputField styleClass="auditheaderdata" id="contactOutput" value="{!installAudit.Auditor_Contact__c}"/>
+    
+</td>
+<td width="10%">
+    <apex:outputLabel style="font-weight:bold" styleClass="auditheaderheading" for="srhNumber" value="SRH Number: "></apex:outputLabel>
+    <!-- <apex:outputText styleClass="auditheaderdata" id="srhNumber" value="{!installAudit.Generation_Asset__r.Name}"/> -->
+    <apex:outputText rendered="{!(installAudit.Generation_Asset__r.Id != null)}" styleClass="auditheaderdata" id="srhNumber1" value="{!installAudit.Generation_Asset__r.Name}"/> 
+    <apex:outputText rendered="{!(installAudit.Service_Contract__r.Id != null)}" styleClass="auditheaderdata" id="srhNumber2" value="{!installAudit.Service_Contract__r.Name}"/>       
+    
+</td>
+<td width="6%">
+    <apex:outputPanel rendered="{!NOT(IsAuditor)}" >
+        <apex:outputLabel style="font-weight:bold" styleClass="auditheaderheading" for="score" value="Score: " ></apex:outputLabel>  
+        <apex:outputText styleClass="auditheaderdata" id="score" value="{!Score}" />
+    </apex:outputPanel>
+</td>
+<td width="14%">    
+    <apex:outputPanel rendered="{!NOT(IsAuditor)}" >
+        <apex:outputLabel style="font-weight:bold" styleClass="auditheaderheading" for="criteriaMissed" value="Criteria Missed: " ></apex:outputLabel>  
+        <apex:outputText styleClass="auditheaderdata" id="criteriaMissed" value="{!CriteriaMissed}" />
+    </apex:outputPanel>
+</td> 
+<td width="14%">    
+    <apex:outputPanel rendered="{!NOT(IsAuditor)}" >
+        <apex:outputLabel style="font-weight:bold" styleClass="auditheaderheading" for="criteriaMissing" value="Priority Criteria Missing: " ></apex:outputLabel>  
+        <apex:outputText styleClass="auditheaderdata" id="criteriaMissing" value="{!PriorityCriteriaMissing}" />
+    </apex:outputPanel>
+</td> 
+<td width="14%">    
+        <apex:outputPanel rendered="{!NOT(IsAuditor)}" > 
+        <apex:outputLabel style="font-weight:bold" styleClass="auditheaderheading" for="priorityMissed" value="Priority Criteria Failed: " ></apex:outputLabel>  
+        <apex:outputText styleClass="auditheaderdata" id="priorityMissed" value="{!PriorityCriteriaMissed}" />
+    </apex:outputPanel>
+</td>    
+<td width="13%">   
+    <apex:outputPanel rendered="{!NOT(IsAuditor)}" >
+        <apex:outputLabel style="font-weight:bold" styleClass="auditheaderheading" for="epcDiscrep" value="EPC Discrepancies: " ></apex:outputLabel>  
+        <apex:outputText styleClass="auditheaderdata" id="epcDiscrep" value="{!EPCDiscrepancies}" />
+    </apex:outputPanel>
+</td>
+<td width="12%">    
+    <apex:outputPanel rendered="{!NOT(IsAuditor)}" >
+        <apex:outputLabel style="font-weight:bold" styleClass="auditheaderheading" for="partnerMetric" value="Partner Metric: " ></apex:outputLabel>  
+        <apex:outputText styleClass="auditheaderdata" id="partnerMetric" value="{!PassFail}" />
+    </apex:outputPanel>
+</td>
+<td width="14%">    
+    <apex:outputPanel rendered="{!NOT(IsAuditor)}" >
+        <apex:outputLabel style="font-weight:bold" styleClass="auditheaderheading" for="corpMetric" value="Corporate Metric: " ></apex:outputLabel>  
+        <apex:outputText styleClass="auditheaderdata" id="corpMetric" value="{!CorporatePassFail}" />
+    </apex:outputPanel>
+</td>
+<td width="4%">    
+<apex:commandButton tabindex="-1" value="Submit to SR" action="{!SubmitAudit}" style="width:100px" rendered="{!IsAuditor && (installAudit.Status__c != 'Submitted' && installAudit.Status__c != 'SR Approved')}"  /></td>
+</tr>
+</table>
+</apex:pageBlock>
+
+<!--Site Chars -->
+<apex:pageBlock rendered="{!siteCharacteristics.size != 0}" >
+<apex:actionFunction name="calculateAutoCriteria1" action="{!CalculateAutoCriteria1}" reRender="feedback"/>
+<apex:pageBlockTable value="{!siteCharacteristics}" var="site" rendered="{!siteCharacteristics.size != 0}" styleclass="tableBorder">
+<apex:column styleClass="columnBorderGrey" headerClass="headerClassGrey" >
+  <apex:facet name="header">Panel Manufacturer</apex:facet>
+  <apex:outputText value="{!site.SiteCharacteristic.Panel_Manufacturer__c}"/>
+</apex:column>
+
+<apex:column styleClass="columnBorderGrey"  headerClass="headerClassGrey">
+  <apex:facet name="header">Panel<br/>Count</apex:facet>
+  <apex:outputText value="{!site.SiteCharacteristic.Panel_Count__c}"/>
+</apex:column>
+<apex:column styleClass="columnBorderWhite" headerClass="headerClassWhite" >
+  <apex:facet name="header">Inverter Manufacturer</apex:facet>
+  <apex:outputText value="{!site.SiteCharacteristic.Inverter_Manufacturer__c}"/>
+</apex:column>
+
+<apex:column styleClass="columnBorderWhite" headerClass="headerClassWhite">
+  <apex:facet name="header">Inverter<br/>Count</apex:facet>
+  <apex:outputText value="{!site.SiteCharacteristic.Inverter_Count__c}"/>
+</apex:column>
+
+<apex:column styleClass="columnBorderGrey" headerClass="headerClassGrey">
+<apex:facet name="header">EPC <br/>Azimuth</apex:facet>
+    <apex:outputText value="{!site.SiteCharacteristic.EPC_Azimuth__c}" />
+</apex:column>
+
+<apex:column styleClass="columnBorderGrey" headerClass="headerClassGrey">
+<apex:facet name="header">Observed <br/>Azimuth</apex:facet>
+
+    <apex:inputField onchange="{calculateAutoCriteria1()}" styleClass="siteCharacteristics" value="{!site.SiteCharacteristic.Observed_Azimuth__c}" rendered="{!IsAuditor && (installAudit.Status__c != 'Submitted' && installAudit.Status__c != 'SR Approved')}">
+    </apex:inputField>
+    <apex:outputField value="{!site.SiteCharacteristic.Observed_Azimuth__c}" rendered="{!NOT(IsAuditor) || (installAudit.Status__c == 'Submitted' || installAudit.Status__c == 'SR Approved')}"/>    
+</apex:column>
+
+<apex:column styleClass="columnBorderWhite" headerClass="headerClassWhite">
+<apex:facet name="header">EPC <br/>Tilt</apex:facet>
+    <apex:outputText value="{!site.SiteCharacteristic.EPC_Tilt__c}" />
+</apex:column>
+
+<apex:column styleClass="columnBorderWhite" headerClass="headerClassWhite">
+<apex:facet name="header">Observed <br/>Tilt</apex:facet>
+    <apex:inputField onchange="{calculateAutoCriteria1()}" styleClass="siteCharacteristics" value="{!site.SiteCharacteristic.Observed_Tilt__c}" rendered="{!IsAuditor && (installAudit.Status__c != 'Submitted' && installAudit.Status__c != 'SR Approved')}"/>
+    <apex:outputField value="{!site.SiteCharacteristic.Observed_Tilt__c}" rendered="{!NOT(IsAuditor) || (installAudit.Status__c == 'Submitted' || installAudit.Status__c == 'SR Approved')}"/>    
+</apex:column>
+
+<apex:column styleClass="columnBorderGrey" headerClass="headerClassGrey">
+<apex:facet name="header">EPC Average <br/>Annual Shading</apex:facet>
+    <apex:outputText value="{!site.SiteCharacteristic.EPC_Average_Annual_Shading__c}"/>    
+</apex:column>
+
+<apex:column styleClass="columnBorderGrey" headerClass="rightColumnHeader">
+<apex:facet name="header">Observed Average <br/>Annual Shading</apex:facet>
+    <apex:inputField onchange="{calculateAutoCriteria1()}" styleClass="siteCharacteristics" value="{!site.SiteCharacteristic.Observed_Average_Annual_Shading__c}" rendered="{!IsAuditor && (installAudit.Status__c != 'Submitted' && installAudit.Status__c != 'SR Approved')}"/>
+    <apex:outputField value="{!site.SiteCharacteristic.Observed_Average_Annual_Shading__c}"  rendered="{!NOT(IsAuditor) || (installAudit.Status__c == 'Submitted' || installAudit.Status__c == 'SR Approved')}"/>    
+</apex:column>
+
+    </apex:pageBlockTable>                           
+</apex:pageBlock>
+
+<!--Feedback -->
+<apex:pageBlock id="feedback" >
+<apex:pageBlockTable value="{!auditFeedbackList}" var="af" styleclass="tableBorder">
+<apex:column styleClass="columnBorder" headerClass="headerClass">
+  <apex:facet name="header">Criteria<br/>ID</apex:facet>
+  <apex:outputText value="{!af.ac.Criteria_Id__c}"/>
+</apex:column>
+<apex:column styleClass="columnBorder" headerClass="headerClass">
+  <apex:facet name="header">System<br/> Component</apex:facet>
+  <apex:outputText value="{!af.ac.System_Component__c}"/>
+</apex:column>
+<apex:column styleClass="columnBorder" headerClass="headerClass">
+  <apex:facet name="header">Criteria Description</apex:facet>
+  <apex:outputText value="{!af.ac.Criteria_Description__c}"/>
+</apex:column>
+<apex:column styleClass="columnBorder">
+  <apex:facet name="header">Criteria Type</apex:facet>
+  <apex:outputText value="{!af.ac.Criteria_Type__c}"/>
+</apex:column>
+<apex:column styleClass="columnBorder" headerClass="headerClass">
+  <apex:facet name="header">Notes and Evaluation guidelines</apex:facet>
+ <apex:outputField value="{!af.ac.Notes_Evaluation__c}" styleClass="commentsText"/>
+</apex:column>
+<apex:column rendered="{!NOT(IsAuditor)}" styleClass="columnBorder" >
+<apex:facet name="header">Priority<br/> Criteria?</apex:facet>
+    <apex:outputText id="priority" value="{!af.ac.Priority_Criteria__c}"  />
+</apex:column>
+<apex:column styleClass="columnBorder"  rendered="{!NOT(IsAuditor)}">
+<apex:facet name="header">Point<br/> Value</apex:facet>
+<center><apex:outputText id="pointValue" value="{!af.ac.Point_Value__c}"  /></center>
+</apex:column>
+<apex:column styleClass="columnBorder" id="QA" >
+<apex:facet name="header">QA<br/> Score</apex:facet>
+    <apex:inputField value="{!af.af.QA_Score__c}" styleClass="scorecardQAScore" rendered="{!IsAuditor && (installAudit.Status__c != 'Submitted' && installAudit.Status__c != 'SR Approved') && af.ac.Auto_Calculated__c == false}"/> 
+    <apex:outputField value="{!af.af.QA_Score__c}" rendered="{!NOT(IsAuditor) || (installAudit.Status__c == 'Submitted' || installAudit.Status__c == 'SR Approved') || af.ac.Auto_Calculated__c  == true}"/>    
+</apex:column>
+<apex:column styleClass="columnBorder" headerClass="headerClass">
+    <apex:facet name="header">Comments</apex:facet>
+    <apex:inputTextArea tabindex="1" styleClass="scorecardComments"  value="{!af.af.Comments__c}"  disabled="{!NOT(IsAuditor) || (installAudit.Status__c == 'Submitted' || installAudit.Status__c == 'SR Approved' || installAudit.Status__c == 'Denied')}" />
+</apex:column>
+    </apex:pageBlockTable>
+<apex:outputPanel rendered="{!criteriaTotalPageNumber > 1}">
+<div align="right" style="display:{!IF(NOT(ISNULL(auditFeedbackList)),'block','none')}"> 
+<font size="1pt">
+  Page #:&nbsp;
+  <apex:outputLabel value="{!criteriaPageNumber}"/>&nbsp;
+   out of&nbsp;
+  <apex:outputLabel value="{!criteriaTotalPageNumber}"/>
+   &nbsp;&nbsp;&nbsp;
+ </font>
+<apex:commandButton value="Previous" action="{!previousCriteriaPage}" tabindex="2000" /><apex:commandButton value="Next" action="{!nextPhotosPage}"  tabindex="1999"/>
+</div>
+</apex:outputPanel> 
+</apex:pageBlock>
+
+<div align="center">
+<apex:commandButton tabindex="4000" value="Save" action="{!SaveAuditFeedback}" rendered="{!NOT(IsPartner) && installAudit.Status__c != 'SR Approved' }" />
+<apex:commandButton tabindex="4001" value="Cancel" action="{!CancelAuditFeedbackEdits}" />
+</div>
+
+<div align="right">
+<table width="350px">
+<tr><td><apex:outputText value="Auditor Comments" style="font-weight:bold" />
+<apex:inputTextArea style="width:500px;height:50px;resize: none;" disabled="true" label="Comments" id="auditorcommentsReadOnly" value="{!AuditorComments}"/>
+</td></tr>
+<tr><td><apex:outputText value="Sunrun Comments" style="font-weight:bold" />
+<apex:inputTextArea tabindex="2000" style="width:500px;height:50px;resize: none;" disabled="{!NOT(IsSunrun) || installAudit.Status__c == 'SR Approved'}" label="Comments" id="commentsReadOnly" value="{!installAudit.Comments__c}"/>
+</td></tr>
+<tr><td align="center">
+<apex:commandButton tabindex="-1" value="Reject" action="{!RejectAudit}" style="width:100px" rendered="{!IsSunrun && installAudit.Status__c = 'Submitted'}"/>
+<apex:commandButton tabindex="-1" value="SR Approve" action="{!ApproveAudit}" style="width:100px" rendered="{!IsSunrun && installAudit.Status__c = 'Submitted'}"  />
+</td></tr>
+</table>
+</div>
+</apex:form>
+
+</apex:page>

@@ -1,0 +1,180 @@
+<!-- 
+*********************************************************************************
+*	Author  	: Chandrika Dasaradharaman (chandrikad@sunrunhome.com)			*
+*	Date    	: March 2012													*
+*	Name		: EditPartnerProposals.page										*
+*	Description	: This page is used to display a pop window to allow  			* 
+*				  Partner users to edit proposal 								*
+*																				*
+*********************************************************************************
+-->
+<apex:page standardController="Proposal__c" extensions="EditPartnerProposals" sidebar="false" showHeader="false">
+	<style>
+		.headerLogo {
+			margin:1px 1px 1px 1px;
+			border:0;
+			padding-left:10px;
+			#height: 35px; 
+			#width: 90px;
+		}
+		.bPageTitle, .apexp{
+			margin-left: 15px;
+			margin-right: 20px;
+		    width: 97%;
+		}
+        .producterror { color: red; font-weight: strong;
+        	background-color: #FFFFCC;
+        	border-style: solid;
+        	border-width: 1px;
+        	padding: 6px 8px 6px 6px;
+        	border-color: #FF9900;
+        	font-size: 100%;
+        	margin-left: 15px;
+			margin-right: 20px;
+		}
+		
+	</style>
+	
+	<div align="left" width="85%">
+		<img src="{!$Resource.PartnerPortalHeader32}" class="headerLogo"/>
+		&nbsp;&nbsp;
+		<apex:sectionHeader title="Proposal Edit Details"/>
+	</div> 
+	
+	<apex:form id="thePanel">
+   		<div align="center">       
+        	<apex:commandButton rendered="{!NOT(showConfirmSave)}" action="{!SaveForm}" value="Save" title="Click to save the Record" 
+        		onComplete="closeAndRefreshparent('{!parentURL}', '{!isSaved}');" 
+        		reRender="thePanel"/>
+        	<apex:commandButton rendered="{!showConfirmSave}" action="{!confirmSaveForm}" value="Confirm" title="Click Confirm to save the Record" 
+        		onComplete="closeAndRefreshparent('{!parentURL}', '{!isSaved}');" 
+        		reRender="thePanel"/>
+        	&nbsp;
+			<apex:commandButton onClick="window.close();" value="Cancel" title="Click to Cancel Edit"/>
+       	</div>
+       	&nbsp;
+       	<apex:messages styleClass="producterror" />	
+        <apex:pageblock mode="edit" title="Edit">
+    		<!-- <apex:pageMessages ></apex:pageMessages> -->
+        	<apex:pageBlockSection columns="1">				
+        		<apex:pageBlockSectionitem id="item1">
+            		<apex:outputPanel >
+            			<apex:outputLabel value="Partner Actions " style="font-size:10.2px;font-weight:bold;margin-left:10px;margin-right:10px" />
+                		<apex:selectList value="{!actionName}" id="actionName" size="1">
+                			<apex:selectOptions value="{!ActionValue}"/>
+        				</apex:selectList>
+        			</apex:outputPanel>
+                </apex:pageBlockSectionitem>
+				&nbsp;&nbsp;&nbsp;              
+				<!-- 
+                <apex:pageBlockSectionitem id="item3">
+                	<apex:outputPanel >
+                    	<apex:outputLabel value="Assignee" rendered="{!isEnabled}" style="font-size:10.2px;font-weight:bold;margin-left:10px;margin-right:55px;margin-top:10px" />
+                    	<apex:inputfield value="{!proposalRecord.Assigne__c}" rendered="{!isEnabled}"/>
+                    </apex:outputPanel>
+                </apex:pageBlockSectionitem>				
+				 -->
+				<apex:pageBlockSectionitem id="item3">
+                	<apex:outputPanel >
+                    	<apex:outputLabel value="Assignee" rendered="{!isEnabled}" style="font-size:10.2px;font-weight:bold;margin-left:10px;margin-right:55px;margin-top:10px" />
+                    	<apex:inputfield value="{!customLookupObj.User__c}" rendered="{!isEnabled}"/>
+                    </apex:outputPanel>
+                </apex:pageBlockSectionitem>
+				&nbsp;&nbsp;&nbsp;
+				<apex:pageBlockSectionitem rendered="{!isOriginalProposal && isEnabled && NOT(blackBirdProposal)}" id="item2">
+					<apex:outputPanel >
+						<apex:outputLabel value="Revised Proposal" rendered="{!isOriginalProposal && isEnabled && NOT(blackBirdProposal)}" style="font-size:10.2px;font-weight:bold;margin-top:10px; margin-left:10px;margin-right:5px" />
+						<apex:inputfield rendered="{!isOriginalProposal && isEnabled}" value="{!proposalRecord.Revised_Proposal__c}" />
+					</apex:outputPanel>
+				</apex:pageBlockSectionitem>
+				&nbsp;&nbsp;&nbsp;
+				<apex:pageBlockSectionitem rendered="{!isOriginalProposal && isEnabled && NOT(blackBirdProposal)}" id="item4">
+					<apex:outputPanel >
+						<apex:outputLabel value="Proposal" rendered="{!isOriginalProposal && isEnabled}" style="font-size:10.2px;font-weight:bold;margin-left:10px;margin-right:55px;margin-top:10px" />
+						<apex:inputfield rendered="{!isOriginalProposal && isEnabled}" value="{!proposalRecord.Original_Proposal_ID__c}" />
+					</apex:outputPanel>
+				</apex:pageBlockSectionitem>
+
+            </apex:pageBlockSection>
+		</apex:pageblock>
+        <apex:outputPanel id="thePanel">
+             <script>
+             	var isSaved = {!isSaved };
+				
+             	//Following is to refresh the parent window when the record is saved
+             //if(isSaved)
+             //{
+                 //window.opener.location.reload();
+                 //window.close();
+                
+				//var parentWindowUrl = {!parentURL};
+				 //alert('Hello ...' + parentWindowUrl);
+				//window.top.close();
+				//window.opener.parent.location.href = 'https://sunrunhome.intdev.cs17.force.com/partner/a08g00000009VS4AAM';
+				//window.opener.parent.location.href = parentWindowUrl;
+				//var win = window.open('','_parent','');
+				//win.close();                 
+             //}
+			</script>
+		</apex:outputPanel> 
+	</apex:form>
+	<script>
+		function closeAndRefreshparent(refreshURL, isSavedVal){
+			//alert(refreshURL);
+			if(isSavedVal == 'true'){
+				window.top.close();
+				window.opener.parent.location.href = refreshURL;
+				var win = window.open('','_parent','');
+				win.close();
+			}
+		}
+		
+		function openLookup(baseURL, width, modified, searchParam){
+		    var proposalPrefix = '{!ProposalPrefix}';
+			var proposalIdStr = '{!proposalId}';
+			var Site = '{!$Site.Prefix}'; 
+			var proposalIdIdValue = '';
+		    var originalbaseURL = baseURL;
+		    var originalwidth = width;
+		    var originalmodified = modified;
+		    var originalsearchParam = searchParam;
+
+		    var lookupType = baseURL.substr(baseURL.length-3, 3);
+		    if (modified == '1') baseURL = baseURL + searchParam;
+		 
+		    var isCustomLookup = false;
+		    if(lookupType != proposalPrefix){
+		    	isCustomLookup = true;
+			    // Following "001" is the lookup type for Account object so change this as per your standard or custom object
+				var urlArr = baseURL.split("&");
+				var txtId = '';
+				if(urlArr.length > 2) {
+					urlArr = urlArr[1].split('=');
+					txtId = urlArr[1];
+				}
+			
+				// Following is the url of Custom Lookup page. You need to change that accordingly
+				if(Site != ''){
+					baseURL = "/partner/apex/CustomPartnerLookup?txt=" + txtId  + '&proposalId=' + proposalIdStr;
+				}else{
+					baseURL = "/apex/CustomPartnerLookup?txt=" + txtId  + '&proposalId=' + proposalIdStr;
+				}
+			
+				// Following is the id of apex:form control "myForm". You need to change that accordingly
+				baseURL = baseURL + "&frm=" + escapeUTF("{!$Component.myForm}");
+				if (modified == '1') {
+					//baseURL = baseURL + "&lksearch=" + searchParam;
+					//baseURL = baseURL + "&lksearch=";
+				}
+			}
+			
+			if(isCustomLookup == true){
+				width = 750;
+				openPopup(baseURL, "lookup", 350, 480, "width="+width+",height=460,toolbar=no,status=no,directories=no,menubar=no,resizable=yes,scrollable=no", true);
+			}else {
+				if (modified == '1') originalbaseURL = originalbaseURL + originalsearchParam;
+					openPopup(originalbaseURL, "lookup", 350, 480, "width="+originalwidth+",height=480,toolbar=no,status=no,directories=no,menubar=no,resizable=yes,scrollable=no", true);
+			} 
+		}
+	</script>
+</apex:page>

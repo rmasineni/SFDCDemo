@@ -1,0 +1,98 @@
+<apex:page id="meterregistrationId" controller="MeterRegistrationController" sidebar="false" tabstyle="Milestone_Management__tab">
+
+	<apex:sectionHeader title="Enter Meter Registration "/>
+	<apex:form id="meterRegistrationForm">
+		<apex:pageBlock id="block1">
+		<apex:pageMessages />
+		<!-- <apex:actionFunction name="RenderSection" action="{!RenderSec}"/> -->
+            <apex:pageBlockSection title="Generation Asset Details" id="assetDetails">
+                 <!-- Removed this Field as part of BSKY-982 -->
+                 <!-- <apex:pageBlockSectionitem id="item0">
+                    <apex:outputLabel value="Generation Asset Name"/>
+                    <apex:outputPanel >
+                        <apex:outputField value="{!selectedGenAsset.Name}"/>
+                    </apex:outputPanel>
+                </apex:pageBlockSectionitem>  -->         
+                <apex:pageBlockSectionitem id="item1">
+                    <apex:outputLabel value="Customer Name"/>
+                    <apex:outputPanel >
+                        <apex:outputField value="{!selectedGenAsset.Customer_Name_Formula__c}"/>
+                    </apex:outputPanel>
+                </apex:pageBlockSectionitem>
+                <apex:pageBlockSectionitem id="item3">
+                    <apex:outputLabel value="Cust Ref Num"/>
+                    <apex:outputPanel >
+                        <apex:outputField value="{!selectedGenAsset.Cust_Ref_Num__c}"/>
+                    </apex:outputPanel>
+                </apex:pageBlockSectionitem>
+                <!--<apex:pageBlockSectionitem id="item2">
+                     <apex:outputLabel value="Account"/>
+                    <apex:outputPanel >                     
+                        <apex:outputField value="{!selectedGenAsset.Account_Name__c}"/>
+                    </apex:outputPanel>
+                </apex:pageBlockSectionitem>-->
+				<!-- <apex:pageBlockSectionitem />  -->  
+                <apex:pageBlockSectionitem id="item4">	
+                    <apex:outputLabel value="Home Address"/>
+                    <apex:outputPanel >                     
+                        <apex:outputField value="{!selectedGenAsset.Home_Address__c}"/>
+                    </apex:outputPanel>
+                </apex:pageBlockSectionitem>
+			</apex:pageBlockSection>
+			
+			<apex:pageBlockSection title="Meter Registration Details" id="meterDetails"  Rendered="{!showEditSec}">
+				<apex:pageBlockSectionitem id="item5">
+                    <apex:outputLabel value="Meter Serial Number"/>                   
+                    <apex:outputPanel layout="block" styleClass="requiredInput">
+				    <apex:outputPanel layout="block" styleClass="requiredBlock"/>
+				    	<!-- <apex:inputfield id="MeterSerialNum" value="{!inputGenAsset.Meter_Serial_Num__c}"/>  -->
+				    	<apex:inputtext id="MeterSerialNum" value="{!serialNumber}"/>
+                    </apex:outputPanel>
+                </apex:pageBlockSectionitem>
+                <apex:pageBlockSectionitem id="item7">
+                    <apex:outputLabel value="Notes"/>
+                    <apex:outputPanel >
+                        <apex:inputTextArea id="MeterRegNotes" value="{!notes}" rows="5" cols="50"/>
+                    </apex:outputPanel>
+                </apex:pageBlockSectionitem>
+                <apex:pageBlockSectionitem id="item6">
+                    <apex:outputLabel value="SSI Code"/>
+                  <apex:outputPanel >
+				    <!--<apex:outputPanel layout="block" styleClass="requiredBlock"/>
+                        <apex:inputField id="ssicode" value="{!inputGenAsset.SSI_Code__c}"/>   -->
+                        <apex:inputtext id="ssicode" value="{!ssiCode}"/>
+                    </apex:outputPanel>
+                </apex:pageBlockSectionitem>
+			</apex:pageBlockSection>
+			
+			<apex:pageBlockSection title="Meter Registration Details After Submit" id="meterDetailsEntered" Rendered="{!showReadSec}" >
+				<apex:pageBlockSectionitem id="item8">
+                    <apex:outputLabel value="Meter Serial Number"/>
+                    <apex:outputPanel >
+                        <!--  <apex:outputField value="{!inputGenAsset.Meter_Serial_Num__c}"/> -->
+                        <apex:outputtext value="{!serialNumber}"/>
+                    </apex:outputPanel>
+                </apex:pageBlockSectionitem>
+                <apex:pageBlockSectionitem id="item10">
+                    <apex:outputLabel value="Notes"/>
+                    <apex:outputPanel >
+                        <apex:outputText value="{!notes}"/>
+                    </apex:outputPanel>
+                </apex:pageBlockSectionitem> 
+                <apex:pageBlockSectionitem id="item9">
+                    <apex:outputLabel value="SSI Code"/>
+                    <apex:outputPanel >
+                        <!-- <apex:outputField value="{!inputGenAsset.SSI_Code__c}"/>  -->
+                        <apex:outputtext value="{!ssiCode}"/>
+                    </apex:outputPanel>
+                </apex:pageBlockSectionitem>
+			</apex:pageBlockSection>
+		</apex:pageBlock>
+		<div style="text-align: center;">
+               <apex:commandButton action="{!back}" value="Back" title="Click to select Generation Asset"/>
+               <apex:commandButton action="{!SaveMeterRegis}" value="Save" status="status2" title="Click to save the Meter Registration Record" rendered="{!showSaveButton}"/>
+               <apex:actionStatus id="status2" startText="saving..."/>
+		</div>
+	</apex:form>
+
+</apex:page>

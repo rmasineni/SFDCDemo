@@ -1,0 +1,13 @@
+<apex:page controller="milestoneProof" sidebar="true" id="msProof">
+    <apex:sectionHeader title="Submit Serial Numbers To SmartTurn"/>
+    <apex:form >
+        <apex:pageBlock mode="view" id="pbConfirm">
+            <apex:pageBlockButtons id="pbButtons">
+                <apex:commandButton action="{!backToUpload}" value="Back To Upload Page" immediate="true"/>
+            </apex:pageBlockButtons>
+            <apex:outputPanel > 
+                <apex:outputText escape="true" style="font-size:100%;font-weight:bold;font-family: 'Verdana','Geneva',sans-serif; white-space:pre-wrap;" value="{!errorPageDetails}"/>                    
+            </apex:outputPanel>
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>

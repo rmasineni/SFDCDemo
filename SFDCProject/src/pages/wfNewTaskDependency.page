@@ -1,0 +1,50 @@
+<apex:page standardController="Task_Dependency__c" extensions="wfNewTaskDependencyClass">
+  <apex:form >
+  <apex:pageblock >
+  <apex:pageBlockButtons location="top">
+      <apex:commandButton value="Save" action="{!taskSave}"/>
+      <apex:commandButton value="Cancel" action="{!backToTask}" immediate="true"
+                    html-formnovalidate="formnovalidate" />
+      </apex:pageBlockButtons>
+      <apex:pageMessages /> 
+    <apex:pageBlockSection title="Task Details" id="taskDetails" > 
+    
+        <apex:pageBlockSectionitem id="item1">
+              <apex:outputLabel value="Name: "/>
+              <apex:inputField value="{!TaskDepend.name}"/> 
+         </apex:pageBlockSectionitem>
+         
+         <apex:pageBlockSectionitem id="item2" rendered="{! readOnly}">
+              <apex:outputLabel value="Task: "/>
+              <apex:inputField value="{!TaskDepend.Task__c}" />
+         </apex:pageBlockSectionitem>
+        
+         <apex:pageBlockSectionitem id="item3" rendered="{!!readOnly}">
+              <apex:outputLabel value="Parent Task: "/>
+              <apex:inputField value="{!TaskDepend.Parent_Task__c}" />
+         </apex:pageBlockSectionitem>
+         
+         <apex:pageBlockSectionitem id="item4" rendered="{!!readOnly}">
+              <apex:outputLabel value="Task: "/>
+              <apex:outputField value="{!TaskDepend.Task__c}"  />
+         </apex:pageBlockSectionitem>
+         
+         <apex:pageBlockSectionitem id="item5" rendered="{!readOnly}">
+              <apex:outputLabel value="Parent Task: "/>
+              <apex:outputField value="{!TaskDepend.Parent_Task__c}"  />
+         </apex:pageBlockSectionitem>
+         
+           <apex:pageBlockSectionitem id="item6" >
+               <apex:outputLabel value="Project" style="display: none" >
+                  <apex:inputField value="{!TaskDepend.Project_Name__c}"  />
+              </apex:outputLabel>
+         </apex:pageBlockSectionitem>
+         
+         <!--  <apex:pageBlockSectionitem id="item4">
+          <apex:outputLabel value="Child Task: "/>
+          <apex:inputField value="{!TaskDepend.Child_Task__c}"/>
+         </apex:pageBlockSectionitem>  -->
+    </apex:pageBlockSection>
+  </apex:pageblock>
+  </apex:form>
+</apex:page>

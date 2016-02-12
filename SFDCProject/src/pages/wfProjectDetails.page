@@ -1,0 +1,454 @@
+<apex:page standardcontroller="Project__c" Extensions="wfProjectDetails">
+    <c:WorkflowTask_CSS />
+    <apex:includescript value="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"/>
+    <apex:includescript value="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"/>
+    <link href="{!URLFOR($Resource.bootstrap_dropdown, 'css/bootstrap.min.css')}" rel="stylesheet" />
+ 
+    <apex:pageMessages />
+      <style type="text/css">
+        .showPhases {
+            background: transparent url('/img/alohaSkin/twisty_sprite.png') 0 0 no-repeat;
+        }
+        .hidePhases {
+            background: transparent url('/img/alohaSkin/twisty_sprite.png') 0 -11px no-repeat;
+        }
+        .labelCol .labelCol1 { 
+            text-align:right; width:3%; max-width:3%; border-bottom: none;
+        }
+        .dataStyle1{
+            border-bottom: none; text-align:left; width:10%; max-width:10%;
+        }
+
+        .labelCol3{
+            text-align:right; width:12%; max-width:12%; border-bottom: none;
+        }
+        .dataStyle3{
+            border-bottom: none; text-align:left; width: 20%; max-width: 20%;
+        }
+
+         body .bPageBlock .pbBody .blue .pbSubheader{
+            background-color:#00ADE6;
+            margin-top:0px;
+         }
+
+         body .bPageBlock .detailList .labelCol{
+            width: 8%;
+         }
+         
+        body .bEditBlock .detailList .dataCol, .bEditBlock .detailList .data2Col {
+            padding-left: 3px;
+        }
+        
+        body  .bPageBlock .detailList .dataCol {
+            width: 15%;
+        }
+          
+		body button, body .x-btn, body .btn, body .btnDisabled, body .btnCancel, body .menuButton .menuButtonButton {
+            -moz-border-bottom-colors: none;
+            -moz-border-left-colors: none;
+            -moz-border-right-colors: none;
+            -moz-border-top-colors: none;
+            background: #e8e8e9 url("/img/alohaSkin/btn_sprite.png") repeat-x scroll right top;
+            border-color: #b5b5b5 #b5b5b5 #7f7f7f;
+            border-image: none;
+            border-radius: 3px;
+            border-style: solid;
+            border-width: 1px;
+            color: #333;
+            margin: 1px;
+            padding: 0.5px 4px 4px;
+        }
+        ul li, ol li {
+            margin-left: 1.5em;
+            padding: 5px;
+        }
+        
+        .dropdown-menu {
+            min-width: 35%;
+        }
+        .glyphicon {
+            display: inline-block;
+            font-family: "Glyphicons Halflings";
+            font-size: 16px;
+            font-style: normal;
+            line-height: 1;
+            padding: 0.1px;
+            position: relative;
+            top: 1px;
+        }                
+    </style>
+    <apex:form id="formId">
+        <apex:actionFunction action="{!newTask}" name="newTaskJSFunction"/>
+        <apex:actionFunction action="{!getProjectDetails}" name="getProjectDetailsJSFunction"/>
+        <apex:pageblock mode="Edit" id="ProjectDetails" >
+            <apex:outputPanel styleClass="blue" layout="block">
+                <apex:pageblocksection collapsible="true" title="Project Details" columns="3">
+                    <apex:pageBlockSectionItem labelStyleClass="labelCol1" dataStyleClass="dataStyle1">
+                        <apex:outputpanel >
+                            <apex:outputLabel value="Project" />
+                        </apex:outputpanel>
+                        <apex:outputPanel layout="block" styleClass="requiredInput">
+                            <apex:outputPanel layout="block" styleClass="requiredBlock"/>
+                            <apex:actionRegion >
+                                <apex:inputfield value="{!customLookup.Project__c}" id="p">
+                                    <apex:actionSupport event="onchange" action="{!initializeProjectDetails}"/>
+                                </apex:inputfield>
+                            </apex:actionRegion>
+                        </apex:outputpanel>
+                    </apex:pageBlockSectionItem>
+                    
+                    <apex:pageBlockSectionItem labelStyleClass="labelCol1" dataStyleClass="dataStyle1">
+                        <apex:outputLabel value="Project Status" /> 
+                        <apex:outputfield value="{!projectObj.Status__c}"/>  
+                    </apex:pageBlockSectionItem>                    
+
+                    <apex:pageBlockSectionItem labelStyleClass="labelCol3" dataStyleClass="dataStyle3">
+                        <apex:outputLabel value="Current Phase" /> 
+                        <apex:outputfield value="{!projectObj.Current_Phase__c}"/>  
+                    </apex:pageBlockSectionItem>   
+
+                    <apex:pageBlockSectionItem labelStyleClass="labelCol1" dataStyleClass="dataStyle1">
+                        <apex:outputLabel value="Customer Name" /> 
+                        <apex:outputLink target="_parent" value="/{!contactObj.Id}">
+                            <apex:outputfield value="{!contactObj.name}"/>
+                        </apex:outputLink>
+                    </apex:pageBlockSectionItem>
+
+                    <apex:pageBlockSectionItem labelStyleClass="labelCol1" dataStyleClass="dataStyle1">
+                        <apex:outputLabel value="Service Contract Status" /> 
+                        <apex:outputfield value="{!projectObj.Service_Contract__r.Status__c}"/>  
+                    </apex:pageBlockSectionItem>                    
+
+                    <apex:pageBlockSectionItem labelStyleClass="labelCol3" dataStyleClass="dataStyle3">
+                        <apex:outputLabel value="Job Code" /> 
+                        <apex:outputfield value="{!projectObj.Job_Code__c}"/>  
+                    </apex:pageBlockSectionItem>                      
+                    
+                    <apex:pageBlockSectionItem labelStyleClass="labelCol1" dataStyleClass="dataStyle1">
+                        <apex:outputLabel value="Home Address" /> 
+                        <apex:outputfield value="{!projectObj.Address__c}">
+                        </apex:outputfield>  
+                    </apex:pageBlockSectionItem>
+
+                    <apex:pageBlockSectionItem labelStyleClass="labelCol1" dataStyleClass="dataStyle1">
+                        <apex:outputLabel value="Sales Partner" /> 
+                        <apex:outputfield value="{!projectObj.Sales_Partner__c}"/>  
+                    </apex:pageBlockSectionItem>
+
+                    <apex:pageBlockSectionItem labelStyleClass="labelCol3" dataStyleClass="dataStyle3">
+                        <apex:outputLabel value="Service Contract" /> 
+                        <apex:outputfield value="{!projectObj.Service_Contract__c}"/>  
+                    </apex:pageBlockSectionItem>
+
+                    <apex:pageBlockSectionItem labelStyleClass="labelCol1" dataStyleClass="dataStyle1">
+                        <apex:outputLabel value="Project Start Date" /> 
+                        <apex:outputfield value="{!projectObj.Start_Date__c}"/>  
+                    </apex:pageBlockSectionItem>
+
+                    <apex:pageBlockSectionItem labelStyleClass="labelCol1" dataStyleClass="dataStyle1">
+                        <apex:outputLabel value="Install Partner" /> 
+                        <apex:outputfield value="{!projectObj.Install_Partner__c}"/>  
+                    </apex:pageBlockSectionItem>
+
+                    <apex:pageBlockSectionItem labelStyleClass="labelCol3" dataStyleClass="dataStyle3">
+                        <apex:outputLabel value="Service Contract Event" /> 
+                            <apex:outputLink target="_parent" value="/{!projectObj.Service_Contract_Event__c}">
+                            <apex:outputText value="{!projectObj.Service_Contract_Event_Name__c}"/>
+                        </apex:outputLink>
+                    </apex:pageBlockSectionItem> 
+
+                    <apex:pageBlockSectionItem labelStyleClass="labelCol1" dataStyleClass="dataStyle1">
+                        <apex:outputLabel value="Project Age (days)" /> 
+                        <apex:outputtext value="{!projectObj.Project_Age__c}"/>  
+                    </apex:pageBlockSectionItem>
+
+                    <apex:pageBlockSectionItem labelStyleClass="labelCol1" dataStyleClass="dataStyle1">
+                        <apex:outputLabel value="Install Branch" /> 
+                        <apex:outputtext value="{!projectObj.Install_Branch__c}"/> 
+                    </apex:pageBlockSectionItem>
+    
+                    <apex:pageBlockSectionItem labelStyleClass="labelCol3" dataStyleClass="dataStyle3">                      
+                        <apex:outputLabel value="Opportunity" /> 
+                        <apex:outputfield value="{!projectObj.Opportunity__c}"/>  
+                    </apex:pageBlockSectionItem>
+
+                    <apex:pageBlockSectionItem labelStyleClass="labelCol1" dataStyleClass="dataStyle1">
+                        <apex:outputLabel value="VIP" /> 
+                        <apex:outputfield value="{!projectObj.VIP_Customer__c}"/>  
+                    </apex:pageBlockSectionItem>
+
+                    <apex:pageBlockSectionItem labelStyleClass="labelCol1" dataStyleClass="dataStyle1">
+                        <apex:outputLabel value="Build Partner" /> 
+                        <apex:outputfield value="{!projectObj.Build_Parter__c}"/>   
+                    </apex:pageBlockSectionItem>
+
+                    <apex:pageBlockSectionItem labelStyleClass="labelCol3" dataStyleClass="dataStyle3">  
+                        <apex:outputLabel value="Proposal" /> 
+                        <apex:outputfield value="{!projectObj.Proposal__c}"/>  
+                    </apex:pageBlockSectionItem>
+                    
+                    <apex:pageBlockSectionItem labelStyleClass="labelCol1" dataStyleClass="dataStyle1">
+                        <apex:outputLabel value="Agreement Type" /> 
+                        <apex:outputfield value="{!projectObj.Agreement_Type__c}"/>  
+                    </apex:pageBlockSectionItem>
+                
+                    <apex:pageBlockSectionItem labelStyleClass="labelCol1" dataStyleClass="dataStyle1">
+                        <apex:outputLabel value="Estimated construction start date" /> 
+                        <apex:outputtext value="{0,date,MM'/'dd'/'yyyy}">
+                            <apex:param value="{!projectObj.Expected_Construction_Start_Date__c}"/> 
+                        </apex:outputText> 
+                    </apex:pageBlockSectionItem>
+
+                    <apex:pageBlockSectionItem labelStyleClass="labelCol3" dataStyleClass="dataStyle3">
+                        <apex:outputLabel value="Salesperson" /> 
+                        <apex:outputfield value="{!projectObj.Sales_Person__c}"/>  
+                    </apex:pageBlockSectionItem>
+                    
+                    <apex:pageBlockSectionItem labelStyleClass="labelCol1" dataStyleClass="dataStyle1">
+                        <apex:outputLabel value="Site Revisit Required" /> 
+                        <apex:outputfield value="{!projectObj.Site_Revisit_Required__c}"/>  
+                    </apex:pageBlockSectionItem>   
+
+                </apex:pageblocksection>
+            </apex:outputPanel>
+        </apex:pageblock>
+        
+        <apex:pageblock mode="Edit"  id="taskList">
+            <apex:pageMessages id="pgmsg" />
+            <apex:outputPanel styleClass="blue" layout="block">
+                <apex:pageblocksection collapsible="true" title="Task Details" columns="1">
+                    <apex:outputPanel layout="none">
+                        
+                        <table id="tableAccount1"  class = "list" border="0" cellpadding="0" cellspacing="0">
+                                <tbody style="background-color: #F8F8F8 ; " >
+                                    <tr class="dataRow" style="border:4px solid #F8F8F8 ;" width="50%">
+                                    <!-- <td class="dataCell" style="border:#F8F8F8 ;"  width="10%"></td> -->
+                                      <td class="dataCell" style="border:#F8F8F8 ;" align="left">
+                                            <apex:outputpanel >
+                                                <apex:inputCheckbox label="Show Only Required Tasks: " value="{!showRequired}" onchange="getProjectDetailsJSFunction();"/>
+                                                <apex:outputLabel value="  Show Only Required Tasks  " />
+                                            </apex:outputpanel>
+                                            
+                                        </td>
+                                        <td class="dataCell" style="border:#F8F8F8 ;" width="50%" align="Right" >
+                                                <apex:outputlabel value="" id="searchTxt"/>
+                                                <apex:inputtext id="input" value="{!searchString}"/>    
+                                                <apex:commandButton styleclass="buttons" action="{!getProjectDetails}"  value="Search" id="searchBtn" />
+                                                <apex:commandButton styleclass="buttons" action="{!refreshPage}"  value="Refresh" id="refreshBtn"/>
+                                                <!-- 
+                                                <apex:commandButton onclick="expandAllRows('{!$Component.repeatPhase}'); return false;" styleclass="buttons" value="Expand All" id="expndBtn"/>
+                                                <apex:commandButton onclick="collapseAllRows('{!$Component.repeatPhase}'); return false;" styleclass="buttons" value="Collapse All" id="collapseBtn"/>
+                                                 
+                                                <apex:commandbutton styleclass="buttons" action="{!saveTasks}" value="Save Tasks" id="saveButton"  rerender="taskList" />
+                                                <apex:commandButton styleclass="buttons" action="{!cancelEditTask}" id="cancelButton" value="Cancel" />
+                                                -->
+                                                <apex:commandbutton action="{!saveTasks}" value="Save Tasks" id="saveButton" styleclass="buttons" rerender="taskList"  />
+                                                <apex:commandButton action="{!cancelEditTask}" immediate="true" id="cancelButton" styleclass="buttons"  value="Cancel "  /> 
+                                                 <apex:commandButton onclick="showNotes('{!BaseURL}', '{!Id}'); return false;" styleclass="buttons" value="Notes" id="notesbtn"/>
+                                           
+                                        </td>
+                                        <td class="dataCell" style="border:#F8F8F8 ;"  align="left"  width = "30%">
+                                            <div class="dropdown"  >
+                                                <button class="btn btn-default dropdown-toggle" type="button" id="menu1" data-toggle="dropdown">
+                                                    <span class="glyphicon glyphicon-align-justify"></span>
+                                                </button>
+                                                <ul class="dropdown-menu" role="menu" aria-labelledby="menu1"  >
+                                                    <!-- <apex:outputPanel >
+                                                        <li role="presentation"><a style="text-decoration:underline; font-weight: bold; cursor: pointer;" onclick="showNotes('{!BaseURL}', '{!Id}'); return false;" id="notesbtn">Project Notes</a></li>
+                                                    </apex:outputPanel> 
+                                                    <apex:outputPanel >
+                                                        <li role="presentation"><a style="text-decoration:underline; font-weight: bold; cursor: pointer;" onclick="showAllProjectNotes('{!BaseURL}', '{!Id}'); return false;" id="allNotesbtn">View All Notes</a></li>          
+                                                    </apex:outputPanel> -->
+                                                    <apex:outputPanel >
+                                                        <li role="presentation"><a style="text-decoration:underline; font-weight: bold; cursor: pointer;" onclick="collapseAllRows('{!$Component.repeatPhase}'); return false;"  id="collapseAll">Collapse All</a></li>         
+                                                    </apex:outputPanel>
+                                                     <apex:outputPanel >
+                                                        <li role="presentation"><a style="text-decoration:underline; font-weight: bold; cursor: pointer;" onclick="expandAllRows('{!$Component.repeatPhase}'); return false;"  id="expanAll">Expand All</a></li>            
+                                                    </apex:outputPanel>
+                                                    <apex:outputPanel >
+                                                        <li role="presentation"><a style="text-decoration:underline; font-weight: bold; cursor: pointer;" onclick="newTaskJSFunction();" id="allNotesbtn">New Task</a></li>         
+                                                    </apex:outputPanel>
+                                                    <apex:outputPanel rendered="{!showBlockButton}">
+                                                        <li role="presentation"><a style="text-decoration:underline; font-weight: bold; cursor: pointer;" onclick="blockProject('{!BaseURL}', '{!Id}'); return false;" id="notesbtn">Block Project</a></li>
+                                                    </apex:outputPanel>
+                                                    <apex:outputPanel rendered="{!NOT showBlockButton}">
+                                                        <li role="presentation"><a style="text-decoration:underline; font-weight: bold; cursor: pointer;" onclick="blockProject('{!BaseURL}', '{!Id}'); return false;" id="notesbtn">UnBlock Project</a></li>
+                                                    </apex:outputPanel>
+                                                    <apex:outputPanel >
+                                                        <li role="presentation"><a style="text-decoration:underline; font-weight: bold; cursor: pointer;" onclick="redirectToOptyTeam('{!BaseURL}', '{!Id}'); return false;" id="optyTeamButton" >Project Roles</a></li>
+                                                    </apex:outputPanel>
+                                                </ul>
+                                            </div>
+                                        </td>
+                                    
+                                    </tr>
+                                </tbody>
+                            </table>      
+   
+                                
+                        <table id="tableAccount" class="list" border="0" cellpadding="0" cellspacing="0">
+                            <thead>
+                                <tr class="headerRow">
+                                    <!--<th class="actionColumn">Action</th>  -->
+                                    <th width="6px"></th>
+                                    <th>Phase Name</th>
+                                    <th>Phase Number</th>
+                                    <th>Phase Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <apex:repeat id="repeatPhase" value="{!phaseWList}" var="phaseWObj">
+                                    <apex:variable var="phase" value="{!phaseWObj.phaseObj}" />  
+                                        <tr id="{!$Component.repeatPhase}:phase" class="dataRow">
+                                            <td class="dataCell">
+                                                <apex:outputLink id="linkShowHide" value="javascript:toggleContactRow('{!$Component.repeatPhase}')">
+                                                    <img id="{!$Component.repeatPhase}:Img" src="/s.gif" class="hidePhases" border="0" height="11px" width="11px" style="padding-right: 4px;"/>
+                                                </apex:outputLink>
+                                            </td>
+                                                                                        
+                                            <td class="dataCell"><apex:outputField value="{!phase.Name}" /></td>
+                                            <td class="dataCell"><apex:outputField value="{!phase.Phase_Number__c}" /></td>
+                                            <td class="dataCell"><apex:outputField value="{!phase.Phase_Status__c}" /></td>
+                                        </tr>
+                                        <tr id="{!$Component.repeatPhase}:Task" class="dataRow" style="display:table-row;">
+                                            <td colspan="100" style="padding:10px; padding-left: 45px;">
+                                                <h3>Tasks</h3>
+                                                <br/>
+                                                <apex:outputPanel layout="none">
+                                                    <table id="tableAccountContacts" class="list" border="0" cellpadding="0" cellspacing="0">
+                                                            <thead>
+                                                                <tr class="headerRow">
+                                                                    <!-- <th class="actionColumn">Action</th>  -->
+                                                                    <th width="25%">Name</th>
+                                                                    <th width="5%">Category</th>
+                                                                    <th width="10%">Group</th>
+                                                                    <th width="15%">Owner</th>
+                                                                    <th width="5%">Status</th>
+                                                                    <th width="5%">SLA Status</th>
+                                                                    <th width="9%">Open Date</th>
+                                                                    <th width="10%">Closed Date</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <!--<apex:outputField value="{!tObj.Name}" />  <td class="actionColumn"><apex:inputCheckbox id="selectContactRow" styleclass="ContactCheckbox" value="{!subitem.IsSelected}"/></td>  -->
+                                                                <!-- <td class="dataCell"><apex:outputField value="{!tObj.Task_Owner__r.Name}"/></td> -->
+                                                                <!-- <apex:variable value="{!subitem.taskObj}" var="tObj" />     -->        
+
+                                                                <apex:repeat id="repeatPhaseContacts" rendered="{!(phaseWObj.taskCount > 0)}" value="{!phaseWObj.taskList}" var="subitem">
+                                                                    <tr class="dataRow">
+                                                                        <td class="dataCell">
+                                                                            <apex:outputLink target="_parent" value="/{!subitem.taskObj.Id}">
+                                                                                <apex:outputText value="{!subitem.taskObj.Name}"/>
+                                                                            </apex:outputLink>
+                                                                        </td>
+                                                                        <td class="dataCell"><apex:outputField value="{!subitem.taskObj.Category__c}"/></td>
+                                                                        <td class="dataCell"><apex:outputField value="{!subitem.taskObj.Group_Name__c}"/></td>
+                                                                        
+                                                                        <td class="dataCell">
+                                                                            <apex:outputField value="{!subitem.taskObj.Task_Owner__c}">
+                                                                                <apex:inlineEditSupport rendered="{!IF(subitem.taskObj.Status__c != 'Complete' , true, false)}" event="ondblclick"/>
+                                                                            </apex:outputField>
+                                                                        </td>
+                                                                        <td class="dataCell"><apex:outputField value="{!subitem.taskObj.Status__c}" /></td> 
+                                                                        <td class="dataCell">
+                                                                            <c:wfSLA slaStatus="{!subitem.taskObj.SLA_Status__c}" />
+                                                                        </td> 
+                                                                        <td class="dataCell"><apex:outputField value="{!subitem.taskObj.Start_Date__c}" /></td> 
+                                                                        <td class="dataCell"><apex:outputField value="{!subitem.taskObj.End_Date__c}" /></td>                                                        
+                                                                    </tr>
+                                                                </apex:repeat>                                                                  
+
+                                                            </tbody>
+                                                    </table>
+                                                    
+                                                </apex:outputPanel>
+                                            </td> 
+                                        </tr>                   
+                                </apex:repeat>
+                            </tbody>
+                        </table>
+                    </apex:outputPanel>
+                </apex:pageblocksection>
+            </apex:outputPanel>
+        </apex:pageblock>       
+        
+        <apex:includeScript value="{!URLFOR($Resource.jqueryui_181, 'development-bundle/jquery-1.7.1.js')}"  />
+        <script>
+
+            function expandAllRows(rowId) {
+                var i=0;
+                while(true){
+                    var tempRowId = rowId + ':'+i;
+                    var phaseImg = $(document.getElementById(tempRowId + ":Img"));
+                    if(phaseImg != null && phaseImg.length > 0){
+                        var taskRow = $(document.getElementById(tempRowId + ":Task"));
+                        phaseImg.attr("class", "hidePhases");
+                        taskRow.show(); 
+                    }else{
+                        return;
+                    }
+                    i++;                
+                }
+                var test1 = '1';
+            }
+
+            function collapseAllRows(rowId) {
+                var i=0;
+                while(true){
+                    var tempRowId = rowId + ':'+i;
+                    var phaseImg = $(document.getElementById(tempRowId + ":Img"));
+                    if(phaseImg != null && phaseImg.length > 0){
+                        var taskRow = $(document.getElementById(tempRowId + ":Task"));
+                            phaseImg.attr("class", "showPhases");
+                            taskRow.hide();
+                    }else{
+                        return;
+                    }
+                    i++;                
+                }
+                var test1 = '1';
+            }
+            
+            function toggleContactRow(rowId) {
+                //alert(rowId);
+                try {
+                    var phaseImg = $(document.getElementById(rowId + ":Img"));
+                    var taskRow = $(document.getElementById(rowId + ":Task"));
+                    var test1 = '';
+                    if (phaseImg.hasClass("hidePhases")) {
+                        phaseImg.attr("class", "showPhases");
+                        taskRow.hide();
+                    }
+                    else {
+                        phaseImg.attr("class", "hidePhases");
+                        taskRow.show();
+                    }
+
+                }catch (e) { alert(e); }
+            }
+         </script>                
+    </apex:form>
+    <script>
+        new MenuButton('Actions', false);
+        function showNotes(baseURLStr, objectId){   
+            var tempURL = baseURLStr + "/apex/wfNotes?id=" + objectId + '&1=1';      
+            var newwindow = window.open(tempURL, '', 'toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=950,height=400,left=150,top=150'); 
+            newwindow.focus();
+        }       
+        function showAllProjectNotes(baseURLStr, objectId){   
+            var tempURL = baseURLStr + "/apex/wfProjectNotes?id=" + objectId + '&1=1';      
+            var newwindow = window.open(tempURL, '', 'toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=950,height=400,left=150,top=150'); 
+            newwindow.focus();
+        } 
+        function blockProject(baseURLStr, objectId){   
+            var tempURL = baseURLStr + "/apex/wfBlockProject?id=" + objectId;      
+            var newwindow = window.open(tempURL, '', 'toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=950,height=400,left=150,top=150');                  
+            newwindow.focus();                 
+        } 
+        function redirectToOptyTeam(baseURLStr,objectId){
+          var tempURL = baseURLStr + "/apex/ShowOptyTeamDetailPage?projID=" + objectId;      
+            var newwindow = window.open(tempURL, 'ProjectTeam', 'toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=1100,height=450,left=150,top=150');                  
+            newwindow.focus();                   
+          }
+    </script>
+</apex:page>

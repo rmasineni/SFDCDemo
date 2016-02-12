@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomTab xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>[Requested in SFDC-352]</description>
+    <frameHeight>600</frameHeight>
+    <hasSidebar>false</hasSidebar>
+    <label>Business Intelligence</label>
+    <mobileReady>true</mobileReady>
+    <motif>Custom64: Compass</motif>
+    <url>http://obiprod.sunrunhome.com/analytics</url>
+    <urlEncodingKey>UTF-8</urlEncodingKey>
+</CustomTab>

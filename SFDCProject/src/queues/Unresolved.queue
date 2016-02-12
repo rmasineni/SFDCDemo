@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Queue xmlns="http://soap.sforce.com/2006/04/metadata">
+    <doesSendEmailToMembers>true</doesSendEmailToMembers>
+    <email>andyw@sunrun.com</email>
+    <name>Unresolved</name>
+    <queueSobject>
+        <sobjectType>Case</sobjectType>
+    </queueSobject>
+    <queueSobject>
+        <sobjectType>Generation_Assets__c</sobjectType>
+    </queueSobject>
+</Queue>

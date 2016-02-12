@@ -1,0 +1,16 @@
+<apex:page standardController="Proposal__c" extensions="TandCModifyProposalExt" showHeader="true" sidebar="true">
+    <apex:form >
+        <apex:outputText rendered="{!displayURL}">
+                <script type="text/javascript">                    
+                    window.top.location.href = '{!redirectURL}';
+                </script>
+        </apex:outputText>
+        <apex:pagemessages />
+        <apex:pageBlock >
+            <apex:pageBlockButtons location="bottom">
+              <apex:commandButton action="{!goBackToProposal}" value="Return To Proposal"/>
+              <apex:commandButton action="{!redirectToDesignTool}" value="Continue To Modify Proposal" rendered="{!showWarning}"/>  
+            </apex:pageBlockButtons>
+        </apex:pageBlock>
+     </apex:form>
+</apex:page>

@@ -1,0 +1,107 @@
+<apex:page standardcontroller="Opportunity" sidebar="false" showHeader="false"  >
+    <style>
+        #filesTableId {
+            background-color: whiteSmoke;
+            border-radius: 6px;
+            -webkit-border-radius: 6px;
+            -moz-border-radius: 6px;
+        }
+        
+        #filesTableId td, #filesTableId th {
+            
+        }
+
+        #filesTableId th {
+            color: #333;
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            font-style: normal;
+            font-weight: bold;
+            text-align: left;
+            
+            padding-left: 0;
+            padding-right: 0;
+        }
+        
+        }
+        #filesTableId td {
+            padding: 0 20px;
+            line-height: 12px;
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            border-bottom: 1px solid #fff;
+            border-top: 1px solid #fff;
+        }
+        #filesTableId td:hover {
+            background-color: #fff;
+        }
+
+        #dropbox {
+            background: rgba(128, 128, 128, 0.14);
+            border: black dashed 1px;
+            width: 85%;
+            padding: 20px;
+            height: 120px;
+            text-align: center;
+            color: blue;
+            border-radius: 10PX;        
+            margin-left: auto;
+            margin-right: auto;
+            margin-top: 20px;
+        }
+ 
+        #progress_bar {
+          width: 200px;
+          height: 5px !important;
+          margin: 1px 0;
+          padding: 0 0 !important;
+          
+          font-size: 14px;
+          clear: both;
+          opacity: 0;
+          -moz-transition: opacity 1s linear;
+          -o-transition: opacity 1s linear;
+          -webkit-transition: opacity 1s linear;
+        }
+        #progress_bar.loading {
+          opacity: 1.0;
+          height: 5px !important;
+           padding: 0 0 !important;
+           background-color: #333333 !important;
+            border: 0px !important;
+        }
+        
+        .loading {
+             background-color:whiteSmoke  !important;
+              border: 0px !important;
+              font-weight: normal !important;
+         }
+        .percent {
+          background-color: #99ccff;
+          height: auto;
+          width: 0;
+        }
+        
+        .deleteButton{
+            background-color: red;
+            width: 150px;
+            height: 40px;
+        }
+
+        .headerLogo {
+            margin:1px 1px 1px 1px;
+            border:0;
+            padding-left:10px;
+            padding-bottom:10px;
+            #height: 30px;
+            #width: 90px;
+        }
+        #fileUploadDiv {
+        overflow:auto;
+        width:800px;
+        }
+    </style>
+    
+    <div align="left" width="100%">
+        <img src="{!$Resource.PartnerPortalHeader32}" class="headerLogo"/>
+    </div>
+	<c:CustomerCredit />
+</apex:page>

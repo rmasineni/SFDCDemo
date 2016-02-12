@@ -1,0 +1,321 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Follow</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <description>Integration</description>
+    <enableActivities>true</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableDivisions>false</enableDivisions>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>true</enableHistory>
+    <enableReports>true</enableReports>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <externalSharingModel>ControlledByParent</externalSharingModel>
+    <fields>
+        <fullName>Adder_Discrepancy__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>To better track discrepancies in adders between how the project was sold, and how the project was designed</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Used to better track discrepancies in adders between how the project was sold, and how the project was designed</inlineHelpText>
+        <label>Adder Discrepancy</label>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Adder_Discrepancy_notes__c</fullName>
+        <description>Notes for if Adder Discrepancy field is checked</description>
+        <externalId>false</externalId>
+        <label>Adder Discrepancy notes</label>
+        <length>32768</length>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Comi_Consultant_Rec_Split__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>Look up field which captures the name of consultant who should receive the other half of a split commission.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Enter the consultant who should receive the other half of the commission split.</inlineHelpText>
+        <label>Commission Consultant Rec. Split</label>
+        <referenceTo>User</referenceTo>
+        <relationshipName>Commissions</relationshipName>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Commission_Consultant_Rec_Split__c</fullName>
+        <description>% of commission that will go to the consultant receiving the split commission</description>
+        <externalId>false</externalId>
+        <label>Commission Consultant Rec Split (%)</label>
+        <precision>4</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Percent</type>
+    </fields>
+    <fields>
+        <fullName>Commission_Exception__c</fullName>
+        <description>Integration</description>
+        <externalId>false</externalId>
+        <label>Commission Exception (%)</label>
+        <picklist>
+            <picklistValues>
+                <fullName>0%</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>25%</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>50%</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>100%</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Commission_Notes__c</fullName>
+        <description>Integration</description>
+        <externalId>false</externalId>
+        <label>Commission Notes</label>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>Difference_Price_Watt_SP_MP__c</fullName>
+        <externalId>false</externalId>
+        <formula>Sales_Price_Watt_for_Commissions__c  -  Minimum_Price_Watt__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Difference Price/Watt (SP-MP)</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>External_Source__c</fullName>
+        <externalId>false</externalId>
+        <label>External Source</label>
+        <length>50</length>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>External_id__c</fullName>
+        <externalId>true</externalId>
+        <label>External id</label>
+        <length>50</length>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Min_Price_Updated__c</fullName>
+        <description>Integration</description>
+        <externalId>false</externalId>
+        <label>Min Price Updated</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>No</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Min_Price_Watt__c</fullName>
+        <externalId>false</externalId>
+        <formula>Opportunity__r.Minimum_Price_Watt__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Min Price Watt</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Minimum_Price_Watt__c</fullName>
+        <externalId>false</externalId>
+        <label>Minimum Price/Watt</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Opportunity__c</fullName>
+        <externalId>false</externalId>
+        <label>Opportunity</label>
+        <referenceTo>Opportunity</referenceTo>
+        <relationshipLabel>Commissions</relationshipLabel>
+        <relationshipName>Commissions</relationshipName>
+        <relationshipOrder>0</relationshipOrder>
+        <reparentableMasterDetail>true</reparentableMasterDetail>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>MasterDetail</type>
+        <writeRequiresMasterRead>false</writeRequiresMasterRead>
+    </fields>
+    <fields>
+        <fullName>Pricing_Exception__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Commission Exception</label>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Proposed_System_Size_DC_Watts__c</fullName>
+        <description>The total size of the project Solar system in DC Watts.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>The total size of the project Solar system in DC Watts.</inlineHelpText>
+        <label>Proposed System Size (DC Watts)</label>
+        <precision>12</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Sales_Price_Watt_Adjustment__c</fullName>
+        <externalId>false</externalId>
+        <label>Sales Price/Watt Adjustment</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Sales_Price_Watt__c</fullName>
+        <externalId>false</externalId>
+        <formula>Total_Contract_Amount__c  /  Proposed_System_Size_DC_Watts__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Sales Price/Watt</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Sales_Price_Watt_for_Commissions__c</fullName>
+        <externalId>false</externalId>
+        <formula>Sales_Price_Watt_Adjustment__c  +  Sales_Price_Watt__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Sales Price/Watt for Commissions</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Total_Contract_Amount__c</fullName>
+        <description>Equal to Total Contract Amount (includes Sales Tax). Different from &quot;Amount (Pre-Tax)&quot; field that is equal to Estimated Revenue (Total Contract Amount less Sales Tax).</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Equal to Total Contract Amount (includes Sales Tax). Different from &quot;Amount (Pre-Tax)&quot; field that is equal to Estimated Revenue (Total Contract Amount less Sales Tax).</inlineHelpText>
+        <label>Total Contract Amount</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <label>Commission</label>
+    <nameField>
+        <displayFormat>COMM-{0000000}</displayFormat>
+        <label>Commission Name</label>
+        <trackHistory>true</trackHistory>
+        <type>AutoNumber</type>
+    </nameField>
+    <pluralLabel>Commissions</pluralLabel>
+    <searchLayouts/>
+    <sharingModel>ControlledByParent</sharingModel>
+</CustomObject>

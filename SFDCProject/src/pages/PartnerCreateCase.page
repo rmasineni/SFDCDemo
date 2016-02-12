@@ -1,0 +1,175 @@
+<apex:page standardController="Case" extensions="PartnerCreateCase" tabstyle="Contact_Us__tab" ShowHeader="true" >
+    <style>
+        .producterror { color: red; font-weight: strong;
+            background-color: #FFFFCC;
+            border-style: solid;
+            border-width: 1px;
+            padding: 6px 8px 6px 6px;
+            border-color: #FF9900;
+            font-size: 100%;
+            margin-left: 15px;
+            margin-right: 20px;
+        }
+        
+        .dis_Subject {width:300px; height:15px;}
+        .dis_Descrip {width:300px; height:60px;}
+    </style> 
+
+    <script type="text/javascript">
+        function closeAndRefreshparent(parentWindowUrl)
+            {
+                window.top.close();
+                window.opener.parent.location.href = parentWindowUrl;
+                var win = window.open('','_parent','');
+                win.close();
+            }
+    </script>
+    
+    <apex:sectionHeader title="{!title}"/>
+    <apex:form id="formId" >
+        <apex:messages styleClass="producterror" /> 
+        <apex:pageblock >
+             <!-- <apex:pageBlockSection title="Case Information" columns="1" >
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="Contact Name" />
+                    <apex:outputPanel layout="block" >
+                        <apex:OutputText id="ContactName" value="{!ContactName}" /> 
+                    </apex:outputPanel>
+                </apex:pageBlockSectionItem> -->
+                <!--  <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="Status" />
+                    <apex:outputPanel layout="block" styleClass="requiredInput">
+                        <apex:outputPanel layout="block" styleClass="requiredBlock"/>
+                        <apex:inputfield id="Status" value="{!caseRec.Status}" />
+                    </apex:outputPanel>
+                </apex:pageBlockSectionItem> 
+            </apex:pageBlockSection> -->
+            <apex:pageBlockSection title="Case Information" columns="1" >
+                <!--  <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="{!$ObjectType.Case.fields.Help_Category_Type__c.label}" for="helpType" />
+                    <apex:outputPanel layout="block" styleClass="requiredInput" >
+                        <apex:outputPanel layout="block" styleClass="requiredBlock"/>
+                        <apex:inputfield id="helpType" value="{!caseRec.Help_Category_Type__c}" />
+                        <apex:actionSupport event="onchange" rerender="EDP"/>
+                    </apex:outputPanel>
+                </apex:pageBlockSectionItem> -->
+                
+              <!--  <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="{!$ObjectType.Case.fields.Help_Category__c.label}" for="helpCategory" />
+                    <apex:outputPanel layout="block" styleClass="requiredInput" >
+                        <apex:outputPanel layout="block" styleClass="requiredBlock"/>
+                        <apex:inputfield id="helpCategory" value="{!caseRec.Help_Category__c}" />
+                         <apex:actionSupport event="onchange" rerender="showRequired,EDP"/> 
+                    </apex:outputPanel>
+                </apex:pageBlockSectionItem> -->
+                
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="Priority" />
+                    <apex:outputPanel layout="block" >
+                        <apex:selectList value="{!priority}" id="priority" size="1">
+                            <apex:selectOptions value="{!priorityOption}"/>
+                        </apex:selectList>
+                    </apex:outputPanel>
+                </apex:pageBlockSectionItem>
+                
+                   <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="{!$ObjectType.Case.fields.Lead__c.label}" for="Lead" />
+                    <apex:outputPanel id="showprop" layout="block" >
+                        <apex:outputPanel id="showRequired" layout="block" styleClass="requiredBlock"  />
+                        <apex:inputfield id="Lead" value="{!caseRec.Lead__c}" >
+                           <!-- <apex:actionSupport event="onchange" rerender="propCustomerNameId1,EDP"/> -->
+                        </apex:inputfield>
+                    </apex:outputPanel>
+                </apex:pageBlockSectionItem>
+                
+                   <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="{!$ObjectType.Case.fields.Proposal__c.label}" for="proposal" />
+                    <apex:outputPanel id="showprop" layout="block" >
+                        <apex:outputPanel id="showRequired" layout="block" styleClass="requiredBlock" />
+                        <apex:inputfield id="proposal" value="{!caseRec.Proposal__c}" >
+                            <apex:actionSupport event="onchange" rerender="propCustomerNameId1,EDP"/>
+                        </apex:inputfield>
+                    </apex:outputPanel>
+                </apex:pageBlockSectionItem>
+                
+               <apex:pageBlockSectionItem id="opportunityId" >
+                    <apex:outputLabel value="Opportunity"  />
+                    <apex:outputPanel id="showOpp" layout="block" >
+                        <apex:outputPanel id="showOpportunity" layout="block" styleClass="requiredBlock" />
+                        <apex:inputfield id="opportunity" value="{!caseRec.Opportunity__c}" >
+                        </apex:inputfield>
+                    </apex:outputPanel>              
+                </apex:pageBlockSectionItem>
+                <!-- <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="Issue Type" />
+                    <apex:outputPanel layout="block" >
+                        <apex:inputfield id="IssueType" value="{!caseRec.Issue_Type__c}" />
+                    </apex:outputPanel>
+                </apex:pageBlockSectionItem> -->
+         </apex:pageBlockSection>  
+                     
+           <!--  <apex:outputpanel id="EDP">
+            <apex:pageBlockSection title="Proposal Information" columns="1" >
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="{!$ObjectType.Case.fields.Proposal__c.label}" for="proposal" />
+                    <apex:outputPanel id="showprop" layout="block" >
+                        <apex:outputPanel id="showRequired" layout="block" styleClass="requiredBlock" rendered="{!showproposal}" />
+                        <apex:inputfield id="proposal" value="{!caseRec.Proposal__c}" >
+                            <apex:actionSupport event="onchange" rerender="propCustomerNameId1,EDP"/>
+                        </apex:inputfield>
+                    </apex:outputPanel>
+                </apex:pageBlockSectionItem>
+                
+               <apex:pageBlockSectionItem id="propCustomerNameId1" >
+                    <apex:outputLabel value="Customer Name"  />
+                    <apex:outputpanel >
+                        <apex:outputtext value="{!propCustomerName}" />
+                    </apex:outputpanel>
+                </apex:pageBlockSectionItem> 
+                
+                <apex:pageBlockSectionItem id="opportunityId" >
+                    <apex:outputLabel value="Opportunity"  />
+                    <apex:outputPanel id="showOpp" layout="block" >
+                        <apex:outputPanel id="showOpportunity" layout="block" styleClass="requiredBlock" />
+                        <apex:inputfield id="opportunity" value="{!caseRec.Opportunity__c}" >
+                        </apex:inputfield>
+                    </apex:outputPanel>
+                    
+              </apex:pageBlockSectionItem>
+                
+            </apex:pageBlockSection>
+            </apex:outputpanel> -->
+            
+            <apex:pageBlockSection title="Description Information" columns="1" >
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="{!$ObjectType.Case.fields.Subject.label}" for="subject" />
+                    <apex:outputPanel layout="block" styleClass="requiredInput" >
+                        <apex:outputPanel layout="block" styleClass="requiredBlock"/>
+                        <apex:inputfield id="subject" value="{!caseRec.Subject}" styleClass="dis_Subject"/>
+                    </apex:outputPanel>
+                </apex:pageBlockSectionItem>
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="{!$ObjectType.Case.fields.Description.label}" for="description" />
+                    <apex:outputPanel layout="block" styleClass="requiredInput" >
+                        <apex:outputPanel layout="block" styleClass="requiredBlock"/>
+                        <apex:inputfield id="description" value="{!caseRec.Description}" styleClass="dis_Descrip"/>
+                    </apex:outputPanel>
+                </apex:pageBlockSectionItem>
+                <!-- <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="{!$ObjectType.Case.fields.Case_Resolution__c.label}" for="resolution" />
+                    <apex:outputPanel layout="block" styleClass="requiredInput"  >
+                        <apex:outputPanel layout="block" styleClass="requiredBlock" Rendered="{!reqResolution}"/>
+                        <apex:inputfield id="resolution" value="{!caseRec.Case_Resolution__c}" />
+                    </apex:outputPanel>
+                </apex:pageBlockSectionItem> -->    
+    
+            </apex:pageBlockSection>
+        </apex:pageblock>
+        
+        <div align="center">
+            <apex:commandButton title="Submit" value="  Submit " action="{!submitCase}" />
+            &nbsp;
+            <apex:commandButton value="Cancel" action="{!doCancel}" immediate="true" />
+        </div>
+    </apex:form>
+</apex:page>

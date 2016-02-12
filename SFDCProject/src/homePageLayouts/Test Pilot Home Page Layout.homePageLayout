@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<HomePageLayout xmlns="http://soap.sforce.com/2006/04/metadata">
+    <narrowComponents>standard-StandardSearch</narrowComponents>
+    <narrowComponents>standard-GoogleTalk</narrowComponents>
+    <narrowComponents>standard-CreateNew</narrowComponents>
+    <narrowComponents>standard-DocumentSearch</narrowComponents>
+    <narrowComponents>standard-RecentItems</narrowComponents>
+    <narrowComponents>standard-SolutionSearch</narrowComponents>
+    <narrowComponents>standard-MessagesAndAlerts</narrowComponents>
+    <narrowComponents>standard-ProductSearch</narrowComponents>
+    <narrowComponents>standard-UsefulLinks</narrowComponents>
+    <narrowComponents>standard-PartnerPortalWelcome</narrowComponents>
+    <wideComponents>standard-ProcessWorkitems</wideComponents>
+    <wideComponents>standard-Calendar</wideComponents>
+    <wideComponents>standard-Tasks</wideComponents>
+    <wideComponents>standard-Dashboard</wideComponents>
+    <wideComponents>Sun Run Blog</wideComponents>
+</HomePageLayout>

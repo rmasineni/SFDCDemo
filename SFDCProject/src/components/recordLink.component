@@ -1,0 +1,8 @@
+<apex:component layout="none">
+    <apex:attribute name="recordId" type="String" description=""/>
+    <apex:attribute name="label" type="String" description=""/>
+    <apex:attribute name="target" type="String" description=""/>
+	<apex:attribute name="idPrefix" type="String" description=""/>
+    
+    <a href="/{!recordId}" id="{!idPrefix}-{!recordId}" target="{!target}" onblur="LookupHoverDetail.getHover('{!idPrefix}-{!recordId}').hide();" onfocus="LookupHoverDetail.getHover('{!idPrefix}-{!recordId}', '/{!recordId}/m?retURL=%2F{!recordId}&isAjaxRequest=1').show();" onmouseout="LookupHoverDetail.getHover('{!idPrefix}-{!recordId}').hide();" onmouseover="LookupHoverDetail.getHover('{!idPrefix}-{!recordId}', '/{!recordId}/m?retURL=%2F{!recordId}&isAjaxRequest=1').show();">{!label}</a>
+</apex:component>

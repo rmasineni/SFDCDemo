@@ -1,0 +1,56 @@
+<apex:page standardController="Opportunity" extensions="PartnerOpportunityCreateExt" sidebar="false" showHeader="false">
+            <apex:form id="formId">             
+            <apex:pagemessages />    
+
+            <script language="JavaScript">
+                 function refreshParent(redirectURL){ 
+                      window.top.location.href=redirectURL;
+                } 
+            </script>    
+            <div style="float:right;margin: 0 auto;text-align: center;">            
+            <apex:outputLabel id="nlLabel" style="font-weight: bold;">Navigate BrightPath:</apex:outputLabel>
+            <apex:selectList title="NavigationDD" style="width:125px;" size="1" value="{!selectedDesign}" multiselect="false">
+                <apex:selectOptions value="{!DesignTypes}"/>
+            </apex:selectList>            
+              <apex:commandLink id="NavigationGo" value="Go" action="{!redirectDesignTool}" target="_parent" styleClass="btn" style="text-decoration:none;padding:2px;" reRender="popup">
+              </apex:commandLink>              
+             <apex:outputPanel id="popup">
+              <apex:outputText rendered="{!displayPopup}">
+                <script type="text/javascript">
+                    var errorMessageStr = '{!displayPopupMessage}';
+                    alert(errorMessageStr);
+                </script>
+            </apex:outputText> 
+            <apex:outputText rendered="{!displayWarningMessage}">
+                <script type="text/javascript">
+                    var alertMessage = '{!displayPopupMessage}';
+                    var isConfirmed = window.confirm(alertMessage);
+                    if(isConfirmed == true){
+                        window.top.location.href = '{!redirectURL}';
+                    }
+                </script>
+            </apex:outputText>             
+            <apex:outputText rendered="{!displayURL}">
+                <script type="text/javascript">
+                    
+                    window.top.location.href = '{!redirectURL}';
+                </script>
+            </apex:outputText> 
+             <apex:outputText rendered="{!displaySalesRepURL}">
+                <script type="text/javascript">
+                    
+                    window.top.location.href = '{!SalesRepURL}';
+                </script>
+            </apex:outputText> 
+            <apex:outputText rendered="{!displayTandCURL}">
+                <script type="text/javascript">
+              
+                    var newwindow = window.open('{!redirectUrl}', '', 'toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=850,height=465,left=350,top=200'); 
+                    newwindow.focus();
+   
+                </script>
+            </apex:outputText>
+        </apex:outputPanel>         
+            </div>
+            </apex:form>
+</apex:page>

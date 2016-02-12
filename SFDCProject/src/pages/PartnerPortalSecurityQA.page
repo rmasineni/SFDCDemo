@@ -1,0 +1,61 @@
+<apex:page title="SunRun Partner Portal Need Help Signing in?" sidebar="false" showHeader="false" controller="PartnerPortalLogin">
+	<apex:composition template="PartnerPortalSiteTemplate">
+		<apex:define name="mainContent">
+			<apex:outputpanel layout="block" styleclass="grid_2">
+				<div class="needHelpDiv1">
+				</div>
+			</apex:outputpanel>
+			<apex:outputpanel layout="block" styleclass="grid_8">
+				<div class="needHelpDiv2">
+                    <div><BR>&nbsp;</BR><BR>&nbsp;</BR></div>
+                    <div style="">
+						<h1 class="NeedHelp">Setup Security Question</h1>
+						<p/><p/>
+                    </div>
+                
+                    <p></p>
+                    <apex:form id="theForm" forceSSL="true">
+						<font style="wordwrap" color="red" weight="bold"><apex:messages styleClass="wordwrap" /></font>
+						<apex:outputPanel layout="none">					
+							<apex:outputtext style="font-size:1.2em;padding-left:3px;" 
+									value="Security Question"/>
+							<span style="margin-left:2px;width:0px;">
+								<apex:inputtext size="50" id="securityQuestionId" value="{!securityQuestion}">
+								</apex:inputtext>
+							</span>
+						</apex:outputPanel>
+						<p/>
+						<apex:outputPanel layout="none">
+							<apex:outputtext style="font-size:1.2em;padding-left:3px;" 
+									value="Security Answer"/>
+							<span style="margin-left:7px;width:0px;">
+								<apex:inputtext size="50" id="securityAnswerId" value="{!securityAnswer}">
+								</apex:inputtext>
+							</span>
+						</apex:outputPanel> 
+						<p/>
+						<apex:outputPanel layout="none">
+							<span style="margin-left:142px;width:0px;">
+								<apex:commandButton styleclass="buttons" action="{!savesecurityQuestion}" value="    Save    " id="theButton1"/>
+							</span>            
+						</apex:outputPanel> 
+						<p/>                    
+						
+						<BR>&nbsp;</BR><BR>&nbsp;</BR>
+						<apex:outputPanel >
+							<span style="margin-left:0px;width:0px;">
+								<apex:commandLink style="font-size:110%;"
+									action="{!returnTologinPage}" 
+									title="Return to login page" value="Return to login page"/>    
+							</span>
+						</apex:outputPanel>
+
+						<div>
+							<BR>&nbsp;</BR>
+						</div>
+                    </apex:form>
+				</div>
+			</apex:outputpanel>
+		</apex:define>
+	</apex:composition>
+</apex:page>

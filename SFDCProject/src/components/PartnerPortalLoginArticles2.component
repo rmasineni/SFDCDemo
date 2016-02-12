@@ -1,0 +1,71 @@
+<apex:component >
+	<apex:attribute name="content3" type="String" required="false" description="Article Content2"/>
+	<apex:attribute name="content4" type="String" required="false" description="Article Content2"/>
+	<apex:attribute name="content5" type="String" required="false" description="Article Content2"/>
+	<style>
+		.media.left > .media-hdr, .media.left > .media-bd {
+			display: inline;
+			float: left;
+		}
+		.media-hdr, .media.top > .media-hdr {
+			display: block;
+			margin: 0 0 10px 0;
+		}
+		.media {
+			overflow: hidden;
+			_overflow: visible;
+			margin-bottom: 10px;
+			width: 92%;
+		}
+		
+		.left {
+			float: left!important;
+		}			
+	</style>
+	<apex:outputpanel layout="block" styleclass="grid_5">
+		<apex:outputText value=" {!content3}" escape="false"/>
+	</apex:outputpanel>
+	<apex:outputpanel layout="block" styleclass="grid_5">
+		<apex:outputText value=" {!content4}" escape="false"/>
+	</apex:outputpanel>
+	<apex:outputpanel layout="block" styleclass="grid_6">
+		<apex:outputText value=" {!content5}" escape="false"/>
+	</apex:outputpanel>		
+
+	
+	<!--
+	<apex:outputpanel layout="block" styleclass="grid_5">
+	<div class="contenetDiv3">
+		<br />
+		<span style="font-family: verdana,geneva,sans-serif; "><span style="color: rgb(0, 173, 230); "><span style="font-size: 16px; ">&nbsp;&nbsp; <img alt="" src="{!$Resource.SunrunContactus}" /></span></span><br />
+		<span style="font-size: 12px; ">&nbsp; &nbsp; &nbsp;Email us at<br />
+		&nbsp; &nbsp; &nbsp;<a href="https://mail.google.com/mail/u/0/?ui=2&view=btop&ver=lsvjwajrtlp4#to%253Dsunrunhelp%252540sunrun.com%2526cmid%253D2" target="_blank"><span style="color: #3399ff; ">sunrunhelp@sunrunhome.com</span></a></span></span>
+		</div>
+		<br />
+	</apex:outputpanel>
+	<apex:outputpanel layout="block" styleclass="grid_5">
+		<div class="contenetDiv3">
+			<br />
+			<span style="font-size: 12px; "><span style="font-family: verdana,geneva,sans-serif; ">&nbsp;&nbsp; <img alt="User-added image" height="33" src="{!$Resource.SunrunVideos}" width="134" /></span></span><br />
+			<span style="font-size: 12px; "><span style="font-family: verdana,geneva,sans-serif; ">&nbsp;&nbsp;&nbsp; Videos educate and increase&nbsp;conversion<br />
+			&nbsp; &nbsp; rates (it&#39;s been proven!)<br />
+			&nbsp;&nbsp;&nbsp; <a href="http://www.sunrun.com/partner-pages-parent/sunrun-videos" target="_blank">Download</a> Sunrun&#39;s latest and&nbsp;greatest<br />
+			&nbsp; &nbsp; videos</span></span>
+		</div>
+	</apex:outputpanel>
+	<apex:outputpanel layout="block" styleclass="grid_6">
+		<div class="contenetDiv3">
+		<br />
+		<font color="#00ade6" face="Verdana">&nbsp;&nbsp; </font>
+			<img alt="User-added image" src="{!$Resource.SunRunCommunity}" /><br />
+			<span style="font-size: 14px;">
+			<span style="font-family: verdana, geneva, sans-serif; ">
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+			<a href="https://www.facebook.com/sunrun" target="_blank"><img alt="User-added image" src="{!$Resource.SunrunFacebook}" /></a>
+			</span></span> <a href="https://twitter.com/Sunrun" target="_blank"><img alt="User-added image" src="{!$Resource.SunrunTwitter}" /></a> 
+			<a href="http://www.youtube.com/sunrunhomesolar" target="_blank"><img alt="User-added image" src="{!$Resource.SunrunYoutube}" /></a>
+		</div>
+	</apex:outputpanel>	
+	
+	  -->
+</apex:component>

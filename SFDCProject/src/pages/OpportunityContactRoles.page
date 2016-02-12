@@ -1,0 +1,116 @@
+<apex:page id="OptyContactRoleId" sidebar="false" showHeader="false" tabStyle="Opportunity" StandardController="Opportunity" 
+    Extensions="CustomOptyContactRole">
+    <style>
+        .producterror { color: red; font-weight: strong;
+            background-color: #FFFFCC;
+            border-style: solid;
+            border-width: 1px;
+            padding: 6px 8px 6px 6px;
+            border-color: #FF9900;
+            font-size: 100%;
+            margin-left: 15px;
+            margin-right: 20px;
+            }
+    </style>
+    <apex:form id="ContactRoleListForm" >
+    <apex:pageBlock >
+    <apex:pageblocksection columns="1" title="Contact Roles" >     
+
+        <apex:outputpanel >
+             <div> 
+               <table width="100%">
+                    <tr>
+                        <td  align="center" width="100%">
+                        <apex:outputLabel style="font-weight:bold;" >Actions</apex:outputLabel>
+                        <apex:selectList value="{!actionName}" id="actionId" size="1" >
+                            <apex:selectOptions value="{!Actions}" />
+                        </apex:selectList>
+                        &nbsp;&nbsp;
+                        <apex:commandButton value="  Go  "  onclick="return processUserActions('{!$Component.actionId}', '{!opportunityId}' )"/>                   
+                        </td>
+                    </tr>
+                </table>    
+               </div> 
+            </apex:outputpanel>
+         </apex:pageBlockSection>
+    </apex:PageBlock>   
+        <!--<apex:messages styleClass="producterror" /> -->
+        <apex:outputPanel id="ContactRoleListId" layout="block" style="overflow:auto;border-color:red;">
+            <apex:pageBlock mode="edit" >
+                <apex:pageBlockSection id="pageBlock" columns="1">  
+                    <apex:pageBlockTable value="{!contactRoleWrapperList}" var="contactRoleWrapper" id="theTable" rowClasses="odd,even" styleClass="tableClass">
+                        <apex:column width="50px" rendered="{!!isAEEUser}">
+                            <apex:facet name="header">Contact Name</apex:facet>
+                            <a href='/partner/{!contactRoleWrapper.contactObj.ID}' onclick="redirect('{!contactRoleWrapper.contactObj.Id}')" ><apex:outputtext value="{!contactRoleWrapper.contactObj.Name}"></apex:outputtext></a>  
+                        </apex:column>
+                        <apex:column width="50px" rendered="{!isAEEUser}">
+                        <apex:facet name="header">Contact Name</apex:facet>
+                        <a href='/aeepartner/{!contactRoleWrapper.contactObj.ID}' onclick="redirect('{!contactRoleWrapper.contactObj.Id}')" ><apex:outputtext value="{!contactRoleWrapper.contactObj.Name}"></apex:outputtext></a>
+                        </apex:column>
+
+                        <!-- <apex:column width="50px" headerValue="Name" value="{!contactRoleWrapper.contactObj.Name}" /> -->
+                        <apex:column width="20px" headerValue="Role" value="{!contactRoleWrapper.contactRoleObj.role}" />
+                        <apex:column width="30px" headerValue="Credit Status" value="{!contactRoleWrapper.contactObj.Credit_Decision_on_Portal__c}" />
+                        <apex:column width="30px" headerValue="Submitted" value="{!contactRoleWrapper.contactObj.Credit_Submitted__c}" />
+                        <apex:column width="30px" headerValue="Received" value="{!contactRoleWrapper.contactObj.Credit_Received__c}" />
+                        <apex:column width="5px" headerValue="Primary" value="{!contactRoleWrapper.contactRoleObj.isPrimary}" />
+                    </apex:pageBlockTable>                                  
+                    <!-- Show notice if related list has no records -->
+                    <apex:outputPanel layout="block" styleClass="noRecordsFound" rendered="{!ContactRoleWrapperListSize == 0}">
+                        No records to display
+                    </apex:outputPanel>
+                </apex:pageBlockSection> 
+            </apex:pageBlock>
+        </apex:outputPanel>
+    </apex:form>
+    <c:Opportunity_JavascriptComponent />
+    <script>
+
+        function redirect(obj){
+            var str = '/partner'+'/'+ obj;
+            window.parent.location = str;
+        }
+
+        function attachContractDocuments(opportunityIdVal){
+            var tempURL = '/apex/Edit_Contact_Roles?id=' + opportunityIdVal; 
+            var isPartner = "{!IsPartnerUser}";
+            var isAEEUser = "{!isAEEUser}";
+            if(isPartner == 'true' && isAEEUser == 'false')
+            {
+                tempURL = '/partner' + tempURL;
+            }
+            else if(isAEEUser == 'true'){
+                tempURL = '/aeepartner' + tempURL;
+            }   
+            var newwindow = window.open(tempURL, '', 'toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=950,height=465,left=150,top=150'); 
+            newwindow.focus();
+        }
+        
+        function processUserActions(actionId, opportunityIdVal){        
+            var temp1 = '{!opportunityId}';
+            var actionText = document.getElementById(actionId).value;
+            if(actionText != null && actionText != '' ){
+                if(actionText == 'NewContact'){
+                    var tempURL = '/apex/NewCustomerContactOverridden?opportunityId=' + opportunityIdVal; 
+                    var isPartner = "{!IsPartnerUser}";
+                    var isAEEUser = "{!isAEEUser}";
+                    if(isPartner == 'true' && isAEEUser == 'false')
+                    {
+                        tempURL = '/partner' + tempURL;
+                    }
+                    else if(isAEEUser == 'true'){
+                        tempURL = '/aeepartner' + tempURL;
+                    } 
+                    window.parent.location = tempURL;
+                    //var newwindow = window.open(tempURL, '', 'toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=950,height=465,left=150,top=150'); 
+                    //newwindow.focus();
+                    return false;
+                }else if(actionText == 'EditContactRoles'){                 
+                    attachContractDocuments(opportunityIdVal);
+                    return false;
+                }
+            }
+            return true;
+        }
+    </script>
+</apex:page>

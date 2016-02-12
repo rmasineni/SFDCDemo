@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Portal xmlns="http://soap.sforce.com/2006/04/metadata">
+    <active>true</active>
+    <admin>sfdc-user-01@sunrunhome.com</admin>
+    <description>Used by Alta Resources</description>
+    <emailSenderAddress>customercare@sunrun.com</emailSenderAddress>
+    <emailSenderName>Customer Care</emailSenderName>
+    <enableSelfCloseCase>false</enableSelfCloseCase>
+    <forgotPassTemplate>Special_Lead_Source/ChangePwdEmail</forgotPassTemplate>
+    <isSelfRegistrationActivated>false</isSelfRegistrationActivated>
+    <logoDocument>SunrunImages/Sun_Run_Logo.gif</logoDocument>
+    <newPassTemplate>Special_Lead_Source/ChangePwdEmail</newPassTemplate>
+    <newUserTemplate>Special_Lead_Source/NewUserEmail</newUserTemplate>
+    <showActionConfirmation>false</showActionConfirmation>
+    <type>Partner</type>
+</Portal>

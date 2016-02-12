@@ -1,0 +1,3 @@
+<apex:page standardcontroller="Lead" recordSetVar="c" Extensions="OverridePartnerLeadTab"  
+				tabstyle="Lead" action="{!redirectLeadTab}">
+</apex:page>

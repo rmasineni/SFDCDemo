@@ -1,0 +1,727 @@
+<apex:page standardcontroller="Opportunity" extensions="OpportunityPageExtension" action="{!onload}" title="Opportunity: {!Opportunity.name}">  
+    <link
+            href='https://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/themes/smoothness/jquery-ui.css'
+            rel='stylesheet' type='text/css' />
+            <style type="text/css">                    
+            body .bPageBlock .pbBody .red .pbSubheader {
+              background-color: White !important; //
+              display: inline;
+              font-family: Arial, Helvetica, sans-serif;
+              font-weight: 500;
+              line-height: 1.1;
+              color: #27282E !important;
+              margin-top: 20px;
+              margin-bottom: 10px;
+              font-size: 1.0em;
+              box-sizing: border-box;
+            }                                   
+            body .bPageBlock,body #bodyCell .bResource .secondaryPalette,body .secondaryPalette.bPageBlock,body .individualPalette .secondaryPalette.bPageBlock,body .bodyDiv .genericTable,body .genericPageBlockTable,body .bodyDiv .bSubBlock,body .bComponentBlock .bPageBlock,body .bMyDashboard .bPageBlock,body.rlHoverFrame .bPageBlock,body.subjectSelectionPopup div.choicesBox,body.lookupTab .secondaryPalette.bPageBlock,body.popupTab .secondaryPalette.bPageBlock,body.UserTagStatsPage .secondaryPalette.bPageBlock
+                {
+                background-color: White !important;
+            }     
+            .popup
+            {
+            background-color: white;
+            border-width: 6px;
+            border-style: solid;
+            z-index: 9999;
+            left: 30%;
+            padding:10px;
+            position: absolute;
+            width: 70%;
+            margin-left: -210px;
+            top:80px;
+            height: 30%;
+            overflow: scroll;
+            }
+            
+            .popupBg
+            {
+            background-color:black;
+            opacity: 0.20;
+            filter: alpha(opacity = 70);
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: 9998;
+            }                                  
+        </style>
+     <apex:outputpanel rendered="{!NOT(editMode)}">
+        <div>
+            <div
+                style="background-color: white !important; font-size: 18px; height: 40px; float: left; color: #585858 !important;padding-top:5px;padding-left:5px;">
+                {!title}                
+            </div>            
+        </div>
+    </apex:outputpanel> 
+    <!-- <apex:outputpanel id="errbreak">
+         <apex:outputPanel rendered="{!AND(showerror,NOT(editMode))}">
+              <br/><br/><br/>
+         </apex:outputPanel>
+         <apex:pageMessages id="errMessage">                 
+         </apex:pageMessages>          
+    </apex:outputpanel>      
+    -->    
+    <apex:outputpanel rendered="{!NOT(editMode)}">
+        <br/><br/><br/>
+    </apex:outputpanel>
+    <chatter:feedWithFollowers entityid="{!opptyObj.id}" rendered="{!NOT(editMode)}"/> 
+    <apex:pageMessages id="errMessage">                 
+    </apex:pageMessages>           
+    <apex:form id="formId">        
+        <apex:pageBlock id="editPb" mode="maindetail" rendered="{!editMode}">        
+         <apex:pageBlockSection title="Opportunity Detail">
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="First Name" />
+                        <apex:inputfield id="FirstName" value="{!contactObj.Firstname}">  
+                        </apex:inputfield>                       
+                </apex:pageBlockSectionItem> 
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="Last Name" />
+                        <apex:inputfield id="LastName" value="{!contactObj.Lastname}">
+                        </apex:inputfield>                    
+                </apex:pageBlockSectionItem> 
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="Primary Title" />
+                        <apex:inputfield id="PrimaryTitle" value="{!OpptyObj.Primary_Title__c}">
+                        </apex:inputfield>
+                </apex:pageBlockSectionItem> 
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="Secondary Title" />
+                        <apex:inputfield id="SecondaryTitle" value="{!OpptyObj.Secondary_Title__c}">
+                        </apex:inputfield>                    
+                </apex:pageBlockSectionItem> 
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="Home Type On Title" />
+                        <apex:inputfield id="HomeTitle" value="{!OpptyObj.Core_Logic_Land_Type__c}">
+                        </apex:inputfield>                    
+                </apex:pageBlockSectionItem> 
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="Email" />
+                        <apex:inputfield id="Email" value="{!contactObj.Email}">
+                        </apex:inputfield>                    
+                </apex:pageBlockSectionItem>
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="Phone" />
+                        <apex:inputfield id="Phone" value="{!contactObj.Phone}">
+                        </apex:inputfield>                    
+                </apex:pageBlockSectionItem>
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="Mobile Phone" />
+                        <apex:inputfield id="MobilePhone" value="{!contactObj.MobilePhone}">
+                        </apex:inputfield>                    
+                </apex:pageBlockSectionItem>                
+                <apex:repeat value="{!$ObjectType.Opportunity.FieldSets.Opportunity_Detail}"
+                    var="field">
+                    <apex:inputField value="{!OpptyObj[field]}" rendered="{!NOT(OR(field=='OwnerId',field=='Energy_Storage_Applicable__c'))}">
+                    </apex:inputField>
+                    <apex:inputField value="{!OpptyObj.Energy_Storage_Applicable__c}" rendered="{!(field=='Energy_Storage_Applicable__c')}">
+                    <apex:actionSupport reRender="ESA" event="onchange" action="{!onChangeEnergyApplicable}"/>
+                    </apex:inputField>   
+                    <apex:outputField value="{!OpptyObj[field]}" rendered="{!(field=='OwnerId')}">
+                    </apex:outputField>    
+                </apex:repeat>               
+            </apex:pageBlockSection>
+            <apex:outputPanel id="retOP">
+            <apex:pageBlockSection title="Retail">
+                <apex:repeat value="{!$ObjectType.Opportunity.FieldSets.Retail}"
+                    var="field">
+                    <apex:inputField value="{!OpptyObj[field]}">
+                    </apex:inputField>    
+                </apex:repeat>
+            </apex:pageBlockSection> 
+            </apex:outputPanel>            
+            <apex:pageBlockSection title="Site" columns="1">
+            <apex:pageBlockSectionItem > 
+               <apex:outputLabel ></apex:outputLabel>              
+                    <c:gmapsLeadAddress id="gmapsAddress" street="{!accObj.BillingStreet}" city="{!accObj.Billingcity}" state="{!accObj.BillingState}" postalCode="{!accObj.BillingpostalCode}"  latitude="{!accObj.Latitude__c}" longitude="{!accObj.Longitude__c}" status="{!accObj.Address_Standardization_Status__c}" edit="true"></c:gmapsLeadAddress>
+             </apex:pageBlockSectionItem>               
+            </apex:pageBlockSection>
+             <apex:pageBlockSection title="" showheader="false">
+                <apex:repeat value="{!$ObjectType.Opportunity.FieldSets.Site}"
+                    var="field">
+                    <apex:inputField value="{!OpptyObj[field]}">
+                    </apex:inputField>    
+                </apex:repeat>
+            </apex:pageBlockSection>
+            <apex:outputPanel >                   
+                <apex:pageblocksection columns="2">                         
+                    <apex:inputfield id="SiteDesignFailureReason" value="{!opptyObj.Site_Design_Failure_Reason__c}">        
+                    </apex:inputfield>      
+                    <apex:outputfield id="SiteDesinger" value="{!opptyObj.Site_Designer__c}">       
+                    </apex:outputfield>     
+                    <apex:outputfield id="SiteDesignRequested" value="{!opptyObj.Site_Design_Requested__c}">        
+                    </apex:outputfield>     
+                </apex:pageblocksection>        
+             </apex:outputPanel>
+            <apex:outputPanel id="promoOP">   
+            <apex:pageBlockSection title="Promotion">
+                <apex:repeat value="{!$ObjectType.Opportunity.FieldSets.Promotion_Referrals}"
+                    var="field">
+                    <apex:inputField value="{!OpptyObj[field]}">
+                    </apex:inputField>    
+                </apex:repeat>
+            </apex:pageBlockSection>   
+            </apex:outputPanel>         
+            <!--<apex:pageBlockSection title="Utility" >
+                <apex:repeat value="{!$ObjectType.Opportunity.FieldSets.Utility}"
+                    var="field">
+                    <apex:inputField value="{!OpptyObj[field]}">
+                    </apex:inputField>    
+                </apex:repeat>
+            </apex:pageBlockSection>
+            -->
+            <apex:outputPanel id="oriOP">
+            <apex:pageBlockSection title="Opportunity Record Information" >
+                <apex:repeat value="{!$ObjectType.Opportunity.FieldSets.Opportunity_Record_Information}"
+                    var="field">
+                    <apex:inputField value="{!OpptyObj[field]}">
+                    </apex:inputField>    
+                </apex:repeat>
+            </apex:pageBlockSection>
+            </apex:outputPanel>
+            <apex:outputPanel id="ESA">
+           <!-- <apex:pageBlockSection title="Consumption Meter" rendered="{!OpptyObj.Energy_Storage_Applicable__c}"> 
+            </apex:pageBlockSection>  -->   
+            
+            <apex:outputText rendered="{!!IsEngStApplicable}">
+                                <script type="text/javascript">
+                               //  var errorMessageStr = '{!IsEngStApplicable} Energy Storage Applicable is unchecked that data will deleted?{!OpptyObj.Energy_Storage_Applicable__c}';
+                                   var errorMessageStr = 'Consumption Metering data will be deleted when unchecked. Are you sure?';
+                                alert(errorMessageStr);
+                                </script>
+                    </apex:outputText>
+            <apex:pageBlockSection title="Demographics and bill inputs" rendered="{!OpptyObj.Energy_Storage_Applicable__c}">
+                <apex:inputfield id="YearlykWhconsumption" value="{!energyStorage.Yearly_kWh_consumption__c}">
+                </apex:inputfield>
+                <apex:inputfield id="Numberofadultshomeduringtheday" value="{!energyStorage.Number_of_adults_home_during_the_day__c}">
+                </apex:inputfield>  
+                <apex:inputfield id="Timereturnfromwork" value="{!energyStorage.Time_return_from_work__c}">
+                </apex:inputfield>
+                <apex:inputfield id="UseAC" value="{!energyStorage.Use_A_C__c}">
+                </apex:inputfield>
+                <apex:inputfield id="Electricvehiclechargedafter4PM" value="{!energyStorage.Electric_vehicle_charged_after_4PM__c}">
+                </apex:inputfield>
+                <apex:inputfield id="PVTurnkey" value="{!energyStorage.PV_Turnkey__c}">
+                </apex:inputfield>
+                <apex:inputfield id="CurrentBlendedUtilityRate" value="{!energyStorage.Current_Blended_Utility_Rate__c}">
+                </apex:inputfield>
+                
+            </apex:pageBlockSection>   
+            <apex:pageBlockSection title="PV+ES calculator outputs" rendered="{!OpptyObj.Energy_Storage_Applicable__c}">
+                <apex:inputfield id="PVkWdc" value="{!energyStorage.PV_kWdc__c}">
+                </apex:inputfield>
+                <apex:inputfield id="ESkWh" value="{!energyStorage.ES_kWh__c}">
+                </apex:inputfield>
+                <apex:inputfield id="Monthly20YearPPALeasePayment" value="{!energyStorage.Monthly_20_Year_PPA_Lease_Payment__c}">
+                </apex:inputfield>
+                <apex:inputfield id="Monthly20YearSavings" value="{!energyStorage.Monthly_20_Year_Savings__c}">
+                </apex:inputfield>
+                <apex:inputfield id="Prepaid20YearPPALease" value="{!energyStorage.Prepaid_20_Year_PPA_Lease__c}">
+                </apex:inputfield>
+                <apex:inputfield id="Prepaid20YearPPALeaseSavings" value="{!energyStorage.Prepaid_20_Year_PPA_Lease_Savings__c}">
+                </apex:inputfield>
+                    
+            </apex:pageBlockSection>
+            <apex:pageBlockSection title="Consumption Meter" rendered="{!OpptyObj.Energy_Storage_Applicable__c}">
+                <apex:inputfield id="MeterSensorID" value="{!energyStorage.Meter_Sensor_ID__c}">
+                </apex:inputfield>
+                <apex:inputfield id="DateofMeterInstall" value="{!energyStorage.Date_of_Meter_Instal__c}">
+                </apex:inputfield>
+            </apex:pageBlockSection>  
+            <apex:pageBlockSection title="Consumption Meter Documents" rendered="{!OpptyObj.Energy_Storage_Applicable__c}" columns="1">
+              <!--  <apex:iframe src="/apex/Opportunity_eSignDocuments?id={!OpptyId}&OpptyEdit={!editMode}"/> -->
+                <apex:iframe src="/apex/Opportunity_eSignDocuments?id={!OpptyId}&OpptyEdit=False}" height="200"/>                   
+            </apex:pageBlockSection>  
+                 
+            </apex:outputPanel>
+             <apex:outputpanel id="hiddenFields" rendered="true">
+                <apex:inputfield value="{!OpptyObj.State__c}" style="display:none"
+                    styleClass="page-address-state" />
+             </apex:outputpanel> 
+             <apex:pageblockbuttons >
+                <apex:commandbutton value="Save" action="{!save}" />
+                <apex:commandbutton value="Cancel" action="{!cancel}" />
+            </apex:pageblockbuttons>      
+             <script>           
+           <!--  twistSection(document.getElementById('{!$Component.editPb.retOP}').getElementsByTagName('img')[0]);  -->
+             twistSection(document.getElementById('{!$Component.editPb.promoOP}').getElementsByTagName('img')[0]);
+             twistSection(document.getElementById('{!$Component.editPb.oriOP}').getElementsByTagName('img')[0]);             
+            </script>  
+        </apex:pageBlock>  
+        <apex:pageBlock id="detailPb" mode="inlineEdit" rendered="{!NOT(editMode)}">
+            <apex:outputpanel id="pbButtons" layout="block" style="text-align: center;">   
+         <!--  <apex:pageblockbuttons location="top">-->
+                <apex:commandbutton id="saveButton" value="Save" action="{!save}"/>
+                <apex:commandbutton id="cancelButton" value="Cancel" action="{!cancel}"/>
+                <apex:commandbutton id="editButton" value="Edit" action="{!editOppty}"/>                                                             
+                <!-- <apex:commandbutton value="Delete" action="{!delete}" />-->                                               
+                        
+              <apex:outputPanel id="designButton">
+                    <div class="menuButton" id="DesignActions"><apex:outputPanel layout="none">
+                        <div class="menuButtonButton" id="DesignActionsButton" tabindex="0" onblur="openPb(); return false;" onclick="closePb(); return false;"><span class="menuButtonLabel" id="DesignActionsLabel">Design</span></div>
+                         
+                        <div class="menuButtonMenu" id="DesignActionsMenu"><apex:outputPanel layout="none">
+                         <apex:commandLink action="{!redirectDesignTool}" rerender="popup,TermsandConditions">New Project                          
+                            <apex:param name="selectedDesign" value="DesignNewProposal" assignTo="{!selectedDesign}"/>
+                         </apex:commandLink>    
+                         <apex:commandLink action="{!redirectDesignTool}" rerender="popup,TermsandConditions">Saved Project                        
+                            <apex:param name="selectedDesign" value="SavedProject" assignTo="{!selectedDesign}"/>
+                         </apex:commandLink>                                           
+                        </apex:outputPanel></div>
+                    </apex:outputPanel></div>
+              </apex:outputPanel>                                          
+              <apex:outputPanel id="popup">
+                              <apex:outputText rendered="{!displayPopup}">
+                                <script type="text/javascript">
+                                    var errorMessageStr = '{!displayPopupMessage}';
+                                    alert(errorMessageStr);
+                                </script>
+                            </apex:outputText> 
+                             <apex:outputText rendered="{!displayWarningMessage}">
+                                <script type="text/javascript">
+                                    var alertMessage = '{!displayPopupMessage}';
+                                    var isConfirmed = window.confirm(alertMessage);
+                                    if(isConfirmed == true){
+                                        window.top.location.href = '{!redirectURL}';
+                                    }
+                                </script>
+                            </apex:outputText> 
+                            <apex:outputText rendered="{!displayURL}">
+                                <script type="text/javascript">
+                                    
+                                    window.top.location.href = '{!redirectURL}';
+                                </script>
+                            </apex:outputText>   
+                          
+                            <apex:outputText rendered="{!displaySalesRepURL}">
+                                <script type="text/javascript">
+                                    
+                                    window.top.location.href = '{!SalesRepURL}';
+                                </script>
+                            </apex:outputText>                       
+                        </apex:outputPanel>  
+                <apex:commandButton id="creditButton" value="Credit" onclick="window.open('/apex/OpportunityCustomerCreditManager?id='+'{!OpptyObj.id}','_blank', 'toolbar=yes, resizable=yes, top=400, left=500, width=600, height=400')" rerender="creditButton"/>        
+                <apex:outputPanel id="paymentsButton">
+                    <div class="menuButton" id="Actions"><apex:outputPanel layout="none">
+                        <div class="menuButtonButton" id="ActionsButton" tabindex="0" onblur="openPb(); return false;" onclick="closePb(); return false;"><span class="menuButtonLabel" id="ActionsLabel">Payments</span></div>
+                 
+                        <div class="menuButtonMenu" id="ActionsMenu"><apex:outputPanel layout="none">
+                            <apex:outputLink value="/apex/callcenteroptypayment?id={!OpptyObj.id}">One Time Payment</apex:outputLink>
+                            <apex:outputLink value="/apex/CallcenterOptyAutoPayment?id={!OpptyObj.id}">Enroll for Auto Payment</apex:outputLink>
+                            <apex:outputLink value="/apex/RequestForOptyAutoPayment?id={!OpptyObj.id}">Send Request for Auto Payment Email</apex:outputLink>
+                            <apex:outputLink value="/apex/RequestForOptyPayment?id={!OpptyObj.id}">Send Request for Payment Email</apex:outputLink>                        
+                        </apex:outputPanel></div>
+                    </apex:outputPanel></div>                    
+              </apex:outputPanel>     
+              <apex:commandbutton id="referrralButton" value="Create Referral" action="{!doReferral}" />
+              <apex:commandbutton id="offerButton" value="Create Offer" action="{!doOffer}" />
+              <apex:commandbutton id="cloneButton" value="Clone" action="{!doClone}" />
+              <apex:commandbutton id="shareButton" value="Sharing" action="{!shareOppty}" />  
+              <apex:commandButton id="newContact" value="New Contact" onclick="window.open('/apex/NewCustomerContact2?sunruncrm=1&opportunityId='+'{!OpptyObj.id}','_blank', 'toolbar=yes, resizable=yes, top=400, left=500, width=800, height=400')" rerender="newContact"/>            
+              <apex:commandButton id="findNearbyCustomers" value="Find Nearby Customers" onclick="window.open('/apex/NearbyCustomersViewer?id={!OpptyObj.Id}', '_blank', 'menubar=no,height=600,width=1000');return false;"/>
+                
+            <!--  <apex:outputpanel style="float:right">
+                     <apex:outputLabel value="Ready for " style="font-weight:bold"/>
+                    <apex:inputField value="{!OpptyObj.Ready_for__c}" />                   
+                </apex:outputpanel> -->
+                <apex:outputpanel style="float:right ">
+            <apex:outputpanel layout="block" style="float:right vertical-align:right ">
+                     <apex:outputLabel value="Ready for " style="font-weight:bold "/>
+                     <apex:inputField value="{!OpptyObj.Ready_for__c}" /> 
+                </apex:outputpanel>    
+            <apex:outputpanel layout="block" style="float:right vertical-align:right">
+                     <apex:outputLabel value="Site Design Status " style="font-weight:bold"/>
+                     <apex:outputField value="{!OpptyObj.Site_Design_Status__c}" />
+                </apex:outputpanel>        
+            <apex:outputpanel layout="block" style="float:right ">
+                     <apex:outputLabel value="Site Design Priority " style="font-weight:bold"/>
+                     <apex:inputField value="{!OpptyObj.Site_Design_Priority__c}" />
+                </apex:outputpanel>         
+                    
+              </apex:outputpanel>       
+           <!--  <apex:outputpanel style="float:right ">
+                <apex:outputpanel layout="block" style="float:right vertical-align:right">
+                     <apex:outputLabel value="Site Design Status " style="font-weight:bold"/>
+                     <apex:inputField value="{!OpptyObj.Site_Design_Status__c}" />
+                </apex:outputpanel>
+                    
+              </apex:outputpanel> -->
+          </apex:outputpanel> 
+            <apex:outputPanel styleClass="red" id="opptyDetailOP">
+            <apex:pageBlockSection title="Opportunity Detail">
+               <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="First Name" />
+                        <apex:outputfield id="FirstName" value="{!contactObj.Firstname}">                                          
+                        </apex:outputfield>
+                </apex:pageBlockSectionItem> 
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="Last Name" />
+                        <apex:outputfield id="LastName" value="{!contactObj.Lastname}">
+                        </apex:outputfield>                    
+                </apex:pageBlockSectionItem>
+                 <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="Primary Title" />
+                        <apex:outputfield id="PrimaryTitle" value="{!OpptyObj.Primary_Title__c}">
+                        </apex:outputfield>
+                </apex:pageBlockSectionItem> 
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="Secondary Title" />
+                        <apex:outputfield id="SecondaryTitle" value="{!OpptyObj.Secondary_Title__c}">
+                        </apex:outputfield>                    
+                </apex:pageBlockSectionItem> 
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="Home Type On Title" />
+                        <apex:outputfield id="HomeTitle" value="{!OpptyObj.Core_Logic_Land_Type__c}">
+                        </apex:outputfield>                    
+                </apex:pageBlockSectionItem>  
+                <apex:pageBlockSectionItem >                
+                    <apex:outputLabel value="Email" />
+                        <apex:outputfield id="Email" value="{!contactObj.Email}">
+                        </apex:outputfield>                    
+                </apex:pageBlockSectionItem>
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="Phone" />
+                        <apex:outputfield id="Phone" value="{!contactObj.Phone}">
+                        </apex:outputfield>                    
+                </apex:pageBlockSectionItem>
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="Mobile Phone" />
+                        <apex:outputfield id="MobilePhone" value="{!contactObj.MobilePhone}">
+                        </apex:outputfield>                    
+                </apex:pageBlockSectionItem> 
+                <apex:repeat value="{!$ObjectType.Opportunity.FieldSets.Opportunity_Detail}"
+                    var="field">
+                    <!--  <apex:outputField value="{!OpptyObj[field]}">
+                    </apex:outputField> -->   
+                    <apex:outputField value="{!OpptyObj[field]}" rendered="{!NOT(OR(field=='OwnerId',field=='Energy_Storage_Applicable__c'))}">
+                    </apex:outputField>
+                    <apex:outputField value="{!OpptyObj.Energy_Storage_Applicable__c}" rendered="{!(field=='Energy_Storage_Applicable__c')}">
+                   <!-- <apex:actionSupport reRender="ESA" event="onchange" action="{!onChangeEnergyApplicable}"/> -->
+                    <apex:inlineEditSupport disabled="true"/>   
+                    </apex:outputField>    
+                </apex:repeat>                
+            </apex:pageBlockSection>
+            </apex:outputPanel>
+            <apex:outputPanel id="retailOp" styleClass="red">
+            <apex:pageBlockSection title="Retail">
+                <apex:repeat value="{!$ObjectType.Opportunity.FieldSets.Retail}"
+                    var="field">
+                    <apex:outputField value="{!OpptyObj[field]}">
+                    </apex:outputField>    
+                </apex:repeat>
+            </apex:pageBlockSection>
+            </apex:outputPanel>
+            <apex:outputPanel id="appointOp" styleClass="red">             
+            <apex:pageBlockSection Title="Appointments" columns="1">            
+            <!-- 
+            <apex:outputPanel layout="block" style="text-align: center;">  
+                <apex:outputLabel value="Sales Branch: " style="font-weight:bold"/>
+                <apex:inputField value="{!opptyObj.Sales_Branch__c}"/>               
+                <apex:outputLabel value="Appointment Type: " style="font-weight:bold"/>
+                <apex:inputField value="{!opptyObj.Appointment_Type_Requested_del__c}"/>              
+                <apex:commandbutton value="Create Appointment" onComplete="window.open('/apex/Repsched2?Id='+'{!OpptyObj.id}','_blank')" action="{!createAppointment}"/>
+            </apex:outputPanel>             
+             -->           
+             <apex:outputPanel layout="block" style="text-align: center;">         
+                <apex:outputLabel value="Appointment Category: " style="font-weight:bold"/>
+                <apex:inputField id="actionId" value="{!opptyObj.Appointment_category__c}"/>              
+                <apex:commandLink value="Create Appointment" onclick="return processUserActions('{!$Component.actionId}')" action="{!showScheduler}" target="_blank" styleClass="btn" style="text-decoration:none;padding:2px;" />
+            </apex:outputPanel>
+                     
+            <apex:pageBlockTable value="{!OpptyObj.Appointments__r}" var="ap">                        
+                <apex:column headervalue="Appointment Name">
+                     <a href="/{!ap.id}">{!ap.Name }</a>
+                </apex:column>
+                <apex:column headervalue="Appointment Type">
+                    <apex:outputField value="{!ap.Appointment_Type__c}">
+                    </apex:outputField>
+                </apex:column>                
+                <apex:column headervalue="Appointment Date/Time">
+                    <apex:outputField value="{!ap.Appointment_Date_Time__c}">
+                     <apex:inlineEditSupport disabled="true"/>
+                    </apex:outputField>
+                </apex:column>               
+                <apex:column headervalue="Appointment Time Local">
+                    <apex:outputField value="{!ap.Appointment_Time_Local__c}">
+                     <apex:inlineEditSupport disabled="true"/>
+                    </apex:outputField>
+                </apex:column>   
+                <apex:column headervalue="Duration">
+                    <apex:outputField value="{!ap.Duration__c}">
+                     <apex:inlineEditSupport disabled="true"/>
+                    </apex:outputField>
+                </apex:column>   
+                <apex:column headervalue="Event Assigned To">
+                    <apex:outputField value="{!ap.Event_Assigned_To__c}">
+                     <apex:inlineEditSupport disabled="true"/>
+                    </apex:outputField>
+                </apex:column>
+                <apex:column headervalue="Status">
+                    <apex:outputField value="{!ap.Status__c}">
+                     <apex:inlineEditSupport disabled="false"/>
+                    </apex:outputField>
+                </apex:column>   
+                <apex:column headervalue="Cancellation Reason">
+                    <apex:outputField value="{!ap.Cancellation_Reason__c}">
+                     <apex:inlineEditSupport disabled="false"/>
+                    </apex:outputField>
+                </apex:column>               
+            </apex:pageBlockTable>
+         </apex:pageBlockSection>  
+            </apex:outputPanel>
+             <apex:outputPanel id="addressOp" styleClass="red">
+                <apex:pageblocksection id="addressPbs" title="Site"
+                    collapsible="true" columns="1">
+                    <apex:pageblocksectionitem >                      
+                    <apex:panelGrid columns="1" style="width:100%;">
+                        <apex:panelGroup style="float:right;">                      
+                            <apex:outputlabel style="font-weight:bold;float:right;color:#424242"
+                                value="Street" />
+                            <br />
+                            <br />
+                            <apex:outputlabel style="font-weight:bold;float:right;color:#424242" value="City" />
+                            <br />
+                            <br />
+                            <apex:outputlabel style="font-weight:bold;float:right;color:#424242" value="State" />
+                            <br />
+                            <br />
+                            <apex:outputlabel style="font-weight:bold;float:right;color:#424242"
+                                value="Postal Code" />
+                        </apex:panelGroup>                      
+                    </apex:panelGrid>                       
+                    <apex:panelGrid columns="4" >                                        
+                        <apex:panelGroup style="line-height:114%">
+                            <apex:outputField value="{!accObj.Billingstreet}">    
+                                <apex:inlineEditSupport disabled="true"/>                       
+                            </apex:outputField>
+                            <br/>
+                            <br/>
+                            <apex:outputField value="{!accObj.Billingcity}"
+                                style="text-align:right">
+                                <apex:inlineEditSupport disabled="true" />
+                            </apex:outputField>
+                            <br/>
+                            <br/>
+                            <apex:outputField value="{!accObj.BillingState}">
+                                <apex:inlineEditSupport disabled="true" />
+                            </apex:outputField>
+                            <br/>
+                            <br/>
+                            <apex:outputField value="{!accObj.Billingpostalcode}">
+                                <apex:inlineEditSupport disabled="true"/>
+                            </apex:outputField>
+                        </apex:panelGroup>   
+                          <apex:panelgroup >    
+                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;                         
+                             <span  style="display:none;">
+                            <apex:outputfield value="{!OpptyObj.State__c}">
+                                </apex:outputfield>
+                            </span>                    
+                        </apex:panelgroup>                    
+                         <apex:panelgroup style="display:block;">
+                        <!-- <div id="map" style="display:block;"></div>-->
+                        <apex:include pageName="OpptyGoogleMap" />                        
+                        </apex:panelgroup>                                               
+                    </apex:panelGrid>                                                         
+                 </apex:pageblocksectionitem>              
+                </apex:pageblocksection>                
+            </apex:outputPanel> 
+            
+            <apex:outputPanel id="siteOp" styleClass="red">
+            <apex:pageBlockSection title="" >
+                <apex:repeat value="{!$ObjectType.Opportunity.FieldSets.Site}"
+                    var="field">
+                    <apex:outputField value="{!OpptyObj[field]}">
+                    </apex:outputField>    
+                </apex:repeat>
+            </apex:pageBlockSection>
+            </apex:outputPanel>   
+            <apex:outputPanel >
+                <apex:pageblocksection columns="2">                 
+                    
+                    <apex:outputfield id="SiteDesignFailureReason" value="{!opptyObj.Site_Design_Failure_Reason__c}">
+                    </apex:outputfield>
+                    <apex:outputfield id="SiteDesinger" value="{!opptyObj.Site_Designer__c}">
+                    </apex:outputfield>
+                    <apex:outputfield id="SiteDesignRequested" value="{!opptyObj.Site_Design_Requested__c}">
+                    </apex:outputfield>
+                </apex:pageblocksection>
+             </apex:outputPanel>
+            <apex:outputPanel id="promoOp" styleClass="red">
+            <apex:pageBlockSection title="Promotion">
+                <apex:repeat value="{!$ObjectType.Opportunity.FieldSets.Promotion_Referrals}"
+                    var="field">
+                    <apex:outputField value="{!OpptyObj[field]}">
+                    </apex:outputField>    
+                </apex:repeat>
+            </apex:pageBlockSection>
+            </apex:outputPanel> 
+            <!--            
+            <apex:outputPanel id="utilityOp" styleClass="red">
+            <apex:pageBlockSection title="Utility">
+                <apex:repeat value="{!$ObjectType.Opportunity.FieldSets.Utility}"
+                    var="field">
+                    <apex:outputField value="{!OpptyObj[field]}">
+                    </apex:outputField>    
+                </apex:repeat>
+            </apex:pageBlockSection>
+            </apex:outputPanel>
+            -->
+            <apex:outputPanel id="ORIop" styleClass="red">
+            <apex:pageBlockSection title="Opportunity Record Information" >
+                <apex:repeat value="{!$ObjectType.Opportunity.FieldSets.Opportunity_Record_Information}"
+                    var="field">
+                    <apex:outputField value="{!OpptyObj[field]}">
+                    </apex:outputField>    
+                </apex:repeat>
+            </apex:pageBlockSection>
+            </apex:outputPanel>
+          <!--  <apex:outputPanel id="dESA" styleClass="red" rendered="{!OpptyObj.Energy_Storage_Applicable__c}" > -->  
+           <apex:outputPanel id="dESA1" styleClass="red" rendered="{!OpptyObj.Energy_Storage_Applicable__c}" >
+            <apex:pageBlockSection title="Demographics and bill inputs" rendered="{!OpptyObj.Energy_Storage_Applicable__c}" collapsible="true" >
+                <apex:outputfield id="YearlykWhconsumption" value="{!energyStorage.Yearly_kWh_consumption__c}">
+                </apex:outputfield>
+                <apex:outputfield id="Numberofadultshomeduringtheday" value="{!energyStorage.Number_of_adults_home_during_the_day__c}">
+                </apex:outputfield>  
+                <apex:outputfield id="Timereturnfromwork" value="{!energyStorage.Time_return_from_work__c}">
+                </apex:outputfield>
+                <apex:outputfield id="UseAC" value="{!energyStorage.Use_A_C__c}">
+                </apex:outputfield>
+                <apex:outputfield id="Electricvehiclechargedafter4PM" value="{!energyStorage.Electric_vehicle_charged_after_4PM__c}">
+                </apex:outputfield>
+                <apex:outputfield id="PVTurnkey" value="{!energyStorage.PV_Turnkey__c}">
+                </apex:outputfield>
+                <apex:outputfield id="CurrentBlendedUtilityRate" value="{!energyStorage.Current_Blended_Utility_Rate__c}">
+                </apex:outputfield>                               
+                
+            </apex:pageBlockSection>   
+             </apex:outputPanel> 
+            <apex:outputPanel id="dESA2" styleClass="red" rendered="{!OpptyObj.Energy_Storage_Applicable__c}" >
+            <apex:pageBlockSection title="PV+ES calculator outputs" rendered="{!OpptyObj.Energy_Storage_Applicable__c}" collapsible="true">
+                <apex:outputfield id="PVkWdc" value="{!energyStorage.PV_kWdc__c}">
+                </apex:outputfield>
+                <apex:outputfield id="ESkWh" value="{!energyStorage.ES_kWh__c}">
+                </apex:outputfield>
+                <apex:outputfield id="Monthly20YearPPALeasePayment" value="{!energyStorage.Monthly_20_Year_PPA_Lease_Payment__c}">
+                </apex:outputfield>
+                <apex:outputfield id="Monthly20YearSavings" value="{!energyStorage.Monthly_20_Year_Savings__c}">
+                </apex:outputfield>
+                <apex:outputfield id="Prepaid20YearPPALease" value="{!energyStorage.Prepaid_20_Year_PPA_Lease__c}">
+                </apex:outputfield>
+                <apex:outputfield id="Prepaid20YearPPALeaseSavings" value="{!energyStorage.Prepaid_20_Year_PPA_Lease_Savings__c}">
+                </apex:outputfield>
+                    
+            </apex:pageBlockSection>
+             </apex:outputPanel>
+            <apex:outputPanel id="dESA3" styleClass="red" rendered="{!OpptyObj.Energy_Storage_Applicable__c}" >
+            <apex:pageBlockSection title="Consumption Meter" rendered="{!OpptyObj.Energy_Storage_Applicable__c}" collapsible="true">
+                <apex:outputfield id="MeterSensorID" value="{!energyStorage.Meter_Sensor_ID__c}">
+                </apex:outputfield>
+                <apex:outputfield id="DateofMeterInstall" value="{!energyStorage.Date_of_Meter_Instal__c}">
+                </apex:outputfield>
+            </apex:pageBlockSection>  
+             </apex:outputPanel>
+            <apex:outputPanel id="dESA4" styleClass="red" rendered="{!OpptyObj.Energy_Storage_Applicable__c}" >
+            <apex:pageBlockSection title="Consumption Meter Documents" rendered="{!OpptyObj.Energy_Storage_Applicable__c}" columns="1" collapsible="true">
+               <!-- <apex:iframe src="/apex/Opportunity_eSignDocuments?id={!OpptyId}&OpptyEdit={!editMode}"/> -->
+                 <apex:iframe src="/apex/Opportunity_eSignDocuments?id={!OpptyId}&OpptyEdit={!editMode}" height="200"/>
+            </apex:pageBlockSection>    
+            </apex:outputPanel>
+             <span  style="display:none;">
+                <apex:outputfield value="{!OpptyObj.State__c}" style="display:none"
+                    styleClass="page-address-state" />  
+                <apex:outputfield value="{!OpptyObj.Utility_Company__c}" style="display:none"/>                 
+             </span>                                                
+          <script type="text/javascript">        
+            new MenuButton('Actions', false);  
+            new MenuButton('DesignActions', false);      
+            var x=document.getElementById('{!$Component.detailPb.ORIop}').getElementsByTagName('img')[0];
+            var y=document.getElementById('{!$Component.detailPb.promoOp}').getElementsByTagName('img')[0];
+            var z=document.getElementById('{!$Component.detailPb.retailOp}').getElementsByTagName('img')[0];
+            var a=document.getElementById('{!$Component.detailPb.addressOp}').getElementsByTagName('img')[0];  
+            var b=document.getElementById('{!$Component.detailPb.siteOp}').getElementsByTagName('img')[0]; 
+            var c=document.getElementById('{!$Component.detailPb.opptyDetailOP}').getElementsByTagName('img')[0];  
+            var d=document.getElementById('{!$Component.detailPb.appointOp}').getElementsByTagName('img')[0];  
+            var e=document.getElementById('{!$Component.detailPb.dESA1}').getElementsByTagName('img')[0];
+            var f=document.getElementById('{!$Component.detailPb.dESA2}').getElementsByTagName('img')[0];
+            var g=document.getElementById('{!$Component.detailPb.dESA3}').getElementsByTagName('img')[0];
+            var h=document.getElementById('{!$Component.detailPb.dESA4}').getElementsByTagName('img')[0];          
+            x.getAttributeNode("style").value="background-color:grey !important";   
+            y.getAttributeNode("style").value="background-color:grey !important";
+            a.getAttributeNode("style").value="background-color:grey !important"; 
+            z.getAttributeNode("style").value="background-color:grey !important";   
+            c.getAttributeNode("style").value="background-color:grey !important";   
+            d.getAttributeNode("style").value="background-color:grey !important";  
+            e.getAttributeNode("style").value="background-color:grey !important";
+            f.getAttributeNode("style").value="background-color:grey !important";
+            g.getAttributeNode("style").value="background-color:grey !important";
+            h.getAttributeNode("style").value="background-color:grey !important"; 
+            twistSection(document.getElementById('{!$Component.detailPb.ORIop}').getElementsByTagName('img')[0]);
+            twistSection(document.getElementById('{!$Component.detailPb.promoOp}').getElementsByTagName('img')[0]);
+          <!--  twistSection(document.getElementById('{!$Component.detailPb.retailOp}').getElementsByTagName('img')[0]);  -->            
+            function closePb(){            
+            twistSection(document.getElementById('{!$Component.detailPb.siteOp}').getElementsByTagName('img')[0]);            
+            var a=document.getElementById('{!$Component.detailPb.ORIop}').getElementsByTagName('img')[0].className;
+            var b=document.getElementById('{!$Component.detailPb.promoOp}').getElementsByTagName('img')[0].className;           
+            if(a=='hideListButton'){
+            twistSection(document.getElementById('{!$Component.detailPb.ORIop}').getElementsByTagName('img')[0]);
+            }
+            if(b=='hideListButton'){
+            twistSection(document.getElementById('{!$Component.detailPb.promoOp}').getElementsByTagName('img')[0]);
+            }                          
+                                     
+            }   
+            function openPb(){              
+                var a=document.getElementById('{!$Component.detailPb.siteOp}').getElementsByTagName('img')[0].className;
+                if(a=='showListButton'){
+                twistSection(document.getElementById('{!$Component.detailPb.siteOp}').getElementsByTagName('img')[0]);
+                }
+                //DesignmenuBlock = document.getElementById("DesignActionsMenu");
+                //DesignmenuBlock.style.display = "none";
+                //menuBlock = document.getElementById("ActionsMenu");
+                //menuBlock.style.display = "none";
+            }                                
+            </script>      
+             <apex:outputPanel id="TermsandConditions">
+            <apex:outputPanel styleClass="popupBg" layout="block" rendered="{!displayTandCURL}"/>
+            <apex:outputPanel styleClass="popup" layout="block" rendered="{!displayTandCURL}">
+                <apex:pageBlock title="Terms and Conditions">
+                    <apex:pageBlockButtons location="bottom">
+                         <apex:commandButton action="{!acceptTermsandConditions}" value="Accept"/>
+                         <apex:commandButton action="{!declineTermsandConditions}" value="Decline"/>
+                   </apex:pageBlockButtons>
+                   <apex:pageBlockSection columns="1"> 
+                          <apex:dataTable value="{!PartnerTermsConditions}" var="PartnerTermsCondition">
+                            <apex:column >
+                                <apex:outputText value="{!PartnerTermsCondition.TermsConditionsInfo__c}" escape="false"/>
+                            </apex:column>
+                          </apex:dataTable>
+                   </apex:pageBlockSection>
+                </apex:pageBlock>
+            </apex:outputPanel>
+        </apex:outputPanel>                            
+        </apex:pageBlock>                 
+     </apex:form> 
+           <apex:relatedList list="Proposals__r" rendered="{!NOT(editMode)}"/>  
+           <apex:relatedList list="OpportunityContactRoles" rendered="{!NOT(editMode)}"/>  
+           <apex:relatedList list="ActivityHistories" rendered="{!NOT(editMode)}"/>           
+           <apex:relatedList list="Payment_transactions__r" rendered="{!NOT(editMode)}"/>
+      <!-- <apex:relatedList list="Energy_Storages__r" rendered="{!NOT(editMode)}"/> -->
+    <script> 
+         function processUserActions(actionId){
+            var result = true;
+            var actionText = document.getElementById(actionId).value;
+            if(actionText == null || actionText == "" || actionText == '--None--'){
+                alert('Select an appointment type');
+                result = false;
+            }
+            return result;
+            //var win = window.open(redirectUrl, '_blank');
+            //win.focus();
+            //return true;
+         }
+    </script>
+</apex:page>

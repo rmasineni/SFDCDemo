@@ -1,0 +1,15 @@
+<apex:page standardController="Case" extensions="CallOut2SmartTurn_M1Submit" sidebar="true">
+    <script>
+    </script>
+    <apex:sectionHeader title="Submit M1 To Smart Turn"/>
+    <apex:form >
+        <apex:pageBlock mode="view" id="pbConfirm">
+            <apex:pageBlockButtons id="pbButtons">
+                <apex:commandButton action="{!cancel}" value="OK" immediate="true"/>
+            </apex:pageBlockButtons>
+            <apex:outputPanel > 
+                <apex:outputText escape="true" style="font-size:100%;font-weight:bold;font-family: 'Verdana','Geneva',sans-serif; white-space:pre-wrap;" value="{!errorPageDetails}"/>                    
+            </apex:outputPanel>
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>

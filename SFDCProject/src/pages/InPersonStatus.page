@@ -1,0 +1,70 @@
+<apex:page sidebar="false" showHeader="false" controller="InPersonStatus" action="{!initialize}">
+	<apex:form >
+		<apex:pageblock rendered="{!(continueSigning)}">
+			<apex:pageblocksection title="Welcome to Sunrun!" collapsible="false" columns="1">
+				<apex:outputtext rendered="{!signingComplete}" value="Thank you for signing! Your signatures are now complete. Please pass control of the electronic device to the next signer to complete the esigning process."/>
+				<apex:outputtext rendered="{!NOT(signingComplete) && NOT(signingCancel)}" value="Please pass control of the electronic device to the next signer to complete the esigning process."/>
+				<apex:outputtext rendered="{!signingCancel}" value="Please continue signing before the session times out. Both customer and sales rep signatures must be completed in the same session."/>
+				<!-- <apex:outputtext value="Sunrun will provide a copy of the contract to the relevant parties once it has been processed."/> -->
+			</apex:pageblocksection>
+			<div align="center">
+				<apex:actionStatus id="mySaveStatus1" onstop="refreshOnComplete('{!inpersonSigningRedirectURL}');" >
+					<apex:facet name="stop">
+						<apex:commandButton value="{!(buttonTitle1)}" rendered="{!(continueSigning)}" action="{!continueInPersonSigningRequest}" rerender="formId" status="mySaveStatus1"/>
+		         	</apex:facet>
+		         <apex:facet name="start">
+		         	<apex:outputtext value="In progress ..." />
+		             <apex:outputPanel >
+		                   <apex:image value="/img/loading32.gif" style="height: 15px;"/>
+		                   <apex:commandButton value="Processing..." status="mySaveStatus1" 
+		                   oncomplete="refreshOnComplete('{!inpersonSigningRedirectURL}');"  disabled="true"/>
+		               </apex:outputPanel>
+		           </apex:facet>
+		        </apex:actionStatus>
+			</div>
+		</apex:pageblock>
+
+		<apex:pageblock rendered="{!(backToProposal)}">
+			<apex:pageblocksection title="Thank you for signing!" collapsible="false" columns="1">
+				<apex:outputtext value="The agreement has been emailed to Sunrun for esignatures."/>
+				<apex:outputtext value="Please download a copy of the agreement from the portal as needed."/>
+				<apex:outputtext value="Sunrun will provide a copy of the contract to the relevant parties once it has been processed. Thank you."/>
+			</apex:pageblocksection>
+			<div align="center">
+				<apex:actionStatus id="mySaveStatus1" onstop="refreshOnComplete('{!inpersonSigningRedirectURL}');" >
+					<apex:facet name="stop">
+						<apex:commandButton rendered="{!backToProposal}" value="Close" onclick="closeAndRefreshparent();"/>
+		         	</apex:facet>
+		         <apex:facet name="start">
+		         	<apex:outputtext value="In progress ..." />
+		             <apex:outputPanel >
+		                   <apex:image value="/img/loading32.gif" style="height: 15px;"/>
+		                   <apex:commandButton value="Processing..." status="mySaveStatus1" 
+		                   oncomplete="refreshOnComplete('{!inpersonSigningRedirectURL}');"  disabled="true"/>
+		               </apex:outputPanel>
+		           </apex:facet>
+		        </apex:actionStatus>
+			</div>
+
+		</apex:pageblock>
+	
+	</apex:form>
+	<script type="text/javascript">
+		var baseURL = '{!BaseURL}' ;
+		var proposalIdStr = '{!proposalId}' ;
+		function closeAndRefreshparent(){
+			window.top.close();
+			refreshParentWindow();
+		}
+		
+		function refreshParentWindow(){
+			window.opener.parent.location.href = baseURL + '/' + proposalIdStr;
+			var win = window.open('','_parent','');
+			win.close();
+		}
+
+		function refreshOnComplete(newURL){
+			refreshParentWindow();
+		}
+	</script>
+</apex:page>

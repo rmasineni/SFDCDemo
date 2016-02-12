@@ -1,0 +1,140 @@
+<apex:page id="page" controller="LeadSearch" sidebar="false" tabstyle="Lead">
+<script>
+function redirect(obj)
+   {
+    var str = '/apex/customizeLeadDetailPage?Id='+ obj;
+    window.parent.location = str;
+   }
+   </script>
+    <style>
+        .pbHeader{
+            font-size:12px !important;
+        }
+    </style>
+
+<apex:pageMessages />
+    <apex:form id="leadSearch">
+    <apex:pageblock mode="Edit" id="ViewDetails" >
+        <apex:outputpanel >
+            <div style="margin-bottom:12px;margin-top:15px" align="center">
+                <apex:outputLabel style="font-weight:bold;">View</apex:outputLabel>
+                &nbsp;
+                <apex:selectList value="{!viewName}" id="viewId" size="1">
+                    <apex:selectOptions value="{!Views}" />
+                </apex:selectList>
+                &nbsp;&nbsp;
+                <!--<apex:commandButton action="{!userActions}" value="  Go  "  reRender="LeadList"/> -->
+                <apex:actionStatus id="myStatus">
+                     <apex:facet name="stop">
+                         <apex:commandButton value="  Go  "  action="{!userActions}" rerender="LeadList" status="myStatus"/>
+                     </apex:facet>
+                     <apex:facet name="start">
+                        <apex:outputtext value="In progress ..." />
+                            <apex:outputPanel >
+                               <apex:image value="/img/loading32.gif" style="height: 15px;"/>
+                               <apex:commandButton value="Processing..." status="myStatus" disabled="true"/>
+                            </apex:outputPanel>
+                       </apex:facet>
+                    </apex:actionStatus> 
+            </div>
+    </apex:outputpanel>
+    </apex:pageblock>
+    
+    <apex:pageblock title="Lead List"  id="LeadList">
+        <apex:pageblocksection columns="1">
+            <apex:outputpanel >
+                <div>
+                    <table width="100%">
+                        <tr>
+                            <td align="right">&nbsp;</td>
+                            <td  align="center" width="100%">
+                                <apex:outputLabel style="font-weight:bold" value="Search By " />
+                                    <apex:selectList value="{!searchColumnName}" id="searchColumnName" size="1">
+                                        <apex:selectOptions value="{!SearchBy}" />
+                                    </apex:selectList>    
+                                
+                                &nbsp;&nbsp;&nbsp;
+                                <apex:inputText id="searchValue" value="{!searchValue}" />   
+                                &nbsp;&nbsp;&nbsp;
+                                <apex:commandButton action="{!doSearch}" value="  Search  " />
+                                <apex:commandButton action="{!doNew}"  value="  New Lead  " rendered="{!!isUnAuthorizedUser}" />
+                                <!-- 
+                                <apex:commandButton onclick="launchForUpload()" value="  Upload  " />  
+                                 <apex:commandButton action="{!URLFOR($Resource.TemplateforMassUploadLeads)}" value="  Download  Template " immediate="true" rerender="leadSearch"/>
+                                 -->                     
+                            </td>
+                        </tr>
+                    </table>
+                <div align="right">
+                </div>
+                </div>
+            </apex:outputpanel>
+        </apex:pageblocksection>
+            
+        <apex:pageblocksection columns="1">
+            <apex:pageBlockTable value="{!Leads}" var="ld">
+                <apex:column >
+                    <apex:facet name="header">Customer Name</apex:facet>
+                     <a href='{!url}{!ld.leadObj.ID}'><apex:outputtext value="{!ld.leadObj.name}"></apex:outputtext></a>                    
+                     <!--
+                    <apex:commandLink action="{!redirectLead}" value="{!ld.leadObj.name}" immediate="false" >
+                         <apex:param name="lId" value="{!ld.leadObj.id}" assignTo="{!leadId}"/>
+                    </apex:commandLink>  -->
+                     
+                </apex:column>
+                <apex:column headerValue="Customer Email" value="{!ld.leadObj.Email}"/>
+                <apex:column headerValue="Customer Phone" value="{!ld.leadObj.Phone}"/>
+                <apex:column headerValue="Lead Status" value="{!ld.leadObj.status}"/>
+                <apex:column headerValue="Created Date" value="{!ld.leadObj.createdDate}"/>
+                <!--  <apex:column headerValue="Utility Company" value="{!ld.leadObj.Utility_Company__c}"/>
+                <apex:column headerValue="Created Date" value="{!ld.leadObj.CreatedDate}"/> -->
+                <!-- <apex:column headerValue="Customer Address" value="{!ld.leadObj.Address_for_Search__c}"/>-->
+                <apex:column headerValue="Customer Address">
+                {!ld.leadObj.street} {!ld.leadObj.city} {!ld.leadObj.state} {!ld.leadObj.postalcode}
+                </apex:column>
+            </apex:pageBlockTable>
+        </apex:pageblocksection>
+        
+        <apex:outputPanel layout="block" styleClass="pSearchShowMore" id="otpNavTop">
+                <br></br>  
+                <br></br>
+                <br></br>
+                Total Records Found: <apex:outputText rendered="{!IF(Con.resultSize==10000,true,false)}">10000 +</apex:outputText><apex:outputText rendered="{!IF(Con.resultSize < 10000,true,false)}">{!Con.resultSize}</apex:outputText>  
+                <apex:image url="/img/search_prevarrow_disabled.gif" styleClass="prevArrow" rendered="{!NOT(Con.HasPrevious)}"/>  
+                <apex:image url="/img/search_prevarrow.gif" title="First Page" styleClass="prevArrow" rendered="{!Con.HasPrevious}"/>  
+                <apex:commandLink action="{!first}" title="First Page" value="First Page" rendered="{!Con.HasPrevious}"/>  
+                <apex:outputPanel styleClass="pShowLess noLink" style="color:grey" rendered="{!NOT(Con.HasPrevious)}">First Page</apex:outputPanel>           
+
+                <apex:image url="/img/search_prevarrow_disabled.gif" styleClass="prevArrow" rendered="{!NOT(Con.HasPrevious)}"/>  
+                <apex:image url="/img/search_prevarrow.gif" title="Previous Page" styleClass="prevArrow" rendered="{!Con.HasPrevious}"/>  
+                <apex:commandLink action="{!Previous}" title="Previous Page" value="Previous Page" rendered="{!Con.HasPrevious}"/>  
+                <apex:outputPanel styleClass="pShowLess noLink" style="color:grey" rendered="{!NOT(Con.HasPrevious)}">Previous Page</apex:outputPanel>           
+                &nbsp;({!IF(Con.PageNumber == 1,1,((Con.PageNumber -1) * Con.PageSize)+1)}-{!IF(Con.resultSize < Con.PageSize,Con.resultSize,Con.PageNumber * Con.pageSize)})&nbsp;  
+                <apex:outputPanel styleClass="pShowLess noLink" style="color:grey" rendered="{!NOT(Con.HasNext)}">Next Page</apex:outputPanel>           
+                <apex:commandLink title="Next Page" value="Next Page" rendered="{!Con.HasNext}" action="{!Next}"/>&nbsp;  
+                <apex:image url="/img/search_nextarrow.gif" title="Next Page" styleClass="nextArrow" rendered="{!Con.HasNext}"/>  
+                <apex:image url="/img/search_nextarrow_disabled.gif" rendered="{!NOT(Con.HasNext)}"/>            
+                <apex:outputPanel styleClass="pShowLess noLink" style="color:grey" rendered="{!NOT(Con.HasNext)}">Last Page</apex:outputPanel>           
+                <apex:commandLink title="Last Page" value="Last Page" rendered="{!Con.HasNext}" action="{!last}"/>&nbsp;  
+                <apex:image url="/img/search_nextarrow.gif" title="Last Page" styleClass="nextArrow" rendered="{!Con.HasNext}"/>  
+                <apex:image url="/img/search_nextarrow_disabled.gif" rendered="{!NOT(Con.HasNext)}"/>
+            </apex:outputPanel>
+        </apex:pageblock>
+    </apex:form>
+    
+    <script type="text/javascript">
+        function launchForUpload()
+        {   
+            var tempURL = "/apex/UploadLeads";
+            var isPartner = "{!IsPartnerUser}";
+            if(isPartner == 'true')
+            {
+                tempURL = '/partner' + tempURL;
+            }        
+            var newwindow = window.open(tempURL, '', 'toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,resizable=yes,width=650,height=390,left=150,top=150'); 
+            newwindow.focus();
+        }
+    
+    </script>
+           
+</apex:page>

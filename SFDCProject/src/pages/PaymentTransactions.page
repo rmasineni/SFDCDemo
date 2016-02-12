@@ -1,0 +1,15 @@
+<apex:page standardController="Opportunity" extensions="PartnerOpportunityCreateExt" rendered="{!!isAEEuser}">
+    <apex:form >
+      <div style="float:left;margin: 0 auto;text-align: center;">
+        <apex:outputLabel style="font-weight: bold;" for="Payments"
+            value="Payments:">
+            </apex:outputlabel>
+            <apex:selectList title="paymentTransaction" size="1"
+                value="{!selectedPayTransc}" multiselect="false">
+                <apex:selectOptions value="{!PayTransOptions}" />
+            </apex:selectList>          
+            <apex:commandLink value="Go" action="{!paymentTransactionRedirect}" target="_parent" styleClass="btn" style="text-decoration:none;padding:2px;">
+            </apex:commandLink>
+      </div>      
+    </apex:form>
+</apex:page>

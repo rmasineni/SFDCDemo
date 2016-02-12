@@ -1,0 +1,838 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <content>fsAction</content>
+        <skipRecordTypeSelect>false</skipRecordTypeSelect>
+        <type>Visualforce</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Follow</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <content>fsAction</content>
+        <skipRecordTypeSelect>false</skipRecordTypeSelect>
+        <type>Visualforce</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <description>Report of specific activities performed during an on-site visit.</description>
+    <enableActivities>false</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableDivisions>false</enableDivisions>
+    <enableEnhancedLookup>true</enableEnhancedLookup>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>false</enableHistory>
+    <enableReports>true</enableReports>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <externalSharingModel>ControlledByParent</externalSharingModel>
+    <fieldSets>
+        <fullName>Additional_Details</fullName>
+        <description>Used in Field Service Ticket Action</description>
+        <displayedFields>
+            <field>FS_Quantity__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>FS_Action_Date__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>FS_Action_Desc__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <label>Additional Details</label>
+    </fieldSets>
+    <fieldSets>
+        <fullName>Existing_Or_Removed_Component</fullName>
+        <description>Used in Field Service Ticket Action</description>
+        <displayedFields>
+            <field>FS_Old_Unit_Manufacturer__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>FS_Old_Unit_KwH_Reading__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>FS_Old_Unit_Model__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>FS_Old_Unit_Signal_Strength__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>FS_Old_Unit_Serial__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <label>Existing Or Removed Component</label>
+    </fieldSets>
+    <fieldSets>
+        <fullName>New_Or_Replacement_Component</fullName>
+        <description>Used in Field Service Ticket Action</description>
+        <displayedFields>
+            <field>FS_New_Unit_Manufacturer__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>FS_New_Unit_KwH_Reading__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>FS_New_Unit_Model__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>FS_New_Unit_Signal_Strength__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>FS_New_Unit_Serial__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <label>New Or Replacement Component</label>
+    </fieldSets>
+    <fields>
+        <fullName>FS_Action_Code__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>Action Code for this FS Action report item</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Select the Action Code for this action</inlineHelpText>
+        <label>Action Code</label>
+        <lookupFilter>
+            <active>true</active>
+            <filterItems>
+                <field>FS_Action_Code__c.FS_Act_Code_Active__c</field>
+                <operation>equals</operation>
+                <value>True</value>
+            </filterItems>
+            <isOptional>false</isOptional>
+        </lookupFilter>
+        <referenceTo>FS_Action_Code__c</referenceTo>
+        <relationshipLabel>FS Actions</relationshipLabel>
+        <relationshipName>FS_Actions</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>FS_Action_Date__c</fullName>
+        <defaultValue>TODAY()</defaultValue>
+        <description>Date when the FS Action was performed</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Enter the date when this action was performed</inlineHelpText>
+        <label>Action Date</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>FS_Action_Desc__c</fullName>
+        <description>Additional Notes about the FS Action being reported</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Enter additional Notes about the FS Action being reported</inlineHelpText>
+        <label>Notes</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>FS_Amount__c</fullName>
+        <description>The amount for with this FS Action record (used for reporting expenses)</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Enter the amount for this FS Action record</inlineHelpText>
+        <label>Material Cost</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>FS_Attach_Photos_Attached__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Check this box to indicate that Attach Photos are attached to the FS Dispatch.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Check this box to indicate that Attach Photos are attached to the FS Dispatch.</inlineHelpText>
+        <label>Photos Attached</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>FS_Component_Code__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>Component being reported in the FS Action record</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Select the code for the component being reported in the FS Action record</inlineHelpText>
+        <label>Component Code</label>
+        <lookupFilter>
+            <active>true</active>
+            <filterItems>
+                <field>FS_Component_Code__c.FS_Component_Active__c</field>
+                <operation>equals</operation>
+                <value>True</value>
+            </filterItems>
+            <isOptional>false</isOptional>
+        </lookupFilter>
+        <referenceTo>FS_Component_Code__c</referenceTo>
+        <relationshipLabel>FS Actions</relationshipLabel>
+        <relationshipName>FS_Actions</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>FS_Dispatch__c</fullName>
+        <description>Parent FS Dispatch record for this FS Action</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Select the parent FS Dispatch record for this FS Action</inlineHelpText>
+        <label>FS Dispatch</label>
+        <referenceTo>FS_Dispatch__c</referenceTo>
+        <relationshipLabel>FS Actions</relationshipLabel>
+        <relationshipName>FS_Actions</relationshipName>
+        <relationshipOrder>0</relationshipOrder>
+        <reparentableMasterDetail>false</reparentableMasterDetail>
+        <trackTrending>false</trackTrending>
+        <type>MasterDetail</type>
+        <writeRequiresMasterRead>true</writeRequiresMasterRead>
+    </fields>
+    <fields>
+        <fullName>FS_Hours__c</fullName>
+        <description>Hours for the FS Action records (0.5 = 30 minutes)</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Enter the number of hours for the FS Action records (in hours and fractional hours, ie 0.5 = 30 minutes)</inlineHelpText>
+        <label>Labor Hours</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>FS_New_Unit_KwH_Reading__c</fullName>
+        <description>KwH reading on the new or replacement unit</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Enter the KwH reading on the new or replacement unit</inlineHelpText>
+        <label>New Energy Reading, kWh</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>3</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>FS_New_Unit_Manufacturer__c</fullName>
+        <description>Model of the new or replacement unit</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Enter the model of the new or replacement unit</inlineHelpText>
+        <label>New Unit Manufacturer</label>
+        <length>80</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>FS_New_Unit_Model__c</fullName>
+        <description>Model of the new or replacement unit</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Enter the model of the new or replacement unit</inlineHelpText>
+        <label>New Unit Model</label>
+        <length>80</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>FS_New_Unit_Serial__c</fullName>
+        <description>Serial number of the new or replacement unit</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Enter the serial number of the new or replacement unit</inlineHelpText>
+        <label>New Unit Serial</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>FS_New_Unit_Signal_Strength__c</fullName>
+        <description>Signal strength of the new or replacement unit</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Enter the signal strength of the new or replacement unit</inlineHelpText>
+        <label>New Communication Signal Strength</label>
+        <precision>15</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>FS_Old_Unit_KwH_Reading__c</fullName>
+        <description>KwH reading on the removed or existing unit</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Enter the KwH reading on the removed or existing unit</inlineHelpText>
+        <label>Old Energy Reading, kWh</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>3</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>FS_Old_Unit_Manufacturer__c</fullName>
+        <description>Name of the removed or existing unit manufacturer</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Enter the name of the removed or existing unit manufacturer</inlineHelpText>
+        <label>Old Unit Manufacturer</label>
+        <length>80</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>FS_Old_Unit_Model__c</fullName>
+        <description>Model of the removed or existing unit</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Enter the model of the removed or existing unit</inlineHelpText>
+        <label>Old Unit Model</label>
+        <length>80</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>FS_Old_Unit_Serial__c</fullName>
+        <description>Serial number of the removed or existing unit</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Enter the serial number of the removed or existing unit</inlineHelpText>
+        <label>Old Unit Serial</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>FS_Old_Unit_Signal_Strength__c</fullName>
+        <description>Signal strength of the removed or existing unit</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Enter the signal strength of the removed or existing unit</inlineHelpText>
+        <label>Old Communication Signal Strength</label>
+        <precision>15</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>FS_Prompt_01__c</fullName>
+        <description>Prompt for 1st section of FS Action edit page layout</description>
+        <externalId>false</externalId>
+        <formula>SUBSTITUTE(
+
+IF( FS_Action_Code__r.FS_Get_Dollars_Info__c  = TRUE
+  ||  FS_Action_Code__r.FS_Get_Hours_Info__c = TRUE
+  ||  FS_Component_Code__r.FS_GET_Qty__c  = TRUE
+  ||  FS_Component_Code__r.FS_Get_Desc__c  = TRUE
+  , &quot;REQUIRED FIELDS: &quot;, &quot;&quot;)
+&amp; 
+IF (FS_Action_Code__r.FS_Get_Dollars_Info__c  = TRUE, &quot;Amount &quot;,&quot;&quot;)
+&amp;
+IF (FS_Action_Code__r.FS_Get_Hours_Info__c  = TRUE, &quot; Hours &quot;,&quot;&quot;)
+&amp;
+IF ( FS_Component_Code__r.FS_GET_Qty__c  = TRUE  = TRUE, &quot; Quantity &quot;,&quot;&quot;)
+&amp;
+IF (FS_Component_Code__r.FS_Get_Desc__c = TRUE, &quot; Description&quot;,&quot;&quot;)
+
+, &quot;  &quot;, &quot;, &quot;)</formula>
+        <label>FS Prompt 01</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>FS_Prompt_02__c</fullName>
+        <description>Prompt to display for the 2nd section of the page layout</description>
+        <externalId>false</externalId>
+        <formula>IF (FS_Action_Code__r.FS_Get_Old_Info__c = TRUE,
+
+SUBSTITUTE(
+
+IF (FS_Component_Code__r.FS_Get_Serial__c = TRUE
+|| FS_Component_Code__r.FS_Get_Model__c = TRUE
+|| FS_Component_Code__r.FS_Get_Manufacturer__c = TRUE
+|| FS_Component_Code__r.FS_Get_Signal_Strength__c = TRUE
+|| FS_Component_Code__r.FS_Get_KwH__c = TRUE, &quot;REQUIRED FIELDS:&quot;,&quot;&quot;)
+&amp;
+IF(FS_Component_Code__r.FS_Get_Manufacturer__c = TRUE, &quot; Manufacturer &quot;, &quot;&quot;)
+&amp;
+IF(FS_Component_Code__r.FS_Get_Model__c = TRUE, &quot; Model &quot;, &quot;&quot;)
+&amp;
+IF(FS_Component_Code__r.FS_Get_Serial__c = TRUE, &quot; Serial Number &quot;,&quot;&quot;)
+&amp;
+IF(FS_Component_Code__r.FS_Get_KwH__c = TRUE, &quot; KwHr Reading &quot;, &quot;&quot;)
+&amp;
+IF(FS_Component_Code__r.FS_Get_Signal_Strength__c = TRUE, &quot; Signal Strength&quot;,&quot;&quot;)
+
+, &quot;  &quot;, &quot;, &quot;)
+
+,&quot;&quot;)</formula>
+        <label>FS Prompt 02</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>FS_Prompt_03__c</fullName>
+        <description>Prompt for the 3rd section of the FS Action page layout</description>
+        <externalId>false</externalId>
+        <formula>IF (FS_Action_Code__r.FS_Get_New_Info__c = TRUE,
+
+SUBSTITUTE(
+
+IF (FS_Component_Code__r.FS_Get_Serial__c = TRUE 
+  ||  FS_Component_Code__r.FS_Get_Model__c = TRUE
+  ||  FS_Component_Code__r.FS_Get_Manufacturer__c = TRUE
+  ||  FS_Component_Code__r.FS_Get_Signal_Strength__c = TRUE
+  ||  FS_Component_Code__r.FS_Get_KwH__c = TRUE, &quot;REQUIRED FIELDS:&quot;,&quot;&quot;)
+&amp;
+IF(FS_Component_Code__r.FS_Get_Manufacturer__c = TRUE, &quot; Manufacturer &quot;, &quot;&quot;)
+&amp;
+IF(FS_Component_Code__r.FS_Get_Model__c = TRUE, &quot; Model &quot;, &quot;&quot;)
+&amp;
+IF(FS_Component_Code__r.FS_Get_Serial__c = TRUE, &quot; Serial Number &quot;,&quot;&quot;)
+&amp;
+IF(FS_Component_Code__r.FS_Get_KwH__c = TRUE, &quot; KwHr Reading &quot;, &quot;&quot;)
+&amp;
+IF(FS_Component_Code__r.FS_Get_Signal_Strength__c = TRUE, &quot; Signal Strength&quot;,&quot;&quot;)
+
+, &quot;  &quot;, &quot;, &quot;)
+
+,&quot;&quot;)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>FS Prompt 03</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>FS_Quantity__c</fullName>
+        <description>Quantity removed or installed</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Enter the quantity</inlineHelpText>
+        <label>Quantity</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>FS_Supplemental_Documents_Attached__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Check this box to indicate that supplemental documents are attached.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Check this box to indicate that supplemental documents are attached.</inlineHelpText>
+        <label>Supplemental Documents Attached</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>FS_Voltage_Test__c</fullName>
+        <description>Enter the voltage test performed for this action</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Enter the voltage test performed for this action</inlineHelpText>
+        <label>Voltage Test</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Inverter_Failure_Reason__c</fullName>
+        <externalId>false</externalId>
+        <label>Inverter Failure Reason</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Hardware/software</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Ground fault</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Arc fault</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Physical damage</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Display</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Noise</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Electrical</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Other</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Inverter_Reading__c</fullName>
+        <description>Allows user to enter the last reading from the invter</description>
+        <externalId>false</externalId>
+        <label>Inverter Reading, kWh</label>
+        <precision>7</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Meter_Failure_Reason__c</fullName>
+        <description>Describes the reason for a meter replacement</description>
+        <externalId>false</externalId>
+        <label>Meter Failure Reason</label>
+        <picklist>
+            <picklistValues>
+                <fullName>-280 SSI Code</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Blank SSI Code</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Battery Error</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Clock Drift</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Display Issue</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Heartbeat</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>105/106 Non Comm</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Other</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>NORDISP</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Panel_Failure_Reason__c</fullName>
+        <externalId>false</externalId>
+        <label>Panel Failure Reason</label>
+        <picklist>
+            <picklistValues>
+                <fullName>golf ball</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>squirrel damage</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>low output</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Other</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <label>FS Action</label>
+    <listViews>
+        <fullName>All</fullName>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+    </listViews>
+    <nameField>
+        <displayFormat>FSA-{0000}</displayFormat>
+        <label>FS Action Name</label>
+        <type>AutoNumber</type>
+    </nameField>
+    <pluralLabel>FS Actions</pluralLabel>
+    <searchLayouts>
+        <customTabListAdditionalFields>FS_Action_Code__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>FS_Component_Code__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>FS_Action_Desc__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>FS_Old_Unit_Model__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>FS_New_Unit_Model__c</customTabListAdditionalFields>
+        <lookupDialogsAdditionalFields>FS_Action_Code__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>FS_Component_Code__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>FS_Action_Desc__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>FS_Quantity__c</lookupDialogsAdditionalFields>
+        <lookupFilterFields>NAME</lookupFilterFields>
+        <searchFilterFields>NAME</searchFilterFields>
+        <searchResultsAdditionalFields>FS_Action_Code__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>FS_Component_Code__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>FS_Old_Unit_Model__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>FS_New_Unit_Model__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>FS_Action_Desc__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>FS_Dispatch__c</searchResultsAdditionalFields>
+    </searchLayouts>
+    <sharingModel>ControlledByParent</sharingModel>
+    <startsWith>Vowel</startsWith>
+    <validationRules>
+        <fullName>FS_Action_and_Component_Reqd</fullName>
+        <active>true</active>
+        <description>All FS Action records must have an Action and a Component</description>
+        <errorConditionFormula>ISBLANK( FS_Action_Code__c ) ||  ISBLANK( FS_Component_Code__c  ) ||  ISNULL( FS_Action_Code__c ) ||  ISNULL( FS_Component_Code__c  ) ||
+ FS_Action_Code__r.Name = &quot;--None--&quot; ||
+ FS_Component_Code__r.Name  = &quot;--None--&quot;</errorConditionFormula>
+        <errorDisplayField>FS_Action_Code__c</errorDisplayField>
+        <errorMessage>There must be a valid value for both Action Code and Component Code.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>FS_Amount_Reqd</fullName>
+        <active>true</active>
+        <description>Amount is required.</description>
+        <errorConditionFormula>BLANKVALUE( FS_Amount__c , -9999.123598 ) = -9999.123598 &amp;&amp;
+FS_Action_Code__r.FS_Get_Dollars_Info__c  = TRUE</errorConditionFormula>
+        <errorDisplayField>FS_Amount__c</errorDisplayField>
+        <errorMessage>Amount is required.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>FS_Desc_Reqd</fullName>
+        <active>false</active>
+        <description>Description is required</description>
+        <errorConditionFormula>BLANKVALUE( FS_Action_Desc__c  , &quot;&quot;) = &quot;&quot; &amp;&amp;
+ FS_Component_Code__r.FS_Get_Desc__c = TRUE</errorConditionFormula>
+        <errorDisplayField>FS_Action_Desc__c</errorDisplayField>
+        <errorMessage>Action Description is required</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>FS_Hours_Reqd</fullName>
+        <active>true</active>
+        <description>Hours is required</description>
+        <errorConditionFormula>BLANKVALUE(  FS_Hours__c   , -9999.20382039) = -9999.20382039 &amp;&amp;
+ FS_Action_Code__r.FS_Get_Hours_Info__c  = TRUE</errorConditionFormula>
+        <errorDisplayField>FS_Hours__c</errorDisplayField>
+        <errorMessage>Hours is required</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>FS_New_KwH_Reqd</fullName>
+        <active>true</active>
+        <description>The New KwHr Reading is required</description>
+        <errorConditionFormula>BLANKVALUE(  FS_New_Unit_KwH_Reading__c  , -83129081.0942380) = -83129081.0942380 &amp;&amp; 
+ FS_Action_Code__r.FS_Get_New_Info__c = TRUE &amp;&amp;
+ FS_Component_Code__r.FS_Get_KwH__c   = TRUE</errorConditionFormula>
+        <errorDisplayField>FS_New_Unit_KwH_Reading__c</errorDisplayField>
+        <errorMessage>The New KwHr Reading is required</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>FS_New_Manuf_Reqd</fullName>
+        <active>true</active>
+        <description>New Unit Manufacturer is required</description>
+        <errorConditionFormula>BLANKVALUE(  FS_New_Unit_Manufacturer__c   , &quot;&quot;) = &quot;&quot; &amp;&amp; 
+FS_Action_Code__r.FS_Get_New_Info__c   = TRUE &amp;&amp; 
+FS_Component_Code__r.FS_Get_Manufacturer__c  = TRUE</errorConditionFormula>
+        <errorDisplayField>FS_New_Unit_Manufacturer__c</errorDisplayField>
+        <errorMessage>New Unit Manufacturer is required</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>FS_New_Model_Reqd</fullName>
+        <active>true</active>
+        <description>The New Unit Model is required</description>
+        <errorConditionFormula>BLANKVALUE( FS_New_Unit_Model__c , &quot;&quot;) = &quot;&quot; &amp;&amp; 
+ FS_Action_Code__r.FS_Get_New_Info__c = TRUE &amp;&amp;
+ FS_Component_Code__r.FS_Get_Model__c  = TRUE</errorConditionFormula>
+        <errorDisplayField>FS_New_Unit_Model__c</errorDisplayField>
+        <errorMessage>The New Unit Model is required</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>FS_New_Serial_Reqd</fullName>
+        <active>true</active>
+        <description>New Serial Number is required</description>
+        <errorConditionFormula>BLANKVALUE(  FS_New_Unit_Serial__c  , &quot;&quot;) = &quot;&quot; &amp;&amp;
+FS_Action_Code__r.FS_Get_New_Info__c = TRUE &amp;&amp;
+ FS_Component_Code__r.FS_Get_Serial__c  = TRUE</errorConditionFormula>
+        <errorDisplayField>FS_New_Unit_Serial__c</errorDisplayField>
+        <errorMessage>New Serial Number is required</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>FS_New_Strength_Reqd</fullName>
+        <active>true</active>
+        <description>New Communication Strength is required</description>
+        <errorConditionFormula>BLANKVALUE(  FS_New_Unit_Signal_Strength__c  , -83129081.0942380) = -83129081.0942380 &amp;&amp;
+FS_Action_Code__r.FS_Get_New_Info__c = TRUE &amp;&amp;
+ FS_Component_Code__r.FS_Get_Signal_Strength__c  = TRUE</errorConditionFormula>
+        <errorDisplayField>FS_New_Unit_Signal_Strength__c</errorDisplayField>
+        <errorMessage>New Communication Strength is required</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>FS_No_changes_after_Approved_FS_Action</fullName>
+        <active>false</active>
+        <description>Changes to FS Action is not allowed after the Dispatch Findings are Approved
+
+Deactivated per Dave Kenny 6/27/12</description>
+        <errorConditionFormula>FS_Dispatch__r.FS_Approve_Findings__c = TRUE</errorConditionFormula>
+        <errorMessage>Changes to FS Action is not allowed after the Dispatch Findings are Approved</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>FS_Old_KwH_Reqd</fullName>
+        <active>true</active>
+        <description>The Old KwHr Reading is required</description>
+        <errorConditionFormula>BLANKVALUE(  FS_Old_Unit_KwH_Reading__c  , -83129081.0942380) = -83129081.0942380 &amp;&amp; 
+ FS_Action_Code__r.FS_Get_Old_Info__c = TRUE &amp;&amp;
+ FS_Component_Code__r.FS_Get_KwH__c   = TRUE</errorConditionFormula>
+        <errorDisplayField>FS_Old_Unit_KwH_Reading__c</errorDisplayField>
+        <errorMessage>The Old KwHr Reading is required</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>FS_Old_Manuf_Reqd</fullName>
+        <active>true</active>
+        <description>Old Unit Manufacturer is required</description>
+        <errorConditionFormula>BLANKVALUE(  FS_Old_Unit_Manufacturer__c   , &quot;&quot;) = &quot;&quot; &amp;&amp; 
+FS_Action_Code__r.FS_Get_Old_Info__c   = TRUE &amp;&amp; 
+FS_Component_Code__r.FS_Get_Manufacturer__c  = TRUE</errorConditionFormula>
+        <errorDisplayField>FS_Old_Unit_Manufacturer__c</errorDisplayField>
+        <errorMessage>Old Unit Manufacturer is required</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>FS_Old_Model_Reqd</fullName>
+        <active>true</active>
+        <description>The Old Unit Model is required</description>
+        <errorConditionFormula>BLANKVALUE( FS_Old_Unit_Model__c , &quot;&quot;) = &quot;&quot; &amp;&amp; 
+ FS_Action_Code__r.FS_Get_Old_Info__c = TRUE &amp;&amp;
+ FS_Component_Code__r.FS_Get_Model__c  = TRUE</errorConditionFormula>
+        <errorDisplayField>FS_Old_Unit_Model__c</errorDisplayField>
+        <errorMessage>The Old Unit Model is required</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>FS_Old_Serial_Reqd</fullName>
+        <active>true</active>
+        <description>Old Serial Number is required</description>
+        <errorConditionFormula>BLANKVALUE(  FS_Old_Unit_Serial__c  , &quot;&quot;) = &quot;&quot; &amp;&amp;
+FS_Action_Code__r.FS_Get_Old_Info__c = TRUE &amp;&amp;
+ FS_Component_Code__r.FS_Get_Serial__c  = TRUE</errorConditionFormula>
+        <errorDisplayField>FS_Old_Unit_Serial__c</errorDisplayField>
+        <errorMessage>Old Serial Number is required</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>FS_Old_Strength_Reqd</fullName>
+        <active>true</active>
+        <description>Old Communication Strength is required</description>
+        <errorConditionFormula>BLANKVALUE(  FS_Old_Unit_Signal_Strength__c  , -83129081.0942380) = -83129081.0942380 &amp;&amp;
+FS_Action_Code__r.FS_Get_Old_Info__c = TRUE &amp;&amp;
+ FS_Component_Code__r.FS_Get_Signal_Strength__c  = TRUE</errorConditionFormula>
+        <errorDisplayField>FS_Old_Unit_Signal_Strength__c</errorDisplayField>
+        <errorMessage>Old Communication Strength is required</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>FS_Qty_Reqd</fullName>
+        <active>true</active>
+        <description>Quantity is required.</description>
+        <errorConditionFormula>BLANKVALUE( FS_Quantity__c , -9999.1236548) = -9999.1236548 &amp;&amp;
+ FS_Component_Code__r.FS_GET_Qty__c = TRUE</errorConditionFormula>
+        <errorDisplayField>FS_Quantity__c</errorDisplayField>
+        <errorMessage>Quantity is required.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>FS_Voltage_Test_Reqd</fullName>
+        <active>true</active>
+        <description>Voltage Test is required</description>
+        <errorConditionFormula>BLANKVALUE(FS_Voltage_Test__c,&quot;&quot;) = &quot;&quot; &amp;&amp;
+ FS_Component_Code__r.FS_Get_Voltage_Test__c = TRUE</errorConditionFormula>
+        <errorDisplayField>FS_Voltage_Test__c</errorDisplayField>
+        <errorMessage>Voltage Test is required</errorMessage>
+    </validationRules>
+</CustomObject>

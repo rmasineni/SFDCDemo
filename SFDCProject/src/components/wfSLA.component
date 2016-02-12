@@ -1,0 +1,17 @@
+<apex:component >
+	<apex:attribute name="slaStatus" type="string" description="SLA Status" required="true" />
+	<apex:outputPanel > 
+		<apex:outputPanel style="width:10px; text-align:middle;"  rendered="{!slaStatus == 'Green'}">
+			<img src="{!$Resource.SLA_on_time}" width="20" height="20"/>                           
+		</apex:outputPanel>
+		<apex:outputPanel style="width:10px; text-align:middle;"  rendered="{!slaStatus == 'Yellow'}">
+			<img src="{!$Resource.SLA_Yellow1}" width="17" height="17"/>                         
+		</apex:outputPanel>      
+		<apex:outputPanel style="width:10px; text-align:middle;"  rendered="{!slaStatus == 'Red'}">
+			<img src="{!$Resource.SLA_MISSED}" width="20" height="20"/>                         
+		</apex:outputPanel>                
+		<apex:outputPanel style="width:10px; text-align:middle;"  rendered="{!slaStatus == ''}">
+			<apex:outputtext value=""></apex:outputtext>                      
+		</apex:outputPanel> 
+	</apex:outputPanel> 
+</apex:component>

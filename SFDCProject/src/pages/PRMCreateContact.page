@@ -1,0 +1,379 @@
+<apex:page controller="PRMContactCreateController" tabStyle="Partner_Administration__tab" sidebar="false" >
+    <!--<apex:sectionHeader title="{!contactPageType}" subtitle="{!name}"/>  -->
+    <apex:pageMessages />
+    <apex:form id="form1">
+        <apex:pageblock id="ContactDetailsId" >
+            <div align="center">
+                <apex:commandButton title="Submit" value="  Submit Request " action="{!submit}"/>
+                &nbsp;
+                <apex:commandButton action="{!cancel}" value="Cancel" onclick="return confirmCancel()" immediate="true"/>
+            </div>
+ 
+            <apex:pageblocksection collapsible="true" title="Contact Information" columns="2">          
+                <apex:pageBlockSectionItem rendered="{!isPartnerConcierge}">
+                    <apex:outputLabel value="{!$ObjectType.CustomLookup__c.fields.Account__c.label}" for="account" />
+                    <apex:outputPanel layout="block" styleClass="requiredInput">
+                    <apex:outputPanel layout="block" styleClass="requiredBlock"/>
+                        <apex:inputfield id="account" value="{!customLookup.Account__c}">
+                        <apex:actionSupport event="onchange" rerender="ContactDetailsId"/>
+                        </apex:inputfield>
+                    </apex:outputPanel>
+                </apex:pageBlockSectionItem>        
+
+                <apex:pageBlockSectionitem rendered="{!NOT(isPartnerConcierge)}" />
+                <apex:pageBlockSectionitem rendered="{!NOT(isPartnerConcierge)}" />
+                <apex:pageBlockSectionitem rendered="{!(isPartnerConcierge)}" />
+                
+                <!--  <apex:outputPanel layout="block" styleClass="requiredInput">
+                    <apex:outputPanel layout="block" styleClass="requiredBlock"/>
+                <apex:inputField id="location" value="{!contactObj.Location__c}" rendered="{!showLocation}" />
+                </apex:outputPanel> -->
+                
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="{!$ObjectType.Contact.fields.firstname.label}" for="firstName" />
+                    <apex:outputPanel layout="block" styleClass="requiredInput">
+                    <apex:outputPanel layout="block" styleClass="requiredBlock"/>
+                        <apex:inputText id="firstname" value="{!contactObj.firstName}" />
+                    </apex:outputPanel>
+                </apex:pageBlockSectionItem>
+
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="{!$ObjectType.Contact.fields.lastname.label}" for="lastname" />
+                    <apex:outputPanel layout="block" styleClass="requiredInput">
+                    <apex:outputPanel layout="block" styleClass="requiredBlock"/>
+                        <apex:inputText id="lastname" value="{!contactObj.lastname}" />
+                    </apex:outputPanel>
+                </apex:pageBlockSectionItem>
+
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="{!$ObjectType.Contact.fields.Email.label}" for="email" />
+                    <apex:outputPanel layout="block" styleClass="requiredInput">
+                    <apex:outputPanel layout="block" styleClass="requiredBlock"/>
+                        <apex:inputText id="email" value="{!contactObj.email}" />
+                    </apex:outputPanel>
+                </apex:pageBlockSectionItem>                
+                <!--<apex:inputField value="{!contactObj.Single_Point_of_Contact__c}" />  -->
+
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="{!$ObjectType.Contact.fields.title.label}" for="title" />
+                    <apex:outputPanel layout="block" styleClass="requiredInput">
+                    <apex:outputPanel layout="block" styleClass="requiredBlock"/>
+                        <apex:inputText id="title" value="{!contactObj.title}" />
+                    </apex:outputPanel>
+                </apex:pageBlockSectionItem>
+                
+                <!--  <apex:inputField value="{!contactObj.Key_Contact__c}"/> -->
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="{!$ObjectType.Contact.fields.Sells_Sunrun__c.label}" for="title" />
+                    <apex:outputPanel layout="block" styleClass="requiredInput">
+                    <apex:outputPanel layout="block" styleClass="requiredBlock"/>
+                        <apex:inputField value="{!contactObj.Sells_Sunrun__c}" />
+                    </apex:outputPanel>
+                </apex:pageBlockSectionItem>
+
+
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="{!$ObjectType.Contact.fields.Sells_in_CA__c.label}" for="title" />
+                    <apex:outputPanel layout="block" styleClass="requiredInput">
+                    <apex:outputPanel layout="block" styleClass="requiredBlock"/>
+                        <apex:inputField value="{!contactObj.Sells_in_CA__c}" />
+                    </apex:outputPanel>
+                </apex:pageBlockSectionItem>
+
+                
+                <apex:pageBlockSectionItem rendered="{!!isSPOCUser}">
+                    <apex:outputLabel value="{!$ObjectType.Contact.fields.Job_Function__c.label}" />
+                    <apex:outputPanel layout="block" styleClass="requiredInput">
+                        <apex:outputPanel layout="block" styleClass="requiredBlock"/>
+                        <apex:selectList value="{!contactObj.Job_Function__c}" id="jobFunction" size="1">
+                            <apex:selectOptions value="{!jobFunctions}" />
+                        </apex:selectList>
+                    </apex:outputPanel>
+                </apex:pageBlockSectionItem>
+                
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="Timezone" />
+                    <apex:selectList value="{!contactObj.timeZoneSidKey__c}" id="timeZone" size="1">
+                        <apex:selectOptions value="{!TimeZones}" />
+                    </apex:selectList>
+                </apex:pageBlockSectionItem>
+                
+                <!--  <apex:pageBlockSectionItem >
+                    <apex:outputpanel >
+                        <apex:outputLabel value="Role" />
+                    </apex:outputpanel>                 
+                    <apex:actionRegion >
+                        <apex:inputfield value="{!contactObj.Role__c}" id="roleId">
+                            <!-- <apex:actionSupport event="onchange" rerender="PanelId1"/> 
+                            <apex:actionSupport event="onchange" />
+                        </apex:inputfield>              
+                    </apex:actionRegion>
+                </apex:pageBlockSectionItem> -->
+
+                <!-- 
+                <apex:pageBlockSectionItem id="PanelId0">
+                    
+                    <apex:outputpanel >
+                        <apex:outputLabel value="Reports To" />
+                    </apex:outputpanel>
+                    <apex:outputpanel id="PanelId1">
+                        <apex:selectList value="{!contactObj.reportsToId}" id="reportsTo" size="1">
+                            <apex:selectOptions value="{!contactReportsToList}" />
+                        </apex:selectList>
+                    </apex:outputpanel>
+                </apex:pageBlockSectionItem>    
+                -->
+                
+                <apex:inputField value="{!contactObj.Phone}" />
+                <apex:inputField value="{!contactObj.MobilePhone}" />
+
+                <apex:pageBlockSectionItem >
+                    <apex:outputpanel >
+                        <apex:outputLabel value="Active Employee ?" />
+                    </apex:outputpanel>                 
+                    <apex:actionRegion >
+                        <apex:inputField value="{!contactObj.active__c}">
+                            <apex:actionSupport event="onchange" 
+                                        rerender="EditToolsAccess, ViewToolsAccess"/>
+                        </apex:inputfield>              
+                    </apex:actionRegion>
+                </apex:pageBlockSectionItem>                
+                <apex:inputField value="{!contactObj.Deactivation_Reason__c}" />
+                
+                <apex:pageBlockSectionItem rendered="{!!isSPOCUser}">
+                    <apex:outputLabel value="{!$ObjectType.Contact.fields.Profile__c.label}" for="profile" />
+                        <apex:outputPanel layout="block" styleClass="requiredInput" >
+                            <apex:outputPanel layout="block" styleClass="requiredBlock"/>
+                            <apex:inputField id="profile" value="{!contactObj.Profile__c}" />
+                        </apex:outputPanel>
+                </apex:pageBlockSectionItem>
+                
+                <apex:pageBlockSectionitem rendered="{!!isAEEUser}">    
+                    <apex:outputLabel value="Partner Site" />
+                    <apex:selectList value="{!siteId}" id="siteId" size="1">
+                        <apex:selectOptions value="{!accountSites}" />
+                    </apex:selectList>
+                </apex:pageBlockSectionitem>
+                
+                <apex:pageBlockSectionItem rendered="{!showLocation}">
+                    <apex:outputLabel value="{!$ObjectType.Contact.fields.Location__c.label}" for="location" />
+                    <apex:outputPanel layout="block" styleClass="requiredInput">
+                        <apex:outputPanel layout="block" styleClass="requiredBlock"/>
+                        <apex:inputField id="location" value="{!contactObj.Location__c}" />
+                    </apex:outputPanel>
+                </apex:pageBlockSectionItem>
+                
+                <apex:pageBlockSectionitem >
+                    <apex:outputLabel value="Contact Number" />
+                    <apex:outputField value="{!contactObj.Contact_Number__c}"/>
+                </apex:pageBlockSectionitem>
+                
+            <!--    <apex:pageBlockSectionitem >
+                    <apex:outputLabel value="Professional Certification" />
+                    <apex:outputField value="{!contactObj.Professional_Certification__c}"/>
+                </apex:pageBlockSectionitem>  -->
+                
+            </apex:pageblocksection>
+
+            <apex:outputpanel id="EditToolsAccess" rendered="{!!isSPOCUser}">
+            <apex:pageblocksection collapsible="true" 
+                        title="Tools" columns="2"
+                        rendered="{!(contactObj.active__c)}">
+                
+                <apex:inputfield value="{!contactObj.Proposal_Tool_Access__c}" rendered="{!!isSPOCUser}"/>
+                <apex:inputfield value="{!contactObj.Can_Run_Change_Orders__c}"/>
+            
+            <!--  <apex:pageBlockSectionItem >
+                    <apex:outputpanel >
+                        <apex:outputLabel value="Partner Portal" />
+                    </apex:outputpanel>
+                    <apex:actionRegion >
+                        <apex:inputfield value="{!contactObj.Partner_Portal_Access__c}">
+                            <apex:actionSupport event="onchange" />
+                                            
+                        </apex:inputfield>
+                    </apex:actionRegion>
+                </apex:pageBlockSectionItem> -->
+                
+                <apex:inputfield value="{!contactObj.Partner_Portal_Access__c}"/>
+                <apex:inputfield value="{!contactObj.Delegated_Admin_Access__c}"/>
+                
+                <apex:inputfield value="{!contactObj.Design_Tool_Access__c}" rendered="{!!isSPOCUser}"/>
+                <apex:inputfield value="{!contactObj.e_sign_documents_access__c}"/>                     
+                    
+                <apex:pageBlockSectionItem />
+                <apex:pageBlockSectionItem />
+                <apex:pageBlockSectionItem />
+                
+                <apex:pageBlockSectionItem rendered="{!showSolarUniverseFields}">
+                    <apex:outputLabel value="{!$ObjectType.Contact.fields.Supress_EPC_Documents_Access__c.label}" />
+                    <apex:inputfield value="{!contactObj.Supress_EPC_Documents_Access__c}"/>
+                </apex:pageBlockSectionItem>
+                
+                <apex:pageBlockSectionItem rendered="{!showSolarUniverseFields}" >
+                    <apex:outputLabel value="{!$ObjectType.Contact.fields.Automatic_Document_Generation_Access__c.label}" />
+                    <apex:inputfield value="{!contactObj.Automatic_Document_Generation_Access__c}"/>
+                </apex:pageBlockSectionItem>
+
+                <apex:pageBlockSectionItem rendered="{!showSolarUniverseFields}">
+                    <apex:outputLabel value="{!$ObjectType.Contact.fields.Supress_Sales_Documents_Access__c.label}" />
+                    <apex:inputfield value="{!contactObj.Supress_Sales_Documents_Access__c}"/>
+                </apex:pageBlockSectionItem>
+
+            </apex:pageblocksection>            
+            </apex:outputpanel>
+            
+            <apex:outputpanel id="ViewToolsAccess" rendered="{!!isSPOCUser}">
+            <apex:pageblocksection collapsible="true" 
+                        title="Tools" columns="2" 
+                        rendered="{!NOT(contactObj.active__c)}">
+                <apex:outputfield value="{!contactObj.Proposal_Tool_Access__c}"/>
+                <apex:outputfield value="{!contactObj.Can_Run_Change_Orders__c}"/>
+                
+                <apex:outputfield value="{!contactObj.Partner_Portal_Access__c}"/>
+                <apex:outputfield value="{!contactObj.Delegated_Admin_Access__c}"/>
+                
+                <apex:outputfield value="{!contactObj.Design_Tool_Access__c}"/>
+                <apex:outputfield value="{!contactObj.e_sign_documents_access__c}"/>        
+
+                <apex:pageBlockSectionItem />
+                <apex:pageBlockSectionItem />
+
+                <apex:pageBlockSectionItem rendered="{!showSolarUniverseFields}">
+                    <apex:outputLabel value="{!$ObjectType.Contact.fields.Supress_EPC_Documents_Access__c.label}" />
+                    <apex:outputfield value="{!contactObj.Supress_EPC_Documents_Access__c}"/>
+                </apex:pageBlockSectionItem>
+                
+
+                <apex:pageBlockSectionItem rendered="{!showSolarUniverseFields}">
+                    <apex:outputLabel value="{!$ObjectType.Contact.fields.Supress_Sales_Documents_Access__c.label}" />
+                    <apex:outputfield value="{!contactObj.Supress_Sales_Documents_Access__c}"/>
+                </apex:pageBlockSectionItem>
+
+                <apex:pageBlockSectionItem rendered="{!showSolarUniverseFields}" >
+                    <apex:outputLabel value="{!$ObjectType.Contact.fields.Automatic_Document_Generation_Access__c.label}" />
+                    <apex:outputfield value="{!contactObj.Automatic_Document_Generation_Access__c}"/>
+                </apex:pageBlockSectionItem>
+
+            </apex:pageblocksection>    
+            </apex:outputpanel>
+            
+            <apex:pageblocksection collapsible="true" title="Tools" columns="2" rendered="{!isSPOCUser}">
+                <apex:inputfield value="{!contactObj.Partner_Portal_Access__c}"/>
+                 <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="{!$ObjectType.Contact.fields.Profile__c.label}" for="profile" />
+                        <apex:outputPanel layout="block" styleClass="requiredInput" >
+                            <apex:outputPanel layout="block" styleClass="requiredBlock"/>
+                            <apex:inputField id="profile" value="{!contactObj.Profile__c}" />
+                        </apex:outputPanel>
+                </apex:pageBlockSectionItem>
+            </apex:pageBlocksection>
+            
+            <apex:outputPanel rendered="{!!isAEEUser}">
+            <apex:pageblocksection collapsible="true" title="Selling Territories" columns="1" rendered="{!!isSPOCUser}">
+            <apex:pageBlockSectionItem >
+                <apex:outputLabel value="          " />
+                <apex:panelGrid columns="3" id="Modes">
+                     <apex:panelGroup >
+                     <apex:outputLabel style="font-weight:bold" value="Available Selling Territories" />
+                      <br/>
+                    <apex:selectList label="Available Selling Territories" id="sel1" value="{!leftselected}" multiselect="true" style="width:250px" size="5">
+                        <apex:selectOptions value="{!unselectedvalues}" />
+                    </apex:selectList>
+                    </apex:panelGroup>
+                    
+                        <apex:panelGroup >
+                            <br/> <br/>
+                            <apex:commandLink action="{!selectclick}" reRender="Modes">
+                                <img src="/s.gif" alt="Add" class="picklistArrowRight" id="arrow1" style="cursor:pointer;" title="Add"/>
+                            </apex:commandLink>
+                            <br/>
+
+                            <apex:commandLink action="{!unselectclick}" reRender="Modes">
+                                <img src="/s.gif" alt="Remove" class="picklistArrowLeft" 
+                                        id="arrow2" style="cursor:pointer;" title="Remove"/>        
+                            </apex:commandLink>
+                        </apex:panelGroup>
+                     <apex:panelGroup >
+                     <apex:outputLabel style="font-weight:bold" value="Assigned Selling Territories" />
+                      <br/>
+                    <apex:selectList label="Assigned Selling Territories" id="sel2" value="{!rightselected}" multiselect="true" style="width:250px" size="5">
+                        <apex:selectOptions value="{!SelectedValues}" />
+                    </apex:selectList>
+                    </apex:panelGroup>
+                    
+                </apex:panelGrid>       
+                </apex:pageBlockSectionItem>    
+            </apex:pageblocksection>
+            </apex:outputPanel>
+            
+            <apex:outputPanel rendered="{!!isAEEUser}">
+            <apex:outputPanel rendered="{!!isSPOCUser}">
+            <apex:pageblocksection rendered="{!isPartnerConcierge}" collapsible="true" title="Accreditation Status" columns="2">
+                <apex:inputfield value="{!contactObj.Accreditation_Status__c}"/>
+                <apex:inputfield value="{!contactObj.Accreditation_date__c}"/>
+                <apex:inputfield value="{!contactObj.Accreditation_period_start_date__c}"/>
+                <apex:inputfield value="{!contactObj.Accreditation_period_end_date__c}"/>
+                <apex:inputfield value="{!contactObj.Notes_License__c}"/>
+            </apex:pageblocksection>
+            </apex:outputPanel>
+            </apex:outputPanel>
+            
+            <apex:outputPanel rendered="{!!isAEEUser}">
+            <apex:pageblocksection rendered="{!isPartnerConcierge}" collapsible="true" title="Sales Registration Information" columns="2">
+                <apex:inputfield value="{!contactObj.Application_Status__c}"/>
+                <apex:inputfield value="{!contactObj.Rejection_Reason__c}"/>
+                <apex:inputfield value="{!contactObj.Sales_Registration_Next_Action_Owner__c}"/>
+                <apex:inputfield value="{!contactObj.Sales_Registration_Type__c}"/>
+                <apex:inputfield value="{!contactObj.Application_Received__c}"/>
+                <apex:inputfield value="{!contactObj.Sales_Registration_Number__c}"/>
+                <apex:inputfield value="{!contactObj.Application_Submitted__c}"/>
+                <apex:inputfield value="{!contactObj.Date_of_Hire__c}"/>
+                <apex:inputfield value="{!contactObj.State_registration_expiration_date__c}"/>
+                <apex:inputfield value="{!contactObj.Sales_Registration_License_Notes__c}"/>
+            </apex:pageblocksection>
+            </apex:outputPanel>
+            
+            <apex:outputPanel rendered="{!!isAEEUser}">
+            <apex:outputPanel rendered="{!isSPOCUser}">
+            <apex:pageblocksection rendered="{!NOT(isPartnerConcierge)}" 
+                    collapsible="true" title="Accreditation Status" columns="2">
+                <apex:outputfield value="{!contactObj.Accreditation_Status__c}"/>
+                <apex:outputfield value="{!contactObj.Accreditation_date__c}"/>
+                <apex:outputfield value="{!contactObj.Accreditation_period_start_date__c}"/>
+                <apex:outputfield value="{!contactObj.Accreditation_period_end_date__c}"/>
+                <apex:inputfield value="{!contactObj.Notes_License__c}" />
+                <apex:outputField value="{!contactObj.Professional_Certification__c}"/>
+            </apex:pageblocksection>
+            </apex:outputPanel>
+            </apex:outputPanel>
+
+            <apex:outputPanel rendered="{!!isAEEUser}">
+            <apex:pageblocksection rendered="{!NOT(isPartnerConcierge)}" 
+                    collapsible="true" title="Sales Registration Information" columns="2">
+                <apex:outputfield value="{!contactObj.Application_Status__c}"/>
+                <apex:outputfield value="{!contactObj.Rejection_Reason__c}"/>
+                <apex:outputfield value="{!contactObj.Sales_Registration_Next_Action_Owner__c}"/>
+                <apex:outputfield value="{!contactObj.Sales_Registration_Type__c}"/>
+                <apex:outputfield value="{!contactObj.Application_Received__c}"/>
+                <apex:outputfield value="{!contactObj.Sales_Registration_Number__c}"/>
+                <apex:outputfield value="{!contactObj.Application_Submitted__c}"/>
+                <apex:outputfield value="{!contactObj.Date_of_Hire__c}"/>
+                <apex:outputfield value="{!contactObj.State_registration_expiration_date__c}"/>
+                <apex:outputfield value="{!contactObj.Sales_Registration_License_Notes__c}" rendered="{!isPartnerConcierge}"/>
+            </apex:pageblocksection>
+            </apex:outputPanel>
+            
+            <apex:outputpanel rendered="{!isPartnerConcierge}">
+                <apex:pageblocksection collapsible="true" title="Solar Universe Info" columns="2" >
+                    <apex:inputfield value="{!contactObj.Supress_EPC_Documents_Access__c}"/>
+                    <apex:inputfield value="{!contactObj.Supress_Sales_Documents_Access__c}"/>
+                    <apex:inputfield value="{!contactObj.Automatic_Document_Generation_Access__c}"/>                
+                </apex:pageblocksection>
+            </apex:outputpanel>
+    
+            
+    
+        </apex:pageblock>
+    </apex:form>        
+</apex:page>

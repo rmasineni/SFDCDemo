@@ -1,0 +1,140 @@
+<apex:page controller="ServiceContractMeterRegistration" sidebar="false" tabstyle="Milestone_Management__tab" id="meterregistrationId">
+	<apex:form id="genAssetSearchForm">
+	
+	<apex:pageMessages escape="false" id="pgmsg"/>
+		<apex:outputText value="{!selCC}" id="selcc" style="visibility:hidden;" />
+   		<apex:actionFunction name="setsel" action="{!setSelCon}" reRender="selcc">
+    		<apex:param name="firstParam" assignTo="{!selCC}" value=""/>
+   		</apex:actionFunction>
+		<apex:pageBlock id="block" title="Select Service Contract">
+            <apex:pageBlockSection id="genAssetSearchPBSection"   columns="2">
+                <apex:pageBlockSectionitem id="item1">
+                    <apex:outputLabel value="Customer Name"/>
+                    <apex:outputPanel >
+                        <apex:inputText value="{!acctName}"/>
+                    </apex:outputPanel>
+                </apex:pageBlockSectionitem>
+                <apex:pageBlockSectionitem id="item2">
+                    <apex:outputLabel value="Cust Ref Num"/>
+                    <apex:outputPanel >
+                        <apex:inputText value="{!custRefNum}"/>
+                    </apex:outputPanel>
+                </apex:pageBlockSectionitem>
+                <apex:pageBlockSectionitem id="item3">
+                    <apex:outputLabel value="Customer Mailing Address"/>
+                    <apex:outputPanel >
+                        <apex:inputText value="{!custMailAddress}"/>
+                    </apex:outputPanel>
+                </apex:pageBlockSectionitem>
+            </apex:pageBlockSection>
+            <div style="text-align: center;" >
+                <apex:commandButton action="{!doSearch}" value="Search Service Contracts" status="status1" title="Click this button to Search for Service Contracts"/>
+                <apex:actionStatus id="status1" startText="requesting..."/>
+            </div>
+		</apex:pageBlock>
+		<apex:pageblock title="Service Contracts" id="genAssetList">
+				<div align="Center">
+                	<apex:commandButton action="{!meterregistration}" value="Enter Meter Registration Details"/>
+                	&nbsp;&nbsp;
+                	<apex:commandButton action="{!batchUpload}" value="Batch Upload Meter Registration Details" rendered="{!showUploadButton}" />
+                </div>
+            <apex:pageblocksection columns="1">
+	            <apex:pageBlockTable value="{!ServiceContracts}" var="scEventWrapper">  
+					<apex:column headervalue="Select">      
+					  <input id="radioB_{!scEventWrapper.scEventRec.Id}" name="radioB_{!scEventWrapper.scEventRec.Id}" 
+					  		value="{!scEventWrapper.selected}" checked="" type="radio" onclick="setsel('{!scEventWrapper.scEventRec.Id}'); setRadio(this);"/>
+					 <script>
+					  var theid = 'radioB_' + '{!scEventWrapper.scEventRec.Id}';     
+					  if('{!scEventWrapper.selected}' == 'true')
+					  {
+					     document.getElementById(theid).checked = 'checked'; 
+					  }     
+					 </script>  
+					</apex:column>
+					<apex:column headerValue="Cust Ref Num" value="{!scEventWrapper.scEventRec.Service_Contract__r.Cust_Ref_Num__c}"/>
+					<apex:column headerValue="Customer Name" value="{!scEventWrapper.scEventRec.Service_Contract__r.Customer_Name__c}"/>
+					<!-- <apex:column headerValue="Meter Serial number" value="{!scEventWrapper.scEventRec.Meter_Serial_Num__c}"/>  -->
+					<apex:column headerValue="Home Address" value="{!scEventWrapper.scEventRec.Service_Contract__r.Customer_Mailing_Address__c}"/>
+                    <apex:column headerValue="Meter Registration Date" value="{!scEventWrapper.scEventRec.Meter_Registration_Date__c}"/> 
+					<!--<apex:column headerValue="Meter Test Date" value="{!scEventWrapper.scEventRec.Meter_Registration_Date__c}"/>-->
+	            </apex:pageBlockTable> 
+			</apex:pageblocksection>
+			
+			<apex:outputPanel layout="block" styleClass="pSearchShowMore" id="otpNavTop">
+				Total Records Found: <apex:outputText rendered="{!IF(Con.resultSize==10000,true,false)}">10000 +</apex:outputText><apex:outputText rendered="{!IF(Con.resultSize < 10000,true,false)}">{!Con.resultSize}</apex:outputText>  
+				<apex:image url="/img/search_prevarrow_disabled.gif" styleClass="prevArrow" rendered="{!NOT(Con.HasPrevious)}"/>  
+				<apex:image url="/img/search_prevarrow.gif" title="First Page" styleClass="prevArrow" rendered="{!Con.HasPrevious}"/>  
+				<apex:commandLink action="{!first}" title="First Page" value="First Page" rendered="{!Con.HasPrevious}"/>  
+				<apex:outputPanel styleClass="pShowLess noLink" style="color:grey" rendered="{!NOT(Con.HasPrevious)}">First Page</apex:outputPanel>           
+
+				<apex:image url="/img/search_prevarrow_disabled.gif" styleClass="prevArrow" rendered="{!NOT(Con.HasPrevious)}"/>  
+				<apex:image url="/img/search_prevarrow.gif" title="Previous Page" styleClass="prevArrow" rendered="{!Con.HasPrevious}"/>  
+				<apex:commandLink action="{!Previous}" title="Previous Page" value="Previous Page" rendered="{!Con.HasPrevious}"/>  
+				<apex:outputPanel styleClass="pShowLess noLink" style="color:grey" rendered="{!NOT(Con.HasPrevious)}">Previous Page</apex:outputPanel>           
+				&nbsp;({!IF(Con.PageNumber == 1,1,((Con.PageNumber -1) * Con.PageSize)+1)}-{!IF(Con.resultSize < Con.PageSize,Con.resultSize,Con.PageNumber * Con.pageSize)})&nbsp;  
+				<apex:outputPanel styleClass="pShowLess noLink" style="color:grey" rendered="{!NOT(Con.HasNext)}">Next Page</apex:outputPanel>           
+				<apex:commandLink title="Next Page" value="Next Page" rendered="{!Con.HasNext}" action="{!Next}"/>&nbsp;  
+				<apex:image url="/img/search_nextarrow.gif" title="Next Page" styleClass="nextArrow" rendered="{!Con.HasNext}"/>  
+				<apex:image url="/img/search_nextarrow_disabled.gif" rendered="{!NOT(Con.HasNext)}"/>            
+				<apex:outputPanel styleClass="pShowLess noLink" style="color:grey" rendered="{!NOT(Con.HasNext)}">Last Page</apex:outputPanel>           
+				<apex:commandLink title="Last Page" value="Last Page" rendered="{!Con.HasNext}" action="{!last}"/>&nbsp;  
+				<apex:image url="/img/search_nextarrow.gif" title="Last Page" styleClass="nextArrow" rendered="{!Con.HasNext}"/>  
+				<apex:image url="/img/search_nextarrow_disabled.gif" rendered="{!NOT(Con.HasNext)}"/>
+			</apex:outputPanel> 
+		</apex:pageblock>
+    </apex:form>
+
+    <script>
+		function setRadio(currentselectedOCR)
+		{
+		  try
+		  {
+		    var elemRadio = document.getElementsByTagName('input');
+		    for(var i=0;i<elemRadio.length;i++)
+		    { 
+		      if(elemRadio[i].id != currentselectedOCR.id && elemRadio[i].id.indexOf('radioB_') != -1)
+		      {
+		        elemRadio[i].value = false;  
+		        elemRadio[i].checked = false;         
+		      }
+		      if(elemRadio[i].id == currentselectedOCR.id)
+		      {
+		        elemRadio[i].checked = true;
+		        elemRadio[i].value = true;  
+		      }      
+		    }
+		  }catch(ex)
+		  {
+		     alert(ex);
+		  }
+		}   
+ 
+        function checkSelection() 
+        {
+            try
+            {
+                var inputElem = document.getElementsByTagName("input");
+                var checkedCount = 0;
+                var noEmailAddressCount = 0;
+                for(var i=0; i<inputElem.length; i++)
+                {
+                    if(inputElem[i].id.indexOf("checkedOne")!=-1)
+                    {
+                        if (inputElem[i].checked == true)
+                        {
+                            checkedCount++;
+                        }
+                    }
+                }
+                return true;
+            }                    
+            catch(e)
+            {
+                alert(e);
+                return false;
+            }
+        }
+    </script> 
+
+    
+</apex:page>

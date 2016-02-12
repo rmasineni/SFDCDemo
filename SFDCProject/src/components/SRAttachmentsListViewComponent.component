@@ -1,0 +1,654 @@
+<apex:component id="srAttachmentsComponent" controller="SRAttachmentRelatedList" allowDML="true">
+    <style>
+        .producterror { color: red; font-weight: strong;
+            background-color: #FFFFCC;
+            border-style: solid;
+            border-width: 1px;
+            padding: 6px 8px 6px 6px;
+            border-color: #FF9900;
+            font-size: 100%;
+            margin-left: 15px;
+            margin-right: 20px;
+            }
+    </style>
+    <apex:attribute name="relatedObject" type="Id" description="SR Attachment Related ObjectId" assignTo="{!relatedObjectId}" />
+    <apex:attribute name="displaySignedDocuments" type="Boolean" description="To display Signed Documents" assignTo="{!displaySignedDocuments}" />
+    <apex:attribute name="displayMasterDocuments" type="Boolean" description="To display Master Documents" assignTo="{!displayMasterDocuments}" />
+    <apex:attribute name="displayGeneralDocuments" type="Boolean" description="To display General Documents" assignTo="{!displayGeneralDocuments}" />
+         <apex:form id="srAttachmentsForm" >
+            <apex:outputpanel style="height:10px;background-color:#FFFFFF;" rendered="{!showActions}">
+                    <!-- <div style="padding-left:30%;padding-bottom:0.5%;background-color:#FFFFFF;" align="left"> -->
+                    <div style="padding-bottom:0.5%;background-color:#FFFFFF;" align="center">
+                    <apex:outputLabel style="font-weight:bold;" >Actions</apex:outputLabel>
+                    &nbsp;
+                    <apex:selectList value="{!actionName}" id="actionId" size="1" >
+                        <apex:selectOptions value="{!Actions}" />
+                    </apex:selectList>
+                    &nbsp;&nbsp;
+                    <apex:commandButton onclick="return processUserActions('{!$Component.actionId}')"  value="  Go  " 
+                        action="{!userActions}" />                  
+                </div>
+            </apex:outputpanel>
+            <apex:messages styleClass="producterror" /> 
+            <apex:outputPanel id="SRAttchmentsList" layout="block" style="overflow:auto;border-color:red;">
+                <apex:pageBlock mode="edit" >
+                    <apex:pageBlockSection id="pageBlock" columns="1">  
+                    <apex:pageBlockTable value="{!srAttachments}" var="srAttachmentWrapper" id="theTable" rowClasses="odd,even" styleClass="tableClass">
+                        <apex:column width="5" rendered="{!showCheckbox}" >
+                            <apex:facet name="header"> 
+                                <apex:inputCheckbox >
+                                    <apex:actionSupport event="onclick" onsubmit="checkAll(this)" rerender="Selected_PBS"/>
+                                </apex:inputCheckbox>
+                            </apex:facet>
+                            <apex:inputCheckbox value="{!srAttachmentWrapper.selected}" id="checkedone"/>       
+                        </apex:column>  
+                        <apex:column width="13" headerValue="Id" rendered="{!IsSystemAdmin}">
+                            <apex:outputLink target="_parent" value="/{!srAttachmentWrapper.srAttachment.Id}">
+                                <apex:outputText value="{!srAttachmentWrapper.srAttachment.Id}"/>
+                            </apex:outputLink>
+                        </apex:column>
+                        <apex:column width="5" headerValue="Document Name">
+                            <apex:outputLink id="testId1" target="blank" value="{!srAttachmentWrapper.signedURL}">
+                                <apex:outputText value="{!srAttachmentWrapper.srAttachment.Document_Name__c}"/>
+                            </apex:outputLink>
+                        </apex:column>
+                        <apex:column width="50px" headerValue="Document Type" value="{!srAttachmentWrapper.srAttachment.Document_Type_Name__c}" />
+                        <apex:column style="text-align:middle;"  width="20px" headervalue="Recipient Status" rendered="{!displaySignedDocuments}">
+                        
+                            <apex:outputPanel style="width:10px; text-align:middle;"  rendered="{!(NOT(srAttachmentWrapper.signatureRequired))}">
+                                <apex:outputtext value="N/A"></apex:outputtext>
+                            </apex:outputPanel>
+                            
+                            <apex:outputPanel style="width:10px; text-align:middle;"  rendered="{!(srAttachmentWrapper.readyForSubmission && srAttachmentWrapper.signatureRequired)}">
+                                <a style="text-decoration:underline;" class="tooltip" target="_blank">
+                                    <img src="{!$Resource.EDPReadyForSubmission}" width="30" height="30"/>
+                                    <span>
+                                        <b>Primary Customer: </b>      {!srAttachmentWrapper.primaryCustomerName} <br/>
+                                        <b>Secondary Customer: </b>    {!srAttachmentWrapper.secondaryCustomerName}  <br/>
+                                        <b>Partner: </b>    {!srAttachmentWrapper.partnerName} <br/>
+                                        <b>Sunrun Operations: </b> {!srAttachmentWrapper.sunrunOperationName} <br/>
+                                    </span>
+                                </a>                            
+                            </apex:outputPanel>
+                                                        
+                            <apex:outputPanel style="width:10px; text-align:middle;"  
+                                rendered="{!NOT(srAttachmentWrapper.readyForSubmission) && srAttachmentWrapper.signatureRequired}">
+                                <a style="text-decoration:underline;" class="tooltip" target="_blank">
+                                    <img src="{!$Resource.Information}" width="30" height="30"/>
+                                    <span>
+                                        <b>Primary Customer: </b>      {!srAttachmentWrapper.primaryCustomerName} <br/>
+                                        <b>Secondary Customer: </b>    {!srAttachmentWrapper.secondaryCustomerName}  <br/>
+                                        <b>Partner: </b>    {!srAttachmentWrapper.partnerName} <br/>
+                                        <b>Sunrun Operations: </b> {!srAttachmentWrapper.sunrunOperationName} <br/>
+                                    </span>
+                                </a>                            
+                            </apex:outputPanel>
+                           
+
+                        </apex:column>
+                        <apex:column width="5px" headerValue="Signature Status" value="{!srAttachmentWrapper.srAttachment.DocuSign_Status__c}" rendered="{!NOT(displayGeneralDocuments) && NOT(displayMasterDocuments) && NOT(isPartnerUser)}"/>
+                        <apex:column width="5px" headerValue="Last Modified Date" value="{!srAttachmentWrapper.srAttachment.LastModifiedDate}" rendered="{!NOT(displayMasterDocuments)}"/>
+                        <apex:column width="5px" headerValue="Created Date" value="{!srAttachmentWrapper.srAttachment.CreatedDate}" rendered="{!displayMasterDocuments}"/>
+                    </apex:pageBlockTable>                                  
+
+                    <!-- Show notice if related list has no records -->
+                    <apex:outputPanel layout="block" styleClass="noRecordsFound" rendered="{!SRAttachmentsSize == 0}">
+                        No records to display
+                    </apex:outputPanel>
+                    <!-- Add pagination toolbar to bottom of table if pageSize is defined -->
+                    <apex:outputPanel layout="block" styleClass="paginatorWrap" rendered="{!AND(SRAttachmentsSize > 0, NOT(ISNULL(pageSize)))}">
+                        <div class="paginator">
+                            <span class="prevNextLinks">
+                                <!-- First Button -->
+                                <span class="prevNext">
+                                    <!-- Show first button if page set has previous page-->
+                                    <apex:commandLink value="" action="{!ssc.first}" rendered="{!ssc.pageNumber != 1}" rerender="pageBlock" title="First">
+                                        <img class="first" src="/s.gif" alt="" />
+                                    </apex:commandLink>
+                                    
+                                    <!-- Show disabled first button page set is on page 1-->
+                                    <apex:outputPanel rendered="{!NOT(ssc.hasPrevious)}">
+                                        <img class="firstoff" src="/s.gif" alt="" />
+                                    </apex:outputPanel>
+                                </span>
+                                
+                                <!-- Previous Button -->
+                                <span class="prevNext">
+                                    <!-- Show previous button page set has previous page-->
+                                    <apex:commandLink value="" action="{!ssc.previous}" rendered="{!ssc.hasPrevious}" rerender="pageBlock">
+                                        <img class="prev" src="/s.gif" alt="" />Previous
+                                    </apex:commandLink>
+                                    
+                                    <!-- Show disabled first button page set is on page 1-->
+                                    <apex:outputPanel rendered="{!NOT(ssc.hasPrevious)}">
+                                        <img class="prevoff" src="/s.gif" alt="" />Previous
+                                    </apex:outputPanel>
+                                </span>
+                                
+                                <!-- Next Button -->
+                                <span class="prevNext">
+                                    <!-- Show next button if page set has next -->
+                                    <apex:commandLink value="" action="{!ssc.next}" rendered="{!ssc.hasNext}" rerender="pageBlock">
+                                        Next<img class="next" alt="Next" title="Next" src="/s.gif" />
+                                    </apex:commandLink>
+                                    
+                                    <!-- Show disabled next button if page set has no next -->
+                                    <apex:outputPanel rendered="{!NOT(ssc.hasNext)}">
+                                        Next<img class="nextOff" alt="Next" title="Next" src="/s.gif" />
+                                    </apex:outputPanel>
+                                </span>
+                                
+                                <!-- Last Button -->
+                                <span class="prevNext">
+                                    <!-- Show last button if page set has next -->
+                                    <apex:commandLink value="" action="{!ssc.last}" rendered="{!ssc.hasNext}" rerender="pageBlock" title="Last">
+                                        <img class="last" src="/s.gif" alt="" />
+                                    </apex:commandLink>
+                                    
+                                    <!-- Show disabled last button if page set has no next -->
+                                    <apex:outputPanel rendered="{!NOT(ssc.hasNext)}">
+                                        <img class="lastoff" src="/s.gif" alt="" />
+                                    </apex:outputPanel>
+                                </span>
+                            </span>
+                            <span class="right">
+                                <!-- allow user to input page number of page set for direct navigation -->
+                                Page&nbsp;
+                                <apex:inputText value="{!ssc.pageNumber}" styleClass="pageInput">
+                                    <apex:actionSupport event="onchange" rerender="pageBlock"/>
+                                </apex:inputText>of {!CEILING(ssc.ResultSize / ssc.pageSize)}
+                            </span>
+                        </div>
+                    </apex:outputPanel>
+                </apex:pageBlockSection> 
+            </apex:pageBlock>
+        </apex:outputPanel>
+    </apex:form>  
+    
+    <style type="text/css">
+        
+        .bPageBlock{
+            border-color: red;
+        }
+        
+        a:hover {
+            background:#ffffff; /*BG color is a must for IE6*/
+            text-decoration:none;
+            
+        } 
+
+        .tooltip span {
+            display:none; 
+            padding:2px 3px; 
+            margin-left:8px; 
+            width:450px;
+            height:170px;
+            opacity: 12.3;
+        }
+        .tooltip:hover span{
+            display:inline; 
+            position:absolute; 
+            background:#EEF1F5; 
+            border:2px solid #cccccc; 
+            color:#000000;
+        }
+                
+        
+        a.tooltip span {
+            display:none; 
+            padding:0px 0px; 
+            margin-left:8px; 
+            width:375px;
+            height:80px;
+            opacity: 12.3;
+        }
+        a.tooltip:hover span{
+            display:inline; 
+            position:absolute; 
+            background:#EEF1F5; 
+            border:2px solid #cccccc; 
+            color:#000000;
+        }
+
+        .styled-button-1 {
+            -webkit-box-shadow: rgba(0, 0, 0, 0.199219) 0px 1px 0px 0px;
+            background-color: #FA2;
+            border-radius: 5px;
+                -moz-border-radius: 5px;
+                -webkit-border-radius: 5px;
+            border-bottom-color: #333;
+            border: none;
+            border-width: 0;
+            box-shadow: rgba(0, 0, 0, 0.199219) 0px 1px 0px 0px;
+            color: #333;
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            font-size: 16px;
+            font-weight: bold;
+            height: 32px;
+            padding: 4px 16px;
+            text-decoration: none;
+            text-shadow: #FE6 0px 1px 0px;
+        }
+        .alignLeft{
+            text-align: left;
+        }
+        .alignRight{
+            text-align: right;
+        }
+        .clickableHeader{
+            cursor: pointer;
+            width: 100%;
+        }
+        .newButton{
+            margin: 1px;
+            padding: 0 3px;
+            text-decoration: none;
+        }
+        .paginatorWrap{
+            //background: url("/img/alohaSkin/listFooter.png") repeat-x scroll 0 0 #F2F2F2;
+            //border: 1px solid #EAEAEA;
+            //background-color: #F3F3F3;
+            //border-top: 1px solid #FFFFFF;
+            padding: 10px;
+        }
+        .noRecordsFound{
+            border: 1px solid #D4DADC;
+            padding: 4px;
+        }
+        .imageAsc{
+            background: url("/img/alohaSkin/sortArrows.png") no-repeat scroll left top transparent;
+            height: 8px;
+            margin: 0 5px;
+            vertical-align: -1px;
+            width: 7px;
+        }
+        .imageDesc{
+            background: url("/img/alohaSkin/sortArrows.png") no-repeat scroll 0px -12px transparent;
+            background-repeat: no-repeat;
+            height: 8px; 
+            margin: 0 5px;
+            vertical-align: -1px;
+            width: 7px;
+        }
+    </style>
+    <script>          
+        var baseURL = '{!BaseURL}' ;
+        var canAttachDocs=new Boolean();
+        function getSelectedRecords(){
+            var inputElem = document.getElementsByTagName("input");
+            var itemsChecked = new Array();
+            var count = 0;
+            for(var i=0; i<inputElem.length; i++){
+                if(inputElem[i].checked == true){
+                    if(inputElem[i].id.indexOf("checkedone")!=-1){
+                        itemsChecked[count] = inputElem[i].id;
+                        count ++;
+                    }
+                }
+            }
+            return itemsChecked;
+        }       
+        
+        function isDocumentSelected(){
+            var inputElem = document.getElementsByTagName("input");
+            var itemsChecked = false;
+            for(var i=0; i<inputElem.length; i++)
+            {
+                if(inputElem[i].checked == true){
+                    itemsChecked = true;
+                    break;
+                }
+            }
+            return itemsChecked;
+        }
+
+        function confirmVoidESignature(){
+            var selectedRecords = getSelectedRecords();
+            if(selectedRecords == null || selectedRecords.length == 0){
+                window.alert('Select a record to void the eSignature request', alert.Information);
+                return false;
+            }else if(selectedRecords.length > 1){
+                window.alert('Salesforce is unable to void the eSignature for more than one record.');
+                return false;
+            }
+            var result =confirm('Are you sure you want to void eSignature request for the selected document?');
+            return result;      
+        }
+        
+        function confirmResendESignature(){
+            var selectedRecords = getSelectedRecords();
+            if(selectedRecords == null || selectedRecords.length == 0){
+                window.alert('Select a record to resend the eSignature request');
+                return false;
+            }else if(selectedRecords.length > 1){
+                window.alert('Salesforce is unable to resend the eSignature for more than one record.');
+                return false;
+            }
+            var result =confirm('Are you sure you want to resend eSignature request for the selected document?');
+            return result;      
+        }
+        
+        function confirmDelete() {
+            var itemsChecked = isDocumentSelected();
+            if(itemsChecked == false){
+                window.alert('Select a record to delete');
+                return false;
+            }
+            var r=confirm('Are you sure you want to delete the selected document ?');
+            return r;
+        }
+        
+        function dealSubmissionModalWindow(status, proposalIdVal){          
+            if(status != null && status == 'INSUFFICIENT_DOCS' && proposalIdVal != null && proposalIdVal != ''){
+                var tempRul = '/apex/DealSubmission?proposalId=' + proposalIdVal; 
+                var newwindow = window.open(tempRul, '', 'toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=850,height=465,left=350,top=200'); 
+                newwindow.focus();
+            }
+            else if(status != null && status == 'DEAL_SUBMITTED'){
+                alert("Proposal has been submitted ...");
+                window.opener.refresh();
+            }else if(status != null && status == 'SELECT_PROPOSAL'){
+                alert("Select a proposal to submit ...");
+            }
+        }
+    
+        function popupwindow(url){
+            var newwindow = window.open(url,'_self'); 
+            newwindow.focus();
+        }
+
+        function checkAll(cb)
+        {
+            var inputElem = document.getElementsByTagName("input");
+            for(var i=0; i<inputElem.length; i++)
+            {
+                if(inputElem[i].id.indexOf("checkedone")!=-1)
+                    inputElem[i].checked = cb.checked;
+            }
+        }       
+
+        function voidDocuSign(proposalIdVal){
+                
+            var tempURL = '/apex/SRAttachmentDocuSignVoid?id=' + proposalIdVal; 
+            var isPartner = "{!IsPartnerUser}";
+            if(isPartner == 'true')
+            {
+                tempURL = '/partner' + tempURL;
+            }
+            var newwindow = window.open(tempURL, '', 'toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=650,height=390,left=150,top=150'); 
+            newwindow.focus();
+        }
+
+
+        function sendESign(proposalIdVal){
+            var tempURL = '/apex/SRAttachmentDocuSignSubmit?id=' + proposalIdVal; 
+            var isPartner = "{!IsPartnerUser}";
+            if(isPartner == 'true')
+            {
+                tempURL = '/partner' + tempURL;
+            } 
+            var newwindow = window.open(tempURL, '', 'toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=750,height=420,left=150,top=150'); 
+            newwindow.focus();
+        }
+
+        function refreshOnComplete(proposalIdVal){
+            if(baseURL != null && baseURL != '' && proposalIdVal != null && proposalIdVal != ''){
+                window.parent.location.href= baseURL + '/' + proposalIdVal;
+            }
+        }
+        
+        function processUserActions(actionId){
+            var relatedObjectId = '{!relatedObjectId}';
+            var actionText = document.getElementById(actionId).value;
+            
+            var canAttachDocs = new Boolean();
+            var canAttachGeneralDocs = new Boolean();
+            canAttachGeneralDocs = true;
+            canAttachDocs = {!canAttachDocs};           
+            if(canAttachDocs == false && 'Download' != actionText){
+                alert('Invalid Proposal Stage to modify the proposal documents');
+                return false;
+            }
+            
+            if('Upload' == actionText){
+                attachContractDocuments(relatedObjectId, canAttachDocs);
+                return false;
+            }else if('Upload_Proposal_GeneralDocs' == actionText){
+                attachProposalGeneralDocs(relatedObjectId, canAttachGeneralDocs);
+                return false;
+            }else if('Upload_SC_GeneralDocs' == actionText){
+                attachSCGeneralDocs(relatedObjectId, canAttachGeneralDocs);
+                return false;
+            }else if('Upload_Opty_GeneralDocs' == actionText){
+                attachOptyGeneralDocs(relatedObjectId, canAttachGeneralDocs);
+                return false;
+            }else if('InitiateESignature' == actionText){
+                var can=new Boolean();
+                canAttachDocs = '{!canAttachDocs}'; 
+                sendESign(relatedObjectId);
+                return false;
+            }else if('VoidESignature' == actionText){
+                //voidDocuSign(relatedObjectId);
+                //return false;
+                return confirmVoidESignature();
+            }else if('ResendESignature' == actionText){
+                return confirmResendESignature();
+            }else if('Delete' == actionText){
+                return confirmDelete();
+            }else if('Download' == actionText){
+                downloadFiles();
+                return false;
+            }
+        }
+
+        function downloadFiles()
+        {   
+            var fso = new ActiveXObject("Scripting.FileSystemObject");
+var s = fso.CreateTextFile('/Users/rmasineni/temp/dingdong.txt', true);
+var text=document.getElementById("TextArea1").innerTex;
+s.WriteLine(text);
+s.Close();
+    
+                    //myTempWindow = window.open('http://manuals.info.apple.com/en/iphone_user_guide.pdf','','left=10000,screenX=10000');
+                //myTempWindow.document.execCommand('SaveAs','null','download.pdf');
+                //myTempWindow.close();
+
+                //var tempURL = '/apex/Proposal_FileDownloader' ; 
+                //var isPartner = "{!IsPartnerUser}";
+                //if(isPartner == 'true')
+                //{
+                //  tempURL = '/partner' + tempURL;
+                //} 
+                //var newwindow = window.open(tempURL, '', 'toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=950,height=465,left=150,top=150'); 
+                //newwindow.focus();
+        }
+
+
+        function uploadToS31(fileName, url){
+            
+            var xmlHttp = new XMLHttpRequest();
+              url = ''
+              xmlHttp.open('GET', url, false);   
+              xmlHttp.setRequestHeader("Cache-Control", "no-cache");
+              xmlHttp.onreadystatechange = function () {
+              
+              if (xmlHttp.readyState == 4 && xmlHttp.status == 200) {
+                    alert('Test1 status ...');
+                }
+               else if (xmlHttp.readyState == 4) {
+                         
+                  alert('Hello ...');
+                  var test11 = '';    
+                };
+              };
+              xmlHttp.send(null);
+
+        }
+
+        function uploadToS3(fileName, url){
+          var xhr = createCORSRequest('GET', url);
+          if (!xhr){
+            //setProgress(file_id, 0, 'CORS not supported');
+            alert('CORS not supported');
+            var test1 = '';
+          }
+          else{
+            xhr.onload = function(){
+                if(xhr.status == 200)
+                {
+                    alert('Upload completed.');
+                    var test2 = '';
+                }
+                else
+                {
+                    alert('Retry completed.');
+                    var test3 = '';
+                }
+            };
+        
+            xhr.onerror = function(){
+                    alert('Set progress .' + xhr.status);
+                    var test4 = '';
+            };
+        
+            xhr.upload.onprogress = function(e){
+                if (e.lengthComputable) 
+                {
+                    //alert('Set progress .');
+                    var test5 = '';
+                    //var percentLoaded = Math.round((e.loaded / e.total) * 100);
+                    //setProgress(file_id, percentLoaded, percentLoaded == 100 ? 'Finalizing.' : 'Uploading.');
+                }
+            };
+        
+            xhr.setRequestHeader('Content-Type', 'application/pdf');
+            //xhr.setRequestHeader('x-amz-acl', 'public-read');
+            xhr.send();
+          }
+        }
+        
+        function createCORSRequest(method, url) 
+        {
+            var xhr = new XMLHttpRequest();
+            if ("withCredentials" in xhr) 
+            {
+              xhr.open(method, url, true);
+            } 
+            else if (typeof XDomainRequest != "undefined") 
+            {
+              xhr = new XDomainRequest();
+              xhr.open(method, url);
+            } 
+            else 
+            {
+              xhr = null;
+            }
+            return xhr;
+        }
+
+        function testFunct(){
+            var result =confirm('Are you sure you want to resend eSignature request for the selected document?');
+            window.location.href= 'https://sunrunhome.intdev.cs17.force.com/partner/apex/Proposal_eSignDocuments?id=a0860000003tVZk';
+            var test2 = '';
+        }
+
+		function attachOptyGeneralDocs(optyIdVal, canAttachDocs){
+		
+			var tempURL = '/apex/Opportunity_GeneralDocUploader?id=' + optyIdVal; 
+			var isPartner = "{!IsPartnerUser}";
+			if(isPartner == 'true')
+			{
+			    tempURL = '/partner' + tempURL;
+			}  
+			var newwindow = window.open(tempURL, '', 'toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=950,height=465,left=150,top=150'); 
+			newwindow.focus();
+ 
+        }
+
+		function attachSCGeneralDocs(proposalIdVal, canAttachDocs){
+		
+			var tempURL = '/apex/ServiceContract_GeneralDocUploader?id=' + proposalIdVal; 
+			var isPartner = "{!IsPartnerUser}";
+			if(isPartner == 'true')
+			{
+			    tempURL = '/partner' + tempURL;
+			}  
+			var newwindow = window.open(tempURL, '', 'toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=950,height=465,left=150,top=150'); 
+			newwindow.focus();
+ 
+        }
+		
+		function attachProposalGeneralDocs(proposalIdVal, canAttachDocs){
+	
+			var tempURL = '/apex/Proposal_GeneralDocUploader?id=' + proposalIdVal; 
+			var isPartner = "{!IsPartnerUser}";
+			if(isPartner == 'true')
+			{
+			    tempURL = '/partner' + tempURL;
+			}  
+			var newwindow = window.open(tempURL, '', 'toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=950,height=465,left=150,top=150'); 
+			newwindow.focus();
+		}
+
+        function attachContractDocuments(proposalIdVal, canAttachDocs){
+            
+            if(canAttachDocs == false){
+                alert('Invalid stage to Upload Documents');
+            }else{
+                var tempURL = '/apex/Proposal_FileUploader?id=' + proposalIdVal; 
+                var isPartner = "{!IsPartnerUser}";
+                if(isPartner == 'true')
+                {
+                    tempURL = '/partner' + tempURL;
+                }  
+                var newwindow = window.open(tempURL, '', 'toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=950,height=465,left=150,top=150'); 
+                newwindow.focus();
+            }
+        }
+
+        function getSelectedRecords2(){
+            var inputElem = document.getElementsByTagName("input");
+            var itemsChecked = new Array();
+            var count = 0;
+            for(var i=0; i<inputElem.length; i++){
+                if(inputElem[i].checked == true){
+                    if(inputElem[i].checked == true){
+                        itemsChecked[count] = inputElem[i].id;
+                        count ++;
+                    }
+                }
+            }
+            return itemsChecked;
+        } 
+
+        function removeOpportunityLookup(){
+            var isPartner = "{!IsPartnerUser}";
+            if(isPartner == 'true'){
+                var salesRepLabelId = '{!salesRepEmailLabelId}' ;
+                if(salesRepLabelId != null && salesRepLabelId != ''){
+                    var element1 = parent.document.getElementById(salesRepLabelId);
+                    if(element1 != null){
+                        element1.parentNode.parentNode.parentNode.removeChild(parent.document.getElementById(salesRepLabelId).parentNode.parentNode);
+                    }               
+                }
+
+                var optyLookupLabelId = '{!opportunityLookupLabelId}' ;
+                var optyLookupId = '{!opportunityLookupId}' ;
+                if(optyLookupLabelId != null && optyLookupLabelId != ''){
+                    var element = parent.document.getElementById(optyLookupLabelId);
+                    if(element != null){
+                        element.parentNode.removeChild(element);
+                    }
+                }
+                
+                if(optyLookupId != null && optyLookupLabelId != ''){
+                    var element = parent.document.getElementById(optyLookupId);
+                    if(element != null){
+                        element.parentNode.removeChild(element);
+                    }           
+                }
+            }
+        }
+        removeOpportunityLookup();  
+    </script> 
+</apex:component>

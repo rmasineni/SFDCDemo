@@ -1,0 +1,3 @@
+<apex:page sidebar="false" showHeader="false" StandardController="Opportunity" extensions="FileUploader">
+    <c:FileUploaderOpp id="fileUploaderId" relatedObject="{!relatedObjectId}"/>
+</apex:page>

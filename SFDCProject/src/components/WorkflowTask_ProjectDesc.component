@@ -1,0 +1,11 @@
+<apex:component >
+	<apex:attribute name="taskObj" description="Task__c value for the component" type="Task__c" required="true"/>
+	<apex:outputPanel styleClass="blue" layout="block">
+		<div class="pbSubheader brandTertiaryBgr first tertiaryPalette">
+			<h3>Task Description</h3>
+		</div>
+	</apex:outputPanel>	
+	<apex:outputPanel style="text-align:left;">
+		<apex:outputfield value="{!taskObj.Task_Description__c}"/>				
+	</apex:outputPanel>
+</apex:component>

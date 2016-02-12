@@ -1,0 +1,50 @@
+<apex:page standardController="Lead" extensions="PartnerLeadDetail" sidebar="false" showHeader="false" rendered="{!if(contains($Profile.Name,'Sales'),false,true)}">
+            <apex:form >    
+            <apex:pagemessages />    
+           
+           <script language="JavaScript">
+                 function refreshParent(redirectURL){ 
+                      window.top.location.href=redirectURL;
+                } 
+            </script>
+            <div style="width: 500px;margin:0 auto;">
+            <apex:outputLabel style="color:red">Navigate BrightPath:</apex:outputLabel>
+            <apex:selectList size="1" value="{!selectedDesign}" multiselect="false">
+                <apex:selectOptions value="{!DesignTypes}"/>
+            </apex:selectList>
+              <!--<apex:commandButton value="Go" action="{!goToDesign}"/>-->
+                  <apex:commandLink value="Go" action="{!goToDesign}" target="_parent" styleClass="btn" style="text-decoration:none;padding:4px;" reRender="popup">
+                  </apex:commandLink>
+                  
+              <apex:outputPanel id="popup">
+              <apex:outputText rendered="{!displayPopup}">
+                <script type="text/javascript">
+                    var errorMessageStr = '{!displayPopupMessage}';
+                    alert(errorMessageStr);
+                </script>
+            </apex:outputText>   
+            <apex:outputText rendered="{!displayURL}">
+                <script type="text/javascript">
+                    
+                    window.top.location.href = '{!redirectUrl}';
+                </script>
+            </apex:outputText>
+            <apex:outputText rendered="{!displayTandCURL}">
+                <script type="text/javascript">
+                
+                    var newwindow = window.open('{!redirectUrl}', '', 'toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=850,height=465,left=350,top=200'); 
+                    newwindow.focus();
+   
+                </script>
+            </apex:outputText>
+            <apex:outputText rendered="{!displaySalesRepURL}">
+                <script type="text/javascript">
+                    
+                    window.top.location.href = '{!SalesRepURL}';
+                </script>
+            </apex:outputText>                                    
+        </apex:outputPanel>
+
+            </div>  
+            </apex:form>
+</apex:page>

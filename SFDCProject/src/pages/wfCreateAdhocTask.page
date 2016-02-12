@@ -1,0 +1,199 @@
+<apex:page controller="wfCreateAdhocTask" sidebar="false" showHeader="false" >
+    <style>
+      .cke_contents {
+        height: 400px !important;
+      }
+    </style>
+    <c:WorkflowTask_CSS />
+    <div align="left" width="100%">
+        <img src="{!$Resource.PartnerPortalHeader32}" class="headerLogo"/>
+    </div>
+
+    <apex:sectionHeader title="Enter New Adhoc Task Details "/>
+    <apex:form id="TaskCloneForm">
+        <apex:pageMessages />
+        <div style="text-align: center;">
+            <!-- <apex:commandButton action="{!saveAdhocTask}" value="Save" status="status2" title="Click to save the Task" rendered="{!editModeSec}"/> -->
+            <apex:actionStatus id="mySaveStatus1" onstop="closeAndRefreshparent('{!parentURL}', '{!confirmMode}');" >
+             <apex:facet name="stop">
+                 <apex:commandButton value="Save" title="Click to save the Task"
+                    rendered="{!editModeSec}" action="{!saveAdhocTask}" status="mySaveStatus1"/>
+                 
+             </apex:facet>
+             <apex:facet name="start">
+                <apex:outputtext value="In progress ..." />
+                 <apex:outputPanel >
+                       <apex:image value="/img/loading32.gif" style="height: 15px;"/>
+                       <apex:commandButton value="Processing..." status="mySaveStatus1" 
+                       oncomplete="closeAndRefreshparent('{!parentURL}', '{!confirmMode}');"  disabled="true"/>
+                   </apex:outputPanel>
+               </apex:facet>
+            </apex:actionStatus>
+
+
+            &nbsp;
+            <apex:actionStatus id="status2" startText="saving..."/>
+            <apex:commandButton rendered="{!editModeSec}" value="Cancel" onclick="window.top.close();" immediate="true" /> &nbsp;
+            <apex:commandButton action="{!editTask}" value=" Edit " status="status2" title="Click to Edit the Task" rendered="{!!editModeSec}"/>
+            <!-- <apex:commandButton rendered="{!confirmMode}" value="Close" 
+                    onclick="closeAndRefreshparent('{!parentURL}');window.top.close();" immediate="true"/> -->
+        </div>                
+        <apex:pageBlock id="block1">
+            <apex:outputPanel styleClass="blue" layout="block">
+                <apex:pageBlockSection title="Task Details" id="taskDetails" rendered="{!editModeSec}">   
+                    <apex:pageBlockSectionitem id="item1">
+                          <apex:outputLabel value="Task Name"/>
+                          <apex:outputPanel layout="block" styleClass="requiredInput">
+                            <apex:outputPanel layout="block" styleClass="requiredBlock"/>
+                            <apex:inputtext id="tName" value="{!newTask.name}"  required="true"/>
+                        </apex:outputPanel>                    
+                    </apex:pageBlockSectionitem>
+                    <apex:pageBlockSectionitem id="item20">  
+                        <apex:outputLabel value="Task Type"/>
+                        <apex:outputPanel >                     
+                            <apex:outputField value="{!newTask.Type__c}"/>
+                        </apex:outputPanel>
+                    </apex:pageBlockSectionitem>
+
+                    <apex:pageBlockSectionitem id="item26">  
+                        <apex:outputLabel value="Task Category"/>
+                        <apex:outputtext value="{!newTask.Category__c}"/>
+                    </apex:pageBlockSectionitem>
+
+                    <apex:pageBlockSectionitem id="item6">  
+                        <apex:outputLabel value="Phase Name"/>
+                        <apex:outputPanel >  
+                        <apex:outputtext id="phaseName" value="{!newTask.Phase__r.name}"/>                   
+                        </apex:outputPanel>
+                    </apex:pageBlockSectionitem>
+                        
+                    <apex:pageBlockSectionitem id="item21">  
+                        <apex:outputLabel value="Task Status"/>
+                        <apex:outputPanel >                     
+                            <apex:outputfield value="{!newTask.Status__c}"/>
+                        </apex:outputPanel>
+                    </apex:pageBlockSectionitem>    
+                    
+                    <apex:outputPanel style="display:none">
+                        <apex:outputfield id="projectName" value="{!newTask.Project_Name__c}"/> 
+                    </apex:outputPanel>
+
+                    <apex:pageBlockSectionitem id="item5">  
+                        <apex:outputLabel value="Task Group"/>
+                        <apex:outputPanel layout="block" styleClass="requiredInput">
+                            <apex:outputPanel layout="block" styleClass="requiredBlock"/>                     
+                            <apex:inputField value="{!newTask.Group_Name__c}" required="true"/>
+                        </apex:outputPanel>
+                    </apex:pageBlockSectionitem>                
+                        
+                    <apex:pageBlockSectionitem id="item25"> 
+                        <apex:outputLabel value="Task Owner"/>
+                        <apex:inputField value="{!newTask.Task_Owner__c}"/>
+                    </apex:pageBlockSectionitem>
+                    
+                    <apex:pageBlockSectionitem id="item27"> 
+                        <apex:outputLabel value="Reason"/>
+                        <apex:inputField value="{!newTask.Reason__c}" required="true"/>
+                    </apex:pageBlockSectionitem>
+                    
+                    <apex:pageBlockSectionitem id="item28"> 
+                        <apex:outputLabel value="Sub-Reason"/>
+                        <apex:inputField value="{!newTask.Sub_Reason__c}"  required="true" />
+                    </apex:pageBlockSectionitem>
+                                    
+                    <apex:pageBlockSectionitem id="item29">  
+                        <apex:outputLabel value="Task Open Date"/>
+                        <apex:outputPanel >                     
+                            <apex:inputField value="{!newTask.Start_Date__c}"/>
+                        </apex:outputPanel>
+                    </apex:pageBlockSectionitem>
+                    
+                    <apex:pageBlockSectionitem id="item4">  
+                        <apex:outputLabel value="Task Description"/>
+                        <apex:outputPanel >                     
+                            <apex:inputfield value="{!newTask.Task_Description__c}" style="width: 500px; height: 20px;" required="true"/>
+                        </apex:outputPanel>
+                    </apex:pageBlockSectionitem>
+                </apex:pageBlockSection> 
+            </apex:outputPanel>               
+            
+            <apex:pageBlockSection title="Task Details After Submit" id="taskDetailsEntered" Rendered="{!Not(editModeSec)}" >
+                <apex:pageBlockSectionitem id="item7">
+                    <apex:outputLabel value="Task Name"/>
+                    <apex:outputPanel >
+                        <apex:outputtext value="{!newTask.name}"/>
+                    </apex:outputPanel>
+                </apex:pageBlockSectionitem>
+                                 
+               <apex:pageBlockSectionitem id="item11">
+                    <apex:outputLabel value="Project Name"/> 
+                    <apex:outputtext value="{!newTask.phase__r.Project__r.name}"/> 
+                </apex:pageBlockSectionitem> 
+                
+                <apex:pageBlockSectionitem id="item9">
+                    <apex:outputLabel value="Task Group"/>
+                    <apex:outputPanel >
+                        <apex:outputtext value="{!newTask.Group_Name__c}"/>
+                    </apex:outputPanel>
+                </apex:pageBlockSectionitem>
+              
+                <apex:pageBlockSectionitem id="item10">
+                    <apex:outputLabel value="Task Phase"/> 
+                    <apex:outputtext value="{!newTask.Phase__r.name}"/>   
+                  </apex:pageBlockSectionitem>   
+           
+                <apex:pageBlockSectionitem id="item17">
+                    <apex:outputLabel value="Task Owner"/> 
+                    <apex:outputtext value="{!newTask.Task_Owner__r.name}"/>     
+               </apex:pageBlockSectionitem> 
+    
+                <apex:pageBlockSectionitem id="item12">
+                    <apex:outputLabel value="Task Status"/> 
+                    <apex:outputtext value="{!newTask.Status__c}"/>     
+               </apex:pageBlockSectionitem> 
+               
+               <apex:pageBlockSectionitem id="item13">
+                    <apex:outputLabel value="Task Type"/> 
+                    <apex:outputtext value="{!newTask.Type__c}"/>                     
+              </apex:pageBlockSectionitem>  
+              
+              
+              <apex:pageBlockSectionitem id="item14">
+                    <apex:outputLabel value="Task Category"/> 
+                    <apex:outputtext value="{!newTask.Category__c}"/>                     
+              </apex:pageBlockSectionitem>  
+              
+              <apex:pageBlockSectionitem id="item15">
+                    <apex:outputLabel value="Reason"/> 
+                    <apex:outputtext value="{!newTask.Reason__c}"/>                     
+              </apex:pageBlockSectionitem>
+              
+              <apex:pageBlockSectionitem id="item18">
+                    <apex:outputLabel value="Sub-Reason"/> 
+                    <apex:outputtext value="{!newTask.Sub_Reason__c}"/>                     
+              </apex:pageBlockSectionitem>
+              
+                <apex:pageBlockSectionitem id="item8">
+                    <apex:outputLabel value="Task Description"/>
+                    <apex:outputPanel >
+                        <apex:outputfield value="{!newTask.Task_Description__c}"/>
+                    </apex:outputPanel>
+                </apex:pageBlockSectionitem>  
+            
+            </apex:pageBlockSection>    
+        </apex:pageBlock>
+    </apex:form>
+
+    <script type="text/javascript">
+
+        function closeAndRefreshparent(parentWindowUrl, confirmMode)
+        {
+            if(confirmMode == 'true'){
+                window.top.close();
+                window.opener.parent.location.href = parentWindowUrl;
+                var win = window.open('','_parent','');
+                win.close();
+            }
+        }
+    </script>
+</apex:page>

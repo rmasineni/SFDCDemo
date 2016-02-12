@@ -1,0 +1,468 @@
+<apex:component controller="wfTaskObjFeildCmpController" allowDML="true" id="compId">
+<style>
+    .myTable {
+      border: 1px solid rgb(200, 205, 229); 
+      text-align:left;
+      
+      width:100%;
+    }
+    
+    .myTd{
+        width: 200px;
+        text-align:left;
+    }
+    
+    .myTh{ 
+        width: 200px;    
+    }
+    .empty-column-content {
+        display: none;
+    }
+    
+   </style>
+   
+   <apex:attribute name="asObjectType" description="Type of Object." type="Task_Template__c" required="true" assignTo="{!tskObj}" id="attr1"/>
+   <apex:attribute name="aDataType" description="To Show Data Type Column or Not" type="boolean" required="true" assignTo="{!showDataType}" id="attr2"/>
+   <apex:attribute name="SaveOptionType" description="Save to Objects or Display Objects" type="String" required="true" assignTo="{!SaveOption}" id="attr2"/>
+    <apex:attribute name="numberOfRows" description="number of rows to display" type="integer" required="true" assignTo="{!numOfRows }" id="attr4"/>
+       <apex:form id="formId">
+     <apex:pageBlock id="pblockId"> 
+      <apex:param name="RowNum" value="1"/>
+        <!-- {!numOfRows}  {!RowNum} -->
+            <apex:pageblockbuttons location="top"> 
+                <apex:commandButton value="Edit" action="{!editRecord}" rerender="pblockId" rendered="{!!editMode}"/>
+                <apex:commandButton value="Save" action="{!customSave}" oncomplete="window.top.location='/{!tskObj.id}'; return false" rendered="{!editMode}"/>   
+                  <apex:commandButton value="Cancel" action="{!Cancel}" rendered="{!editMode}" />                        
+            </apex:pageblockbuttons>  
+            <apex:outputPanel id="inputPanel" rendered="{!editMode}">
+            <table  class="myTable">
+                <tr>
+                    <th class="myTh">
+                        Object Name
+                    </th>
+                    <th class="myTh">
+                        Field Name
+                    </th>
+                   
+                    <!-- 
+                         <th class="myTh" styleClass="empty-column-content" >
+                         <apex:outputPanel rendered="{!IF(numOfRows >=1 && showDataType, true, false)}">
+                            Data Type
+                            </apex:outputPanel>  
+                        </th>                   
+                     -->
+
+                        
+                        <th class="myTh" styleClass="empty-column-content" >
+                        <apex:outputPanel rendered="{!IF(numOfRows >=1 && showDataType, true, false)}">
+                            Required
+                             </apex:outputPanel>
+                        </th>
+                  
+                </tr>
+           
+               <tr>
+                  <td class="myTd">
+                  
+                   
+                   <apex:outputPanel id="myObject1" rendered="{!IF(numOfRows >=1, true, false)}"> 
+     
+                           <apex:selectList value="{!object1}" size="1">
+                                    <apex:selectOptions value="{!ObjectNames}"/>
+                                    <apex:actionSupport event="onchange" rerender="myFields1" >
+                                      
+                                    </apex:actionsupport>
+                            </apex:selectList>
+
+                     </apex:outputPanel>
+                  </td>
+                  <td class="myTd">
+                    <apex:outputPanel id="myFields1" rendered="{!IF(numOfRows >=1, true, false)}">
+
+                       <apex:selectList value="{!Field1}" multiselect="false" size="1">
+                           <apex:selectOptions value="{!FieldNames1}" />
+                           <apex:actionSupport event="onchange" rerender="myReq1">
+                          
+                           </apex:actionSupport>
+                       </apex:selectList>
+ 
+                   </apex:outputPanel>
+                  </td>  
+                  <!-- 
+                  <td class="myTd">
+                    <apex:outputPanel id="myFields11" rendered="{!IF(numOfRows >=1 && showDataType, true, false)}">                      
+                        <apex:outputText value="N/A" id="opText2" rendered="{!IF(Field1 == 'N/A', true, false)}"/>
+                        <apex:outputText value="{!fieldDataType1}" id="opText1" rendered="{!!IF(Field1 == 'N/A', true, false)}"/>
+                   </apex:outputPanel>
+                  </td>                  
+                   -->                     
+                   <td class="myTd">
+                    <apex:outputPanel id="myReq1" rendered="{!IF(numOfRows >=1 && showDataType, true, false)}"> 
+                       <apex:inputCheckbox value="{!req1}" />
+                       </apex:outputPanel>
+                    </td>
+                 
+                </tr>
+                <tr>
+                  <td class="myTd">
+                     <apex:outputPanel id="myObject2" rendered="{!IF(numOfRows >=2, true, false)}">   
+   
+                           <apex:selectList value="{!Object2}" size="1">
+                                    <apex:selectOptions value="{!ObjectNames}" />
+                                    <apex:actionSupport event="onchange" rerender="myFields2" />
+                            </apex:selectList>
+
+                     </apex:outputPanel> 
+                  </td> 
+                  <td class="myTd">
+                    <apex:outputPanel id="myFields2" rendered="{!IF(numOfRows >=2, true, false)}" >
+ 
+                       <apex:selectList value="{!Field2}" multiselect="false" size="1">
+                           <apex:selectOptions value="{!FieldNames2}" />
+                           <apex:actionSupport event="onchange" rerender="myReq2" />
+                       </apex:selectList>
+
+                   </apex:outputPanel>
+                  </td>
+                   <!-- 
+                   <td class="myTd">
+                    <apex:outputPanel id="myFields22" rendered="{!IF(numOfRows >=2 && showDataType , true, false)}" >
+                        <apex:outputText value="N/A" id="opText3" rendered="{!IF(Field2 == 'N/A', true, false)}"/>
+                        <apex:outputText value="{!fieldDataType2}" id="opText4" rendered="{!!IF(Field2 == 'N/A', true, false)}"/>
+                        
+                   </apex:outputPanel>
+                  </td>                   
+                  -->
+
+                  <apex:param name="req" value="false"/>
+                   <td class="myTd">
+                    <apex:outputPanel id="myReq2" rendered="{!IF(numOfRows >=1 && showDataType, true, false)}"> 
+                       <apex:inputCheckbox value="{!req2}"/>
+                       </apex:outputPanel>
+                    </td>
+                  <!-- 
+                  <td class="myTd">
+                    <apex:outputPanel id="myReq2" rendered="{!IF(numOfRows >=2 && showDataType, true, false)}"> 
+                         <apex:inputCheckbox value="{!req}" rendered="{!IF(fieldDataType2 == 'N/A', true, false)}"/>
+                        <apex:inputCheckbox value="{!req2}" rendered="{!! IF(fieldDataType2 == 'N/A', true, false)}" />
+                       </apex:outputPanel>
+                    </td>                 
+                   -->
+
+                </tr>
+                <tr>
+                  <td class="myTd">
+                     <apex:outputPanel id="myObject3" rendered="{!IF(numOfRows >=3, true, false)}" >   
+       
+                               <apex:selectList value="{!Object3}" size="1">
+                                        <apex:selectOptions value="{!ObjectNames}" />
+                                        <apex:actionSupport event="onchange" rerender="myFields3,myFields33" />
+                                </apex:selectList>
+
+                      </apex:outputPanel>
+                  </td>
+                  <td class="myTd">
+                    <apex:outputPanel id="myFields3" rendered="{!IF(numOfRows >=3, true, false)}">
+ 
+                       <apex:selectList value="{!Field3}" multiselect="false" size="1">
+                           <apex:selectOptions value="{!FieldNames3}" />
+                           <apex:actionSupport event="onchange" rerender="myReq3" />
+                       </apex:selectList>
+
+                   </apex:outputPanel>
+                  </td>
+                  
+                  <!-- 
+                  <td class="myTd">
+                    <apex:outputPanel id="myFields33" rendered="{!IF(numOfRows >=3 && showDataType, true, false)}">
+                        <apex:outputText value="N/A" id="opText5" rendered="{!IF(Field3 == 'N/A', true, false)}"/>
+                        <apex:outputText value="{!fieldDataType3}" id="opText6" rendered="{!!IF(Field3 == 'N/A', true, false)}"/>
+                   </apex:outputPanel>
+                  </td>                  
+                   -->
+
+                  
+                  <td class="myTd">
+                    <apex:outputPanel id="myReq3" rendered="{!IF(numOfRows >=1 && showDataType, true, false)}"> 
+                       <apex:inputCheckbox value="{!req3}"/>
+                       </apex:outputPanel>
+                    </td>         
+                </tr>
+                
+                <tr>   
+                   <td class="myTd">
+                    <apex:outputPanel id="myObject4" rendered="{!IF(numOfRows>=4, true, false)}">
+                           <apex:selectList value="{!Object4}" size="1">
+                                    <apex:selectOptions value="{!ObjectNames}" />
+                                    <apex:actionSupport event="onchange" rerender="myFields4" />
+                            </apex:selectList>
+                    </apex:outputPanel>
+                  </td>
+                  <td class="myTd">
+                    <apex:outputPanel id="myFields4" rendered="{!IF(numOfRows >=4, true, false)}">
+
+                       <apex:selectList value="{!Field4}" multiselect="false" size="1">
+                           <apex:selectOptions value="{!FieldNames4}" />
+                           <apex:actionSupport event="onchange" rerender="myReq4" />
+                       </apex:selectList>
+ 
+                   </apex:outputPanel>
+                  </td>
+                  <!-- 
+                    <td class="myTd">
+                    <apex:outputPanel id="myFields44" rendered="{!IF(numOfRows >=4 && showDataType, true, false)}">
+                        <apex:outputText value="N/A" id="opText7" rendered="{!IF(Field4 == 'N/A', true, false)}"/>
+                        <apex:outputText value="{!fieldDataType4}" id="opText8" rendered="{!!IF(Field4 == 'N/A', true, false)}"/>
+                   </apex:outputPanel>
+                  </td>                 
+                   -->
+
+                  <td class="myTd">
+                    <apex:outputPanel id="myReq4" rendered="{!IF(numOfRows >=4 && showDataType, true, false)}"> 
+                       <apex:inputCheckbox value="{!req4}"/>
+                       </apex:outputPanel>
+                    </td>
+                </tr>
+                <tr>
+                  <td class="myTd">
+                  <apex:outputPanel id="myObject5" rendered="{!IF(numOfRows >=5, true, false)}" >
+                           <apex:selectList value="{!Object5}" size="1">
+                                <apex:selectOptions value="{!ObjectNames}" />
+                                            <apex:actionSupport event="onchange" rerender="myFields5" />
+                            </apex:selectList>
+                   </apex:outputPanel>
+                  </td>
+                  <td class="myTd">
+                    <apex:outputPanel id="myFields5" rendered="{!IF(numOfRows >=5, true, false)}">
+        
+                       <apex:selectList value="{!Field5}" multiselect="false" size="1">
+                           <apex:selectOptions value="{!FieldNames5}" />
+                           <apex:actionSupport event="onchange" rerender="myReq5" />
+                       </apex:selectList>
+                    
+                   </apex:outputPanel>
+                  </td>
+                  <!-- 
+                   <td class="myTd">
+                    <apex:outputPanel id="myFields55" rendered="{!IF(numOfRows >=5 && showDataType, true, false)}">
+                        <apex:outputText value="N/A" id="opText9" rendered="{!IF(Field5 == 'N/A', true, false)}"/>
+                        <apex:outputText value="{!fieldDataType5}" id="opText10" rendered="{!!IF(Field5 == 'N/A', true, false)}"/>
+                   </apex:outputPanel>
+                  </td>                  
+                   -->
+
+                  <td class="myTd">
+                    <apex:outputPanel id="myReq5" rendered="{!IF(numOfRows >=5 && showDataType, true, false)}"> 
+                                <apex:inputCheckbox value="{!req5}"/>
+                        </apex:outputPanel>
+                    </td>
+                </tr> 
+                <!------------------ROW 6 -----------------------------------------------------
+                 <tr>
+                  <td class="myTd">
+                  <apex:outputPanel id="myObject6" rendered="{!IF(numOfRows >=5, true, false)}" >
+                           <apex:selectList value="{!Object6}" size="1">
+                                <apex:selectOptions value="{!ObjectNames}" />
+                                            <apex:actionSupport event="onchange" rerender="myFields6,myFields66" />
+                            </apex:selectList>
+                   </apex:outputPanel>
+                  </td>
+                  <td class="myTd">
+                    <apex:outputPanel id="myFields5" rendered="{!IF(numOfRows >=5, true, false)}">
+        
+                       <apex:selectList value="{!Field5}" multiselect="false" size="1">
+                           <apex:selectOptions value="{!FieldNames5}" />
+                           <apex:actionSupport event="onchange" rerender="myFields55" />
+                       </apex:selectList>
+                    
+                   </apex:outputPanel>
+                  </td>
+                   <td class="myTd">
+                    <apex:outputPanel id="myFields55" rendered="{!IF(numOfRows >=5 && showDataType, true, false)}">
+                        <apex:outputText value="N/A" id="opText9" rendered="{!IF(Field5 == 'N/A', true, false)}"/>
+                        <apex:outputText value="{!fieldDataType5}" id="opText10" rendered="{!!IF(Field5 == 'N/A', true, false)}"/>
+                   </apex:outputPanel>
+                  </td>
+                  <td class="myTd">
+                    <apex:outputPanel id="myReq5" rendered="{!IF(numOfRows >=5 && showDataType, true, false)}"> 
+                                <apex:inputCheckbox value="{!req5}"/>
+                        </apex:outputPanel>
+                    </td>
+                </tr> -->
+                
+                
+                
+                </table>
+            </apex:outputPanel>
+            <apex:outputPanel id="outputPanel" rendered="{!IF((showDataType && !editmode ), true, false)}" >
+                <table class="myTable">
+                    <tr>
+                    <th class="myTh">
+                        Object Name
+                    </th>
+                    <th class="myTh">
+                        Field Name
+                    </th>
+                     <th class="myTh">
+                       Required
+                    </th>
+                    </tr>
+                   <tr>
+                   <apex:outputPanel id="objfield1" rendered="{!IF(numOfRows >=1, true, false)}">
+                        <td class="myTd">
+                            <apex:outputLabel value="Object1: " />
+                            <apex:outputField value="{!tskObj.Object_Name1__c }" /> 
+                        </td>
+                        <td class="myTd">
+                            <apex:outputLabel value="Field1: " />
+                            <apex:outputField value="{!tskObj.Field_Name1__c}" />
+                        </td>
+                        <td class="myTd">
+                            <apex:outputLabel value="Required1: " />   
+                            <apex:inputcheckbox value="{!tskObj.Req1__c}" label="Same as Above" disabled="true"/>              
+                        </td>
+                      </apex:outputPanel>
+                    </tr>
+                        <tr>
+                        <apex:outputPanel id="objfield2" rendered="{!IF(numOfRows >=2, true, false)}">
+                        <td class="myTd">
+                            <apex:outputLabel value="Object2: " />
+                            <apex:outputField value="{!tskObj.Object_Name2__c }" /> 
+                        </td>
+                        <td class="myTd">
+                            <apex:outputLabel value="Field2: " />
+                            <apex:outputField value="{!tskObj.Field_Name2__c}" />
+                        </td>
+                         <td class="myTd">
+                            <apex:outputLabel value="Required2: " />   
+                            <apex:inputcheckbox value="{!tskObj.Req2__c}" label="Same as Above" disabled="true"/>              
+                        </td>
+                        </apex:outputPanel>
+                    </tr>
+                     <tr>
+                     <apex:outputPanel id="objfield3" rendered="{!IF(numOfRows >= 3, true, false)}">
+                        <td class="myTd">
+                            <apex:outputLabel value="Object3: " />
+                            <apex:outputField value="{!tskObj.Object_Name3__c }" /> 
+                        </td>
+                        <td class="myTd">
+                            <apex:outputLabel value="Field3: " />
+                            <apex:outputField value="{!tskObj.Field_Name3__c}" />
+                        </td>
+                        <td class="myTd">
+                            <apex:outputLabel value="Required3: " />   
+                            <apex:inputcheckbox value="{!tskObj.Req3__c}" label="Same as Above" disabled="true"/>              
+                        </td>
+                        </apex:outputPanel>
+                    </tr>
+                     
+                      <tr>
+                      <apex:outputPanel id="objfield4" rendered="{!IF(numOfRows >=4, true, false)}">
+                        <td class="myTd">
+                            <apex:outputLabel value="Object4: " />
+                            <apex:outputField value="{!tskObj.Object_Name4__c }" /> 
+                        </td>
+                        <td class="myTd">
+                            <apex:outputLabel value="Field4: " />
+                            <apex:outputField value="{!tskObj.Field_Name4__c}" />
+                        </td>
+
+                        <td class="myTd">
+                            <apex:outputLabel value="Required4: " />   
+                            <apex:inputcheckbox value="{!tskObj.Req4__c}" label="Same as Above" disabled="true"/>              
+                        </td>
+                        </apex:outputPanel>
+                    </tr>
+                      <tr>
+                      <apex:outputPanel id="objfield5" rendered="{!IF(numOfRows >= 5, true, false)}">
+                        <td class="myTd">
+                            <apex:outputLabel value="Object5: " />
+                            <apex:outputField value="{!tskObj.Object_Name5__c }" /> 
+                        </td>
+                        <td class="myTd">
+                            <apex:outputLabel value="Field5: " />
+                            <apex:outputField value="{!tskObj.Field_Name5__c}" />
+                        </td>
+                        <td class="myTd">
+                            <apex:outputLabel value="Required5: " />   
+                            <apex:inputcheckbox value="{!tskObj.Req5__c}" label="Same as Above" disabled="true"/>              
+                        </td>
+                        </apex:outputPanel>
+                    </tr>  
+                </table>
+            </apex:outputPanel>      
+          <apex:outputPanel id="outputPanel2" rendered="{!IF((!showDataType && !editmode ), true, false)}" >   
+                <table class="myTable">
+                    <tr>
+                    <th class="myTh">
+                        Object Name
+                    </th>
+                    <th class="myTh">
+                        Field Name
+                    </th>
+                    </tr>
+                    <tr>
+                    <apex:outputPanel id="Dp1" rendered="{!IF(numOfRows >=1, true, false)}">
+                        <td class="myTd"  >
+                            <apex:outputLabel value="DisplayObject1: " />
+                            <apex:outputField value="{!tskObj.Display_Object1__c}" /> 
+                        </td>
+                        <td class="myTd" >
+                            <apex:outputLabel value="DisplayField1: " />
+                            <apex:outputField value="{!tskObj.Display_Field1__c}" />
+                        </td>
+                   </apex:outputPanel>    
+                    </tr>
+                    <tr>
+                    <apex:outputPanel id="Dp2" rendered="{!IF(numOfRows >=2, true, false)}">
+                        <td class="myTd" >
+                            <apex:outputLabel value="DisplayObject2: " />
+                            <apex:outputField value="{!tskObj.Display_Object2__c}" />
+                        </td>
+                        <td class="myTd" >
+                            <apex:outputLabel value="DisplayField2: " />
+                            <apex:outputField value="{!tskObj.Display_Field2__c}" />
+                        </td>
+                    </apex:outputPanel> 
+                    </tr>   
+                    <tr>
+                    <apex:outputPanel id="Dp3" rendered="{!IF(numOfRows >=3, true, false)}">
+                        <td class="myTd"  >
+                            <apex:outputLabel value="DisplayObject3: " />
+                            <apex:outputField value="{!tskObj.Display_Object3__c}" />
+                        </td>
+                        <td class="myTd"  >
+                            <apex:outputLabel value="DisplayField3: " />
+                            <apex:outputField value="{!tskObj.Display_Field3__c}" />
+                        </td>
+                     </apex:outputPanel> 
+                    </tr>     
+                    <tr>
+                    <apex:outputPanel id="Dp4" rendered="{!IF(numOfRows >=4, true, false)}">
+                        <td class="myTd" >
+                            <apex:outputLabel value="DisplayObject4: " />
+                            <apex:outputField value="{!tskObj.Display_Object4__c}" />
+                        </td>
+                        <td class="myTd"  >
+                            <apex:outputLabel value="DisplayField4: " />
+                            <apex:outputField value="{!tskObj.Display_Field4__c}" />
+                        </td>
+                    </apex:outputPanel> 
+                    </tr>   
+                    <tr>
+                    <apex:outputPanel id="Dp5" rendered="{!IF(numOfRows >=5, true, false)}">
+                        <td class="myTd"  >
+                            <apex:outputLabel value="DisplayObject5: " />
+                            <apex:outputField value="{!tskObj.Display_Object5__c}" />
+                        </td>
+                        <td class="myTd" >
+                            <apex:outputLabel value="DisplayField5: " />
+                            <apex:outputField value="{!tskObj.Display_Field5__c}" />
+                        </td> 
+                     </apex:outputPanel> 
+                    </tr>           
+                </table>
+            </apex:outputPanel>                       
+       </apex:pageBlock> 
+   </apex:form>
+</apex:component>

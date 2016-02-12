@@ -1,0 +1,265 @@
+<apex:page controller="milestoneProof" sidebar="false" id="msProof">
+    <script>
+        function allowUpdateNumPanels()
+        {       
+            if('{!bError}' == 'true')
+            {            
+               alert('You must enter a valid, non-zero number for Sunrun-owned panels!');
+               return false;
+            }
+        }
+        function validateFields(milestoneProofType, ntpGranted) 
+        { 
+            if('{!bError}' == 'true')
+            {
+               alert('You must resolve your errors before you can upload the M1 Proof!');
+               return false;
+            }
+            if (milestoneProofType == 'Please Select')
+            {
+                alert("Please select a value for Proof Type");
+                return false;
+            }
+            
+            var inputFile = document.getElementsByName("msProof:uploadProofForm:block1:uploadPBSection:uploadPBSectionItem1:fileToUpload:inputFile:file")[0].value;
+            if (inputFile == null || inputFile == '')
+            {
+                alert("Please select a file to upload");
+                return false;
+            }
+            
+            if ((milestoneProofType == 'M1 Proof' || milestoneProofType == 'M2 Proof') && ntpGranted == '')
+            {
+                alert("NTP Granted Date is either blank or null. Cannot upload file!!!");
+                return false;
+            }
+
+            return true;
+        }
+
+        function validateSerialNo() 
+        {
+//          var panelSerialNumbers = document.getElementsById('{!$Component.msProof.uploadProofForm.block1.smartTurn.item1.slNo}').value;
+         
+            var panelSerialNumbers = document.getElementsById('{!$Component.slNo}').value;
+            alert(panelSerialNumbers);
+/*
+            if (panelSerialNumbers == null || panelSerialNumbers == '')
+            {
+                alert("Please enter the Serial Numbers before attempting to Submit it to SmartTurn");
+                return false;
+            }
+            
+            var slNoArray = panelSerialNumbers.split('\r\n');
+            
+            milestoneProof.lookupInventory(panelSerialNumbers, function(result, event){
+               if (event.status) 
+               {
+                   var recCount = result;
+                   if (recCount == null || recCount <= 0)
+                   {
+                        alert('Inventory Lookup Failed');
+                        return false;
+                   }
+                   else if (recCount != slNoArray.length)
+                   {
+                        alert('Serial Number count does not match with Inventory Lookup Failed');
+                        return false;
+                   }                       
+               }
+               }, {escape:true});
+*/                
+            return true;
+        }
+
+        function validatePTO(milestoneProofType) 
+        {
+            if (milestoneProofType == 'Please Select')
+            {
+                alert("Please select a value for Proof Type");
+                return false;
+            }
+            
+            if (milestoneProofType == 'M3 Proof')
+            {
+                var ptoDate = document.getElementsByName("msProof:uploadProofForm:block1:assetDetails:item11:ptoDate")[0].value;
+                if (ptoDate == null || ptoDate == '')
+                {
+                    alert("Please provide the PTO Date");
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
+        function showFileName() 
+        {
+            return true;
+        }
+
+    </script>
+    <apex:Pagemessages />
+    <apex:sectionHeader title="Upload Proof for Generation Asset"/>
+    <apex:form enctype="multipart/form-data" id="uploadProofForm">
+<!--
+        <apex:actionFunction action="{!refreshFileName}" name="showFileName" rerender="block">
+        </apex:actionFunction>
+-->     
+        <apex:pageBlock mode="edit" id="block1">
+
+            <apex:pageBlockSection id="assetDetails">
+                <apex:pageBlockSectionitem id="item1">
+                    <apex:outputLabel value="Generation Asset"/>
+                    <apex:outputPanel >
+                        <apex:outputField value="{!selGenAssetRec.Name}"/>
+                    </apex:outputPanel>
+                </apex:pageBlockSectionitem>
+                <apex:pageBlockSectionitem id="item2">
+                    <apex:outputLabel value="Account"/>
+                    <apex:outputPanel >                     
+                        <apex:outputField value="{!selGenAssetRec.Account_Name__c}"/>
+                    </apex:outputPanel>
+                </apex:pageBlockSectionitem>
+                <apex:pageBlockSectionitem id="item3">
+                    <apex:outputLabel value="M1 Status"/>
+                    <apex:outputPanel >
+                        <apex:outputField value="{!selGenAssetRec.M1_Status__c}"/>
+                    </apex:outputPanel>
+                </apex:pageBlockSectionitem>
+                <apex:pageBlockSectionitem id="item4">
+                    <apex:outputLabel value="M1 Proof:Panel/Inverter Delvery"/>
+                    <apex:outputPanel >
+                        <apex:outputField value="{!selGenAssetRec.M1_proof_panel_inverter_delivery__c}"/>
+                    </apex:outputPanel>
+                </apex:pageBlockSectionitem>
+                <apex:pageBlockSectionitem id="item5">
+                    <apex:outputLabel value="M2 Status"/>
+                    <apex:outputPanel >
+                        <apex:outputField value="{!selGenAssetRec.M2_Status__c}"/>
+                    </apex:outputPanel>
+                </apex:pageBlockSectionitem>
+                <apex:pageBlockSectionitem id="item6">
+                    <apex:outputLabel value="M2 Proof:Substantial Completion"/>
+                    <apex:outputPanel >
+                        <apex:outputField value="{!selGenAssetRec.M2_proof_substantial_completion__c}"/>
+                    </apex:outputPanel>
+                </apex:pageBlockSectionitem>
+                <apex:pageBlockSectionitem id="item7">
+                    <apex:outputLabel value="M3 Status"/>
+                    <apex:outputPanel >
+                        <apex:outputField value="{!selGenAssetRec.M3_Status__c}"/>
+                    </apex:outputPanel>
+                </apex:pageBlockSectionitem>
+                <apex:pageBlockSectionitem id="item8">
+                    <apex:outputLabel value="Meter Test Date"/>
+                    <apex:outputPanel >
+                        <apex:outputField value="{!selGenAssetRec.Meter_Test_Date__c}"/>
+                    </apex:outputPanel>
+                </apex:pageBlockSectionitem>
+                <apex:pageBlockSectionitem id="item9">
+                    <apex:outputLabel value="Rebate Form Sent Date"/>
+                    <apex:outputPanel >
+                        <apex:outputField value="{!selGenAssetRec.Rebate_Form_Sent__c}"/>
+                    </apex:outputPanel>
+                </apex:pageBlockSectionitem>
+                
+               <apex:pageBlockSectionitem rendered="{!if(SelGenAssetRec.SmartTurn_M1_StatusCode__c == 'SUCCESS',false,true)}" id="item10">
+                    <apex:outputLabel value="Proof Type"/>
+                    <apex:outputPanel >
+                        <apex:selectList id="proofTypeList" value="{!milestoneProofType}" size="1">
+                            <apex:selectOptions id="proofType" value="{!proofType}" />
+                            <apex:actionSupport event="onchange" action="{!validateConfiguration}"/>
+                        </apex:selectList>                        
+                    </apex:outputPanel>
+                </apex:pageBlockSectionitem>                 
+               <apex:pageBlockSectionitem rendered="{!if(SelGenAssetRec.SmartTurn_M1_StatusCode__c == 'SUCCESS',true,false)}" id="item10a">
+                    <apex:outputLabel value="Proof Type"/>                   
+                    <apex:outputPanel >                                            
+                        <apex:selectList id="proofTypeList" value="{!milestoneProofType}" size="1">
+                            <apex:selectOptions id="proofType" value="{!proofType}" />
+                            <apex:actionSupport event="onchange"/>
+                        </apex:selectList>                        
+                    </apex:outputPanel>                        
+                </apex:pageBlockSectionitem>                
+
+                
+                
+<!--                <apex:pageBlock mode="maindetail" rendered="{!if(AND(isInstallPartnerVerengo,NULLVALUE(SelGenAssetRec.SmartTurn_M2_StatusCode__c,'') <> 'SUCCESS'),true,false)}">-->
+                <apex:pageBlock mode="maindetail" rendered="{!if(OR(AND($User.ContactId != '', isInstallPartnerVerengo, SelGenAssetRec.Cash_Grant_Eligible__c, NULLVALUE(SelGenAssetRec.SmartTurn_M1_StatusCode__c,'') <> 'SUCCESS'),AND($User.ContactId == '', isInstallPartnerVerengo, SelGenAssetRec.Cash_Grant_Eligible__c, NULLVALUE(SelGenAssetRec.SmartTurn_M2_StatusCode__c,'') <> 'SUCCESS')),true,false)}">                
+                  <apex:pageBlockButtons location="bottom">
+                    <apex:commandButton rendered="{!if($User.ContactId != '',false,true)}" onclick="allowUpdateNumPanels();" action="{!OnlyUpdatePanelCount}" value="Update # of Panels" style="left:0px;position:relative;" title="Update # of Panels"/>
+                  </apex:pageBlockButtons>
+                  <apex:pageBlockSectionitem id="item11a" rendered="{!if(isInstallPartnerVerengo,true,false)}">
+                    <apex:outputLabel styleClass="labelCol" value="Number of Sunrun-Owned Panels"/>
+                    <apex:outputPanel >
+                        <apex:inputText value="{!iNumSunRunOwnedModulesUsed}">                         
+                         <apex:actionSupport action="{!validateConfiguration}" event="onchange"/>
+                        </apex:inputText>
+                     </apex:outputPanel>
+                  </apex:pageBlockSectionitem>
+                </apex:pageBlock>
+                
+                <apex:pageBlockSectionitem id="item11" rendered="{!AND(isM3Proof == True,ISNULL(selGenAssetRec.Partner_PTO_proof_date__c))}" >
+                    <apex:outputLabel value="PTO Date"/>
+                    <apex:outputPanel >
+                        <apex:inputField id="ptoDate" value="{!selGenAssetRec.Partner_PTO_proof_date__c}" />
+                    </apex:outputPanel>
+                </apex:pageBlockSectionitem>
+                <apex:pageBlockSectionitem id="item12" rendered="{!AND(isM3Proof == True,NOT(ISNULL(selGenAssetRec.Partner_PTO_proof_date__c)))}">
+                    <apex:outputLabel value="PTO Date"/>
+                    <apex:outputPanel >
+                        <apex:outputField id="ptoDate" value="{!selGenAssetRec.Partner_PTO_proof_date__c}" />
+                    </apex:outputPanel>
+                </apex:pageBlockSectionitem>
+            </apex:pageBlockSection>
+            <apex:pageBlockSection id="smartTurn" title="SmartTurn Upload Details" columns="2" rendered="{!AND(isM2Proof == True,selGenAssetRec.Cash_Grant_Eligible__c)}" >
+                <apex:pageBlockSectionitem id="item1">
+                    <apex:outputLabel value="Panel Serial Number(s). Enter one serial number per line. Or, copy-paste from a spreadsheet."/>
+                    <apex:outputPanel >
+                        <apex:inputTextArea id="slNo" value="{!selGenAssetRec.Panel_Serial_Number__c}" rows="10" cols="100" disabled="{!NOT(enableSlNoUpload)}" />
+                    </apex:outputPanel>
+                </apex:pageBlockSectionitem>
+                <apex:pageBlockSectionitem id="item2">
+                    <apex:outputLabel value="SmartTurn M2 Status"/>
+                    <apex:outputPanel >
+                        <apex:outputField id="m2StatusCode" value="{!selGenAssetRec.SmartTurn_M2_StatusCode__c}" />
+                    </apex:outputPanel>
+                </apex:pageBlockSectionitem>
+                <apex:pageBlockSectionitem id="item3">
+                    <apex:outputLabel value="SmartTurn Message"/>
+                    <apex:outputPanel >
+                        <apex:outputField id="m2message" value="{!selGenAssetRec.SmartTurn_Message__c}" />
+                    </apex:outputPanel>
+                </apex:pageBlockSectionitem>
+                <apex:commandButton disabled="{!NOT(enableSlNoUpload)}" action="{!submitSerialNumber}" value="Submit Serial Number(s)" status="slNoStatus" style="left:100px;position:relative;" title="Click this button to Submit the Serial Numbers to SmartTurn" />
+            </apex:pageBlockSection>                   
+            <apex:pageBlockSection title="File Details" id="uploadPBSection">
+                <apex:pageBlockSectionitem id="uploadPBSectionItem1">
+                    <apex:outputLabel value="File"/>
+<!--                    <apex:inputFile style="width:100%" id="fileToUpload" value="{!fileBody}" filename="{!fullPathFileName}" required="true" title="Select the file here. Limit your file size to a max of 5 MB" onChange="showFileName()"/>
+-->
+                    <apex:inputFile style="width:100%" id="fileToUpload" value="{!fileBody}" filename="{!fullPathFileName}" title="Select the file here. Limit your file size to a max of 5 MB"/>
+                </apex:pageBlockSectionitem>
+            </apex:pageBlockSection>
+            <apex:actionStatus id="status" startText="Uploading file..."/>
+            <div style="text-align: center; font-size: 15px;" >
+                <apex:commandButton onClick="return validatePTO('{!milestoneProofType}')" action="{!savePTO}" value="Save PTO Date" status="status" style="left:0px;position:relative;" title="Click this button to save the PTO Date" rendered="{!AND(isM3Proof == True,ISNULL(selGenAssetRec.Partner_PTO_proof_date__c))}"/>
+                <apex:commandButton disabled="{!NOT(enableAttachFile)}" onclick="return validateFields('{!milestoneProofType}', '{!selGenAssetRec.NTP_Granted__c}')" action="{!attachFile}" value="Attach File" status="status" style="left:0px;position:relative;" title="Click this button to attach the file" />
+                <apex:commandButton action="{!backToSearch}" value="Back To Search" style="left:0px;position:relative;" title="Click this button to go back to the previous screen"/>
+            </div>
+            <apex:pageBlockSection title="Attachments" id="attachments" columns="1">
+                <apex:pageBlockTable value="{!attachments}" var="a" id="theTable" rendered="{!NOT(ISNULL(attachments))}" rowClasses="odd,even" styleClass="tableClass">
+                    <apex:column headerValue="Title">
+                        <apex:outputLink target="_blank" value="/{!a.ParentId}">{!a.Name}</apex:outputLink>
+                    </apex:column>
+<!-- 
+                    <apex:column headervalue="Title" value="{!a.Name}" />
+ -->                    
+                    <apex:column headervalue="Create Date" value="{!a.CreatedDate}" />  
+                    <apex:column headervalue="Created By" value="{!a.CreatedById}" />  
+            </apex:pageBlockTable>
+            </apex:pageBlockSection>            
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>

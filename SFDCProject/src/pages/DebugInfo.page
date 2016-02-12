@@ -1,0 +1,28 @@
+<apex:page showHeader="false" sidebar="false" standardStylesheets="false" controller="DebugInfoController">
+<pre>Session Id: {!$Api.Session_ID}</pre>
+    
+<apex:outputPanel rendered="{!record != null}">
+<pre>
+SObject Type: {!sobjName}
+SObject Id: {!sobjId}
+SObject Values:
+    <apex:dataTable value="{!record}" var="field" styleClass="tableClass" border="1">
+            <apex:column >
+                <apex:facet name="header">Label</apex:facet>
+                <pre><apex:outputText style="font-family: Consolas, 'Courier New'" value="{!field.label}"/></pre>
+            </apex:column>
+    
+            <apex:column >
+                <apex:facet name="header">API</apex:facet>
+                <pre><apex:outputText style="font-family: Consolas, 'Courier New'" value="{!field.api}"/></pre>
+            </apex:column>
+
+        	<apex:column >
+                <apex:facet name="header">Value</apex:facet>
+                <pre><apex:outputText style="font-family: Consolas, 'Courier New'" value="{!field.value}"/></pre>
+            </apex:column>
+    
+        </apex:dataTable>
+</pre>
+    </apex:outputPanel>
+</apex:page>

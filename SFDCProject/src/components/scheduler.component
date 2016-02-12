@@ -1,0 +1,1257 @@
+<apex:component controller="SchedulerController" layout="none">
+    <apex:attribute name="sobjId" type="String" description="" assignTo="{!sobjectId}"/>
+    
+    <apex:includeScript value="/support/console/35.0/integration.js"/>
+
+    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.5/css/bootstrap.min.css'/>
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.5.8/slick.min.css"/>
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.5.8/slick-theme.min.css"/>
+    <link href='https://fonts.googleapis.com/css?family=Droid+Sans' rel='stylesheet' type='text/css'></link>
+    
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.js'></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.6/moment.js'></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery.blockUI/2.66.0-2013.10.09/jquery.blockUI.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mousetrap/1.4.6/mousetrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.4.0/moment-timezone-with-data-2010-2020.min.js'></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery-noty/2.3.6/packaged/jquery.noty.packaged.min.js'></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery-url-parser/2.3.1/purl.min.js'></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/bootstrap3-dialog/1.34.6/js/bootstrap-dialog.min.js'></script>
+
+    <!-- 
+        
+        Slick.js was lacking some of the core features we needed for this component. So we took the
+        version 1.5.8 and modified to add below things.
+        
+        1. Slick.js by default don't pass the direction in which the user is sliding. Prev or next.
+            But we need this as we have to reset the week dates in upcoming slide to correct ont. So
+            we updated to add that parameter.
+            
+        2. Slick.js doesn't test if slide can be slided into. We need this feature to not to allow
+            user to slide past the current date.
+        
+            If you want to see the difference, compare the slick.js 1.5.8 version and version we have.
+    -->
+    <script src="{!URLFOR($Resource.SchedulerResources, 'js/slick.js')}"></script>
+
+<link href='https://fonts.googleapis.com/css?family=Open+Sans:300,600,700' rel='stylesheet' type='text/css'/>
+    <style>
+        
+        @font-face {
+            font-family: 'sunrunfont';
+            src: url('{!URLFOR($Resource.SchedulerResources, 'fonts/naiv-thintext-webfont.woff2')}') format('woff2');
+        }
+
+        html {
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: "Open Sans";
+            font-size: 14px;
+            font-weight: 300;
+            line-height: 1.42857143;
+            color: #686868;
+            background-color: #ffffff;
+            letter-spacing: 0.3px;
+            outline: none !Important;
+        }
+        
+        div {
+            outline: none;
+        }
+        
+        label {
+            cursor: pointer;
+        }
+
+        .ul-plain {
+            list-style-type: none;
+            padding-left: 0;
+            margin: 0;
+        }
+
+		.blockUI {
+            padding-bottom: 15px;
+        }
+
+        .blockUI.blockElement {
+            top: 125px !Important;
+            border: 3px solid #686868 !Important;
+        }
+		
+		.processing-message {
+        	width: 100%;
+            display: block;
+        }
+
+        textarea {
+            border-radius: 4px;
+            border-color: #D7D7D7;
+            padding: 20px;
+            width: 100%;
+            border-width: 1px;
+            border-style: solid;
+        }
+
+        .modal-dialog {
+            position: absolute;
+            top: 31%;
+            left: 31%;        
+        }
+
+        .bootstrap-dialog-title {
+            margin: 0;
+            line-height: 1.42857143;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .widget {
+        	margin: 30px 0;
+            display: block;
+            width: 100%;
+        }
+        
+        /* title styling */
+        h1 {
+            font-family: sunrunfont, "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+            color: #686868;
+        }
+        
+        .widget-title {
+            text-align: center;
+            font-weight: 300;
+            font-size: 2.142857143em;
+            margin-bottom: .5em;
+            margin-top: 0;
+        }
+
+        /* side widgets */
+        .widget aside {
+            position: relative;
+            min-height: 1px;
+            padding-left: 15px;
+            padding-right: 15px;
+        }
+
+        aside {
+            margin-bottom: 10px;
+        }
+
+        .widget-option {
+            margin-bottom: 15px;
+        }
+        
+        .widget-option .widget-option__wrapper {
+            padding: 15px;
+            background-color: #F1F0EE;
+            border-radius: 12px;
+        }
+
+        .widget-option__title {
+            margin: 0;
+            margin-bottom: 10px;
+            font-size: 1em;
+            font-weight: 600;
+        }
+
+        /* Appointment type styling */
+        #appt-type-choices {
+            margin-bottom: 10px;
+        }
+        
+        .widget-option__choices {
+            list-style-type: none;
+            padding-left: 0;
+            margin: 0;
+            border-top: 1px solid #C8C7CC;
+            border-bottom: 1px solid #C8C7CC;
+            background-color: #fff;
+        }
+        
+        .widget-option__choices li {
+            padding-left: 54px;
+            position: relative;
+        }
+
+        .widget-option__choices input[type="radio"] {
+            position: absolute;
+            left: 24px;
+            top: 12px;
+        }
+
+        input[type="radio"], input[type="checkbox"] {
+            margin: 4px 0 0;
+            line-height: normal;
+        }
+        
+        input[type="checkbox"], input[type="radio"] {
+            box-sizing: border-box;
+            padding: 0;
+        }
+
+        .widget-option__choices label {
+            display: block;
+            font-weight: normal;
+            padding: 12px;
+            padding-left: 6px;
+            margin-bottom: 0;
+        }
+
+        .widget-option__choices li + li label {
+            border-top: 1px solid #C8C7CC;
+        }
+
+        .widget main {
+            position: relative;
+            min-height: 25px;
+            padding-left: 50px;
+            padding-right: 15px;
+        }
+        
+        /* slick buttons */
+        .slick-prev {
+            left: -50px;
+        }
+        
+        .slick-next {
+            right: -50px;
+        }
+        
+        .slick-prev, .slick-next, .slick-prev:hover, .slick-next:hover, 
+                .slick-prev:active, .slick-next:active,
+                .slick-prev:focus, .slick-next:focus {
+            font-size: 0;
+            line-height: 0;
+            position: absolute;
+            z-index: 1000;
+            top: 0;
+            display: block;
+            width: 44px;
+            height: 44px;
+            margin: 0;
+            padding: 0;
+            cursor: pointer;
+            color: transparent;
+            border: none;
+            outline: none;
+            background: transparent;
+            background-color: #E5E1DE;
+            border-radius: 100%;
+        }
+        
+        .slick-prev:before {
+            content: '\3008';
+            left: -0.25em;
+        }
+        
+        .slick-next:before {
+            content: '\3009';
+            right: -0.25em;
+        }
+
+        .slick-prev:before, .slick-next:before {
+            font-size: 30px;
+            position: relative;
+            line-height: 1;
+            opacity: .75;
+            color: #686868;
+            top: -2px;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        .slick-disabled {
+            opacity: 0.5;
+            filter: alpha(opacity=50);
+        }
+        
+        #scheduler {
+            width: 820px;    
+        }
+
+        /* Day column */
+        .appt-cal__day {
+            text-align: center;
+        }
+
+        .appt-cal__day .header {
+            font-weight: 600; 
+            margin-bottom: 10px;
+            display: block;
+        }
+        
+        /* time slots */
+        .appt-cal__day-slots {
+            list-style-type: none;
+            padding-left: 0;
+            margin: 0;
+        }
+        
+        .appt-cal__slot {
+            display: inline-block;
+            background-color: #D8EBF7;
+            border: 5px solid #D8EBF7;
+            border-radius: 12px;
+            width: 100%;
+            font-weight: normal;
+            font-size: 12px;
+            margin-bottom: 15px;
+            cursor: pointer;
+        }
+
+        .appt-cal__slot:hover {
+            background-color: #c3e0f3;
+            border-color: #c3e0f3;
+        }
+
+		.appt-cal__slot.slot-not-available {
+            color: #fff;
+            background-color: #E3373B;
+            border-color: #E3373B;
+        }
+
+        .appt-cal__slot.in-territory {
+            color: #fff;
+            background-color: #56a73a;
+            border-color: #56a73a;
+        }
+
+        .appt-cal__slot.in-territory:hover {
+            background-color: #4c9433;
+            border-color: #4c9433;
+        }
+
+        .appt-cal__slot.out-territory {
+            background-color: #ffe666;
+            border-color: #ffe666;
+        }
+
+        .appt-cal__slot.out-territory:hover {
+            background-color: #ffda19;
+            border-color: #ffda19;
+        }
+        
+        .event-selected, .event-selected:hover, .event-selected:focus, .event-selected:active {
+            background-color: #16BCE9 !Important;
+            border-color: #20698A !Important;
+            color: #fff !Important;
+        }
+        
+        /* widget footer */
+        .widget-footer {
+            position: relative;
+            min-height: 1px;
+            margin-right: -45px;    
+            padding-left: 15px;
+            padding-right: 15px;
+            margin-left: auto;
+            clear: both;
+        }
+        
+        /* button styling */
+        
+        .btn {
+            padding: 3px 40px;
+            display: inline-block;
+            margin-bottom: 0;
+            font-size: 16px;
+            font-weight: normal;
+            text-align: center;
+            vertical-align: middle;
+            touch-action: manipulation;
+            cursor: pointer;
+            background-image: none;
+            border: 1px solid transparent;
+            white-space: nowrap;
+            line-height: 1.42857143;
+            border-radius: 4px;
+            user-select: none;
+        }
+        
+        .btn:hover, .btn:focus, .btn.focus {
+            color: #686868;
+            text-decoration: none;
+        }
+        
+        
+        .btn-default {
+            color: #686868;
+            background-color: #e5e1de;
+            border-color: #e5e1de;
+        }
+        
+        .btn-primary {
+            color: #ffffff;
+            background-color: #eb9a4f;
+            border-color: #e88d38;
+        }
+        
+        .btn-primary:hover, .btn-primary:focus, .btn-primary:active {
+            color: white !Important;
+            background-color: #e68021;
+            border-color: #cc6e17;
+        }
+        
+        .btn-primary.disabled, .btn-default.disabled {
+            background-color: #e5e1de;
+            border-color: #e5e1de;
+            color: #686868;
+        }
+        
+        .slick-disabled {
+            cursor: default !Important;
+        }
+        
+        .message__content {
+            font-size: 18px;
+            line-height: 1.4em;
+        }
+        
+        p {
+            margin: 0 0 10px;
+        }
+        
+        .message__content p {
+            margin-bottom: 30px;
+        }
+        
+        #appointment-confirmation-buttons {
+            float: left;
+            text-align: left;
+            position: relative;
+            min-height: 1px;
+            margin-right: -45px;
+            padding-left: 34px;
+            padding-right: 15px;
+            margin-left: auto;
+            clear: none;
+        }
+
+        #appointment-picker-buttons {
+            text-align: right;
+			margin-right: 20px;
+        }
+        
+        .page-help {
+        	float: right;
+        }
+        
+        /* Laptops */
+        @media all and (min-width: 1191px) { 
+            .widget {
+				max-width: 1225px;
+                margin-left: auto;
+                margin-right: auto;
+            }
+            
+            .widget-title {
+                margin-bottom: 30px;
+            }
+
+            #primary-widget-options {
+                margin-bottom: 0;
+            }
+    
+            .widget aside {
+                float: left;
+                clear: left;
+                width: 30%;
+                max-width: 300px;
+            }
+            
+            .form-appt-scheduler {
+                margin-left: auto;
+                margin-right: auto;
+            }
+
+            .widget main {
+                float: right;
+    			padding-left: 0px;
+			    padding-right: 50px;
+            }
+
+            .appt-cal__view--seven-days .appt-cal__day {
+                float: left;
+                width: 116px;
+                position: relative;
+                min-height: 1px;
+                padding-left: 7.5px;
+                padding-right: 7.5px;
+            }
+
+            .appt-cal__slot {
+                margin-bottom: 15px;
+            }
+
+            .widget[active-state-type*="calendar"] .widget-footer {
+                float: left;
+                width: 62.5%;
+            }
+
+            .widget-footer .btn {
+                margin-right: 0;
+                margin-left: 15px;
+            }
+
+			#confirm-appt-scheduled {
+            	width: 825px;
+			}
+
+        }
+        
+        /* Tablet Landscape */
+        @media all and (min-width: 1000px) and (max-width: 1190px) { 
+        	.widget-option-group {
+            	width: 250px;
+            }
+            
+            .widget aside.widget-option-group {
+                padding-left: 25px;
+                padding-right: 0;
+                float: left;
+                clear: left;
+            }
+            
+            .widget main {
+                float: right;
+                width: 720px;
+            }
+            
+            .appt-cal__view--seven-days .appt-cal__day {
+                float: left;
+                width: 100px;
+                position: relative;
+                min-height: 1px;
+                padding-left: 5px;
+                padding-right: 5px;
+            }
+            
+           	.slick-next {
+				left: 715px;            
+            }
+			
+            .appt-cal__day .header {
+            	height: 60px;
+            }
+            
+            #appointment-notes {
+            	display: none;
+        	}
+        }
+        
+        /* Tablet portrait */
+        @media all and (min-width: 700px) and (max-width: 999px) { 
+            .widget main {
+                float: left;
+                width: 720px;
+            }
+            
+            .appt-cal__view--seven-days .appt-cal__day {
+                float: left;
+                width: 100px;
+                position: relative;
+                min-height: 1px;
+                padding-left: 5px;
+                padding-right: 5px;
+            }
+            
+           	.slick-next {
+				left: 715px;            
+            }
+			
+            .appt-cal__day .header {
+            	height: 60px;
+            }
+
+            .widget-option {
+            	float: left;
+                width: 50%;
+            }
+            
+            .widget-option__wrapper {
+            	min-height: 150px;
+            }
+            
+            #appointment-notes, .widget main {
+            	clear: both;
+        	}
+			
+            .widget main {
+            	margin-left: 8%;
+        	}
+
+            #appointment-notes1 {
+				display: none !Important;            
+			}
+            
+            #appointment-notes .widget-option {
+            	width: 100%;
+			}
+
+            #appointment-notes .widget-option .widget-option__wrapper {
+            	height: 200px;
+			}
+
+            #appointment-notes textarea {
+            	height: 70%;
+			}
+
+            #customer-info {
+            	padding-right: 10px;
+			}
+
+            #appointment-type-picker {
+            	padding-left: 10px;
+			}
+            
+            .page-help {
+            	margin-right: 15px;
+            } 
+        }
+
+		/* Tablet Portrait */
+        @media all and (min-width: 481px) and (max-width: 699px) { 
+        	#appointment-notes {
+            	clear: both;
+        	}
+        }
+
+        /* Phones */
+        @media all and (max-width: 480px) { 
+        
+        }        
+</style>
+
+    <script>
+        /**
+         * The UI which is responsible to render the calendar and available slots is implemented as
+         * a Jquery UI Widget plugin, which encapsulates the Slick slider. To understand
+         * how this plugin works, read thorugh completely this tutorial. 
+         * https://learn.jquery.com/jquery-ui/widget-factory/.
+         * 
+         * After that you will be able to understand the below code. Without understanding JQuery widget,
+         * please do not modify this code.
+         */
+        $.widget('sunrun.scheduler', {
+            options: {
+                className: 'scheduler-slot',
+                firstDay: 0,
+                headerFormat: 'dddd[<br/>]MMMM D',
+                scrollPast: false,
+                events: null,
+                eventClick: null,
+                timezoneId: 'America/Los_Angeles' //default timezone.
+            },
+        
+            currentSlide: 0,
+            isoDateFormat: 'MM-DD-YYYY',
+            startDate: moment(),
+            
+            //This creates the necessary dom, that is two slides cotaining 
+            //lists to display the day header and container to hold the events.
+            _create: function () {
+                var widget = this;
+        
+                widget.element.addClass('sunscheduler');
+                
+                var html = this._createWidgetDom();
+                widget.element.append(html);
+        
+                widget._resetSlide(0, this.startDate);
+        
+                widget.element.slick({
+                    arrows: true,
+                    draggable: false,
+                    checkIfCanSlide: function(slick, currentSlide, direction) {
+                        if (direction === 'previous') {
+                            return widget._canSlideBack();
+                        }
+        
+                        return true;
+                    },
+                    draggable: false,
+                    infinite: true,
+                    swipe: false,
+                    touchMove: false,
+                    focusOnSelect: false
+                });
+        
+                widget.element.on('beforeChange', function(event, slick, currentSlide, nextSlide, direction){
+                    if (direction === 'next') {
+                        widget.startDate.add(1, 'weeks');
+                    } else {
+                        widget.startDate.subtract(1, 'weeks');
+                    }
+                    widget._resetSlide(nextSlide, widget.startDate);
+                });
+        
+                widget.element.on('afterChange', function(event, slick, currentSlide) {
+                    widget._refetchEvents();
+                    widget.currentSlide = currentSlide;
+                });
+        
+                widget._refetchEvents();
+            },
+            
+            _canSlideBack: function() {
+                var newDate = moment(this.startDate);
+                newDate.subtract(6, 'days');
+                
+                if (moment().diff(newDate, 'days') > 0) {
+                    return false;
+                }
+                
+                return true;
+            },
+        
+            _refetchEvents: function() {
+                var widget = this;
+
+                $('.slick-prev').toggleClass('slick-disabled', !(widget._canSlideBack()));
+                
+                widget._resetSlide(widget.currentSlide, widget.startDate);
+
+                if (widget.options.events) {
+                    widget.options.events(widget.startDate, moment(widget.startDate).add(1, 'weeks'), null, function(eventsArray){
+                        widget._renderEvents(eventsArray);
+                    });
+                }
+            },
+        
+            _renderEvents: function(events) {
+                var widget = this;
+                var map = this._processEventsForRendering(events);
+        
+                for (var key in map) {
+                    var dayEvents = map[key];
+                    var dayNum = this._diffInDays(dayEvents[0].startMoment, this.startDate);
+                    var dayColumn = this._getDayColumn(dayNum).find('ul');
+                    
+                    for (var i = 0; i < dayEvents.length; i++) {
+                        var event = dayEvents[i];
+                        dayColumn.append('<li id="' + event.id + '" class="appt-cal__slot slot ' + event.className + '">' + event.startMoment.tz(widget.options.timezoneId).format('h:mm A')  + ' - <br/>' + event.endMoment.tz(widget.options.timezoneId).format('h:mm A') + '</li>');
+                        var eventElement = dayColumn.find('#' + event.id);
+                        eventElement.data('source', event);
+                        eventElement.bind('click', function(jqEvent) {
+                            if (widget.options.eventClick) {
+                                widget.options.eventClick(jqEvent, $(jqEvent.target).data('source'));
+                            }
+                        });
+                    }
+                }
+            },
+            
+            _diffInDays: function(date1, date2) {
+                var diffInDays = moment(date1.format(this.isoDateFormat), this.isoDateFormat).diff(
+                    moment(date2.format(this.isoDateFormat), this.isoDateFormat),
+                    'days');
+                return diffInDays;
+            },
+            
+            _processEventsForRendering: function(events) {
+                var map = {};
+                for (var i = 0; i < events.length; i++) {
+                    var event = events[i];
+                    var dayKey = moment(event.start).format('MM-DD-YYYY');
+                    var daySlots = map[dayKey];
+                    if (!daySlots) {
+                        daySlots = [];
+                        map[dayKey] = daySlots;
+                    }
+        
+                    event.startMoment = moment(event.start);
+                    event.endMoment = moment(event.end);
+                    event.id = 'event-' + event.startMoment.valueOf() + '-' + event.endMoment.valueOf();
+                    daySlots.push(event);
+                }
+        
+                //The map 'map' has events grouped by day. Now we need to loop through each map key
+                //and add events to the
+                for (var key in map) {
+                    map[key].sort(function(a, b){
+                        return a.startMoment.valueOf() - b.startMoment.valueOf();
+                    });
+                }
+        
+                return map;
+            },
+        
+            //Returns the day column element in current slide.
+            _getDayColumn:function(dayNum) {
+                return this.element.find('.slide' + this.currentSlide + ' .day' + dayNum);
+            },
+        
+            _createWidgetDom: function () {
+                var html = '';
+                html += this._createSlideDom(0);
+                html += this._createSlideDom(1);
+        
+                return html;
+            },
+        
+            _createSlideDom: function(slideNum) {
+                var html = '<div class="slide slide' + slideNum + '">';
+                for(var i = 0; i < 7; i++) {
+                    html += this._createDayDom(slideNum, i);
+                }
+                html += '</div>';
+        
+                return html;
+            },
+        
+            _createDayDom: function(slideNum, dayNum) {
+                var html = ''
+                    + '<div class="appt-cal__day day' + dayNum + '">'
+                    + '    <span class="header">'
+                    + '        Slide ' + slideNum + ' Day ' + dayNum
+                    + '    </span>'
+                    + '    <ul class="body appt-cal__day-slots">'
+                    + '    </ul>'
+                    + '</div>'
+                ;
+        
+                return html;
+            },
+        
+            _resetSlide: function(slideNum, startDate) {
+        
+                //Render the header with dates
+                var currentDate = moment(startDate);
+                for(var i = 0; i < 7; i++) {
+                    this.element.find('.slide' + slideNum + ' .day' + i + ' .header').html(currentDate.format(this.options.headerFormat));
+                    currentDate.add(1, 'days');
+                }
+        
+                //Remove all old events
+                this.element.find('.slide' + slideNum + ' ul li').remove();
+            },
+            
+            refetchEvents: function() {
+                this._refetchEvents();
+            }
+        });
+    </script>
+    
+    <script>
+        
+        //This script is specific scheduler functionality. This allows us to show
+        //the processing message. This part of script depends on jquery-blockUI plugin.
+        var utils = {
+            ajaxRequests: 0,
+            
+            unblockUI: function() {
+                utils.ajaxRequests -= 1;
+                
+                if (utils.ajaxRequests === 0) {
+                    $.unblockUI();
+                }
+            },
+            
+            blockUI: function () {
+                utils.ajaxRequests += 1;
+                $.blockUI({
+                    css: { 
+                        border: '3px solid #555',
+                        padding: '10px',
+                        backgroundColor: '#fff', 
+                        borderRadius: '10px', 
+                        opacity: 1.0, 
+                        color: '#000',
+                        height: '50px'
+                    },
+                    overlayCSS: {
+                        opacity: 0.0
+                    },
+                    message: "<span class='blockUI processing-message'><img src='/img/loading32.gif'/> Processing the Request. Please wait...</span>"
+                }); 
+            }
+        };
+    </script>
+    
+    <script>
+        var scheduler = {
+            
+            //This variable holds the currently selected slot.
+            selectedEvent: null,
+            
+            //This variable holds the currently selected jquery element.
+            selectedEventElement: null,
+
+            customerPostalCode: '{!contactInfo.account.BillingPostalCode}',
+            
+            customerTimezoneId: '{!contactInfo.timezoneId}',
+            
+            isSlotNeedsToBeColored: function() {
+                return !(scheduler.getAppointmentType() === 'Phone Call Follow up'
+                        || scheduler.getAppointmentType() === 'Phone Call');
+            },
+            
+            fetchEvents: function (start, end, timezone, callback) {
+                scheduler.clearSelection();
+                scheduler.startApiCall();
+                
+                SchedulerController.findAvailableSlots(
+                    '{!sobjectId}',
+                    start.tz(scheduler.customerTimezoneId).format('YYYY-MM-DD'), 
+                    end.tz(scheduler.customerTimezoneId).format('YYYY-MM-DD'), 
+                    scheduler.customerTimezoneId, scheduler.getAppointmentType(), 
+                    scheduler.customerPostalCode, '{!$CurrentPage.parameters.debug}', 
+                    function(result, response) {
+                        if (scheduler.handleError(result, response)) {
+                            return;
+                        }
+                        
+                        var needsToBeColored = scheduler.isSlotNeedsToBeColored();
+                        var calEvents = [];
+                        // Jobs done here:
+                        // 1) In Apex "end" is a reserved word so using "ends"; change back
+                        // 2) The Apex DateTime is serialized as milliseconds; change to Date
+                        // 3) The HTML < and > are replaced by entities; turn back
+                        for (var i = 0; i < result.length; i++) {
+                            var event = {};
+                            //event.start = new Date(result[i].startTime);
+                            //event.end = new Date(result[i].endTime);
+                            event.start = result[i].startTimeString;
+                            event.end = result[i].endTimeString;
+                            event.eventData = result[i];
+                            if (needsToBeColored) {
+                                if (!result[i].primaryRepIds || result[i].primaryRepIds.length == 0) {
+                                    event.className = 'out-territory';
+                                } else {
+                                    event.className = 'in-territory';
+                                }
+                            }
+                            calEvents.push(event);
+                        }
+                        
+                        // Invoke FullCalendar function
+                        callback(calEvents);
+                        utils.unblockUI();
+                });
+            },
+            
+            selectEvent: function(jqEvent, event) {
+                var newlySelectedEventElement = $(jqEvent.target);
+                
+                if ($(newlySelectedEventElement).hasClass('event-selected')) {
+                	scheduler.createAppointment();
+                    return;
+                }
+
+                if ($(newlySelectedEventElement).hasClass('slot-not-available')) {
+                	return;
+                }
+                
+                scheduler.clearSelection();
+                
+                scheduler.selectedEventElement = newlySelectedEventElement;
+                scheduler.selectedEventElement.addClass('event-selected');
+                scheduler.selectedEvent = event;
+
+                //enable the cancel and create appoinment buttons.
+                scheduler.enableCreateAppointmentButtons();
+            },
+            
+            clearSelection: function() {
+                if (scheduler.selectedEventElement) {
+                    scheduler.selectedEventElement.removeClass('event-selected');
+                }
+                scheduler.selectedEventElement = null;
+                scheduler.selectedEvent = null;
+                
+                //disable the cancel and create appoinment buttons.
+                scheduler.disableCreateAppointmentButtons();
+            },
+            
+            disableCreateAppointmentButtons: function() {
+                $('#create-appointment').addClass('disabled').prop("disabled", true);
+            },
+
+            enableCreateAppointmentButtons: function() {
+                $('#create-appointment').removeClass('disabled').prop("disabled", false);
+            },
+            
+            isAppointmentNeedsNotes: function() {
+                return scheduler.getAppointmentType() != 'Phone Call'
+                	&& scheduler.getAppointmentType() != 'Phone Call Follow up'
+            },
+
+            getAppointmentType: function() {
+                return $('input[name=appointmentType]:checked').val();
+            },
+
+            getAppointmentTypeName: function() {
+                return $('input[name=appointmentType]:checked + label').text();
+            },
+			
+            createAppointmentWithConfirmation: function() {
+                BootstrapDialog.show({
+                            title: 'Schedule Appointment?',
+                            message: 'Are you sure you want to schedule this appointment?',
+                            buttons: [{
+                                label: 'No',
+                                action: function(dialog) {
+                                    dialog.close();
+                                }
+                            }, {
+                                label: 'Yes, Schedule',
+                                action: function(dialog) {
+                                    dialog.close();
+                                    scheduler.createAppointment();
+                                },
+                                cssClass: 'btn-primary'
+                            }]
+                        });
+            
+            },
+            
+            createAppointment: function() {
+                //If we are already progressing with create appointment call, just don't
+                //create another one.
+                if (scheduler.createAppointmentInProgress) {
+                    return;
+                }
+                
+                scheduler.createAppointmentInProgress = true;
+                scheduler.startApiCall();
+                scheduler.disableCreateAppointmentButtons();
+                
+				var apptNotes = null;
+                if (scheduler.isAppointmentNeedsNotes()) {
+                    apptNotes = $('#appointment-notes textarea').val();
+               	}
+                
+                SchedulerController.createAppointment('{!sobjectId}', scheduler.getAppointmentType(),
+                    scheduler.selectedEvent.eventData.primaryRepIds, scheduler.selectedEvent.eventData.secondaryRepIds,
+                    scheduler.selectedEvent.eventData.startTimeString, scheduler.selectedEvent.eventData.endTimeString,
+                    apptNotes, '{!$CurrentPage.parameters.debug}',
+                    function(result, response){
+                		scheduler.createAppointmentInProgress = false;
+
+                        if (scheduler.handleError(result, response)) {
+                            if (response.message.indexOf('Selected time slot is unavailable') >= 0) {
+                            	$(scheduler.selectedEventElement).removeClass('in-territory');
+                            	$(scheduler.selectedEventElement).removeClass('out-territory');
+                            	$(scheduler.selectedEventElement).addClass('slot-not-available');
+                            	scheduler.clearSelection();
+                            } else {
+	                            scheduler.enableCreateAppointmentButtons();
+                            }
+
+                            return;
+                        }
+                        
+                        utils.unblockUI();
+                        scheduler.showAppointmentConfirmation();
+                });
+            },
+            
+            showAppointmentConfirmation: function(appointmentId) {
+                $('h1').text('Your appointment is set!');
+                $('#appointment-notes').hide();
+
+                $('#appointment-type-picker').hide();
+                $('#appointment-type-confirmation span.appointment-type').text(this.getAppointmentTypeName());
+                $('#appointment-type-confirmation').show();
+
+                $('#appointment-picker').hide();
+                $('#confirm-appt-scheduled').show();
+
+                $('#appointment-date').text(this.selectedEvent.startMoment.tz(this.customerTimezoneId).format('dddd, MMMM DD'));
+                $('#appointment-from-time').text(this.selectedEvent.startMoment.tz(this.customerTimezoneId).format('h:mm A'));
+                $('#appointment-to-time').text(this.selectedEvent.endMoment.tz(this.customerTimezoneId).format('h:mm A'));
+                
+                $('#appointment-picker-buttons').hide();
+                $('#appointment-confirmation-buttons').show();
+            },
+            
+            handleError: function(result, response) {
+                if (!response.status) {
+	                var message = response.message;
+                    message = message.replace('\n', '<br/>');
+                    noty({
+                        text: message,
+                        layout: 'topRight',
+                        theme: 'relax',
+                        type: 'error'
+                    });
+                    utils.unblockUI();
+                    return true;
+                }
+                
+                return false;
+            },
+            
+            startApiCall: function() {
+                utils.blockUI();
+                $.noty.closeAll();
+            },
+            
+            initApptType: function() {
+                //Initialize the appointment type.
+                var apptCategory = $.url().param('category');
+                if (apptCategory === 'Sales' || apptCategory === 'Service' || apptCategory === 'Site Audit') {
+                    //these are valid categories.
+                } else {
+                    apptCategory = 'Sales';
+                }
+                
+                //Hide all appt type entires not applicable to selected category
+	            $('li.appointment-type-entry').not('[category="' + apptCategory + '"]').hide();
+                
+                //Select the first item in the category
+	            $('li.appointment-type-entry[category="' + apptCategory + '"] input:first').prop('checked',true);
+                
+                //When we show/hide elements, we need to ensure the first shown entry doesn't
+                //have the border. Or else, it will be shown as double border.
+				$('.widget-option__choices li:visible:first label').css('border-top', 'none');
+                this.apptTypeChanged();
+            },
+            
+            apptTypeChanged: function() {
+                $('#appointment-notes').toggle(scheduler.isAppointmentNeedsNotes());
+            },
+            
+            /** 
+             * Closes the current tab
+             */
+            closeTab: function() {
+                console.log(sforce);
+                console.log(sforce.console);
+            	if (sforce.console.isInConsole()) {
+                	sforce.console.getFocusedSubtabId(function(result){
+                    	sforce.console.closeTab(result.id);
+                    });
+               	} else {
+                	window.close();
+                }
+            }
+        };
+    
+        $(document).ready(function(){
+            scheduler.initApptType();            
+        
+            var bar = $("#scheduler").scheduler({
+                events: scheduler.fetchEvents,
+                eventClick: scheduler.selectEvent,
+                timezoneId: '{!contactInfo.timezoneId}'
+            });
+            
+            //We need to bind to Appointment type radio button to refetch the events.
+            $('input[name=appointmentType]').click(function(){
+                scheduler.apptTypeChanged();
+                $("#scheduler").scheduler('refetchEvents');
+            });
+            
+            $('#cancel-selection').click(function(){scheduler.closeTab();});
+            $('#return-to-record').click(function(){scheduler.closeTab();});
+            $('#create-appointment').click(scheduler.createAppointmentWithConfirmation);
+        });
+    
+    </script>
+
+    <div class="widget ">
+        <div class="form form-appt-scheduler">
+            <a href="/apex/HelpRedirector?section=scheduler&target=help" target="_newtab"><span class="page-help">Help for this page <img src="/img/alohaSkin/help_orange.png"/></span></a>
+            <h1 class="widget-title">Schedule your appointment</h1>
+            <aside class="widget-option-group" id="primary-widget-options">
+                <div class="widget-option" id="customer-info">
+                    <div class="widget-option__wrapper">
+                        <h4 class="widget-option__title">Your Contact Info</h4>
+                        <ul class="ul-plain">
+                            <li>{!contactInfo.contact.firstName} {!contactInfo.contact.LastName}</li>
+                            <li>{!contactInfo.account.BillingStreet}</li>
+                            <li>{!contactInfo.account.BillingCity}, {!contactInfo.account.BillingState} {!contactInfo.account.BillingPostalCode}</li>
+                            <li>{!contactInfo.contact.phone}</li>
+                            <li>{!contactInfo.contact.email}</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="widget-option" id="appointment-type-picker">
+                    <div class="widget-option__wrapper">
+                        <h4 class="widget-option__title">Appointment Type</h4>
+                        <ul class="widget-option__choices" id="appt-type-choices">
+                            <li class="appointment-type-entry" category="Sales"><input type="radio" class="widget-option__input" id="appt-type__home-visit" name="appointmentType" value="Home Visit"/> <label for="appt-type__home-visit">Home Visit</label></li>
+                            <li class="appointment-type-entry" category="Sales"><input type="radio" class="widget-option__input" id="appt-type__home-visit-followup" name="appointmentType" value="Home Visit Follow up"/> <label for="appt-type__home-visit-followup">Home Visit Follow up</label></li>
+                            <li class="appointment-type-entry" category="Sales"><input type="radio" class="widget-option__input" id="appt-type__phone-call" name="appointmentType" value="Phone Call"/> <label for="appt-type__phone-call">Phone Call</label></li>
+                            <li class="appointment-type-entry" category="Sales"><input type="radio" class="widget-option__input" id="appt-type__phone-call-followup" name="appointmentType" value="Phone Call Follow up"/> <label for="appt-type__phone-call-followup">Phone Call Follow up</label></li>
+                            <li class="appointment-type-entry" category="Site Audit"><input type="radio" class="widget-option__input" id="appt-type__site-audit" name="appointmentType" value="Site Audit"/> <label for="appt-type__site-audit">Site Audit</label></li>
+                            <li class="appointment-type-entry" category="Site Audit"><input type="radio" class="widget-option__input" id="appt-type__site-audit-revisit" name="appointmentType" value="Site Audit Revisit"/> <label for="appt-type__site-audit-revisit">Site Audit Revisit</label></li>
+                            <li class="appointment-type-entry" category="Service"><input type="radio" class="widget-option__input" id="appt-type__service-standard-field-service" name="appointmentType" value="Standard Field Service"/> <label for="appt-type__service-standard-field-service">Standard Field Service</label></li>
+                            <li class="appointment-type-entry" category="Service"><input type="radio" class="widget-option__input" id="appt-type__service-1hr-field-service" name="appointmentType" value="1hr Field Service visit"/> <label for="appt-type__service-1hr-field-service">1hr Field Service visit</label></li>
+                            <li class="appointment-type-entry" category="Service"><input type="radio" class="widget-option__input" id="appt-type__service-2hr-field-service" name="appointmentType" value="2hr Field Service visit"/> <label for="appt-type__service-2hr-field-service">2hr Field Service visit</label></li>
+                            <li class="appointment-type-entry" category="Service"><input type="radio" class="widget-option__input" id="appt-type__service-4hr-field-service" name="appointmentType" value="4hr Field Service visit"/> <label for="appt-type__service-4hr-field-service">4hr Field Service visit</label></li>
+                            <li class="appointment-type-entry" category="Service"><input type="radio" class="widget-option__input" id="appt-type__service-8hr-field-service" name="appointmentType" value="8hr Field Service visit"/> <label for="appt-type__service-8hr-field-service">8hr Field Service visit</label></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="widget-option" id="appointment-type-confirmation" style="display: none">
+                    <div class="widget-option__wrapper">
+                        <h4 class="widget-option__title">Appointment Type</h4>
+                        <span class="appointment-type">Appointment Type</span>
+                    </div>
+                </div>
+            </aside>
+            
+            <main>
+                <section class="state state--calendar state--active" state-type="calendar" id="appointment-picker">
+                    <p>Please select the best time for you to meet with us. Times are shown in {!contactInfo.timezoneName} Timezone.</p>
+                    <div class="appt-cal" id="available-times">
+                        <div id="scheduler" class="appt-cal__view--seven-days"></div>
+                    </div>
+                </section>
+                
+                <section class="state state--message state--active message__content" state-type="message" id="confirm-appt-scheduled" style="display: none;">
+                    <div class="message__content">
+                        <p>Thank you for setting an appointment with us.</p>
+                        <p>We are looking forward to meeting you at your home on <span id="appointment-date">Thursday, October 8</span>, from <span id="appointment-from-time">1:00 PM</span> - <span id="appointment-to-time">3:00 PM</span>.</p>
+                    </div>
+                </section>
+                
+            </main>
+            
+            <aside class="widget-option-group" id="appointment-notes">
+                <div class="widget-option" for-appt-type="home-visit" for-state="appointment-picker" id="opt-home-visit__notes">
+                    <div class="widget-option__wrapper">
+                        <h4 class="widget-option__title">Is there anything we should know about our visit?</h4>
+                        <p>(Gate codes, attic access, dogs, etc.)</p>
+                        <textarea name="home-visit__notes" placeholder="Notes"></textarea>
+                    </div>
+                </div>
+            </aside>
+
+            <div class="widget-footer"  id="appointment-picker-buttons">
+				<div for-state="appointment-picker">
+                    <a href="javascript:void(0);" class="btn btn-default btn--switch-state" id="cancel-selection">cancel</a> 
+                    <a href="javascript:void(0);" class="btn btn-primary btn--switch-state disabled" id="create-appointment">schedule appointment</a>
+             	</div>
+            </div>
+
+            <div class="widget-footer"  id="appointment-confirmation-buttons" style="display: none">
+				<div for-state="appointment-picker">
+                    <a href="javascript:void(0);" class="btn btn-primary btn--switch-state" id="return-to-record">return to {!returnToRecordLabel}</a>
+             	</div>
+            </div>          
+        </div>
+    </div>
+
+    <div id="dialog-confirm-model" class="modal fade" data-backdrop="static" style="dispaly: none">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Schedule this appointment?</h4>
+                </div>
+                <div class="modal-body">
+                    <p>Are you sure you want to schedule this appointment?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">Yes, Schedule</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</apex:component>

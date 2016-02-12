@@ -1,0 +1,595 @@
+<apex:page standardController="Lead" extensions="LeadPageExtension" 
+    action="{!onload}" title="Lead: {!Lead.firstName} {!Lead.lastname}">    
+    <apex:includeScript value="/soap/ajax/15.0/connection.js"/>
+    <apex:includeScript value="/soap/ajax/15.0/apex.js"/>
+    <link
+        href='https://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/themes/smoothness/jquery-ui.css'
+        rel='stylesheet' type='text/css' />
+        <style type="text/css">
+        .buttonClass {
+            background-image: none;
+            color: white !important;
+            background: orange !important;
+        }
+        
+        body .bPageBlock .pbBody .red .pbSubheader {
+              background-color: White !important; //
+              display: inline;
+              font-family: Arial, Helvetica, sans-serif;
+              font-weight: 500;
+              line-height: 1.1;
+              color: #27282E !important;
+              margin-top: 20px;
+              margin-bottom: 10px;
+              font-size: 1.0em;
+              box-sizing: border-box;
+        }
+        
+        
+        
+        body .bPageBlock,body #bodyCell .bResource .secondaryPalette,body .secondaryPalette.bPageBlock,body .individualPalette .secondaryPalette.bPageBlock,body .bodyDiv .genericTable,body .genericPageBlockTable,body .bodyDiv .bSubBlock,body .bComponentBlock .bPageBlock,body .bMyDashboard .bPageBlock,body.rlHoverFrame .bPageBlock,body.subjectSelectionPopup div.choicesBox,body.lookupTab .secondaryPalette.bPageBlock,body.popupTab .secondaryPalette.bPageBlock,body.UserTagStatsPage .secondaryPalette.bPageBlock
+            {
+            background-color: White !important;
+        }
+        .redrequired {
+        background-color: #CC0000 !important;
+        height:10px;       
+        position: absolute;    
+        width: 2px;
+        left:-14px;
+        top:-13px;
+        }  
+        .bluerequired {
+        background-color: #3300FF !important;
+        bottom: 1px;
+        height:16px;
+        left: -4px;
+        position: absolute;      
+        top: -18px;
+        width: 3px;
+        }
+        .bluerequirededit {
+        background-color: #3300FF !important;
+        height:10px;       
+        position: absolute;    
+        width: 2px;
+        left:-14px;
+        top:-13px;
+        }          
+    </style>
+    <apex:outputpanel rendered="{!NOT(editMode)}">
+        <div>
+            <div
+                style="background-color: white !important; font-size: 18px; height: 40px; float: left; color: #585858 !important;padding-top:5px;padding-left:5px;">
+                {!title}                
+            </div>
+            <apex:outputpanel rendered="{!Showscore}">
+                <div
+                    style="float: right; background-color: #white !important; height: 30px;">
+                    <apex:outputPanel style="color:#4000FF; font-weight:bold;font-size:15px">
+            Score: {!LeadObj.Score__c}/10             
+            </apex:outputPanel>
+                    &nbsp;
+                    <apex:image url="{!$Resource.ProgressBar}" width="{!score}px;"
+                        height="15px;" />
+                    <apex:image url="{!$Resource.ProgressBarBorder}"
+                        width="{!scoreBorder}px;" height="15px;" />
+                </div>
+            </apex:outputpanel>
+        </div>
+    </apex:outputpanel>
+    <apex:sectionHeader id="titleId" title="{!title}" rendered="{!editMode}">        
+    </apex:sectionHeader>  
+     <!--<apex:outputpanel id="errbreak">
+         <apex:outputPanel rendered="{!AND(showerror,NOT(editMode))}">
+              <br/><br/><br/>
+         </apex:outputPanel>
+         <apex:pageMessages id="errMessage">                 
+         </apex:pageMessages> 
+    </apex:outputpanel>
+    --> 
+    <apex:outputPanel rendered="{!NOT(editMode)}">
+    <br/><br/><br/>
+    </apex:outputPanel>
+    <chatter:feedWithFollowers entityid="{!leadObj.id}" rendered="{!NOT(editMode)}"/> 
+    <apex:pageMessages id="errMessage">                 
+    </apex:pageMessages>               
+    <apex:form id="formId">               
+        <apex:pageBlock mode="maindetail" rendered="{!editMode}" id="editPb">
+            <apex:pageBlockSection title="Customer Information">
+                <apex:repeat value="{!$ObjectType.Lead.FieldSets.Contact_Information}"
+                    var="field">
+                    <apex:inputField value="{!LeadObj[field]}"
+                        onkeydown="javascript:backspacerDOWN(this,event,{!(field=='Phone'||field=='MobilePhone')});"
+                        onkeyup="javascript:backspacerUP(this,event,{!(field=='Phone'||field=='MobilePhone')});"
+                        required="{!OR(field.required,field.dbrequired)}">
+                        <apex:outputPanel layout="block" styleClass="requiredInput">
+                        <apex:outputPanel layout="block" styleClass="bluerequired" rendered="{!OR(field.label=='Phone', field.label=='Email')}"/>
+                        </apex:outputPanel>
+                    </apex:inputField>    
+                </apex:repeat>
+            </apex:pageBlockSection>
+            <apex:pageBlockSection title="Lead Origination">
+                <apex:repeat value="{!$ObjectType.Lead.FieldSets.Lead_Generation}"
+                    var="field">
+                    <apex:inputField value="{!LeadObj[field]}"
+                        required="{!OR(field.required,field.dbrequired)}" />
+                    <apex:outputpanel rendered="{!field=='Lead_Qualifier__c'}"/> 
+                </apex:repeat>
+            </apex:pageBlockSection> 
+            <apex:outputpanel id="address1">
+            <apex:pageblocksection title="Site Information"
+                columns="1">                    
+                <apex:pageBlockSectionItem >    
+                    <apex:outputlabel ></apex:outputlabel>              
+                    <c:gmapsLeadAddress id="gmapsAddress" street="{!leadObj.Street}" city="{!leadObj.city}" state="{!leadObj.State}" postalCode="{!leadObj.postalCode}" country="{!leadObj.country}" latitude="{!leadObj.Latitude__c}" longitude="{!leadObj.Longitude__c}" status="{!leadObj.Address_Standardization_Status__c}" edit="true" objectName="Lead"></c:gmapsLeadAddress>                  
+                </apex:pageBlockSectionItem>                
+            </apex:pageblocksection>
+            </apex:outputpanel>  
+            <apex:pageBlockSection title="" collapsible="false" showheader="false">
+                <apex:repeat value="{!$ObjectType.Lead.FieldSets.Site}" var="field">
+                    <apex:inputField value="{!LeadObj[field]}"
+                        required="{!field.required}" rendered="{!OR(AND(ISNULL(leadid),NOT(OR(field=='Utility_Company__c',field=='Rate_Schedule__c', field=='Territory__c',field=='Usage_Option__c'))),NOT(ISNULL(leadid)))}"/>                       
+                </apex:repeat>
+            </apex:pageBlockSection>  
+             <apex:outputpanel id="leadstOp">
+            <apex:pageBlockSection title="Dialer">
+                <apex:repeat value="{!$ObjectType.Lead.FieldSets.Lead_Status}"
+                    var="field">
+                    <apex:inputField value="{!LeadObj[field]}"                        
+                        required="{!OR(field.required,field.dbrequired)}">                        
+                    </apex:inputField>    
+                </apex:repeat>
+            </apex:pageBlockSection>      
+            </apex:outputpanel>   
+             <apex:outputpanel id="promoOp">                                           
+            <apex:pageBlockSection title="Promotion">
+                <apex:repeat value="{!$ObjectType.Lead.FieldSets.Promotion_Referral}"
+                    var="field">
+                    <apex:inputField value="{!LeadObj[field]}"
+                        required="{!OR(field.required,field.dbrequired)}" rendered="{!NOT(OR(field.label=='Referral', field.label=='Offer'))}"/>
+                </apex:repeat>
+            </apex:pageBlockSection>  
+            </apex:outputpanel>                     
+            <apex:outputpanel id="hiddenFields" rendered="true">
+                <apex:inputfield value="{!LeadObj.State__c}" style="display:none"
+                    styleClass="page-address-state" />
+                <apex:inputfield value="{!LeadObj.street}" style="display:none" styleClass="address-line1"/>
+                <apex:inputfield value="{!LeadObj.city}" style="display:none" styleClass="address-city"/>
+                <apex:inputfield value="{!LeadObj.state}" style="display:none" styleClass="address-state"/>
+                <apex:inputfield value="{!LeadObj.postalcode}" style="display:none" styleClass="address-zip"/>
+                <apex:inputfield value="{!LeadObj.Latitude__c}" styleClass="address-lat" style="display:none"/>
+                <apex:inputfield value="{!LeadObj.Longitude__c}" styleClass="address-lng" style="display:none"/>
+                <apex:inputfield value="{!LeadObj.Address_Standardization_Status__c}" styleClass="address-status" style="display:none"/>
+            </apex:outputpanel>
+            <apex:pageblockbuttons location="top">
+                <!--<apex:commandbutton value="Save" action="{!save}" />-->   
+                <apex:actionStatus id="myStatus">
+                     <apex:facet name="stop">
+                         <apex:commandButton id="svButton" rerender="errMessage" value="Save" action="{!save}" status="myStatus"/>
+                     </apex:facet>
+                     <apex:facet name="start">
+                        <apex:outputtext value="Saving ..." />
+                            <apex:outputPanel >
+                               <apex:image value="/img/loading32.gif" style="height: 15px;"/>
+                               <apex:commandButton value="Saving..." status="myStatus" disabled="true"/>
+                            </apex:outputPanel>
+                       </apex:facet>
+                </apex:actionStatus>               
+                <apex:commandbutton value="Cancel" action="{!cancel}" />
+                <!--<apex:commandbutton value="Convert" action="{!SaveConvert}" />-->
+            </apex:pageblockbuttons>
+            <script>           
+             twistSection(document.getElementById('{!$Component.editPb.promoOp}').getElementsByTagName('img')[0]);
+             twistSection(document.getElementById('{!$Component.editPb.leadstOp}').getElementsByTagName('img')[0]);             
+            </script>           
+        </apex:pageBlock>         
+        <apex:pageBlock id="detailPb" mode="inlineEdit"
+            rendered="{!NOT(editMode)}">
+            <apex:outputPanel styleClass="red" id="customerOp">
+                <apex:pageBlockSection title="Customer Information">
+                    <apex:repeat value="{!$ObjectType.Lead.FieldSets.Contact_Information}"
+                        var="field">                                                
+                        <apex:outputField value="{!LeadObj[field]}">
+                            <apex:inlineEditSupport event="ondblclick" />
+                            <apex:outputPanel layout="block" styleClass="requiredInput">
+                                <apex:outputPanel layout="block" styleClass="redrequired" rendered="{!OR(field.required, field.dbrequired)}"/>
+                                <apex:outputPanel layout="block" styleClass="bluerequirededit" rendered="{!OR(field.label=='Phone', field.label=='Email')}"/> 
+                            </apex:outputPanel>                              
+                        </apex:outputField>                                                         
+                    </apex:repeat>
+                </apex:pageBlockSection>
+            </apex:outputPanel> 
+            <apex:outputPanel id="detailLGop" styleClass="red">
+                <apex:pageBlockSection title="Lead Origination">
+                    <apex:repeat value="{!$ObjectType.Lead.FieldSets.Lead_Generation}"
+                        var="field">
+                        <apex:outputField value="{!LeadObj[field]}">
+                            <apex:inlineEditSupport event="ondblclick" />
+                        </apex:outputField>
+                        <apex:outputpanel rendered="{!field=='Lead_Qualifier__c'}"/> 
+                    </apex:repeat>
+                </apex:pageBlockSection>
+            </apex:outputPanel> 
+            <apex:outputPanel id="addressOp" styleClass="red">
+                <apex:pageblocksection id="addressPbs" title="Site Information"
+                    collapsible="true" columns="1">
+                    <apex:pageblocksectionitem >    
+                    <apex:panelGrid columns="1" style="width:100%">
+                        <apex:panelGroup style="float:right;">                      
+                            <apex:outputlabel style="font-weight:bold;float:right;color:#424242"
+                                value="Street" />
+                            <br />
+                            <br />
+                            <apex:outputlabel style="font-weight:bold;float:right;color:#424242" value="City" />
+                            <br />
+                            <br />
+                            <apex:outputlabel style="font-weight:bold;float:right;color:#424242" value="State" />
+                            <br />
+                            <br />
+                            <apex:outputlabel style="font-weight:bold;float:right;color:#424242"
+                                value="Postal Code" />
+                        </apex:panelGroup>                      
+                    </apex:panelGrid>                       
+                    <apex:panelGrid columns="3">    
+                                    
+                        <apex:panelGroup style="line-height:114%">
+                            <apex:outputField value="{!LeadObj.street}">    
+                                <apex:inlineEditSupport disabled="true"/>                       
+                            </apex:outputField>
+                            <br/>
+                            <br/>
+                            <apex:outputField value="{!LeadObj.city}"
+                                style="text-align:right">
+                                <apex:inlineEditSupport disabled="true" />
+                            </apex:outputField>
+                            <br/>
+                            <br/>
+                            <apex:outputField value="{!LeadObj.State__c}">
+                                <apex:inlineEditSupport disabled="true" />
+                            </apex:outputField>
+                            <br/>
+                            <br/>
+                            <apex:outputField value="{!LeadObj.postalcode}">
+                                <apex:inlineEditSupport disabled="true"/>
+                            </apex:outputField>
+                        </apex:panelGroup>
+                        <apex:panelgroup >
+                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;                    
+                        </apex:panelgroup>
+                        <apex:panelgroup >  
+                            <span  style="display:none;">
+                            <apex:outputfield value="{!leadObj.State__c}">
+                                </apex:outputfield>
+                            </span>                                                                                                                         
+                         <!--<apex:include pageName="LeadGoogleMap" />-->
+                        </apex:panelgroup>                  
+                    </apex:panelGrid>
+                 </apex:pageblocksectionitem>               
+                </apex:pageblocksection>                                                  
+            </apex:outputPanel> 
+            <apex:outputPanel styleClass="red">
+                <apex:pageBlockSection title="" collapsible="false">
+                    <apex:repeat value="{!$ObjectType.Lead.FieldSets.Site}" var="field">
+                        <apex:outputField value="{!LeadObj[field]}">
+                            <apex:inlineEditSupport event="ondblclick"/>
+                                <apex:outputPanel layout="block" styleClass="requiredInput">
+                                <apex:outputPanel layout="block" styleClass="redrequired" rendered="{!OR(field.required, field.dbrequired,field.label=='Usage Option')}"/>                                                              
+                            </apex:outputPanel>     
+                        </apex:outputField>
+                    </apex:repeat>
+                </apex:pageBlockSection>
+            </apex:outputPanel>      
+             <apex:outputPanel styleClass="red" id="leadStatusOp">
+                <apex:pageBlockSection title="Dialer">
+                    <apex:repeat value="{!$ObjectType.Lead.FieldSets.Lead_Status}"
+                        var="field">                                                
+                        <apex:outputField value="{!LeadObj[field]}">
+                            <apex:inlineEditSupport event="ondblclick"/>                                                        
+                        </apex:outputField>                                                         
+                    </apex:repeat>
+                </apex:pageBlockSection>
+            </apex:outputPanel>                                               
+            <apex:outputPanel id="detailRefop" styleClass="red">
+                <apex:pageBlockSection id="referralpb" title="Promotion"
+                    collapsible="true">
+                    <apex:repeat value="{!$ObjectType.Lead.FieldSets.Promotion_Referral}"
+                        var="field">
+                        <apex:outputField value="{!LeadObj[field]}">
+                            <apex:inlineEditSupport event="ondblclick"/>
+                        </apex:outputField>
+                    </apex:repeat>
+                </apex:pageBlockSection>
+            </apex:outputPanel> 
+         <apex:outputPanel styleClass="red" id="leadHistOp">        
+         <apex:pageBlockSection Title="Lead History" columns="1" rendered="{!NOT(editMode)}">
+            <apex:pageBlockTable value="{!LeadHistoryList}" var="lh">                       
+                <apex:column headervalue="Date">
+                    <apex:outputField value="{!lh.Createddate}">
+                        <apex:inlineEditSupport disabled="true"/>
+                    </apex:outputField>
+                </apex:column>
+                <apex:column headervalue="User">
+                    <apex:outputField value="{!lh.Createdby.name}">
+                        <apex:inlineEditSupport disabled="true"/>
+                    </apex:outputField>
+                </apex:column>   
+                <apex:column headervalue="Field">
+                    <apex:outputField value="{!lh.field}">
+                        <apex:inlineEditSupport disabled="true"/>
+                    </apex:outputField>
+                </apex:column>            
+                <apex:column headervalue="Old Value">
+                    <apex:outputField value="{!lh.oldvalue}">
+                        <apex:inlineEditSupport disabled="true"/>
+                    </apex:outputField>
+                </apex:column>
+                <apex:column headervalue="New Value">
+                    <apex:outputField value="{!lh.newvalue}">
+                        <apex:inlineEditSupport disabled="true"/>
+                    </apex:outputField>
+                </apex:column>                           
+            </apex:pageBlockTable>
+         </apex:pageBlockSection>                        
+        </apex:outputPanel>                       
+            <apex:pageblockbuttons location="top" id="pbButtons">
+                <apex:commandbutton id="saveButton" value="Save" action="{!save}"/>
+                <apex:commandbutton id="cancelButton" value="Cancel" action="{!cancel}"/>
+                <apex:commandbutton id="editButton" value="Edit" action="{!editLead}" />               
+                <apex:actionStatus id="myStatus">
+                     <apex:facet name="stop">
+                         <apex:commandButton id="convertButton" rerender="errMessage" value="Convert" disabled="{!NOT(ShowConvertLead)}" action="{!doConvert}" status="myStatus"/>
+                     </apex:facet>
+                     <apex:facet name="start">
+                        <apex:outputtext value="In progress ..." />
+                            <apex:outputPanel >
+                               <apex:image value="/img/loading32.gif" style="height: 15px;"/>
+                               <apex:commandButton value="Converting..." status="myStatus" disabled="true"/>
+                            </apex:outputPanel>
+                       </apex:facet>
+                </apex:actionStatus>
+                <!--<apex:outputpanel rendered="{!ShowConvertLead}">
+                    <apex:inputField value="{!leadObj.Warm_Transfer__c}" />
+                    <apex:outputLabel value="Warm Transfer" />
+                </apex:outputpanel>-->
+                <apex:commandbutton id="shareButton" value="Share" action="{!shareLead}"/>
+                <apex:commandbutton id="cloneButton" value="Clone" action="{!doClone}"
+                    disabled="{!if(ISBLANK(leadId),true,false)}" />
+                <apex:commandbutton id="dupeButton" value="Find Duplicates"
+                    action="{!findDuplicates}" />
+                <apex:commandButton id="findNearbyCustomers" value="Find Nearby Customers" onclick="window.open('/apex/NearbyCustomersViewer?id={!Lead.Id}', '_blank', 'menubar=no,height=600,width=1000');return false;"/>
+                <apex:commandButton id="sendtocostco" onclick="sendToCostco();" value="Send To Costco"/>
+                <!-- <apex:commandbutton value="Delete" action="{!delete}" />-->
+            </apex:pageblockbuttons>
+            <script>
+            var x=document.getElementById('{!$Component.detailPb.detailRefop}').getElementsByTagName('img')[0];
+            var y=document.getElementById('{!$Component.detailPb.detailLGop}').getElementsByTagName('img')[0];
+            var a=document.getElementById('{!$Component.detailPb.addressOp}').getElementsByTagName('img')[0];
+            var b=document.getElementById('{!$Component.detailPb.customerOp}').getElementsByTagName('img')[0];
+            var c=document.getElementById('{!$Component.detailPb.leadStatusOp}').getElementsByTagName('img')[0];
+            var d=document.getElementById('{!$Component.detailPb.leadHistOp}').getElementsByTagName('img')[0];
+            twistSection(document.getElementById('{!$Component.detailPb.leadStatusOp}').getElementsByTagName('img')[0]); 
+            twistSection(document.getElementById('{!$Component.detailPb.detailRefop}').getElementsByTagName('img')[0]); 
+            twistSection(document.getElementById('{!$Component.detailPb.leadHistOp}').getElementsByTagName('img')[0]);          
+            //twistSection(document.getElementById('{!$Component.detailPb.detailLGop}').getElementsByTagName('img')[0]);
+            x.getAttributeNode("style").value="background-color:grey !important";   
+            y.getAttributeNode("style").value="background-color:grey !important";
+            a.getAttributeNode("style").value="background-color:grey !important";  
+            b.getAttributeNode("style").value="background-color:grey !important";
+            c.getAttributeNode("style").value="background-color:grey !important";   
+            d.getAttributeNode("style").value="background-color:grey !important";           
+            </script>
+        </apex:pageBlock>        
+    </apex:form>    
+        <apex:relatedList list="ActivityHistories" rendered="{!NOT(editMode)}"/>   
+        <apex:relatedList list="Related_Leads__r" rendered="{!NOT(editMode)}"/>                               
+        <!--<apex:relatedList list="OpenActivities" rendered="{!NOT(editMode)}"/>-->
+    <script type="text/javascript">
+        <!-- This script is based on the javascript code of Roman Feldblum (web.developer@programmer.net) -->
+        <!-- Original script : http://javascript.internet.com/forms/format-phone-number.html -->
+        <!-- Original script is revised by Eralper Yilmaz (http://www.eralper.com) -->
+        <!-- Revised script : http://www.kodyaz.com -->
+        <!-- Format : "(123) 456-7890" -->
+        var enableButton;
+        var zChar = new Array(' ', '(', ')', '-', '.');
+        var maxphonelength = 14;
+        var phonevalue1;
+        var phonevalue2;
+        var cursorposition;
+        
+        function ParseForNumber1(object){
+          phonevalue1 = ParseChar(object.value, zChar);
+        }
+        
+        function ParseForNumber2(object){
+          phonevalue2 = ParseChar(object.value, zChar);
+        }
+        
+        function backspacerUP(object,e,isPhone) {   
+        //var x=document.getElementById(object);
+        if(isPhone==false)
+        return;
+          if(e){ 
+            e = e 
+          } else {
+            e = window.event 
+          } 
+          if(e.which){ 
+            var keycode = e.which 
+          } else {
+            var keycode = e.keyCode 
+          }
+        
+          ParseForNumber1(object)
+        
+          if(keycode >= 48){
+            ValidatePhone(object)
+          }
+        }
+        
+        function backspacerDOWN(object,e,isPhone) { 
+        if(isPhone==false)
+        return;
+          if(e){ 
+            e = e 
+          } else {
+            e = window.event 
+          } 
+          if(e.which){ 
+            var keycode = e.which 
+          } else {
+            var keycode = e.keyCode 
+          }
+          ParseForNumber2(object)
+        } 
+        
+        function GetCursorPosition(){
+        
+          var t1 = phonevalue1;
+          var t2 = phonevalue2;
+          var bool = false
+          for (i=0; i<t1.length; i++)
+          {
+            if (t1.substring(i,1) != t2.substring(i,1)) {
+              if(!bool) {
+                cursorposition=i
+                window.status=cursorposition
+                bool=true
+              }
+            }
+          }
+        }
+        
+        function ValidatePhone(object){
+        
+          var p = phonevalue1
+        
+          p = p.replace(/[^\d]*/gi,"")
+        
+          if (p.length < 3) {
+            object.value=p
+          } else if(p.length==3){
+            pp=p;
+            d4=p.indexOf('(')
+            d5=p.indexOf(')')
+            if(d4==-1){
+              pp="("+pp;
+            }
+            if(d5==-1){
+              pp=pp+")";
+            }
+            object.value = pp;
+          } else if(p.length>3 && p.length < 7){
+            p ="(" + p; 
+            l30=p.length;
+            p30=p.substring(0,4);
+            p30=p30+") " 
+        
+            p31=p.substring(4,l30);
+            pp=p30+p31;
+        
+            object.value = pp; 
+        
+          } else if(p.length >= 7){
+            p ="(" + p; 
+            l30=p.length;
+            p30=p.substring(0,4);
+            p30=p30+") " 
+        
+            p31=p.substring(4,l30);
+            pp=p30+p31;
+        
+            l40 = pp.length;
+            p40 = pp.substring(0,9);
+            p40 = p40 + "-"
+        
+            p41 = pp.substring(9,l40);
+            ppp = p40 + p41;
+        
+            object.value = ppp.substring(0, maxphonelength);
+          }
+        
+          GetCursorPosition()
+        
+          if(cursorposition >= 0){
+            if (cursorposition == 0) {
+              cursorposition = 2
+            } else if (cursorposition <= 2) {
+              cursorposition = cursorposition + 1
+            } else if (cursorposition <= 4) {
+              cursorposition = cursorposition + 3
+            } else if (cursorposition == 5) {
+              cursorposition = cursorposition + 3
+            } else if (cursorposition == 6) { 
+              cursorposition = cursorposition + 3 
+            } else if (cursorposition == 7) { 
+              cursorposition = cursorposition + 4 
+            } else if (cursorposition == 8) { 
+              cursorposition = cursorposition + 4
+              e1=object.value.indexOf(')')
+              e2=object.value.indexOf('-')
+              if (e1>-1 && e2>-1){
+                if (e2-e1 == 4) {
+                  cursorposition = cursorposition - 1
+                }
+              }
+            } else if (cursorposition == 9) {
+              cursorposition = cursorposition + 4
+            } else if (cursorposition < 11) {
+              cursorposition = cursorposition + 3
+            } else if (cursorposition == 11) {
+              cursorposition = cursorposition + 1
+            } else if (cursorposition == 12) {
+              cursorposition = cursorposition + 1
+            } else if (cursorposition >= 13) {
+              cursorposition = cursorposition
+            }
+        
+            var txtRange = object.createTextRange();
+            txtRange.moveStart( "character", cursorposition);
+            txtRange.moveEnd( "character", cursorposition - object.value.length);
+            txtRange.select();
+          }
+        
+        }
+        
+        function ParseChar(sStr, sChar)
+        {
+        
+          if (sChar.length == null) 
+          {
+            zChar = new Array(sChar);
+          }
+            else zChar = sChar;
+        
+          for (i=0; i<zChar.length; i++)
+          {
+            sNewStr = "";
+        
+            var iStart = 0;
+            var iEnd = sStr.indexOf(sChar[i]);
+        
+            while (iEnd != -1)
+            {
+              sNewStr += sStr.substring(iStart, iEnd);
+              iStart = iEnd + 1;
+              iEnd = sStr.indexOf(sChar[i], iStart);
+            }
+            sNewStr += sStr.substring(sStr.lastIndexOf(sChar[i]) + 1, sStr.length);
+        
+            sStr = sNewStr;
+          }
+        
+          return sNewStr;
+        }   
+        function sendToCostco(){  
+            sforce.connection.sessionId = "{!$Api.Session_ID}"         
+            var call=sforce.apex.execute("SendLeadToCosctoButton","sendLead",{leadId:"{!LeadObj.Id}"});
+            if(call!='Success')
+            {
+                alert(call);               
+            }
+            parent.location.href="/{!LeadObj.Id}";
+        }                 
+    </script>
+</apex:page>

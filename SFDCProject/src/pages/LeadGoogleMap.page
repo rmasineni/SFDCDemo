@@ -1,0 +1,116 @@
+<apex:page standardController="Lead">
+<!-- <apex:pageBlock > -->
+<head>
+ 
+<script type="text/javascript" src="https://maps.google.com/maps/api/js?sensor=false"></script>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script> 
+<script type="text/javascript"> 
+ 
+$(document).ready(function() {
+  
+  var myOptions = {
+    zoom: 20,
+    panControl:true,
+    scaleControl: true,
+    zoomControl: true,
+    mapTypeControl: true,
+    streetViewControl: true,
+    draggable: true,
+    mapTypeId: google.maps.MapTypeId.HYBRID,
+    mapTypeControl: true
+  }
+  
+  var map;
+  var marker;
+  
+  var geocoder = new google.maps.Geocoder();  
+  var latitude="{!Lead.Latitude__c}";
+  var longitude="{!Lead.Longitude__c}";
+   var address;
+  if((latitude==''||longitude=='')||(latitude=='0.000000000000000'&&longitude=='0.000000000000000')){
+     address = "{!Lead.street}, "+"{!Lead.city}, "+"{!Lead.postalcode}";
+  }
+  else{
+    address = "{!Lead.Latitude__c}, "+"{!Lead.Longitude__c}";
+  }
+  var infowindow = new google.maps.InfoWindow({
+    content: "<b>{!Lead.Name}</b>"
+  });
+ 
+  geocoder.geocode( { address: address}, function(results, status) {
+    if (status == google.maps.GeocoderStatus.OK && results.length) {
+      if (status != google.maps.GeocoderStatus.ZERO_RESULTS) {
+      
+        //create map
+        map = new google.maps.Map(document.getElementById("map"), myOptions);
+      
+        //center map
+        map.setCenter(results[0].geometry.location);
+        
+        //create marker
+        marker = new google.maps.Marker({
+            position: results[0].geometry.location,
+            map: map,
+            title: "{!Lead.Name}"
+        });
+        
+        //add listeners
+        google.maps.event.addListener(marker, 'click', function() {
+          infowindow.open(map,marker);
+        });
+        google.maps.event.addListener(infowindow, 'closeclick', function() {
+          map.setCenter(marker.getPosition()); 
+        });
+        
+      }
+      
+    } else {
+      $('#map').css({'height' : '15px'});
+      $('#map').html("");
+      resizeIframe();
+    }
+  });
+  
+  function resizeIframe() {
+    var me = window.name;
+    if (me) {
+      var iframes = parent.document.getElementsByName(me);
+      if (iframes && iframes.length == 1) {
+        height = document.body.offsetHeight;
+        iframes[0].style.height = height + "px";
+      }
+    }
+  }
+  
+});
+</script>  
+<style>
+#map {
+  font-family: Arial;
+  font-size:12px;
+  line-height:normal !important;
+  height:300px;
+  background:transparent;
+}
+</style>
+ 
+</head>
+ 
+<body>
+<div id="map"></div> 
+</body> 
+<div style="background-color:grey !important;text-align:center;">
+<apex:outputPanel rendered="{!NOT(ISBLANK(Lead.Latitude__c))}">
+<apex:outputLabel value="{!Lead.Street}"></apex:outputLabel>,
+<apex:outputLabel value="{!Lead.city}"></apex:outputLabel>,
+<apex:outputLabel value="{!Lead.state}"></apex:outputLabel>,
+<apex:outputLabel value="{!Lead.postalcode}"></apex:outputLabel>,
+<apex:outputLabel value="{!Lead.country}"></apex:outputLabel>
+(<apex:outputLabel value="{!Lead.Latitude__c}"/>,
+<apex:outputLabel value="{!Lead.Longitude__c}"/>)
+</apex:outputPanel>
+</div>
+<!-- 
+</apex:pageBlock>
+ -->
+</apex:page>

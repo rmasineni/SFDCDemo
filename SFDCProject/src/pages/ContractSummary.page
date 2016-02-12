@@ -1,0 +1,405 @@
+<apex:page sidebar="false" showHeader="false" controller="ContractSummary" tabStyle="ServiceContract">
+     <style>
+    .producterror { color: red; font-weight: strong;}
+    </style>
+    <apex:pageMessages escape="false" id="pgmsg"/>
+    <apex:sectionHeader title="Service Contract" subtitle="{!contractName}">
+    </apex:sectionHeader>
+    <!-- 
+    <table align="center" width="auto" style="padding-top:-100px;">
+        <tr>
+            <td><button onclick="window.top.close();">Close</button></td>
+        </tr>
+    </table>    
+     -->
+    <apex:pageblock id="SummaryBlock" >
+        <apex:form id="form1">
+        <div align="center">
+            <apex:commandButton title="Refresh" action="{!refresh}" rerender="SummaryBlock" value="  Refesh  " />
+            &nbsp;
+            <apex:commandButton onclick="window.top.close();" value="Close" />
+         </div>  
+        </apex:form>     
+        <div id="232" style="overflow-y: scroll;">
+            <apex:pageblocksection title="Customer Info">
+                <apex:pageBlockSectionitem >
+                    <apex:outputLabel value="Customer Name" />
+                    <apex:outputtext value="{!contactObj.Name}"/>
+                </apex:pageBlockSectionitem>
+                <apex:pageBlockSectionitem >
+                    <apex:outputLabel value="Home Address" />
+                    <apex:outputpanel >
+                        <apex:outputtext value="{!accountObj.BillingStreet}, "/>
+                        <apex:outputtext value="{!accountObj.BillingCity}, {!accountObj.BillingState}, {!accountObj.BillingPostalCode} "/>              
+                        <apex:outputtext value="{!accountObj.BillingCountry}"/>
+                    </apex:outputpanel>
+                </apex:pageBlockSectionitem>            
+                <apex:pageBlockSectionitem >
+                    <apex:outputLabel value="Customer Email (Formula)" />
+                    <apex:outputtext value="{!contactObj.email}"/>
+                </apex:pageBlockSectionitem>
+                <apex:pageBlockSectionitem >
+                    <apex:outputLabel value="Customer Phone" />
+                    <apex:outputtext value="{!contactObj.Phone}"/>
+                </apex:pageBlockSectionitem>            
+                
+                <apex:pageBlockSectionitem >
+                    <apex:outputLabel value="Customer Signoff Date" />
+                    <apex:outputtext value="{!proposalObj.Customer_Signoff_Date__c}"/>
+                </apex:pageBlockSectionitem>            
+                <apex:pageBlockSectionitem >
+                    <apex:outputLabel value="Opportunity: Sales Representative" />
+                    <apex:outputtext value="{!proposalObj.Sales_Rep__c}"/>
+                </apex:pageBlockSectionitem>            
+            </apex:pageblocksection>
+        </div>
+        
+        <div id="234" style="overflow-y: scroll; height:375px;">
+            <apex:pageblocksection id="AssetInfo" title="Asset Info">
+                <apex:pageBlockSectionitem >
+                    <apex:outputLabel value="Asset Status" />
+                    <apex:outputtext value="{!assetObj.Status__c}"/>
+                </apex:pageBlockSectionitem>    
+                <apex:pageBlockSectionitem >
+                    <apex:outputLabel value="Date Cancelled" />
+                    <apex:outputtext value="{!serviceContractEventObj.Date_Cancelled__c}"/>
+                </apex:pageBlockSectionitem>
+                <apex:outputfield value="{!serviceContractEventObj.Lease_Date__c}"/>
+                <apex:pageBlockSectionitem >                    
+                    <apex:outputtext value=""/>                 
+                </apex:pageBlockSectionitem>
+                
+                <apex:pageBlockSectionitem >
+                    <apex:outputLabel value="Asset Name" />
+                    <apex:outputtext value="{!assetObj.Name}"/>
+                </apex:pageBlockSectionitem>    
+    
+                <apex:pageBlockSectionitem >
+                    <apex:outputLabel value="SRH Number" />
+                    <apex:outputtext value=""/>
+                </apex:pageBlockSectionitem>            
+                        
+                <apex:pageBlockSectionitem >
+                    <apex:outputLabel value="Opportunity Name" />
+                    <apex:outputtext value="{!optyObj.name}"/>
+                </apex:pageBlockSectionitem>
+                
+                <apex:outputfield value="{!contractObj.Deal_ID__c}"/>
+                <apex:pageBlockSectionitem >
+                    <apex:outputLabel value="Parent Proposal ID" />
+                    <apex:outputtext value="{!proposalObj.Original_Proposal_ID__r.Name}"/>
+                </apex:pageBlockSectionitem>
+                
+                <apex:pageBlockSectionitem >
+                    <apex:outputLabel value="Proposal Unique ID" />
+                    <apex:outputtext value="{!proposalObj.name}"/>
+                </apex:pageBlockSectionitem>
+                
+                <apex:outputfield value="{!contractObj.Cust_Ref_Num__c}"/>
+    
+                <apex:pageBlockSectionitem >
+                    <apex:outputLabel value="Account Name" />
+                    <apex:outputtext value="{!accountObj.name}"/>
+                </apex:pageBlockSectionitem>
+    
+                <apex:pageBlockSectionitem >
+                    <apex:outputLabel value="Created By Id" />
+                    <apex:outputtext value="{!assetObj.CreatedBy.Name}"/>
+                </apex:pageBlockSectionitem>
+                <apex:pageBlockSectionitem >
+                    <apex:outputLabel value="Created Date" />
+                    <apex:outputText value="{0,date,MM'/'dd'/'yyyy}">
+                        <apex:param value="{!assetObj.CreatedDate}" /> 
+                    </apex:outputText>
+                </apex:pageBlockSectionitem>
+            </apex:pageblocksection>
+            <script>
+                twistSection(document.getElementById('{!$Component.SummaryBlock.AssetInfo}').getElementsByTagName('img')[0]);
+            </script>           
+            
+            <apex:pageblocksection id="ContractDetails" title="Contract Details">
+                <!-- 
+                <apex:repeat value="{!$ObjectType.ServiceContract.FieldSets.Contract_Summary_Fields}" var="f"> 
+                    <apex:outputfield value="{!contractObj[f]}"/>
+                </apex:repeat>          
+                 -->
+                <apex:outputfield style="border-left:1px;" value="{!contractObj.Product_Type__c}"/>
+                <apex:outputfield value="{!contractObj.Agreement_Term_Years__c}"/>
+                <apex:outputfield value="{!contractObj.EPC_Price__c}"/>
+                <apex:outputfield value="{!contractObj.Price_per_kWh__c}"/>
+                <apex:outputfield value="{!contractObj.Total_Solar_Prepay_Required__c}"/>
+                <apex:outputfield value="{!contractObj.Partner_Financed__c}"/>
+                <apex:outputfield value="{!contractObj.Annual_Monthly_Payment_Escalator__c}"/>
+                <apex:outputfield value="{!contractObj.Monthly_Upfront_Payment_Amount__c}"/>                   
+                
+                <apex:outputfield value="{!contractObj.ACH_Required__c}"/>
+                <apex:pageBlockSectionitem >
+                    <apex:outputLabel value="ACH Fee Eligible" />
+                    <apex:outputtext value=""/>
+                </apex:pageBlockSectionitem>
+                
+                <apex:outputfield value="{!contractObj.Billing_Type__c}"/>
+                <apex:outputfield value="{!contractObj.Billing_Method__c}"/>
+                <apex:outputfield value="{!serviceContractEventObj.Initial_Deposit_Amount__c}"/>
+                <apex:outputfield value="{!serviceContractEventObj.Initial_Deposit_Amount_Received__c}"/>
+                <apex:outputfield value="{!serviceContractEventObj.Initial_Deposit_Method__c}"/>
+                <apex:outputfield value="{!serviceContractEventObj.Initial_Deposit_Processed__c}"/>
+                <apex:outputfield value="{!serviceContractEventObj.Deposit_Amount_Refunded__c}"/>
+                <apex:outputfield value="{!serviceContractEventObj.Deposit_Refund_Date__c}"/>
+                <apex:outputfield value="{!serviceContractEventObj.Deposit_ID__c}"/>
+                <apex:outputfield value="{!contractObj.Counterparty__c}"/>
+                <apex:outputfield value="{!contractObj.Est_Yr_1_Generation__c}"/>
+                <apex:outputfield value="{!contractObj.Avg_Monthly_Electric_Bill__c}"/>
+                <apex:outputfield value="{!contractObj.Utility_Company__c}"/>
+                <apex:outputfield value="{!contractObj.Yr_1_Avoided_Power_Cost__c}"/>
+                <apex:outputfield value="{!contractObj.X20_Year_Estimated_Generation__c}"/>
+                <apex:pageBlockSectionitem >
+                    <apex:outputtext value=""/>
+                </apex:pageBlockSectionitem>
+                
+                <apex:outputfield value="{!contractObj.Approx_Price_Watt_AC__c}"/>
+                <apex:outputfield value="{!contractObj.Approx_Price_Watt_DC__c}"/>
+    
+                <apex:outputfield value="{!contractObj.Full_System_cost__c}"/>
+                <apex:pageBlockSectionitem >
+                    <apex:outputtext value=""/>
+                </apex:pageBlockSectionitem>
+                
+                <apex:outputfield value="{!contractObj.Lease_ID__c}"/>
+                <apex:outputfield value="{!contractObj.Base_Lease_Payment_Amount__c}"/>
+                <apex:outputfield value="{!serviceContractEventObj.Rate_Modification__c}"/>
+                <apex:outputfield value="{!serviceContractEventObj.Rate_Modification_Date__c}"/>
+                            
+                <apex:outputfield value="{!contractObj.Original_Price_per_kWh__c}"/>
+                <apex:outputfield value="{!contractObj.Original_Yr_1_Gen__c}"/>
+                <apex:outputfield value="{!contractObj.Original_Rebate_Estimate__c}"/>
+      <!--          <apex:outputfield value="{!contractObj.Upfront_Payment__c}"/>              -->
+    
+                <apex:outputfield value="{!accountObj.Lot_Number__c}"/>
+                <apex:pageBlockSectionitem >
+                    <apex:outputtext value=""/>
+                </apex:pageBlockSectionitem>
+                <apex:outputfield value="{!accountObj.Community__c}"/>
+                <apex:pageBlockSectionitem >
+                    <apex:outputtext value=""/>
+                </apex:pageBlockSectionitem>
+                
+                <apex:outputfield value="{!contractObj.Prepay_Amount__c}"/>
+                <apex:outputfield value="{!contractObj.Prepay_Discount_Rate__c}"/>
+                <apex:outputfield value="{!serviceContractEventObj.Prepayment_Date__c}"/>
+                <apex:outputfield value="{!contractObj.Prepay_payment_for_electricity__c}"/>
+                <apex:outputfield value="{!contractObj.Prepay_payment_for_RECs__c}"/>
+                <apex:pageBlockSectionitem >
+                    <apex:outputtext value=""/>
+                </apex:pageBlockSectionitem>
+                
+                <apex:outputfield value="{!contractObj.Production_Estimate_Source__c}"/>
+                <apex:outputfield value="{!contractObj.Production_Estimate_Source_Adjust_Ratio__c}"/>
+                
+                <apex:outputfield value="{!contractObj.Year_1_monthly_payment__c}"/>
+                <apex:pageBlockSectionitem >
+                    <apex:outputtext value=""/>
+                </apex:pageBlockSectionitem>
+                <apex:outputfield value="{!contractObj.Ver_portion_of_upfront__c}"/>
+                <apex:outputfield value="{!contractObj.Buyout_per_Watt__c}"/>
+                    
+                <apex:outputfield value="{!contractObj.FMV_Valuation_Date__c}"/>    
+                <apex:pageBlockSectionitem >
+                    <apex:outputtext value=""/>
+                </apex:pageBlockSectionitem>            
+                <apex:outputfield value="{!contractObj.Transfer_Watt__c}"/> 
+                <apex:outputfield value="{!contractObj.Transfer_Price__c}"/>    
+            </apex:pageblocksection>
+            <script>
+                twistSection(document.getElementById('{!$Component.SummaryBlock.ContractDetails}').getElementsByTagName('img')[0])
+            </script>   
+    
+            <apex:pageblocksection id="SalesEPCDetails" title="Sales Org - EPC Details">
+                <!-- 
+                <apex:repeat value="{!$ObjectType.ServiceContract.FieldSets.Sales_Org_EPC_Details}" var="f"> 
+                    <apex:outputfield value="{!contractObj[f]}"/>
+                </apex:repeat>              
+                 -->
+                <apex:outputfield value="{!contractObj.Sales_Organization__c}"/>
+                <apex:pageBlockSectionitem >
+                    <apex:outputLabel value="Install Partner" />
+                    <apex:outputtext value="{!installPartner.name}"/>
+                </apex:pageBlockSectionitem>
+                <apex:pageBlockSectionitem >                    
+                    <apex:outputtext value=""/>                 
+                </apex:pageBlockSectionitem>    
+                <apex:outputfield value="{!contractObj.EPC_price_per_watt1__c}"/>    
+                <apex:outputfield value="{!contractObj.Milestone_Deduction_Amount__c}"/>
+                <apex:pageBlockSectionitem >                    
+                    <apex:outputtext value=""/>                 
+                </apex:pageBlockSectionitem>    
+                <apex:outputfield value="{!serviceContractEventObj.Cust_Origination_Fee_1_Amount_Paid__c}"/>
+                <apex:outputfield value="{!serviceContractEventObj.Cust_Origination_Fee_2_Amount_Paid__c}"/>
+   <!--             <apex:outputfield value="{!contractObj.REC_Price__c}"/>                                           -->
+   <!--            <apex:outputfield value="{!contractObj.REC_Price_Level_Used_For_Pricing__c}"/>                     -->
+                <apex:outputfield value="{!contractObj.Sunrun_Project_Coordination_Fee__c}"/>
+            </apex:pageblocksection>
+            <script>
+                twistSection(document.getElementById('{!$Component.SummaryBlock.SalesEPCDetails}').getElementsByTagName('img')[0])
+            </script>
+            
+            <apex:pageblocksection id="PaymentDetails" title="Partner Payment Details">
+                
+                <!-- 
+                <apex:repeat value="{!$ObjectType.ServiceContract.FieldSets.Partner_Payment_Details}" var="f"> 
+                    <apex:outputfield value="{!contractObj[f]}"/>
+                </apex:repeat>      
+                <apex:repeat value="{!$ObjectType.Service_Contract_Event__c.FieldSets.Partner_Payment_Details}" var="f"> 
+                    <apex:outputfield value="{!serviceContractEventObj[f]}"/>
+                </apex:repeat>              
+                 -->
+      <!--          <apex:outputfield value="{!contractObj.Upfront_Payment_Amount__c}"/>                         -->
+                <apex:outputfield value="{!serviceContractEventObj.Upfront_Payment_Amount_Rec_d__c}"/>
+                <apex:outputfield value="{!serviceContractEventObj.Upfront_Payment_Rec_d_Date__c}"/>
+     <!--           <apex:outputfield value="{!contractObj.Upfront_Payment_Plan__c}"/>                         -->
+                <apex:outputfield value="{!serviceContractEventObj.Upfront_Payment_Method__c}"/>
+                <apex:pageBlockSectionitem >                    
+                    <apex:outputtext value=""/>                 
+                </apex:pageBlockSectionitem>
+                
+      <!--          <apex:outputfield value="{!contractObj.UpFront_ID__c}"/>                         -->
+        <!--        <apex:outputfield value="{!contractObj.Upfront_Total_inc_Dep_for_Ori__c}"/>             -->
+    
+     <!--       <apex:outputfield value="{!contractObj.M0_terms__c}"/>                                     -->
+                <apex:outputfield value="{!serviceContractEventObj.M0_Payment_Date__c}"/>
+                <apex:outputfield value="{!serviceContractEventObj.M0_amount_paid__c}"/>
+     <!--           <apex:outputfield value="{!serviceContractEventObj.Utility_Classification__c}"/>       -->
+                                <apex:pageBlockSectionitem >                    <apex:outputtext value=""/>                 </apex:pageBlockSectionitem>
+     <!--           <apex:outputfield value="{!serviceContractEventObj.Utility_Classification_Date__c}"/>      -->
+                
+                <apex:outputfield value="{!serviceContractEventObj.M1_Payment__c}"/>
+                <apex:outputfield value="{!serviceContractEventObj.M1_payment_date__c}"/>
+                <apex:outputfield value="{!serviceContractEventObj.M1_amount_paid__c}"/>
+                <apex:outputfield value="{!serviceContractEventObj.M1_Denied_Comments__c}"/>
+                <apex:outputfield value="{!serviceContractEventObj.SO_M1_Payment__c}"/>
+                <apex:outputfield value="{!serviceContractEventObj.SO_M1_payment_date__c}"/>
+                <apex:outputfield value="{!serviceContractEventObj.SO_M1_amount_paid__c}"/>
+                <apex:pageBlockSectionitem / >
+    
+                <apex:outputfield value="{!serviceContractEventObj.M2_Payment__c}"/>
+                <apex:outputfield value="{!serviceContractEventObj.M2_payment_date__c}"/>
+                <apex:outputfield value="{!serviceContractEventObj.M2_amount_paid__c}"/>
+                <apex:outputfield value="{!serviceContractEventObj.M2_Denied_Comments__c}"/>
+       <!--         <apex:outputfield value="{!serviceContractEventObj.SO_m2_payment_new__c}"/>    -->
+                <apex:outputfield value="{!serviceContractEventObj.SO_M2_payment_date__c}"/>
+                <apex:outputfield value="{!serviceContractEventObj.SO_M2_amount_paid__c}"/>
+                <apex:pageBlockSectionitem / >
+    
+                <apex:outputfield value="{!serviceContractEventObj.M3_Payment__c}"/>
+                <apex:outputfield value="{!serviceContractEventObj.M3_payment_date__c}"/>
+                <apex:outputfield value="{!serviceContractEventObj.M3_amount_paid__c}"/>
+                <apex:outputfield value="{!serviceContractEventObj.M3_Denied_Comments__c}"/>
+     <!--           <apex:outputfield value="{!serviceContractEventObj.SO_m3_payment_new__c}"/>     -->
+                <apex:outputfield value="{!serviceContractEventObj.SO_M3_payment_date__c}"/>
+                <apex:outputfield value="{!serviceContractEventObj.SO_M3_amount_paid__c}"/>
+                <apex:pageBlockSectionitem / >
+            </apex:pageblocksection>
+            <script>
+                twistSection(document.getElementById('{!$Component.SummaryBlock.PaymentDetails}').getElementsByTagName('img')[0])
+            </script>
+    
+            <apex:pageblocksection id="RebateInfo" title="Rebate Info">
+                <!-- 
+                <apex:repeat value="{!$ObjectType.ServiceContract.FieldSets.Rebate_Info_Fields}" var="f"> 
+                    <apex:outputfield value="{!contractObj[f]}"/>
+                </apex:repeat>              
+                -->
+  <!--          <apex:outputfield value="{!contractObj.Credit_Memo_on_Rebate__c}"/>                                -->
+  <!--          <apex:outputfield value="{!contractObj.Credit_memo_amt_applied__c}"/>                              -->    
+                <apex:outputfield value="{!serviceContractEventObj.Adjustment_to_Credit_Memo_Amt__c}"/>
+                <apex:outputfield value="{!serviceContractEventObj.M0_Credit_Memo_Applied_On__c}"/>
+                
+  <!--          <apex:outputfield value="{!contractObj.Est_Rebate_Amount__c}"/>                                    -->
+                <apex:outputfield value="{!serviceContractEventObj.Rebate_Form_Signed__c}"/>
+                <apex:outputfield value="{!serviceContractEventObj.Rebate_Approval_Rec_d__c}"/>
+                <apex:outputfield value="{!serviceContractEventObj.Rebate_Form_Sent__c}"/>
+                <apex:outputfield value="{!serviceContractEventObj.Rebate_Conf_Num__c}"/>
+                <apex:outputfield value="{!serviceContractEventObj.Rebate_Conf_Rec_d__c}"/>
+  <!--          <apex:outputfield value="{!contractObj.Rebate_level_for_pricing__c}"/>                            -->
+                <apex:outputfield value="{!serviceContractEventObj.Rebate_Rec_d__c}"/>
+                <apex:outputfield value="{!serviceContractEventObj.Rebate_Expiration_Date__c}"/>
+     <!--       <apex:outputfield value="{!contractObj.Rebate_level_confirmed__c}"/>                           -->
+                
+     <!--       <apex:outputfield value="{!contractObj.Final_Rebate_Amount__c}"/>                              -->
+                <apex:outputfield value="{!serviceContractEventObj.Rebate_Borrowed_Date__c}"/>
+    
+                <apex:outputfield value="{!serviceContractEventObj.Rebate_Amount_Received__c}"/>
+                <apex:outputfield value="{!serviceContractEventObj.M0_Credit_Amount__c}"/>
+                
+   <!--             <apex:outputfield value="{!contractObj.Rebate_Guaranteed_by_Partner__c}"/>                        -->
+   <!--         <apex:outputfield value="{!contractObj.Rebate_ID__c}"/>                                            -->
+    
+   <!--         <apex:outputfield value="{!contractObj.Rebate_Notes__c}"/>                                         -->
+   <!--             <apex:outputfield value="{!contractObj.SO_Rebate_Memo__c}"/>                                  -->
+    
+                <apex:outputfield value="{!serviceContractEventObj.SREC_acct__c}"/>
+                <apex:outputfield value="{!serviceContractEventObj.SREC_level__c}"/>
+                
+                <apex:outputfield value="{!serviceContractEventObj.SREC_letter_sent__c}"/>  
+                <apex:outputfield value="{!serviceContractEventObj.SREC_Registered__c}"/>
+                
+                <apex:outputfield value="{!serviceContractEventObj.SREC_level_Expected__c}"/>   
+                <apex:outputfield value="{!serviceContractEventObj.SREC_Term__c}"/>
+    
+                <apex:outputfield value="{!serviceContractEventObj.NYSERDA_Reported__c}"/>  
+  <!--              <apex:outputfield value="{!contractObj.Other_Rebate_Reference__c}"/>                       -->
+                
+                <apex:outputfield value="{!serviceContractEventObj.PUC_Filed__c}"/> 
+                <apex:outputfield value="{!serviceContractEventObj.UCC_Filed__c}"/>
+                <apex:outputfield value="{!serviceContractEventObj.PUC_One_Off_Removal__c}"/>   
+                
+            </apex:pageblocksection>
+            <script>
+                twistSection(document.getElementById('{!$Component.SummaryBlock.RebateInfo}').getElementsByTagName('img')[0])
+            </script>
+                        
+            <apex:pageblocksection id="GrantInfo" title="Grants Info">
+                <apex:outputfield value="{!serviceContractEventObj.M1_Deposit__c}"/>
+                <apex:outputfield value="{!serviceContractEventObj.M1_Deposit_Acct__c}"/>
+                <apex:outputfield value="{!contractObj.Cash_Grant_Eligible__c}"/>
+                <apex:outputfield value="{!contractObj.Cash_Grant_Pre_Buy_Eligible__c}"/>
+                <apex:outputfield value="{!serviceContractEventObj.Cash_Grant_Credit_Memo_Amt_Applied__c}"/>
+                <apex:outputfield value="{!serviceContractEventObj.Cash_Grant_Credit_Memo_Date_Applied__c}"/>
+                
+                <apex:outputfield value="{!contractObj.Cash_Grant_Panel_Price_per_Watt__c}"/>
+      <!--      <apex:outputfield value="{!contractObj.Cash_Grant_Panel_Taxable_Price_per_Watt__c}"/>               -->
+    
+                <apex:outputfield value="{!serviceContractEventObj.Grant_Amt_Applied_For__c}"/>
+                <apex:outputfield value="{!serviceContractEventObj.Grant_Application_Number__c}"/>
+                <apex:outputfield value="{!serviceContractEventObj.Grant_Amt_Rec_d__c}"/>
+                <apex:outputfield value="{!contractObj.Grant_ID__c}"/>
+                <apex:outputfield value="{!serviceContractEventObj.Grant_Application_Date__c}"/>
+                <apex:outputfield value="{!serviceContractEventObj.Grant_Rec_d_Date__c}"/>
+    
+                <!-- 
+                <apex:repeat value="{!$ObjectType.Service_Contract_Event__c.FieldSets.Grants}" var="f"> 
+                    <apex:outputfield value="{!serviceContractEventObj[f]}"/>
+                </apex:repeat>  
+                            
+                <apex:repeat value="{!$ObjectType.ServiceContract.FieldSets.Grants}" var="f"> 
+                    <apex:outputfield value="{!contractObj[f]}"/>
+                </apex:repeat>              
+                 -->
+            </apex:pageblocksection>
+            <script>
+                twistSection(document.getElementById('{!$Component.SummaryBlock.GrantInfo}').getElementsByTagName('img')[0])
+            </script>
+                        
+            <apex:pageblocksection id="Activities" title="Activities">
+                <apex:outputfield value="{!serviceContractEventObj.Customer_Invoice_Sent__c}"/>
+                <apex:outputfield value="{!serviceContractEventObj.Invoice_Posted_Online__c}"/>
+                <apex:pageblocksection />
+            </apex:pageblocksection>
+            <script>
+                twistSection(document.getElementById('{!$Component.SummaryBlock.Activities}').getElementsByTagName('img')[0])
+            </script>
+        </div>
+    </apex:pageblock>
+
+    
+</apex:page>

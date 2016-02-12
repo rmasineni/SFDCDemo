@@ -1,0 +1,1319 @@
+<apex:component id="PhotoComponent" controller="AuditPhotoUploaderController" allowDML="true">
+    <apex:attribute id="lookupId" name="relatedObject" assignTo="{!relatedObject}" type="Id" description="SR Audit Attachment Related ObjectId" />
+    <style>
+        #filesTableId {
+            background-color: whiteSmoke;
+            border-radius: 6px;
+            -webkit-border-radius: 6px;
+            -moz-border-radius: 6px;
+        }
+        
+        #filesTableId td, #filesTableId th {
+            
+        }
+
+        #filesTableId th {
+            color: #333;
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            font-style: normal;
+            font-weight: bold;
+            text-align: left;
+            
+            padding-left: 0;
+            padding-right: 0;
+        }
+        
+        }
+        #filesTableId td {
+            padding: 0 20px;
+            line-height: 12px;
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            border-bottom: 1px solid #fff;
+            border-top: 1px solid #fff;
+        }
+        #filesTableId td:hover {
+            background-color: #fff;
+        }
+
+        #dropbox {
+            background: rgba(128, 128, 128, 0.14);
+            border: black dashed 1px;
+            width: 85%;
+            padding: 20px;
+            height: 120px;
+            text-align: center;
+            color: blue;
+            border-radius: 10PX;        
+            margin-left: auto;
+            margin-right: auto;
+            margin-top: 20px;
+        }
+ 
+        #progress_bar {
+          width: 200px;
+          height: 5px !important;
+          margin: 1px 0;
+          padding: 0 0 !important;
+          
+          font-size: 14px;
+          clear: both;
+          opacity: 0;
+          -moz-transition: opacity 1s linear;
+          -o-transition: opacity 1s linear;
+          -webkit-transition: opacity 1s linear;
+        }
+        #progress_bar.loading {
+          opacity: 1.0;
+          height: 5px !important;
+           padding: 0 0 !important;
+           background-color: #333333 !important;
+            border: 0px !important;
+        }
+        
+        .loading {
+             background-color:whiteSmoke  !important;
+              border: 0px !important;
+              font-weight: normal !important;
+         }
+        .percent {
+          background-color: #99ccff;
+          height: auto;
+          width: 0;
+        }
+        
+        .deleteButton{
+            background-color: red;
+            width: 150px;
+            height: 40px;
+        }
+
+        .headerLogo {
+            margin:1px 1px 1px 1px;
+            border:0;
+            padding-left:50px;
+            padding-bottom:10px;
+            #height: 30px;
+            #width: 90px;
+        }
+        #fileUploadDiv {
+        overflow:auto;
+        width:800px;
+        }
+    </style>
+    
+    <div align="left" width="100%">
+        <img src="{!$Resource.PartnerPortalHeader32}" class="headerLogo"/>
+    </div>
+    <div id="TopOfUploadList"></div>
+    <!-- Gen Asset Info -->
+    <apex:pageBlock mode="maindetail" id="block1">
+            <apex:pageBlockSection id="assetDetails" columns="1">
+            
+                <apex:pageBlockSectionitem id="item1">
+                    <apex:outputLabel value="Site Visit Date"/>
+                    <apex:outputPanel >
+                        <apex:outputText value="{0,date,MM'/'dd'/'yyyy}">
+                            <apex:param value="{!InstallAuditObj.Site_Visit_Date__c}" />
+                        </apex:outputText>
+                    </apex:outputPanel>
+                </apex:pageBlockSectionitem>
+                            
+                <apex:pageBlockSectionitem id="item1b">
+                    <apex:outputLabel value="Audit Number"/>
+                    <apex:outputPanel >
+                        <apex:outputText value="{!InstallAuditObj.Name}"/>
+                    </apex:outputPanel>
+                </apex:pageBlockSectionitem>
+                
+                <apex:pageBlockSectionitem id="item3">
+                    <apex:outputLabel value="Account"/>
+                    <apex:outputPanel >
+                        <apex:outputText value="{!accountName}"/>
+                    </apex:outputPanel>
+                </apex:pageBlockSectionitem>
+
+                <apex:pageBlockSectionitem id="item5">
+                    <apex:outputLabel value="Number of Photos Uploaded"/>                    
+                    <apex:outputPanel id="panel">
+                        <apex:outputText id="pc" value="{0, number,###,###,##0}">
+                         <apex:param value="{!GenAssetPhotoCount}"/>
+                        </apex:outputText>
+                    </apex:outputPanel>
+                </apex:pageBlockSectionitem>                           
+                                                                
+        </apex:pageBlockSection>        
+    </apex:pageBlock>
+    
+    
+    <div id="fileUploadDiv" align="center" width="100%" style="margin-bottom:20">
+    <table align="left" width="800px">
+      <tr>
+        <td width="150px" align="right"><b>File selection &#160;:</b></td>
+        <td width="650px"><input class='disableAfterUpload' type="file" id="files" name="files[]" multiple="multiple" onchange="handleIE9FileSelect(this);" /></td>
+      </tr>
+      <tr>
+        <td width="150px" align="right"><b>Status&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;:</b></td>
+        <td width="650px" ><span id="status"></span></td>
+      </tr>
+      <tr></tr>
+      
+    </table>
+    
+    </div>
+    <!--class='disableAfterUpload'-->
+    <div id="dropbox" align="center">Drop your files here</div>
+    <br/>
+    <table id="FilesTable"></table>
+    <table id="filesTableId" align="center" width="90%">
+        <thead>
+            <th>File Name</th>
+             <th>Document Type</th>
+            <th>Size</th>
+            <th>Upload Status</th>           
+        </thead>
+        <tbody id="tablebody">
+            <tr id="row1" style="display:none">
+                <td></td>
+                 <td> 
+                     <select id ="documentTypesId" class ="disableAfterUpload" name="documentTypes"> 
+                       
+                      </select> 
+                 </td> 
+
+                <td></td>
+                <td></td>                
+            </tr>
+        </tbody>
+    </table>    
+
+    <table align="center" width="auto" style="padding-top:20px;">
+        <tr>
+            <td><button onclick="window.top.close();">Close</button></td>
+<apex:form >
+ <apex:actionFunction name="refreshPhotoList" action="{!doNothing}" rerender="j_id0:fileUploaderId:j_id1:fpau:pau:uploadedPhotos"/>
+</apex:form> 
+            <td><button id="uploadButton" class='disableAfterUpload' onclick="uploadFilesToS3();">Upload Photos</button></td>
+            <td><button id="showAlbumButton" class='disableAfterUpload' onclick="showPhotoAlbum('{!relatedObject}' ,true);">Show Album</button></td>
+        </tr>
+     </table>
+
+    <apex:form id="fpau">
+    <apex:pageBlock title="Photos Already Uploaded" id="pau">
+    <apex:pageBlockButtons >
+     <apex:commandButton value="Delete" onclick="if(confirm('Are you sure?')==true){updateSRGAAttachedPhotos();} return false;"/>   <!--="{!SaveChangesToUploadedPhotos}" />-->
+     <apex:commandButton value="Cancel" />
+    </apex:pageBlockButtons>
+    <apex:pageBlockSection title="Photos Already Uploaded">
+    <div id="uploadedPhotosDiv">
+    </div>
+    </apex:pageBlockSection>    
+    </apex:pageblock>
+    </apex:form>
+
+    <apex:includeScript value="{!URLFOR($Resource.Coverflow, 'js/jquery-1.7.1.js')}"  />
+    <script type="text/javascript">
+        var baseURL = '{!BaseURL}' ;
+        var partnerStr = '';
+        if(baseURL != null && (baseURL.indexOf('/partner') != -1)){
+            partnerStr = '/partner' ;
+        }  
+        var parentObjectId = '{!relatedObject}';
+        var genAssetNameStr = '{!GenAssetName}';
+        var s3FolderNameStr = '{!s3FolderName}';
+        var existingSRAttachments = '{!existingSRAttachments}'; 
+        var storedFiles = {};
+        var processedFileCount = 0;
+        var etags = [];
+        var selectedFileNames = '';
+        var childElementIds = '';
+        var tableSelection = '';
+        var contactDocumentTypes = '';
+        var documentClassificationMap;
+        var listOfUploadedPhotos;
+        var documentTypesIdToNameMap = new Array();
+        var fileNamesMap = new Array();
+        var pregressbarFileMap = new Array();
+        var runningIndex = 0;
+        //var parentWin=window.opener.parent;
+        var unsignedDocumentTypes = [];
+        var unableToInitializeFileUpload = 'Unable to initialize file uploader.';
+        var FailedToDeleteRow = 'Unable to delete the row';
+        var FailedToAddRow = 'Unable to add the row';
+        var FileProcessError = 'Unable to process the selected file';
+        var validTypes = '{!setValidFileTypes}';
+
+      var isMobile = false; 
+         if((navigator.userAgent.match(/iPad/i)) || (navigator.userAgent.match(/iPhone/i)) || (navigator.userAgent.match(/iPod/i))) { 
+              isMobile = true; 
+          } 
+
+RepeatingOperation = function(op, yieldEveryIteration) {
+
+  
+    
+    
+  //keeps count of how many times we have run heavytask() 
+  //before we need to temporally check back with the browser.
+  var count = 0;   
+
+  this.step = function() {
+
+    //Each time we run time-consuming code, increment the count. When count
+    //is bigger than the yieldEveryIteration limit, pass control back 
+    //to browser and instruct the browser to immediately call op() so
+    //we can pick up where we left off.  Repeat until we are done.
+    
+    if (++count >= yieldEveryIteration) {
+      
+      count = 0;
+      
+      //pass control back to the browser, and in 1 millisecond, 
+      //have the browser call the op() function.  
+      
+      setTimeout(function() { op(); }, 1, [])
+      
+      //The following return statement halts this thread, it gives 
+      //the browser a sigh of relief, your long-running javascript
+      //loop has ended (even though technically we havn't yet).
+      //The browser decides there is no need to alarm the user of
+      //an unresponsive javascript process.
+      
+      return;
+      
+      }
+    op();
+  };
+};
+
+        $(document).ready(function(){
+            try{
+                 $(".edit").click(function(){
+                  $(this).parent().load("edit");
+                });
+                $(".view").click(function(){
+                  $(this).parent().load("view");
+                });
+                 var selectOptions = document.getElementById('documentTypesId');
+                var count = 1;
+                initializeDocumentClassificationMap();          
+            }catch(err){
+                alert(unableToInitializeFileUpload);
+            }
+        });
+    
+window.onload=function(){refreshListOfUploadedPhotos()};
+        //document.getElementById('files').addEventListener('change', handleFileSelect, false);
+        
+        var dropbox = document.getElementById("dropbox")
+        // init event handlers
+
+        if(msieversion() == 8 || msieversion() == 9)
+        {  
+           document.getElementById('files').attachEvent('onchange', handleFileSelect, false);
+           //        
+           dropbox.attachEvent('ondragenter', dragEnter);
+           dropbox.attachEvent('ondragexit', dragExit);
+           dropbox.attachEvent('ondragover', dragOver);
+           dropbox.attachEvent('ondrop', drop);                
+        }
+        else
+        {           
+           document.getElementById('files').addEventListener('change', handleFileSelect, false);
+           //
+           dropbox.addEventListener("dragenter", dragEnter, false);
+           dropbox.addEventListener("dragexit", dragExit, false);
+           dropbox.addEventListener("dragover", dragOver, false);
+           dropbox.addEventListener("drop", drop, false);
+        }        
+        
+   function showPhotoAlbum(GenAssetIdVal, canAttachDocs){
+            if(canAttachDocs == false){
+                alert('Invalid stage to Upload Documents');
+            }else{
+                var tempURL = partnerStr + '/apex/ShowAlbum?id=' + GenAssetIdVal; 
+                var isPartner = "{!IsPartnerUser}";
+                var newwindow = window.open(tempURL, '', 'toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=yes,resizable=yes'); 
+                
+                newwindow.focus();
+            }
+        }
+                
+        function updateSRGAAttachedPhotos(){
+        try{
+           var inputCheckbox = document.getElementsByTagName("input");
+           var unchecked = []; //will contain all unchecked checkboxes
+           for (var i = 0; i < inputCheckbox.length; i++) {  
+             if (inputCheckbox[i].type == "checkbox" && inputCheckbox[i].checked) {  
+                unchecked.push(inputCheckbox[i].id);  
+             }
+           }
+           }catch(ex)
+           {
+              alert(ex);
+           }
+
+           if(unchecked.length > 0)
+           {
+              Visualforce.remoting.Manager.invokeAction('{!$RemoteAction.AuditPhotoUploaderController.updateStatus}', 
+                unchecked,
+                function(result, event){
+                    if (event.status) {
+                       refreshListOfUploadedPhotos();
+                    } else if (event.type === 'exception') {
+                        alert('Error Message: ' + event.message);
+                    } else {
+                        alert('Message: ' + event.message);
+                    }
+                }, 
+                {escape: true}
+              );
+           }
+        }
+        
+        function refreshListOfUploadedPhotos(){
+
+            Visualforce.remoting.Manager.invokeAction('{!$RemoteAction.AuditPhotoUploaderController.getAttachedPhotosAfterUpload}', 
+                parentObjectId,
+                function(result, event){
+                    if (event.status) {
+                        listOfUploadedPhotos = result;
+                        var phhtml = getPhotoHTML(listOfUploadedPhotos);
+                        document.getElementById('uploadedPhotosDiv').innerHTML = phhtml;
+                    } else if (event.type === 'exception') {
+                        alert('Error Message: ' + event.message);
+                    } else {
+                        alert('Message: ' + event.message);
+                    }
+                }, 
+                {escape: true}
+            );
+
+        }        
+
+function getPhotoHTML(result){
+            var PhotoCount = 0;
+            var htmlForUploadedPhotos = '<table>';
+            htmlForUploadedPhotos += '<tr>';
+            htmlForUploadedPhotos += '<th>Select All<br/><input type="checkbox" onclick="checkUncheckAll(this);"/></th>';            
+            htmlForUploadedPhotos += '<th>Thumbnail</th>';
+            htmlForUploadedPhotos += '<th>File Name</th>';
+    		htmlForUploadedPhotos += '<th>Document Type </th>';
+            htmlForUploadedPhotos += '<th>File Size</th>';
+            htmlForUploadedPhotos += '</tr>';
+
+            for (var i = 0; i<result.length;i++){
+
+               var count = 0;
+			
+               htmlForUploadedPhotos += '<tr><td>';
+               if(result[i].filestatus == true)
+               {
+                  htmlForUploadedPhotos += ' <input name="delchkbx" id="' + result[i].id + '" unchecked type="checkbox" value="' + result[i].filestatus + '"/>';
+               }
+               else
+               {
+                  htmlForUploadedPhotos += ' <input name="delchkbx" id="' + result[i].id + '" type="checkbox" value="' + result[i].filestatus + '"/>';
+               }
+               htmlForUploadedPhotos += '</td>';
+               htmlForUploadedPhotos += '<td width="100px;">';
+               htmlForUploadedPhotos += ' <a href="' + result[i].thumbnail + '" target="_blank">';
+               htmlForUploadedPhotos += '  <img alt="User-added image" height="37" width="50" src="' + result[i].thumbnail + '"></img>';
+               htmlForUploadedPhotos += ' </a>';
+               htmlForUploadedPhotos += '</td>';
+               htmlForUploadedPhotos += '<td width="200px;">';
+               htmlForUploadedPhotos += ' <a href="' + result[i].thumbnail + '" target="_blank">' + result[i].filename + '</a>';
+               htmlForUploadedPhotos += '</td>';
+			  //adding phototype
+               htmlForUploadedPhotos += '<td width="200px;">';
+               htmlForUploadedPhotos += ' <a href="' + result[i].thumbnail + '" target="_blank">' + result[i].PhotoType + '</a>';
+               htmlForUploadedPhotos += '</td>';
+                //end   
+	
+               htmlForUploadedPhotos += '<td width="100px;">';
+               htmlForUploadedPhotos += ' <apex:outputText value="' + result[i].filesize + '"/>';
+               htmlForUploadedPhotos += '</td></tr>';
+               htmlForUploadedPhotos += '<td width="25px;">';
+
+               PhotoCount++;
+
+           }
+           document.getElementById('PhotoPage:fileUploaderId:PhotoComponent:block1:assetDetails:item5:pc').innerHTML = PhotoCount;
+           htmlForUploadedPhotos += '</tr>';
+           htmlForUploadedPhotos += '</table>';
+           return htmlForUploadedPhotos;
+}
+        
+        function initializeDocumentClassificationMap(){
+            Visualforce.remoting.Manager.invokeAction('{!$RemoteAction.AuditPhotoUploaderController.getPhotoTypes}', 
+                parentObjectId,
+                function(result, event){
+                    if (event.status) {
+                        documentClassificationMap = result;
+                        initializeDocumentTypes();
+                    } else if (event.type === 'exception') {
+                        alert('Error Message: ' + event.message);
+                    } else {
+                        alert('Message: ' + event.message);
+                    }
+                }, 
+                {escape: true}
+            );
+        }
+        
+        function msieversion()
+        {
+            var ua = window.navigator.userAgent
+            var msie = ua.indexOf ( "MSIE " )
+
+            if ( msie > 0 )      // If Internet Explorer, return version number
+               return parseInt (ua.substring (msie+5, ua.indexOf (".", msie )))
+            else                 // If another browser, return 0
+               return 0
+        }
+        
+        function initializeDocumentTypes(){
+            var selectOptions = document.getElementById('documentTypesId');
+            var count = 0;
+            var tempDocumentTyes = [];
+            var unsignedDocCount = 0;
+            for (var classificationObj in documentClassificationMap){
+                 tempDocumentTyes[count] = documentClassificationMap[classificationObj].Document_Name__c;
+                count ++;
+                if(documentClassificationMap[classificationObj].ESignature_allowed__c != true){
+                    unsignedDocumentTypes[unsignedDocCount] = documentClassificationMap[classificationObj].Id;
+                    unsignedDocCount++;
+                }
+            }
+            tempDocumentTyes.sort();
+            count = 1;
+            /*for(var i=0; i < tempDocumentTyes.length; i++){
+                var tempName = tempDocumentTyes[i];
+                var tempId = documentClassificationMap[tempName].Id;
+                documentTypesIdToNameMap[tempId] = tempName;
+                selectOptions.options[count] = new Option(tempName, tempId);
+                count ++; 
+            }*/  
+           for(var i=0; i < tempDocumentTyes.length; i++){
+                var tempName = tempDocumentTyes[i];
+                if(isMobile == false || (documentClassificationMap[tempName].Show_On_Mobile__c == true && isMobile == true)){
+                    //showing 'Installation' as default photo type for service contract 
+                    if(tempName=='Quality'){
+                       var tempId = documentClassificationMap[tempName].Id;
+                       documentTypesIdToNameMap[tempId] = tempName;
+                       selectOptions.options[0] = new Option(tempName, tempId);
+                     }
+                   }
+          
+            } 
+            
+            for(var i=0; i < tempDocumentTyes.length; i++){
+                var tempName = tempDocumentTyes[i];
+                if(isMobile == false || (documentClassificationMap[tempName].Show_On_Mobile__c == true && isMobile == true)){
+                 
+                    if(tempName!='Quality'){
+                     var tempId = documentClassificationMap[tempName].Id;
+                         documentTypesIdToNameMap[tempId] = tempName;
+                         selectOptions.options[count] = new Option(tempName, tempId);
+                         count ++;  
+                    }
+                  }
+                 
+            } 
+
+      
+            
+        }
+
+        function populateDocStatus(val,cell){
+            var docsStatus = '';
+            var docClassificationObj = documentClassificationMap[val];
+            var docSignStatus = "<select name='documentSignStatus' class='disableAfterUpload' id='documentSignStatusId'>";
+            var docSignOptions = '';
+            if(docClassificationObj != null){
+                var ptrDocRelList = docClassificationObj.Partner_Document_Relationships__r;
+                if(ptrDocRelList != null && ptrDocRelList.length > 0){
+                    var ptrDocRelObj = ptrDocRelList[0];
+                    if(ptrDocRelObj.Customer_signature_required__c == true || 
+                        ptrDocRelObj.Partner_signature_required__c == true || 
+                        ptrDocRelObj.SR_Ops_signature_required__c == true){
+                        if(docClassificationObj.Source_System__c == 'Proposal Tool'){
+                            docSignOptions += "<option value=Signed>Signed</option>";
+                        }else{
+                            docSignOptions += "<option value=''>----Select----</option>";
+                            docSignOptions += "<option value=Signed>Signed</option>";
+                            docSignOptions += "<option value=Unsigned>Unsigned</option>";
+                        }
+                    }
+                }
+
+                if(docSignOptions == ''){
+                    docSignStatus += "<option value='Not Applicable'>Not Applicable</option>";
+                }else{
+                    docSignStatus += docSignOptions;
+                }
+            }
+            cell.innerHTML = docSignStatus;
+        }
+
+        function createSynchronousCORSRequest(method, url){
+            var xhr;            
+            try{
+               xhr = new XMLHttpRequest();
+            }
+            catch (e)
+            {
+               // Internet Explorer Browsers
+               try
+               {
+                   ajaxRequest = new ActiveXObject("Msxml2.XMLHTTP");
+               }
+               catch (e)
+               {
+                   try
+                   {
+                       ajaxRequest = new ActiveXObject("Microsoft.XMLHTTP");
+                   }
+                   catch (e)
+                   {
+                       // Something went wrong
+                       alert("Your browser broke!");
+                       return false;
+                   }
+               }
+           }            
+            
+            if ("withCredentials" in xhr){
+              xhr.open(method, url, false);
+            }else if (typeof XDomainRequest != "undefined"){
+              if(msieversion() == 8 || msieversion() == 9)
+              {
+                 //xhr.onreadystatechange = function() { callback(xhr); };
+                 xhr.open("POST", url, true);
+                 xhr.setRequestHeader("Content-type", "text/xml; charset=utf-8");
+                 xhr.send(url);
+              }
+              else
+              {
+                 xhr = new XDomainRequest();
+                 xhr.open(method, url);
+              }
+            }else{
+              xhr = null;
+            }
+            return xhr;
+        }
+
+        function createCORSRequest(method, url){
+            var xhr = new XMLHttpRequest();
+            if ("withCredentials" in xhr){
+              xhr.open(method, url, true);
+            }else if (typeof XDomainRequest != "undefined"){
+              xhr = new XDomainRequest();
+              xhr.open(method, url);
+            }else{
+              xhr = null;
+            }
+            return xhr;
+        }
+        
+        function handleIE9FileSelect(input){        
+             if(msieversion() == 8 || msieversion() == 9)
+             {
+                try{
+                   var files = input.files;
+                   if (!files) {
+                    // workaround for IE9
+                    files = [];  
+                    files.push({
+                    name: input.value.substring(input.value.lastIndexOf("\\")+1),
+                    size: 0,  // it's not possible to get file size w/o flash or so
+                    type: input.value.substring(input.value.lastIndexOf(".")+1)
+                    });
+                    }
+                    }catch(error){alert(error);}
+                  
+                  storedFiles[files[0].name] = files[0];
+                  //fileNamesMap[files[0].name] = getTimestamp() + "." + files[0].name; 
+                  fileNamesMap[files[0].name] = getServerPhotoName(0, files[0].name);                                                      
+                  //var file_id = files[0].name.replace(".","_");
+                  addRow(files[0]);
+                  setProgress(files[0].name, 0, 'Waiting for upload');
+                  enableTableRow(files[0].name);
+                  enableButtons(); 
+               }       
+        }
+        
+        function handleFileSelect(evt){
+            try{
+                var files;
+                var fileCount ;
+                if(msieversion() == 8 || msieversion() == 9)
+                {
+                  
+                }
+                else
+                {
+                   files = evt.target.files;
+                   fileCount = files.length;                  
+                   if (fileCount > 0){
+                       if(fileCount > parseInt('{!$Label.PhotosPerUpload}'))
+                       {
+                          alert('You may only upload a maximum of ' + '{!$Label.PhotosPerUpload}' + ' photos at a time!');
+                       }
+                       else
+                       {
+                         for(var i = 0, f; f = files[i]; i++){
+                           if(f.name in storedFiles){
+                               alert('The File Already Selected');
+                           }else{
+                             if(validTypes.indexOf(f.type) == -1 || f.type == null || f.type == '')
+                             {
+                               alert('Invalid File Type for Upload: ' + f.name + ' of type: ' + f.type);
+                             }
+                             else
+                             {
+                                 storedFiles[f.name] = f;
+                                 //fileNamesMap[f.name] = getTimestamp() + "." + f.name; 
+                                 fileNamesMap[f.name] = getServerPhotoName(i, f.name);
+                                 //var file_id = f.name.replace(".","_");
+                                 addRow(f);
+                                 setProgress(f.name, 0, 'Waiting for upload');
+                                 enableTableRow(f.name);
+                                 enableButtons();
+                             }
+                           }
+                       }
+                       evt.target.files = null;
+                     }
+                   }
+                }
+            }catch(err){
+                alert(FileProcessError);
+            }           
+        }
+        
+        function getServerPhotoName(iPhoto, filename){
+           var photoIndex = '';
+           var iNew = parseInt('{!GenAssetPhotoCount}');
+           iNew += parseInt(iPhoto + 1);
+           if(iNew<100)
+           {photoIndex='0';}
+           if(iNew<10)
+           {photoIndex='00';}
+           photoIndex += String(iNew);
+           return '{!InstallAuditObj.Name}' + '_' + getTimestamp() + "_photo-" + photoIndex + "_" + filename; 
+        }
+
+        function Delete(){
+            
+            try{
+                var selFiles = selectedFileNames.split(',');
+                var childids = childElementIds.split(',');
+                if( selFiles.length -1 > 0)
+                {
+                    for(var i=0; i < selFiles.length -1 ; i++){
+                        var ch = document.getElementById(selFiles[i]);
+                        delete pregressbarFileMap[selFiles[i]];
+                        delete storedFiles[selFiles[i]];
+                        delete fileNamesMap[selFiles[i]];
+                        
+                        tableSelection.removeChild(ch);
+                    }
+                    selectedFileNames = '';
+                    childElementIds = '';
+                }else{  
+                    alert('Please select atleast one file for delete');
+                }
+            }catch(err){
+                alert(FailedToDeleteRow);
+            }   
+        }
+
+        function uploadFilesToS3(){
+
+            try{
+                window.location.href = "#TopOfUploadList";
+                var newDocuments = {};
+                var erroMsgMap = {};
+                var duplicateDocumentsFound = false;
+                for (file in storedFiles) { 
+                    var tempFile = storedFiles[file];
+                    var fileName = tempFile.name;                   
+                    var row = document.getElementById(fileName);
+                }   
+
+                var sfdcResult = '';
+
+                Visualforce.remoting.Manager.invokeAction('{!$RemoteAction.AuditPhotoUploaderController.checkexistingSRAttachments}', 
+                                                    parentObjectId,  newDocuments, function(result, event){                                                 
+                    if (event.status) {   
+                        if(result != null){
+                            var uploadDocuments = false;                             
+                            if(result.status == ''){
+                                uploadDocuments = true;
+                            }else if(result.status == 'Confirm'){
+                                uploadDocuments = confirm(result.errorMessage);                             
+                            }else if(result.status == 'Error'){
+                                alert(result.errorMessage);
+                            }
+                        }
+
+                        if(uploadDocuments == true){            
+                            if( existingSRAttachments != null && documentClassificationMap != null){
+                                disableButtons();
+                                setFileCount();
+                                var fileCount = 1;
+                                for (file in storedFiles) {
+                                    disableTableRow(file);                                                                        
+                                    uploadFile(storedFiles[file], file);
+                                    //document.getElementById('TopOfUploadList').innerHTML = 'Files Uploaded: ' + fileCount;
+                                    fileCount++;
+                                }                       
+                            }               
+                        }
+                    }else if (event.type === 'exception') {
+                        alert('Unable to verify the existing attachments in Salesforce: ' + event.message);
+                    } else {
+                        alert('Unable to verify the existing attachments in Salesforce: ' + event.message);
+                    }
+                },
+                {
+                    escape: true
+                }); 
+
+            }catch(error){
+                alert('Salesforce is unable to upload the files. Please restart the file uploader window. ' + error);
+            }
+        }                
+        
+        /**
+         * Execute the given callback with the signed response.
+         */
+        function executeOnSignedUrl(file, callback)
+        {  
+            var amazonS3FileName = fileNamesMap[file.name]; 
+            Visualforce.remoting.Manager.invokeAction('{!$RemoteAction.AuditPhotoUploaderController.getS3ProxyInfoForPut}', 
+                s3FolderNameStr, amazonS3FileName, file.type,  
+                function(result, event){
+                    if (event.status) {
+                        var str = result;
+                        callback(result);
+                        
+                    } else if (event.type === 'exception') {
+                        alert('Error Message: ' + event.message);
+                    } else {
+                        alert('Message: ' + event.message);
+                    }
+                }, 
+                {escape: true}
+            );
+        }
+        
+        function uploadFile(file, file_id){ 
+            executeOnSignedUrl(file, function(requestInfo){
+            uploadToS3Synchronously(file, requestInfo, file_id);
+            });
+        }
+
+        /**
+         * Use a CORS call to upload the given file to S3. Assumes the url
+         * parameter has been signed and is accessible for upload.
+         */
+        function uploadToS3Synchronously(file, requestInfo, file_id){            
+            for(var i=0; i <= 3; i++){
+                var fileName = file.name; 
+                var fileSize = file.size;
+                var fileType = file.type;
+                var url = requestInfo.requestEndpoint.replace(/amp;/g,'');
+
+//NEWCODE
+  var global_i = 10000; //initialize your 'for loop stepper' (i) here.
+  var xhr;
+  var repeater = new this.RepeatingOperation(function() {
+
+                xhr = createSynchronousCORSRequest('PUT', url);
+
+    if (--global_i >= 0){     //Your for loop conditional goes here.
+      repeater.step();        //while we still have items to process,
+                              //run the next iteration of the loop.
+    }
+    else {
+       // alert("we are done");  //when this line runs, the for loop is complete.
+    }
+  }, 2);                   //10 means process 10 heavytask(), then
+                            //yield back to the browser, and have the
+                            //browser call us right back.
+
+  repeater.step();          //this command kicks off the recursive closure.
+
+//END NEWCODE
+
+
+                if (!xhr){
+                    setProgress(file.name, 0, 'CORS not supported');
+                    break;
+                }
+                else{
+                requestInfo.accessKey
+                try{
+                    xhr.setRequestHeader('Content-Type', file.type);
+                    xhr.setRequestHeader('x-amz-date',requestInfo.timestamp);
+                    xhr.setRequestHeader('authorization','AWS '+ requestInfo.accessKey + ':' + requestInfo.signature);
+                    xhr.send(file);
+                    }
+                    catch(e){                   
+                      alert('Currently cannot use IE9 and prior versions to upload photos.' + e);
+                    }
+                 
+                    if(xhr.status == 200){
+                       var etagCount = etags.length;
+                       var etag = xhr.getResponseHeader("ETag");
+                       etags[etagCount] = etag;                       
+                       upsertRecordsSynchronously(fileName);
+                       processedFileCount -- ;  
+                       var tempStatus = 'Upload completed.';
+                       if(processedFileCount > 0){
+                            tempStatus = 'In progress ... '
+                       }
+                       setProgress(fileName, 100, tempStatus);
+                       if(processedFileCount <= 0){
+                            deleteFilesInCache();
+                       }
+                       break;
+                    }else if(xhr.status >= 400){
+                        if(i >= 3){
+                            alert('Salesforce is unable to upload ' + fileName + '. Please close this window and retry again.  Error Status: ' + xhr.status);
+                        }
+                    }        
+                }
+            }
+        }
+
+
+        /**
+         * Use a CORS call to upload the given file to S3. Assumes the url
+         * parameter has been signed and is accessible for upload.
+         */
+        function uploadToS3(file, requestInfo, file_id){
+            var fileName = file.name;
+            var fileSize = file.size;
+            var fileType = file.type;
+            var file_id = file.name.replace(".","_");
+            var url = requestInfo.requestEndpoint.replace(/amp;/g,'');
+            var xhr = createCORSRequest('PUT', url);
+            if (!xhr){
+                setProgress(file.name, 0, 'CORS not supported');
+            }
+            else{
+                xhr.onload = function(){
+                    if(xhr.status == 200){
+                        setProgress(file_id, 100, 'Upload completed.');
+                        var etagCount = etags.length;
+                        var etag = xhr.getResponseHeader("ETag");
+                        etags[etagCount] = etag;
+                        upsertRecords();
+                    }else if(xhr.status >= 400){
+                        //uploadFilesToS3();
+                        //setProgress(0, 'Upload error: ' + xhr.status);
+                    }
+                };
+                xhr.onerror = function(){
+                setProgress(file_id, 0, 'XHR error.');
+            };
+        
+            xhr.upload.onprogress = function(e){
+                if (e.lengthComputable) 
+                {
+                    var percentLoaded = Math.round((e.loaded / e.total) * 100);
+                    setProgress(file_id, percentLoaded, percentLoaded == 100 ? 'Finalizing.' : 'Uploading.');
+                }
+            };
+            xhr.setRequestHeader('Content-Type', file.type);
+            xhr.setRequestHeader('x-amz-date',requestInfo.timestamp);
+            xhr.setRequestHeader('authorization','AWS '+ requestInfo.accessKey + ':' + requestInfo.signature);
+            xhr.send(file);
+          }
+        }
+
+        function upsertRecordsSynchronously(fileName){
+            var tempFile = storedFiles[fileName];
+            var fileName = tempFile.name;
+            var amazonS3FileName = fileNamesMap[tempFile.name];
+            var fileSize = bytesToSize(tempFile.size);
+            var contactDocumentType = document.getElementById(fileName).children[1].children[0].value;
+             var contactDocumentTypeName = documentTypesIdToNameMap[contactDocumentType];
+            //var contactDocumentType = 'Other'; //document.getElementById(fileName).children[2].children[0].value;  
+            var contactDocumentWetSign = 'Not Applicable'; //document.getElementById(fileName).children[3].children[0].value;
+            //
+            Visualforce.remoting.Manager.invokeAction('{!$RemoteAction.AuditPhotoUploaderController.upsertSRGenAssetAttachment}', 
+               parentObjectId, fileName, amazonS3FileName, contactDocumentType, 
+               contactDocumentTypeName  ,fileSize, contactDocumentWetSign,  
+               function(result, event){
+                   if (event.status) {
+                       processResponse(result);
+                   } else if (event.type === 'exception') {
+                       alert('Error Message: ' + event.message);
+                   } else {
+                       alert('Message: ' + event.message);
+                   }
+               }, 
+               {escape: true}
+           );
+
+        }
+        
+        function setFileCount(){
+            processedFileCount = 0;
+            for (file in storedFiles) {
+                processedFileCount ++;
+            }
+        }               
+        
+
+        function deleteFilesInCache(){
+            var countFiles = 0;
+            for (file in storedFiles) {
+                countFiles ++;
+            }
+
+            if(countFiles != etags.length){
+                return countFiles;
+            }
+            
+            etags = []; 
+            storedFiles = {};
+            processedFileCount = 0;
+            fileNamesMap = new Array();     
+        }
+
+
+        function upsertRecords(){
+            var countFiles = 0;
+            for (file in storedFiles) {
+                countFiles ++;
+            }
+
+            if(countFiles != etags.length){
+                return countFiles;
+            }
+            
+            for (file in storedFiles) {
+                var tempFile = storedFiles[file];
+                var fileName = tempFile.name;
+                var amazonS3FileName = fileNamesMap[tempFile.name];
+                var fileSize = bytesToSize(tempFile.size);
+                var contactDocumentType = document.getElementById(fileName).children[1].children[0].value;  
+                var contactDocumentWetSign = document.getElementById(fileName).children[3].children[0].value;
+                Visualforce.remoting.Manager.invokeAction('{!$RemoteAction.AuditPhotoUploaderController.upsertSRGenAssetAttachment}', 
+                    parentObjectId, fileName, amazonS3FileName, contactDocumentType, 
+                    documentTypesIdToNameMap[contactDocumentType] ,fileSize, contactDocumentWetSign,  
+                    function(result, event){
+                        if (event.status) {
+                            processResponse(result);
+                        } else if (event.type === 'exception') {
+                            alert('Error Message: ' + event.message);
+                        } else {
+                            alert('Message: ' + event.message);
+                        }
+                    }, 
+                    {escape: true}
+                );
+            }
+            etags = []; 
+            storedFiles = {};
+            processedFileCount = 0;
+            fileNamesMap = new Array();
+        }
+
+        function setProgress(file_id, percent, statusLabel){
+            var tempFileName = getModifiedFileName(file_id);
+            var progress = document.querySelector('#PB_' + tempFileName  + '> ' + ' .percent');
+            progress.style.width = percent + '%';
+            if(percent == 0)
+            {
+               //progress.textContent = percent + '%';
+               progress.textContent = 'Not Started';
+            }
+            else
+            {
+               progress.textContent = 'Completed';
+                           refreshListOfUploadedPhotos();
+            }
+            document.getElementById('PB_'+tempFileName).className = 'loading';
+            document.getElementById('status').textContent = statusLabel;
+         }
+    
+         function dragEnter(evt) {
+             if(msieversion() == 8 || msieversion() == 9)
+             {
+                evt.cancelBubble = true;
+                evt.returnValue = false;
+             }
+             else
+             {
+                evt.stopPropagation();
+                evt.preventDefault();
+             }
+         }
+         
+         function dragExit(evt) {
+             if(msieversion() == 8 || msieversion() == 9)
+             {
+                evt.cancelBubble = true;
+                evt.returnValue = false;
+             }
+             else
+             {         
+                evt.stopPropagation();
+                evt.preventDefault();
+             }
+         }
+         
+         function dragOver(evt) {
+             if(msieversion() == 8 || msieversion() == 9)
+             {
+                evt.cancelBubble = true;
+                evt.returnValue = false;
+             }
+             else
+             {         
+                evt.stopPropagation();
+                evt.preventDefault();
+             }
+         }
+            
+        function drop(evt) {
+            var files;
+            var fileCount;
+            if(msieversion() == 8 || msieversion() == 9)
+            {
+               alert('File drag and drop is not supported on Internet Explorer 9 and prior versions.  Please use an alternate browser.');                                   
+            }
+            else
+            {                
+               evt.stopPropagation();
+               evt.preventDefault();
+               files = evt.dataTransfer.files;
+               fileCount = files.length;                
+               var count = 0;
+               // Only call the handler if 1 or more files was dropped.
+               if (fileCount > 0){
+               
+                  if(fileCount > parseInt('{!$Label.PhotosPerUpload}'))
+                  {
+                     alert('You may only upload a maximum of ' + '{!$Label.PhotosPerUpload}' + ' photos at a time!');
+                  }
+                  else
+                  {
+               
+                for(var i = 0, f; f = files[i]; i++){
+                    if(f.name in storedFiles){
+                        alert('The File Already Selected');
+                    }
+                    else{
+                        if(validTypes.indexOf(f.type) == -1 || f.type == null || f.type == '')
+                        {
+                           alert('Invalid File Type for Upload: ' + f.name + ' of type: ' + f.type);
+                        }
+                        else
+                        {
+                           storedFiles[f.name] = f;
+//                         fileNamesMap[f.name] = getTimestamp() + "." + f.name; 
+                           fileNamesMap[f.name] = getServerPhotoName(i, f.name);
+                           addRow(f);
+                           setProgress(f.name, 0, 'Waiting for upload');
+                           enableTableRow(f.name);
+                           enableButtons();
+                        }
+                    }
+                   }
+                 }
+               }
+            }
+        }
+
+        function processResponse(response){
+           var status = response.status;
+           var fileName = response.fileName;               
+           delete storedFiles[fileName];
+           delete pregressbarFileMap[fileName];
+           delete fileNamesMap[fileName];
+           
+           var count = 0;
+           for (file in storedFiles) {
+               count += 1;
+               break;
+           }
+
+           if(count == 0){
+               if(baseURL != null && baseURL != '' && parentObjectId != null && parentObjectId != ''){ 
+                    //window.opener.location.href= baseURL + '/' + parentObjectId;
+                    //window.opener.parent.location.href= baseURL + '/' + proposalIdVal;   
+                    //var tempURLStr = baseURL + '/' + parentObjectId;   
+                    //DO not navigate away from milestoneProof at this time!   
+                    //parentWin.location.href = tempURLStr;                 
+                }
+           }
+        }
+    
+        function getFileType(fileName){
+        
+            try{
+                var fileType = '';
+                if(fileName == null || fileName == ''){
+                    return fileType;
+                }
+                
+                var extension = fileName.substr( (fileName.lastIndexOf('/') +1) );
+                switch(extension) {
+                    case 'jpg':
+                        fileType = 'jpg';
+                        break;
+                    case 'png':
+                        fileType = 'png';
+                        break;
+                    case 'gif':
+                        fileType = 'gif';
+                        break;                     
+                    case 'zip':
+                        fileType = 'zip';
+                        break; 
+                    case 'rar':
+                        fileType = 'rar';
+                        break; 
+                    case 'pdf':
+                        fileType = 'pdf';
+                        break; 
+                    case 'txt':
+                        fileType = 'txt';
+                        break; 
+                    default:
+                        fileType = '';
+                }
+                return fileType;
+            }catch(error){
+                alert('Unable to get the file type.');
+            }
+        }
+    
+        function addRow(file){
+            var newRow = $('#filesTableId tr:last').clone(true).insertAfter('#filesTableId tr:last');
+            var row= $('#filesTableId tr:last');
+            if(row[0].style.display == "none"){
+                var checkBox = row.find('input');
+                var dropDown = row.find('select');
+                dropDown.bind('change', function(event){
+                    var child = document.getElementById($(this).parent().parent()[0].id);
+                    var selectedtext = documentTypesIdToNameMap[this.value];
+                    //var values = populateDocStatus(selectedtext,child.cells[3]);
+                });
+                
+                checkBox.bind('click', function(event) {
+                    var child = document.getElementById($(this).parent().parent()[0].id);
+                    var fileName = child.id;
+                    if(this.checked)
+                    {
+                        if(child == null || child.id == null)
+                            return;
+                        
+                        childElementIds += child + ',';    
+                        selectedFileNames +=  fileName + ',' ;
+                        var olddiv = document.getElementById($(this).parent().parent().parent()[0].id);
+                        tableSelection = olddiv;
+                    }else{
+                        childElementIds = childElementIds.replace(child+',', '');
+                        selectedFileNames = selectedFileNames.replace(fileName+',','');
+                    }
+                });
+            }
+            row[0].style.display="";
+            row[0].id = file.name;
+            row[0].cells[0].innerHTML = file.name;
+            row[0].cells[2].innerHTML = bytesToSize(file.size);
+            var tempFileName = createProgressbarFileName(file.name);
+            row[0].cells[3].innerHTML = '<div class="loading" id="PB_'+ tempFileName +'"><div class="percent">0%</div></div>';
+        }
+    
+        function bytesToSize(bytes) {
+            var sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB'];
+            if (bytes == 0) return 'n/a';
+            var i = parseInt(Math.floor(Math.log(bytes) / Math.log(1024)));
+            return Math.round(bytes / Math.pow(1024, i), 2) + ' ' + sizes[i];
+        }
+            
+        function hasSize(hasObj){
+            var element_count = 0;
+            for(var e in hasObj){
+                if(hasObj.hasOwnProperty(e)){
+                    element_count++;
+                }
+            }
+            return element_count;
+        }
+            
+        function getTimestamp(){
+            var now = new Date();
+            var year = now.getUTCFullYear();
+            var month = now.getUTCMonth();
+            var day= now.getUTCDay();
+            var hour= now.getUTCHours();
+            var mins= now.getUTCMinutes();
+            var secs= now.getUTCSeconds();
+            var dateString = year + "" + month + "" + day + "" + hour + "" + mins + "" + secs;
+            return dateString;
+        }
+     
+        function getModifiedFileName(fileName){
+            //var tempFileName = fileName.replace(/\./g, "_").replace(/\s/g, "X").replace(/-/g, "__");
+            var tempFileName = pregressbarFileMap[fileName];
+            return tempFileName;
+        }   
+
+        function createProgressbarFileName(fileName){
+            //var tempFileName = fileName.replace(/\./g, "_").replace(/\s/g, "X").replace(/-/g, "__");
+            var tempFileName = 'Progressbar_' + runningIndex;
+            pregressbarFileMap[fileName] = tempFileName;
+            runningIndex ++;
+            return tempFileName;
+        } 
+         
+    
+        function disableTableRow(fileName){
+            //document.getElementById(fileName).children[0].children[0].setAttribute('disabled', 'disabled');
+            //document.getElementById(fileName).children[2].children[0].setAttribute('disabled', 'disabled');
+            //document.getElementById(fileName).children[3].children[0].setAttribute('disabled', 'disabled');
+        }
+
+        function enableTableRow(fileName){
+            //document.getElementById(fileName).children[0].children[0].removeAttribute('disabled');
+            //document.getElementById(fileName).children[2].children[0].removeAttribute('disabled');
+            //document.getElementById(fileName).children[3].children[0].removeAttribute('disabled');
+        }
+        
+        function disableButtons(){
+            document.getElementById("uploadButton").disabled = true;
+//            document.getElementById("uploadButton").setAttribute('disabled', 'disabled');
+            //document.getElementById("deleteButton").setAttribute('disabled', 'disabled');
+        }
+        
+        function enableButtons(){
+            document.getElementById("uploadButton").disabled = false;
+//            document.getElementById("uploadButton").removeAttribute('disabled');
+            //document.getElementById("deleteButton").removeAttribute('disabled');
+        }   
+
+    function checkUncheckAll(chkbx)
+    {
+        var inputElem = document.getElementsByTagName("input");
+        for(var i=0; i<inputElem.length; i++)
+        {
+            if(inputElem[i].type == "checkbox" && inputElem[i].name == 'delchkbx')
+            { 
+                inputElem[i].checked = chkbx.checked
+            }
+        }
+       
+    }    
+    </script>
+
+</apex:component>

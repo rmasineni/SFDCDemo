@@ -1,0 +1,34 @@
+<apex:page standardController="Contact" extensions="PartnerTermsConditionsExt" showHeader="false" sidebar="false">
+    <apex:form >
+
+       <apex:outputText rendered="{!displayTandCURL}">
+                <script type="text/javascript">
+                    window.top.opener.refreshParent("{!redirectURL}");
+                    window.top.close();
+                </script>
+        </apex:outputText>
+
+        <apex:outputText rendered="{!displayIntermediateURL}">
+                <script type="text/javascript">
+                    window.top.opener.location.href = '{!redirectURL}'; 
+                    window.top.close(); 
+                </script>
+        </apex:outputText>
+        
+        <apex:pagemessages />
+        <apex:commandButton action="{!declineTermsandConditions}" value="Return" rendered="{!!renderTermsConditions}"/>
+        <apex:pageBlock title="Terms and Conditions" rendered="{!renderTermsConditions}" >
+            <apex:pageBlockButtons location="bottom">
+                 <apex:commandButton action="{!acceptTermsandConditions}" value="Accept" />
+                 <apex:commandButton onclick="window.close()" value="Decline" />
+           </apex:pageBlockButtons>
+           <apex:pageBlockSection columns="1"> 
+                  <apex:dataTable value="{!PartnerTermsConditions}" var="PartnerTermsCondition" >
+                    <apex:column >
+                        <apex:outputText value="{!PartnerTermsCondition.TermsConditionsInfo__c}" escape="false"/>
+                    </apex:column>
+                  </apex:dataTable>
+           </apex:pageBlockSection>
+        </apex:pageBlock>
+     </apex:form>
+</apex:page>

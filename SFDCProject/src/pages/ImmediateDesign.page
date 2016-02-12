@@ -1,0 +1,399 @@
+<apex:page controller="ImmediateDetailExtension">
+<apex:includeScript value="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js" loadOnReady="false"></apex:includeScript>
+    <apex:stylesheet value="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/themes/ui-lightness/jquery-ui.css"></apex:stylesheet>
+    <apex:stylesheet value="{!URLFOR($Resource.jquery, '/css/smoothness/jquery-ui-1.10.3.custom.min.css')}"/>
+    <apex:includeScript value="{!URLFOR($Resource.jquery, '/js/jquery-1.9.1.js')}"/>  
+    <apex:includeScript value="{!URLFOR($Resource.jquery, '/js/jquery-ui-1.10.3.custom.min.js')}"/>
+ <link
+            href='https://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/themes/smoothness/jquery-ui.css'
+            rel='stylesheet' type='text/css' />
+            <style type="text/css">                    
+            body .bPageBlock .pbBody .red .pbSubheader {
+              background-color: White !important; //
+              display: inline;
+              font-family: Arial, Helvetica, sans-serif;
+              font-weight: 500;
+              line-height: 1.1;
+              color: #27282E !important;
+              margin-top: 20px;
+              margin-bottom: 10px;
+              font-size: 1.0em;
+              box-sizing: border-box;
+            }                                   
+            body .bPageBlock,body #bodyCell .bResource .secondaryPalette,body .secondaryPalette.bPageBlock,body .individualPalette .secondaryPalette.bPageBlock,body .bodyDiv .genericTable,body .genericPageBlockTable,body .bodyDiv .bSubBlock,body .bComponentBlock .bPageBlock,body .bMyDashboard .bPageBlock,body.rlHoverFrame .bPageBlock,body.subjectSelectionPopup div.choicesBox,body.lookupTab .secondaryPalette.bPageBlock,body.popupTab .secondaryPalette.bPageBlock,body.UserTagStatsPage .secondaryPalette.bPageBlock
+                {
+                background-color: White !important;
+            }     
+            .popup
+            {
+            background-color: white;
+            border-width: 6px;
+            border-style: solid;
+            z-index: 9999;
+            left: 30%;
+            padding:10px;
+            position: absolute;
+            width: 70%;
+            margin-left: -210px;
+            top:80px;
+            height: 50%;
+            overflow: scroll;
+            }
+            
+            .popupBg
+            {
+            background-color:black;
+            opacity: 0.20;
+            filter: alpha(opacity = 70);
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: 9998;
+            }
+
+        .popupBackgroundGrayOut {
+             background-color:#0D0D0E;
+             min-height:500px !important;
+             opacity: 0.60;
+             filter: alpha(opacity = 60);
+             width: 100%;
+             top: 0;
+             left: 0;
+             z-index: 995;
+             position: absolute;
+             -webkit-border-radius: 7px; 
+             -moz-border-radius: 7px; 
+             border-radius: 7px;
+         }          
+        </style>
+   
+<script>
+setTimeout(function(){
+   window.location.reload(1);
+}, 900000);
+</script>
+  <apex:outputPanel >
+        <apex:actionstatus id="actnStat" startText="Processing.."/>
+            <div class="popupBackground" style="height:400px !important ; width:100% !important ;background-color:#CDE8F0 !important;" id="LoadOverlay">
+                <div class="popupPanel">
+                   <table border="0" width="100%" height="100%">
+                        <tr><td align="center"><img src="{!URLFOR($Resource.jquery, '/images/circleIndicator.gif')}"/>
+                            </td>
+                        </tr>
+                         <tr><td align="center" style="font-family: Calibri; font-size: 13px; font-weight: normal;"><b>Please Wait ...</b></td>
+                         </tr>  
+                   </table>
+                </div>
+            </div>   
+    </apex:outputPanel>
+    
+    <div id="mainForm" style="display:none;height:90%">
+<apex:form >
+  <div id="Reset">Page will refresh in 
+      <span id="countdown">60</span>
+      Seconds or click &nbsp;
+   <apex:commandButton value="Refresh" onclick="document.getElementById('countdown').innerHTML = 60" action="{!RefereshInterval}" reRender="leadsPageBlock,updateCounter"/>   
+  
+  </div>
+  
+ 
+    <apex:pageBlock id="leadsPageBlock">
+        <!-- 
+        <apex:pageBlockTable value="{!myWrappers}" var="l"> 
+            <apex:column > 
+            <apex:pageBlockTable value="{!l.leadList}" var="lobj">          
+            <apex:column headerValue="Name">           
+            <apex:commandLink onclick="window.open('/{!lobj.id}')">
+            {!lobj.name}
+            </apex:commandLink>            
+            </apex:column>       
+            </apex:pageBlockTable>  
+            </apex:column>   
+            <apex:column > 
+            <apex:pageBlockTable value="{!l.opptyList}" var="oobj">          
+            <apex:column headerValue="Name">           
+            <apex:commandLink onclick="window.open('/{!oobj.id}')">
+            {!oobj.name}
+            </apex:commandLink>            
+            </apex:column>       
+            </apex:pageBlockTable>  
+            </apex:column>   
+        </apex:pageBlockTable>
+         -->
+         <apex:pageblocksection columns="1">
+            <apex:outputpanel >
+                <div>
+                    <table width="100%">
+                        <tr>
+                            <td align="right">&nbsp;</td>
+                            <td  align="center" width="100%">
+                                <apex:outputLabel style="font-weight:bold" value="Search By " />
+                                    <apex:selectList value="{!searchColumnName}" id="searchColumnName" size="1">
+                                        <apex:selectOptions value="{!SearchBy}" />
+                                    </apex:selectList>    
+                                
+                                &nbsp;&nbsp;&nbsp;
+                                <apex:inputText id="searchValue" value="{!searchValue}" />   
+                                &nbsp;&nbsp;&nbsp;
+                                <apex:commandButton action="{!doSearch}" value="  Search  " />
+                                <!-- <apex:commandButton action="{!doNew}" value="  New Opportunity  " />-->                   
+                            </td>
+                        </tr>
+                    </table>
+                <div align="right">
+                </div>
+                </div>
+            </apex:outputpanel>
+        </apex:pageblocksection>  
+        
+        <!--
+        <apex:outputPanel id="designButton">
+                    <div class="menuButton" id="DesignActions">
+                    <apex:outputPanel layout="none">
+                        <div class="menuButtonButton" id="DesignActionsButton" tabindex="0">
+                        <span class="menuButtonLabel" id="DesignActionsLabel">Design</span></div>
+                         
+                        <div class="menuButtonMenu" id="DesignActionsMenu">
+                        <apex:outputPanel layout="none">
+                         <apex:commandLink action="{!redirectDesignTool}" rerender="popup,TermsandConditions">New Project
+                         </apex:commandLink>    
+                         <apex:commandLink action="{!redirectDesignToolSaveProject}" rerender="popup,TermsandConditions">Saved Project
+                         </apex:commandLink>                                           
+                        </apex:outputPanel></div>
+                    </apex:outputPanel></div>
+                    </apex:outputPanel>
+                    -->
+                            
+                   
+               <apex:variable var="index" value="{!1}"/>     
+         <apex:pageBlockTable value="{!myWrappers}" var="mywrap"> 
+       <!--  <apex:column headerValue="Name">
+         <apex:commandLink onclick="window.open('/{!mywrap.id}')">
+            {!mywrap.name}
+            </apex:commandLink> 
+         </apex:column>  -->
+         <!--<apex:column headerValue="Select">
+                <apex:inputCheckbox value="{!mywrap.IsSelected}">
+                    <apex:actionSupport event="onchange" rerender="pbsMultiSite" action="{!clearOthers}" reRender="leadsPageBlock" >
+                        <apex:param value="{!mywrap.Id}" name="selectedId" assignTo="{!SelectedOpportunityId}"/>
+                    </apex:actionSupport>
+                </apex:inputCheckbox>
+            </apex:column> -->
+            <apex:column >
+                  <apex:facet name="header">Action</apex:facet>
+                  <apex:outputPanel id="designButton">
+                    <div class="menuButton" id="DesignActions{!index}">
+                    <apex:outputPanel layout="none">
+                        <div class="menuButtonButton" id="DesignActions{!index}Button" tabindex="0">
+                        <span class="menuButtonLabel" id="DesignActions{!index}Label">Design</span></div>
+                         
+                        <div class="menuButtonMenu" id="DesignActions{!index}Menu">
+                        <apex:outputPanel layout="none">
+                         <apex:commandLink action="{!redirectDesignTool}" rerender="popup,TermsandConditions">New Project
+                         <apex:param name="selectedOppId" value="{!mywrap.id}" assignTo="{!selectedOppId}"/>
+                         </apex:commandLink>    
+                         <apex:commandLink action="{!redirectDesignToolSaveProject}" rerender="popup,TermsandConditions">Saved Project
+                         <apex:param name="selectedOppId" value="{!mywrap.id}" assignTo="{!selectedOppId}"/>
+                         </apex:commandLink>                                           
+                        </apex:outputPanel></div>
+                    </apex:outputPanel></div>
+                    </apex:outputPanel>
+                 <script type="text/javascript">
+                        var idaction = 'DesignActions'+{!index};
+                        new MenuButton(idaction, false); 
+                    </script>           
+
+                 <apex:variable var="index" value="{!index + 1}"/>
+                 </apex:column>
+          <apex:column >
+                 <apex:facet name="header">Name</apex:facet>
+                 
+                 <!--<apex:commandLink action="{!redirectDesignTool}" styleClass="btn" rerender="popup,TermsandConditions">New Project
+                 <apex:param name="selectedOppId" value="{!mywrap.id}" assignTo="{!selectedOppId}"/>
+                 </apex:commandLink>-->
+               <a href='#' onclick="validateOpportunity('{!mywrap.id}')"><apex:outputtext value="{!mywrap.name}"></apex:outputtext></a>
+               <!--  <a href='{!urlPrefix}/{!mywrap.id}' onclick="redirect('{!mywrap.id}')"><apex:outputtext value="{!mywrap.name}"></apex:outputtext></a> -->
+        
+         </apex:column>    
+          <apex:column headerValue="Sales Partner" value="{!mywrap.SalesPartner}"/>   
+    <!--  <apex:column headerValue="Contact Name" value="{!mywrap.OppContactRoleName}"/> -->     
+    <!--      <apex:column headerValue="Site Designer" value="{!mywrap.SiteDesigner}"/> -->
+          <apex:column headerValue="Sales Rep" value="{!mywrap.SalesRep}"/>   
+          <apex:column headerValue="Site Design Priority" value="{!mywrap.SiteDesignPriority}"/>
+          <apex:column headerValue="Site Design Status" value="{!mywrap.SiteDesignStatus}"/>
+          <apex:column headerValue="Ready For" value="{!mywrap.ReadyFor}"/>   
+          <apex:column headerValue="Site Design Requested" value="{!mywrap.SiteDesignRequestedDT}"/>   
+        <!--  <apex:column headerValue="Last Modified Date" value="{!mywrap.lmDT}"/> -->  
+        <!--  <apex:column headerValue="Created Date" value="{!mywrap.CDT}"/> -->
+        <!--  <apex:column headerValue="Created Date">   
+          <apex:outputText value="{0,date,E MMM dd hh:mm:ss a yyyy}"> <apex:param value="{!mywrap.cdate}" /> </apex:outputText> 
+        <!--  <apex:outputText value="{0,date,M/d/yyy h:mm a}"> <apex:param value="{!mywrap.cdate}" /> </apex:outputText> -->   
+       <!--   </apex:column>    
+      <!--    <apex:column headerValue="Last Modified Date" value="{!mywrap.ldate}"/> -->    
+      
+
+         </apex:pageBlockTable> 
+                                        
+              <apex:outputPanel id="popup">
+                             <apex:outputText rendered="{!displayPopup}">
+                                <script type="text/javascript">
+                                    var errorMessageStr = '{!displayPopupMessage}';
+                                    alert(errorMessageStr);
+                                    refreshList();
+                                </script>
+                            </apex:outputText> 
+                             <apex:outputText rendered="{!displayWarningMessage}">
+                                <script type="text/javascript">
+                                    var alertMessage = '{!displayPopupMessage}';
+                                    var isConfirmed = window.confirm(alertMessage);
+                                    if(isConfirmed == true){
+                                          window.open('{!redirectURL}', '_blank');
+                                        //window.top.location.href = '{!redirectURL}';
+                                    }
+                                    
+                                    refreshList();
+                                   
+                                </script>
+                            </apex:outputText> 
+                            <apex:outputText rendered="{!displayURL}">
+                                <script type="text/javascript">
+                                  window.open('{!redirectURL}', '_blank');
+                                //  window.top.location.href = '{!redirectURL}';
+                                  refreshList();
+                                </script>
+                            </apex:outputText>   
+                          
+                            <apex:outputText rendered="{!displaySalesRepURL}">
+                                <script type="text/javascript">
+                                    window.open('{!SalesRepURL}', '_blank');
+                                    refreshList();
+                                    //window.top.location.href = '{!SalesRepURL}';
+                                </script>
+                            </apex:outputText>                       
+                        </apex:outputPanel> 
+       <apex:outputPanel layout="block">
+                <br></br>               
+                Total Records Found: <apex:outputText rendered="{!IF(totalCount==10000,true,false)}">10000 +</apex:outputText><apex:outputText rendered="{!IF(totalCount < 10000,true,false)}">{!totalCount}</apex:outputText>  
+                <apex:image url="/img/search_prevarrow_disabled.gif" styleClass="prevArrow" rendered="{!NOT(HasPrevious)}"/>  
+                <apex:image url="/img/search_prevarrow.gif" title="First Page" styleClass="prevArrow" rendered="{!HasPrevious}"/>  
+                <apex:commandLink action="{!first}" title="First Page" value="First Page" rendered="{!HasPrevious}"/>  
+                <apex:outputPanel styleClass="pShowLess noLink" style="color:grey" rendered="{!NOT(HasPrevious)}">First Page</apex:outputPanel>           
+
+                <apex:image url="/img/search_prevarrow_disabled.gif" styleClass="prevArrow" rendered="{!NOT(HasPrevious)}"/>  
+                <apex:image url="/img/search_prevarrow.gif" title="Previous Page" styleClass="prevArrow" rendered="{!HasPrevious}"/>  
+                <apex:commandLink action="{!Previous}" title="Previous Page" value="Previous Page" rendered="{!HasPrevious}"/>  
+                <apex:outputPanel styleClass="pShowLess noLink" style="color:grey" rendered="{!NOT(HasPrevious)}">Previous Page</apex:outputPanel>           
+                &nbsp;({!IF(PageNumber == 1,1,((PageNumber -1) )+1)}-{!totalPageCount})&nbsp;  
+                <apex:outputPanel styleClass="pShowLess noLink" style="color:grey" rendered="{!NOT(HasNext)}">Next Page</apex:outputPanel>           
+                <apex:commandLink title="Next Page" value="Next Page" rendered="{!HasNext}" action="{!Next}"/>&nbsp;  
+                <apex:image url="/img/search_nextarrow.gif" title="Next Page" styleClass="nextArrow" rendered="{!HasNext}"/>  
+                <apex:image url="/img/search_nextarrow_disabled.gif" rendered="{!NOT(HasNext)}"/>            
+                <apex:outputPanel styleClass="pShowLess noLink" style="color:grey" rendered="{!NOT(HasNext)}">Last Page</apex:outputPanel>           
+                <apex:commandLink title="Last Page" value="Last Page" rendered="{!HasNext}" action="{!last}"/>&nbsp;  
+                <apex:image url="/img/search_nextarrow.gif" title="Last Page" styleClass="nextArrow" rendered="{!HasNext}"/>  
+                <apex:image url="/img/search_nextarrow_disabled.gif" rendered="{!NOT(HasNext)}"/>
+            </apex:outputPanel> 
+          
+          
+          <apex:outputPanel id="TermsandConditions">
+            <apex:outputPanel styleClass="popupBg" layout="block" rendered="{!displayTandCURL}"/>
+            <apex:outputPanel styleClass="popup" layout="block" rendered="{!displayTandCURL}">
+                <apex:pageBlock title="Terms and Conditions">
+                    <apex:pageBlockButtons location="bottom">
+                         <apex:commandButton action="{!acceptTermsandConditions}" value="Accept"/>
+                         <apex:commandButton action="{!declineTermsandConditions}" value="Decline"/>
+                   </apex:pageBlockButtons>
+                   <apex:pageBlockSection columns="1"> 
+                          <apex:dataTable value="{!PartnerTermsConditions}" var="PartnerTermsCondition">
+                            <apex:column >
+                                <apex:outputText value="{!PartnerTermsCondition.TermsConditionsInfo__c}" escape="false"/>
+                            </apex:column>
+                          </apex:dataTable>
+                   </apex:pageBlockSection>
+                </apex:pageBlock>
+            </apex:outputPanel>
+        </apex:outputPanel>                            
+          
+    </apex:pageBlock>  
+    <!--      
+    <apex:pageBlock title="Opportunities">
+        <apex:pageBlockTable value="{!Opptys}" var="o">            
+            <apex:column headerValue="Name">           
+            <apex:commandLink onclick="window.open('/{!o.id}')">
+            {!o.name}
+            </apex:commandLink>            
+            </apex:column>
+            <apex:column value="{!o.account.billingstreet}"/>
+            <apex:column value="{!o.account.billingcity}"/>
+        </apex:pageBlockTable>
+        <apex:panelGrid columns="4">
+    <apex:commandLink action="{!firstOppty}" >First</apex:commandlink>
+    <apex:commandLink action="{!previousOppty}" rendered="{!hasOpptyPrevious}" >Previous</apex:commandlink>
+    <apex:commandLink action="{!nextOppty}" rendered="{!hasOpptyNext}" >Next</apex:commandlink>
+    <apex:commandLink action="{!lastOppty}" >Last</apex:commandlink>
+    </apex:panelGrid>
+    </apex:pageBlock> -->
+    <apex:actionFunction name="updateCounter" action="{!updateCounter}" rerender="leadsPageBlock" />
+    <apex:actionFunction name="refreshList" action="{!RefereshInterval}" rerender="leadsPageBlock" />
+    <apex:actionPoller action="{!RefereshInterval}" reRender="leadsPageBlock" interval="60"/>  
+ <script>
+  down=setInterval(function(){DownRepeat(document.getElementById("countdown").innerHTML);},1000);
+
+function DownRepeat(Time) 
+{ 
+    var RealNumber = parseInt(Time);
+    if(RealNumber != 0)
+        document.getElementById("countdown").innerHTML = RealNumber - 1;
+    else
+    {
+        //  location.reload();
+       updateCounter();
+       document.getElementById("countdown").innerHTML = 60;       }
+}
+    function validateOpportunity(OppId)
+  {
+    var oppUrl = '{!urlPrefix}/'+OppId;
+    console.log("oppUrl==="+oppUrl);
+    Visualforce.remoting.Manager.invokeAction("{!$RemoteAction.ImmediateDetailExtension.getlatestOppRecord}",OppId,
+    function(result, event){
+        console.log(result);
+        if (event.status) {
+            if(result.Site_Design_Status__c =='In Progress')
+            {
+                alert('This site design is currently in progress!');
+                refreshList();
+               
+            }
+             else
+            {
+                // window.open(oppUrl, '_blank');
+                 window.location.href=oppUrl;
+            } 
+        }
+        },
+        {escape: true}
+    );
+  }
+  setTimeout(function(){
+  updateCounter();},1);
+</script>
+    
+    </apex:form> 
+</div>
+ <script type="text/javascript">
+            var $=jQuery.noConflict();
+           
+            $(document).ready(function()
+            {
+               setTimeout(function(){
+                $('#LoadOverlay').hide(); 
+                $("#mainForm").show();           
+                  //updateCounter();  
+                    
+                }, 1000);
+                
+            });
+    </script>   
+</apex:page>

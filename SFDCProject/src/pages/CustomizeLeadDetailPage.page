@@ -1,0 +1,372 @@
+<apex:page standardController="Lead" extensions="PartnerLeadDetail" showHeader="true" tabStyle="Lead" >
+    <apex:sectionHeader title="Lead Detail"/>  
+    <chatter:feedWithFollowers entityid="{!lead.id}" rendered="{!isSunrunDivision}"/>
+    <apex:form id="formId" >
+        <apex:pagemessages id="pgMSG" />  
+        <!-- 
+        <div align="center" style = "margin-bottom:10px" >
+            <apex:commandButton title="Edit" value="  Edit " action="{!editLead}" />    
+            &nbsp;
+            <apex:commandButton value="Convert"  action="{!convertLead}" />
+            &nbsp; 
+            <apex:commandButton value="Design New Proposal" action="{!goToDesign}" rendered="{!BBEligible}"/>
+            &nbsp;           
+            <apex:commandButton value="Get Directions" Onclick="getDirections('{!Lead.Address_for_Search__c}');" Rendered="{!showGetDirections}"/> 
+            <Label for="Navigate Lightmile">Navigate Lightmile</label>&nbsp;
+            <apex:selectList size="1" value="{!selectedDesign}" multiselect="false">
+                <apex:selectOptions value="{!DesignTypes}"/>
+            </apex:selectList>
+            <apex:commandButton value="Go" action="{!goToDesign}" rerender="popup"/>
+            <apex:outputPanel id="popup">
+              <apex:outputText rendered="{!displayPopup}">
+                <script type="text/javascript">
+                    var errorMessageStr = '{!displayPopupMessage}';
+                    alert(errorMessageStr);
+                </script>
+            </apex:outputText>
+            <apex:outputText rendered="{!displayURL}">
+                <script type="text/javascript">
+                    
+                    window.top.location.href = '{!redirectURL}';
+                </script>
+            </apex:outputText> 
+            <apex:outputText rendered="{!displaySalesRepURL}">
+                <script type="text/javascript">
+                    
+                    window.top.location.href = '{!SalesRepURL}';
+                </script>
+            </apex:outputText>                          
+        </apex:outputPanel>            
+        </div>
+        -->
+        <apex:pageblock id="mainPageBlock">
+        
+            <apex:pageBlockSection title="Customer Information" columns="2" >
+                <apex:outputfield id="FirstName" value="{!Lead.Firstname}" />
+                <apex:outputfield id="LastName" value="{!Lead.lastName}" />  
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="Address" for="gmapsAddress"/>  
+                    <apex:outputText >
+                    {!Lead.Street}<br></br>{!Lead.City} {!Lead.State} {!Lead.PostalCode}    
+                    </apex:outputText>
+                </apex:pageBlockSectionItem>  
+                <!--               
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="Address" for="gmapsAddress" />
+                    <c:gmapAddress id="gmapsAddress" street="{!Lead.Street}" city="{!Lead.city}" state="{!Lead.state}" postalCode="{!Lead.postalCode}" country="{!Lead.country}" edit="false"></c:gmapAddress>                  
+                </apex:pageBlockSectionItem>
+                -->
+                <apex:outputField id="HomeType" value="{!Lead.Home_Type__c}"/>
+                <apex:outputfield value="{!Lead.Phone}" />                
+                <apex:outputfield value="{!Lead.Alternate_Phone__c}"/> 
+                <apex:outputfield value="{!Lead.Email}"/>
+                <apex:outputField value="{!Lead.HasOptedOutOfEmail}"/>
+                <apex:outputField value="{!Lead.Best_way_to_reach__c}"/>
+                <apex:outputField value="{!Lead.Best_time_to_Contact__c}"/>
+                <apex:outputField value="{!Lead.Preferred_Language__c}"/>
+                <apex:outputField value="{!Lead.Hawaii_NEM_Approved__c}" rendered="{!!isAEEUser}"/>
+              <!--  <apex:outputfield value="{!Lead.mobilephone}"/>-->  
+                <apex:outputField value="{!Lead.Notes__c}"/>   
+               <!-- <apex:outputfield value="{!Lead.Sales_Contact_Method__c}"/>    -->         
+            </apex:pageblocksection>
+            
+          <!--  <apex:outputpanel id="address" rendered="{!IsBlank($CurrentPage.parameters.gmaps)}">
+            <apex:pageBlockSection title="Address Information" columns="2" >
+                <!-- <apex:outputfield value="{!Lead.Address_for_Search__c}"/> -->    
+               <!-- <apex:pageBlockSectionItem >  
+                <apex:outputPanel >
+                 <span style="font-weight: bold">          
+                 <apex:outputLabel value="{!$ObjectType.Lead.fields.Address_for_Search__c.label}"/>
+                </span>
+                </apex:outputPanel>
+                <apex:outputText >
+                {!Lead.street}<br></br>{!Lead.city} {!Lead.state} {!Lead.postalcode}    
+                </apex:outputText>         
+                </apex:pageBlockSectionItem>    
+                <apex:outputfield value="{!Lead.CDYNE_Status__c}"/>
+                <apex:pageBlockSectionItem />
+                <apex:outputfield value="{!Lead.Zip_6__c}"/>
+            </apex:pageBlockSection>
+             </apex:outputPanel>
+           
+            <apex:outputpanel id="address1" rendered="{!Not(IsBlank($CurrentPage.parameters.gmaps))}">
+            <apex:pageblocksection title="Address Information" columns="1">
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="Address" for="gmapsAddress" />
+                    <c:gmapAddress id="gmapsAddress" street="{!Lead.Street}" city="{!Lead.city}" state="{!Lead.state}" postalCode="{!Lead.postalCode}" country="{!Lead.country}" lat="{!Lead.Latitude__c}" lng="{!Lead.Longitude__c}" edit="false"></c:gmapAddress>
+                </apex:pageBlockSectionItem>
+            </apex:pageblocksection>
+            </apex:outputPanel>   -->        
+            <apex:pageblocksection title="Utility Information" columns="2" >
+                
+               <apex:outputfield id="UtilityCompany" value="{!Lead.Utility_Company__c}" />  
+                <!--  <apex:outputfield id="SunRunProduct" value="{!Lead.Which_SR_product__c}" /> -->               
+               <apex:outputfield id="territory" value="{!Lead.Territory__c}" />
+               <apex:outputfield id="usageOption" value="{!Lead.Usage_Option__c}" />
+               <apex:outputfield id="Rateschedule" value="{!Lead.Rate_Schedule__c}" />
+       <!--        <apex:pageBlockSectionItem ></apex:pageBlockSectionItem>  -->
+       <!--         <apex:outputfield id="usageOption" value="{!Lead.Usage_Option__c}" />  -->
+               <!-- <apex:outputfield id="LeadSource" value="{!Lead.LeadSource}" /> -->  
+       <!--         <apex:pageblocksectionItem />   -->         
+                <apex:outputfield id="JanUsage" value="{!Lead.Jan_Usage__c}" />
+                <apex:outputfield id="FebUsage" value="{!Lead.Feb_Usage__c}" />
+                <apex:outputfield id="MarUsage" value="{!Lead.Mar_Usage__c}" />
+                <apex:outputfield id="AprUsage" value="{!Lead.Apr_Usage__c}" />
+                <apex:outputfield id="MayUsage" value="{!Lead.May_Usage__c}" />
+                <apex:outputfield id="JunUsage" value="{!Lead.Jun_Usage__c}" />                
+                <apex:outputfield id="JulUsage" value="{!Lead.Jul_Usage__c}" />                
+                <apex:outputfield id="AugUsage" value="{!Lead.Aug_Usage__c}" />                
+                <apex:outputfield id="SepUsage" value="{!Lead.Sep_Usage__c}" />                
+                <apex:outputfield id="OctUsage" value="{!Lead.Oct_Usage__c}" />                
+                <apex:outputfield id="NovUsage" value="{!Lead.Nov_Usage__c}" />
+                <apex:outputfield id="DecUsage" value="{!Lead.Dec_Usage__c}" />
+                <apex:outputfield id="squarefootage" value="{!Lead.Square_footage__c}"/>   
+      <!--          <apex:outputfield id="AverageMonthlyElectricBill" value="{!Lead.Average_Monthly_Electric_Bill__c}" />  -->
+                <!-- 
+                <apex:pageBlockSectionItem />
+                <apex:pageBlockSectionItem />                
+                  <apex:outputfield id="AnnualUsage" Value="{!Lead.dt_Annual_Kwh_Usage__c}"/>
+                 --> 
+            </apex:pageblocksection>               
+           <!-- <apex:pageblocksection title="Site Information" columns="2" >
+               <apex:outputfield id="RoofingType" value="{!Lead.Roofing_Type__c}" />
+               <apex:outputField id="AgeofRoof" value="{!Lead.Age_of_Roof__c}"/>
+               <apex:outputField id="HomeType" value="{!Lead.Home_Type__c}"/>
+               <apex:outputField id="Over2Stories" value="{!Lead.Over_2_stories__c}"/>
+               <apex:outputField id="HOA" value="{!Lead.HOA__c}"/>
+               <apex:outputField id="InstallationType" value="{!Lead.Installation_Type__c}"/>
+            </apex:pageblocksection>  
+            <apex:pageblocksection title="Appointment" columns="2" >
+              <apex:outputField id="ConsultationDate" value="{!Lead.Consultation_Date_and_Time__c}"/>
+              <apex:outputField id="ConsultationTime" value="{!Lead.Consultation_Time__c}"/>
+              <apex:outputField id="SalesRep" value="{!Lead.SalesRep__c}"/>
+            </apex:pageblocksection>-->
+            <apex:pageblocksection title="Lead Information" columns="2" >
+              <apex:outputField id="SalesRep" value="{!Lead.SalesRep__c}"/>
+       <!--       <apex:outputField id="LeadStage" value="{!Lead.Status}"/>  -->
+              <apex:outputField id="Owner" value="{!Lead.Owner.Name}" label="Lead Owner"/>
+       <!--       <apex:outputField id="LeadStatus" value="{!Lead.Lead_Status__c}"/>  -->
+              <apex:outputField id="LeadOrganizationLoc" value="{!Lead.Lead_Organization_Location_2__c}" label="Lead Organization Location" rendered="{!isLGCYUser}"/>
+             <!-- <apex:outputField id="Reason" value="{!Lead.Reason__c}"/>-->
+       <!--       <apex:outputField id="LeadQualifier" value="{!Lead.Lead_Qualifier__c}"/> -->
+              <apex:outputField id="ProspectId" value="{!Lead.Prospect_Id__c}"/>
+             
+            
+            </apex:pageblocksection> 
+            <!--
+            <apex:pageblocksection title="Promotion Information" columns="2" >
+              <apex:outputField id="OfferPromoName" value="{!Lead.Offer_Promo_Name__c}"/>
+              <apex:outputField id="RefPromoName" value="{!Lead.Promotion_Name__c}"/>
+              <apex:outputfield id="Offer" value="{!Lead.Offer__c}"/>
+              <apex:outputField id="RefByContact" value="{!Lead.Referred_By_Contact__c}"/>
+              <apex:outputField id="SalesRepofRef" value="{!Lead.Sales_rep_of_referrer__c}"/>
+              <apex:outputField id="Referral" value="{!Lead.Referral_Input__c}"/>
+            </apex:pageblocksection>  
+          -->
+        
+       <apex:pageBlockButtons >
+          <!--  <apex:commandButton title="Edit" value="  Edit " action="{!editLead}" /> -->   
+            &nbsp;
+         <!--   <apex:commandButton value="Convert"  action="{!convertLead}" /> 
+            &nbsp; 
+             <apex:commandButton value="Convert"  action="{!convertLead}" rerender="pgMSG" status="myStatus" /> 
+            &nbsp; -->
+           <apex:actionStatus id="myStatus">
+             <apex:facet name="stop">
+                 <apex:outputPanel >
+                          <apex:commandButton value="Edit" action="{!editLead}" immediate="true" />
+                         <apex:commandButton value="  Convert "  action="{!convertLead}" rerender="pgMSG" status="myStatus" />
+                        
+                 </apex:outputPanel>        
+             </apex:facet>
+                     
+             <apex:facet name="start">
+                  <apex:outputPanel >
+                     <!--  <apex:outputtext value="Converting..." /> -->
+                       <apex:commandButton value="Edit" status="myStatus" disabled="true"/>
+                       <apex:commandButton value="Converting..." status="myStatus" disabled="true"/>
+                       <apex:image value="/img/loading32.gif" style="height: 15px;"/>         
+                  </apex:outputPanel>
+            </apex:facet>
+     </apex:actionStatus>
+            <!-- 
+            <apex:commandButton value="Design New Proposal" action="{!goToDesign}" rendered="{!BBEligible}" rerender="popup2"/>
+             -->
+            <!-- <apex:commandButton value="Validate Address" action="{!validateAddress}" /> 
+            &nbsp; 
+            <apex:commandButton value="Get Directions" Onclick="getDirections('{!Lead.Address_for_Search__c}');" Rendered="{!showGetDirections}"/> 
+            -->
+       <!--     <apex:outputLabel for="Navigate BrightPath" value="Navigate BrightPath" rendered="{!BBEligible}"></apex:outputlabel>
+            <apex:selectList title="NavigationDD" size="1" value="{!selectedDesign}" multiselect="false" rendered="{!BBEligible}">
+                <apex:selectOptions value="{!DesignTypes}"/>
+            </apex:selectList>
+            -->
+      <!--      <apex:commandButton value="Go" action="{!goToDesign}" rerender="popup2,TermsandConditions" rendered="{!BBEligible}"/>
+            -->
+            <apex:outputPanel id="popup2">
+              <apex:outputText rendered="{!displayPopup}">
+                <script type="text/javascript">
+                    var errorMessageStr = '{!displayPopupMessage}';
+                    alert(errorMessageStr);
+                </script>
+            </apex:outputText>
+            <apex:outputText rendered="{!displayURL}">
+                <script type="text/javascript">
+                    
+                    window.top.location.href = '{!redirectURL}';
+                </script>
+            </apex:outputText>   
+            <apex:outputText rendered="{!displaySalesRepURL}">
+                <script type="text/javascript">
+                    
+                    window.top.location.href = '{!SalesRepURL}';
+                </script>
+            </apex:outputText>                          
+        </apex:outputPanel>
+       </apex:pageBlockButtons> 
+       </apex:pageblock>
+
+       <apex:outputPanel id="TermsandConditions">
+            <apex:outputPanel styleClass="popupBg" layout="block" rendered="{!displayTandCURL}"/>
+            <apex:outputPanel styleClass="popup" layout="block" rendered="{!displayTandCURL}">
+                <apex:pageBlock title="Terms and Conditions">
+                    <apex:pageBlockButtons location="bottom">
+                         <apex:commandButton action="{!acceptTermsandConditions}" value="Accept"/>
+                         <apex:commandButton action="{!declineTermsandConditions}" value="Decline"/>
+                   </apex:pageBlockButtons>
+                   <apex:pageBlockSection columns="1"> 
+                          <apex:dataTable value="{!PartnerTermsConditions}" var="PartnerTermsCondition">
+                            <apex:column >
+                                <apex:outputText value="{!PartnerTermsCondition.TermsConditionsInfo__c}" escape="false"/>
+                            </apex:column>
+                          </apex:dataTable>
+                   </apex:pageBlockSection>
+                </apex:pageBlock>
+            </apex:outputPanel>
+        </apex:outputPanel>
+
+       </apex:form>  
+     <!-- <apex:include pageName="PartnerDesignOption"/>-->
+     <apex:include pageName="LeadNotesMainPage"/>
+     
+    
+    <script>
+        function getDirections(addressVal)  
+        {
+            if(addressVal == null || addressVal == "")
+            {
+                alert('Address field should not be empty inorder to access this button');
+            }
+            else
+            {
+                var urlvalue ='https://maps.google.com/'; 
+                urlvalue = urlvalue + 'maps?daddr=' + addressVal;
+                var popup = window.open(urlvalue, '_blank');
+            }
+        }
+        
+        function convertLead(leadIdVal)
+        {
+            var isConfirm = window.confirm('Are you sure you would like to convert this Lead?');
+            if(isConfirm == true){
+            //var leadIdVal = '{!Lead.Id}' ;
+            var result = sforce.apex.execute("ConvertLead","doConvert",
+            {leadId:leadIdVal});
+            alert(result);
+            location.reload(true);
+            }
+        }
+        
+        function redirectToEdit(noteID)
+        {   
+            var tempURL = '/partner/apex/LeadEditNotePage?Id='+ noteID; 
+     
+            var newwindow = window.open(tempURL, '', 'toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,resizable=yes,width=650,height=390,left=150,top=150'); 
+            newwindow.focus();
+        }
+        
+        function launchForNew()
+        {   
+            var baseURL = "{!baseURL}";
+            var tempURL = baseURL + "/apex/LeadNewNotePage?Id={!LeadId}";
+            var newwindow = window.open(tempURL, '', 'toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,resizable=yes,width=650,height=390,left=150,top=150'); 
+            newwindow.focus();
+        }
+                
+    </script>
+        
+    <style type="text/css">
+         .paginatorWrap{
+            //background: url("/img/alohaSkin/listFooter.png") repeat-x scroll 0 0 #F2F2F2;
+            //border: 1px solid #EAEAEA;
+            //background-color: #F3F3F3;
+            //border-top: 1px solid #FFFFFF;
+            padding: 3px;
+        }
+        .noRecordsFound{
+            border: 1px solid #D4DADC;
+            padding: 4px;
+        }
+        a:hover {
+            background:#ffffff; /*BG color is a must for IE6*/
+            text-decoration:none;
+            
+        } 
+        a.tooltip span {
+            display:none; 
+            padding:2px 3px; 
+            margin-left:8px; 
+            width:300px;
+            height:70px;
+            opacity: 12.3;
+        }
+        a.tooltip:hover span{
+            display:inline; 
+            position:absolute; 
+            background:#EEF1F5; 
+            border:2px solid #cccccc; 
+            color:#000000;
+        }
+
+        .producterror { color: red; font-weight: strong;
+            background-color: #FFFFCC;
+            border-style: solid;
+            border-width: 1px;
+            padding: 6px 8px 6px 6px;
+            border-color: #FF9900;
+            font-size: 100%;
+            margin-left: 15px;
+            margin-right: 20px;
+        }
+        
+        .popup
+        {
+        background-color: white;
+        border-width: 6px;
+        border-style: solid;
+        z-index: 9999;
+        left: 30%;
+        padding:10px;
+        position: absolute;
+        width: 70%;
+        margin-left: -210px;
+        top:80px;
+        height: 50%;
+        overflow: scroll;
+        }
+        
+        .popupBg
+        {
+        background-color:black;
+        opacity: 0.20;
+        filter: alpha(opacity = 70);
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        z-index: 9998;
+        }
+        
+    </style> 
+</apex:page>

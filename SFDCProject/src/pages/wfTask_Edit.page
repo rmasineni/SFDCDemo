@@ -1,0 +1,52 @@
+<apex:page standardcontroller="Task__c" extensions="WorkflowTask"  tabstyle="Task__c">
+    <apex:composition template="wfTask_Template">
+        <apex:define name="TaskHeader">
+            <apex:sectionHeader title="Task Information" subtitle="{!taskObj.name}"/>
+        </apex:define>
+
+        <apex:define name="ProjectDetails">
+            <c:WorkflowTask_ProjectDetails taskObj="{!taskObj}" contactObj="{!contactObj}" baseURL="{!BaseURL}"/>
+        </apex:define>
+
+        <apex:define name="ProjectDescription">
+            <c:WorkflowTask_ProjectDesc taskObj="{!taskObj}"/>
+        </apex:define>
+
+        <apex:define name="TaskDisplayFields">
+            <div class="contenetDiv21">
+                 <apex:outputPanel styleClass="blue" layout="block">
+                    <apex:dynamicComponent componentValue="{!taskDisplayFields}"/>
+                </apex:outputPanel>
+            </div>                  
+        </apex:define>
+
+        <apex:define name="TaskEditFields">
+            <div class="contenetDiv22">
+                <apex:outputPanel styleClass="blue" layout="block">
+                    <apex:dynamicComponent componentValue="{!taskEditFields}"/>
+                </apex:outputPanel>
+            </div>
+
+            <div class="contenetDiv232">
+                <span style="margin-top:55px;">
+                    <apex:commandButton action="{!viewTask}" styleclass="buttons" value="Cancel" id="theButton13"/>
+                    &nbsp;
+                    <apex:commandButton action="{!saveRelatedObjects}" styleclass="buttons" value="Save" id="theButto14"/>
+                </span>                 
+            </div>      
+            <div class="contenetDiv24">
+                <span style="margin-top:25px;">
+                    <apex:commandButton onclick="showNotes('{!BaseURL}', '{!taskId}'); return false;" styleclass="buttons" value="{!notesLabel}" id="notesbtn"/>
+					&nbsp;
+                    <apex:commandButton onclick="showAllNotes('{!BaseURL}', '{!projectId}'); return false;" styleclass="buttons" value="{!projectNotesLabel}" id="allNotesbtn"/>
+                    &nbsp;
+                    <apex:commandButton action="{!taskSave}" rendered="{!showTaskComplete}" styleclass="buttons" value="Task Complete" id="tcBtn"/>
+                    
+                </span>
+            </div>                          
+        </apex:define>
+    </apex:composition>
+    <script>
+        function setFocusOnLoad() {}
+    </script>
+</apex:page>

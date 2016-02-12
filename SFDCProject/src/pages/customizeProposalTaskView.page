@@ -1,0 +1,69 @@
+<apex:page id="page" controller="customizeProposalTaskView" sidebar="false" showHeader="false">
+
+<link href='/partner/resource/PartnerPortalResources/css/partnerportal-styles.css' rel='stylesheet' type='text/css'/>
+
+
+<apex:pageMessages />
+    <apex:form >
+    <apex:pageblock mode="Edit" id="ViewDetails" >
+    <apex:pageblocksection title="Pending Tasks">
+        <apex:outputpanel >
+            <div style="margin-bottom:12px;margin-top:15px" align="center">
+                <!-- <apex:selectList value="{!PickList1}" id="view1Id" size="1">
+                    <apex:selectOptions value="{!View1}" />
+                </apex:selectList>
+                &nbsp;&nbsp; -->
+                <apex:selectList value="{!PickList2}" id="view2Id" size="1">
+                    <apex:selectOptions value="{!View2}" />
+                </apex:selectList>
+                &nbsp;&nbsp;
+                <apex:commandButton action="{!userActions}" value="  Go  "/>  
+                <!--  reRender="TaskList"/ --> 
+            </div>
+        </apex:outputpanel>
+    </apex:pageblocksection>
+    
+    <apex:pageblocksection columns="1">
+        <apex:pageBlockTable value="{!lstTask}" var="Tsk">
+            <apex:column headerValue="Status" value="{!Tsk.Status}"/>
+            <apex:column headerValue="Due Date" value="{!Tsk.ActivityDate}"/>
+            <apex:column headerValue="Assigned To" value="{!Tsk.OwnerId}"/>
+            
+            <apex:column headerValue="Proposal ID">
+                <apex:outputLink id="parent" target="_parent" value="/{!Tsk.Whatid}">
+                <apex:outputText value="{!Tsk.What.Name}"/>
+                </apex:outputLink>
+            </apex:column>
+                        
+            <apex:column headerValue="Subject">
+                <apex:outputLink target="_parent" value="/{!Tsk.id}">
+                <apex:outputText value="{!Tsk.Subject}"/>
+                </apex:outputLink>
+            </apex:column>
+        </apex:pageBlockTable>
+   </apex:pageblocksection>
+            <apex:outputPanel layout="block" styleClass="pSearchShowMore" id="otpNavTop">
+                <br></br>               
+                Total Records Found: <apex:outputText rendered="{!IF(totalCount==10000,true,false)}">10000 +</apex:outputText><apex:outputText rendered="{!IF(totalCount < 10000,true,false)}">{!totalCount}</apex:outputText>  
+                <apex:image url="/img/search_prevarrow_disabled.gif" styleClass="prevArrow" rendered="{!NOT(HasPrevious)}"/>  
+                <apex:image url="/img/search_prevarrow.gif" title="First Page" styleClass="prevArrow" rendered="{!HasPrevious}"/>  
+                <apex:commandLink action="{!first}" title="First Page" value="First Page" rendered="{!HasPrevious}"/>  
+                <apex:outputPanel styleClass="pShowLess noLink" style="color:grey" rendered="{!NOT(HasPrevious)}">First Page</apex:outputPanel>           
+
+                <apex:image url="/img/search_prevarrow_disabled.gif" styleClass="prevArrow" rendered="{!NOT(HasPrevious)}"/>  
+                <apex:image url="/img/search_prevarrow.gif" title="Previous Page" styleClass="prevArrow" rendered="{!HasPrevious}"/>  
+                <apex:commandLink action="{!Previous}" title="Previous Page" value="Previous Page" rendered="{!HasPrevious}"/>  
+                <apex:outputPanel styleClass="pShowLess noLink" style="color:grey" rendered="{!NOT(HasPrevious)}">Previous Page</apex:outputPanel>           
+                &nbsp;({!IF(PageNumber == 1,1,((PageNumber -1) )+1)}-{!totalPageCount})&nbsp;  
+                <apex:outputPanel styleClass="pShowLess noLink" style="color:grey" rendered="{!NOT(HasNext)}">Next Page</apex:outputPanel>           
+                <apex:commandLink title="Next Page" value="Next Page" rendered="{!HasNext}" action="{!Next}"/>&nbsp;  
+                <apex:image url="/img/search_nextarrow.gif" title="Next Page" styleClass="nextArrow" rendered="{!HasNext}"/>  
+                <apex:image url="/img/search_nextarrow_disabled.gif" rendered="{!NOT(HasNext)}"/>            
+                <apex:outputPanel styleClass="pShowLess noLink" style="color:grey" rendered="{!NOT(HasNext)}">Last Page</apex:outputPanel>           
+                <apex:commandLink title="Last Page" value="Last Page" rendered="{!HasNext}" action="{!last}"/>&nbsp;  
+                <apex:image url="/img/search_nextarrow.gif" title="Last Page" styleClass="nextArrow" rendered="{!HasNext}"/>  
+                <apex:image url="/img/search_nextarrow_disabled.gif" rendered="{!NOT(HasNext)}"/>
+            </apex:outputPanel>    
+    </apex:pageblock>
+    </apex:form>
+</apex:page>

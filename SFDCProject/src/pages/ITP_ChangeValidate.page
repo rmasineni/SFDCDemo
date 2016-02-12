@@ -1,0 +1,177 @@
+<apex:page standardController="BMCServiceDesk__Change_Request__c" sidebar="false" showHeader="false" >
+<apex:form >
+  <apex:outputPanel id="changepopup" title="Validate Change Before Submit for Approval">
+    <apex:outputPanel styleClass="popupBackground" layout="block"/>
+      <apex:outputPanel styleClass="custPopup" layout="block">    
+        <apex:pageBlock id="thePage1"  mode="detail">
+        <apex:pageBlockButtons id="buttons" location="bottom">
+               <apex:commandButton value="Close" action="{!Cancel}"/>
+           </apex:pageBlockButtons>
+         <apex:actionRegion >         
+            <apex:pageBlockSection title="Validate Change Before Submit for Approval" id="QuickEntry">
+            <table>
+            <tr>
+            <th>Field Name</th>
+            <th>Poplulated?</th>
+            </tr>
+            <apex:pageBlockSectionItem rendered="{!IF(BMCServiceDesk__Change_Request__c.BMCServiceDesk__FKImpact__c = null,false,true)}">
+            <tr>
+            <td>Impact</td>
+            <td><input type = "checkbox" checked="true" disabled="true" /></td>
+            </tr>
+            </apex:pageBlockSectionItem>
+            <apex:pageBlockSectionItem rendered="{!IF(BMCServiceDesk__Change_Request__c.BMCServiceDesk__FKImpact__c = null,true,false)}">
+            <tr>
+            <td>Impact</td>
+            <td><input type = "checkbox" disabled="true"/></td>
+            </tr>
+            </apex:pageBlockSectionItem>
+            <apex:pageBlockSectionItem rendered="{!IF(BMCServiceDesk__Change_Request__c.BMCServiceDesk__FKUrgency__c = null,false,true)}">
+            <tr>
+            <td>Urgency</td>
+            <td><input type = "checkbox" checked="true" disabled="true"/></td>
+            </tr>
+            </apex:pageBlockSectionItem>
+            <apex:pageBlockSectionItem rendered="{!IF(BMCServiceDesk__Change_Request__c.BMCServiceDesk__FKUrgency__c = null,true,false)}">
+            <tr>
+            <td>Urgency</td>
+            <td><input type = "checkbox" disabled="true"/></td>
+            </tr>
+            </apex:pageBlockSectionItem>            
+            <apex:pageBlockSectionItem rendered="{!IF(BMCServiceDesk__Change_Request__c.BMCServiceDesk__Roll_Out_Plan__c = null,false,true)}">
+            <tr>
+            <td>Rollout Plan</td>
+            <td><input type = "checkbox" checked="true" disabled="true"/></td>
+            </tr>
+            </apex:pageBlockSectionItem>
+            <apex:pageBlockSectionItem rendered="{!IF(BMCServiceDesk__Change_Request__c.BMCServiceDesk__Roll_Out_Plan__c = null,true,false)}">
+            <tr>
+            <td>Rollout Plan</td>
+            <td><input type = "checkbox" disabled="true"/></td>
+            </tr>
+            </apex:pageBlockSectionItem>
+            <apex:pageBlockSectionItem rendered="{!IF(BMCServiceDesk__Change_Request__c.BMCServiceDesk__Back_Out_Plan__c = null,false,true)}">
+            <tr>
+            <td>Back-out Plan</td>
+            <td><input type = "checkbox" checked="true" disabled="true"/></td>
+            </tr>
+            </apex:pageBlockSectionItem>
+            <apex:pageBlockSectionItem rendered="{!IF(BMCServiceDesk__Change_Request__c.BMCServiceDesk__Back_Out_Plan__c = null,true,false)}">
+            <tr>
+            <td>Back-out Plan</td>
+            <td><input type = "checkbox" disabled="true"/></td>
+            </tr>
+            </apex:pageBlockSectionItem>
+            <apex:pageBlockSectionItem rendered="{!IF(BMCServiceDesk__Change_Request__c.BMCServiceDesk__Change_Description__c = null,false,true)}">
+            <tr>
+            <td>Description</td>
+            <td><input type = "checkbox" checked="true" disabled="true"/></td>
+            </tr>
+            </apex:pageBlockSectionItem>
+            <apex:pageBlockSectionItem rendered="{!IF(BMCServiceDesk__Change_Request__c.BMCServiceDesk__Change_Description__c = null,true,false)}">
+            <tr>
+            <td>Description</td>
+            <td><input type = "checkbox" disabled="true"/></td>
+            </tr>
+            </apex:pageBlockSectionItem>
+            <apex:pageBlockSectionItem rendered="{!IF(BMCServiceDesk__Change_Request__c.ITP_Deployment_Documentation__c = null,false,true)}">
+            <tr>
+            <td>Deployment Documentation</td>
+            <td><input type = "checkbox" checked="true" disabled="true"/></td>
+            </tr>
+            </apex:pageBlockSectionItem>
+            <apex:pageBlockSectionItem rendered="{!IF(BMCServiceDesk__Change_Request__c.ITP_Deployment_Documentation__c = null,true,false)}">
+            <tr>
+            <td>Deployment Documentation</td>
+            <td><input type = "checkbox" disabled="true"/></td>
+            </tr>
+            </apex:pageBlockSectionItem>            
+            <apex:pageBlockSectionItem rendered="{!IF(BMCServiceDesk__Change_Request__c.ITP_Deployment_Time_Hours__c = null,false,true)}">
+            <tr>
+            <td>Deployment Time</td>
+            <td><input type = "checkbox" checked="true" disabled="true"/></td>
+            </tr>
+            </apex:pageBlockSectionItem>
+            <apex:pageBlockSectionItem rendered="{!IF(BMCServiceDesk__Change_Request__c.ITP_Deployment_Time_Hours__c = null,true,false)}">
+            <tr>
+            <td>Deployment Time</td>
+            <td><input type = "checkbox" disabled="true"/></td>
+            </tr>
+            </apex:pageBlockSectionItem>
+            <apex:pageBlockSectionItem rendered="{!IF(BMCServiceDesk__Change_Request__c.ITP_Downtime_Hours__c = null,false,true)}">
+            <tr>
+            <td>Downtime</td>
+            <td><input type = "checkbox" checked="true" disabled="true"/></td>
+            </tr>
+            </apex:pageBlockSectionItem>
+            <apex:pageBlockSectionItem rendered="{!IF(BMCServiceDesk__Change_Request__c.ITP_Downtime_Hours__c = null,true,false)}">
+            <tr>
+            <td>Downtime</td>
+            <td><input type = "checkbox" disabled="true"/></td>
+            </tr>
+            </apex:pageBlockSectionItem>
+            <apex:pageBlockSectionItem rendered="{!IF(BMCServiceDesk__Change_Request__c.ITP_Business_Units_Impacted__c = null,false,true)}">
+            <tr>
+            <td>Business Units Impacted</td>
+            <td><input type = "checkbox" checked="true" disabled="true"/></td>
+            </tr>
+            </apex:pageBlockSectionItem>
+            <apex:pageBlockSectionItem rendered="{!IF(BMCServiceDesk__Change_Request__c.ITP_Business_Units_Impacted__c = null,true,false)}">
+            <tr>
+            <td>Business Units Impacted</td>
+            <td><input type = "checkbox" disabled="true"/></td>
+            </tr>
+            </apex:pageBlockSectionItem>                                         
+            <apex:pageBlockSectionItem rendered="{!IF(BMCServiceDesk__Change_Request__c.Passed_UAT__c = true,true,false)}">
+            <tr>
+            <td>Passed UAT</td>
+            <td><input type = "checkbox" checked="true" disabled="true"/></td>
+            </tr>
+            </apex:pageBlockSectionItem>
+            <apex:pageBlockSectionItem rendered="{!IF(BMCServiceDesk__Change_Request__c.Passed_UAT__c = false,true,false)}">
+            <tr>
+            <td>Passed UAT</td>
+            <td><input type = "checkbox" disabled="true"/></td>
+            </tr>
+            </apex:pageBlockSectionItem>
+                        
+            </table>            
+ </apex:pageBlockSection>
+           </apex:actionRegion>
+          </apex:pageBlock>
+      </apex:outputPanel>
+</apex:outputPanel>
+</apex:form>
+
+<style type="text/css">
+        .custPopup{
+            background-color: white;
+            border-width: 2px;
+            border-style: solid;
+            z-index: 9999;
+            left: 50%;
+            padding:10px;
+            position: absolute;
+            /* These are the 3 css properties you will need to change so the popup 
+            displays in the center of the screen. First set the width. Then set 
+            margin-left to negative half of what the width is. You can add 
+            the height property for a fixed size pop up if you want.*/
+            width: 500px;
+            margin-left: -250px;
+            top:100px;
+        }
+        .popupBackground{
+            background-color:black;
+            opacity: 0.20;
+            filter: alpha(opacity = 20);
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: 9998;
+        }
+
+    </style>
+
+</apex:page>

@@ -1,0 +1,93 @@
+<apex:page controller="CustomerOptyPaymentController" showHeader="false" sidebar="false" standardStylesheets="false" action="{!processPaymentResponse}" language="{!languageCode}" >
+
+	<apex:stylesheet value="{!URLFOR($Resource.PaymentResources, 'css/partnerportal-styles.css')}"/>
+	<apex:stylesheet value="{!URLFOR($Resource.PaymentResources, 'css/payment-styles.css')}"/>
+	<apex:stylesheet value="{!URLFOR($Resource.PaymentResources, 'css/customer-payment-styles.css')}"/>
+
+    <style>
+        <apex:insert name="custom-styles"></apex:insert>
+	</style>
+    
+	<div id="page">
+		<div id="header">
+			<span class="logo">Logo</span>
+			<apex:outputPanel rendered="{!validToken}" styleClass="user"><apex:outputText >{!$Label.Payment_Welcome_LN_FN}</apex:outputText> &nbsp;  {!billingContact.FirstName} {!billingContact.LastName}</apex:outputPanel>
+		</div>
+		<div id="content">
+			<h1><apex:insert name="page-title"><apex:outputText >{!$Label.Welcome_to_One_Time_Payment} </apex:outputText></apex:insert></h1>
+
+            <!-- Sometimes there will be an issue updating the opty/contract when the payment is successful. However, we don't want to treat that
+				as error as payment has been received. We will check if we successfully created a payment txn and if so, will ignore if there are 
+				any errors. -->
+			<apex:outputPanel layout="block" styleClass="message-box error" rendered="{!And(hasErrorMessages, IsBlank(savedPaymentTransaction))}">
+				<apex:messages />
+		    </apex:outputPanel>
+		
+			<c:paymentProcessor rendered="{!Not(IsBlank(optyPaymentInfo.billingContact))}" 
+				amount="500.00" 
+				firstName="{!billingContact.FirstName}" 
+				lastName="{!billingContact.LastName}" 
+				email="{!billingContact.Email}" 
+				phone="{!billingContact.Phone}" 
+				street="{!billingAddress.street}"
+				city="{!billingAddress.city}"
+				state="{!billingAddress.state}"
+				postalCode="{!billingAddress.postalCode}"
+				paymentResponseJson="{!paymentResponseJson}"
+				paymentMode="onetime-payment"
+				customParamsJson="{!customParamsJson}"
+			/>
+
+			<script>
+				spayment = spayment || {};
+				spayment.preprocessPaymentRequest = function(callbackFunction) {
+					var contact = spayment.createContactFromDetailsAndAddress(smodel.paymentRequest.billingContact, smodel.paymentRequest.billingAddress);
+					
+		            CustomerOptyPaymentController.associatePaymentContactWithOptyForToken('{!$CurrentPage.parameters.token}', smodel.local.paymentMode, contact, function(result, event){
+		                if (spayment.checkAndHandleError(result, event)) {
+		                    return;
+		                }
+						
+						var customParams = {};
+						customParams.opportunityId = "{!optyId}";
+						customParams.prospectId = "{!optyProspectId}";
+						customParams.contactId = result.body.contactId;
+						customParams.contactNum = result.body.contactNum;
+						
+						smodel.paymentRequest.customParams["{!CustomParamNum}"] = JSON.stringify(customParams);
+						callbackFunction();
+		            });
+				};
+			</script>
+		</div>
+		<div id="footer">
+			<apex:insert name="footer">© Sunrun Inc</apex:insert>
+		</div>
+	</div>	
+	
+	<style>
+		#card-type, #card-number, #card-cvv-code {
+			width: 150px;
+		}
+		
+		#street {
+			width: 249px;
+		}
+		
+		#postal-code {
+			width: 48px;
+		}			
+		
+		#email, #phone {
+			width: 203px;
+		}
+		
+		#first-name, #last-name {
+			width: 100px;
+		}			
+	</style>
+	
+	<c:htmlComment >
+		<apex:outputText escape="false" value="{!errorLog}"/>	
+	</c:htmlComment>
+</apex:page>

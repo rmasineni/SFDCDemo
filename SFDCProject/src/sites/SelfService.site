@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomSite xmlns="http://soap.sforce.com/2006/04/metadata">
+    <active>true</active>
+    <allowHomePage>false</allowHomePage>
+    <allowStandardAnswersPages>false</allowStandardAnswersPages>
+    <allowStandardIdeasPages>false</allowStandardIdeasPages>
+    <allowStandardLookups>false</allowStandardLookups>
+    <allowStandardSearch>false</allowStandardSearch>
+    <authorizationRequiredPage>BMCServiceDesk__SSSiteLogin</authorizationRequiredPage>
+    <bandwidthExceededPage>BandwidthExceeded</bandwidthExceededPage>
+    <changePasswordPage>BMCServiceDesk__SSChangePassword</changePasswordPage>
+    <clickjackProtectionLevel>AllowAllFraming</clickjackProtectionLevel>
+    <description>BMC Remedyforce Self Service. This site can be used by clients to log their own tickets or submit service requests.</description>
+    <fileNotFoundPage>FileNotFound</fileNotFoundPage>
+    <genericErrorPage>Exception</genericErrorPage>
+    <inMaintenancePage>InMaintenance</inMaintenancePage>
+    <inactiveIndexPage>BMCServiceDesk__InMaintenance</inactiveIndexPage>
+    <indexPage>BMCServiceDesk__SelfServiceHome</indexPage>
+    <masterLabel>SelfService</masterLabel>
+    <portal>Customer Portal</portal>
+    <requireInsecurePortalAccess>false</requireInsecurePortalAccess>
+    <siteAdmin>it-helpdesk@sunrun.com</siteAdmin>
+    <siteRedirectMappings>
+        <action>Temporary</action>
+        <isActive>true</isActive>
+        <source>/googleefa4791440e85c9c.html</source>
+        <target>/resource/GoogleCalendarResources</target>
+    </siteRedirectMappings>
+    <siteRedirectMappings>
+        <action>Temporary</action>
+        <isActive>true</isActive>
+        <source>/googlef2c401e2b63b6a2e.html</source>
+        <target>/resource/GoogleCalendarResources</target>
+    </siteRedirectMappings>
+    <siteTemplate>BMCServiceDesk__SiteTemplate</siteTemplate>
+    <siteType>Visualforce</siteType>
+    <subdomain>sunrun</subdomain>
+</CustomSite>

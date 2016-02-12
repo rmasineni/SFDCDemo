@@ -1,0 +1,30 @@
+<apex:page controller="MilestoneManagement" tabstyle="Milestone_Management__tab" sidebar="false">
+    <style>
+    .producterror { color: red; font-weight: strong;}
+    </style>
+    <apex:sectionHeader title="Milestone Management"/>
+
+    <apex:form id="formId">
+        <apex:pageblock mode="edit" >
+            <apex:outputpanel >
+                <div id="thePanel" style="height:20px;"></div>
+            </apex:outputpanel>
+            
+            <apex:outputpanel >
+            <div align="center">
+                <apex:outputLabel style="font-weight:bold;">Select Milestone Actions</apex:outputLabel>
+                &nbsp;
+                <apex:selectList value="{!milestoneAction}" id="milestoneFormId" size="1">
+                    <apex:selectOptions value="{!milestoneActions}" />
+                </apex:selectList>
+                &nbsp;&nbsp;
+                <apex:commandButton action="{!displayMilestoneAction}" value=" Go " />
+            </div>            
+            </apex:outputpanel> 
+            <apex:outputpanel >
+                <div id="thePanel" style="height:20px;"></div>
+            </apex:outputpanel>
+        </apex:pageblock>
+    </apex:form>
+    
+</apex:page>

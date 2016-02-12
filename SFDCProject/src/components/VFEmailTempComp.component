@@ -1,0 +1,4 @@
+<apex:component access="global" controller="controller_formatted_datetime">{!FormattedDatetime}
+<apex:attribute assignTo="{!date_time}" description="The DateTime value to be rendered" name="date_time_value" type="DateTime"></apex:attribute>
+<apex:attribute assignTo="{!defined_format}" description="The optional format to use for the DateTime value to be rendered" name="date_time_format" type="String"></apex:attribute>
+</apex:component>

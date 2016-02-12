@@ -1,0 +1,77 @@
+<apex:page standardController="Proposal__c" extensions="SubmitProposal" sidebar="false" showHeader="false">
+	<apex:form id="SubmitProposal">
+		<apex:pageBlock title="{!titleStr}">
+		<apex:pageMessages escape="false" ></apex:pageMessages>
+		<apex:inputHidden value="{!Proposal__c.Stage__c}"/>
+		<apex:inputHidden value="{!Proposal__c.Name}"/>
+		<apex:panelGroup layout="block" >
+		
+		<apex:outputpanel >
+			<P>&nbsp; &nbsp;</P>
+		</apex:outputpanel>
+		
+		<apex:outputpanel rendered="{!(showClose)}" style="text-align:center" layout="block">
+			<apex:commandbutton value="Close" onclick="closeAndRefreshparent('{!parentURL}');" immediate="true"/>
+		</apex:outputpanel>
+
+		<apex:outputpanel rendered="{!(NOT(showClose) && showSubmitFirst)}" style="text-align:center" layout="block">
+			<apex:commandbutton rendered="{!(showError || showSubmit)}" value="Cancel" onclick="window.top.close();" immediate="true"/>
+			&nbsp;&nbsp;
+			<apex:actionStatus id="submitStatus1">
+			<apex:facet name="stop">
+	             <apex:commandButton value="Submit Proposal" action="{!submitProposal}" rerender="SubmitProposal" rendered="{!showSubmit}" status="submitStatus1"/>
+	         </apex:facet>
+	         <apex:facet name="start">
+	         	<apex:outputtext value="In progress ..." />
+	             	<apex:outputPanel >
+	                   <apex:image value="/img/loading32.gif" style="height: 15px;"/>
+	                   <apex:commandButton value="Processing..." status="submitStatus1" disabled="true"/>
+					</apex:outputPanel>
+	           </apex:facet>
+	        </apex:actionStatus>
+		</apex:outputpanel>
+		
+		<apex:outputpanel rendered="{!(NOT(showClose) && showSubmitSecond)}" style="text-align:center" layout="block">
+			<apex:commandbutton value="Cancel" onclick="window.top.close();" immediate="true"/>
+			&nbsp;&nbsp;
+			<apex:actionStatus id="submitStatus11">
+	         <apex:facet name="stop">
+	             <apex:commandButton value="Submit Proposal" action="{!submitProposal}" rerender="SubmitProposal" rendered="{!showSubmit}" status="submitStatus11"/>
+	         </apex:facet>
+	         <apex:facet name="start">
+	         	<apex:outputtext value="In progress ..." />
+	             	<apex:outputPanel >
+	                   <apex:image value="/img/loading32.gif" style="height: 15px;"/>
+	                   <apex:commandButton value="Processing..." status="submitStatus11" disabled="true"/>
+					</apex:outputPanel>
+	           </apex:facet>
+	        </apex:actionStatus>
+			
+			&nbsp;&nbsp;
+			<apex:actionStatus id="submitStatus2">
+	         <apex:facet name="stop">
+	             <apex:commandButton value="Submit Proposal for Additional System" action="{!cloneAndSubmitProposal}" rerender="SubmitProposal"  status="submitStatus2"/>
+	         </apex:facet>
+	         <apex:facet name="start">
+	         	<apex:outputtext value="In progress ..." />
+	             	<apex:outputPanel >
+	                   <apex:image value="/img/loading32.gif" style="height: 15px;"/>
+	                   <apex:commandButton value="Processing..." status="submitStatus2" disabled="true"/>
+					</apex:outputPanel>
+	           </apex:facet>
+	        </apex:actionStatus>
+		</apex:outputpanel>
+		</apex:panelGroup>
+		</apex:pageBlock>
+	</apex:form>
+
+    <script>
+		function closeAndRefreshparent(refreshURL){
+			window.top.close();
+			window.opener.parent.location.href = refreshURL;
+			var win = window.open('','_parent','');
+			win.close();
+		}
+    </script>
+
+</apex:page>

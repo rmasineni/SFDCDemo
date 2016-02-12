@@ -1,0 +1,46 @@
+<apex:page title="Partner Portal Exception" sidebar="false" showHeader="false">
+	<apex:composition template="PartnerPortalSiteTemplate">
+		<apex:define name="mainContent">
+			<apex:outputpanel layout="block" styleclass="grid_2">
+				<div class="needHelpDiv1">
+				</div>
+			</apex:outputpanel>
+			<apex:outputpanel layout="block" styleclass="grid_8">
+				<div class="needHelpDiv2">
+					<div>
+				   		<BR>&nbsp;</BR><BR>&nbsp;</BR>
+				   		<BR>&nbsp;</BR><BR>&nbsp;</BR>
+						<BR>&nbsp;</BR>
+			   		</div>
+
+ 					<div id="SuccessMessage" class="pbHeader">
+						<table id="successBox" border="0" cellpadding="0" cellspacing="0">
+							<tr>
+								<td>
+									<div class="">
+										<div class=""></div>
+										<span style="margin-left:33px;width:0px;">
+											<div style="font-size:14px; font-weight: 800; color:black;" >Error:</div>
+											<p></p>
+											<div style="font-size:14px; color:black;" >{!$Site.ErrorMessage}</div>
+										</span>
+										<div class="">
+											<div class="bg"></div>
+										</div>
+									</div>
+								</td>
+							</tr>
+						</table> 
+					</div>  
+
+					<p></p>
+
+					<div>
+		   				<BR>&nbsp;</BR>
+	   				</div>
+					
+				</div>
+			</apex:outputpanel>
+		</apex:define>
+	</apex:composition>
+</apex:page>

@@ -1,0 +1,245 @@
+<apex:page id="page" controller="FSDispatchesSearch" sidebar="false" tabStyle="FS_Dispatch__tab">
+    <script>
+            function redirect(obj){
+            var str = '/'+ obj;
+            window.parent.location = str;
+        }
+        
+        function noenter(ev)  {
+            if (window.event && window.event.keyCode == 13 || ev.which == 13) {
+                doSearchAF();
+                return false;
+             } else {
+                  return true;
+             }
+         }
+    </script>
+       <style>
+        .pbHeader{
+            font-size:12px !important;
+        }
+        .producterror{ 
+            color: red; font-weight: strong;
+            background-color: #FFFFCC;
+            border-style: solid;
+            border-width: 1px;
+            padding: 6px 8px 6px 6px;
+            border-color: #FF9900;
+            font-size: 100%;
+            margin-left: 15px;
+            margin-right: 20px;
+        }
+       </style>
+       <!-- CSS added to display alternate row colors and Center align Text in PageblockTable -->
+        <style type="text/css">
+        .oddrow{background-color: #FFFFFF; } 
+        .evenrow{background-color: #FFFFFF;; } 
+        .textalign{text-align:center; } 
+       </style>
+            <apex:messages styleClass="producterror" />
+      
+ 
+       <apex:form >
+            <apex:actionFunction name="doSearchAF" action="{!doSearch}" />
+    
+             <apex:pageblock mode="Edit" id="ViewDetails" >
+                    <apex:outputpanel >
+                        <div style="margin-bottom:12px;margin-top:15px" align="center">
+                          <apex:outputLabel style="font-weight:bold;">View</apex:outputLabel>
+                            &nbsp;
+                               <apex:selectList value="{!viewName}" id="viewId" size="1">
+                                    <apex:selectOptions value="{!Views}" />
+                               </apex:selectList> 
+                                   &nbsp;&nbsp;    
+                                 <apex:commandButton action="{!userActions}" value="  Go  "  />    </div>
+                     </apex:outputpanel>
+              </apex:pageblock>    
+                
+              <apex:pageBlock title="FS Dispatch List"  id="FsdispatchList">
+                     <apex:pageBlockSection columns="1">
+                         <apex:outputpanel >
+                            <div>
+                                 <table width="100%">
+                                      <tr>
+                                         <td align="right">&nbsp;</td>
+                                             <td  align="center" width="100%">
+                          <apex:outputLabel style="font-weight:bold" value="Search By" />
+                                <apex:selectList value="{!searchColumnName}" id="searchColumnName" size="1">
+                                      <apex:selectOptions value="{!SearchBy}" />
+                                          &nbsp;
+                                 </apex:selectList> 
+                                   &nbsp;&nbsp;&nbsp;   
+                                 
+                         <apex:inputText id="searchValue" value="{!searchvalue}" onkeypress="return noenter(event);" />
+                           &nbsp;&nbsp;&nbsp;
+                              <apex:commandButton action="{!doSearch}" value="search"/>
+                                             </td>
+                                                 </tr>
+                                                     </table>
+                                                        <div align="right">
+                                                             </div>
+                                                                 </div>
+                              </apex:outputpanel>
+                                    </apex:pageBlockSection>
+                                                <!-- < apex:pageblocksection columns="1">-->
+                                                <!--    <apex:pageblocktable value="{!FSDispatches}" var= -->
+                   </apex:pageBlock>
+                         <apex:pageBlock id="pgblock">
+                              <apex:pageBlockSection columns="1">
+                                      <apex:pageBlockTable value="{!FSDispatches }" var="FS" rowClasses="oddrow,evenrow"   rules="groups"  title="Click Column Header for Sorting"  styleclass="textalign" headerClass="textalign"  >  
+                     <apex:column >
+                           <apex:facet name="header">
+                                 <apex:commandLink value="FS Dispatch ID" action="{!doSearch}" rerender="pgblock">
+                        <!--<a href='/{!FS.dispatchObj.ID}' onclick="redirect('{!FS.dispatchObj.ID}')"><apex:outputtext value="{!FS.dispatchObj.name}"></apex:outputtext></a> -->
+                                     <apex:param name="sortField" value="FS_Dispatch_ID__c" assignTo="{!sortField}"/>
+                                         </apex:commandLink>
+                                             </apex:facet> 
+                                 <a href='{!urlPrefix}/{!FS.dispatchObj.ID}' onclick="redirect('{!FS.dispatchObj.ID}')"><apex:outputtext value="{!FS.dispatchObj.name}"></apex:outputtext></a>
+                         <!--   <apex:facet name="header">FSdispatch ID</apex:facet>-->
+                          <!-- <a href='/{!FS.dispatchObj.ID}' onclick="redirect('{!FS.dispatchObj.ID}')"><apex:outputtext value="{!FS.dispatchObj.name}"></apex:outputtext></a> -->
+                     </apex:column> 
+                     <apex:column >
+                        <apex:facet name="header">
+                           <apex:commandLink value="Customer Name" action="{!doSearch}" rerender="pgblock">
+                                <!-- Value attribute should have field (API Name) to sort in asc or desc order -->
+                                <apex:param name="sortField" value="FS_Customer_Name__c" assignTo="{!sortField}"/>
+                           </apex:commandLink>
+                        </apex:facet>
+                        <apex:outputField value="{!FS.dispatchObj.FS_Customer_Name__c}"/>
+                    </apex:column> 
+                    <apex:column >
+                        <apex:facet name="header">
+                           <apex:commandLink value="City" action="{!doSearch}" rerender="pgblock">
+                                <!-- Value attribute should have field (API Name) to sort in asc or desc order -->
+                                <apex:param name="sortField" value="FS_City__c" assignTo="{!sortField}"/>
+                           </apex:commandLink>
+                        </apex:facet>
+                        <apex:outputField value="{!FS.dispatchObj.FS_City__c}"/>
+                    </apex:column> 
+                                                            
+                  <!--  <apex:column headerValue="City" value="{!FS.dispatchObj.FS_City__c}"/>-->
+                  <apex:column >
+                        <apex:facet name="header">
+                           <apex:commandLink value="State" action="{!doSearch}" rerender="pgblock">
+                                <!-- Value attribute should have field (API Name) to sort in asc or desc order -->
+                                <apex:param name="sortField" value="FS_Gen_Asset_State__c" assignTo="{!sortField}"/>
+                           </apex:commandLink>
+                        </apex:facet>
+                        <apex:outputField value="{!FS.dispatchObj.FS_Gen_Asset_State__c}"/>
+                  </apex:column>
+                  <!--  <apex:column headerValue="State" value="{!FS.dispatchObj.FS_Gen_Asset_State__c}"/>-->
+                  <apex:column >
+                        <apex:facet name="header">
+                           <apex:commandLink value="Case Reason" action="{!doSearch}" rerender="pgblock">
+                                <!-- Value attribute should have field (API Name) to sort in asc or desc order -->
+                                <apex:param name="sortField" value="Case_Reason__c" assignTo="{!sortField}"/>
+                           </apex:commandLink>
+                        </apex:facet>
+                        <apex:outputField value="{!FS.dispatchObj.Case_Reason__c}"/>
+                    </apex:column>
+                  
+                   <!-- <apex:column headerValue="Case Reason" value="{!FS.dispatchObj.Case_Reason__c}"/>-->
+                   <apex:column >
+                        <apex:facet name="header">
+                           <apex:commandLink value="Subreason" action="{!doSearch}" rerender="pgblock">
+                                <!-- Value attribute should have field (API Name) to sort in asc or desc order -->
+                                <apex:param name="sortField" value="Subreason__c" assignTo="{!sortField}"/>
+                           </apex:commandLink>
+                        </apex:facet>
+                        <apex:outputField value="{!FS.dispatchObj.Subreason__c}"/>
+                    </apex:column>
+                   
+                  <!-- <apex:column headerValue="Subreason" value="{!FS.dispatchObj.Subreason__c-->}"/>
+                  <apex:column >
+                        <apex:facet name="header">
+                           <apex:commandLink value="Selected Partner Name" action="{!doSearch}" rerender="pgblock">
+                                <!-- Value attribute should have field (API Name) to sort in asc or desc order -->
+                                <apex:param name="sortField" value="FS_Selected_Partner_Name__c" assignTo="{!sortField}"/>
+                           </apex:commandLink>
+                        </apex:facet>
+                        <apex:outputField value="{!FS.dispatchObj.FS_Selected_Partner_Name__c}"/>
+                    </apex:column>
+                  <!--<apex:column headerValue="Selected Partner Name" value="{!FS.dispatchObj.FS_Selected_Partner_Name__c}"/> -->
+                      <apex:column >
+                        <apex:facet name="header">
+                           <apex:commandLink value="Case Priority" action="{!doSearch}" rerender="pgblock">
+                                <!-- Value attribute should have field (API Name) to sort in asc or desc order -->
+                                <apex:param name="sortField" value="Case_Priority__c" assignTo="{!sortField}"/>
+                           </apex:commandLink>
+                        </apex:facet>
+                        <apex:outputField value="{!FS.dispatchObj.Case_Priority__c}"/>
+                    </apex:column>
+                 <!--   <apex:column headerValue="Case Priority" value="{!FS.dispatchObj.Case_Priority__c}"/>-->
+                        <apex:column >
+                        <apex:facet name="header">
+                           <apex:commandLink value="Partner Tracking ID" action="{!doSearch}" rerender="pgblock">
+                                <!-- Value attribute should have field (API Name) to sort in asc or desc order -->
+                                <apex:param name="sortField" value="FS_Partner_Tracking_ID__c" assignTo="{!sortField}"/>
+                           </apex:commandLink>
+                        </apex:facet>
+                        <apex:outputField value="{!FS.dispatchObj.FS_Partner_Tracking_ID__c}"/>
+                    </apex:column>
+                  <!--  <apex:column headerValue="Partner Tracking ID" value="{!FS.dispatchObj.FS_Partner_Tracking_ID__c}"/>--> 
+                      <apex:column >
+                        <apex:facet name="header">
+                           <apex:commandLink value="Dispatch State" action="{!doSearch}" rerender="pgblock">
+                                <!-- Value attribute should have field (API Name) to sort in asc or desc order -->
+                                <apex:param name="sortField" value="FS_Dispatch_State__c" assignTo="{!sortField}"/>
+                           </apex:commandLink>
+                        </apex:facet>
+                        <apex:outputField value="{!FS.dispatchObj.FS_Dispatch_State__c}"/>
+                    </apex:column>  
+                 <!--<apex:column headerValue="Dispatch State" value="{!FS.dispatchObj.FS_Dispatch_State__c}"/> -->
+                 <apex:column >
+                        <apex:facet name="header">
+                           <apex:commandLink value="Time Dispatched" action="{!doSearch}" rerender="pgblock">
+                                <!-- Value attribute should have field (API Name) to sort in asc or desc order -->
+                                <apex:param name="sortField" value="FS_Time_Dispatched__c" assignTo="{!sortField}"/>
+                           </apex:commandLink>
+                        </apex:facet>
+                        <apex:outputField value="{!FS.dispatchObj.FS_Time_Dispatched__c}"/>
+                    </apex:column> 
+                <!--<apex:column headerValue="Time Dispatched" value="{!FS.dispatchObj.FS_Time_Dispatched__c}"/>-->
+                    <apex:column >
+                        <apex:facet name="header">
+                           <apex:commandLink value="Time Submitted" action="{!doSearch}" rerender="pgblock">
+                                <!-- Value attribute should have field (API Name) to sort in asc or desc order -->
+                                <apex:param name="sortField" value="FS_Time_Submitted__c" assignTo="{!sortField}"/>
+                           </apex:commandLink>
+                        </apex:facet>
+                        <apex:outputField value="{!FS.dispatchObj.FS_Time_Submitted__c}"/>
+                    </apex:column> 
+                 <!--  <apex:column headerValue="Time Submitted" value="{!FS.dispatchObj.FS_Time_Submitted__c}-->"/>
+                                                                         
+                </apex:pageBlockTable>  
+        
+            </apex:pageBlockSection>
+          <apex:outputPanel layout="block" styleClass="pSearchShowMore" id="otpNavTop">
+                <br></br>           
+                Total Records Found: <apex:outputText rendered="{!IF(Con.resultSize==10000,true,false)}">10000 +</apex:outputText><apex:outputText rendered="{!IF(Con.resultSize < 10000,true,false)}">{!Con.resultSize}</apex:outputText>  
+                <apex:image url="/img/search_prevarrow_disabled.gif" styleClass="prevArrow" rendered="{!NOT(Con.HasPrevious)}"/>  
+                <apex:image url="/img/search_prevarrow.gif" title="First Page" styleClass="prevArrow" rendered="{!Con.HasPrevious}"/>  
+                <apex:commandLink action="{!first}" title="First Page" value="First Page" rendered="{!Con.HasPrevious}"/>  
+                <apex:outputPanel styleClass="pShowLess noLink" style="color:grey" rendered="{!NOT(Con.HasPrevious)}">First Page</apex:outputPanel>           
+
+                <apex:image url="/img/search_prevarrow_disabled.gif" styleClass="prevArrow" rendered="{!NOT(Con.HasPrevious)}"/>  
+                <apex:image url="/img/search_prevarrow.gif" title="Previous Page" styleClass="prevArrow" rendered="{!Con.HasPrevious}"/>  
+                <apex:commandLink action="{!Previous}" title="Previous Page" value="Previous Page" rendered="{!Con.HasPrevious}"/>  
+                <apex:outputPanel styleClass="pShowLess noLink" style="color:grey" rendered="{!NOT(Con.HasPrevious)}">Previous Page</apex:outputPanel>           
+                &nbsp;({!IF(Con.PageNumber == 1,1,((Con.PageNumber -1) * Con.PageSize)+1)}-{!IF(Con.resultSize < Con.PageSize,Con.resultSize,Con.PageNumber * Con.pageSize)})&nbsp;  
+                <apex:outputPanel styleClass="pShowLess noLink" style="color:grey" rendered="{!NOT(Con.HasNext)}">Next Page</apex:outputPanel>           
+                <apex:commandLink title="Next Page" value="Next Page" rendered="{!Con.HasNext}" action="{!Next}"/>&nbsp;  
+                <apex:image url="/img/search_nextarrow.gif" title="Next Page" styleClass="nextArrow" rendered="{!Con.HasNext}"/>  
+                <apex:image url="/img/search_nextarrow_disabled.gif" rendered="{!NOT(Con.HasNext)}"/>            
+                <apex:outputPanel styleClass="pShowLess noLink" style="color:grey" rendered="{!NOT(Con.HasNext)}">Last Page</apex:outputPanel>           
+                <apex:commandLink title="Last Page" value="Last Page" rendered="{!Con.HasNext}" action="{!last}"/>&nbsp;  
+                <apex:image url="/img/search_nextarrow.gif" title="Last Page" styleClass="nextArrow" rendered="{!Con.HasNext}"/>  
+                <apex:image url="/img/search_nextarrow_disabled.gif" rendered="{!NOT(Con.HasNext)}"/>
+            </apex:outputPanel>  
+
+
+        </apex:pageBlock>
+    </apex:form>
+
+
+</apex:page>

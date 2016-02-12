@@ -1,0 +1,210 @@
+<apex:page standardController="Contact" extensions="NewCustomerContact" sidebar="false" showHeader="false">
+	 <style>
+    .producterror { color: red; font-weight: strong;}
+    </style>
+
+ 	<apex:sectionHeader title="{!title}"/>
+	<apex:form id="formId" >
+		<apex:messages styleClass="producterror" />		
+		<apex:pageblock >
+			<apex:pageBlockSection title="Contact Information" columns="2">
+				<apex:pageBlockSectionItem >
+					<apex:outputLabel value="First Name" />
+					<apex:outputPanel layout="block" styleClass="requiredInput">
+					<apex:outputPanel layout="block" styleClass="requiredBlock"/>
+						<apex:inputfield id="FirstName" value="{!addCon.Firstname}">
+						</apex:inputfield>
+					</apex:outputPanel>
+				</apex:pageBlockSectionItem>  				
+				<apex:pageBlockSectionItem >
+					<apex:outputLabel value="Last Name" />
+					<apex:outputPanel layout="block" styleClass="requiredInput">
+					<apex:outputPanel layout="block" styleClass="requiredBlock"/>
+						<apex:inputtext id="LastName" value="{!lastName}">
+						</apex:inputtext>
+					</apex:outputPanel>
+				</apex:pageBlockSectionItem> 
+				<apex:pageBlockSectionItem >
+					<apex:outputLabel value="Email" />
+					<apex:outputPanel layout="block" styleClass="requiredInput">
+					<apex:outputPanel layout="block" styleClass="requiredBlock"/>
+						<apex:inputfield id="Email" value="{!addCon.Email}">
+						</apex:inputfield>
+					</apex:outputPanel>
+				</apex:pageBlockSectionItem>
+				<!-- <apex:pageBlockSectionItem >
+					<apex:outputLabel value="Email Opt Out" />
+					<apex:outputPanel layout="block">
+						<apex:inputfield id="EmailOptOut" value="{!addCon.HasOptedOutOfEmail}">
+						</apex:inputfield>
+					</apex:outputPanel>
+				</apex:pageBlockSectionItem>  -->
+				<apex:pageBlockSectionItem >
+					<apex:outputLabel value="Phone" />
+					<apex:outputPanel layout="block">
+						<apex:inputfield id="Phone" value="{!addCon.phone}">
+						</apex:inputfield>
+					</apex:outputPanel>
+				</apex:pageBlockSectionItem>				
+
+				<apex:pageBlockSectionItem >
+					<apex:outputLabel value="Other Phone" />
+					<apex:outputPanel layout="block">
+						<apex:inputfield id="HomePhone" value="{!addCon.homephone}">
+						</apex:inputfield>
+					</apex:outputPanel>
+				</apex:pageBlockSectionItem>
+												
+				<apex:pageBlockSectionItem >
+					<apex:outputLabel value="Mobile" />
+					<apex:outputPanel layout="block">
+						<apex:inputfield id="HomePhone" value="{!addCon.mobilephone}">
+						</apex:inputfield>
+					</apex:outputPanel>
+				</apex:pageBlockSectionItem>
+
+				<apex:pageBlockSectionItem >
+					<apex:outputLabel value="Proposal" />
+					<apex:outputPanel layout="block">
+						<apex:inputfield id="proposal" value="{!addCon.Proposal__c}">
+							<apex:actionSupport event="onchange" action="{!updateProposalDetails}"
+								rerender="AddressSection2, AddressSection1,AddressSection12, AddressSection11"/>	
+						</apex:inputfield>
+					</apex:outputPanel>
+				</apex:pageBlockSectionItem>
+
+  			</apex:pageblocksection>
+		</apex:pageblock>
+
+		<apex:outputPanel Id="AddressSection11" layout="block">
+		<apex:pageblock rendered="{!EditAdditionalInfo}">
+			<apex:pageblocksection Id="AddressSection1"  title="Address Information">
+					<apex:pageBlockSectionItem >
+						<apex:outputLabel value="Street" />
+						<apex:outputPanel layout="block" styleClass="requiredInput">
+						<apex:outputPanel layout="block" styleClass="requiredBlock"/>
+						<apex:inputfield value="{!addCon.MailingStreet}"/>
+						</apex:outputPanel>
+					</apex:pageBlockSectionItem>  				
+					<apex:pageBlockSectionItem >
+						<apex:outputLabel value="City" />
+						<apex:outputPanel layout="block" styleClass="requiredInput">
+						<apex:outputPanel layout="block" styleClass="requiredBlock"/>
+						<apex:inputfield value="{!addCon.MailingCity}"/>
+						</apex:outputPanel>
+					</apex:pageBlockSectionItem> 				
+					<apex:pageBlockSectionItem >
+						<apex:outputLabel value="State" />
+						<apex:outputPanel layout="block" styleClass="requiredInput">
+						<apex:outputPanel layout="block" styleClass="requiredBlock"/>
+						<apex:inputfield value="{!addCon.Mailingstate}"/>
+						</apex:outputPanel>
+					</apex:pageBlockSectionItem>  				
+					<apex:pageBlockSectionItem >
+						<apex:outputLabel value="Postal Code" />
+						<apex:outputPanel layout="block" styleClass="requiredInput">
+						<apex:outputPanel layout="block" styleClass="requiredBlock"/>
+						<apex:inputfield value="{!addCon.MailingPostalCode}"/>
+						</apex:outputPanel>
+					</apex:pageBlockSectionItem> 	
+			</apex:pageblocksection>
+		</apex:pageblock>
+		</apex:outputPanel>
+		
+		<apex:outputPanel Id="AddressSection12"  layout="block">
+		<apex:pageblock rendered="{!NOT(EditAdditionalInfo)}">
+			<apex:pageblocksection Id="AddressSection2" title="Address Information">
+					<apex:pageBlockSectionItem >
+						<apex:outputLabel value="Street" />
+						<apex:outputtext value="{!addCon.MailingStreet}"/>
+					</apex:pageBlockSectionItem>  				
+					<apex:pageBlockSectionItem >
+						<apex:outputLabel value="City" />
+						<apex:outputtext value="{!addCon.MailingCity}"/>
+					</apex:pageBlockSectionItem> 				
+					<apex:pageBlockSectionItem >
+						<apex:outputLabel value="State" />
+						<apex:outputtext value="{!addCon.Mailingstate}"/>
+					</apex:pageBlockSectionItem>  				
+					<apex:pageBlockSectionItem >
+						<apex:outputLabel value="Postal Code" />
+						<apex:outputtext value="{!addCon.MailingPostalCode}"/>
+					</apex:pageBlockSectionItem> 	
+					<apex:pageBlockSectionItem >
+						<apex:outputLabel value="Country" />
+						<apex:outputtext value="{!addCon.Mailingcountry}"/>
+					</apex:pageBlockSectionItem> 
+			</apex:pageblocksection>
+		</apex:pageblock>
+		</apex:outputPanel>
+		
+		<div align="center">
+			<apex:actionStatus id="mySaveStatus1" onstop="closeAndRefreshparent('{!confirmMode}', '{!contactId}', '{!proposalId}');" >
+	         <apex:facet name="stop">
+	             <apex:commandButton value=" Save " rendered="{!NOT(confirmMode)}"
+	             	action="{!saveContact}" rerender="formId"
+	             	 status="mySaveStatus1"/>
+	         </apex:facet>
+	         <apex:facet name="start">
+	         	<apex:outputtext value="In progress ..." />
+	             <apex:outputPanel >
+	                   <apex:image value="/img/loading32.gif" style="height: 15px;"/>
+	                   <apex:commandButton value="Processing..." status="mySaveStatus1" 
+	                   oncomplete="closeAndRefreshparent('{!confirmMode}', '{!contactId}', '{!proposalId}');"  disabled="true"/>
+	               </apex:outputPanel>
+	           </apex:facet>
+	        </apex:actionStatus>
+	        <!-- 
+			<apex:commandButton rendered="{!NOT(confirmMode)}" action="{!saveContact}" value=" Save " 
+				rerender="formId" oncomplete="closeAndRefreshparent('{!confirmMode}', '{!contactId}');" />
+	         -->
+			&nbsp;
+			<apex:commandButton rendered="{!NOT(confirmMode)}" value="Cancel" onclick="window.top.close();" immediate="true" />
+			&nbsp;
+			<apex:commandButton rendered="{!confirmMode}" value="Close" onclick="closeAndRefreshparent('{!parentURL}');window.top.close();" immediate="true"/>
+			
+		</div>
+	</apex:form>
+	
+	
+	<script type="text/javascript">
+		var baseURL = '{!BaseURL}' ;
+		
+		function closeAndRefreshparent(confirmMode, contactId, proposalId)
+		{
+			var parentWindowUrl = ''; 
+			if(confirmMode == false){
+				return;
+			}
+			
+			//var proposalId = '{!proposalId}';
+			parentWindowUrl = baseURL + '/apex/CustomerCreditManager?';
+
+			if(proposalId != null && proposalId != ''){
+				parentWindowUrl += 'proposalId=' + proposalId + '&';
+			}			
+			if(contactId != null && contactId != ''){
+				parentWindowUrl += 'contactId=' + contactId;
+			}
+			
+
+			if(confirmMode == 'true'){
+				window.top.close();
+				window.opener.location.href= parentWindowUrl;
+				var win = window.open('','_parent','');
+				win.close();
+			}
+		}
+				
+		function confirmCancel() {
+		     var winMain=window.opener;
+		      if (null==winMain)
+		      {
+		         winMain=window.parent.opener;
+		      }
+		      winMain.closePopup();
+		      return true;
+		}  
+	</script>
+
+</apex:page>

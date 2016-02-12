@@ -1,0 +1,123 @@
+<apex:page title="AEE Partner Portal" sidebar="false" showHeader="false" controller="PartnerPortalLogin">
+	<link href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/css/bootstrap.min.css' rel='stylesheet' type='text/css'/>
+    
+    <style>
+    	#login-page {
+        	max-width: 999px;
+        }
+        
+        #body-row {
+        	margin-top: 75px;
+        }
+        
+        .widget {
+            padding: 10px;
+            border: 2px solid #F47730;
+            max-width: 300px;
+            border-radius: 5px;        
+        }
+        
+        .widget-title {
+			font-size: 18px;
+		    font-weight: bold;
+		    padding-bottom: 5px;
+		    display: block;        	
+        }
+        
+        .widget .row {
+        	padding-bottom: 5px;
+        }
+        
+        .widget input[type=text], .widget input[type=password] {
+        	width: 100%;
+        }
+        
+        .widget input[type=submit] {
+        	min-width: 100px;
+        }
+
+        #error-row ul {
+        	padding-left: 0;
+        }
+        
+        #error-row li {
+        	list-style:none;
+            margin-left: 0;
+        	padding-left: 0;
+        }
+        
+        #footer-row {
+			margin-top: 25px;
+		    padding: 10px;
+		    border-top: 1px solid #C1C1C1;
+        	color: #C1C1C1;
+        }
+        
+        .vcenter {
+			display: flex;
+		    align-items: center;
+        }
+    </style>
+	<apex:form id="theForm" forceSSL="true">
+        <div id="login-page" class="container">
+            <div id="header-row" class="row">
+                <div class="col-md-12">
+                </div>
+            </div>
+            <div id="body-row" class="row vcenter">
+                <div class="col-md-6 text-center">
+                    <img src="{!URLFOR($Resource.CommunityResourcesAee, 'images/aee-login-logo.png')}"/>
+                </div>
+                <div class="col-md-6">
+                    <div class="widget container">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <span class="widget-title">AEE Partner Login</span>
+                            </div>
+                        </div>
+                        <div id="error-row" class="row">
+                            <div class="col-md-12">
+                                <c:PartnerPortalErrorMessage />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <apex:outputPanel >
+                                    <apex:outputLabel value="Username:" for="username"/>
+                                    <apex:inputtext size="30" id="username" value="{!username}"/>
+                                </apex:outputPanel>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <apex:outputPanel >
+                                    <apex:outputLabel value="Password: " for="password"/>
+                                    <apex:inputSecret size="30" id="password" value="{!password}"/>
+                                </apex:outputPanel>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <apex:outputPanel >
+                                    <apex:commandButton styleclass="buttons" action="{!login}" value="    Log In    " id="theButton1"/>
+                                </apex:outputPanel>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <apex:outputPanel >
+                                    <a href="/aeepartner/PartnerPortalNeedHelp">Need Help Signing In?</a>
+                                </apex:outputPanel>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+          <div id="footer-row" class="row">
+            <div class="col-md-12 text-center">
+                © 2016 AEE Solar
+            </div>
+          </div>
+        </div>
+	</apex:form>
+</apex:page>

@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Follow</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <description>NE Partner Parent Certification</description>
+    <enableActivities>false</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableDivisions>false</enableDivisions>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>false</enableHistory>
+    <enableReports>false</enableReports>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <externalSharingModel>ReadWrite</externalSharingModel>
+    <fields>
+        <fullName>Account__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>Account</description>
+        <externalId>false</externalId>
+        <label>Account</label>
+        <referenceTo>Account</referenceTo>
+        <relationshipLabel>NE Partner Parent Certifications</relationshipLabel>
+        <relationshipName>NE_Partner_Parent_Certifications</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Completed_Date__c</fullName>
+        <description>Completed Date</description>
+        <externalId>false</externalId>
+        <label>Completed Date</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>Contact__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>Contact</description>
+        <externalId>false</externalId>
+        <label>Contact</label>
+        <referenceTo>Contact</referenceTo>
+        <relationshipLabel>NE Partner Parent Certifications</relationshipLabel>
+        <relationshipName>NE_Partner_Parent_Certifications</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Enrolled_Date__c</fullName>
+        <description>Enrolled Date</description>
+        <externalId>false</externalId>
+        <label>Enrolled Date</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>Parent_Certification_ID__c</fullName>
+        <description>Parent Certification ID</description>
+        <externalId>false</externalId>
+        <label>Parent Certification ID</label>
+        <length>100</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Parent_Certification_Score__c</fullName>
+        <description>Parent Certification Score</description>
+        <externalId>false</externalId>
+        <label>Parent Certification Score</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackTrending>false</trackTrending>
+        <type>Percent</type>
+    </fields>
+    <fields>
+        <fullName>Parent_Certification_Status__c</fullName>
+        <description>Parent Certification Status</description>
+        <externalId>false</externalId>
+        <label>Parent Certification Status</label>
+        <length>100</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Parent_Certification__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>Parent Certification</description>
+        <externalId>false</externalId>
+        <label>Parent Certification</label>
+        <referenceTo>NE_Parent_Certification__c</referenceTo>
+        <relationshipLabel>NE Partner Parent Certifications</relationshipLabel>
+        <relationshipName>NE_Partner_Parent_Certifications</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Percentage_Completion__c</fullName>
+        <description>Percentage Completion</description>
+        <externalId>false</externalId>
+        <label>Percentage Completion</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackTrending>false</trackTrending>
+        <type>Percent</type>
+    </fields>
+    <label>NE Partner Parent Certification</label>
+    <nameField>
+        <displayFormat>NPC-{0000000000}</displayFormat>
+        <label>NE-Reference</label>
+        <type>AutoNumber</type>
+    </nameField>
+    <pluralLabel>NE Partner Parent Certifications</pluralLabel>
+    <searchLayouts>
+        <lookupDialogsAdditionalFields>Account__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Contact__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Parent_Certification__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Parent_Certification_ID__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Parent_Certification_Status__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Enrolled_Date__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Completed_Date__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Parent_Certification_Score__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Percentage_Completion__c</lookupDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>Account__c</lookupPhoneDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>Contact__c</lookupPhoneDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>Parent_Certification__c</lookupPhoneDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>Parent_Certification_ID__c</lookupPhoneDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>Parent_Certification_Status__c</lookupPhoneDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>Enrolled_Date__c</lookupPhoneDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>Completed_Date__c</lookupPhoneDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>Percentage_Completion__c</lookupPhoneDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>Parent_Certification_Score__c</lookupPhoneDialogsAdditionalFields>
+        <searchFilterFields>Account__c</searchFilterFields>
+        <searchFilterFields>Contact__c</searchFilterFields>
+        <searchFilterFields>Parent_Certification__c</searchFilterFields>
+        <searchFilterFields>Parent_Certification_ID__c</searchFilterFields>
+    </searchLayouts>
+    <sharingModel>ReadWrite</sharingModel>
+</CustomObject>

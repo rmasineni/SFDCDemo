@@ -1,0 +1,1870 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Follow</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <description>Captures surveys info from clicktools or other survey tools</description>
+    <enableActivities>false</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableDivisions>false</enableDivisions>
+    <enableEnhancedLookup>true</enableEnhancedLookup>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>false</enableHistory>
+    <enableReports>true</enableReports>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <externalSharingModel>ControlledByParent</externalSharingModel>
+    <fields>
+        <fullName>Agreement_Number__c</fullName>
+        <externalId>false</externalId>
+        <formula>Service_Contract__r.Agreement_Number__c</formula>
+        <label>Agreement Number</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Answer_1__c</fullName>
+        <externalId>false</externalId>
+        <label>Answer 1</label>
+        <length>5000</length>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>2</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Answer_2__c</fullName>
+        <externalId>false</externalId>
+        <label>Answer 2</label>
+        <length>5000</length>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>2</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Answer_3__c</fullName>
+        <externalId>false</externalId>
+        <label>Answer 3</label>
+        <length>5000</length>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>2</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Answer_4__c</fullName>
+        <externalId>false</externalId>
+        <label>Answer 4</label>
+        <length>5000</length>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>2</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Answer_5__c</fullName>
+        <externalId>false</externalId>
+        <label>Answer 5</label>
+        <length>5000</length>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>2</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Answer_6__c</fullName>
+        <externalId>false</externalId>
+        <label>Answer 6</label>
+        <length>5000</length>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>2</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Answer_7__c</fullName>
+        <externalId>false</externalId>
+        <label>Answer 7</label>
+        <length>5000</length>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>2</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Answer_8__c</fullName>
+        <externalId>false</externalId>
+        <label>Answer 8</label>
+        <length>5000</length>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>2</visibleLines>
+    </fields>
+    <fields>
+        <fullName>CSAT_Survey_Response__c</fullName>
+        <externalId>false</externalId>
+        <label>CSAT Survey Response</label>
+        <precision>16</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Contact_Email_Address__c</fullName>
+        <externalId>false</externalId>
+        <formula>Contact__r.Email</formula>
+        <label>Contact Email Address</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Contact__c</fullName>
+        <externalId>false</externalId>
+        <label>Contact</label>
+        <referenceTo>Contact</referenceTo>
+        <relationshipLabel>Surveys</relationshipLabel>
+        <relationshipName>Surveys</relationshipName>
+        <relationshipOrder>0</relationshipOrder>
+        <reparentableMasterDetail>false</reparentableMasterDetail>
+        <trackTrending>false</trackTrending>
+        <type>MasterDetail</type>
+        <writeRequiresMasterRead>false</writeRequiresMasterRead>
+    </fields>
+    <fields>
+        <fullName>FS_Customer_Comments__c</fullName>
+        <externalId>false</externalId>
+        <label>FS Customer Comments</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>FS_Dispatch_ID__c</fullName>
+        <deleteConstraint>Restrict</deleteConstraint>
+        <description>Contains the id for the FS Dispatch</description>
+        <externalId>false</externalId>
+        <label>FS Dispatch ID</label>
+        <referenceTo>FS_Dispatch__c</referenceTo>
+        <relationshipLabel>Surveys</relationshipLabel>
+        <relationshipName>Surveys</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>FS_NPS_Value__c</fullName>
+        <description>Holds the value for the NPS question from the FS Survey</description>
+        <externalId>false</externalId>
+        <label>FS NPS Value</label>
+        <length>10</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>FS_Partner_Comments__c</fullName>
+        <description>Comments from Customer about Partner</description>
+        <externalId>false</externalId>
+        <label>FS Partner Comments</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>FS_Partner_Rating__c</fullName>
+        <description>Value from Very Poor- Very Goo</description>
+        <externalId>false</externalId>
+        <label>FS Partner Rating</label>
+        <length>10</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>FS_Work_Complete__c</fullName>
+        <description>survey questions asking customer if work is completed. Yes/No response</description>
+        <externalId>false</externalId>
+        <label>FS Work Complete</label>
+        <length>10</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Gen_Asset_ID__c</fullName>
+        <externalId>false</externalId>
+        <label>Gen Asset ID</label>
+        <length>20</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Gen_Asset_Name__c</fullName>
+        <externalId>false</externalId>
+        <label>Gen Asset Name</label>
+        <length>25</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Install_Partner__c</fullName>
+        <externalId>false</externalId>
+        <label>Install Partner</label>
+        <length>50</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Lead_Org_Location__c</fullName>
+        <externalId>false</externalId>
+        <label>Lead Org Location</label>
+        <length>50</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>NPS_Value__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF ( ISBLANK ( CSAT_Survey_Response__c ), NULL , IF( CSAT_Survey_Response__c &gt; 8, 1, IF( CSAT_Survey_Response__c &lt; 7, -1, 0 ) ) )</formula>
+        <label>NPS Value</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>PTO_Month2__c</fullName>
+        <externalId>false</externalId>
+        <label>PTO Month</label>
+        <length>20</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>PTO_Month_as_Date__c</fullName>
+        <externalId>false</externalId>
+        <formula>datevalue(  PTO_month_reformat__c  )</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>Turns the text value for PTO month into a date so it can be used for proper sorting</inlineHelpText>
+        <label>PTO Month as Date</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>PTO__c</fullName>
+        <externalId>false</externalId>
+        <label>PTO</label>
+        <length>20</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>PTO_month_reformat__c</fullName>
+        <externalId>false</externalId>
+        <formula>right( PTO_Month2__c ,4)&amp;&quot;-&quot;&amp;
+LEFT(PTO_Month2__c,FIND(&quot;/&quot;,PTO_Month2__c,1)-1)&amp;&quot;-1&quot;</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>PTO month reformat</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Question_1__c</fullName>
+        <externalId>false</externalId>
+        <label>Question 1</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>Question_2__c</fullName>
+        <externalId>false</externalId>
+        <label>Question 2</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>Question_3__c</fullName>
+        <externalId>false</externalId>
+        <label>Question 3</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>Question_4__c</fullName>
+        <externalId>false</externalId>
+        <label>Question 4</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>Question_5__c</fullName>
+        <externalId>false</externalId>
+        <label>Question 5</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>Question_6__c</fullName>
+        <externalId>false</externalId>
+        <label>Question 6</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>Question_7__c</fullName>
+        <externalId>false</externalId>
+        <label>Question 7</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>Question_8__c</fullName>
+        <externalId>false</externalId>
+        <label>Question 8</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>Sales_Org__c</fullName>
+        <externalId>false</externalId>
+        <label>Sales Org</label>
+        <length>50</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Service_Contract__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Service Contract</label>
+        <referenceTo>ServiceContract</referenceTo>
+        <relationshipName>Surveys</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Survey_Name__c</fullName>
+        <externalId>false</externalId>
+        <label>Survey Name</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Survey_Sub_Type__c</fullName>
+        <externalId>false</externalId>
+        <label>Survey Sub Type</label>
+        <length>40</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Utility__c</fullName>
+        <externalId>false</externalId>
+        <label>Utility</label>
+        <length>25</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>X12M_NPS_Count__c</fullName>
+        <externalId>false</externalId>
+        <formula>Case(
+X12M_NPS_Value__c ,
+-1,1,
+1,1,
+0)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>12M NPS Count</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>X12M_NPS_Value__c</fullName>
+        <externalId>false</externalId>
+        <formula>if(ISBLANK( X12M_Recommend_Sunrun__c ),X12M_Recommend_Sunrun__c,
+Case( X12M_Recommend_Sunrun__c,
+0,-1,
+1,-1,
+2,-1,
+3,-1,
+4,-1,
+5,-1,
+6,-1,
+7,0,
+8,0,
+9,1,
+10,1,
+0))</formula>
+        <label>12M NPS Value</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>X12M_Recommend_Sunrun_Comments__c</fullName>
+        <externalId>false</externalId>
+        <label>12M Recommend Sunrun Comments</label>
+        <length>3000</length>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>10</visibleLines>
+    </fields>
+    <fields>
+        <fullName>X12M_Recommend_Sunrun__c</fullName>
+        <externalId>false</externalId>
+        <label>12M Recommend Sunrun</label>
+        <precision>2</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>X12M_Sunrun_Satisfaction_Comments__c</fullName>
+        <externalId>false</externalId>
+        <label>12M Sunrun Satisfaction Comments</label>
+        <length>3000</length>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>10</visibleLines>
+    </fields>
+    <fields>
+        <fullName>X12M_Sunrun_Satisfaction__c</fullName>
+        <externalId>false</externalId>
+        <label>12M Sunrun Satisfaction</label>
+        <precision>2</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>X12M_Sunrun_meet_expectation_Comment__c</fullName>
+        <externalId>false</externalId>
+        <label>12M Sunrun meet expectation Comment</label>
+        <length>3000</length>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>10</visibleLines>
+    </fields>
+    <fields>
+        <fullName>X12M_Sunrun_meets_expectations__c</fullName>
+        <externalId>false</externalId>
+        <label>12M Sunrun meets expectations</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Sunrun falls short of my expectations</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Sunrun meets my expectations</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Sunrun exceeds my expectations</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>X12M_What_Sunrun_can_do_to_move_10__c</fullName>
+        <externalId>false</externalId>
+        <label>12M What Sunrun can do to move 10?</label>
+        <length>3000</length>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>10</visibleLines>
+    </fields>
+    <fields>
+        <fullName>X12M_What_Sunrun_can_do_to_stay_10__c</fullName>
+        <externalId>false</externalId>
+        <label>12M What Sunrun can do to stay 10</label>
+        <length>3000</length>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>10</visibleLines>
+    </fields>
+    <fields>
+        <fullName>X18M_NPS_Count__c</fullName>
+        <externalId>false</externalId>
+        <formula>Case(
+X18M_NPS_Value__c ,
+-1,1,
+1,1,
+0)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>18M NPS Count</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>X18M_NPS_Value__c</fullName>
+        <externalId>false</externalId>
+        <formula>if(ISBLANK( X18M_Recommend_Sunrun__c ),X18M_Recommend_Sunrun__c ,
+Case(X18M_Recommend_Sunrun__c ,
+0,-1,
+1,-1,
+2,-1,
+3,-1,
+4,-1,
+5,-1,
+6,-1,
+7,0,
+8,0,
+9,1,
+10,1,
+0))</formula>
+        <label>18M NPS Value</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>X18M_Recommend_Sunrun_Comments__c</fullName>
+        <externalId>false</externalId>
+        <label>18M Recommend Sunrun Comments</label>
+        <length>3000</length>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>10</visibleLines>
+    </fields>
+    <fields>
+        <fullName>X18M_Recommend_Sunrun__c</fullName>
+        <externalId>false</externalId>
+        <label>18M Recommend Sunrun</label>
+        <precision>2</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>X18M_Sunrun_Satisfaction_Comments__c</fullName>
+        <externalId>false</externalId>
+        <label>18M Sunrun Satisfaction Comments</label>
+        <length>3000</length>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>10</visibleLines>
+    </fields>
+    <fields>
+        <fullName>X18M_Sunrun_Satisfaction__c</fullName>
+        <externalId>false</externalId>
+        <label>18M Sunrun Satisfaction</label>
+        <precision>2</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>X18M_Sunrun_meet_expectation_Comment__c</fullName>
+        <externalId>false</externalId>
+        <label>18M Sunrun meet expectation Comment</label>
+        <length>3000</length>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>10</visibleLines>
+    </fields>
+    <fields>
+        <fullName>X18M_Sunrun_meets_expectations__c</fullName>
+        <externalId>false</externalId>
+        <label>18M Sunrun meets expectations</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Sunrun falls short of my expectations</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Sunrun meets my expectations</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Sunrun exceeds my expectations</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>X18M_What_Sunrun_can_do_to_move_10__c</fullName>
+        <externalId>false</externalId>
+        <label>18M What Sunrun can do to move 10?</label>
+        <length>3000</length>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>10</visibleLines>
+    </fields>
+    <fields>
+        <fullName>X18M_What_Sunrun_can_do_to_stay_10__c</fullName>
+        <externalId>false</externalId>
+        <label>18M What Sunrun can do to stay 10</label>
+        <length>3000</length>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>10</visibleLines>
+    </fields>
+    <fields>
+        <fullName>X1M_How_can_Sunrun_improve_experience__c</fullName>
+        <externalId>false</externalId>
+        <label>1M How can Sunrun improve experience</label>
+        <length>3000</length>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>10</visibleLines>
+    </fields>
+    <fields>
+        <fullName>X1M_Installer_Satisfaction_Comments__c</fullName>
+        <externalId>false</externalId>
+        <label>1M - Installer Satisfaction Comments</label>
+        <length>3000</length>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>10</visibleLines>
+    </fields>
+    <fields>
+        <fullName>X1M_Installer_Satisfaction__c</fullName>
+        <externalId>false</externalId>
+        <label>1M - Installer Satisfaction</label>
+        <precision>2</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>X1M_NPS_Value__c</fullName>
+        <externalId>false</externalId>
+        <formula>if(ISBLANK(X1M_Recommend_SunRun__c),X1M_Recommend_SunRun__c,
+Case( X1M_Recommend_SunRun__c,
+0,-1,
+1,-1,
+2,-1,
+3,-1,
+4,-1,
+5,-1,
+6,-1,
+7,0,
+8,0,
+9,1,
+10,1,
+0))</formula>
+        <label>1M NPS Value</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>X1M_NPS_count__c</fullName>
+        <externalId>false</externalId>
+        <formula>Case(
+X1M_NPS_Value__c ,
+-1,1,
+1,1,
+0)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>1M NPS count</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>X1M_Recommend_SunRun_Comments__c</fullName>
+        <externalId>false</externalId>
+        <label>1M - Recommend SunRun Comments</label>
+        <length>3000</length>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>10</visibleLines>
+    </fields>
+    <fields>
+        <fullName>X1M_Recommend_SunRun__c</fullName>
+        <externalId>false</externalId>
+        <label>1M - Recommend SunRun</label>
+        <precision>2</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>X1M_SunRun_Satisfaction_Comments__c</fullName>
+        <externalId>false</externalId>
+        <label>1M - SunRun Satisfaction Comments</label>
+        <length>3000</length>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>10</visibleLines>
+    </fields>
+    <fields>
+        <fullName>X1M_SunRun_Satisfaction__c</fullName>
+        <externalId>false</externalId>
+        <label>1M - SunRun Satisfaction</label>
+        <precision>2</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>X1M_What_SunRun_can_do_to_move_to_10__c</fullName>
+        <externalId>false</externalId>
+        <label>1M - What SunRun can do to move to 10?</label>
+        <length>3000</length>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>10</visibleLines>
+    </fields>
+    <fields>
+        <fullName>X1M_What_SunRun_can_do_to_stay_at_10__c</fullName>
+        <externalId>false</externalId>
+        <label>1M - What SunRun can do to stay at 10?</label>
+        <length>3000</length>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>10</visibleLines>
+    </fields>
+    <fields>
+        <fullName>X24M_NPS_Count__c</fullName>
+        <externalId>false</externalId>
+        <formula>Case(
+X24M_NPS_Value__c ,
+-1,1,
+1,1,
+0)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>24M NPS Count</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>X24M_NPS_Value__c</fullName>
+        <externalId>false</externalId>
+        <formula>if(ISBLANK( X24M_Recommend_Sunrun__c ),X24M_Recommend_Sunrun__c,
+Case( X24M_Recommend_Sunrun__c,
+0,-1,
+1,-1,
+2,-1,
+3,-1,
+4,-1,
+5,-1,
+6,-1,
+7,0,
+8,0,
+9,1,
+10,1,
+0))</formula>
+        <label>24M NPS Value</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>X24M_Recommend_Sunrun_Comments__c</fullName>
+        <externalId>false</externalId>
+        <label>24M Recommend Sunrun Comments</label>
+        <length>3000</length>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>10</visibleLines>
+    </fields>
+    <fields>
+        <fullName>X24M_Recommend_Sunrun__c</fullName>
+        <externalId>false</externalId>
+        <label>24M Recommend Sunrun</label>
+        <precision>2</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>X24M_Sunrun_Satisfaction_Comments__c</fullName>
+        <externalId>false</externalId>
+        <label>24M Sunrun Satisfaction Comments</label>
+        <length>3000</length>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>10</visibleLines>
+    </fields>
+    <fields>
+        <fullName>X24M_Sunrun_Satisfaction__c</fullName>
+        <externalId>false</externalId>
+        <label>24M Sunrun Satisfaction</label>
+        <precision>2</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>X24M_Sunrun_meet_expectation_Comment__c</fullName>
+        <externalId>false</externalId>
+        <label>24M Sunrun meet expectation Comment</label>
+        <length>3000</length>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>10</visibleLines>
+    </fields>
+    <fields>
+        <fullName>X24M_Sunrun_meets_expectations__c</fullName>
+        <externalId>false</externalId>
+        <label>24M Sunrun meets expectations</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Sunrun falls short of my expectations</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Sunrun meets my expectations</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Sunrun exceeds my expectations</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>X24M_What_Sunrun_can_do_to_move_10__c</fullName>
+        <externalId>false</externalId>
+        <label>24M What Sunrun can do to move 10?</label>
+        <length>3000</length>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>10</visibleLines>
+    </fields>
+    <fields>
+        <fullName>X24M_What_Sunrun_can_do_to_stay_10__c</fullName>
+        <externalId>false</externalId>
+        <label>24M What Sunrun can do to stay 10</label>
+        <length>3000</length>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>10</visibleLines>
+    </fields>
+    <fields>
+        <fullName>X30M_NPS_Count__c</fullName>
+        <externalId>false</externalId>
+        <formula>Case(
+X30M_NPS_Value__c ,
+-1,1,
+1,1,
+0)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>30M NPS Count</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>X30M_NPS_Value__c</fullName>
+        <externalId>false</externalId>
+        <formula>if(ISBLANK( X30M_Recommend_Sunrun__c ),X30M_Recommend_Sunrun__c,
+Case(  X30M_Recommend_Sunrun__c ,
+0,-1,
+1,-1,
+2,-1,
+3,-1,
+4,-1,
+5,-1,
+6,-1,
+7,0,
+8,0,
+9,1,
+10,1,
+0))</formula>
+        <label>30M NPS Value</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>X30M_Recommend_Sunrun_Comments__c</fullName>
+        <externalId>false</externalId>
+        <label>30M Recommend Sunrun Comments</label>
+        <length>3000</length>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>10</visibleLines>
+    </fields>
+    <fields>
+        <fullName>X30M_Recommend_Sunrun__c</fullName>
+        <externalId>false</externalId>
+        <label>30M Recommend Sunrun</label>
+        <precision>2</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>X30M_Sunrun_Satisfaction_Comments__c</fullName>
+        <externalId>false</externalId>
+        <label>30M Sunrun Satisfaction Comments</label>
+        <length>3000</length>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>10</visibleLines>
+    </fields>
+    <fields>
+        <fullName>X30M_Sunrun_Satisfaction__c</fullName>
+        <externalId>false</externalId>
+        <label>30M Sunrun Satisfaction</label>
+        <precision>2</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>X30M_Sunrun_meet_expectation_Comment__c</fullName>
+        <externalId>false</externalId>
+        <label>30M Sunrun meet expectation Comment</label>
+        <length>3000</length>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>10</visibleLines>
+    </fields>
+    <fields>
+        <fullName>X30M_Sunrun_meets_expectations__c</fullName>
+        <externalId>false</externalId>
+        <label>30M Sunrun meets expectations</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Sunrun falls short of my expectations</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Sunrun meets my expectations</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Sunrun exceeds my expectations</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>X30M_What_Sunrun_can_do_to_move_10__c</fullName>
+        <externalId>false</externalId>
+        <label>30M What Sunrun can do to move 10?</label>
+        <length>3000</length>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>10</visibleLines>
+    </fields>
+    <fields>
+        <fullName>X30M_What_Sunrun_can_do_to_stay_10__c</fullName>
+        <externalId>false</externalId>
+        <label>30M What Sunrun can do to stay 10</label>
+        <length>3000</length>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>10</visibleLines>
+    </fields>
+    <fields>
+        <fullName>X42M_NPS_Count__c</fullName>
+        <externalId>false</externalId>
+        <formula>Case(
+X42M_NPS_Value__c ,
+-1,1,
+1,1,
+0)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>42M NPS Count</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>X42M_NPS_Value__c</fullName>
+        <externalId>false</externalId>
+        <formula>if(ISBLANK( X42M_Recommend_Sunrun__c ),X42M_Recommend_Sunrun__c,
+Case( X42M_Recommend_Sunrun__c,
+0,-1,
+1,-1,
+2,-1,
+3,-1,
+4,-1,
+5,-1,
+6,-1,
+7,0,
+8,0,
+9,1,
+10,1,
+0))</formula>
+        <label>42M NPS Value</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>X42M_Recommend_Sunrun_Comments__c</fullName>
+        <externalId>false</externalId>
+        <label>42M Recommend Sunrun Comments</label>
+        <length>3000</length>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>10</visibleLines>
+    </fields>
+    <fields>
+        <fullName>X42M_Recommend_Sunrun__c</fullName>
+        <externalId>false</externalId>
+        <label>42M Recommend Sunrun</label>
+        <precision>2</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>X42M_Sunrun_Satisfaction_Comments__c</fullName>
+        <externalId>false</externalId>
+        <label>42M Sunrun Satisfaction Comments</label>
+        <length>3000</length>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>10</visibleLines>
+    </fields>
+    <fields>
+        <fullName>X42M_Sunrun_Satisfaction__c</fullName>
+        <externalId>false</externalId>
+        <label>42M Sunrun Satisfaction</label>
+        <precision>2</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>X42M_Sunrun_meet_expectation_Comment__c</fullName>
+        <externalId>false</externalId>
+        <label>42M Sunrun meet expectation Comment</label>
+        <length>3000</length>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>10</visibleLines>
+    </fields>
+    <fields>
+        <fullName>X42M_Sunrun_meets_expectations__c</fullName>
+        <externalId>false</externalId>
+        <label>42M Sunrun meets expectations</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Sunrun falls short of my expectations</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Sunrun meets my expectations</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Sunrun exceeds my expectations</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>X42M_What_Sunrun_can_do_to_move_10__c</fullName>
+        <externalId>false</externalId>
+        <label>42M What Sunrun can do to move 10?</label>
+        <length>3000</length>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>10</visibleLines>
+    </fields>
+    <fields>
+        <fullName>X42M_What_Sunrun_can_do_to_stay_10__c</fullName>
+        <externalId>false</externalId>
+        <label>42M What Sunrun can do to stay 10</label>
+        <length>3000</length>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>10</visibleLines>
+    </fields>
+    <fields>
+        <fullName>X54M_NPS_Count__c</fullName>
+        <externalId>false</externalId>
+        <formula>Case(
+X54M_NPS_Value__c ,
+-1,1,
+1,1,
+0)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>54M NPS Count</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>X54M_NPS_Value__c</fullName>
+        <externalId>false</externalId>
+        <formula>if(ISBLANK( X54M_Recommend_Sunrun__c ),X54M_Recommend_Sunrun__c,
+Case( X54M_Recommend_Sunrun__c,
+0,-1,
+1,-1,
+2,-1,
+3,-1,
+4,-1,
+5,-1,
+6,-1,
+7,0,
+8,0,
+9,1,
+10,1,
+0))</formula>
+        <label>54M NPS Value</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>X54M_Recommend_Sunrun_Comments__c</fullName>
+        <externalId>false</externalId>
+        <label>54M Recommend Sunrun Comments</label>
+        <length>3000</length>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>10</visibleLines>
+    </fields>
+    <fields>
+        <fullName>X54M_Recommend_Sunrun__c</fullName>
+        <externalId>false</externalId>
+        <label>54M Recommend Sunrun</label>
+        <precision>2</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>X54M_Sunrun_Satisfaction_Comments__c</fullName>
+        <externalId>false</externalId>
+        <label>54M Sunrun Satisfaction Comments</label>
+        <length>3000</length>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>10</visibleLines>
+    </fields>
+    <fields>
+        <fullName>X54M_Sunrun_Satisfaction__c</fullName>
+        <externalId>false</externalId>
+        <label>54M Sunrun Satisfaction</label>
+        <precision>2</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>X54M_Sunrun_meet_expectation_Comment__c</fullName>
+        <externalId>false</externalId>
+        <label>54M Sunrun meet expectation Comment</label>
+        <length>3000</length>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>10</visibleLines>
+    </fields>
+    <fields>
+        <fullName>X54M_Sunrun_meets_expectations__c</fullName>
+        <externalId>false</externalId>
+        <label>54M Sunrun meets expectations</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Sunrun falls short of my expectations</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Sunrun meets my expectations</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Sunrun exceeds my expectations</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>X54M_What_Sunrun_can_do_to_move_10__c</fullName>
+        <externalId>false</externalId>
+        <label>54M What Sunrun can do to move 10?</label>
+        <length>3000</length>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>10</visibleLines>
+    </fields>
+    <fields>
+        <fullName>X54M_What_Sunrun_can_do_to_stay_10__c</fullName>
+        <externalId>false</externalId>
+        <label>54M What Sunrun can do to stay 10</label>
+        <length>3000</length>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>10</visibleLines>
+    </fields>
+    <fields>
+        <fullName>X66M_NPS_Count__c</fullName>
+        <externalId>false</externalId>
+        <formula>Case(
+X66M_NPS_Value__c ,
+-1,1,
+1,1,
+0)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>66M NPS Count</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>X66M_NPS_Value__c</fullName>
+        <externalId>false</externalId>
+        <formula>if(ISBLANK( X66M_Recommend_Sunrun__c ),X66M_Recommend_Sunrun__c,
+Case( X66M_Recommend_Sunrun__c,
+0,-1,
+1,-1,
+2,-1,
+3,-1,
+4,-1,
+5,-1,
+6,-1,
+7,0,
+8,0,
+9,1,
+10,1,
+0))</formula>
+        <label>66M NPS Value</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>X66M_Recommend_Sunrun_Comments__c</fullName>
+        <externalId>false</externalId>
+        <label>66M Recommend Sunrun Comments</label>
+        <length>3000</length>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>10</visibleLines>
+    </fields>
+    <fields>
+        <fullName>X66M_Recommend_Sunrun__c</fullName>
+        <externalId>false</externalId>
+        <label>66M Recommend Sunrun</label>
+        <precision>2</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>X66M_Sunrun_Satisfaction_Comments__c</fullName>
+        <externalId>false</externalId>
+        <label>66M Sunrun Satisfaction Comments</label>
+        <length>3000</length>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>10</visibleLines>
+    </fields>
+    <fields>
+        <fullName>X66M_Sunrun_Satisfaction__c</fullName>
+        <externalId>false</externalId>
+        <label>66M Sunrun Satisfaction</label>
+        <precision>2</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>X66M_Sunrun_meet_expectation_Comment__c</fullName>
+        <externalId>false</externalId>
+        <label>66M Sunrun meet expectation Comment</label>
+        <length>3000</length>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>10</visibleLines>
+    </fields>
+    <fields>
+        <fullName>X66M_Sunrun_meets_expectations__c</fullName>
+        <externalId>false</externalId>
+        <label>66M Sunrun meets expectations</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Sunrun falls short of my expectations</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Sunrun meets my expectations</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Sunrun exceeds my expectations</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>X66M_What_Sunrun_can_do_to_move_10__c</fullName>
+        <externalId>false</externalId>
+        <label>66M What Sunrun can do to move 10?</label>
+        <length>3000</length>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>10</visibleLines>
+    </fields>
+    <fields>
+        <fullName>X66M_What_Sunrun_can_do_to_stay_10__c</fullName>
+        <externalId>false</externalId>
+        <label>66M What Sunrun can do to stay 10</label>
+        <length>3000</length>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>10</visibleLines>
+    </fields>
+    <fields>
+        <fullName>X6M_NPS_Count__c</fullName>
+        <externalId>false</externalId>
+        <formula>Case(
+X6M_NPS_value__c ,
+-1,1,
+1,1,
+0)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>6M NPS Count</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>X6M_NPS_value__c</fullName>
+        <externalId>false</externalId>
+        <formula>if(ISBLANK( X6M_Recommend_Sunrun__c ), X6M_Recommend_Sunrun__c ,
+Case( X6M_Recommend_Sunrun__c ,
+0,-1,
+1,-1,
+2,-1,
+3,-1,
+4,-1,
+5,-1,
+6,-1,
+7,0,
+8,0,
+9,1,
+10,1,
+0))</formula>
+        <label>6M NPS value</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>X6M_Recommend_Sunrun_Comments__c</fullName>
+        <externalId>false</externalId>
+        <label>6M Recommend Sunrun Comments</label>
+        <length>3000</length>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>10</visibleLines>
+    </fields>
+    <fields>
+        <fullName>X6M_Recommend_Sunrun__c</fullName>
+        <externalId>false</externalId>
+        <label>6M Recommend Sunrun</label>
+        <precision>2</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>X6M_SunRun_Satisfaction__c</fullName>
+        <externalId>false</externalId>
+        <label>6M SunRun Satisfaction</label>
+        <precision>2</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>X6M_Sunrun_Satisfaction_Comments__c</fullName>
+        <externalId>false</externalId>
+        <label>6M Sunrun Satisfaction Comments</label>
+        <length>3000</length>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>10</visibleLines>
+    </fields>
+    <fields>
+        <fullName>X6M_What_can_Sunrun_do_to_move_to_10__c</fullName>
+        <externalId>false</externalId>
+        <label>6M What can Sunrun do to move to 10?</label>
+        <length>3000</length>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>10</visibleLines>
+    </fields>
+    <fields>
+        <fullName>X6M_What_can_Sunrun_do_to_stay_at_10__c</fullName>
+        <externalId>false</externalId>
+        <label>6M What can Sunrun do to stay at 10?</label>
+        <length>3000</length>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>10</visibleLines>
+    </fields>
+    <fields>
+        <fullName>X78M_NPS_Count__c</fullName>
+        <externalId>false</externalId>
+        <formula>Case(
+X78M_NPS_Value__c ,
+-1,1,
+1,1,
+0)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>78M NPS Count</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>X78M_NPS_Value__c</fullName>
+        <externalId>false</externalId>
+        <formula>if(ISBLANK( X78M_Recommend_Sunrun__c ),X78M_Recommend_Sunrun__c,
+Case( X78M_Recommend_Sunrun__c,
+0,-1,
+1,-1,
+2,-1,
+3,-1,
+4,-1,
+5,-1,
+6,-1,
+7,0,
+8,0,
+9,1,
+10,1,
+0))</formula>
+        <label>78M NPS Value</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>X78M_Recommend_Sunrun_Comments__c</fullName>
+        <externalId>false</externalId>
+        <label>78M Recommend Sunrun Comments</label>
+        <length>3000</length>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>10</visibleLines>
+    </fields>
+    <fields>
+        <fullName>X78M_Recommend_Sunrun__c</fullName>
+        <externalId>false</externalId>
+        <label>78M Recommend Sunrun</label>
+        <precision>2</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>X78M_Sunrun_Satisfaction_Comments__c</fullName>
+        <externalId>false</externalId>
+        <label>78M Sunrun Satisfaction Comments</label>
+        <length>3000</length>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>10</visibleLines>
+    </fields>
+    <fields>
+        <fullName>X78M_Sunrun_Satisfaction__c</fullName>
+        <externalId>false</externalId>
+        <label>78M Sunrun Satisfaction</label>
+        <precision>2</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>X78M_Sunrun_meet_expectation_Comment__c</fullName>
+        <externalId>false</externalId>
+        <label>78M Sunrun meet expectation Comment</label>
+        <length>3000</length>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>10</visibleLines>
+    </fields>
+    <fields>
+        <fullName>X78M_Sunrun_meets_expectations__c</fullName>
+        <externalId>false</externalId>
+        <label>78M Sunrun meets expectations</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Sunrun falls short of my expectations</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Sunrun meets my expectations</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Sunrun exceeds my expectations</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>X78M_What_Sunrun_can_do_to_move_10__c</fullName>
+        <externalId>false</externalId>
+        <label>78M What Sunrun can do to move 10?</label>
+        <length>3000</length>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>10</visibleLines>
+    </fields>
+    <fields>
+        <fullName>X78M_What_Sunrun_can_do_to_stay_10__c</fullName>
+        <externalId>false</externalId>
+        <label>78M What Sunrun can do to stay 10</label>
+        <length>3000</length>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>10</visibleLines>
+    </fields>
+    <label>Survey</label>
+    <listViews>
+        <fullName>All</fullName>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+    </listViews>
+    <nameField>
+        <displayFormat>Survey {00000000}</displayFormat>
+        <label>Survey ID</label>
+        <type>AutoNumber</type>
+    </nameField>
+    <pluralLabel>Surveys</pluralLabel>
+    <recordTypes>
+        <fullName>Field_Service</fullName>
+        <active>true</active>
+        <description>Houses data from the Field Service Survey</description>
+        <label>Field Service</label>
+        <picklistValues>
+            <picklist>X12M_Sunrun_meets_expectations__c</picklist>
+            <values>
+                <fullName>Sunrun exceeds my expectations</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Sunrun falls short of my expectations</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Sunrun meets my expectations</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>X18M_Sunrun_meets_expectations__c</picklist>
+            <values>
+                <fullName>Sunrun exceeds my expectations</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Sunrun falls short of my expectations</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Sunrun meets my expectations</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>X24M_Sunrun_meets_expectations__c</picklist>
+            <values>
+                <fullName>Sunrun exceeds my expectations</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Sunrun falls short of my expectations</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Sunrun meets my expectations</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>X30M_Sunrun_meets_expectations__c</picklist>
+            <values>
+                <fullName>Sunrun exceeds my expectations</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Sunrun falls short of my expectations</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Sunrun meets my expectations</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>X42M_Sunrun_meets_expectations__c</picklist>
+            <values>
+                <fullName>Sunrun exceeds my expectations</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Sunrun falls short of my expectations</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Sunrun meets my expectations</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>X54M_Sunrun_meets_expectations__c</picklist>
+            <values>
+                <fullName>Sunrun exceeds my expectations</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Sunrun falls short of my expectations</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Sunrun meets my expectations</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>X66M_Sunrun_meets_expectations__c</picklist>
+            <values>
+                <fullName>Sunrun exceeds my expectations</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Sunrun falls short of my expectations</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Sunrun meets my expectations</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>X78M_Sunrun_meets_expectations__c</picklist>
+            <values>
+                <fullName>Sunrun exceeds my expectations</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Sunrun falls short of my expectations</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Sunrun meets my expectations</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
+    <searchLayouts/>
+    <sharingModel>ControlledByParent</sharingModel>
+</CustomObject>

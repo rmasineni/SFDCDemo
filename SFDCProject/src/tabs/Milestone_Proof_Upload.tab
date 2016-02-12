@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomTab xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Form to upload milestone proofs by partners</description>
+    <label>Milestone Proof Upload</label>
+    <mobileReady>false</mobileReady>
+    <motif>Custom18: Form</motif>
+    <page>milestoneProof</page>
+</CustomTab>

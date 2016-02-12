@@ -1,0 +1,12 @@
+<apex:component >
+    <apex:attribute name="content" type="String" required="false" description="Article Content2"/>
+    <apex:outputpanel layout="block" styleclass="grid_16">
+        <div class="contenetDiv3" >
+            <div style="text-align:left;padding:10px;">
+                <apex:outputPanel id="outputIt"> 
+                    <apex:outputText value=" {!content}" escape="false"/>
+                </apex:outputPanel> 
+            </div>
+        </div>
+    </apex:outputpanel>
+</apex:component>

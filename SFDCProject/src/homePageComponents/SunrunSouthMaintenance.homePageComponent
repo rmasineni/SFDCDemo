@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<HomePageComponent xmlns="http://soap.sforce.com/2006/04/metadata">
+    <body>&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt; 
+&lt;div style=&quot;text-align: center;&quot;&gt;&lt;span style=&quot;font-size: 36px;&quot;&gt;&lt;span style=&quot;font-family: arial,helvetica,sans-serif;&quot;&gt;Click &lt;a href=&quot;http://login.salesforce.com&quot;&gt;CRM login&lt;/a&gt; for Sunrun South Users.&lt;/span&gt;&lt;/span&gt;&lt;/div&gt;
+
+&lt;div style=&quot;text-align: center; margin-left: 40px;&quot;&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt; &lt;/div&gt;
+&lt;br&gt; </body>
+    <pageComponentType>htmlArea</pageComponentType>
+    <width>wide</width>
+</HomePageComponent>

@@ -1,0 +1,4 @@
+<apex:component layout="none">
+	<apex:outputText value="<" escape="false"/>!--
+	<apex:componentBody />--<apex:outputText value=">" escape="false"/>
+</apex:component>

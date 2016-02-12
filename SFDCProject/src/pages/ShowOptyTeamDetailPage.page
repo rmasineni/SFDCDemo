@@ -1,0 +1,111 @@
+<apex:page controller="ShowOptyTeamDetails" sidebar="false" showHeader="false" >
+ <style>
+        .headerLogo {
+            margin:1px 1px 1px 1px;
+            border:0;
+            padding-left:10px;
+            padding-bottom:10px;
+            #height: 30px;
+            #width: 90px;
+        }
+     
+   
+    </style>
+     <style>
+    .headerRow{text-align:center;}
+    .dataRow{text-align:center;}
+         body .bPageBlock .pbBody .blue .pbSubheader{
+			background-color:#00ADE6;
+			margin-top:0px;
+         }
+
+    </style>
+    
+    <script>
+    
+        function setOptyTeamId(teamId){
+            document.getElementById('{!$Component.frm.hdOptyTeamID}').value = teamId;
+        }
+    
+    	function deleteOptyTeam(){
+           var val=true;
+           if(!confirm('Are you sure to delete?')){
+             val= false;
+           } 
+            if(val==true){
+                CallApexMethod();
+                
+                }
+        }
+    </script>
+    <c:WorkflowTask_CSS />
+	<div align="left" width="100%">
+		<img src="{!$Resource.PartnerPortalHeader32}" class="headerLogo"/>
+    </div >
+     
+    <apex:form id="frm">
+    <!--    <apex:actionFunction name="CallApexMethod" action="{!deleteOptyTeam}" reRender="pagepanel,msg" />-->
+         <apex:pageMessages />
+        <apex:inputhidden id="hdOptyTeamID" value="{!getOptyTeamId}"/>
+        
+        <apex:pageBlock tabStyle="Task__c" id="OptyTeam"  >
+            <apex:outputPanel styleClass="blue" layout="block" id="pagepanel">
+                <apex:pageBlockSection title="Project Details" id="projectSection" >
+                    <apex:outputText value="{!projDetails.Name}"/>
+                    <apex:outputText value="{!projDetails.Status__c}"/>
+                    <apex:outputText value="{!projDetails.Opportunity__r.Install_Branch__c}"/>	
+                    <apex:outputText value="{!projDetails.Service_Contract_Name__c}"/>
+                    <apex:outputText value="{!projDetails.Opportunity__r.Sales_Branch__c}"/>	
+                    <apex:outputText value="{!projDetails.Opportunity_Name__c}"/>	 	
+                </apex:pageBlockSection> 
+                <apex:pageBlockSection title="Project Role" id="OptyTeamSection" columns="1">
+                    <apex:pageBlockTable value="{!optyTeamList}" var="optyTeam" width="100%" headerClass="headerRow" styleClass="dataRow" >
+                        <apex:column headerValue="Select"  >
+                            <input type="radio" name="group" id="{!optyTeam.Id}" onchange="setOptyTeamId('{!optyTeam.Id}');" />
+                        </apex:column>
+                        <apex:column headerValue="Project Role"  >
+                            <apex:inputField value="{!optyTeam.Role__c}" >
+                            </apex:inputField>
+                        </apex:column>
+                        <apex:column headerValue="User"  >
+                            <apex:inputField value="{!optyTeam.User__c}" >
+                            </apex:inputField>
+                        </apex:column>
+                        <apex:column headerValue="Created By" >
+                            <apex:outputField value="{!optyTeam.CreatedById}" >
+                            </apex:outputField>
+                        </apex:column>
+                        <apex:column headerValue="Created Date"   >
+                            <apex:outputtext value="{0,date,MM'/'dd'/'yyyy}"  >
+                                <apex:param value="{!optyTeam.CreatedDate}"/> 
+                            </apex:outputText> 
+                        </apex:column>
+                        <apex:column headerValue="Last Modified By" >
+                            <apex:outputField value="{!optyTeam.LastModifiedById}" >
+                            </apex:outputField>
+                        </apex:column>
+                        <apex:column headerValue="Last Modified Date"  >
+                            <apex:outputtext value="{0,date,MM'/'dd'/'yyyy}" >
+                                <apex:param value="{!optyTeam.LastModifiedDate}"/> 
+                            </apex:outputText> 
+                            
+                        </apex:column>
+                        
+                        <apex:column headerValue="Opportunity" rendered="false"  >
+                            <apex:inputField value="{!optyTeam.Opportunity__c}" styleClass="dataRow">
+                            </apex:inputField>
+                        </apex:column>
+                    </apex:pageBlockTable>
+                </apex:pageBlockSection>
+            </apex:outputPanel>
+            <apex:pageBlockButtons >
+                <apex:commandButton action="{!addOptyTeam}" value="New Project Role"/>
+                <apex:commandButton action="{!saveOptyTeam}" value="Save"/>
+                <apex:commandButton value="Delete" onclick="if(!confirm('Are you sure to delete?')){return false;}"  action="{!deleteOptyTeam}"  />
+                <apex:commandButton onclick="window.close(); opener.location.reload(true);" value="Close"/>
+            </apex:pageBlockButtons>
+        </apex:pageBlock>
+     
+    </apex:form>   
+    
+</apex:page>

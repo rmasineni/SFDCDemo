@@ -1,0 +1,41 @@
+<apex:page standardController="Opportunity" extensions="RequestForOptyAutoPaymentController">
+    <apex:form >
+        <apex:pageBlock title="Select Contact to send Auto Payment Enrollment Request Email"  rendered="{!Not(emailSent)}">
+            <apex:pageMessages />
+            
+            <apex:pageBlockTable value="{!opty.OpportunityContactRoles}" var="role" rendered="{!renderedPanel}">
+                <apex:column headerValue="Select">
+                    <input type="radio" name="action" onchange="javascript:setContactRole('{!role.id}')"/>
+                </apex:column>
+                <apex:column value="{!role.Contact.FirstName} {!role.Contact.LastName}" headerValue="Name"/>
+                <apex:column value="{!role.Contact.Email}"/>
+                <apex:column value="{!role.Role}"/>
+            </apex:pageBlockTable>
+
+            <apex:pageBlockButtons location="bottom">
+                <apex:commandButton id="button" value="Return to Opportunity" action="{!returnToOpty}"/>
+                <apex:commandButton value="Send Email" action="{!sendRequestForPaymentEmail}" rendered="{!renderedPanel}"/>        
+            </apex:pageBlockButtons>
+            
+        </apex:pageBlock>
+
+        <apex:pageBlock title="Email Sent" rendered="{!emailSent}">
+            <apex:pageMessages />
+            
+            <apex:pageBlockButtons location="bottom">
+                <apex:commandButton id="button" value="Return to Opportunity" action="{!returnToOpty}"/>
+            </apex:pageBlockButtons>
+        </apex:pageBlock>
+        
+        <apex:inputHidden value="{!contactRoleId}" id="contactRoleIdHidden"/>
+        <script>
+            //Typically actionFunction is good for these type of actions, but when I tried, it wasn't working.
+            //it was failing with error undefined is not a function 3_3_3.Finalorg.ajax4jsf.javascript.AjaxScript?rel=1403471323000:178 A4J.Query.getActionUrl
+            //so end up in creating this small js function
+            function setContactRole(roleId) {
+                document.getElementById('{!$Component.contactRoleIdHidden}').value = roleId;
+            }
+        </script>
+        
+    </apex:form>
+</apex:page>

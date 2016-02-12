@@ -1,0 +1,370 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Follow</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <description>Object used to define the Partner APIs rest to SFDC field mappings.</description>
+    <enableActivities>false</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableDivisions>false</enableDivisions>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>true</enableHistory>
+    <enableReports>false</enableReports>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <externalSharingModel>ReadWrite</externalSharingModel>
+    <fields>
+        <fullName>Active__c</fullName>
+        <defaultValue>true</defaultValue>
+        <externalId>false</externalId>
+        <inlineHelpText>If checked, this field will be picked up for mapping else will be ignored. Can be used to temporarily remove a field from api without actually deleting the mapping.</inlineHelpText>
+        <label>Active</label>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Api__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>The api, which this mapping is applicable to.</inlineHelpText>
+        <label>Api</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Lead Api</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Contract Api</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Proposal Api</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Contact Api</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Credit Api</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Payment Api</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Opty Api</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Scheduler Api</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Account Api</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Read_Only__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <inlineHelpText>If checked, this field can only be read and cannot be updated. All cross object reference, formula fields are marked as read-only.</inlineHelpText>
+        <label>Read Only</label>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Required__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <inlineHelpText>Indicates if this field is required field. This validation will be applied when creating or updating a record.</inlineHelpText>
+        <label>Required</label>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Rest_Field__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>The Rest field name of the api. Note that Rest field names are case sensitive and must follow lowerCamelCase format.</inlineHelpText>
+        <label>Rest Field</label>
+        <length>255</length>
+        <required>true</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Sfdc_Field__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Salesforce field which this record&apos;s rest field should map to. This should be an actual Salesforce API field in specified Sobject. Api name could contain parent relationship references. For ex., for ServiceContract, this could be Opportunity__r.Deal_Id__c</inlineHelpText>
+        <label>Sfdc Field</label>
+        <length>255</length>
+        <required>true</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Sobject__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>The Salesforce Object name. For ex., Contact or Lead or Opportunity or Proposal__c etc.,</inlineHelpText>
+        <label>Sobject</label>
+        <length>255</length>
+        <required>true</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Unique_Token__c</fullName>
+        <caseSensitive>false</caseSensitive>
+        <externalId>false</externalId>
+        <label>Unique Token</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>true</unique>
+    </fields>
+    <label>Partner Api Field</label>
+    <listViews>
+        <fullName>All</fullName>
+        <columns>NAME</columns>
+        <columns>Api__c</columns>
+        <columns>Rest_Field__c</columns>
+        <columns>Sobject__c</columns>
+        <columns>Sfdc_Field__c</columns>
+        <columns>Required__c</columns>
+        <columns>UPDATEDBY_USER</columns>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>All_Account_Api_Fields</fullName>
+        <columns>NAME</columns>
+        <columns>Api__c</columns>
+        <columns>Rest_Field__c</columns>
+        <columns>Sobject__c</columns>
+        <columns>Sfdc_Field__c</columns>
+        <columns>Required__c</columns>
+        <columns>UPDATEDBY_USER</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Api__c</field>
+            <operation>equals</operation>
+            <value>Account Api</value>
+        </filters>
+        <label>All Account Api Fields</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>All_Contact_Api_Fields</fullName>
+        <columns>NAME</columns>
+        <columns>Api__c</columns>
+        <columns>Rest_Field__c</columns>
+        <columns>Sobject__c</columns>
+        <columns>Sfdc_Field__c</columns>
+        <columns>Required__c</columns>
+        <columns>UPDATEDBY_USER</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Api__c</field>
+            <operation>equals</operation>
+            <value>Contact Api</value>
+        </filters>
+        <label>All Contact Api Fields</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>All_Credit_Api_Fields</fullName>
+        <columns>NAME</columns>
+        <columns>Api__c</columns>
+        <columns>Rest_Field__c</columns>
+        <columns>Sobject__c</columns>
+        <columns>Sfdc_Field__c</columns>
+        <columns>Required__c</columns>
+        <columns>UPDATEDBY_USER</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Api__c</field>
+            <operation>equals</operation>
+            <value>Credit Api</value>
+        </filters>
+        <label>All Credit Api Fields</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>All_Lead_Api_Fields</fullName>
+        <columns>NAME</columns>
+        <columns>Api__c</columns>
+        <columns>Rest_Field__c</columns>
+        <columns>Sobject__c</columns>
+        <columns>Sfdc_Field__c</columns>
+        <columns>Required__c</columns>
+        <columns>UPDATEDBY_USER</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Api__c</field>
+            <operation>equals</operation>
+            <value>Lead Api</value>
+        </filters>
+        <label>All Lead Api Fields</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>All_Opty_Api_Fields</fullName>
+        <columns>NAME</columns>
+        <columns>Api__c</columns>
+        <columns>Rest_Field__c</columns>
+        <columns>Sobject__c</columns>
+        <columns>Sfdc_Field__c</columns>
+        <columns>Required__c</columns>
+        <columns>UPDATEDBY_USER</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Api__c</field>
+            <operation>equals</operation>
+            <value>Opty Api</value>
+        </filters>
+        <label>All Opty Api Fields</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>All_Payment_Api_Fields</fullName>
+        <columns>NAME</columns>
+        <columns>Api__c</columns>
+        <columns>Rest_Field__c</columns>
+        <columns>Sobject__c</columns>
+        <columns>Sfdc_Field__c</columns>
+        <columns>Required__c</columns>
+        <columns>UPDATEDBY_USER</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Api__c</field>
+            <operation>equals</operation>
+            <value>Payment Api</value>
+        </filters>
+        <label>All Payment Api Fields</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>All_Proposal_Api_Fields</fullName>
+        <columns>NAME</columns>
+        <columns>Api__c</columns>
+        <columns>Rest_Field__c</columns>
+        <columns>Sobject__c</columns>
+        <columns>Sfdc_Field__c</columns>
+        <columns>Required__c</columns>
+        <columns>UPDATEDBY_USER</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Api__c</field>
+            <operation>equals</operation>
+            <value>Proposal Api</value>
+        </filters>
+        <label>All Proposal Api Fields</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>All_Scheduler_Api_Fields</fullName>
+        <columns>NAME</columns>
+        <columns>Api__c</columns>
+        <columns>Rest_Field__c</columns>
+        <columns>Sobject__c</columns>
+        <columns>Sfdc_Field__c</columns>
+        <columns>Required__c</columns>
+        <columns>UPDATEDBY_USER</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Api__c</field>
+            <operation>equals</operation>
+            <value>Scheduler Api</value>
+        </filters>
+        <label>All Scheduler Api Fields</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>All_Service_Contract_Api_Fields</fullName>
+        <columns>NAME</columns>
+        <columns>Api__c</columns>
+        <columns>Rest_Field__c</columns>
+        <columns>Sobject__c</columns>
+        <columns>Sfdc_Field__c</columns>
+        <columns>Required__c</columns>
+        <columns>UPDATEDBY_USER</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Api__c</field>
+            <operation>equals</operation>
+            <value>Contract Api</value>
+        </filters>
+        <label>All Service Contract Api Fields</label>
+        <language>en_US</language>
+    </listViews>
+    <nameField>
+        <displayFormat>PAF-{0000000000}</displayFormat>
+        <label>Partner Api Field#</label>
+        <trackHistory>false</trackHistory>
+        <type>AutoNumber</type>
+    </nameField>
+    <pluralLabel>Partner Api Fields</pluralLabel>
+    <searchLayouts/>
+    <sharingModel>ReadWrite</sharingModel>
+</CustomObject>

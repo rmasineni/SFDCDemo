@@ -1,0 +1,95 @@
+<apex:page docType="html-5.0" sidebar="false" showHeader="false" controller="PartnerPortalLogin">
+
+	<head>
+		<style>
+			<apex:stylesheet value="{!URLFOR($Resource.PartnerPortal, 'reset.css')}"/>
+			<apex:stylesheet value="{!URLFOR($Resource.PartnerPortal, 'common.css')}"/>
+			<apex:stylesheet value="{!URLFOR($Resource.PartnerPortal, 'website.css')}"/>			
+
+			.wordwrap { 
+				white-space: pre-wrap;    
+				white-space: -moz-pre-wrap;
+				white-space: -pre-wrap;     
+				white-space: -o-pre-wrap;   
+				word-wrap: break-word;     
+			}
+			.buttons{
+				background: -moz-linear-gradient(rgba(9, 124, 230, 0.04), #37A8F3); /* FF 3.6+ */  
+			    background: -ms-linear-gradient(rgba(9, 124, 230, 0.04), #37A8F3); /* IE10 */  
+			    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #000000), color-stop(100%, #ffffff)); /* Safari 4+, Chrome 2+ */  
+			    background: -webkit-linear-gradient(rgba(9, 124, 230, 0.04), #37A8F3); /* Safari 5.1+, Chrome 10+ */  
+			    background: -o-linear-gradient(rgba(9, 124, 230, 0.04), #37A8F3); /* Opera 11.10 */  
+			    background: linear-gradient(rgba(9, 124, 230, 0.04), #37A8F3); /* the standard *
+
+    			/*background: -moz-linear-gradient(center top , #EDECEE 0%, #EDECEE 100%, #EDECEE 100%, #EDECEE 100%) repeat scroll 0 0 transparent;*/
+				border: 1px solid #AAAAAA;
+				border-radius: 10px 10px 10px 10px;
+				bottom: 14px;
+				color: white;
+				cursor: pointer;
+				font-size: 11px;
+				height: 20px;
+				right: 10px;
+				text-align: center;
+				width: 90px;
+				font: bold 11px arial,sans-serif;
+			}
+			.errorMsg2 {
+			    color: #CC0000;
+			}
+		</style>
+	</head>
+	
+	<body id="page-account-login">
+ 		 <div class="frame"> <!--  DIV FRAME START -->
+ 		 	<div id="header">
+				<a href="http://www.sunrun.com/" class="home" title="Sunrun Home">Sunrun Home</a>
+            	<ul id="topnav"></ul>
+		 	</div> <!-- #header -->
+ 			
+ 			<div id="content" class="">
+
+            <div id="leftcol"></div> <!-- #leftcol -->
+				<div id="middlecol" class="main">
+            
+            		<div>
+            		<BR>&nbsp;</BR>
+            		<BR>&nbsp;</BR>
+            		<BR>&nbsp;</BR>
+            		</div>
+    				
+       
+    				<p></p>
+
+					<apex:form id="theForm" forceSSL="true">
+						<div style="width:390px;">
+							<font style="wordwrap" color="red" weight="bold"><apex:messages styleClass="wordwrap" /></font>
+						</div>
+				<h1>Partner Login</h1>													
+
+				<div>
+					<BR>&nbsp;</BR>
+          		</div>
+				</apex:form>
+				<p></p>
+				<script>document.login_form.username.focus();</script>
+			</div>
+		</div>
+		<div id="footer">
+		    <ul >
+		      <li>© 2007 - 2012 Sunrun Inc.</li>
+		    </ul>
+		    <ul id="footernav">
+		          <li> <a href="http://www.sunrun.com/">Sunrun Home</a></li>
+		          <li><span class="divider">|</span> <a href="http://www.sunrun.com/about-sunrun/contact">Contact Sunrun</a></li>
+		          <li><span class="divider">|</span> <a href="http://www.sunrun.com/about-sunrun">About Sunrun</a></li>
+		          <li><span class="divider">|</span> <a href="http://www.sunrun.com/blog">Blog</a></li>
+		          <li><span class="divider">|</span> <a href="http://www.sunrun.com/privacy-policy">Privacy Policy</a></li>
+			</ul>
+			<ul>
+		      	<div class="custom_footer"></div>
+			</ul>
+		</div>	
+		</div> <!--  DIV FRAME END -->
+	</body>
+</apex:page>

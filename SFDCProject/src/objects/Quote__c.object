@@ -1,0 +1,572 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Follow</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <description>This is a form of the proposal object specifically meant for Lead objects.</description>
+    <enableActivities>true</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableDivisions>false</enableDivisions>
+    <enableEnhancedLookup>true</enableEnhancedLookup>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>false</enableHistory>
+    <enableReports>true</enableReports>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <externalSharingModel>ReadWrite</externalSharingModel>
+    <fields>
+        <fullName>Account__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Account</label>
+        <referenceTo>Account</referenceTo>
+        <relationshipLabel>Quotes</relationshipLabel>
+        <relationshipName>Quotes</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Alternate_Phone__c</fullName>
+        <externalId>false</externalId>
+        <label>Alternate Phone</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Phone</type>
+    </fields>
+    <fields>
+        <fullName>Azimuth__c</fullName>
+        <description>The estimated azimuth of the home as indicated by the quote.</description>
+        <externalId>false</externalId>
+        <label>Azimuth</label>
+        <length>5</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>City__c</fullName>
+        <externalId>false</externalId>
+        <label>City</label>
+        <length>64</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Deleted_Date__c</fullName>
+        <description>The date and time at which the user &quot;deleted&quot; their quote in the Lead Portal.  This normally happens only to expired quotes.  A quote that is deleted is still in our records but invisible to the user.  An empty value for this field means that the quote has not been deleted.</description>
+        <externalId>false</externalId>
+        <label>Deleted Date</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>Email__c</fullName>
+        <description>The quoted person&apos;s email address.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>The quoted person&apos;s first name.</inlineHelpText>
+        <label>Email</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Email</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Expire_Date__c</fullName>
+        <description>The date after which a quote is expired, when to be valid it must be &quot;refreshed&quot; by the user in the Lead Portal.  Nominally 30 days after creation.</description>
+        <externalId>false</externalId>
+        <label>Expire Date</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>First_Name__c</fullName>
+        <description>The quoted person&apos;s first name.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>The quoted person&apos;s first name.</inlineHelpText>
+        <label>First Name</label>
+        <length>64</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Indicated_Latitude__c</fullName>
+        <externalId>false</externalId>
+        <label>Indicated Latitude</label>
+        <precision>15</precision>
+        <required>false</required>
+        <scale>5</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Indicated_Longitude__c</fullName>
+        <description>The indicated longitude of the home being quoted.</description>
+        <externalId>false</externalId>
+        <label>Indicated Longitude</label>
+        <precision>15</precision>
+        <required>false</required>
+        <scale>5</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Last_Name__c</fullName>
+        <description>The quoted person&apos;s last name.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>The quoted person&apos;s last name.</inlineHelpText>
+        <label>Last Name</label>
+        <length>64</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Lead__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>The lead that issued this quote.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>The lead that issued this quote.</inlineHelpText>
+        <label>Lead</label>
+        <referenceTo>Lead</referenceTo>
+        <relationshipLabel>Quotes</relationshipLabel>
+        <relationshipName>Quotes</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Mode_Name__c</fullName>
+        <description>The name of the mode which issued this quote.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>The name of the mode which issued this quote.</inlineHelpText>
+        <label>Mode Name</label>
+        <length>32</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>New_Utility_Bill__c</fullName>
+        <description>The utility bill after solar.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>The utility bill after solar.</inlineHelpText>
+        <label>New Utility Bill</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Notes__c</fullName>
+        <externalId>false</externalId>
+        <label>Notes</label>
+        <length>32000</length>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Old_Utility_Bill__c</fullName>
+        <description>The utility bill the customer has before installing solar.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>The utility bill the customer has before installing solar.</inlineHelpText>
+        <label>Old Utility Bill</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Own_Home__c</fullName>
+        <defaultValue>true</defaultValue>
+        <externalId>false</externalId>
+        <label>Own Home?</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Phone_Number__c</fullName>
+        <externalId>false</externalId>
+        <label>Phone Number</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Phone</type>
+    </fields>
+    <fields>
+        <fullName>Postal_Code__c</fullName>
+        <description>The zip or postal code of the given home.</description>
+        <externalId>false</externalId>
+        <label>Postal Code</label>
+        <length>5</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Proposal_Unique_ID__c</fullName>
+        <caseSensitive>false</caseSensitive>
+        <description>The unique identifier of the contract evaluation that issued this proposal.</description>
+        <externalId>true</externalId>
+        <inlineHelpText>The unique identifier of the contract evaluation that issued this proposal.</inlineHelpText>
+        <label>Evaluation Unique ID</label>
+        <length>32</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>true</unique>
+    </fields>
+    <fields>
+        <fullName>Refreshed_Date__c</fullName>
+        <description>Date/time at which the quote was refreshed by the user.  Only possible for quotes that have expired.  No value indicates the field has never been refreshed.</description>
+        <externalId>false</externalId>
+        <label>Refreshed Date</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>Shading__c</fullName>
+        <description>The shading derate, as estimated by the quote.</description>
+        <externalId>false</externalId>
+        <label>Shading</label>
+        <precision>6</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Solar_Bill__c</fullName>
+        <description>The expected periodic bill for going with SunRun.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>The expected periodic bill for going with SunRun.</inlineHelpText>
+        <label>Solar Bill</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>State__c</fullName>
+        <description>Two letter code for the state. Three letters just in case...</description>
+        <externalId>false</externalId>
+        <label>State</label>
+        <length>3</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Street__c</fullName>
+        <description>The street address of the home being quoted.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>The street address of the home being quoted.</inlineHelpText>
+        <label>Street</label>
+        <length>64</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Tilt__c</fullName>
+        <description>The tilt of the panels, as estimated by the user of the quote tool.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>The tilt of the panels, as estimated by the user of the quote tool.</inlineHelpText>
+        <label>Tilt</label>
+        <precision>7</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Upfront_Payment__c</fullName>
+        <description>The upfront payment</description>
+        <externalId>false</externalId>
+        <inlineHelpText>The upfront payment</inlineHelpText>
+        <label>Upfront Payment</label>
+        <precision>12</precision>
+        <required>true</required>
+        <scale>2</scale>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Utility__c</fullName>
+        <externalId>false</externalId>
+        <label>Utility</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Pacific Gas &amp; Electric (PG&amp;E)</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Southern California Edison (SCE)</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>San Diego Gas &amp; Electric (SDG&amp;E)</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Banning</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>LADWP</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Pasadena</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>SRP</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>APS</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>UNITIL</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>NSTAR</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>National Grid</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>WMECO</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>X25_Year_Savings__c</fullName>
+        <externalId>false</externalId>
+        <label>25 Year Savings</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>kWh_Apr__c</fullName>
+        <externalId>false</externalId>
+        <label>kWh – Apr</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>kWh_Aug__c</fullName>
+        <externalId>false</externalId>
+        <label>kWh – Aug</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>kWh_Dec__c</fullName>
+        <externalId>false</externalId>
+        <label>kWh – Dec</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>kWh_Feb__c</fullName>
+        <externalId>false</externalId>
+        <label>kWh – Feb</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>kWh_Jan__c</fullName>
+        <externalId>false</externalId>
+        <label>kWh – Jan</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>kWh_Jul__c</fullName>
+        <externalId>false</externalId>
+        <label>kWh – Jul</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>kWh_Jun__c</fullName>
+        <externalId>false</externalId>
+        <label>kWh – Jun</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>kWh_Mar__c</fullName>
+        <externalId>false</externalId>
+        <label>kWh – Mar</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>kWh_May__c</fullName>
+        <externalId>false</externalId>
+        <label>kWh – May</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>kWh_Nov__c</fullName>
+        <externalId>false</externalId>
+        <label>kWh – Nov</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>kWh_Oct__c</fullName>
+        <externalId>false</externalId>
+        <label>kWh – Oct</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>kWh_Sep__c</fullName>
+        <externalId>false</externalId>
+        <label>kWh – Sep</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <label>Quote</label>
+    <listViews>
+        <fullName>All</fullName>
+        <columns>NAME</columns>
+        <columns>CREATED_DATE</columns>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+    </listViews>
+    <nameField>
+        <label>Quote Name</label>
+        <type>Text</type>
+    </nameField>
+    <pluralLabel>Quotes</pluralLabel>
+    <searchLayouts/>
+    <sharingModel>ReadWrite</sharingModel>
+</CustomObject>

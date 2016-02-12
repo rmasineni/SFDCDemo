@@ -1,0 +1,39 @@
+<apex:page controller="srvcCon_CustomSearchController" sidebar="false">
+    <style type="text/css">
+    .col1 {width:20%; text-align:left; valign:top}
+    .col2 {width:80%; text-align:left;valign:top}       
+</style>
+<apex:form >
+        
+        <apex:outputPanel style="float:center;width:50px;height:50px">
+            
+            <apex:sectionHeader title="{!$CurrentPage.parameters.recName}" subtitle="Related Records"/>
+            
+            <apex:pageBlock rendered="{!AND(NOT(ISNULL(accList)),accList.size>0)}">
+                <c:srvcCon_RelatedChildObjComp resultArry="{!accList}"  title="ServiceContract" headerValue="{!headerValue}" 
+                                               objType="{!objType}" childrecs="{!childSCList}" childType="ServiceContract"></c:srvcCon_RelatedChildObjComp>
+                 <c:srvcCon_RelatedChildObjComp resultArry="{!accList}"  title="Cases" headerValue="{!headerValue}" 
+                                               objType="{!objType}" childrecs="{!childCaseList}" childType="Case"></c:srvcCon_RelatedChildObjComp> 
+                <c:srvcCon_RelatedChildObjComp resultArry="{!accList}"  title="FS Dispatch" headerValue="{!headerValue}" 
+                                               objType="{!objType}" childrecs="{!childFSDList}" childType="FSDispatch"></c:srvcCon_RelatedChildObjComp>
+              <!--  <c:srvcCon_RelatedChildObjComp resultArry="{!accList}"  title="SC Event" headerValue="{!headerValue}" 
+                                               objType="{!objType}" childrecs="{!childSCEList}" childType="ServiceContractEvent"></c:srvcCon_RelatedChildObjComp> -->
+                 <c:srvcCon_RelatedChildObjComp resultArry="{!accList}"  title="Service Transfer" headerValue="{!headerValue}"
+                                               objType="{!objType}" childrecs="{!childSTransferList}" childType="ServiceTransfer"></c:srvcCon_RelatedChildObjComp> 
+                <c:srvcCon_RelatedChildObjComp resultArry="{!accList}"  title="Contacts" headerValue="{!headerValue}"
+                                               objType="{!objType}" childrecs="{!childConList}" childType="Contact"></c:srvcCon_RelatedChildObjComp> 
+               
+                
+                <!--<c:srvcCon_RelatedChildObjComp resultArry="{!accList}"  title="Opportunity" headerValue="{!headerValue}" 
+                                               objType="{!objType}" childrecs="{!childOppList}" childType="Opportunity"></c:srvcCon_RelatedChildObjComp> 
+                 
+                <c:srvcCon_RelatedPrntObjComp resultArry="{!accList}"  title="Accounts" headerValue="{!headerValue}" 
+                                              objType="{!objType}" ></c:srvcCon_RelatedPrntObjComp> -->
+
+            </apex:pageBlock>
+            
+            
+        </apex:outputPanel>     
+   
+</apex:form>
+</apex:page>

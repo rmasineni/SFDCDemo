@@ -1,0 +1,259 @@
+<apex:component >
+    <style>
+        .headerLogo {
+            margin:1px 1px 1px 1px;
+            border:0;
+            padding-left:10px;
+            padding-bottom:10px;
+            #height: 30px;
+            #width: 90px;
+        }
+        
+        .producterror { color: red; font-weight: strong;}
+        
+         body .bPageBlock .pbBody .blue .pbSubheader{
+             background-color:#00ADE6;
+              margin-top:0px;
+         }
+         body .bPageBlock .pbBody .grey .pbSubheader{
+             background-color:#c0c0c0;
+         }
+         body .bPageBlock .pbBody .grey .pbSubheader h3{
+             color:#000;
+         }
+         
+        body .data2Col .first .columnOneValue{
+            text-align: left;
+            width: 25%;
+         }
+         
+         body .columnOneLabel .bPageBlock .pbBody .labelCol, body .bPageBlock .pbBody .dataCol, body .bPageBlock .pbBody .data2Col, body .print .topics-label, body .print .topics-list{
+            padding-bottom: 5px;
+            padding-top: 5px;
+         }
+         
+        .td1{
+            text-align: left;
+            margin-left:5px;
+            font-weight: bold;
+            font-color: red;
+        }
+        
+        .td2{
+
+            text-align: left;
+        }               
+        
+         .sectionItemData{
+            text-align:left; 
+            width: 60%; 
+            max-width: 60%;
+            border-bottom: none;
+        }
+        
+        .sectionItemLabel{
+            text-align:right; 
+            width: 50%; 
+            max-width: 50%; 
+            border-bottom: none;
+        }
+        
+        div.contenetDiv1{
+            float: left;
+            margin-right:2px;
+            position: relative;
+            height: 750px;
+            width: 335px;
+        }   
+
+        div.contenetDiv11{
+            float: left;
+            position: relative;
+            text-align: center;
+            box-shadow:1px 1px 1px none;
+            border-radius:10px; 
+            height: 305px;
+            width: 375px;
+            margin-bottom: 2px;
+            border-style:solid;
+            border: 2px solid #00ADE6;
+            overflow: auto;
+        }   
+
+
+        div.contenetDiv12{
+            float: left;
+            position: relative;
+            text-align: center;
+            box-shadow:1px 1px 1px none;
+            border-radius:10px; 
+            height: 350px;
+            width: 375px;
+            margin-bottom: 2px;
+            border-style:solid;
+            border: 2px solid #00ADE6;
+            overflow: auto;
+        }
+        
+        div.contenetDiv13{
+            float: left;
+            position: relative;
+            text-align: center;
+            box-shadow:1px 1px 1px none;
+            border-radius:10px; 
+            height: 60px;
+            width: 335px;
+            margin-bottom: 2px;
+            overflow: auto;
+            margin-top:5px;
+        }
+
+
+        div.contenetDiv2{
+            position: relative;
+            margin-left:380px;
+            #border: 10px;
+            #border-radius:10px;    
+            height: 680px;
+            #width: 585px;
+            margin-bottom:2px;
+            #border: 5px solid #CB0000;
+        }
+
+        div.contenetDiv21{
+
+            position: relative;
+            #box-shadow:1px 1px 1px none;   
+            height: 300px;
+            #margin-bottom: 2px;
+            overflow: auto;
+        }   
+
+
+        div.contenetDiv22{
+            position: relative;
+            #box-shadow:1px 1px 1px none;
+            height: 200px;
+            margin-bottom: 2px;
+            margin-top: -10px;
+            #border: 2px solid #00ADE6;
+            overflow: auto;
+        }
+
+        div.contenetDiv221{
+            position: relative;
+            #box-shadow:1px 1px 1px none;
+            height: 130px;
+            margin-bottom: 2px;
+            margin-top: -10px;
+            #border: 2px solid #00ADE6;
+            overflow: auto;
+        }
+
+        div.contenetDiv23{
+            position: relative;
+            box-shadow:1px 1px 1px none;
+            border-radius:10px; 
+            height: 90px;
+            margin-bottom: 2px;
+            margin-top:5px;
+        }
+        
+        div.contenetDiv231{
+            position: relative;
+            box-shadow:1px 1px 1px none;
+            border-radius:10px; 
+            height: 100px;
+            margin-bottom: 2px;
+            margin-top:5px;
+        }
+        
+        div.contenetDiv2311{
+            position: relative;
+            box-shadow:1px 1px 1px none;
+            border-radius:10px; 
+            height: 100px;
+            margin-bottom: 2px;
+            margin-top:5px;
+        }
+
+
+        div.contenetDiv232{
+            position: relative;
+            box-shadow:1px 1px 1px none;
+            border-radius:10px; 
+            height: 105px;
+            margin-bottom: 2px;
+            margin-top:5px;
+            text-align: center;
+        }
+
+        div.contenetDiv233{
+            position: relative;
+            box-shadow:1px 1px 1px none;
+            height: 70px;
+            margin-bottom: 2px;
+            margin-top:1px;
+            overflow-y: scroll;
+        	position:relative;
+        }
+         div.contenetDiv23311{
+            position: relative;
+            box-shadow:1px 1px 1px none;
+            height: 70px;
+            margin-bottom: 2px;
+            margin-top:1px;
+            overflow-y: scroll;
+        	position:relative;
+        }
+
+        div.contenetDiv24{
+
+            position: relative;
+            box-shadow:1px 1px 1px none;
+            border-radius:10px; 
+            height: 90px;
+            margin-bottom: 2px;
+            overflow: auto;
+            margin-top:5px;
+            text-align: center;
+        }
+
+        div.contenetDiv25{
+
+            position: relative;
+            box-shadow:1px 1px 1px none;
+            border-radius:50px; 
+            height: 50px;
+            margin-bottom: 2px;
+            overflow: auto;
+            margin-top:5px;
+            text-align: center;
+        }
+        
+        .buttons{
+            background: -moz-linear-gradient(rgba(9, 124, 230, 0.04), #37A8F3); /* FF 3.6+ */  
+            background: -ms-linear-gradient(rgba(9, 124, 230, 0.04), #37A8F3); /* IE10 */  
+            background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #000000), color-stop(100%, #ffffff)); /* Safari 4+, Chrome 2+ */  
+            background: -webkit-linear-gradient(rgba(9, 124, 230, 0.04), #37A8F3); /* Safari 5.1+, Chrome 10+ */  
+            background: -o-linear-gradient(rgba(9, 124, 230, 0.04), #37A8F3); /* Opera 11.10 */  
+            background: linear-gradient(rgba(9, 124, 230, 0.04), #37A8F3); 
+            border: 1px solid #AAAAAA;
+            border-radius: 5px 5px 5px 5px;
+            bottom: 14px;
+            color: white;
+            cursor: pointer;
+            font-size: 11px;
+            height: 20px;
+            right: 10px;
+            text-align: center;
+            width: 10 px;
+            font: bold 11px arial,sans-serif;
+        }       
+        h1 {
+            color: #00ADE6;
+           # margin-left: 0px;
+        } 
+    </style>
+    <apex:stylesheet value="{!URLFOR($Resource.Css960GS, '960.css')}" />
+</apex:component>

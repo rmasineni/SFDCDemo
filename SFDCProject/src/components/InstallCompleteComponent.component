@@ -1,0 +1,24 @@
+<apex:component controller="sendEmailInstallComplete" access="global">
+    <apex:attribute name="EvtId" type="String" description="Id of the Event" assignTo="{!EventId}"/>
+    
+   <table border = "0" cellspacing = "0">
+        <tr>
+            <td>Manufacturer</td> 
+            <td>Model Name</td> 
+        </tr>
+        <apex:repeat value="{!events}" var="o">
+        <tr>
+            <td>{!o.Manufacturer__c}</td>
+            <td>{!o.Model__c}</td>
+                     
+        </tr>
+        </apex:repeat>  
+       <apex:repeat value="{!Panels}" var="p">
+        <tr>
+            <td>{!p.Manufacturer__c}</td>
+            <td>{!p.Model__c}</td>
+                     
+        </tr>
+        </apex:repeat>  
+    </table>
+</apex:component>

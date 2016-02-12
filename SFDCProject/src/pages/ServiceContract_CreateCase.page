@@ -1,0 +1,229 @@
+<apex:page standardController="Case" extensions="SC_CreateCase">
+   <apex:form id="formid">    
+   <apex:pagemessages id="pms"/>
+       <div align ="Center">
+                   
+        <apex:commandButton id="save" value="Save" action="{!saveCreate}"/>
+        &nbsp;&nbsp;
+        <apex:commandButton id="cancel" value="Cancel" action="{!cancel}"/>              
+       </div>
+       <div align="Right">
+        <apex:pageblock >        
+                        <apex:outputPanel layout="block" styleClass="requiredInput">
+                        <apex:outputPanel layout="block" styleClass="redrequired" />
+                        <apex:outputtext value=" = Required to save case"></apex:outputtext>
+                        </apex:outputPanel>               
+       </apex:pageblock> 
+        </div>   
+
+      <apex:pageblock id="ServiceCntrtPB">  
+       <apex:pageBlockSection title="Service Contract" columns="2" >
+                <apex:pageBlockSectionItem >
+                    <apex:outputlabel value="Service Contract"/>
+                    <apex:outputPanel layout="block">    
+                    <apex:outputPanel layout="block"/>                     
+                        <apex:outputLabel id="ServiceContract" value="{!scname}"/>
+                    </apex:outputPanel>
+                </apex:pageBlockSectionItem> 
+                
+           <apex:pageBlockSectionItem >
+                    <apex:outputlabel value="TE Fund Name" />
+                    <apex:outputPanel layout="block">
+                        <apex:outputPanel layout="block"/>
+                        <apex:outputText id="TEFundName" value="{!tefund}"/>
+                    </apex:outputPanel>
+                </apex:pageBlockSectionItem>                
+                <apex:pageBlockSectionItem >
+                    <apex:outputlabel value="Customer Contact" />
+                    <apex:outputPanel layout="block">
+                        <apex:outputPanel layout="block"/>
+                        <apex:outputText id="CustomerContact" value="{!cucont}"/>
+                    </apex:outputPanel>
+                </apex:pageBlockSectionItem>                 
+                <apex:pageBlockSectionItem >
+                    <apex:outputlabel value="Account Name" />
+                    <apex:outputPanel layout="block">
+                        <apex:outputPanel layout="block"/>
+                        <apex:outputText id="AccountName" value="{!acname}"/>
+                    </apex:outputPanel>
+                </apex:pageBlockSectionItem> 
+                <apex:pageBlockSectionItem >
+                    <apex:outputlabel value="Prepayment Date" />
+                    <apex:outputPanel layout="block">
+                        <apex:outputPanel layout="block"/>
+                        <apex:outputText id="PrepaymentDate" value=" {!prepaydate}" />
+                    </apex:outputPanel>
+                </apex:pageBlockSectionItem>                                                  
+                  <apex:pageBlockSectionItem >
+                    <apex:outputlabel value="Install Partner" />
+                    <apex:outputPanel layout="block">
+                        <apex:outputPanel layout="block"/>
+                        <apex:outputText id="InstallPartner" value="{!installpartner}"/>
+                    </apex:outputPanel>
+                </apex:pageBlockSectionItem>                        
+                </apex:pageBlockSection>
+                
+                
+                    <apex:pageBlockSection title="Invoice Information" columns="2" >                
+                     <apex:pageBlockSectionItem >
+                    <apex:outputlabel value="Case Reason"/>    
+                    <apex:actionRegion >  
+                    <apex:outputPanel layout="block" styleClass="requiredInput" >  
+                    <apex:outputPanel layout="block" styleClass="requiredBlock"/>                                 
+                        <apex:inputfield id="CaseReason" value=" {!c.Reason}">                          
+                             <apex:actionSupport event="onchange"  rerender="ServiceCntrtPB" status="status" action="{!getInvRec}">
+                             <apex:param value="{!c.reason}" assignTo="{!picklist}"/>
+                             </apex:actionSupport>
+                        </apex:inputfield> 
+                        </apex:outputPanel>               
+                </apex:actionRegion>
+                </apex:pageBlockSectionItem>  
+                                                                 
+                      <apex:pageBlockSectionItem id="pbs">
+                        <apex:outputlabel value="Partner Recipient"/>    
+                        <apex:inputfield id="PartnerRecepient" value="{!c.Partner_Recepient__c}">                                                
+                        </apex:inputField>
+                </apex:pageBlockSectionItem> 
+                  <apex:pageBlockSectionItem >
+                    <apex:outputlabel value="Subset Reason"/>
+                    <apex:outputPanel layout="block" styleClass="requiredInput" >  
+                    <apex:outputPanel layout="block" styleClass="requiredBlock"/>                     
+                        <apex:inputfield id="SubsetReason" value=" {!c.Subset_Reasons__c}"/>
+                    </apex:outputPanel>
+                </apex:pageBlockSectionItem> 
+                
+                 <apex:pageBlockSectionItem >
+                    <apex:outputlabel value="Related To"/>
+                    <apex:outputPanel layout="block" >    
+                    <apex:inputText id="RelatedTo" value=" {!c.Related_To__c}"/>                                       
+                    </apex:outputPanel>              
+                    </apex:pageBlockSectionItem>                 
+                    <apex:pageBlockSectionItem >
+                    <apex:outputlabel value="Invoice Amount"/>  
+                    <apex:outputPanel layout="block" styleClass="requiredInput" >  
+                    <apex:outputPanel layout="block" styleClass="requiredBlock"/>                                                     
+                        <apex:inputField id="InvoiceAmount" value="{!c.Amount__c}"/>   
+                         </apex:outputPanel>                 
+                    </apex:pageBlockSectionItem>               
+                    <apex:pageBlockSectionItem >
+                    <apex:outputlabel value="Subject"/>
+                    <apex:outputPanel layout="block" >                      
+                        <apex:inputtext id="Subject" value=" {!c.Subject}"/>
+                    </apex:outputPanel>              
+                    </apex:pageBlockSectionItem>           
+                  <apex:pageBlockSectionItem >
+                    <apex:outputlabel value="Transaction Date"/>                    
+                    <apex:inputfield id="CreatedDate" value=" {!c.Transaction_Date__c}"/>                                                                       
+                    </apex:pageBlockSectionItem>                   
+                      <apex:pageBlockSectionItem >
+                    <apex:outputlabel value="Description"/>
+                    <apex:outputPanel layout="block" >                      
+                        <apex:inputtextarea id="Description" value=" {!c.Description}"/>
+                    </apex:outputPanel>              
+                    </apex:pageBlockSectionItem>                 
+                  
+                </apex:pageBlockSection>
+                
+                <apex:pageBlockSection title="Accounting Information" columns="2" >
+                    
+                    <apex:pageBlockSectionItem >
+                    <apex:outputlabel value="External ID"/>
+                    <apex:outputPanel layout="block" >                      
+                        <apex:outputfield id="ExternalID" value=" {!c.External_ID__c}"/>
+                    </apex:outputPanel>              
+                    </apex:pageBlockSectionItem>  
+                    
+                     <apex:pageBlockSectionItem >
+                    <apex:outputlabel value="Upload Date"/>
+                    <apex:outputPanel layout="block" >                      
+                        <apex:outputfield id="UploadDate" value=" {!c.Upload_Date__c}"/>
+                    </apex:outputPanel>              
+                    </apex:pageBlockSectionItem>  
+                
+                </apex:pageBlockSection>
+                
+                <apex:pageBlockSection title="Case Description" columns="2">
+                
+                   <apex:pageBlockSectionItem >
+                    <apex:outputlabel value="Status"/>
+                    <apex:outputPanel layout="block" >  
+                    <apex:outputPanel layout="block"/>                    
+                        <apex:inputfield id="Status" value=" {!c.Status}"/>
+                    </apex:outputPanel>              
+                    </apex:pageBlockSectionItem> 
+                
+                   <apex:pageBlockSectionItem >
+                    <apex:outputlabel value="Case Record Type"/>
+                    <apex:outputPanel layout="block" >                      
+                        <!--
+                        <apex:inputfield id="CaseRecordType" value=" {!c.RecordTypeID}"/>-->
+                        <apex:outputLabel value="Invoice"></apex:outputLabel>
+                        
+                    </apex:outputPanel>              
+                    </apex:pageBlockSectionItem>  
+                
+                    <apex:pageBlockSectionItem >
+                    <apex:outputlabel value="Case Number"/>
+                    <apex:outputPanel layout="block" >                      
+                        <apex:outputText id="CaseNumber" value=" {!c.CaseNumber}"/>
+                    </apex:outputPanel>              
+                    </apex:pageBlockSectionItem> 
+                    
+                     <apex:pageBlockSectionItem >
+                    <apex:outputlabel value="Created Date"/>
+                    <apex:outputPanel layout="block" >                      
+                       <apex:outputfield id="CreatedDate" value=" {!c.CreatedDate}"/>  
+                    </apex:outputPanel>              
+                    </apex:pageBlockSectionItem> 
+                    
+                   <apex:pageBlockSectionItem >
+                    <apex:outputlabel value="Date Closed"/>
+                    <apex:outputPanel layout="block" >                      
+                        <apex:outputfield id="DateClosed" value=" {!c.ClosedDate}"/>
+                    </apex:outputPanel>              
+                    </apex:pageBlockSectionItem> 
+                
+                </apex:pageBlockSection>
+                
+                 <apex:pageBlockSection title="Sunrun Staff" columns="2">                
+                    
+                     <apex:pageBlockSectionItem >
+                    <apex:outputlabel value="Created By"/>
+                    <apex:outputPanel layout="block" >                      
+                        <apex:inputfield id="CreatedBy" value=" {!c.CreatedByID}"/>
+                    </apex:outputPanel>              
+                    </apex:pageBlockSectionItem> 
+                    
+                     <apex:pageBlockSectionItem >
+                    <apex:outputlabel value="Last Modified Date"/>
+                    <apex:outputPanel layout="block" >                      
+                        <apex:outputfield id="LastModifiedDate" value=" {!c.CreatedDate}"/>
+                    </apex:outputPanel>              
+                    </apex:pageBlockSectionItem> 
+                  
+                </apex:pageBlockSection>
+
+                </apex:pageblock>
+   </apex:form>
+   
+  <style type="text/css">
+  .myrequiredBlock {
+        background-color: #3300FF !important;
+        bottom: 1px;
+        left: -8px;
+        position: absolute;
+        top: 1px;
+        width: 3px;
+    }   
+    .redrequired {
+        background-color: #CC0000 !important;
+        bottom: 1px;
+        //left: 0px;
+        position: absolute;
+        right: 125px;
+        top: 1px;
+        width: 3px;
+    }
+  
+  </style>
+</apex:page>

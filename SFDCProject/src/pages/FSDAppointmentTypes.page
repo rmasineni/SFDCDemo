@@ -1,0 +1,47 @@
+<apex:page standardController="FS_Dispatch__c" extensions="AppointmentTypes">
+	<apex:includeScript value="/support/console/22.0/integration.js"/>
+	<apex:form >
+      <div style="float:right;margin: 0 auto;text-align: center;">
+      	<apex:outputpanel rendered="{!showScheduling}">
+        	<apex:outputLabel style="font-weight: bold;" for="Payments"
+            	value="Appointment Types:">
+            </apex:outputlabel>
+            <apex:selectList id="actionId" title="apptTypes" size="1"
+                value="{!apptType}" multiselect="false">
+                <apex:selectOptions value="{!ApptTypes}" />
+            </apex:selectList>          
+            <apex:commandLink value="Go" onclick="return processUserActions('{!$Component.actionId}')" styleClass="btn" style="text-decoration:none;padding:2px;">
+            </apex:commandLink>
+      	</apex:outputpanel>
+      </div>      
+    </apex:form>
+	
+	<script> 
+		
+
+		function processUserActions(actionId){
+			var result = false;
+			var actionText = document.getElementById(actionId).value;
+			if(actionText == null || actionText == '--None--'){
+				alert('Select an appointment type');
+				result = false;
+			}else{
+				var tempSchedulingURL = "{!baseURL}" + "{!schedulerUrl}" + actionText;
+				if(sforce.console.isInConsole()) {
+                	OpenSubtab(tempSchedulingURL);
+				} else {
+					window.open(tempSchedulingURL, '_blank');
+				}
+			}
+			return result;
+    	 }
+    	 
+    	 function OpenSubtab(schedulingURL) {  
+			sforce.console.getEnclosingPrimaryTabId(function openSubtab(result) { 
+				var primaryTabId = result.id; 
+				sforce.console.openSubtab(primaryTabId , schedulingURL, true, 'FSD Scheduling Tool', null, function openSuccess(result) { }, 'salesforceSubtab'); 
+		    }); 
+		}
+
+    </script>
+</apex:page>

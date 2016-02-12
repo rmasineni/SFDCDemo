@@ -1,0 +1,3 @@
+<apex:page sidebar="false" showHeader="false" standardStylesheets="false" standardController="FS_Dispatch__c" extensions="CallcenterOptySchedulerController">
+    <c:scheduler sobjId="{!$CurrentPage.parameters.id}"/>
+</apex:page>

@@ -1,0 +1,2211 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Follow</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <enableActivities>true</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableDivisions>false</enableDivisions>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>true</enableHistory>
+    <enableReports>true</enableReports>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <externalSharingModel>ReadWrite</externalSharingModel>
+    <fields>
+        <fullName>ACH_Required__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>ACH Required</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Account_Credit_Requester__c</fullName>
+        <externalId>false</externalId>
+        <formula>CreatedBy.Account_Name__c</formula>
+        <label>Account: Credit Requester</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Account__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Account</label>
+        <referenceTo>Account</referenceTo>
+        <relationshipLabel>Customer Credit</relationshipLabel>
+        <relationshipName>Customer_Credit</relationshipName>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Adverse_Action_1_truncated__c</fullName>
+        <externalId>false</externalId>
+        <formula>SUBSTITUTE(Adverse_Action_Reason1__c, LEFT(Adverse_Action_Reason1__c, FIND(&quot;: &quot;, Adverse_Action_Reason1__c)), &quot;&quot;)</formula>
+        <label>Adverse Action 1 (truncated)</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Adverse_Action_2_truncated__c</fullName>
+        <externalId>false</externalId>
+        <formula>SUBSTITUTE(Adverse_Action_Reason2__c, LEFT(Adverse_Action_Reason2__c, FIND(&quot;: &quot;, Adverse_Action_Reason2__c)), &quot;&quot;)</formula>
+        <label>Adverse Action 2 (truncated)</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Adverse_Action_3_truncated__c</fullName>
+        <externalId>false</externalId>
+        <formula>SUBSTITUTE(Adverse_Action_Reason3__c, LEFT(Adverse_Action_Reason3__c, FIND(&quot;: &quot;, Adverse_Action_Reason3__c)), &quot;&quot;)</formula>
+        <label>Adverse Action 3 (truncated)</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Adverse_Action_4_truncated__c</fullName>
+        <externalId>false</externalId>
+        <formula>SUBSTITUTE(Adverse_Action_Reason4__c, LEFT(Adverse_Action_Reason4__c, FIND(&quot;: &quot;, Adverse_Action_Reason4__c)), &quot;&quot;)</formula>
+        <label>Adverse Action 4 (truncated)</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Adverse_Action_5_truncated__c</fullName>
+        <externalId>false</externalId>
+        <formula>SUBSTITUTE(Adverse_Action_Reason5__c, LEFT(Adverse_Action_Reason5__c, FIND(&quot;: &quot;, Adverse_Action_Reason5__c)), &quot;&quot;)</formula>
+        <label>Adverse Action 5 (truncated)</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Adverse_Action_Reason1__c</fullName>
+        <externalId>false</externalId>
+        <label>Adverse Action Reason1</label>
+        <length>150</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Adverse_Action_Reason2__c</fullName>
+        <externalId>false</externalId>
+        <label>Adverse Action Reason2</label>
+        <length>150</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Adverse_Action_Reason3__c</fullName>
+        <externalId>false</externalId>
+        <label>Adverse Action Reason3</label>
+        <length>150</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Adverse_Action_Reason4__c</fullName>
+        <externalId>false</externalId>
+        <label>Adverse Action Reason4</label>
+        <length>150</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Adverse_Action_Reason5__c</fullName>
+        <externalId>false</externalId>
+        <label>Adverse Action Reason5</label>
+        <length>150</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Age__c</fullName>
+        <externalId>false</externalId>
+        <formula>if(DateOfBirth__c == null, NULL, FLOOR((TODAY()-DateOfBirth__c)/365.25))</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Age</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Approved_By__c</fullName>
+        <externalId>false</externalId>
+        <label>Approved By</label>
+        <length>100</length>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Approved__c</fullName>
+        <externalId>false</externalId>
+        <label>Approved</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Passed Credit Check</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Conditional Pass &amp; signed up for ACH</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Prepaid: Full Payment received</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Conditional Approval from partner</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Credit Approval Revoked</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>New Home - Guarantee</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>CPASS HI Credit criteria met</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Other</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>BKFilingCode__c</fullName>
+        <externalId>false</externalId>
+        <label>BKFilingCode</label>
+        <length>50</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>BKFilingDate__c</fullName>
+        <externalId>false</externalId>
+        <label>BKFilingDate</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>BKNumMonths__c</fullName>
+        <externalId>false</externalId>
+        <label>BKNumMonths</label>
+        <length>10</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>BKOver60months__c</fullName>
+        <externalId>false</externalId>
+        <label>BKWithin60Months</label>
+        <length>5</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Banky_Outcome__c</fullName>
+        <externalId>false</externalId>
+        <label>Banky Outcome</label>
+        <length>15</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Bureau1__c</fullName>
+        <externalId>false</externalId>
+        <label>Bureau (Experian)</label>
+        <length>100</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Bureau2__c</fullName>
+        <externalId>false</externalId>
+        <label>Bureau (TransUnion)</label>
+        <length>100</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Bureau3__c</fullName>
+        <externalId>false</externalId>
+        <label>Bureau (Equifax)</label>
+        <length>100</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>City__c</fullName>
+        <externalId>false</externalId>
+        <label>City</label>
+        <length>50</length>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Conditional_Approval_Amount__c</fullName>
+        <externalId>false</externalId>
+        <label>Conditional Approval Amount</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Conditional_Approval__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Conditional Approval</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Contact_Address_Match__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Contact Address Match</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Contact__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Contact</label>
+        <lookupFilter>
+            <active>true</active>
+            <filterItems>
+                <field>Contact.AccountId</field>
+                <operation>equals</operation>
+                <valueField>$Source.Account__c</valueField>
+            </filterItems>
+            <isOptional>true</isOptional>
+        </lookupFilter>
+        <referenceTo>Contact</referenceTo>
+        <relationshipLabel>Customer Credit</relationshipLabel>
+        <relationshipName>Customer_Credit</relationshipName>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Country__c</fullName>
+        <externalId>false</externalId>
+        <label>Country</label>
+        <length>100</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Credit_Bureau_Address__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(Decisioning_Bureau__c = &apos;Equifax&apos;, &apos;Equifax Credit Information Services, P.O. Box 740241, Atlanta, GA 30374, 1-800-685-1111, www.equifax.com&apos;,  IF(Decisioning_Bureau__c = &apos;TransUnion&apos;, &apos;TransUnion, P.O. Box 2000, Chester, PA 19022, 800-916-8800, www.transunion.com&apos;, &apos;Experian, 701 Experian Parkway, P.O. Box 2002, Allen, TX 75013, 1 888 EXPERIAN (1 888 397 3742). www.experian.com&apos;) )</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Credit Bureau Address</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Credit_Decision_on_Portal__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(AND(OR(Text(Status__c)=&apos;PASS&apos;,Text(Status__c)=&apos;CPASS&apos;,Text(Status__c)=&apos;FAIL&apos;,Text(Status__c)=&apos;MANUAL&apos;,Text(Status__c)=&apos;N/A&apos;),
+TEXT(Sunrun_Credit_Status__c) = &apos;CPASS&apos;,Fico_Number__c &gt;649,Fico_Number__c&lt;680),&apos;LOWFICO&apos;,
+CASE(Status__c,
+&quot;&quot;,&quot;Sent&quot;, 
+&quot;CPASS&quot;, TEXT(Sunrun_Credit_Status__c),
+&quot;PASS&quot;, TEXT(Sunrun_Credit_Status__c),
+&quot;FAIL&quot;, TEXT(Sunrun_Credit_Status__c),
+&quot;MANUAL&quot;,&quot;MANUAL&quot;,
+&quot;N/A&quot;,
+IF(OR( TEXT(Sunrun_Credit_Status__c) = &apos;CPASS&apos;, TEXT(Sunrun_Credit_Status__c) = &apos;PASS&apos;, TEXT(Sunrun_Credit_Status__c) = &apos;FAIL&apos;), TEXT(Sunrun_Credit_Status__c),&apos;MANUAL&apos;),
+&quot;MANUAL - Please Review Credit Report And Credit Score Card&quot;,&quot;Manual&quot;,
+&quot;Please Review Credit Report And Credit Score Card&quot;,&quot;Manual&quot;,
+&quot;NOT ON THE TITLE OF THE HOME&quot;,&quot;NOT ON THE TITLE OF THE HOME&quot;,
+&quot;HomeownerInitialLogin&quot;,&quot;HomeownerInitialLogin&quot;,
+&quot;HomeownerApplicationComplete&quot;,&quot;HomeownerApplicationComplete&quot;,
+&quot;HomeownerAuthorizedCreditCheck&quot;,&quot;HomeownerAuthorizedCreditCheck&quot;,
+&quot;FROZENFILE&quot;,&quot;FROZENFILE&quot;, 
+TEXT (Status__c)
+))</formula>
+        <inlineHelpText>This field is used to display credit status on partner portal</inlineHelpText>
+        <label>Sunrun Status on Portal</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Credit_Email_Sent__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Credit Email Sent?</label>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Credit_requested_from_portal__c</fullName>
+        <externalId>false</externalId>
+        <formula>If (OR (CreatedBy.Profile.Name = &apos;PartnerSales&apos;, CreatedBy.Profile.Name = &apos;PartnerOperations&apos;, CreatedBy.Profile.Name = &apos;PartnerAdmin+Ops&apos;, CreatedBy.Profile.Name = &apos;Sales - Direct&apos;), &apos;Yes&apos;, &apos;No&apos;)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Credit requested from portal?</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Customer_Email__c</fullName>
+        <externalId>true</externalId>
+        <label>Customer Email</label>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Email</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Customer_Number__c</fullName>
+        <externalId>false</externalId>
+        <label>Customer Number</label>
+        <length>18</length>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>DateOfBirth__c</fullName>
+        <externalId>false</externalId>
+        <label>DOB</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Date_Approved__c</fullName>
+        <externalId>false</externalId>
+        <label>Date Approved</label>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>Date_Pulled_String__c</fullName>
+        <externalId>false</externalId>
+        <formula>if( OR(ISNULL(Date_Pulled__c),ISBLANK(Date_Pulled__c)), &apos;&apos; , MID(TEXT(Date_Pulled__c - 0.291666662), 6, 2)&amp;&quot;/&quot;&amp;MID(TEXT( Date_Pulled__c - 0.291666662), 9, 2)&amp;&quot;/&quot;&amp;LEFT( TEXT(Date_Pulled__c - 0.291666662) , 4))</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Date Pulled String</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Date_Pulled__c</fullName>
+        <externalId>false</externalId>
+        <label>Date Pulled</label>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>Date_Run1__c</fullName>
+        <externalId>false</externalId>
+        <label>Date Run (Experian)</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>Date_Run2__c</fullName>
+        <externalId>false</externalId>
+        <label>Date Run (TransUnion)</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>Date_Run3__c</fullName>
+        <externalId>false</externalId>
+        <label>Date Run (Equifax)</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>Date_Submitted__c</fullName>
+        <description>The date SunRun Submitted the credit check request to LeaseDimensions</description>
+        <externalId>false</externalId>
+        <label>Date Submitted</label>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>Deal_Id__c</fullName>
+        <externalId>true</externalId>
+        <label>Deal Id</label>
+        <length>18</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Decisioning_Bureau__c</fullName>
+        <externalId>false</externalId>
+        <label>Decisioning Bureau</label>
+        <length>100</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Email_sent_to_partner_with_no_ACH_Link__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Email sent to partner with no ACH Link</label>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Email_sent_with_ACH_Link__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Email sent with ACH Link</label>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Employer__c</fullName>
+        <externalId>false</externalId>
+        <label>Employer</label>
+        <length>100</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Employment_Status__c</fullName>
+        <externalId>false</externalId>
+        <label>Employment Status</label>
+        <length>50</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Equifax_Adverse_Action_1_truncated__c</fullName>
+        <externalId>false</externalId>
+        <formula>SUBSTITUTE(Equifax_Adverse_Action_Reason1__c, LEFT(Equifax_Adverse_Action_Reason1__c, FIND(&quot;: &quot;, Equifax_Adverse_Action_Reason1__c)), &quot;&quot;)</formula>
+        <label>Equifax Adverse Action 1 (truncated)</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Equifax_Adverse_Action_2_truncated__c</fullName>
+        <externalId>false</externalId>
+        <formula>SUBSTITUTE(Equifax_Adverse_Action_Reason2__c, LEFT(Equifax_Adverse_Action_Reason2__c, FIND(&quot;: &quot;, Equifax_Adverse_Action_Reason2__c)), &quot;&quot;)</formula>
+        <label>Equifax Adverse Action 2 (truncated)</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Equifax_Adverse_Action_3_truncated__c</fullName>
+        <externalId>false</externalId>
+        <formula>SUBSTITUTE(Equifax_Adverse_Action_Reason3__c, LEFT(Equifax_Adverse_Action_Reason3__c, FIND(&quot;: &quot;, Equifax_Adverse_Action_Reason3__c)), &quot;&quot;)</formula>
+        <label>Equifax Adverse Action 3 (truncated)</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Equifax_Adverse_Action_4_truncated__c</fullName>
+        <externalId>false</externalId>
+        <formula>SUBSTITUTE(Equifax_Adverse_Action_Reason4__c, LEFT(Equifax_Adverse_Action_Reason4__c, FIND(&quot;: &quot;, Equifax_Adverse_Action_Reason4__c)), &quot;&quot;)</formula>
+        <label>Equifax Adverse Action 4 (truncated)</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Equifax_Adverse_Action_5_truncated__c</fullName>
+        <externalId>false</externalId>
+        <formula>SUBSTITUTE(Equifax_Adverse_Action_Reason5__c, LEFT(Equifax_Adverse_Action_Reason5__c, FIND(&quot;: &quot;, Equifax_Adverse_Action_Reason5__c)), &quot;&quot;)</formula>
+        <label>Equifax Adverse Action 5 (truncated)</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Equifax_Adverse_Action_Reason1__c</fullName>
+        <externalId>false</externalId>
+        <label>Equifax Adverse Action Reason1</label>
+        <length>150</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Equifax_Adverse_Action_Reason2__c</fullName>
+        <externalId>false</externalId>
+        <label>Equifax Adverse Action Reason2</label>
+        <length>150</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Equifax_Adverse_Action_Reason3__c</fullName>
+        <externalId>false</externalId>
+        <label>Equifax Adverse Action Reason3</label>
+        <length>150</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Equifax_Adverse_Action_Reason4__c</fullName>
+        <externalId>false</externalId>
+        <label>Equifax Adverse Action Reason4</label>
+        <length>150</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Equifax_Adverse_Action_Reason5__c</fullName>
+        <externalId>false</externalId>
+        <label>Equifax Adverse Action Reason5</label>
+        <length>150</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Equifax_BKNumMonths__c</fullName>
+        <externalId>false</externalId>
+        <label>Equifax BKNumMonths</label>
+        <length>10</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Equifax_Banky_Outcome__c</fullName>
+        <externalId>false</externalId>
+        <label>Equifax Banky outcome</label>
+        <length>15</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Equifax_Mortgage_Outcome__c</fullName>
+        <externalId>false</externalId>
+        <label>Equifax Mortgage Outcome</label>
+        <length>15</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Equifax_Reason__c</fullName>
+        <externalId>false</externalId>
+        <label>Reason (Equifax)</label>
+        <length>50</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Error_Text__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(OR(ISBLANK(Adverse_Action_1_truncated__c), ISNULL(Adverse_Action_1_truncated__c)) , &apos;&apos;, &apos; * &apos; &amp; Adverse_Action_1_truncated__c &amp; BR() &amp; BR())
+&amp; IF(OR(ISBLANK(Adverse_Action_2_truncated__c), ISNULL(Adverse_Action_2_truncated__c)) , &apos;&apos;, &apos; * &apos; &amp; Adverse_Action_2_truncated__c &amp; BR() &amp; BR()) 
+&amp; IF(OR(ISBLANK(Adverse_Action_3_truncated__c), ISNULL(Adverse_Action_3_truncated__c)) , &apos;&apos;, &apos; * &apos; &amp; Adverse_Action_3_truncated__c &amp; BR() &amp; BR()) 
+&amp; IF(OR(ISBLANK(Adverse_Action_4_truncated__c), ISNULL(Adverse_Action_4_truncated__c)) , &apos;&apos;, &apos; * &apos; &amp; Adverse_Action_4_truncated__c &amp; BR() &amp; BR()) 
+&amp; IF(OR(ISBLANK(Adverse_Action_5_truncated__c), ISNULL(Adverse_Action_5_truncated__c)) , &apos;&apos;, &apos; * &apos; &amp;Adverse_Action_5_truncated__c &amp; BR() &amp; BR())
+&amp; IF(ISPICKVAL(Reason__c,&apos;900X&apos;) , &apos; * &apos; &amp; &apos;The credit agency does not have sufficient reporting to establish a credit score. To resolve this error, contact any credit agency / agencies at the number below. Once you resolve the error, contact your sales representative as you may still be eligible for Sunrun Solar Service&apos; &amp; BR() &amp; BR() , &apos;&apos;)
+&amp; IF(ISPICKVAL(Reason__c,&apos;SSN-FRAUDSHIELD-05&apos;) , &apos; * &apos; &amp; &apos;Your account triggered a fraud alert on Experian systems. To resolve this error, contact Experian at the number below. Once you resolve the alert, contact your sales representative as you may still be eligible for Sunrun Solar Service&apos; &amp; BR() &amp; BR() , &apos;&apos;)
+&amp; IF(ISPICKVAL(Reason__c,&apos;SSN-FRAUDSHIELD-06&apos;) , &apos; * &apos; &amp; &apos;Your account triggered a fraud alert on Experian systems. To resolve this error, contact Experian at the number below. Once you resolve the alert, contact your sales representative as you may still be eligible for Sunrun Solar Service&apos; &amp; BR() &amp; BR() , &apos;&apos;)
+
+&amp; IF(ISPICKVAL(Reason__c,&apos;LTV&apos;) , &apos; * &apos; &amp; &apos;Did not meet our minimum home loan to value minimum credit criteria.(calculated as the outstanding mortgage balance associated with the property on which the solar facility is being constructed divided by value of that property)&apos; &amp; BR() &amp; BR() , &apos;&apos;)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Error Text</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Estimated_Home_Value__c</fullName>
+        <externalId>false</externalId>
+        <label>Estimated Home Value</label>
+        <length>50</length>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Experian_Adverse_Action_1_truncated__c</fullName>
+        <externalId>false</externalId>
+        <formula>SUBSTITUTE(Experian_Adverse_Action_Reason1__c, LEFT(Experian_Adverse_Action_Reason1__c, FIND(&quot;: &quot;, Experian_Adverse_Action_Reason1__c)), &quot;&quot;)</formula>
+        <label>Experian Adverse Action 1 (truncated)</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Experian_Adverse_Action_2_truncated__c</fullName>
+        <externalId>false</externalId>
+        <formula>SUBSTITUTE(Experian_Adverse_Action_Reason2__c, LEFT(Experian_Adverse_Action_Reason2__c, FIND(&quot;: &quot;, Experian_Adverse_Action_Reason2__c)), &quot;&quot;)</formula>
+        <label>Experian Adverse Action 2 (truncated)</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Experian_Adverse_Action_3_truncated__c</fullName>
+        <externalId>false</externalId>
+        <formula>SUBSTITUTE(Experian_Adverse_Action_Reason3__c, LEFT(Experian_Adverse_Action_Reason3__c, FIND(&quot;: &quot;, Experian_Adverse_Action_Reason3__c)), &quot;&quot;)</formula>
+        <label>Experian Adverse Action 3 (truncated)</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Experian_Adverse_Action_4_truncated__c</fullName>
+        <externalId>false</externalId>
+        <formula>SUBSTITUTE(Experian_Adverse_Action_Reason4__c, LEFT(Experian_Adverse_Action_Reason4__c, FIND(&quot;: &quot;, Experian_Adverse_Action_Reason4__c)), &quot;&quot;)</formula>
+        <label>Experian Adverse Action 4 (truncated)</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Experian_Adverse_Action_5_truncated__c</fullName>
+        <externalId>false</externalId>
+        <formula>SUBSTITUTE(Experian_Adverse_Action_Reason5__c, LEFT(Experian_Adverse_Action_Reason5__c, FIND(&quot;: &quot;, Experian_Adverse_Action_Reason5__c)), &quot;&quot;)</formula>
+        <label>Experian Adverse Action 5 (truncated)</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Experian_Adverse_Action_Reason1__c</fullName>
+        <externalId>false</externalId>
+        <label>Experian Adverse Action Reason1</label>
+        <length>150</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Experian_Adverse_Action_Reason2__c</fullName>
+        <externalId>false</externalId>
+        <label>Experian Adverse Action Reason2</label>
+        <length>150</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Experian_Adverse_Action_Reason3__c</fullName>
+        <externalId>false</externalId>
+        <label>Experian Adverse Action Reason3</label>
+        <length>150</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Experian_Adverse_Action_Reason4__c</fullName>
+        <externalId>false</externalId>
+        <label>Experian Adverse Action Reason4</label>
+        <length>150</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Experian_Adverse_Action_Reason5__c</fullName>
+        <externalId>false</externalId>
+        <label>Experian Adverse Action Reason5</label>
+        <length>150</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Experian_BKFilingCode__c</fullName>
+        <externalId>false</externalId>
+        <label>Experian BKFilingCode</label>
+        <length>50</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Experian_BKFilingDate__c</fullName>
+        <externalId>false</externalId>
+        <label>Experian BKFilingDate</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>Experian_BKNumMonths__c</fullName>
+        <externalId>false</externalId>
+        <label>Experian BKNumMonths</label>
+        <length>10</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Experian_BKOver60months__c</fullName>
+        <externalId>false</externalId>
+        <label>Experian BKOver60months</label>
+        <length>5</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Experian_Banky_Outcome__c</fullName>
+        <externalId>false</externalId>
+        <label>Experian Banky outcome</label>
+        <length>15</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Experian_Mortgage_Outcome__c</fullName>
+        <externalId>false</externalId>
+        <label>Experian Mortgage Outcome</label>
+        <length>15</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Experian_Reason__c</fullName>
+        <externalId>false</externalId>
+        <label>Reason (Experian)</label>
+        <length>50</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>External_Id__c</fullName>
+        <caseSensitive>false</caseSensitive>
+        <externalId>true</externalId>
+        <label>External Id</label>
+        <length>25</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>true</unique>
+    </fields>
+    <fields>
+        <fullName>FICO1__c</fullName>
+        <externalId>false</externalId>
+        <label>FICO (Experian)</label>
+        <length>100</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>FICO2__c</fullName>
+        <externalId>false</externalId>
+        <label>FICO (TransUnion)</label>
+        <length>100</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>FICO3__c</fullName>
+        <externalId>false</externalId>
+        <label>FICO (Equifax)</label>
+        <length>100</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Failed_Score__c</fullName>
+        <externalId>false</externalId>
+        <label>Failed Score</label>
+        <length>50</length>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Fico_Number_Field__c</fullName>
+        <externalId>false</externalId>
+        <formula>VALUE( Fico__c )</formula>
+        <label>Fico (Number Field)</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Fico_Number__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(OR(ISNULL(Fico__c), ISBLANK(Fico__c),  NOT(ISNUMBER(Fico__c))) , -1, 
+     IF((VALUE(Fico__c) &gt; 850), -1, VALUE(Fico__c) ))</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Fico Number</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Fico__c</fullName>
+        <externalId>false</externalId>
+        <label>Fico</label>
+        <length>100</length>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>First_Name__c</fullName>
+        <externalId>false</externalId>
+        <label>First Name</label>
+        <length>80</length>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Gen__c</fullName>
+        <externalId>false</externalId>
+        <label>Gender</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Male</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Female</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Home_Equity1__c</fullName>
+        <externalId>false</externalId>
+        <label>Home Equity1</label>
+        <length>100</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Home_Equity2__c</fullName>
+        <externalId>false</externalId>
+        <label>Home Equity2</label>
+        <length>100</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Home_Equity_Amt1__c</fullName>
+        <externalId>false</externalId>
+        <label>Home Equity Amt1</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Home_Equity_Amt2__c</fullName>
+        <externalId>false</externalId>
+        <label>Home Equity Amt2</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Home_Equity_OpenDate1__c</fullName>
+        <externalId>false</externalId>
+        <label>Home Equity OpenDate1</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Home_Equity_OpenDate2__c</fullName>
+        <externalId>false</externalId>
+        <label>Home Equity OpenDate2</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Home_Owner_Signed__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Home Owner Signed</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Home_Phone__c</fullName>
+        <externalId>false</externalId>
+        <label>Home Phone</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Phone</type>
+    </fields>
+    <fields>
+        <fullName>Household_Income__c</fullName>
+        <externalId>false</externalId>
+        <label>Household Income</label>
+        <length>50</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Income__c</fullName>
+        <externalId>false</externalId>
+        <label>Income</label>
+        <length>50</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Installer__c</fullName>
+        <externalId>false</externalId>
+        <label>Installer</label>
+        <length>100</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>LTV__c</fullName>
+        <externalId>false</externalId>
+        <label>LTV</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Percent</type>
+    </fields>
+    <fields>
+        <fullName>Last_Name__c</fullName>
+        <externalId>false</externalId>
+        <label>Last Name</label>
+        <length>80</length>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Lease_Dimensions_State__c</fullName>
+        <externalId>false</externalId>
+        <label>Lease Dimensions State</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Created and Invited Homeowner</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Credit Ran for Customer</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Resent Invitation to Homeowner</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Refreshed Homeowner&apos;s Credit</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>MI__c</fullName>
+        <externalId>false</externalId>
+        <label>MI</label>
+        <length>50</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Mailing_Address__c</fullName>
+        <externalId>false</externalId>
+        <label>Mailing Address</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>Mortgage_Outcome__c</fullName>
+        <externalId>false</externalId>
+        <label>Mortgage Outcome</label>
+        <length>15</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Notes__c</fullName>
+        <externalId>false</externalId>
+        <label>Notes</label>
+        <length>32768</length>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Html</type>
+        <visibleLines>10</visibleLines>
+    </fields>
+    <fields>
+        <fullName>OFAC_Status__c</fullName>
+        <externalId>false</externalId>
+        <label>OFAC Status</label>
+        <length>5</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Other_Phone__c</fullName>
+        <externalId>false</externalId>
+        <label>Other Phone</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Phone</type>
+    </fields>
+    <fields>
+        <fullName>Partner_Financed__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Partner Financed</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Pending_Comments__c</fullName>
+        <externalId>false</externalId>
+        <label>Pending Comments</label>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>Pending_Notes__c</fullName>
+        <externalId>false</externalId>
+        <label>Pending Notes</label>
+        <length>32768</length>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Pending_Reason__c</fullName>
+        <externalId>false</externalId>
+        <label>Pending Reason</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Cannot cross out or write on contract</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Cannot verify sig. need printed name</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Incomplete Conditional Approval</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Missing pages</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Missing payment method</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Missing sales rep signature or ID</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>CPASS: need to sign up for ACH</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>CPASS Prepaid: need Full Payment or CA</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Expired credit check</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Failed cr, need cr for other homeowner</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Major change order</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Minor change order</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Missing sig. of homeowner who pass cr</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Need Cond. Approval or Full Payment</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Need Credit Check:</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Need first 5 pages of trust:</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Need Mortgage Statement</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Need signed Officer&apos;s Certificate</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Cannot verify sig, need printed name</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Need change order form for correct addr.</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Other</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>MultiselectPicklist</type>
+        <visibleLines>6</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Proposal_Id__c</fullName>
+        <externalId>false</externalId>
+        <label>Proposal Id</label>
+        <length>18</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Reason__c</fullName>
+        <externalId>false</externalId>
+        <label>Reason</label>
+        <picklist>
+            <picklistValues>
+                <fullName>NO HOME VALUE</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>TITLE REVIEW</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>INEL</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>SSN-DUP</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>SSN-FRAUDSHIELD-05</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>SSN-FRAUDSHIELD-06</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>SCORE</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>LTV</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>DELINQ</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>BANKY</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>900X</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>FROZENFILE</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>SRH_Customer_Number__c</fullName>
+        <description>SRH Customer Number</description>
+        <externalId>false</externalId>
+        <label>SRH Customer Number</label>
+        <length>100</length>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Sales_Organization_Name__c</fullName>
+        <externalId>false</externalId>
+        <label>Sales Organization Name</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Sales_Rep_Email_Calculated__c</fullName>
+        <externalId>false</externalId>
+        <label>Sales Rep Email Calculated</label>
+        <length>50</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Sales_Rep_Email_Oppty__c</fullName>
+        <externalId>false</externalId>
+        <label>Sales Rep Email Oppty</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Email</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Sales_Rep_Email__c</fullName>
+        <externalId>false</externalId>
+        <label>Sales Rep Email</label>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Email</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Sales_Representative_Oppty__c</fullName>
+        <externalId>false</externalId>
+        <label>Sales Representative Oppty</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Email</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Size_of_Household__c</fullName>
+        <externalId>false</externalId>
+        <label>Size of Household</label>
+        <precision>5</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>State__c</fullName>
+        <externalId>false</externalId>
+        <label>State</label>
+        <length>50</length>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Status__c</fullName>
+        <externalId>false</externalId>
+        <label>LeaseDimensions Status</label>
+        <picklist>
+            <picklistValues>
+                <fullName>CPASS</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>PASS</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>FAIL</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>MANUAL</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>N/A</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Street__c</fullName>
+        <externalId>false</externalId>
+        <label>Street</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Sunrun_Credit_Status__c</fullName>
+        <externalId>false</externalId>
+        <label>Sunrun Credit Decision</label>
+        <picklist>
+            <picklistValues>
+                <fullName>CPASS</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>PASS</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>FAIL</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>MANUAL</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>N/A</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Sunrun_LTV__c</fullName>
+        <externalId>false</externalId>
+        <label>Sunrun LTV</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Percent</type>
+    </fields>
+    <fields>
+        <fullName>Sunrun_Reason_Recorded__c</fullName>
+        <externalId>false</externalId>
+        <label>Sunrun Reason Recorded</label>
+        <length>50</length>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Total_Solar_Prepay_Required__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Total Solar Prepay Required</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>TransUnion_BKNumMonths__c</fullName>
+        <externalId>false</externalId>
+        <label>TransUnion BKNumMonths</label>
+        <length>10</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>TransUnion_Banky_Outcome__c</fullName>
+        <externalId>false</externalId>
+        <label>TransUnion Banky outcome</label>
+        <length>15</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>TransUnion_Mortgage_Outcome__c</fullName>
+        <externalId>false</externalId>
+        <label>TransUnion Mortgage Outcome</label>
+        <length>15</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>TransUnion_Reason__c</fullName>
+        <externalId>false</externalId>
+        <label>Reason (TransUnion)</label>
+        <length>50</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Transunion_Adverse_Action_1_truncated__c</fullName>
+        <externalId>false</externalId>
+        <formula>SUBSTITUTE(Transunion_Adverse_Action_Reason1__c, LEFT(Transunion_Adverse_Action_Reason1__c, FIND(&quot;: &quot;, Transunion_Adverse_Action_Reason1__c)), &quot;&quot;)</formula>
+        <label>Transunion Adverse Action 1 (truncated)</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Transunion_Adverse_Action_2_truncated__c</fullName>
+        <externalId>false</externalId>
+        <formula>SUBSTITUTE(Transunion_Adverse_Action_Reason2__c, LEFT(Transunion_Adverse_Action_Reason2__c, FIND(&quot;: &quot;, Transunion_Adverse_Action_Reason2__c)), &quot;&quot;)</formula>
+        <label>Transunion Adverse Action 2 (truncated)</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Transunion_Adverse_Action_3_truncated__c</fullName>
+        <externalId>false</externalId>
+        <formula>SUBSTITUTE(Transunion_Adverse_Action_Reason3__c, LEFT(Transunion_Adverse_Action_Reason3__c, FIND(&quot;: &quot;, Transunion_Adverse_Action_Reason3__c)), &quot;&quot;)</formula>
+        <label>Transunion Adverse Action 3 (truncated)</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Transunion_Adverse_Action_4_truncated__c</fullName>
+        <externalId>false</externalId>
+        <formula>SUBSTITUTE(Transunion_Adverse_Action_Reason4__c, LEFT(Transunion_Adverse_Action_Reason4__c, FIND(&quot;: &quot;, Transunion_Adverse_Action_Reason4__c)), &quot;&quot;)</formula>
+        <label>Transunion Adverse Action 4 (truncated)</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Transunion_Adverse_Action_5_truncated__c</fullName>
+        <externalId>false</externalId>
+        <formula>SUBSTITUTE(Transunion_Adverse_Action_Reason5__c, LEFT(Transunion_Adverse_Action_Reason5__c, FIND(&quot;: &quot;, Transunion_Adverse_Action_Reason5__c)), &quot;&quot;)</formula>
+        <label>Transunion Adverse Action 5 (truncated)</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Transunion_Adverse_Action_Reason1__c</fullName>
+        <externalId>false</externalId>
+        <label>Transunion Adverse Action Reason1</label>
+        <length>150</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Transunion_Adverse_Action_Reason2__c</fullName>
+        <externalId>false</externalId>
+        <label>Transunion Adverse Action Reason2</label>
+        <length>150</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Transunion_Adverse_Action_Reason3__c</fullName>
+        <externalId>false</externalId>
+        <label>Transunion Adverse Action Reason3</label>
+        <length>150</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Transunion_Adverse_Action_Reason4__c</fullName>
+        <externalId>false</externalId>
+        <label>Transunion Adverse Action Reason4</label>
+        <length>150</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Transunion_Adverse_Action_Reason5__c</fullName>
+        <externalId>false</externalId>
+        <label>Transunion Adverse Action Reason5</label>
+        <length>150</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Type__c</fullName>
+        <externalId>false</externalId>
+        <label>Type</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Sunrun</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>LeaseDimension</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>X1st_Mortgage_Amt2__c</fullName>
+        <externalId>false</externalId>
+        <label>1st Mortgage Amt2</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>X1st_Mortgage_Amt3__c</fullName>
+        <externalId>false</externalId>
+        <label>1st Mortgage Amt3</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>X1st_Mortgage_Amt4__c</fullName>
+        <externalId>false</externalId>
+        <label>1st Mortgage Amt4</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>X1st_Mortgage_Amt5__c</fullName>
+        <externalId>false</externalId>
+        <label>1st Mortgage Amt5</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>X1st_Mortgage_Amt__c</fullName>
+        <externalId>false</externalId>
+        <label>1st Mortgage Amt</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>X1st_Mortgage_Name__c</fullName>
+        <externalId>false</externalId>
+        <label>1st Mortgage Name</label>
+        <length>100</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>X1st_Mortgage_OpenDate2__c</fullName>
+        <externalId>false</externalId>
+        <label>1st Mortgage OpenDate2</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>X1st_Mortgage_OpenDate3__c</fullName>
+        <externalId>false</externalId>
+        <label>1st Mortgage OpenDate3</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>X1st_Mortgage_OpenDate4__c</fullName>
+        <externalId>false</externalId>
+        <label>1st Mortgage OpenDate4</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>X1st_Mortgage_OpenDate5__c</fullName>
+        <externalId>false</externalId>
+        <label>1st Mortgage OpenDate5</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>X1st_Mortgage_OpenDate__c</fullName>
+        <externalId>false</externalId>
+        <label>1st Mortgage OpenDate</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>X1st_Mortgage_name2__c</fullName>
+        <externalId>false</externalId>
+        <label>1st Mortgage name2</label>
+        <length>100</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>X1st_Mortgage_name3__c</fullName>
+        <externalId>false</externalId>
+        <label>1st Mortgage name3</label>
+        <length>100</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>X1st_Mortgage_name4__c</fullName>
+        <externalId>false</externalId>
+        <label>1st Mortgage name4</label>
+        <length>100</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>X1st_Mortgage_name5__c</fullName>
+        <externalId>false</externalId>
+        <label>1st Mortgage name5</label>
+        <length>100</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>X2nd_Mortgage_Amt2__c</fullName>
+        <externalId>false</externalId>
+        <label>2nd Mortgage Amt2</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>X2nd_Mortgage_Amt__c</fullName>
+        <externalId>false</externalId>
+        <label>2nd Mortgage Amt</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>X2nd_Mortgage_OpenDate2__c</fullName>
+        <externalId>false</externalId>
+        <label>2nd Mortgage OpenDate2</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>X2nd_Mortgage_OpenDate__c</fullName>
+        <externalId>false</externalId>
+        <label>2nd Mortgage OpenDate</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>X2nd_Mortgage_name2__c</fullName>
+        <externalId>false</externalId>
+        <label>2nd Mortgage name2</label>
+        <length>100</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>X2nd_Mortgage_name__c</fullName>
+        <externalId>false</externalId>
+        <label>2nd Mortgage name</label>
+        <length>100</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Years_at_Home__c</fullName>
+        <externalId>false</externalId>
+        <label>Years at Home</label>
+        <length>100</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Zip__c</fullName>
+        <externalId>false</externalId>
+        <label>Zip</label>
+        <length>12</length>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <label>Customer Credit</label>
+    <listViews>
+        <fullName>All</fullName>
+        <columns>NAME</columns>
+        <columns>Fico__c</columns>
+        <columns>CREATED_DATE</columns>
+        <columns>CREATEDBY_USER</columns>
+        <columns>UPDATEDBY_USER</columns>
+        <columns>LAST_UPDATE</columns>
+        <columns>Contact__c</columns>
+        <columns>Customer_Email__c</columns>
+        <columns>Status__c</columns>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+        <language>en_US</language>
+    </listViews>
+    <nameField>
+        <displayFormat>CC-{0000000}</displayFormat>
+        <label>Customer Credit Name</label>
+        <trackHistory>false</trackHistory>
+        <type>AutoNumber</type>
+    </nameField>
+    <pluralLabel>Customer Credit</pluralLabel>
+    <searchLayouts>
+        <customTabListAdditionalFields>Contact__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Customer_Email__c</customTabListAdditionalFields>
+        <searchResultsAdditionalFields>SRH_Customer_Number__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>First_Name__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Last_Name__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Customer_Email__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Date_Pulled__c</searchResultsAdditionalFields>
+    </searchLayouts>
+    <sharingModel>ReadWrite</sharingModel>
+    <webLinks>
+        <fullName>Refresh_Credit</fullName>
+        <availability>online</availability>
+        <displayType>button</displayType>
+        <height>600</height>
+        <linkType>page</linkType>
+        <masterLabel>Refresh Credit</masterLabel>
+        <openType>sidebar</openType>
+        <page>CreditCheckContactRefresh</page>
+        <protected>false</protected>
+    </webLinks>
+</CustomObject>

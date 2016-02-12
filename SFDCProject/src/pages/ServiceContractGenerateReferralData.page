@@ -1,0 +1,38 @@
+<apex:page controller="ServiceContractGenerateReferralData" action="{!init}" sidebar="{!IF(!bExcel,true,false)}" cache="{!IF(!bExcel,false,true)}" showHeader="true" contenttype="{!IF(!bExcel,'','application/x-excel#referrals.xls')}" standardStylesheets="{!IF(!bExcel,true,false)}">
+<apex:form id="theform">
+<apex:pageBlock >
+<apex:pageBlockButtons location="top" rendered="{!IF(!bExcel,true,false)}">
+  <apex:commandButton value="Get Renewals" action="{!refreshData}"/>
+  <apex:commandButton value="Export to Excel" action="{!genExcel}" /> 
+</apex:pageBlockButtons>
+<apex:pageBlockSection columns="2" rendered="{!IF(!bExcel,true,false)}">
+   <apex:inputField value="{!RP.Start_Date__c}" id="fromDate"/>
+   <apex:inputField value="{!RP.End_Date__c}" id="toDate" />
+</apex:pageBlockSection>
+  <apex:pageBlockSection id="referraldata">
+   <apex:repeat value="{!thousandBlocks}" var="thousands" id="thedata">
+   <apex:dataTable id="thetable" value="{!thousands.RefData}" var="r" border="5px;" title="Referral Data Extract" > 
+    <apex:column value="{!r.refid}" headerValue="Salesforce Referral Id"/> 
+    <apex:column value="{!r.refname}" headerValue="Referral Name"/> 
+    <apex:column value="{!r.statid}" headerValue="Transaction ID"/>
+    <apex:column headerValue="Transaction Date">{!MONTH(r.trxdate)}/{!DAY(r.trxdate)}/{!YEAR(r.trxdate)}</apex:column>
+    <apex:column value="{!r.contactname}" headerValue="Contact Name"/>   
+    <apex:column headerValue="Credit Amount">    
+     <apex:outputText value="{0, number,$###,###,###.00}">
+      <apex:param value="{!r.creditamount}"/>
+     </apex:outputText>    
+    </apex:column>   
+    <apex:column value="{!r.creditreason}" headerValue="Credit Reason"/>
+    <apex:column value="{!r.textforcustomerinvoice}" headerValue="Text for Customer Invoice"/>
+    <apex:column value="{!r.agreementnumber}" headerValue="Agreement Number"/>
+    <apex:column value="{!r.tefundname}" headerValue="TE Fund Name"/>        
+    <apex:column value="{!r.ppd}" headerValue="Prepaid Customer Yes/No"/>
+  <!--    <apex:column value="{!r.utility}" headerValue="State/Utility"/>    -->
+    <apex:column value="{!r.channel}" headerValue="Channel"/>
+    <apex:column value="{!r.salespartner}" headerValue="Sales/Install Partner"/>
+   </apex:dataTable>
+   </apex:repeat>
+  </apex:pageBlockSection>
+  </apex:pageBlock>
+ </apex:form>
+</apex:page>

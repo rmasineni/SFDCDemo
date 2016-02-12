@@ -1,0 +1,1 @@
+<apex:page standardController="Task__c" extensions="wfTaskRedirect" action="{!getWfTaskEditPage}" />

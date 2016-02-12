@@ -1,0 +1,70 @@
+<apex:page standardController="Case" extensions="quickFsDispatch" sidebar="true" id="quickFsDispatchPage">
+    <script>
+
+        function confirmCancel() 
+        {
+            var isCancel = confirm("Are you sure you wish to cancel?");
+            if (isCancel) return true;
+            return false;
+        }
+
+        function checkSelection() 
+        {
+            try
+            {
+                var inputElem = document.getElementsByTagName("input");
+                var checkedCount = 0;
+                var noEmailAddressCount = 0;
+                for(var i=0; i<inputElem.length; i++)
+                {
+                    if(inputElem[i].id.indexOf("checkedOne")!=-1)
+                    {
+                        if (inputElem[i].checked == true)
+                        {
+                            checkedCount++;
+                        }
+                    }
+                }
+                if (checkedCount <= 0)
+                {
+                    alert("Please select atleast one template.");
+                    return false;
+                }
+                else if (checkedCount > 1)
+                {
+                    alert("Please limit your selection to only one template.");
+                    return false;
+                }
+                return true;
+            }                    
+            catch(e)
+            {
+                alert(e);
+                return false;
+            }
+            return true;
+        }
+    </script>
+
+    <apex:sectionHeader title="Select Quick FS Dispatch Template"/>
+    <apex:form id="quickFsDispatchForm">
+        <apex:pageBlock mode="edit" id="block">
+            <apex:pageMessages />
+            <apex:pageBlockButtons >
+                <apex:commandButton action="{!createFsDispatch}" value="Create FS Dispatch" immediate="true" onClick="return checkSelection()"/>
+                <apex:commandButton action="{!cancel}" value="Cancel" onclick="return confirmCancel()" immediate="true" tabindex="1"/>
+            </apex:pageBlockButtons>
+            <apex:pageBlockTable value="{!qFsDispTemplates}" var="l" id="theTable" rowClasses="odd,even" styleClass="tableClass">
+                <apex:column >
+                    <apex:inputCheckbox value="{!l.recSelected}" id="checkedOne" >
+                        <apex:actionSupport event="onclick" action="{!GetSelectedTemplate}"/>
+                    </apex:inputCheckbox>
+                </apex:column>
+                <apex:column headervalue="Template" value="{!l.qFsDispTemplateRec.Name}" />                    
+                <apex:column headervalue="Phase" value="{!l.qFsDispTemplateRec.FS_Dispatch_Phase__c}" />                    
+                <apex:column headervalue="State Reason" value="{!l.qFsDispTemplateRec.FS_Dispatch_State__c}" />                    
+                <apex:column headervalue="Constraint" value="{!l.qFsDispTemplateRec.FS_Dispatch_Constraint__c}" />
+            </apex:pageBlockTable>
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>

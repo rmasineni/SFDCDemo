@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ConnectedApp xmlns="http://soap.sforce.com/2006/04/metadata">
+    <contactEmail>shyam.rajan@sunrun.com</contactEmail>
+    <label>Sunrun Solar Station</label>
+    <oauthConfig>
+        <callbackUrl>https://r30.sunrun.com/#/sfcallback/</callbackUrl>
+        <consumerKey>3MVG9ytVT1SanXDktcxaik2P0Y7i65mJ5PyMtVzNJYhHxO8q89TwJR8pqxvnrEm9bsGEbA4Y9zVha4Vy1JxLN</consumerKey>
+        <scopes>Basic</scopes>
+        <scopes>Api</scopes>
+        <scopes>Web</scopes>
+        <scopes>Full</scopes>
+        <scopes>Chatter</scopes>
+        <scopes>CustomApplications</scopes>
+        <scopes>RefreshToken</scopes>
+        <scopes>OpenID</scopes>
+        <scopes>CustomPermissions</scopes>
+    </oauthConfig>
+</ConnectedApp>

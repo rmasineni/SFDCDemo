@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Follow</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <description>List of valid FS Action Codes and the Fields that are required when using the code in an FS Action record.</description>
+    <enableActivities>false</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableDivisions>false</enableDivisions>
+    <enableEnhancedLookup>true</enableEnhancedLookup>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>false</enableHistory>
+    <enableReports>true</enableReports>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <externalSharingModel>ReadWrite</externalSharingModel>
+    <fields>
+        <fullName>FS_Act_Code_Active__c</fullName>
+        <defaultValue>true</defaultValue>
+        <description>Indicator to show that the Action Code is Active</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Check if you want users to be able to select this Action Code when adding or editing FS Action records</inlineHelpText>
+        <label>FS Act Code Active</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>FS_Act_Code_Desc__c</fullName>
+        <description>Short description of the FS Action Code</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Enter a short description for the FS Action Code</inlineHelpText>
+        <label>FS Act Code Desc</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>FS_Get_Dollars_Info__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Indicator to show that the Hours information should be collected.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Check if you want the user to provide dollar amount information when using this code</inlineHelpText>
+        <label>FS Get Dollars Info</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>FS_Get_Hours_Info__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Indicator to show that the Hours information should be collected.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Check if you want the user to provide hours information when using this code</inlineHelpText>
+        <label>FS Get Hours Info</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>FS_Get_New_Info__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Indicator to show that the set of fields for the new component should be collected</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Check if you want the user to provide information about the replacement or newly installed component</inlineHelpText>
+        <label>FS Get New Info</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>FS_Get_Old_Info__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Indicator to show that the set of fields for the old/existing/removed component should be collected</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Check if you want the user to provide information about the existing or removed component</inlineHelpText>
+        <label>FS Get Old Info</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <label>FS Action Code</label>
+    <listViews>
+        <fullName>All</fullName>
+        <columns>NAME</columns>
+        <columns>FS_Act_Code_Desc__c</columns>
+        <columns>FS_Act_Code_Active__c</columns>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+    </listViews>
+    <nameField>
+        <label>FS Action Code</label>
+        <type>Text</type>
+    </nameField>
+    <pluralLabel>FS Action Codes</pluralLabel>
+    <searchLayouts>
+        <customTabListAdditionalFields>FS_Act_Code_Desc__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>FS_Act_Code_Active__c</customTabListAdditionalFields>
+        <lookupDialogsAdditionalFields>FS_Act_Code_Desc__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>FS_Act_Code_Active__c</lookupDialogsAdditionalFields>
+        <searchFilterFields>NAME</searchFilterFields>
+        <searchFilterFields>FS_Act_Code_Desc__c</searchFilterFields>
+        <searchFilterFields>FS_Act_Code_Active__c</searchFilterFields>
+        <searchResultsAdditionalFields>FS_Act_Code_Desc__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>FS_Act_Code_Active__c</searchResultsAdditionalFields>
+    </searchLayouts>
+    <sharingModel>ReadWrite</sharingModel>
+    <startsWith>Vowel</startsWith>
+</CustomObject>

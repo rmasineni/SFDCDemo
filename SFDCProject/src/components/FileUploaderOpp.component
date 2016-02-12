@@ -1,0 +1,986 @@
+<apex:component controller="FileUploaderComponentOpp" >
+    <apex:attribute id="lookupId" name="relatedObject" assignTo="{!relatedObject}" type="Id" description="SR Attachment Related ObjectId" />
+    <apex:attribute id="uploadTypeId" name="fileUploadType" assignTo="{!fileUploadType}" type="String" description="" />
+    <style>
+        #filesTableId {
+            background-color: whiteSmoke;
+            border-radius: 6px;
+            -webkit-border-radius: 6px;
+            -moz-border-radius: 6px;
+        }
+        
+        #filesTableId td, #filesTableId th {
+            
+        }
+
+        #filesTableId th {
+            color: #333;
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            font-style: normal;
+            font-weight: bold;
+            text-align: left;
+            
+            padding-left: 0;
+            padding-right: 0;
+        }
+        
+        }
+        #filesTableId td {
+            padding: 0 20px;
+            line-height: 12px;
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            border-bottom: 1px solid #fff;
+            border-top: 1px solid #fff;
+        }
+        #filesTableId td:hover {
+            background-color: #fff;
+        }
+
+        #dropbox {
+            background: rgba(128, 128, 128, 0.14);
+            border: black dashed 1px;
+            width: 85%;
+            padding: 20px;
+            height: 120px;
+            text-align: center;
+            color: blue;
+            border-radius: 10PX;        
+            margin-left: auto;
+            margin-right: auto;
+            margin-top: 20px;
+        }
+ 
+        #progress_bar {
+          width: 200px;
+          height: 5px !important;
+          margin: 1px 0;
+          padding: 0 0 !important;
+          
+          font-size: 14px;
+          clear: both;
+          opacity: 0;
+          -moz-transition: opacity 1s linear;
+          -o-transition: opacity 1s linear;
+          -webkit-transition: opacity 1s linear;
+        }
+        #progress_bar.loading {
+          opacity: 1.0;
+          height: 5px !important;
+           padding: 0 0 !important;
+           background-color: #333333 !important;
+            border: 0px !important;
+        }
+        
+        .loading {
+             background-color:whiteSmoke  !important;
+              border: 0px !important;
+              font-weight: normal !important;
+         }
+        .percent {
+          background-color: #99ccff;
+          height: auto;
+          width: 0;
+        }
+        
+        .deleteButton{
+            background-color: red;
+            width: 150px;
+            height: 40px;
+        }
+
+        .headerLogo {
+            margin:1px 1px 1px 1px;
+            border:0;
+            padding-left:50px;
+            padding-bottom:10px;
+            #height: 30px;
+            #width: 90px;
+        }
+        #fileUploadDiv {
+        overflow:auto;
+        width:800px;
+        }
+    </style>
+    
+    <div align="left" width="100%">
+        <img src="{!$Resource.PartnerPortalHeader32}" class="headerLogo"/>
+    </div>
+    <div id="fileUploadDiv" align="center" width="100%" style="margin-bottom:20">
+    <table align="left" width="800px">
+      <tr>
+        <td width="150px" align="right"><b>File selection &#160;:</b></td>
+        <td width="650px"><input class='disableAfterUpload' type="file" id="files" name="files[]" multiple="multiple" /></td>
+      </tr>
+      <tr>
+        <td width="150px" align="right"><b>Status&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;:</b></td>
+        <td width="650px" ><span id="status"></span></td>
+      </tr>
+      <tr></tr>
+      
+    </table>
+    
+    </div>
+    <div class='disableAfterUpload' id="dropbox" align="center">Drop your files here <p/> <span id="fileTypeSpanId"> (pdf, jpg, gif, png files only) </span> </div>
+    <br/>
+    <table id="FilesTable"></table>
+    <table id="filesTableId" align="center" width="90%">
+        <thead>
+        <th>Select</th>
+            <th>File Name</th>
+            <th>Document Type</th>
+            <th>Document Status</th>
+            <th>Size</th>
+            <th>Upload Status</th>
+           
+        </thead>
+        <tbody id="tablebody">
+            <tr id="row1" style="display:none">
+            <td><input type="checkbox" id="selectBox" /></td>
+                <td></td>
+                <td>
+                    <select id ="documentTypesId" class ="disableAfterUpload" name="documentTypes">
+                        <option value="">--Select Document Type--</option>
+                    </select>
+                </td>
+                <td>
+                <select id ="documentSignStatusId"  class ="disableAfterUpload" name="documentSignStatus">
+                        <option value="">----Select----</option>
+                        <option value="Signed">Signed</option>
+                        <option value="Unsigned">Unsigned</option>
+                        <option value="Not Applicable">Not Applicable</option>
+                    </select>
+                </td>
+                <td></td>
+                <td></td>
+                
+            </tr>
+        </tbody>
+    </table>    
+    <table align="center" width="auto" style="padding-top:20px;">
+        <tr>
+            <td><button onclick="window.top.close();">Close</button></td>
+            <td><button id="uploadButton" class='disableAfterUpload' onclick="uploadFilesToS3()">Upload Files</button></td>
+            <!--<td><button id="uploadButton" class='disableAfterUpload' onclick="javascript:window.opener.location.reload();return false;">Refersh Parent</button></td>-->
+            <!-- parentWin.location.reload(); -->
+           <!-- <td><button id="deleteButton" class='disableAfterUpload' onclick="Delete()">Delete</button></td> -->
+        </tr>
+    </table>
+    
+    <apex:includeScript value="{!URLFOR($Resource.Coverflow, 'js/jquery-1.7.1.js')}"  />
+    <script type="text/javascript">
+        var baseURL = '{!BaseURL}' ;
+        var fileUploadTypeStr = '{!fileUploadType}' ;
+        var opportunityId = '{!opportunityId}';
+        var isSunRunUser = '{!isSunrunUser}';
+        var parentObjectId = '{!relatedObject}';
+        var proposalNameStr = '{!proposalName}';
+        var sObjectStr = '{!sObjectType}';
+        var existingSRAttachments = '{!existingSRAttachments}'; 
+        var storedFiles = {};
+        var processedFileCount = 0;
+        var etags = [];
+        var selectedFileNames = '';
+        var childElementIds = '';
+        var tableSelection = '';
+        var contactDocumentTypes = '';
+        var documentClassificationMap;
+        var documentTypesIdToNameMap = new Array();
+        var fileNamesMap = new Array();
+        var pregressbarFileMap = new Array();
+        var runningIndex = 0;
+        var parentWin;
+        if(window.opener != null){
+            parentWin = window.opener.parent;
+        }
+        var unsignedDocumentTypes = [];
+        
+        var isMobile = false;
+        if((navigator.userAgent.match(/iPad/i)) || (navigator.userAgent.match(/iPhone/i)) || (navigator.userAgent.match(/iPod/i))) {
+            isMobile = true;
+        }
+
+        if(fileUploadTypeStr != null && fileUploadTypeStr == 'GeneralDocuments'){
+            document.getElementById('fileTypeSpanId').style.display = 'none';
+        }
+        
+        var unableToInitializeFileUpload = 'Unable to initialize file uploader.';
+        var FailedToDeleteRow = 'Unable to delete the row';
+        var FailedToAddRow = 'Unable to add the row';
+        var FileProcessError = 'Unable to process the selected file';
+
+        $(document).ready(function(){
+            try{
+                 $(".edit").click(function(){
+                  $(this).parent().load("edit");
+                });
+                $(".view").click(function(){
+                  $(this).parent().load("view");
+                });
+                var selectOptions = document.getElementById('documentTypesId');
+                var count = 1;
+                initializeDocumentClassificationMap();          
+            }catch(err){
+                alert(unableToInitializeFileUpload);
+            }
+        });
+
+        if((navigator.userAgent.match(/iPad/i)) || (navigator.userAgent.match(/iPhone/i)) || (navigator.userAgent.match(/iPod/i))) {
+            var inputElement = document.getElementById('files');
+            inputElement.onchange = function (){
+                try{
+                    debugger;
+                    var files = this.files;
+                    processSelectedFiles(files);
+                }catch(err){
+                    alert(FileProcessError);
+                }
+            }           
+        }else{
+            document.getElementById('files').addEventListener('change', handleFileSelect, false);
+        }
+
+
+        //document.getElementById('files').addEventListener('change', handleFileSelect, false);
+        var dropbox = document.getElementById("dropbox")
+        // init event handlers
+        dropbox.addEventListener("dragenter", dragEnter, false);
+        dropbox.addEventListener("dragexit", dragExit, false);
+        dropbox.addEventListener("dragover", dragOver, false);
+        dropbox.addEventListener("drop", drop, false);
+        
+        function initializeDocumentClassificationMap(){
+            if(fileUploadTypeStr != null && fileUploadTypeStr == 'GeneralDocuments'){
+                Visualforce.remoting.Manager.invokeAction('{!$RemoteAction.FileUploaderComponentOpp.getGeneralDocuments}', 
+                    parentObjectId,
+                    function(result, event){
+                        if (event.status) {
+                            documentClassificationMap = result;
+                            initializeDocumentTypes();
+                        } else if (event.type === 'exception') {
+                            alert('Error Message: ' + event.message);
+                        } else {
+                            alert('Message: ' + event.message);
+                        }
+                    }, 
+                    {escape: true}
+                );          
+            }else{
+                Visualforce.remoting.Manager.invokeAction('{!$RemoteAction.FileUploaderComponentOpp.getDocumentClassificationByCategroy}', 
+                    parentObjectId,
+                    function(result, event){
+                        if (event.status) {
+                            documentClassificationMap = result;
+                            initializeDocumentTypes();
+                        } else if (event.type === 'exception') {
+                            alert('Error Message: ' + event.message);
+                        } else {
+                            alert('Message: ' + event.message);
+                        }
+                    }, 
+                    {escape: true}
+                );
+            }
+        }
+        
+        function initializeDocumentTypes(){
+            var selectOptions = document.getElementById('documentTypesId');
+            var count = 0;
+            var tempDocumentTyes = [];
+            var unsignedDocCount = 0;
+            for (var classificationObj in documentClassificationMap){
+                tempDocumentTyes[count] = documentClassificationMap[classificationObj].Document_Name__c;
+                count ++;
+                if(documentClassificationMap[classificationObj].ESignature_allowed__c != true){
+                    unsignedDocumentTypes[unsignedDocCount] = documentClassificationMap[classificationObj].Id;
+                    unsignedDocCount++;
+                }
+            }
+            tempDocumentTyes.sort();
+            count = 1;
+            for(var i=0; i < tempDocumentTyes.length; i++){
+                var tempName = tempDocumentTyes[i];
+                if(isMobile == false || (documentClassificationMap[tempName].Show_On_Mobile__c == true && isMobile == true)){
+                    var tempId = documentClassificationMap[tempName].Id;
+                    documentTypesIdToNameMap[tempId] = tempName;
+                    selectOptions.options[count] = new Option(tempName, tempId);
+                    count ++;                   
+                }
+            }           
+        }
+
+        function populateDocStatus(val,cell){
+            var docsStatus = '';
+            var docClassificationObj = documentClassificationMap[val];
+            var docSignStatus = "<select name='documentSignStatus' class='disableAfterUpload' id='documentSignStatusId'>";
+            var docSignOptions = '';
+            if(docClassificationObj != null){
+                var ptrDocRelList = docClassificationObj.Partner_Document_Relationships__r;
+                if(ptrDocRelList != null && ptrDocRelList.length > 0){
+                    var ptrDocRelObj = ptrDocRelList[0];
+                    if(ptrDocRelObj.Customer_signature_required__c == true || 
+                        ptrDocRelObj.Partner_signature_required__c == true || 
+                        ptrDocRelObj.SR_Ops_signature_required__c == true){
+                        if(docClassificationObj.Source_System__c == 'Proposal Tool'){
+                            docSignOptions += "<option value=Signed>Signed</option>";
+                            
+                            if(isSunRunUser == 'true' && ptrDocRelObj.SR_Ops_signature_required__c == true){
+                                docSignOptions += "<option value='SR Countersigned'>SR Countersigned</option>";
+                            }
+                        }else{
+                            docSignOptions += "<option value=''>----Select----</option>";
+                            docSignOptions += "<option value=Signed>Signed</option>";
+                            docSignOptions += "<option value=Unsigned>Unsigned</option>";
+                            if(isSunRunUser == 'true' && ptrDocRelObj.SR_Ops_signature_required__c == true){
+                                docSignOptions += "<option value='SR Countersigned'>SR Countersigned</option>";
+                            }
+                        }
+                    }
+                }
+
+                if(docSignOptions == ''){
+                    docSignStatus += "<option value='Not Applicable'>Not Applicable</option>";
+                }else{
+                    docSignStatus += docSignOptions;
+                }
+            }
+            cell.innerHTML = docSignStatus;
+        }
+
+        function createSynchronousCORSRequest(method, url){
+            var xhr = new XMLHttpRequest();
+            if ("withCredentials" in xhr){
+              xhr.open(method, url, false);
+            }else if (typeof XDomainRequest != "undefined"){
+              xhr = new XDomainRequest();
+              xhr.open(method, url);
+            }else{
+              xhr = null;
+            }
+            return xhr;
+        }
+        
+        function handleFileSelect(evt){
+            processSelectedFiles(evt.target.files);
+            evt.target.files = null;
+        }
+
+        function processSelectedFiles(files){
+            try{
+                debugger;
+                //var files = evt.target.files;
+                var fileCount = files.length;
+                if (fileCount > 0){
+                    for(var i = 0, f; f = files[i]; i++){
+                        if(isMobile == true){
+                            var temp = i + 1;
+                            temp = temp + '_' + f.name;
+                            f.name = temp;
+                        }
+                        if(f.name in storedFiles){
+                            alert('The File Already Selected');
+                            return;
+                        }else{
+                            console.log('f.type'+f.type);
+                            var tempFileType = f.type;
+                            var fileTypeResult = hasValidFileTypeExtension(f.name, f.type);
+                            if(fileTypeResult == true){
+                                storedFiles[f.name] = f;
+                                var tempFileName = f.name; 
+                                tempFileName = tempFileName.replace(/[&\/\\#,+()$~%'":*?<>{}]/g,'');
+                                fileNamesMap[f.name] = getTimestamp() + "." + tempFileName; 
+                                addRow(f);
+                                setProgress(f.name, 0, 'Waiting for upload');
+                                enableTableRow(f.name);
+                                console.log('enableButtons'+f.name);
+                                enableButtons();
+                            }else{
+                                var alertMessage = '';
+                                if(tempFileType == null){
+                                    tempFileType = '';
+                                }
+                                alertMessage = '\'' + f.name + '\' (' + f.type + ')' + ' is not associated with a valid file format. ';  
+                                alertMessage += 'Valid file formats are pdf, jpg, gif, png.' ;
+                                alert(alertMessage);
+                            }
+                        }
+                    }
+                    //evt.target.files = null;
+                }
+            }catch(err){
+                alert(FileProcessError);
+            }           
+        }
+
+        function Delete(){
+            
+            try{
+                var selFiles = selectedFileNames.split(',');
+                var childids = childElementIds.split(',');
+                if( selFiles.length -1 > 0)
+                {
+                    for(var i=0; i < selFiles.length -1 ; i++){
+                        var ch = document.getElementById(selFiles[i]);
+                        delete pregressbarFileMap[selFiles[i]];
+                        delete storedFiles[selFiles[i]];
+                        delete fileNamesMap[selFiles[i]];
+                        
+                        tableSelection.removeChild(ch);
+                    }
+                    selectedFileNames = '';
+                    childElementIds = '';
+                }else{  
+                    alert('Please select atleast one file for delete');
+                }
+            }catch(err){
+                alert(FailedToDeleteRow);
+            }   
+        }
+
+        function uploadFilesToS3(){
+        
+            try{
+                var newDocuments = {};
+                var erroMsgMap = {};
+                var duplicateDocumentsFound = false;
+                for (file in storedFiles) {
+                    var tempFile = storedFiles[file];
+                    var fileName = tempFile.name;
+                    
+                    var row = document.getElementById(fileName);
+                    var contactDocumentType = row.cells[2].children[0].value;
+                    if(contactDocumentType == null || contactDocumentType == '' 
+                        || contactDocumentType == '--Select Document Type--'){
+                        alert('Select document type for ' + fileName);
+                        return;
+                    }
+                    var contactDocumentStatus = row.cells[3].children[0].value;
+                        if(contactDocumentStatus == null || contactDocumentStatus == '' 
+                            || contactDocumentType == '----Select----'){
+                            alert('Select document status for ' + fileName);
+                            return;
+                    }
+     
+                    if(newDocuments[contactDocumentType] == null){
+                        newDocuments[contactDocumentType] = fileName;
+                    }else if(newDocuments[contactDocumentType] != null 
+                        && (unsignedDocumentTypes != null && unsignedDocumentTypes.indexOf(contactDocumentType) < 0)){
+                        //&& documentTypesIdToNameMap[contactDocumentType] != 'Other'){
+                        duplicateDocumentsFound = true;
+                        alert('Found more than one document with same document types');
+                        return ;
+                    } 
+                }   
+                
+                var sfdcResult = '';
+                if(fileUploadTypeStr != null && fileUploadTypeStr == 'GeneralDocuments'){
+                    disableButtons();
+                    setFileCount();
+                    for (file in storedFiles) {
+                        disableTableRow(file);
+                        uploadFile(storedFiles[file], file);
+                    }                 
+                }else if(fileUploadTypeStr == null || fileUploadTypeStr != 'GeneralDocuments'){
+                    Visualforce.remoting.Manager.invokeAction('{!$RemoteAction.FileUploaderComponentOpp.checkexistingSRAttachments}', 
+                                                        parentObjectId,  newDocuments, function(result, event){
+                        if (event.status) {
+                            if(result != null){
+                                var uploadDocuments = false;
+                                if(result.status == ''){
+                                    uploadDocuments = true;
+                                }else if(result.status == 'Confirm'){
+                                    uploadDocuments = confirm(result.errorMessage);                             
+                                }else if(result.status == 'Error'){
+                                    alert(result.errorMessage);
+                                }
+                            }
+    
+                            if(uploadDocuments == true){            
+                                if( existingSRAttachments != null && documentClassificationMap != null){
+                                    disableButtons();
+                                    setFileCount();
+                                    for (file in storedFiles) {
+                                        disableTableRow(file);
+                                        uploadFile(storedFiles[file], file);
+                                    }                       
+                                }               
+                            }
+                        }else if (event.type === 'exception') {
+                            alert('Unable to verify the existing attachments in Salesforce: ' + event.message);
+                        } else {
+                            alert('Unable to verify the existing attachments in Salesforce: ' + event.message);
+                        }
+                    },
+                    {
+                        escape: true
+                    }); 
+                }
+                
+            }catch(error){
+                alert('Salesforce is unable to upload the files. Please restart the file uploader window. ');
+            }
+        }
+        
+        /**
+         * Execute the given callback with the signed response.
+         */
+        function executeOnSignedUrl(file, callback)
+        {   
+            var amazonS3FileName = fileNamesMap[file.name];
+            Visualforce.remoting.Manager.invokeAction('{!$RemoteAction.FileUploaderComponentOpp.getS3ProxyInfoForPut}', 
+                sObjectStr, proposalNameStr, amazonS3FileName, file.type,  
+                function(result, event){
+                    if (event.status) {
+                        var str = result;
+                        callback(result);
+                        
+                    } else if (event.type === 'exception') {
+                        alert('Error Message: ' + event.message);
+                    } else {
+                        alert('Message: ' + event.message);
+                    }
+                }, 
+                {escape: true}
+            );
+        }
+        
+        function uploadFile(file, file_id){
+            executeOnSignedUrl(file, function(requestInfo){
+                uploadToS3Synchronously(file, requestInfo, file_id);
+            });
+        }
+
+        /**
+         * Use a CORS call to upload the given file to S3. Assumes the url
+         * parameter has been signed and is accessible for upload.
+         */
+        function uploadToS3Synchronously(file, requestInfo, file_id){
+            debugger;
+            console.log('requestInfo===============');
+            console.log(requestInfo);
+            console.log(file_id);
+            
+            for(var i=0; i <= 3; i++){
+                var fileName = file.name;
+                var fileSize = file.size;
+                var fileType = file.type;
+                var url = requestInfo.requestEndpoint.replace(/amp;/g,'');
+                console.log(url);
+                debugger;
+                var xhr = createSynchronousCORSRequest('PUT', url);
+                if (!xhr){
+                    setProgress(file.name, 0, 'CORS not supported');
+                    break;
+                }
+                else{
+                    xhr.setRequestHeader('Content-Type', file.type);
+                    xhr.setRequestHeader('x-amz-date',requestInfo.timestamp);
+                    xhr.setRequestHeader('authorization','AWS '+ requestInfo.accessKey + ':' + requestInfo.signature);
+                    xhr.send(file);
+                    if(xhr.status == 200){
+                       var etagCount = etags.length;
+                       var etag = xhr.getResponseHeader("ETag");
+                       etags[etagCount] = etag;
+                       upsertRecordsSynchronously(fileName);
+                       processedFileCount -- ;
+                       var tempStatus = 'Upload completed.';
+                       if(processedFileCount > 0){
+                            tempStatus = 'In progress ... '
+                       }
+                       setProgress(fileName, 100, tempStatus);
+                       if(processedFileCount <= 0){
+                            deleteFilesInCache();
+                       }
+                       break;
+                    }else if(xhr.status >= 400){
+                        console.log(xhr);
+                        if(i >= 3){
+                            alert('Salesforce is unable to upload ' + fileName + '. Please close the this window and retry again.');
+                        }
+                    }        
+                }
+            }
+        }
+
+        function upsertRecordsSynchronously(fileName){
+            var tempFile = storedFiles[fileName];
+            
+            var fileName = tempFile.name;
+            
+            var tempFileName = tempFile.name; 
+            tempFileName = tempFileName.replace(/[&\/\\#,+()$~%'":*?<>{}]/g,''); 
+                            
+            var amazonS3FileName = fileNamesMap[tempFile.name];
+            var fileSize = bytesToSize(tempFile.size);
+            var contactDocumentType = document.getElementById(fileName).children[2].children[0].value;  
+            var contactDocumentWetSign = document.getElementById(fileName).children[3].children[0].value;
+            Visualforce.remoting.Manager.invokeAction('{!$RemoteAction.FileUploaderComponentOpp.upsertSRAttachment}', 
+               parentObjectId, tempFileName, amazonS3FileName, contactDocumentType, 
+               documentTypesIdToNameMap[contactDocumentType] ,fileSize, contactDocumentWetSign,  
+               function(result, event){
+                   if (event.status) {
+                       processResponse(result);
+                   } else if (event.type === 'exception') {
+                       alert('Error Message: ' + event.message);
+                   } else {
+                       alert('Message: ' + event.message);
+                   }
+               }, 
+               {escape: true}
+           );
+
+        }
+        
+        function setFileCount(){
+            processedFileCount = 0;
+            for (file in storedFiles) {
+                processedFileCount ++;
+            }
+        }               
+        
+
+        function deleteFilesInCache(){
+            var countFiles = 0;
+            for (file in storedFiles) {
+                countFiles ++;
+            }
+
+            if(countFiles != etags.length){
+                return countFiles;
+            }
+            
+            etags = []; 
+            storedFiles = {};
+            processedFileCount = 0;
+            fileNamesMap = new Array();     
+        }
+
+
+        function upsertRecords(){
+            var countFiles = 0;
+            for (file in storedFiles) {
+                countFiles ++;
+            }
+
+            if(countFiles != etags.length){
+                return countFiles;
+            }
+            
+            for (file in storedFiles) {
+                var tempFile = storedFiles[file];
+                var fileName = tempFile.name;
+                var amazonS3FileName = fileNamesMap[tempFile.name];
+                var fileSize = bytesToSize(tempFile.size);
+                var contactDocumentType = document.getElementById(fileName).children[2].children[0].value;  
+                var contactDocumentWetSign = document.getElementById(fileName).children[3].children[0].value;
+                Visualforce.remoting.Manager.invokeAction('{!$RemoteAction.FileUploaderComponentOpp.upsertSRAttachment}', 
+                    parentObjectId, fileName, amazonS3FileName, contactDocumentType, 
+                    documentTypesIdToNameMap[contactDocumentType] ,fileSize, contactDocumentWetSign,  
+                    function(result, event){
+                        if (event.status) {
+                            processResponse(result);
+                        } else if (event.type === 'exception') {
+                            alert('Error Message: ' + event.message);
+                        } else {
+                            alert('Message: ' + event.message);
+                        }
+                    }, 
+                    {escape: true}
+                );
+            }
+            etags = []; 
+            storedFiles = {};
+            processedFileCount = 0;
+            fileNamesMap = new Array();
+        }
+
+        function setProgress(file_id, percent, statusLabel){
+            var tempFileName = getModifiedFileName(file_id);
+            var progress = document.querySelector('#PB_' + tempFileName  + '> ' + ' .percent');
+            progress.style.width = percent + '%';
+            progress.textContent = percent + '%';
+            document.getElementById('PB_'+tempFileName).className = 'loading';
+            document.getElementById('status').textContent = statusLabel;
+         }
+    
+         function dragEnter(evt) {
+             evt.stopPropagation();
+             evt.preventDefault();
+         }
+         
+         function dragExit(evt) {
+             evt.stopPropagation();
+             evt.preventDefault();
+         }
+         
+         function dragOver(evt) {
+             evt.stopPropagation();
+             evt.preventDefault();
+         }
+            
+        function drop(evt) {
+            evt.stopPropagation();
+            evt.preventDefault();
+            var files = evt.dataTransfer.files;
+            var fileCount = files.length;
+            var count = 0;
+            // Only call the handler if 1 or more files was dropped.
+            if (fileCount > 0){
+                for(var i = 0, f; f = files[i]; i++){
+                    var tempFileType = f.type;
+                    if(f.name in storedFiles){
+                        alert('The File Already Selected');
+                    }else{
+                        var fileTypeResult = hasValidFileTypeExtension(f.name, f.type);
+                        if(fileTypeResult == true){
+                            storedFiles[f.name] = f;
+                            //fileNamesMap[f.name] = getTimestamp() + "." + f.name;
+                            
+                            var tempFileName = f.name; 
+                            tempFileName = tempFileName.replace(/[&\/\\#,+()$~%'":*?<>{}]/g,'');
+                            fileNamesMap[f.name] = getTimestamp() + "." + tempFileName; 
+                                                             
+                            addRow(f);
+                            setProgress(f.name, 0, 'Waiting for upload');
+                            enableTableRow(f.name);
+                            enableButtons();
+                        }else{
+                            var alertMessage = '';
+                            if(tempFileType == null){
+                                tempFileType = '';
+                            }
+                            alertMessage = '\'' + f.name + '\' (' + f.type + ')' + ' is not associated with a valid file format. '; 
+                            alertMessage += 'Valid file formats are pdf, jpg, gif, png.' ;
+                            alert(alertMessage);
+                        }
+                    }
+                }
+            }
+        }
+
+        function processResponse(response){
+           var status = response.status;
+           var fileName = response.fileName;               
+           delete storedFiles[fileName];
+           delete pregressbarFileMap[fileName];
+           delete fileNamesMap[fileName];
+           
+           var count = 0;
+           for (file in storedFiles) {
+               count += 1;
+               break;
+           }
+
+           if(count == 0){
+               if(baseURL != null && baseURL != '' && parentObjectId != null && parentObjectId != ''){  
+                    var tempURLStr = baseURL + '/' + parentObjectId;   
+                    if(parentWin.location.href != null && (parentWin.location.href.indexOf('btdid=') >= 0)){
+                        tempURLStr += '?btdid=' + opportunityId;
+                    }
+                  window.opener.location.reload();
+                   //parentWin.location.href = 'apex/opportunitypage?id='+opportunityId+'&OpptyEdit='+parse('OpptyEdit');                 
+                }
+           }
+        }
+    
+        function hasValidFileTypeExtension(fileName, fileType){
+            
+            if(fileUploadTypeStr != null && fileUploadTypeStr == 'GeneralDocuments'){
+                return true;
+            }
+            
+            var fileMimeType = getFileType(fileType);
+            if(fileMimeType != null){
+                if((fileMimeType.indexOf('pdf') >= 0) 
+                    || (fileMimeType.indexOf('jpeg') >= 0)
+                    || (fileMimeType.indexOf('jpg') >= 0)  
+                    || (fileMimeType.indexOf('png') >= 0)
+                    || (fileMimeType.indexOf('gif') >= 0)){     
+                    return true;
+                }else{
+                    if(fileName != null && ((fileName.lastIndexOf('pdf') >= 0)
+                        || (fileName.lastIndexOf('jpeg') >= 0)
+                        || (fileName.lastIndexOf('jpg') >= 0)
+                        || (fileName.lastIndexOf('gif') >= 0)
+                        || (fileName.lastIndexOf('png') >= 0))){
+                        return true;
+                    }else{
+                        return false;
+                    }
+                }
+            }else{
+                return false;
+            }
+        }
+    
+        function getFileType(fileName){
+        
+            try{
+                var fileType = '';
+                if(fileName == null || fileName == ''){
+                    return fileType;
+                }
+                
+                var extension = fileName.substr( (fileName.lastIndexOf('/') +1) );
+                switch(extension) {
+                    case 'jpg':
+                        fileType = 'jpg';
+                        break;
+                    case 'jpeg':
+                        fileType = 'jpg';
+                        break;
+                    case 'png':
+                        fileType = 'png';
+                        break;
+                    case 'gif':
+                        fileType = 'gif';
+                        break;                     
+                    case 'zip':
+                        fileType = 'zip';
+                        break; 
+                    case 'rar':
+                        fileType = 'rar';
+                        break; 
+                    case 'pdf':
+                        fileType = 'pdf';
+                        break; 
+                    case 'txt':
+                        fileType = 'txt';
+                        break; 
+                    default:
+                        fileType = '';
+                }
+                return fileType;
+            }catch(error){
+                alert('Unable to get the file type.');
+            }
+        }
+    
+        function addRow(file){
+            var newRow = $('#filesTableId tr:last').clone(true).insertAfter('#filesTableId tr:last');
+            var row= $('#filesTableId tr:last');
+            if(row[0].style.display == "none"){
+                var checkBox = row.find('input');
+                var dropDown = row.find('select');
+                dropDown.bind('change', function(event){
+                    var child = document.getElementById($(this).parent().parent()[0].id);
+                    var selectedtext = documentTypesIdToNameMap[this.value];
+                    var values = populateDocStatus(selectedtext,child.cells[3]);
+                });
+                
+                checkBox.bind('click', function(event) {
+                    var child = document.getElementById($(this).parent().parent()[0].id);
+                    var fileName = child.id;
+                    if(this.checked)
+                    {
+                        if(child == null || child.id == null)
+                            return;
+                        
+                        childElementIds += child + ',';    
+                        selectedFileNames +=  fileName + ',' ;
+                        var olddiv = document.getElementById($(this).parent().parent().parent()[0].id);
+                        tableSelection = olddiv;
+                    }else{
+                        childElementIds = childElementIds.replace(child+',', '');
+                        selectedFileNames = selectedFileNames.replace(fileName+',','');
+                    }
+                });
+            }
+            row[0].style.display="";
+            row[0].id = file.name;
+            row[0].cells[1].innerHTML = file.name;
+            row[0].cells[4].innerHTML = bytesToSize(file.size);
+            var tempFileName = createProgressbarFileName(file.name);
+            row[0].cells[5].innerHTML = '<div class="loading" id="PB_'+ tempFileName +'"><div class="percent">0%</div></div>';
+        }
+    
+        function bytesToSize(bytes) {
+            var sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB'];
+            if (bytes == 0) return 'n/a';
+            var i = parseInt(Math.floor(Math.log(bytes) / Math.log(1024)));
+            return Math.round(bytes / Math.pow(1024, i), 2) + ' ' + sizes[i];
+        }
+            
+        function hasSize(hasObj){
+            var element_count = 0;
+            for(var e in hasObj){
+                if(hasObj.hasOwnProperty(e)){
+                    element_count++;
+                }
+            }
+            return element_count;
+        }
+        
+        var timeStampCounter = 0;
+        function getTimestamp(){
+            var now = new Date();
+            var year = now.getUTCFullYear();
+            var month = now.getUTCMonth();
+            var day= now.getUTCDay();
+            var hour= now.getUTCHours();
+            var mins= now.getUTCMinutes();
+            var secs= now.getUTCSeconds();
+            secs = secs + timeStampCounter;
+            timeStampCounter ++;
+             
+            var dateString = year + "" + month + "" + day + "" + hour + "" + mins + "" + secs;
+            return dateString;
+        }
+     
+        function getModifiedFileName(fileName){
+            //var tempFileName = fileName.replace(/\./g, "_").replace(/\s/g, "X").replace(/-/g, "__");
+            var tempFileName = pregressbarFileMap[fileName];
+            return tempFileName;
+        }   
+
+        function createProgressbarFileName(fileName){
+            //var tempFileName = fileName.replace(/\./g, "_").replace(/\s/g, "X").replace(/-/g, "__");
+            var tempFileName = 'Progressbar_' + runningIndex;
+            pregressbarFileMap[fileName] = tempFileName;
+            runningIndex ++;
+            return tempFileName;
+        } 
+         
+    
+        function disableTableRow(fileName){
+            document.getElementById(fileName).children[0].children[0].setAttribute('disabled', 'disabled');
+            document.getElementById(fileName).children[2].children[0].setAttribute('disabled', 'disabled');
+            document.getElementById(fileName).children[3].children[0].setAttribute('disabled', 'disabled');
+        }
+
+        function enableTableRow(fileName){
+            document.getElementById(fileName).children[0].children[0].removeAttribute('disabled');
+            document.getElementById(fileName).children[2].children[0].removeAttribute('disabled');
+            document.getElementById(fileName).children[3].children[0].removeAttribute('disabled');
+        }
+        
+        function disableButtons(){
+            if(document.getElementById("uploadButton"))document.getElementById("uploadButton").setAttribute('disabled', 'disabled');
+            if(document.getElementById("deleteButton"))document.getElementById("deleteButton").setAttribute('disabled', 'disabled');
+        }
+        
+        function enableButtons(){
+            if(document.getElementById("uploadButton"))document.getElementById("uploadButton").removeAttribute('disabled');
+            if(document.getElementById("deleteButton"))document.getElementById("deleteButton").removeAttribute('disabled');
+        }   
+    function parse(val) {
+        var result = "Not found",
+            tmp = [];
+        location.search
+        //.replace ( "?", "" ) 
+        // this is better, there might be a question mark inside
+        .substr(1)
+            .split("&")
+            .forEach(function (item) {
+            tmp = item.split("=");
+            if (tmp[0] === val) result = decodeURIComponent(tmp[1]);
+        });
+        return result;
+    }
+    function test()
+    {
+        console.log('parse(OpptyEdit)============'+parse('OpptyEdit'));
+    }
+    test();
+    </script>
+
+</apex:component>

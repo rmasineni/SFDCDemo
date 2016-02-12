@@ -1,0 +1,296 @@
+<apex:component controller="CustomerCreditManager" allowDML="true">
+    <script>
+        var conArray = [];
+    </script>
+    <apex:sectionHeader title="Credit Report Management"/>
+    <apex:form id="form" >
+        <apex:pageMessages escape="false" id="pgmsg"/>
+        <apex:pageblock id="ContactSearchId" rendered="false">
+            <apex:pageblocksection Title="Search Contacts" columns="2">
+                <apex:pageBlockSectionItem helptext="Select either Proposal OR Contact">
+                    <apex:outputpanel >
+                        <apex:outputLabel value="Proposal" />
+                    </apex:outputpanel>
+                    <apex:outputpanel >
+                        <apex:actionRegion >
+                            <apex:inputfield value="{!customLookupObj.Proposal__c}" id="proposalId">
+                                <apex:actionSupport event="onchange" action="{!updateInputValue}"  rerender="ContactSearchId"/>
+                            </apex:inputfield>
+                        </apex:actionRegion>
+                    </apex:outputpanel>
+
+                </apex:pageBlockSectionItem>
+
+                <apex:pageBlockSectionItem helptext="Select either Proposal OR Contact">
+                    <apex:outputLabel value="Contact" />
+                    <apex:outputPanel >
+                        <apex:inputfield id="contactId" value="{!customLookupObj.Contact__c}" />                
+                    </apex:outputPanel>
+                </apex:pageBlockSectionItem>
+                
+                <apex:inputHidden value="{!inputValue}" id="theHiddenInput"/>
+                <script> var proposalIdStr = document.getElementById("{!$Component.theHiddenInput}"); </script>
+                
+            </apex:pageblocksection>
+            <div align="Center">
+                <apex:commandButton action="{!applySearchFilter}" value="  Search  " />   
+             
+                <!--  <span>
+                    <apex:commandButton onclick="newContact();" value=" New Contact " />  
+                </span> -->
+            
+            </div>
+        </apex:pageblock>
+        
+        <apex:outputText value="{!selCC}" id="selcc" style="visibility:hidden;" />
+        <apex:actionFunction name="setsel" action="{!setSelCon}" reRender="selcc">
+        <apex:param name="firstParam" assignTo="{!selCC}" value=""/>
+        </apex:actionFunction>
+        <!-- <apex:pageblock id="allOCRspb" title="Available Contacts for Credit Check"> -->
+        <apex:pageblock id="allOCRspb">
+            <apex:pageblocksection columns="1">
+            <apex:pageblocktable id="listContacts" value="{!listCCC}" var="ocr">
+                <script>conArray.push('{!ocr}');</script> 
+                <apex:column headervalue="Select">      
+                    <input id="radioB_{!ocr.ContactId}" name="radioB_{!ocr.ContactId}" value="{!ocr.selected}" checked="" type="radio" onclick="setsel('{!ocr.ContactId}'); setRadio(this);"/>
+                    <script>
+                        var theid = 'radioB_' + '{!ocr.ContactId}';     
+                        if('{!ocr.selected}' == 'true')
+                        {
+                           document.getElementById(theid).checked = 'checked'; 
+                        }     
+                    </script>
+                </apex:column>
+                <apex:column headerValue="First Name" value="{!ocr.FirstName}"/>
+
+                <apex:column >
+                    <apex:facet name="header">Last Name</apex:facet>
+                    <a href='/partner/{!ocr.ContactId}/e?retURL=/partner/apex/CustomerCreditManager?contactId={!ocr.ContactId}&proposalId={!customLookupObj.Proposal__c}' >
+                        <apex:outputtext value="{!ocr.LastName}"></apex:outputtext>
+                    </a>
+                </apex:column>
+                <apex:column headerValue="Email" value="{!ocr.ContactEmail}"/>
+                <apex:column headerValue="Status" value="{!ocr.status}"/>
+                <apex:column headerValue="Submitted" value="{!ocr.DateSubmitted2}"/>
+                <apex:column headerValue="Received" value="{!ocr.DateReceived2}"/>
+            </apex:pageblocktable>
+            </apex:pageblocksection>
+            <apex:pageblockButtons location="top">
+                 <apex:outputPanel >
+                        <span style="margin-left:10%;width:0px;"></span>
+                        
+                        <span>
+                        <apex:commandButton id="InpersonCreditbutton" value="In-Person Credit Check" 
+                                    rendered="{!ShowButtons}"
+                                    onclick="var retval = callLeaseDimensions('request a credit check.'); if(retval=='SUCCESS'){return true;}else{return false;}" 
+                                    action="{!inPersonSubmitCreditCheck}" /> 
+                        </span> 
+                        
+                        
+                        <span>
+                        <apex:commandButton id="resendbutton" value="Email Credit Check" 
+                                    rendered="{!ShowButtons}"
+                                    onclick="var retval = callLeaseDimensions('request a credit check.'); if(retval=='SUCCESS'){return true;}else{return false;}" 
+                                    action="{!SubmitCreditCheck}" /> 
+                        </span>         
+                        <span>
+                        <apex:commandButton id="sccrbtn" value="Resend Credit Email" 
+                                    rendered="{!ShowButtons}"
+                                    onclick="var retval = callLeaseDimensions('resend credit email.'); if(retval=='SUCCESS'){return true;}else{return false;}" 
+                                    action="{!SubmitResendEmail}" /> 
+                        </span> 
+                        <span>
+                            <apex:commandButton onclick="closeWindow('{!oppId}');" value=" Close " /> 
+                        </span> 
+                         <span>
+                            <!-- <apex:commandButton onclick="newContact();" value=" New Contact " /> -->  
+                        </span> 
+                  </apex:outputPanel>
+            </apex:pageblockButtons>
+        </apex:pageblock>
+    </apex:form>
+    <script>
+        var siteURL = '{!siteURL}' ;
+        var parentWin;
+        if(window.opener != null){
+            parentWin = window.opener.parent;
+        }
+        
+        function newContact(){
+            var Site = '{!$Site.Prefix}'; 
+            var proposalIdIdValue = '';
+            if(proposalIdStr != null && proposalIdStr.value != ''){
+                proposalIdIdValue = proposalIdStr.value;
+            }
+            
+            if(Site != '') 
+            { 
+               url = '/partner/apex/NewCustomerContact?proposalId=' + proposalIdIdValue; 
+            }else{ 
+               url = '/apex/NewCustomerContact?proposalId=' + proposalIdIdValue; 
+            } 
+            var newwindow = window.open(url, '', 'toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=650,height=450,left=150,top=150'); 
+            newwindow.focus();
+        }
+        
+        function openLookup(baseURL, width, modified, searchParam){
+        
+            var Site = '{!$Site.Prefix}'; 
+            var proposalIdIdValue = '';
+            if(proposalIdStr != null && proposalIdStr.value != ''){
+                proposalIdIdValue = proposalIdStr.value;
+            }
+            //alert(optyIdValue);
+            //var optyIdValue = '0066000000C1Nxq';
+            var originalbaseURL = baseURL;
+            var originalwidth = width;
+            var originalmodified = modified;
+            var originalsearchParam = searchParam;
+
+            var lookupType = baseURL.substr(baseURL.length-3, 3);
+            if (modified == '1') baseURL = baseURL + searchParam;
+         
+            var isCustomLookup = false;
+         
+            // Following "001" is the lookup type for Account object so change this as per your standard or custom object
+            if(lookupType == "003"){
+              var urlArr = baseURL.split("&");
+              var txtId = '';
+              if(urlArr.length > 2) {
+                urlArr = urlArr[1].split('=');
+                txtId = urlArr[1];
+              }
+         
+              // Following is the url of Custom Lookup page. You need to change that accordingly
+              if(Site != ''){
+                baseURL = "/partner/apex/CustomContactLookup?txt=" + txtId;
+              }else{
+                baseURL = "/apex/CustomContactLookup?txt=" + txtId;
+              }
+              
+              if(proposalIdIdValue != null){
+                baseURL = baseURL + "&proposalId=" + proposalIdIdValue;
+              }
+         
+              // Following is the id of apex:form control "myForm". You need to change that accordingly
+              baseURL = baseURL + "&frm=" + escapeUTF("{!$Component.myForm}");
+              if (modified == '1') {
+                baseURL = baseURL + "&lksearch=" + searchParam;
+              }
+         
+              // Following is the ID of inputField that is the lookup to be customized as custom lookup
+              if(txtId.indexOf('contact') > -1 ){
+                isCustomLookup = true;
+              }
+            }
+        
+            if(isCustomLookup == true){
+              width = 1150;
+              openPopup(baseURL, "lookup", 550, 480, "width="+width+",height=460,toolbar=no,status=no,directories=no,menubar=no,resizable=yes,scrollable=no", true);
+            }
+            else {
+              if (modified == '1') originalbaseURL = originalbaseURL + originalsearchParam;
+              openPopup(originalbaseURL, "lookup", 350, 480, "width="+originalwidth+",height=480,toolbar=no,status=no,directories=no,menubar=no,resizable=yes,scrollable=no", true);
+            } 
+        }
+        
+        function closeWindow(optyId){
+            var tempURL = '';
+            if(siteURL != null && optyId != null && optyId != ''){
+                 if(siteURL.indexOf('/partner')){
+                    tempURL = siteURL + '/apex/partneropportunitycreate?id=' + optyId;
+                 }else{
+                    tempURL = siteURL +  '/' + optyId;
+                 }
+                
+                window.top.close();
+                window.opener.parent.location.href = tempURL;
+                var win = window.open('','_parent','');
+                win.close();
+
+            
+            }
+        }
+          
+        function callLeaseDimensions(actionText)
+        {
+            var elemRadio = document.getElementsByTagName('input');
+            var bAtLeaseOneChecked = false;
+            var conid = '';
+            var bValid = true;
+            for(var i=0;i<elemRadio.length;i++)
+            { 
+              if(elemRadio[i].id.indexOf('radioB_') != -1 && elemRadio[i].checked)
+              { 
+                 bAtLeaseOneChecked = true;
+                 conid = elemRadio[i].id.replace('radioB_','');
+                 listCons = '{!listActiveCCCons}';
+                 if(listCons.indexOf(conid) != -1)
+                 {
+                    bValid = false;
+                 }
+                 listConsSubmitted = '{!listSubmittedCCCons}';
+                 if(listConsSubmitted.indexOf(conid) != -1)
+                 {
+                    bValid = false;
+                 }
+                 else
+                 {
+                    //document.getElementById('selectedcreditcheckrecord').value = 'conid';
+                 }
+              }
+            }
+            if(bAtLeaseOneChecked)
+            {
+               //
+               if(bValid)
+               {
+                  //alert('Issuing call to LeaseDimensions GreenLight...');
+               }
+               else       
+               {
+                  alert('This contact already has an active credit report or was recently submitted for review.  You may not request a new one at this time.');
+                  return 'FAIL';
+               }
+            }
+            else
+            {
+               alert('You must select a contact in order to ' + actionText);
+               return 'FAIL';
+            }
+            return 'SUCCESS';
+        }
+        
+        function setRadio(currentselectedOCR)
+        {
+          try
+          {
+            var elemRadio = document.getElementsByTagName('input');
+            for(var i=0;i<elemRadio.length;i++)
+            { 
+              if(elemRadio[i].id != currentselectedOCR.id && elemRadio[i].id.indexOf('radioB_') != -1)
+              {
+                elemRadio[i].value = false;  
+                elemRadio[i].checked = false;         
+              }
+              if(elemRadio[i].id == currentselectedOCR.id)
+              {
+                elemRadio[i].checked = true;
+                elemRadio[i].value = true;  
+              }      
+            }
+          }catch(ex)
+          {
+             alert(ex);
+          }
+        }  
+        function scrollTo(hash) {
+            // window.scrollTo(0, document.body.scrollHeight);
+            window.location = "#" + hash;
+        }
+        function resizeWindow() {
+                  window.resizeTo("900","500");
+        }
+        resizeWindow();
+    </script>
+</apex:component>

@@ -1,0 +1,97 @@
+<apex:page standardController="Opportunity" extensions="CallcenterOptyAutoPaymentController" action="{!processPaymentResponse}">
+        
+    <apex:stylesheet value="{!URLFOR($Resource.PaymentResources, 'css/payment-styles.css')}"/>
+
+    <h2 class="pageDescription">Auto Payment Enrollment for Opportunity {!optyPaymentInfo.opty.Name}</h2>
+    
+    <apex:pageBlock >
+        <apex:outputPanel layout="block" styleClass="message-box error" rendered="{!hasErrorMessages}">
+            <apex:messages />
+        </apex:outputPanel>
+        
+        <c:paymentProcessor rendered="{!renderPanel }" 
+            amount="0.0" 
+            firstName="{!optyPaymentInfo.billingContact.FirstName}" 
+            lastName="{!optyPaymentInfo.billingContact.LastName}" 
+            email="{!optyPaymentInfo.billingContact.Email}" 
+            phone="{!optyPaymentInfo.billingContact.Phone}" 
+            street="{!optyPaymentInfo.billingContact.MailingStreet}"
+            city="{!optyPaymentInfo.billingContact.MailingCity}"
+            state="{!optyPaymentInfo.billingContact.MailingState}"
+            postalCode="{!optyPaymentInfo.billingContact.MailingPostalCode}"
+            paymentResponseJson="{!paymentResponseJson}"
+            paymentMode="auto-payment"
+            customParamsJson="{!customParamsJson}"
+            cancelUrl="/{!optyPaymentInfo.opty.id}"
+            successUrl="/{!optyPaymentInfo.opty.id}"
+        />
+    </apex:pageBlock>
+    
+    <script>
+        spayment = spayment || {};
+        spayment.preprocessAutoPaymentRequest = function(callbackFunction) {
+            var contact = spayment.createContactFromDetailsAndAddress(smodel.paymentRequest.billingContact, smodel.paymentRequest.billingAddress);
+
+            CallcenterOptyAutoPaymentController.associatePaymentContactWithOpty('{!optyPaymentInfo.opty.id}', smodel.local.paymentMode, contact, function(result, event){
+                if (spayment.checkAndHandleError(result, event)) {
+                    return;
+                }
+                var customParams = {};
+                customParams.opportunityId = "{!optyPaymentInfo.opty.id}";
+                customParams.prospectId = "{!optyPaymentInfo.opty.Prospect_Id__c}";
+                customParams.contactId = result.body.contactId;
+                customParams.contactNum = result.body.contactNum;
+                
+                smodel.paymentRequest.customParams["{!CustomParamNum}"] = JSON.stringify(customParams);
+                callbackFunction();
+            });
+            
+        };
+    </script>
+    
+    <style>
+            button, .btn {
+                padding: 5px 10px !Important;
+                text-decoration: none !Important;
+            }
+            
+            .bPageBlock .buttons {
+                text-align: left;
+                padding: 3px 0px;
+            }
+            
+            .pageDescription {
+                font-size: 1.6em;
+                margin: 10px 0;
+                display: block;
+            }
+            
+            #card-type {
+                width: 144px;
+            }
+
+            #card-number, #card-cvv-code {
+                width: 140px;
+            }
+            
+            #street {
+                width: 257px;
+            }
+            
+            #postal-code {
+                width: 48px;
+            }           
+            
+            #email, #phone {
+                width: 208px;
+            }
+            
+            #first-name, #last-name {
+                width: 100px;
+            }           
+    </style>
+    
+    <c:htmlComment >
+        <apex:outputText escape="false" value="{!errorLog}"/>   
+    </c:htmlComment>
+</apex:page>

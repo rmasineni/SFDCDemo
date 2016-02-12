@@ -1,0 +1,130 @@
+<apex:page standardcontroller="Task__c" extensions="WorkflowTask"  tabstyle="Task__c">
+    <apex:composition template="wfTask_Template">
+        <apex:define name="TaskHeader">
+            <apex:sectionHeader title="Task Information" subtitle="{!taskObj.name}"/>
+        </apex:define>
+
+        <apex:define name="ProjectDetails">
+			<apex:outputPanel styleClass="blue" layout="block">
+            	<c:WorkflowTask_ProjectDetails taskObj="{!taskObj}" contactObj="{!contactObj}" baseURL="{!BaseURL}"/>
+            </apex:outputPanel>
+        </apex:define>
+
+        <apex:define name="ProjectDescription">
+            <c:WorkflowTask_ProjectDesc taskObj="{!taskObj}"/>
+        </apex:define>
+
+        <apex:define name="TaskDisplayFields">
+            <div class="contenetDiv21">
+                 <apex:outputPanel styleClass="blue" layout="block">
+                    <apex:dynamicComponent componentValue="{!taskDisplayFields}"/>
+                </apex:outputPanel>
+            </div>                  
+        </apex:define>
+
+        <apex:define name="TaskEditFields">
+            <div class="contenetDiv221">
+                <apex:outputPanel styleClass="blue" layout="block">
+                    <apex:dynamicComponent componentValue="{!ViewFields}"/>
+                </apex:outputPanel>
+			</div>
+
+            <div class="contenetDiv231">
+                <apex:outputpanel styleClass="blue" style="overflow: auto; height: 100px;">
+                    <apex:pageBlockSection columns="1"  title="Predecessor Tasks">
+                         <apex:outputpanel styleClass="blue">
+                         <div class="contenetDiv233" >
+                            <apex:pageblocktable id="ptasks" value="{!predecessorTaskList}" var="pTaskObj">
+                                <apex:column HeaderValue="Name" >
+                                    <apex:outputLink target="_parent" value="/{!pTaskObj.Id}">
+                                        <apex:outputText value="{!pTaskObj.Name}"/>
+                                    </apex:outputLink>
+                                </apex:column>
+                                <apex:column HeaderValue="Status" >
+                                    <apex:outputField value="{!pTaskObj.Status__c}">
+                                    </apex:outputField> 
+                                </apex:column>
+                                <apex:column HeaderValue="Phase" >
+                                    <apex:outputField value="{!pTaskObj.phase__r.name}">
+                                    </apex:outputField> 
+                                </apex:column>
+                                <apex:column HeaderValue="Group" >
+                                    <apex:outputField value="{!pTaskObj.Group_Name__c}">
+                                    </apex:outputField> 
+                                </apex:column>                  
+                                <apex:column HeaderValue="Owner" >
+                                    <apex:outputField value="{!pTaskObj.Task_Owner__r.Name}">
+                                    </apex:outputField> 
+                                </apex:column>                      
+                            </apex:pageblocktable>
+                        </div>
+                        </apex:outputpanel>
+                    </apex:pageBlockSection>
+                    </apex:outputpanel>
+                    </div>  
+            <div class="contenetDiv2311">
+                <apex:outputpanel styleClass="blue" style="overflow: auto; height: 100px;">
+                    <apex:pageBlockSection columns="1" title="Successor Tasks">
+                         <apex:outputpanel styleClass="blue">
+                         <div class="contenetDiv23311" >
+                            <apex:pageblocktable id="ptasks" value="{!SuccessorTaskList}" var="sTaskObj">
+                                <apex:column HeaderValue="Name" >
+                                    <apex:outputLink target="_child" value="/{!sTaskObj.Id}">
+                                        <apex:outputText value="{!sTaskObj.Name}"/>
+                                    </apex:outputLink>
+                                </apex:column>
+                                <apex:column HeaderValue="Status" >
+                                    <apex:outputField value="{!sTaskObj.Status__c}">
+                                    </apex:outputField> 
+                                </apex:column>
+                                <apex:column HeaderValue="Phase" >
+                                    <apex:outputField value="{!sTaskObj.phase__r.name}">
+                                    </apex:outputField> 
+                                </apex:column>
+                                <apex:column HeaderValue="Group" >
+                                    <apex:outputField value="{!sTaskObj.Group_Name__c}">
+                                    </apex:outputField> 
+                                </apex:column>                  
+                                <apex:column HeaderValue="Owner" >
+                                    <apex:outputField value="{!sTaskObj.Task_Owner__r.Name}">
+                                    </apex:outputField> 
+                                </apex:column>                      
+                            </apex:pageblocktable>
+                        </div>
+                        </apex:outputpanel>
+                    </apex:pageBlockSection>
+                    </apex:outputpanel>
+                    </div>
+ 
+            <div class="contenetDiv24">
+				<span style="margin-top:25px;">
+
+					<apex:commandButton onclick="return toggleCategroyConfirm('{!categroyLabel}');" action="{!toggleTaskCategory}" rendered="{!( Not(showReopen) && Not (isStandardTask) )}" 
+                                        styleclass="buttons" value="{!categroyLabel}" id="category"/>
+                    &nbsp;
+					
+					<apex:commandButton onclick="showBlockTask('{!BaseURL}', '{!taskId}'); return false;" rendered="{!showBlock}" 
+                    						styleclass="buttons" value="Block" id="blockBtn"/>
+					&nbsp;
+                    <apex:commandButton onclick="showNotes('{!BaseURL}', '{!taskId}'); return false;" styleclass="buttons" value="{!notesLabel}" id="notesbtn"/>
+					&nbsp;
+                    <apex:commandButton onclick="showAllNotes('{!BaseURL}', '{!projectId}'); return false;" styleclass="buttons" value="{!projectNotesLabel}" id="allNotesbtn"/>
+					&nbsp;
+					<apex:commandButton onclick="showTaskUpdate('{!BaseURL}', '{!taskId}', 'onhold'); return false;" styleclass="buttons" rendered="{!showOnHold}" value="On-Hold" id="onHoldBtn"/>
+                    &nbsp;
+
+                    <apex:commandButton action="{!editTask}" rendered="{!showEdit}" styleclass="buttons" value="Edit" id="editbtn"/>
+                    &nbsp;
+					<apex:commandButton onclick="return confirmComplete();" action="{!taskSave}" rendered="{!showTaskComplete}" styleclass="buttons" value="Task Complete" id="tcBtn"/>
+					&nbsp;
+                    <apex:commandButton action="{!showAdhocTask}"  styleclass="buttons" value="Show Task Details" id="showTaskDep" rendered="{!showTaskDependency}"/>	  
+                
+                </span>
+                <span style="margin-top:25px;">
+					<apex:commandButton onclick="showTaskUpdate('{!BaseURL}', '{!taskId}', 'reopen'); return false;" styleclass="buttons" 
+								rendered="{!showReopen}" value="Re-open" id="reopenbtn"/>
+                </span>                  
+            </div>                          
+        </apex:define>
+    </apex:composition>
+</apex:page>

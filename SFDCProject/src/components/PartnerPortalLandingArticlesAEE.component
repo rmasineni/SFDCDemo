@@ -1,0 +1,50 @@
+<apex:component controller="PartnerPortalLanding">
+    <apex:attribute name="content" type="String" required="false" description="Article Content"/>
+     <apex:outputpanel layout="block" styleclass="grid_16">
+        <div style="height:20px; width:200px;" ></div>
+    </apex:outputpanel>  
+   
+     <apex:outputpanel layout="block" styleclass="grid_3">
+        <div class="contenetDiv102" >
+            <img src="{!$Resource.partnerportalCEE}" />
+        </div>
+         <div class="contenetDiv101" >
+            <img src="{!$Resource.partnerportalAEELink}" />
+        </div>
+    </apex:outputpanel>
+    <apex:outputpanel layout="block" styleclass="grid_5">
+         <div class="contenetDiv112" >
+            <div style="text-align:center;">
+                <div style="text-align:left;">
+                <apex:outputPanel id="outputId4"> 
+                    <p>
+                      <span>
+                          <span>
+                        <span style="font-size:14px;">
+                            <a href="https://cee.leadmanager.co/login?utm_source=sunrunpartnerportal" target="_blank"><span style="color:#00ade6;"><span style="font-size: 14px;"><span style="font-family: verdana, geneva, sans-serif;">Purchase Leads from CEE</span>
+                                </span>
+                                </span>
+                                
+                            </a>
+                        </span>
+                          </span>
+                          <br/><br/>
+                            <br/><br/>
+                          <span>
+                          <span style="font-size:14px;">
+                            <a href="http://www.AEEsolar.com" target="_blank"><span style="color:#00ade6;"><span style="font-size: 14px;"><span style="font-family: verdana, geneva, sans-serif;">Purchase Equipment from AEE</span>
+                                </span>
+                                </span>
+                                
+                            </a>
+                            </span>
+                          </span>
+                      </span>
+                    </p>
+                </apex:outputPanel> 
+                </div>
+            </div>
+        </div>        
+    </apex:outputpanel>
+    
+</apex:component>

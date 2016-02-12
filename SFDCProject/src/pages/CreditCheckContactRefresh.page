@@ -1,0 +1,19 @@
+<apex:page standardController="Customer_Credit__c" extensions="CreditCheckExtension" action="{!CreditCheckRefresh}">
+ <apex:pageMessages escape="false"/>
+<apex:form > 
+<apex:outputText value="{!Customer_Credit__c.Approved__c}" rendered="false"/> 
+<apex:outputText value="{!Customer_Credit__c.Pending_Reason__c}" rendered="false"/> 
+<apex:outputText value="{!Customer_Credit__c.Contact__c}" rendered="false"/>
+<apex:outputText value="{!Customer_Credit__c.Contact__r.Name}" rendered="false"/> 
+<apex:outputText value="{!Customer_Credit__c.Account__c}" rendered="false"/> 
+<apex:outputText value="{!Customer_Credit__c.Date_Pulled__c}" rendered="false"/> 
+<!-- <apex:outputText value="{!Customer_Credit__c.Conditional_Approval__c}" rendered="false"/> --> 
+<apex:outputText value="{!Customer_Credit__c.Conditional_Approval_Amount__c}" rendered="false"/> 
+<!-- <apex:outputText value="{!Customer_Credit__c.Total_Solar_Prepay_Required__c}" rendered="false"/>  -->
+<apex:pageBlock >
+ <apex:pageBlockButtons location="top">
+  <apex:commandButton value="  Return to Credit Record  " action="{!returnToCreditRecord}"/>
+ </apex:pageBlockButtons>
+</apex:pageBlock> 
+</apex:form>
+</apex:page>

@@ -1,0 +1,22 @@
+<apex:page standardController="Contact" extensions="ContactCreditCheckExtension" action="{!submitCreditCheck}">
+ <apex:pageMessages escape="false"/>
+<apex:form > 
+<apex:outputText value="{!Contact.FirstName}" rendered="false"/> 
+<apex:outputText value="{!Contact.LastName}" rendered="false"/> 
+<apex:outputText value="{!Contact.Name}" rendered="false"/>  
+<apex:outputText value="{!Contact.Email}" rendered="false"/> 
+<apex:outputText value="{!Contact.AccountId}" rendered="false"/> 
+<apex:outputText value="{!Contact.Birthdate}" rendered="false"/> 
+<apex:outputText value="{!Contact.MailingStreet}" rendered="false"/> 
+<apex:outputText value="{!Contact.MailingCity}" rendered="false"/> 
+<apex:outputText value="{!Contact.MailingState}" rendered="false"/> 
+<apex:outputText value="{!Contact.MailingPostalCode}" rendered="false"/> 
+<apex:outputText value="{!Contact.MailingCountry}" rendered="false"/> 
+<apex:outputText value="{!Contact.Phone}" rendered="false"/> 
+<apex:pageBlock >
+ <apex:pageBlockButtons location="top">
+  <apex:commandButton value="  Return to Contact  " action="{!returnToContact}"/>
+ </apex:pageBlockButtons>
+</apex:pageBlock> 
+</apex:form>
+</apex:page>

@@ -1,0 +1,90 @@
+<!-- 
+*********************************************************************************
+*	Author  	: Chandrika Dasaradharaman (chandrikad@sunrunhome.com)			*
+*	Date    	: April 2013													*
+*	Name		: LeadEditNotePage.page											*
+*	Description	: This page is used to display Lead Notes 						* 
+*				  in Edit or read mode											*
+*																				*
+*********************************************************************************
+-->
+<apex:page standardController="Notes__c" extensions="LeadEditNoteClass" sidebar="false" showHeader="false">
+    <style>
+		.headerLogo {
+			margin:1px 1px 1px 1px;
+			border:0;
+			padding-left:10px;
+			height: 35px; 
+			width: 90px;
+		}
+		.bPageTitle, .apexp{
+			margin-left: 15px;
+			margin-right: 20px;
+		    width: 97%;
+		}
+		.noteSection{
+			margin-bottom:1px
+		}
+	</style>
+	
+	<div align="left" width="85%">
+		<img src="{!$Resource.PartnerPortalHeader2}" class="headerLogo"/>
+		&nbsp;&nbsp;
+		<apex:sectionHeader title="Lead Edit Note"/>
+	</div> 
+	
+    <apex:form id="changeDescription">
+    	
+		<!--  <apex:outputpanel id="contentMode" >  
+			<div id="contentToToggle" style="display:{!if(!showEditContent,"block","none")};">
+				<div class = "noteSection" align = "center">
+					<apex:commandButton value="Edit" action="{!contentMode}" rerender="contentMode" />
+    				&nbsp;
+    				<apex:commandButton onClick="window.close();" value="Cancel" title="Click to Cancel Edit"/>
+    				&nbsp;
+				</div>
+				&nbsp;
+				<apex:pageBlock >
+    				<apex:pageBlockSection id="item1" columns="1">
+            			<apex:pageBlockSectionitem >
+							<apex:outputlabel value="Notes"/>
+							<apex:outputText id="readnote" style="height:60px; width:400px" value="{!bodyVal}"/>
+						</apex:pageBlockSectionitem>
+					</apex:pageBlockSection>      
+				</apex:pageBlock>
+			</div>
+     	
+     		<div style="display:{!if(showEditContent,"block","none")};"> -->
+     			<div class = "noteSection" align = "center">
+					<apex:commandButton value="Save" action="{!save}" OnComplete="closeAndRefreshparent('{!parentURL}','{!isSaved}')" reRender="thePanel" />
+    				&nbsp;
+    				<apex:commandButton onClick="window.close();" value="Cancel" title="Click to Cancel Edit"/>
+    				&nbsp;
+				</div>
+				&nbsp;
+				<apex:pageBlock >
+    				<apex:pageBlockSection id="item1" columns="1" >
+            			<apex:pageBlockSectionitem >
+                			<apex:outputlabel value="Edit Notes"/>
+                			<apex:inputTextarea id="newDesc" style="height:60px; width:400px" value="{!bodyVal}"/>           
+            			</apex:pageBlockSectionitem>
+            		</apex:pageBlockSection>      
+    			</apex:pageBlock> 
+     		<!--  </div>
+     	</apex:outputpanel> -->
+
+ </apex:form>
+   				<script> 
+				function closeAndRefreshparent(parentWindowUrl, isSavedVal)
+				{
+					if(isSavedVal == 'true')
+					{
+						window.top.close();
+						window.opener.parent.location.href = parentWindowUrl;
+						var win = window.open('','_parent','');
+						//var win = window.open('','_self','');
+						win.close();
+					}
+				}
+        	</script>
+</apex:page>

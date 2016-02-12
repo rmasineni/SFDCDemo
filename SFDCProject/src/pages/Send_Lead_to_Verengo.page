@@ -1,0 +1,3 @@
+<apex:page standardController="Lead" Extensions="lead360Controller" action="{!send}">
+
+</apex:page>

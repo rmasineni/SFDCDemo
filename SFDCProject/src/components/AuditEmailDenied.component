@@ -1,0 +1,29 @@
+<apex:component access="global" controller="AuditEmailTemplateController">
+
+   <apex:attribute name="ObjectId"
+        description="Install Audit Id"
+        assignTo="{!InstallAuditId}"
+        type="Id" />   
+             
+   <apex:attribute name="TheObject"
+        description="Install Audit Record"
+        assignTo="{!ia}"
+        type="Install_Audit__c" />        
+
+<p>Dear Sunrun,</p> 
+
+<p>{!InstallAudit.Auditor_Contact__r.Name} has denied a review of project {!InstallAudit.Service_Contract__r.Name} for the following reasons:</p>
+{!InstallAudit.Denied_Reason__c}
+ 
+<p>{!'https://' + $Label.SalesforceInstance + '/apex/InstallAudit?Id=' + InstallAudit.Id}</p>
+ 
+<p>SRH Number: {!InstallAudit.Service_Contract__r.Name}<br/>
+Customer Name: {!InstallAudit.Service_Contract__r.Contact.Name}<br/>
+Customer Address: {!InstallAudit.Service_Contract__r.Customer_Mailing_Address__c}<br/>
+Audit Type: {!InstallAudit.Install_Audit_Type__c}<br/>
+Installation Partner: {!InstallAudit.Service_Contract__r.Install_Partner__c}</p>
+
+<p>Thanks,</p>
+<p>{!InstallAudit.Auditor_Contact__r.Name}</p>
+        
+</apex:component>

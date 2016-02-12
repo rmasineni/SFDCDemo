@@ -1,0 +1,93 @@
+<apex:page >
+    <c:WorkflowTask_CSS />
+    <apex:pageMessages />
+    <apex:insert name="TaskHeader"/>
+    <apex:form >
+        <apex:pageblock id="TaskDetailsId">
+            <div class="contenetDiv1">
+                <div class="contenetDiv11">
+					 <apex:insert name="ProjectDescription"/>
+					<!-- 
+					<apex:outputPanel styleClass="blue" layout="block">
+                       <apex:insert name="ProjectDetails"/>
+                   	</apex:outputPanel>                     
+                     -->                  
+                </div>                  
+                <div class="contenetDiv12">
+                	 <apex:insert name="TaskDisplayFields"/> 
+                    <!-- <apex:insert name="ProjectDescription"/>   -->  
+                </div>  
+            </div>
+    
+            <div class="contenetDiv2">
+                <div class="contenetDiv21">
+                    <!-- <apex:insert name="TaskDisplayFields"/>   -->                
+					<apex:outputPanel styleClass="blue" layout="block">
+                       <apex:insert name="ProjectDetails"/>
+                   	</apex:outputPanel> 
+                </div>  
+                <apex:insert name="TaskEditFields"/>                    
+                    
+            </div>  
+        </apex:pageblock>   
+    </apex:form>
+    
+    <script>
+    	
+    	function confirmComplete(){
+    		var result = false;
+    		var alertMessage = 'Would you like to update this task to completed ?';
+    		result = confirm(alertMessage);
+			return result;
+    	}
+    
+    	function toggleCategroyConfirm(newCategory){
+    		var result = false;
+    		var alertMessage = '';
+    		if(newCategory != null && newCategory.indexOf('Required') >= 0){
+    			alertMessage = 'Would you like to make this task as Required ? ';
+    		}else if(newCategory != null &&  newCategory.indexOf('Optional') >= 0){
+    			alertMessage = 'Would you like to make this task as Optional ? ';
+    		}else{
+    			alert('Invalid request');
+    			return result;
+    		}
+			
+			result = confirm(alertMessage);
+			return result;
+    	}
+		
+		function showTaskUpdate(baseURLStr, objectId, action){   
+            var tempURL = baseURLStr + "/apex/wfTask_Update?id=" + objectId + '&action=' + action;      
+            var newwindow = window.open(tempURL, '', 'toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=950,height=500,left=150,top=150'); 
+            newwindow.focus();
+        }
+        
+        function showBlockTask(baseURLStr, objectId){   
+            var tempURL = baseURLStr + "/apex/wfCreateAdhocTask?id=" + objectId;      
+            var newwindow = window.open(tempURL, '', 'toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=1050,height=500,left=150,top=150'); 
+            newwindow.focus();
+        }
+
+		function showAllNotes(baseURLStr, objectId){   
+            var tempURL = baseURLStr + "/apex/wfProjectNotes?id=" + objectId + '&1=1';      
+            var newwindow = window.open(tempURL, '', 'toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=950,height=500,left=150,top=150'); 
+            newwindow.focus();
+        } 
+        
+        function showNotes(baseURLStr, objectId){   
+            var tempURL = baseURLStr + "/apex/wfNotes?id=" + objectId;      
+            var newwindow = window.open(tempURL, '', 'toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=950,height=500,left=150,top=150'); 
+            newwindow.focus();
+        }       
+
+		function showHistory(baseURLStr, objectId){   
+            var tempURL = baseURLStr + "/apex/SobjectAuditViewer?id=" + objectId;      
+            var newwindow = window.open(tempURL, '', 'toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=950,height=600,left=150,top=150'); 
+            newwindow.focus();
+        }
+        
+        
+    </script>
+
+</apex:page>

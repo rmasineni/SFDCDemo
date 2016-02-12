@@ -1,0 +1,49 @@
+<apex:component controller="srvcCon_CustomSearchController">
+  
+  <!-- Attributes to accept the parameters -->
+  <apex:attribute name="Records" Type="Sobject[]" assignTo="{!sObjLst}" required="true" description="Accepts list of records of any object and assign to a variable in controller class"/>
+  <apex:attribute name="Fields" Type="String[]" required="true" description="Accepts list of field API names of a sobject in string format" assignTo="{!objFields}"/>
+  <apex:attribute name="Title" Type="String" required="true" description="Accepts the title of the section"/>
+    <apex:attribute name="objType" Type="String" required="true" description="ObjType required for Redirection"/>
+  <apex:attribute name="refresh" type="string" required="true" assignTo="{!refreshflag}" description="wwww"/>
+  <apex:attribute name="headerVal" Type="String[]" required="true" description="Column header of the section"  assignTo="{!hdrValue}" /> 
+  <apex:actionFunction name="updateComponent" reRender="sObjList"/>
+    
+  <!-- Table which displays records along with pagination -->
+     <apex:pageBlock rendered="{!SobjRecords.size > 0}" title=" {!Title}"  id="sObjList"> 
+        
+         <!-- <apex:pageBlockSection columns="1" title="{!Title}s" id="pbSec"> -->
+              <apex:pageBlockTable value="{!SobjRecords}" var="sObj"  >
+                 
+                  <apex:variable var="redirectCols" value="{!''}{!RedirectColNames}" />
+                  <!-- Dispalys the multiple columns based on the user input -->
+                  <apex:repeat value="{!SobjColumnHeader}" var="colHdr">
+                      <apex:column headerValue="{!colHdr.header}" rendered="{!IF( colHdr.fields != 'Name' && colHdr.fields != 'id'&& colHdr.fields != 'CaseNumber'&& colHdr.fields != 'LastModifiedDate', true, false)}"> {!sObj[colHdr.fields]}   </apex:column>
+                       <apex:column width="10%" headerValue="{!colHdr.header}" rendered="{!IF( colHdr.fields == 'LastModifiedDate', true, false)}">           
+                           <c:VFEmailTempComp date_time_format="MM/dd/yyyy hh:mm a z"   date_time_value="{!sObj[colHdr.fields]}" />  
+                      </apex:column> 
+                      
+                      <apex:column headerValue="{!colHdr.header}" rendered="{!IF( CONTAINS(redirectCols,colHdr.fields), true, false)}">			
+                      <!--<apex:column headerValue="{!colHdr.header}" rendered="{!IF( colHdr.fields == 'Name' || colHdr.fields == 'CaseNumber', true, false)}"> -->
+                            <apex:commandLink value="{!sObj[colHdr.fields]}" target="_self"
+                                 onClick="OpenSubtab('{!sObj['id']}','{!objType}','{!sObj[colHdr.fields]}');return false">
+                                <apex:param value="{!sObj['id']}" name="recId" assignTo="{!recId}" />
+                                <apex:param value="{!objType}" name="objType" assignTo="{!objType}" />
+                                <apex:param value="{!sObj[colHdr.fields]}" name="recName" assignTo="{!recName}" />
+                            </apex:commandLink>
+                      </apex:column>
+                  </apex:repeat>
+             </apex:pageBlockTable> 
+     
+    <!-- Dispalys pagination buttons -->
+              <apex:panelGrid columns="5">
+                  <apex:commandButton value="First" action="{!con.first}" disabled="{!!con.hasPrevious}" status="pagStatus" reRender="sObjList"/>
+                  <apex:commandButton value="Previous" action="{!con.previous}" disabled="{!!con.hasPrevious}" status="pagStatus" reRender="sObjList"/>
+                  <apex:commandButton value="Next" action="{!con.next}" disabled="{!!con.hasNext}" status="pagStatus" reRender="sObjList"/>
+                  <apex:commandButton value="Last" action="{!con.last}" disabled="{!!con.hasNext}" status="pagStatus" reRender="sObjList"/>
+                  <apex:actionStatus startText="Fetching..." id="pagStatus"/>
+              </apex:panelGrid>
+      <!--</apex:pageBlockSection> -->
+        
+    </apex:pageBlock>
+</apex:component>

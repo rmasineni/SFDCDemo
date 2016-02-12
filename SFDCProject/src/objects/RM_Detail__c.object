@@ -1,0 +1,400 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Follow</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <enableActivities>true</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableDivisions>false</enableDivisions>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>true</enableHistory>
+    <enableReports>true</enableReports>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <externalSharingModel>ControlledByParent</externalSharingModel>
+    <fields>
+        <fullName>Activity__c</fullName>
+        <externalId>false</externalId>
+        <label>Activity</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Pre Deploy</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Deploy</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Post Deploy</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>All</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Category__c</fullName>
+        <externalId>false</externalId>
+        <label>Category</label>
+        <picklist>
+            <controllingField>Activity__c</controllingField>
+            <picklistValues>
+                <fullName>Custom Fields</fullName>
+                <controllingFieldValues>All</controllingFieldValues>
+                <controllingFieldValues>Pre Deploy</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Custom Settings</fullName>
+                <controllingFieldValues>All</controllingFieldValues>
+                <controllingFieldValues>Pre Deploy</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Custom Labels</fullName>
+                <controllingFieldValues>All</controllingFieldValues>
+                <controllingFieldValues>Pre Deploy</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Record Type</fullName>
+                <controllingFieldValues>All</controllingFieldValues>
+                <controllingFieldValues>Pre Deploy</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Email Template</fullName>
+                <controllingFieldValues>All</controllingFieldValues>
+                <controllingFieldValues>Pre Deploy</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Remote Site Settings</fullName>
+                <controllingFieldValues>All</controllingFieldValues>
+                <controllingFieldValues>Pre Deploy</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Custom Objects</fullName>
+                <controllingFieldValues>All</controllingFieldValues>
+                <controllingFieldValues>Deploy</controllingFieldValues>
+                <controllingFieldValues>Pre Deploy</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Picklist Values</fullName>
+                <controllingFieldValues>All</controllingFieldValues>
+                <controllingFieldValues>Pre Deploy</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Classes</fullName>
+                <controllingFieldValues>All</controllingFieldValues>
+                <controllingFieldValues>Deploy</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Components</fullName>
+                <controllingFieldValues>All</controllingFieldValues>
+                <controllingFieldValues>Deploy</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Pages</fullName>
+                <controllingFieldValues>All</controllingFieldValues>
+                <controllingFieldValues>Deploy</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Static Resources</fullName>
+                <controllingFieldValues>All</controllingFieldValues>
+                <controllingFieldValues>Deploy</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Triggers</fullName>
+                <controllingFieldValues>All</controllingFieldValues>
+                <controllingFieldValues>Deploy</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Tab</fullName>
+                <controllingFieldValues>All</controllingFieldValues>
+                <controllingFieldValues>Deploy</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Page Layout</fullName>
+                <controllingFieldValues>All</controllingFieldValues>
+                <controllingFieldValues>Deploy</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Reports</fullName>
+                <controllingFieldValues>All</controllingFieldValues>
+                <controllingFieldValues>Deploy</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Dashboard</fullName>
+                <controllingFieldValues>All</controllingFieldValues>
+                <controllingFieldValues>Deploy</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Validations</fullName>
+                <controllingFieldValues>All</controllingFieldValues>
+                <controllingFieldValues>Post Deploy</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Worflow Rules</fullName>
+                <controllingFieldValues>All</controllingFieldValues>
+                <controllingFieldValues>Post Deploy</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Page Layouts and Assignment</fullName>
+                <controllingFieldValues>All</controllingFieldValues>
+                <controllingFieldValues>Post Deploy</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Profiles</fullName>
+                <controllingFieldValues>All</controllingFieldValues>
+                <controllingFieldValues>Post Deploy</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Approval Process</fullName>
+                <controllingFieldValues>All</controllingFieldValues>
+                <controllingFieldValues>Post Deploy</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Sites Setup</fullName>
+                <controllingFieldValues>All</controllingFieldValues>
+                <controllingFieldValues>Post Deploy</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Partner Onboarding</fullName>
+                <controllingFieldValues>All</controllingFieldValues>
+                <controllingFieldValues>Deploy</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Change_Set_Name__c</fullName>
+        <externalId>false</externalId>
+        <label>Change Set Name</label>
+        <length>20</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Deployment_date__c</fullName>
+        <externalId>false</externalId>
+        <label>Deployment date</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>Detail__c</fullName>
+        <externalId>false</externalId>
+        <label>Detail</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>Functional_Area__c</fullName>
+        <externalId>false</externalId>
+        <label>Functional Area</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Account Management</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Contact Management</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Partner Administration</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Netexam Training</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Lead Management</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Opportunity Management</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Offers</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Promotions</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Referral</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Scheduling</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>One time payments</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Automatic monthly payments</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Credit check</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Proposal</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Service Contract</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Workflow Management</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Case</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Service Transfer</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Knowledge</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Notes__c</fullName>
+        <externalId>false</externalId>
+        <label>Notes</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>Release_Management_Record__c</fullName>
+        <externalId>false</externalId>
+        <label>Release Management Record Name</label>
+        <referenceTo>Release_Management_Record__c</referenceTo>
+        <relationshipLabel>RM Details</relationshipLabel>
+        <relationshipName>RM_Details</relationshipName>
+        <relationshipOrder>0</relationshipOrder>
+        <reparentableMasterDetail>false</reparentableMasterDetail>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>MasterDetail</type>
+        <writeRequiresMasterRead>true</writeRequiresMasterRead>
+    </fields>
+    <label>RM Detail</label>
+    <nameField>
+        <displayFormat>{0000}</displayFormat>
+        <label>RM Detail Name</label>
+        <trackHistory>false</trackHistory>
+        <type>AutoNumber</type>
+    </nameField>
+    <pluralLabel>RM Details</pluralLabel>
+    <searchLayouts>
+        <customTabListAdditionalFields>Functional_Area__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Change_Set_Name__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Activity__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Deployment_date__c</customTabListAdditionalFields>
+        <searchResultsAdditionalFields>Functional_Area__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Change_Set_Name__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Activity__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Category__c</searchResultsAdditionalFields>
+    </searchLayouts>
+    <sharingModel>ControlledByParent</sharingModel>
+</CustomObject>

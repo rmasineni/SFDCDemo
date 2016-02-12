@@ -1,0 +1,54 @@
+<apex:page standardController="Proposal__c" extensions="LMAuthoritiesButtonProposalExt" sidebar="false" showHeader="false" rendered="{!DesignTypes.size>1}">
+            <apex:form >    
+            <apex:pagemessages id="pageMessage"/>
+            <script language="JavaScript">
+                 function refreshParent(redirectURL){ 
+                    window.top.location.href=redirectURL;
+                } 
+            </script>                 
+            <div style="width: 580px;margin:0 auto;">
+            <apex:outputLabel style="font-weight: bold;font-size: 130%;font-size: 12px !important;">Navigate BrightPath:</apex:outputLabel>
+            <apex:selectList title="NavigationDD" style="width: 275px; height: 25px; font-size: 100%; font-size: 14px !important; border-radius: 3px; color: #4A4A4A; box-shadow: 0px 1px 1px 0px rgba(0, 0, 0, 0.075) inset; border-color: #CCC; border-width: 1px; border-image: none 100% 100% 100% 100% / / 0px 0px 0px 0px; border-style: solid;" size="1" value="{!selectedDesign}" multiselect="false">
+                <apex:selectOptions value="{!DesignTypes}"/>
+            </apex:selectList>
+              <apex:commandButton id="NavigationGo" value="Go" style="min-width: 75px; width: auto; min-height:27px; border-radius: 3px; background-color: #FAFAFA; background-image: none; color: #000000!Important; font-weight: bold; font-size: 12px; padding: 4px 7px !Important; border: 1px solid #ABABAB;;" action="{!redirectToDesign}" rerender="redirectPanel,pageMessage"/>
+              <apex:outputPanel id="redirectPanel">
+
+              <apex:outputText rendered="{!showErrorAlert}">
+                <script type="text/javascript">
+                    var errorMessageStr = '{!errorMessage}';
+                    alert(errorMessageStr);
+                </script>
+            </apex:outputText>
+
+              <apex:outputText rendered="{!showWarning}">
+                <script type="text/javascript">
+                    var alertMessage = '{!warningMessage}';
+                    var isConfirmed = window.confirm(alertMessage);
+                    if(isConfirmed == true){
+                        window.top.location.href = '{!redirectUrl}';
+                    }
+                </script>
+            </apex:outputText>
+            
+              <apex:outputText rendered="{!shouldRedirect}">
+                <script type="text/javascript">
+                    
+                    window.top.location.href = '{!redirectUrl}';
+                </script>
+            </apex:outputText>
+ 
+            <apex:outputText rendered="{!displayTandCURL}">
+                <script type="text/javascript">
+               
+                    var newwindow = window.open('{!redirectUrl}', '', 'toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=850,height=465,left=350,top=200'); 
+                    newwindow.focus();
+   
+                </script>
+            </apex:outputText>      
+                  
+        </apex:outputPanel>
+            </div>
+           <!-- <apex:messages id="pageMessage"/>  --> 
+            </apex:form>
+</apex:page>

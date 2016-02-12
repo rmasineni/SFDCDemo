@@ -1,0 +1,28 @@
+<apex:page id="PartnerDesignOption" standardController="Lead" extensions="PartnerDesignOption" showheader="false"> 
+	<apex:form id="DOFormId">
+		<apex:pageblock id="DOcustomlist" title="Design Estimate" >
+            <apex:pageblocktable Value="{!leadDesignOption}" var="LDO" >
+                
+                <apex:column headervalue="Make Module" title="Make Module Name">
+                    <apex:outputfield value="{!LDO.Module__c}"/>
+                </apex:column>
+                <apex:column headervalue="KWP" title="Kilo Watts Peak ">
+                    <apex:outputfield value="{!LDO.KWP__c}"/>
+                </apex:column>
+                <!-- BSKY-2238 -->
+				<!-- <apex:column headervalue="KWH">
+                    <apex:outputfield value="{!LDO.KWH__c}"/>
+                </apex:column>  -->
+                <apex:column headervalue="KWH/KWP" title="Kilowatt hour/Kilo Watts Peak "> 
+                    <apex:outputfield value="{!LDO.KWH_KWP__c}"/>
+                </apex:column>
+                <apex:column headervalue="Usage %" title=" % of Usage ">
+                    <apex:outputfield value="{!LDO.Usage__c}"/>
+                </apex:column>
+                <apex:column headervalue="Cost / Year (kWh)" title=" Cost per Year">
+                    <apex:outputfield value="{!LDO.costPerYearkWh__c}"/>
+                </apex:column>
+            </apex:pageblocktable>
+			</apex:pageblock> 
+	</apex:form>
+</apex:page>

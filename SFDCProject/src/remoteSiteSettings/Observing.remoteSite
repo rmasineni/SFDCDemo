@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RemoteSiteSetting xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>https://devapi.sunrunhome.com:8443/contract/services/Contract010000/getObservedSalesForceContactIds</description>
+    <disableProtocolSecurity>true</disableProtocolSecurity>
+    <isActive>true</isActive>
+    <url>https://prd-api.sunrunhome.com</url>
+</RemoteSiteSetting>

@@ -1,0 +1,123 @@
+<apex:page standardController="Case" extensions="PartnerCaseDetail" showHeader="true" tabstyle="Contact_Us__tab" >
+    <apex:sectionHeader title="Case Detail"/>  
+    <apex:form id="formId" >
+        <!-- <div align="center" style = "margin-bottom:10px" >
+            <apex:commandButton value="Close"  action="{!doClose}" rendered="{!showCloseButton}" onclick="return confirmClose()"/>
+            &nbsp; 
+        </div> -->
+        
+        <apex:pageblock >
+             <apex:pageBlockSection title="Case Information" columns="1" >
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="{!$ObjectType.Case.fields.CaseNumber.label}" for="caseNumber" />
+                    <apex:outputText id="caseNumber" value="{!Case.CaseNumber}" />
+                </apex:pageBlockSectionItem> 
+                 <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="{!$ObjectType.Case.fields.Assignee__c.label}" for="asignee" />
+                    <apex:outputText id="assignee" value="{!Case.Assignee__c}" />
+                </apex:pageBlockSectionItem> 
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="{!$ObjectType.Case.fields.Status.label}" for="status" />
+                    <apex:outputText id="status" value="{!Case.Status}" />
+                </apex:pageBlockSectionItem>
+                
+                <apex:pageBlockSectionItem > 
+                    <apex:outputLabel value="{!$ObjectType.Case.fields.Priority.label}" for="priority" />
+                    <apex:outputText id="priority" value="{!Case.Priority}" />
+                </apex:pageBlockSectionItem>
+                
+            </apex:pageBlockSection>
+            <apex:pageBlockSection title="Additional Information" columns="1" >
+                <!-- <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="{!$ObjectType.Case.fields.Help_Category_Type__c.label}" for="helpType" />
+                    <apex:outputText id="helpType" value="{!Case.Help_Category_Type__c}" />
+                </apex:pageBlockSectionItem> 
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="{!$ObjectType.Case.fields.Help_Category__c.label}" for="helpCategory" />
+                    <apex:outputText id="helpCategory" value="{!Case.Help_Category__c}" />
+                </apex:pageBlockSectionItem>-->
+                
+                <!--<apex:pageBlockSectionItem >
+                    <apex:outputLabel value="Issue Type" />
+                    <apex:outputText id="IssueType" value="{!Case.Issue_Type__c}" />
+                </apex:pageBlockSectionItem>
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="ETA" />
+                    <apex:outputText id="ETA" value="{!Case.ETA__c}" />
+                </apex:pageBlockSectionItem> -->
+                
+                  <apex:pageBlockSectionItem > 
+                    <apex:outputLabel value="{!$ObjectType.Case.fields.Lead__c.label}" for="lead" />
+                 
+                   <!-- <apex:outputField id="lead" value="{!Case.Lead__c}" /> -->
+                    <apex:outputLink value="customizeLeadDetailPage?id={!case.Lead__c}" id="LeadLink">
+                     <apex:outputField id="lead" value="{!Case.Lead__r.name}" /> 
+                    </apex:outputLink>
+                </apex:pageBlockSectionItem>
+
+                <apex:pageBlockSectionItem rendered="{!showProposal}">
+                    <apex:outputLabel value="{!$ObjectType.Case.fields.Proposal__c.label}" for="proposal" />
+                    <apex:outputField id="proposal" value="{!Case.Proposal__c}" /> 
+                </apex:pageBlockSectionItem>
+                
+                <apex:pageBlockSectionItem > 
+                    <apex:outputLabel value="{!$ObjectType.Case.fields.Opportunity__c.label}" for="Oppty" />
+                    <apex:outputField id="Oppty" value="{!Case.Opportunity__c}" />
+                </apex:pageBlockSectionItem>
+               <!--  <apex:pageBlockSectionItem rendered="{!showProposal}">
+                    <apex:outputLabel value="{!$ObjectType.Case.fields.Prop_Customer_Name__c.label}" for="custName" />
+                    <apex:outputField id="custName" value="{!Case.Prop_Customer_Name__c}" /> 
+                </apex:pageBlockSectionItem> -->
+            </apex:pageBlockSection>
+                <apex:pageBlockSection title="Description Information" columns="1" >
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="{!$ObjectType.Case.fields.Subject.label}" for="subject" />
+                    <apex:outputText id="subject" value="{!Case.Subject}" />
+                </apex:pageBlockSectionItem>
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="{!$ObjectType.Case.fields.Description.label}" for="description" />
+                    <apex:outputText id="description" value="{!Case.Description}" />
+                </apex:pageBlockSectionItem>
+            </apex:pageBlockSection>
+        </apex:pageblock>
+        <apex:detail relatedList="true"></apex:detail>
+            <apex:pageblock id="CommentsList" title="Case Comments"  >
+                <apex:outputPanel >
+                    <div align="center" style = "margin-bottom:10px" >
+                        <apex:commandButton title="AddComment" rendered="{!showCloseButton}" value="  Add Comment " onclick="launchForNew()" />   
+                    </div>
+                </apex:outputPanel>
+                <apex:pageBlockTable value="{!CaseComment}" var="comment" rendered="{!NOT(ISNULL(CaseComment))}">
+                 <!-- <apex:column value="{!comment.id}"/> -->
+                    <apex:column headerValue="Comment" value="{!comment.CommentBody}"/>
+                    <apex:column headerValue="Created By" value="{!comment.CreatedById}"/>
+                    <apex:column headerValue="Last Modified By" value="{!comment.LastModifiedById}" />
+                </apex:pageBlockTable>
+                <apex:outputLabel value="No records to display" rendered="{!(ISNULL(CaseComment))}" styleClass="noRowsHeader"></apex:outputLabel>
+            </apex:pageblock>
+        
+        <div align="center" style = "margin-bottom:10px" >
+            <apex:commandButton value="Close Case"  action="{!doClose}" rendered="{!showCloseButton}" onclick="return confirmClose()"/>
+            &nbsp; 
+        </div>
+    </apex:form>
+    <script>
+
+        function confirmClose() 
+        {
+            var isCancel = confirm("Please confirm this case is resolved? Closing the case means Sunrun will no longer address this case. Are you sure you want to close this case?");
+            if (isCancel) return true;
+            return false; 
+        }
+        
+        function launchForNew()
+        {   
+            //alert('Open new window');
+            var tempURL = "/partner/apex/PartnerCreateCaseComment?Id={!caseId}";     
+            var newwindow = window.open(tempURL, '', 'toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,resizable=yes,width=650,height=390,left=150,top=150'); 
+            newwindow.focus();
+        }
+    
+     </script>
+      <apex:relatedList id="noteslist" list="Attachments" subject="{!case.id}" />
+</apex:page>

@@ -1,0 +1,63 @@
+<!-- 
+*********************************************************************************
+*	Author  	: Chandrika Dasaradharaman (chandrikad@sunrunhome.com)			*
+*	Date    	: March 2012													*
+*	Name		: ProposalNewNotePage.page										*
+*	Description	: This page is used to Add New proposal Notes 					* 
+*																				*
+*********************************************************************************
+-->
+<apex:page standardController="Proposal__c" extensions="ProposalNewNoteClass" sidebar="false" showHeader="false"> 
+    <style>
+		.headerLogo {
+            margin:1px 1px 1px 1px;
+            border:0;
+            padding-left:10px;
+            padding-bottom:10px;
+            #height: 30px;
+            #width: 90px;
+		}
+		
+		.bPageTitle, .apexp{
+			margin-left: 15px;
+			margin-right: 20px;
+		    width: 97%;
+		}
+	</style>
+	
+	<div align="left" width="85%">
+		<img src="{!$Resource.PartnerPortalHeader32}" class="headerLogo"/>
+		&nbsp;&nbsp;
+		<apex:sectionHeader title="Proposal New Note"/>
+	</div> 
+	
+    <apex:form id="newNote">
+    	<div align="Center">
+            <apex:commandButton value="Save" action="{!saveForm}" onclick="closeAndRefreshparent('{!parentURL}');window.top.close();" reRender="thePanel"/>
+            &nbsp; 
+            <apex:commandButton onClick="window.close();" value="Cancel" title="Click to Cancel Edit"/> 
+        </div>
+        &nbsp;  
+    	<apex:pageBlock >
+       	 	<apex:pageBlockSection id="item1" columns="1" >
+            	<div align="Center">
+            		<apex:pageBlockSectionitem >
+                		<apex:outputlabel value="Notes"/>
+                		<apex:inputTextarea style="height:60px; width:400px" id="noteValue" value="{!noteValue}"/>           
+            		</apex:pageBlockSectionitem>
+              	</div>
+        	</apex:pageBlockSection> 
+    	</apex:pageBlock>
+     	<apex:outputPanel id="thePanel">
+        	<script> 
+				function closeAndRefreshparent(parentWindowUrl)
+				{
+					window.top.close();
+					window.opener.parent.location.href = parentWindowUrl;
+					var win = window.open('','_parent','');
+					win.close();
+				}
+             </script>
+      	</apex:outputPanel>
+   	</apex:form>
+</apex:page>

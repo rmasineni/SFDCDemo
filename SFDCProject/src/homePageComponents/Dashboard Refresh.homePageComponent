@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<HomePageComponent xmlns="http://soap.sforce.com/2006/04/metadata">
+    <body>&amp;lt;br&amp;gt;&amp;lt;script type=&amp;quot;text&amp;quot;/javascript&amp;quot;&amp;gt;function refreshDashboardTimeout() {var dashboardButton=&lt;br&gt;document.getElementByld(&amp;quot;db_ref_btn&amp;quot;);dashboardButton.click()}window.setTimeout(&amp;quot;refreshDashboardTimeout();&amp;quot;,5*1000;&amp;lt;/script&amp;gt;</body>
+    <pageComponentType>htmlArea</pageComponentType>
+    <width>wide</width>
+</HomePageComponent>

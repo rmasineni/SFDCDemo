@@ -1,0 +1,5 @@
+<apex:page standardController="Lead" extensions="LeadExtensionForCDYNE" action="{!init}">
+<apex:pageMessages ></apex:pageMessages>
+ <apex:outputField value="{!Lead.CDYNE_Status__c}" rendered="false"/>
+ <apex:outputField value="{!Lead.CDYNE_Result__c}" rendered="false"/>
+</apex:page>

@@ -1,0 +1,34 @@
+<apex:page >
+
+    <apex:outputPanel layout="block" style="font-weight:bold">
+        <center> Need Help? Email  <u> <font color="Blue"> {!$Label.PartnerPortalHelpDesk} </font> </u> </center>
+        <br></br>
+        <br></br>
+        <br></br>
+        <br></br>
+        <br></br>
+        <br></br>
+        <br></br>
+        <br></br>
+        <br></br>
+        <br></br>
+        <br></br>
+        <br></br>
+        <br></br>
+        <br></br>
+        <br></br>
+        <br></br>
+        <br></br>
+        <br></br>
+        <br></br>
+        <br></br>
+        <br></br>
+        <br></br>
+        <br></br>
+        <br></br>
+        <br></br>
+        <br></br>
+              
+    </apex:outputPanel>
+  
+</apex:page>

@@ -1,0 +1,168 @@
+@isTest(SeeAllData=true)
+public with sharing class UnitTest_PartnerLeadCreate {
+    static testmethod void UnitTest_PartnerLeadCreate(){
+        
+        Lead l1=new Lead();                
+        Lead l=new Lead(state='CA',city='San Francisco',street='123 street',postalcode='12345',lastname='Test',channel__c='Test',company='Home',average_Monthly_Electric_Bill__c=100,firstname='Test',email='tset@yopmail.com',alternate_phone__c='(111)-(111)-(1234)',phone='(123)-(123)-(1234)');        
+        insert l;
+        ApexPages.StandardController controller = new Apexpages.Standardcontroller(l);
+        system.currentPageReference().getParameters().put('leadId',l.id); 
+        PartnerLeadCreate plc=new PartnerLeadCreate(controller);
+         List<Notes__c> notes=plc.getLeadNotes();
+         Pagereference pg=plc.saveLead();
+         pg=plc.doCancel();     
+         Map<String, String> cdynecodeMap=plc.getMapCDYNEReturnCodes();
+         String parse=plc.parse('Test', cdynecodeMap);
+         List<design_option__c> doList=plc.getleadDesignOption();
+         //pg=plc.calculateMonUsage();
+         plc.addLead=l1;
+         plc.editLead=false;
+         Pg=plc.saveLead();
+         l1.email='Test';
+          plc.addLead=l1;
+          Pg=plc.saveLead();
+          l1.firstname='Test';
+          plc.addLead=l1;
+          Pg=plc.saveLead();
+          l1.lastname='Test';
+          plc.addLead=l1;
+          Pg=plc.saveLead();
+          l1.phone='1231231234';
+          l1.Alternate_Phone__c='3334445555';
+          plc.addLead=l1;
+          Pg=plc.saveLead();
+          l1.Average_Monthly_Electric_Bill__c=55;
+          plc.addLead=l1;
+          Pg=plc.saveLead();
+          l1.Jan_Usage__c=-10;
+          plc.addLead=l1;
+          Pg=plc.saveLead();
+          l1.Jan_Usage__c=10110;
+          l1.Feb_Usage__c=-10;
+          plc.addLead=l1;
+          Pg=plc.saveLead();
+          l1.Feb_Usage__c=10220;
+          l1.Mar_Usage__c=-10;
+          plc.addLead=l1;
+          Pg=plc.saveLead();
+          l1.Mar_Usage__c=11100;
+          l1.Apr_Usage__c=-10;
+          plc.addLead=l1;
+          Pg=plc.saveLead();
+          l1.Apr_Usage__c=11100;          
+          l1.May_Usage__c=-10;
+          plc.addLead=l1;
+          Pg=plc.saveLead();
+          l1.May_Usage__c=22100;
+          l1.Jun_Usage__c=-10;
+          plc.addLead=l1;
+          Pg=plc.saveLead();
+          l1.Jun_Usage__c=11100;
+          l1.Jul_Usage__c=-10;
+          plc.addLead=l1;
+          Pg=plc.saveLead();
+          l1.Jul_Usage__c=11100;
+          l1.Aug_Usage__c=-10;
+          plc.addLead=l1;
+          Pg=plc.saveLead();
+          l1.Aug_Usage__c=11100;
+          l1.sep_Usage__c=-10;
+          plc.addLead=l1;
+          Pg=plc.saveLead();
+          l1.sep_Usage__c=11100;
+          l1.oct_Usage__c=-10;
+          plc.addLead=l1;
+          Pg=plc.saveLead();
+          l1.oct_Usage__c=11100;
+          l1.nov_Usage__c=-10;
+          plc.addLead=l1;
+          Pg=plc.saveLead();
+          l1.nov_Usage__c=11100;
+          l1.dec_Usage__c=-10;
+          plc.addLead=l1;
+          Pg=plc.saveLead();
+          l1.dec_Usage__c=11100;
+          plc.addLead=l1;
+          Pg=plc.saveLead();
+          l1.jan_Usage__c=10;
+          plc.addLead=l1;
+          Pg=plc.saveLead();
+          l1.feb_Usage__c=10;
+          plc.addLead=l1;
+          Pg=plc.saveLead();
+          l1.mar_Usage__c=10;
+          plc.addLead=l1;
+          Pg=plc.saveLead();
+          l1.apr_Usage__c=10;
+          plc.addLead=l1;
+          Pg=plc.saveLead();
+          l1.may_Usage__c=10;
+          plc.addLead=l1;
+          Pg=plc.saveLead();
+          l1.jun_Usage__c=10;
+          plc.addLead=l1;
+          Pg=plc.saveLead();
+          l1.jul_Usage__c=10;
+          plc.addLead=l1;
+          Pg=plc.saveLead();
+          l1.aug_Usage__c=10;
+          plc.addLead=l1;
+          Pg=plc.saveLead();
+          l1.sep_Usage__c=10;
+          plc.addLead=l1;
+          Pg=plc.saveLead();
+          l1.oct_Usage__c=10;
+          plc.addLead=l1;
+          Pg=plc.saveLead();
+          l1.nov_Usage__c=10;
+          plc.addLead=l1;
+          Pg=plc.saveLead();
+          l1.dec_Usage__c=10;
+          plc.addLead=l1;
+          Pg=plc.saveLead(); 
+          l1.phone='999999';
+          plc.addLead=l1;
+          Pg=plc.saveLead();
+          l1.phone='9999999999';
+          plc.addLead=l1;
+          Pg=plc.saveLead();
+          l1.phone='999999999999999';
+          l1.alternate_phone__c='999999999';//9 digits
+          plc.addLead=l1;
+          pg=plc.savelead();
+          /*l1.alternate_phone__c='999999999999999';//12 digits
+          plc.addLead=l1;
+          pg=plc.savelead();*/
+          l1.alternate_phone__c='9999999';//7 digits
+          plc.addLead=l1;
+          pg=plc.savelead();
+          l1.alternate_phone__c='999888777666';//12 digits
+          plc.addLead=l1;
+          pg=plc.savelead();
+          l1.MobilePhone ='9999988';
+          plc.addLead=l1;
+          pg=plc.savelead();
+          l1.Street='Raymond St';
+          l1.PostalCode='94536';
+          plc.addLead=l1;
+          Pg=plc.saveLead();
+          plc.editLead=false;
+          plc.addlead =null;
+           Pg=plc.docancel();          
+          //Pg= plc.calculateMonUsage();
+         Test.starttest(); 
+         Lead lead1=new Lead(state='CA',city='San Francisco',street='123 street',postalcode='12345',lastname='Test',channel__c='Test',company='Home',average_Monthly_Electric_Bill__c=100,firstname='Test',email='tset@yopmail.com',alternate_phone__c='(111)-(111)-(1234)',phone='(123)-(123)-(1234)');
+         Apexpages.Standardcontroller controller1 = new Apexpages.Standardcontroller(lead1);
+         system.currentPageReference().getParameters().put('leadId',lead1.id);
+         PartnerLeadCreate plcreate = new PartnerLeadCreate(controller1);
+         plcreate.addLead= lead1;
+         plcreate.parentURL = '/apex/LeadSearch?retURL=';
+         plcreate.editLead=false;
+         Pagereference pg1 = plcreate.saveLead();
+         Test.stoptest();
+                  
+         
+    }
+    
+    
+}

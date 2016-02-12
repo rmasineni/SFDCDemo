@@ -1,0 +1,250 @@
+<apex:page sidebar="false" showHeader="false">
+	<style>
+		.headerLogo {
+ 			border: 0 none;
+		   margin: 10px -10px 20px 0px;
+		   
+		}
+		.sunRunCaption {
+			border:0;
+			margin:0px 0px 1px 15px;
+			height: 50%;
+			width: 70%;
+		}
+		
+		.frame {
+		    font-family: 'Arial',sans-serif;
+		    text-align: left;
+		}
+		a {
+		    color: #0099FF;
+		    text-decoration: underline;
+		}
+
+		a, ul.footerUlist, li.footerlist, .divider {
+			
+		    background: none repeat scroll 0 0 transparent;
+		    border: 0 none;
+		    font-size: 100%;
+		    margint: 1.0em;
+ 		    outline: 0 none;
+		    vertical-align: baseline;
+		    display: inline;
+		}
+		
+		li.footerlist{
+			margin-right: 2.5em;
+		}
+
+		.divider {
+			padding: 0 0.8em;
+		}
+
+		.wordwrap { 
+			white-space: pre-wrap;    
+			white-space: -moz-pre-wrap;
+			white-space: -pre-wrap;     
+			white-space: -o-pre-wrap;   
+			word-wrap: break-word;     
+		}
+		.buttons{
+			background: -moz-linear-gradient(rgba(9, 124, 230, 0.04), #37A8F3); /* FF 3.6+ */  
+		    background: -ms-linear-gradient(rgba(9, 124, 230, 0.04), #37A8F3); /* IE10 */  
+		    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #000000), color-stop(100%, #ffffff)); /* Safari 4+, Chrome 2+ */  
+		    background: -webkit-linear-gradient(rgba(9, 124, 230, 0.04), #37A8F3); /* Safari 5.1+, Chrome 10+ */  
+		    background: -o-linear-gradient(rgba(9, 124, 230, 0.04), #37A8F3); /* Opera 11.10 */  
+		    background: linear-gradient(rgba(9, 124, 230, 0.04), #37A8F3); 
+			border: 1px solid #AAAAAA;
+			border-radius: 10px 10px 10px 10px;
+			bottom: 14px;
+			color: white;
+			cursor: pointer;
+			font-size: 11px;
+			height: 20px;
+			right: 10px;
+			text-align: center;
+			width: 90px;
+			font: bold 11px arial,sans-serif;
+		}
+            .buttons2{
+                background: -moz-linear-gradient(rgba(9, 124, 230, 0.04), #37A8F3); /* FF 3.6+ */  
+                background: -ms-linear-gradient(rgba(9, 124, 230, 0.04), #37A8F3); /* IE10 */  
+                background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #000000), color-stop(100%, #ffffff)); /* Safari 4+, Chrome 2+ */  
+                background: -webkit-linear-gradient(rgba(9, 124, 230, 0.04), #37A8F3); /* Safari 5.1+, Chrome 10+ */  
+                background: -o-linear-gradient(rgba(9, 124, 230, 0.04), #37A8F3); /* Opera 11.10 */  
+                background: linear-gradient(rgba(9, 124, 230, 0.04), #37A8F3); 
+				border: 1px solid #AAAAAA;
+                border-radius: 10px 10px 10px 10px;
+                bottom: 14px;
+                color: white;
+                cursor: pointer;
+                font-size: 11px;
+               	height: 32px;
+                right: 10px;
+                text-align: center;
+                width: 120px;
+                font: bold 11px arial,sans-serif;
+            }
+
+		.buttons3{
+			background: -moz-linear-gradient(rgba(9, 124, 230, 0.04), #37A8F3); /* FF 3.6+ */  
+		    background: -ms-linear-gradient(rgba(9, 124, 230, 0.04), #37A8F3); /* IE10 */  
+		    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #000000), color-stop(100%, #ffffff)); /* Safari 4+, Chrome 2+ */  
+		    background: -webkit-linear-gradient(rgba(9, 124, 230, 0.04), #37A8F3); /* Safari 5.1+, Chrome 10+ */  
+		    background: -o-linear-gradient(rgba(9, 124, 230, 0.04), #37A8F3); /* Opera 11.10 */  
+		    background: linear-gradient(rgba(9, 124, 230, 0.04), #37A8F3); 
+			border: 1px solid #AAAAAA;
+			border-radius: 10px 10px 10px 10px;
+			bottom: 14px;
+			color: white;
+			cursor: pointer;
+			font-size: 11px;
+			height: 20px;
+			right: 10px;
+			text-align: center;
+			width: 120px;
+			font: bold 11px arial,sans-serif;
+		}
+
+
+		.errorMsg2 {
+		    color: #CC0000;
+		}
+		div.contenetDiv1{
+			position: relative;
+			border: 10px;
+			text-align: center;
+			#padding: 10px;
+			#background: #edd;
+			box-shadow:1px 1px 1px none;
+			border-radius:10px;	
+			height: 265px;
+		    #width: 585px;
+		    overflow: auto;
+			margin-bottom:15px;
+			border: 3px solid #E5E5E5;
+		}
+
+		div.contenetDiv21{
+			position: relative;
+			border: 10px;
+			text-align: center;
+			#background: #edd;
+			box-shadow:1px 1px 1px none;
+			border-radius:10px;	
+			height: 265px;
+		    width: 335px;
+			margin-bottom: 15px;
+			border-style:solid;
+			border: 3px solid #00ADE6;
+			overflow: auto;
+		}			
+
+		div.contenetDiv22{
+			position: relative;
+			border: 10px;
+			text-align: center;
+			#background: #edd;
+			box-shadow:1px 1px 1px none;
+			border-radius:10px;	
+			height: 330px;
+		    width: 335px;
+			margin-bottom: 15px;
+			border: 3px solid #E5E5E5;
+			overflow: auto;
+		}
+	
+		div.contenetDiv3{
+			position: relative;
+			border: 10px;
+			text-align: left;
+			#background: #edd;
+			box-shadow:1px 1px 1px none;
+			border-radius:10px;	
+			height: 130px;
+		    width: 960x;
+			margin-bottom: 15px;
+			border: 3px solid #E5E5E5;
+			overflow: auto;
+		}
+		h1.loginHeader {
+		    color: #00ADE6;
+		    font-size: 1.5em;
+		    margin: 0.5em;
+		    font-weight: normal;
+		    font-family: 'Verdana','Geneva',sans-serif;
+		}
+
+		h1.NeedHelp {
+		    color: #434440;
+		    font-size: 1.6em;
+		    margin: 0.5em;
+		    font-weight: normal;
+		    font-family: 'Verdana','Geneva',sans-serif;
+		}
+
+		h2.loginHeader {
+		    color: #434440;
+		    font-size: 1.0em;
+		    margin: 0.5em;
+		    font-weight: normal;
+		    font-family: 'Verdana','Geneva',sans-serif;
+		}
+
+		div.needHelpDiv1{
+			position: relative;
+			border: 10px;
+			text-align: center;
+			#background: #edd;
+			box-shadow:1px 1px 1px none;
+			border-radius:10px;	
+			height: 400px;
+			margin-bottom: 15px;
+			overflow: auto;
+		}
+
+		div.needHelpDiv2{
+			position: relative;
+			border: 10px;
+			text-align: center;
+			#background: #edd;
+			box-shadow:1px 1px 1px none;
+			border-radius:10px;	
+			height: 400px;
+		    width: 735px;
+			margin-bottom: 15px;
+			overflow: auto;
+		}
+
+	</style>
+	<apex:stylesheet value="{!URLFOR($Resource.Css960GS, '960.css')}" />
+
+	<div id="frame">
+		<apex:outputpanel layout="block" styleclass="container_16">
+			<apex:insert name="header">
+				<c:PartnerPortalSiteHeader />
+			</apex:insert>
+		</apex:outputpanel>
+		
+		<apex:outputpanel layout="block" styleclass="container_16">
+			<apex:insert name="mainContent">
+			</apex:insert>	
+		</apex:outputpanel>
+
+       <apex:outputPanel layout="block" styleclass="container_16">
+           <apex:outputPanel styleClass="pkbFullWidthPanel" layout="block">
+               <apex:outputPanel styleClass="pkbFullWidthTop" layout="block" />
+               <apex:outputPanel styleClass="pkbFullWidthInner" layout="block">
+                   <apex:insert name="body" />
+               </apex:outputPanel>
+           </apex:outputPanel>
+       </apex:outputPanel>
+		&nbsp;&nbsp;
+		<apex:outputpanel layout="block" styleclass="container_16">
+			<apex:insert name="footer">
+				<c:PartnerPortalSiteFooter />
+			</apex:insert>
+		</apex:outputpanel>
+	</div>
+	
+</apex:page>

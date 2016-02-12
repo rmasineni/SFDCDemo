@@ -1,0 +1,75 @@
+<apex:page title="Sunrun Partner Website" sidebar="false" showHeader="false" controller="PartnerPortalLogin">
+    <apex:outputPanel layout="none" rendered="{!BEGINS($Site.Prefix, '/aeepartner')}"> 
+		<apex:include pageName="PartnerPortalLoginAee"/>
+    </apex:outputPanel>
+    <apex:outputPanel layout="none" rendered="{!BEGINS($Site.Prefix, '/partner')}"> 
+        <apex:composition template="PartnerPortalSiteTemplate">
+            <apex:define name="mainContent">
+                <!-- <c:PartnerPortalLoginArticles1 content="{!loginContent1}"/> --> 
+                <!-- <img src="{!$Resource.Partner_Portal_Welcome_Message}" style="padding: 0px 0px 0px 15px; margin-top:-30px;" /> -->
+                <c:PartnerPortalCoverflowComponent />
+                <apex:outputpanel layout="block" styleclass="grid_6">
+                    <div class="contenetDiv21">
+                        <p></p>
+                        <div align="Left" style="padding: 0px 0px 0px 15px;">
+                            <h1 class="loginHeader">PARTNER LOGIN</h1>
+                        </div>
+    
+                         <!-- 
+                        <div align="Left" style="padding: 0px 0px 0px 22px;">
+                            <img style="width:100px; height:30px;" src="{!$Resource.Partner_login_Title}" />
+                        </div>					 
+                          -->
+                        
+                        <p></p>
+                        <apex:form id="theForm" forceSSL="true">
+                            <div style="width:315px;text-align:left;">
+                                <c:PartnerPortalErrorMessage />
+                            </div>
+    
+                            <div align="Left"  style="padding: 5px 5px 5px 22px; width:300px;">
+                                <apex:outputPanel >
+                                    <apex:outputLabel value="Username:    " for="username" style="font-size:100%" />
+                                    <apex:inputtext size="30" id="username" value="{!username}">
+                                    </apex:inputtext>
+                                </apex:outputPanel>
+                            </div>
+    
+                            <div align="Left"  style="padding: 5px 5px 5px 25px; width:300px;">
+                                <apex:outputPanel >
+                                    <apex:outputLabel value="Password: " for="password" style="font-size:100%;padding:0px 2px 0px 0px;"/>
+                                    <apex:inputSecret size="30" id="password" value="{!password}">
+                                    </apex:inputSecret>
+                                </apex:outputPanel>
+                            </div>
+                                
+                            <div align="Center">
+                                <apex:outputPanel >
+                                    <span style="margin-top:5px;">
+                                        <apex:commandButton styleclass="buttons" action="{!login}" value="    Log In    " id="theButton1"/>
+                                    </span>
+                                </apex:outputPanel>
+                            </div>
+    
+                            <div align="Center">
+                                <BR>&nbsp;</BR>
+                                <apex:outputPanel >
+                                    <span style="margin-left:15px;width:0px;">
+                                        <apex:commandLink style="font-size:100%;"
+                                            action="{!needSigningHelpPage}" 
+                                            title="Need Help Signing in?" value="Need Help Signing in?"/> 
+                                    </span>
+                                       
+                                </apex:outputPanel>
+                            </div>					
+                        </apex:form>					
+                    </div>
+                </apex:outputpanel>
+                <c:PartnerPortalLoginArticles2 content3="{!loginContent3}"  
+                                                content4="{!loginContent4}" 
+                                                content5="{!loginContent5}" />
+    
+            </apex:define>
+        </apex:composition>
+	</apex:outputPanel>
+</apex:page>

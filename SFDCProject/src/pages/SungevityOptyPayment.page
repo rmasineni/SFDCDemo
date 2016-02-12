@@ -1,0 +1,36 @@
+<apex:page showHeader="false" sidebar="false" standardStylesheets="false">
+	<apex:composition template="CustomerOptyPaymentTemplate">
+		<apex:define name="custom-styles">
+			html, body {
+            	background: #ECE0DA;
+            }
+            
+            #navigation {
+            	border: 2px solid #C75218
+           	}
+            
+			#navigation span.active {
+				color: #f26322;
+			}
+            
+            #navigation span {
+            	background: #f26322;
+            }
+            
+            #page {
+            	box-shadow: 0px 0px 1px 1px #EFAB89;
+            }
+            
+            #header .logo {
+                text-indent: -999px;
+                background-image: url('{!URLFOR($Resource.PaymentResources, '/images/sungevity-logo.png')}');
+                display: inline-block;
+                height: 57px;
+                width: 169px;
+            }
+            
+		</apex:define>
+        <apex:define name="page-title">Welcome to Sungevity One Time Payment</apex:define>
+		<apex:define name="footer">© Sungevity Inc</apex:define>
+    </apex:composition>
+</apex:page>

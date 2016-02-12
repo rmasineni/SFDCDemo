@@ -1,0 +1,86 @@
+<apex:page controller="GoogleCalendarSyncUserSetupController">
+    <apex:sectionHeader subtitle="Google Calendar Sync User Setup for {!$User.FirstName} {!$User.LastName}"/> 
+    <apex:form >
+        <apex:pageBlock title="Calendar Sync Setup Instructions">
+            <p>
+                Follow these steps to setup the Google Calendar Sync.
+                <ul>
+                    <h2>If Calendar Sync is not enabled:</h2>
+                    <li>Click on the "Grant Google Calendar Access" Button.</li>
+                    <li>If you are not already given access, Google will prompt you to grant access.</li>
+                    <li>After granting the access, your primary calelndar Id is shown below. Please verify the calendar Id and change if required.</li>
+                    <li>Click "Enable Calendar Sync" to enable the sync.</li>
+                    <p/>
+                    <h2>If Calendar Sync is already enabled:</h2>
+                    <li>Click on the "Disable Calendar Sync" to disable the sync.</li>
+            	</ul>
+            </p>
+        	<p>
+            	Notes:
+                <ul>
+                    <li>Note that Recurring events created in Google are synchronized to Salesforce but Recurring Events created in Salesforce are not synchronized to Google</li>
+                	<li>When you enable the Sync, only events belongs to defined window of timeframe will be synced. Default is 15 days in the past and 3 months in future (and is configurable)</li>
+                    <li>Events are synced using batch process and hence there may be a delay of few mins for updates to show up.</li>
+                    <li>If an Event is completely deleted in Salesforce or Google, those are deleted from other place as well. However,
+                    	If an Event's Activity Reason is set as Cancellation, then it will not be deleted in Google Calendar.</li>
+        		</ul>
+        	</p>
+        </apex:pageBlock>
+        <apex:pageBlock title="Grant access to your Google Calendar" rendered="{!And(Not(user.Google_Calendar_Sync_Enabled__c), IsBlank(userAccessToken))}">
+            <apex:pageMessages />
+           	<apex:commandButton action="{!requestGoogleForOAuthAccess}" value="Grant Google Calendar Access"/>
+        </apex:pageBlock> 
+        <apex:pageBlock title="Verify Calendar Id and Confirm" rendered="{!And(user != null, Not(user.Google_Calendar_Sync_Enabled__c), Not(IsBlank(userAccessToken)))}">
+            <apex:pageMessages />
+            <apex:pageBlockButtons location="both">
+            	<apex:commandButton action="{!grantAccessAndEnableSync}" value="Enable Sync"/>
+                <apex:commandButton action="{!grantAccessAndEnableAndStartFullSync}" value="Enable and Start Full Sync"/>
+            </apex:pageBlockButtons>
+            <apex:pageBlockSection columns="2">
+            	<apex:inputText value="{!calendarId}" label="Google Calendar Id" required="true"/>
+            </apex:pageBlockSection>
+        </apex:pageBlock> 
+        <apex:pageBlock title="Google Calendar Sync is Enabled" rendered="{!And(user != null, user.Google_Calendar_Sync_Enabled__c)}">
+            <apex:pageMessages />
+            <apex:pageBlockButtons location="both">
+            	<apex:commandButton action="{!disableSync}" value="Disable Sync"/>
+                <apex:commandButton action="{!startFullSync}" value="Start Full Sync"/>
+            </apex:pageBlockButtons>
+            <apex:pageBlockSection columns="2">
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="User"/>
+                    <apex:outputLink value="/{!user.id}?noredirect=1"> {!user.Name} </apex:outputLink>
+                </apex:pageBlockSectionItem>
+                <apex:outputField label="Is User Active?" value="{!user.IsActive}"/>
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="Status"/>
+                    <apex:outputPanel >
+                        <apex:outputPanel rendered="{!isBlank(verificationErrorMessage)}">
+                            <apex:image url="/img/msg_icons/confirm16.png"/>
+                            <apex:outputText value=" Sync Enabled and Verified"/>
+                        </apex:outputPanel>
+                        <apex:outputPanel rendered="{!Not(IsBlank(verificationErrorMessage))}">
+                            <apex:image url="/img/msg_icons/error16.png"/>
+                            <apex:outputText value=" Sync Enabled but Access Verification Failed"/>
+                        </apex:outputPanel>
+                    </apex:outputPanel>
+                </apex:pageBlockSectionItem>
+                		<apex:outputField label="Calendar Sync Required" value="{!user.Google_Calendar_Sync_Required__c}"/>
+                <apex:outputField label="Calendar Sync Enabled" value="{!user.Google_Calendar_Sync_Enabled__c}"/>
+                		<apex:outputField label="Google Delta Sync Time" value="{!user.Google_Calendar_Goog_Delta_Sync_Time__c}"/>
+                <apex:outputField label="Calendar Sync Setup Time" value="{!user.Google_Calendar_Setup_DateTime__c}"/>
+                <apex:outputField label="Google Full Sync Time" value="{!user.Google_Calendar_Goog_Full_Sync_Time__c}"/>
+                		<apex:outputField label="Calendar Sync From Days" value="{!user.Google_Calendar_Sync_From_Days__c}"/>
+                <apex:outputField label="Google Sync Attempt Time" value="{!user.Google_Calendar_Goog_Sync_Try_Time__c}"/>
+                		<apex:outputField label="Calendar Sync To Days" value="{!user.Google_Calendar_Sync_To_Days__c}"/>
+                <apex:outputField label="Google Push Time" value="{!user.Google_Calendar_Goog_Push_Time__c}"/>
+                		<apex:outputField label="Google Calendar Id" value="{!user.Google_Calendar_Id__c}"/>
+                		<apex:outputField label="Google Calendar Sync Token" value="{!user.Google_Calendar_Sync_Token__c}"/>
+                <apex:outputField label="Salesforce Delta Sync Time" value="{!user.Google_Calendar_Sfdc_Delta_Sync_Time__c}"/>
+                		<apex:outputField label="Google Calendar Push Channel" value="{!user.Google_Calendar_Push_Channel_Id__c}"/>
+                <apex:outputField label="Salesforce Full Sync Time" value="{!user.Google_Calendar_Sfdc_Full_Sync_Time__c}"/>
+                		<apex:outputField label="Google Calendar Push Resource" value="{!user.Google_Calendar_Push_Resource_Id__c}"/>
+            </apex:pageBlockSection>
+        </apex:pageBlock> 
+    </apex:form>
+</apex:page>

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<HomePageComponent xmlns="http://soap.sforce.com/2006/04/metadata">
+    <body>&lt;br&gt;&lt;script language=&quot;JavaScript&quot;&gt;function removeSerchbox(){var a = [];var re = new RegExp(&apos;\\bsearchCell\\b&apos;);var els = document.getElementsByTagName(&quot;td&quot;);for(var i=0,j=els.length; i&lt;j; i++)if(re.test(els[i].className))a.push(els[i]);var parent=a[0];parent.style.display=&apos;none&apos;;} var oldonload = window.onload;if (typeof window.onload != &apos;function&apos;)    {     window.onload = oldonload;   } else {     window.onload = function() {      if (oldonload) {      oldonload();    }    removeSerchbox();   }  } &lt;/script&gt;</body>
+    <pageComponentType>htmlArea</pageComponentType>
+    <width>narrow</width>
+</HomePageComponent>

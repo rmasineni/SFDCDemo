@@ -1,0 +1,3 @@
+<apex:page standardcontroller="Case" recordSetVar="case" Extensions="OverridePartnerCaseTab"  
+                action="{!redirectCaseTab}">
+</apex:page>

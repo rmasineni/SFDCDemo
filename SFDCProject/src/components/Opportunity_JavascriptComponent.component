@@ -1,0 +1,24 @@
+<apex:component >
+	<script>
+		function adjustHeight(){
+
+			try{
+		
+				var contactRoleForm = document.getElementById('OptyContactRoleId:ContactRoleListForm');
+				var notesElement =  document.getElementById('OpportunitysNotes:NotesFormId');
+				
+				var iframes = parent.document.getElementsByTagName("iframe");
+				if(iframes[0] != null && notesElement != null && notesElement.offsetHeight > 0){
+					iframes[0].height= notesElement.offsetHeight;
+				}
+				
+				if(iframes[1] != null && contactRoleForm != null && contactRoleForm.offsetHeight > 0){
+					iframes[1].height= contactRoleForm.offsetHeight - 8;
+				}
+			}catch(exceptionObj){
+			
+			}
+		}
+		adjustHeight();
+	</script>
+</apex:component>

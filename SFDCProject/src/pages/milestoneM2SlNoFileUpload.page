@@ -1,0 +1,40 @@
+<apex:page controller="milestoneM2SlNoFileUpload" sidebar="false" id="m2SlNo">
+    <script>
+        function validateFields() 
+        {
+            var inputFile = document.getElementsByName("m2SlNo:uploadForm:block1:uploadPBSection:uploadPBSectionItem1:fileToUpload:inputFile:file")[0].value;
+            if (inputFile == null || inputFile == '')
+            {
+                alert("Please select a file to upload");
+                return false;
+            }
+            if (inputFile.indexOf('.csv') < 0)
+            {
+                alert("Only Comma delimited file with .CSV extension can be uploaded");
+                return false;
+            }
+            return true;
+		}
+	</script>	
+	<apex:pagemessages />
+    <apex:sectionHeader title="Upload M2 Serial Number File"/>
+	
+	<apex:form enctype="multipart/form-data" id="uploadForm">
+		<apex:pageBlock mode="edit" id="block1">
+			<apex:pageBlockSection title="File Details" id="uploadPBSection">
+				<apex:pageBlockSectionitem id="uploadPBSectionItem1">
+					<apex:outputLabel value="File"/>
+					<apex:inputFile style="width:100%" id="fileToUpload" value="{!fileBody}" filename="{!fullPathFileName}" title="Select the file here. Limit your file size to a max of 5 MB" />
+				</apex:pageBlockSectionitem>
+				<apex:commandButton value="Upload M2 Serial No(s)" action="{!uploadSlNo}" onClick="return validateFields()" title="Click this button to upload the serial numbers"/>
+			</apex:pageBlockSection>
+			<apex:outputPanel id="submitResults" rendered="{!NOT(ISNULL(finalMsg))}" >						
+					<apex:pageBlockSection title="Submit Results" id="submitPBSection">
+			            <apex:outputPanel > 
+			                <apex:outputText escape="false" value="{!finalMsg}"/>                    
+			            </apex:outputPanel>
+					</apex:pageBlockSection>
+			</apex:outputPanel>										
+		</apex:pageBlock>
+	</apex:form>
+</apex:page>

@@ -1,0 +1,26 @@
+<apex:page controller="MeterRegistrationController" sidebar="false" tabstyle="Milestone_Management__tab" id="meterregistrationId">
+	<apex:pagemessages />
+    <apex:sectionHeader title="Upload Meter Registration File"/>
+	<apex:form enctype="multipart/form-data" id="uploadForm">
+		<apex:pageBlock mode="edit" id="block1">
+			<apex:pageBlockSection title="File Details" id="uploadPBSection">
+				<apex:pageBlockSectionitem id="uploadPBSectionItem1">
+					<apex:outputLabel value="File"/>
+					<apex:inputFile style="width:100%" id="fileToUpload" value="{!fileBody}" filename="{!fullPathFileName}" title="Select the file here. Limit your file size to a max of 5 MB" />
+				</apex:pageBlockSectionitem>
+				<apex:commandButton value="Upload Meter Registration Details" action="{!uploadMeterRegistrationDetails}" onClick="return validateFields()" title="Click this button to upload meter registration details"/>
+			</apex:pageBlockSection>
+			<apex:outputPanel id="submitResults" rendered="{!NOT(ISNULL(finalMsg))}" >						
+					<apex:pageBlockSection title="Submit Results" id="submitPBSection">
+			            <apex:outputPanel > 
+			                <apex:outputText escape="false" value="{!finalMsg}"/>                    
+			            </apex:outputPanel>
+					</apex:pageBlockSection>
+			</apex:outputPanel>										
+		</apex:pageBlock>
+		<div style="text-align: center;">
+        	<apex:commandButton action="{!back}" value="Back" status="status1" title="Click to select Generation Asset"/>
+            <apex:actionStatus id="status1" startText="requesting..."/>
+        </div>
+	</apex:form>
+</apex:page>

@@ -1,0 +1,24 @@
+<apex:page standardController="Task_Template__c" extensions="wfObjectFieldController" id="pageId" showHeader="false" sidebar="false">
+<style>
+    .myTable {
+      border: 1px solid rgb(200, 205, 229); 
+      text-align:left;
+      
+      width:100%;
+    }
+    
+    .myTd{
+        width: 200px;
+        text-align:left;
+    }
+    
+    .myTh{ 
+        width: 200px;    
+    }
+    
+   </style>
+     <c:wfObjectFieldComponent aDataType="true" asObjectType="{!tskObj}" SaveOptionType="Default" numberofRows="{!numberOfRows}" > </c:wfObjectFieldComponent>
+ 
+   <apex:form id="formId">
+     </apex:form> 
+</apex:page>

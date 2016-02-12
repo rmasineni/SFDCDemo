@@ -1,0 +1,1177 @@
+<apex:component layout="none" controller="PaymentProcessorController">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/handlebars.js/1.3.0/handlebars.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.6.0/moment.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery.blockUI/2.66.0-2013.10.09/jquery.blockUI.min.js"></script>
+    <apex:includescript value="{!URLFOR($Resource.PaymentResources, 'js/payment-utils.js')}"/>
+    
+    <apex:attribute name="amount" type="String" required="false" description=""/>
+    <apex:attribute name="paymentMode" type="String" required="false" description=""/>
+    <apex:attribute name="firstName" type="String" required="false" description=""/>
+    <apex:attribute name="lastName" type="String" required="false" description=""/>
+    <apex:attribute name="email" type="String" required="false" description=""/>
+    <apex:attribute name="phone" type="String" required="false" description=""/>
+    <apex:attribute name="street" type="String" required="false" description=""/>
+    <apex:attribute name="city" type="String" required="false" description=""/>
+    <apex:attribute name="state" type="String" required="false" description=""/>
+    <apex:attribute name="postalCode" type="String" required="false" description=""/>
+    <apex:attribute name="paymentResponseJson" type="String" required="false" description=""/>
+    <apex:attribute name="customParamsJson" type="String" required="false" description=""/>
+    <apex:attribute name="cancelUrl" type="String" required="false" description=""/>
+    <apex:attribute name="successUrl" type="String" required="false" description=""/>
+  
+    <script>
+        var smessages = {
+            "EnterCardNum":  "<apex:outputText >{!$Label.payment_EnterCardNum} </apex:outputText>",
+            "SelectCardType":  "<apex:outputText >{!$Label.payment_SelectCardType} </apex:outputText>",
+            "EnterCardCvvCode":  "<apex:outputText >{!$Label.payment_EnterCardCvvCode} </apex:outputText>",
+            "InvalidCardType":  "<apex:outputText >{!$Label.payment_InvalidCardType} </apex:outputText>",
+            "InvalidCardExpiryDate":  "<apex:outputText >{!$Label.payment_InvalidCardExpiryDate} </apex:outputText>",
+            "InvalidCardNumber":  "<apex:outputText >{!$Label.payment_InvalidCardNumber} </apex:outputText>",
+            "EnterECheckRoutingNumber": "<apex:outputText > {!$Label.payment_EnterECheckRoutingNumber}</apex:outputText>",
+            "EnterECheckAccountNumber":  "<apex:outputText > {!$Label.payment_EnterECheckAccountNumber}</apex:outputText>",
+            "EnterECheckAccountNumberConfirmation":  "<apex:outputText > {!$Label.payment_EnterECheckAccountNumberConfirmation}</apex:outputText>",
+            "EnterFirstName":  "<apex:outputText >{!$Label.payment_EnterFirstName} </apex:outputText>",
+            "EnterLastName":  "<apex:outputText >{!$Label.payment_EnterLastName} </apex:outputText>",
+            "EnterEmail":  "<apex:outputText >{!$Label.payment_EnterEmail} </apex:outputText>",
+            "EnterPhone":  "<apex:outputText >{!$Label.payment_EnterPhone} </apex:outputText>",
+            "EnterStreet":  "<apex:outputText >{!$Label.payment_EnterStreet} </apex:outputText>",
+            "EnterCity":  "<apex:outputText >{!$Label.payment_EnterCity} </apex:outputText>",
+            "EnterState":  "<apex:outputText >{!$Label.payment_EnterState} </apex:outputText>",
+            "EnterPostalCode":  "<apex:outputText >{!$Label.payment_EnterPostalCode} </apex:outputText>",
+            "EnterOtherAmount":  "<apex:outputText >{!$Label.payment_Other_Amount} </apex:outputText>",
+            "EnterOtherAmountGreaterThanZero":  "<apex:outputText >{!$Label.payment_EnterOtherAmountGreaterThanZero} </apex:outputText>",
+            "ProcessRequest": "<apex:outputText >{!$Label.payment_ProcessingtheRequest}</apex:outputText>"
+        }
+        
+           
+        var smodel = {
+            "paymentResponse": {!paymentResponseJson},
+            
+            "paymentRequest": {
+                
+                "currentPageUrl": "{!currentPageUrl}",
+                
+                //Billing contact attributes starts with upper case because we will be
+                //using sfdc standard Contact object to serialize or deserialize, which 
+                //requires attributes starts with upper case.
+                "billingContact": {
+                    "FirstName": "{!firstName}",
+                    "LastName": "{!lastName}",
+                    "Email": "{!email}",
+                    "Phone": "{!phone}"
+                },
+                
+                "billingAddress": {
+                    "street": "{!street}",
+                    "city": "{!city}",
+                    "state": "{!state}",
+                    "postalCode": "{!postalCode}",
+                    "country": "US"
+                },
+                
+                "paymentTransaction": {
+                    "paymentType": "echeck",
+                    "transactionType": "sale",
+                    "echeckType": "C",
+                    "amount": 0.0
+                },
+                
+                "customParams": {!customParamsJson}
+            },
+            
+            "local": {
+                "amountDue": {!amount},
+                "currentPage": "payment-type",
+                "cancelUrl": "{!cancelUrl}",
+                "successUrl": "{!successUrl}",
+                "paymentMode": "{!paymentMode}",
+                
+                "paymentType": {
+                    "methodType": "echeck",
+                    "amountType": "total",
+                    "otherAmount": {!amount}
+                },
+    
+                "creditCard": {
+                    "type": "001", //VISA
+                    "number": "",
+                    "cvvCode": "",
+                    "expiryMonth": "",
+                    "expiryYear": ""
+                },
+                
+                "echeck": {
+                    "echeckType": "C",
+                    "accountNumber": "",
+                    "routingNumber": ""
+                },
+                
+                //This contact is input as specified VF page and not updated by this component, where as billing contact in paymentRequest is updated with user input.
+                "billingContact": {
+                    "FirstName": "{!firstName}",
+                    "LastName": "{!lastName}",
+                    "Email": "{!email}",
+                    "Phone": "{!phone}"
+                },
+                
+                //This is the address that is not updated in this page, where as billing address in paymentRequest is updated with user input.
+                "billingAddress": {
+                    "street": "{!street}",
+                    "city": "{!city}",
+                    "state": "{!state}",
+                    "postalCode": "{!postalCode}"
+                }
+            }
+        }
+
+    </script>
+    
+    <script>
+    var spayment = {
+        isAutoPayment: function() {
+            return  smodel.local.paymentMode === 'auto-payment';
+        },
+    
+        init: function() {
+            spayment.initTemplates();
+            
+            //Initial page is payment-type.
+            smodel.local.currentPage = spayment.isAutoPayment()?"autopayment-details":"payment-type";
+            
+            //If payment response has been received, set the current page as payment-confirmation
+            //or payment-details
+            var errorMessage; 
+            if (smodel.paymentResponse.header) {
+                if (smodel.paymentResponse.paymentTransaction.transactionType === "create_payment_token") {
+                    smodel.local.paymentMode = "auto-payment";
+                } else {
+                    smodel.local.paymentMode = "onetime-payment";
+                }
+
+                if (smodel.paymentResponse.header.status = 'success' && 
+                        smodel.paymentResponse.paymentGatewayHeader.status == 'accept') {
+                        
+                    if (spayment.isAutoPayment()) {
+                        smodel.local.currentPage = "autopayment-confirmation";
+                    } else {
+                        smodel.local.currentPage = "payment-confirmation";
+                    }
+                    
+                } else {
+
+                    if (spayment.isAutoPayment()) {
+                        smodel.local.currentPage = "autopayment-details";
+                        smodel.local.paymentType.methodType = "echeck";
+                    } else {
+                        if (smodel.paymentResponse.paymentTransaction.paymentType === "card") {
+                            smodel.local.currentPage = "payment-details-card";
+                            smodel.local.paymentType.methodType = "card";
+                        } else {
+                            smodel.local.currentPage = "payment-details-echeck";
+                            smodel.local.paymentType.methodType = "echeck";
+                        }
+                    }
+                    
+                    if (smodel.paymentResponse.paymentAuth.invalidFieldNames) {
+                        if (smodel.paymentResponse.paymentAuth.invalidFieldNames && smodel.paymentResponse.paymentAuth.invalidFieldNames.indexOf("card_number") > -1) {
+                            errorMessage = smessages.InvalidCardNumber;
+                            
+                        } else if (smodel.paymentResponse.paymentAuth.invalidFieldNames.indexOf("card_expiry_date") > -1) {
+                            errorMessage = smessages.InvalidCardExpiryDate;
+                            
+                        } else {
+                            errorMessage = "Payment is declined due to invalid payment details [" + smodel.paymentResponse.paymentGatewayHeader.statusMessage 
+                                + " " + smodel.paymentResponse.paymentAuth.invalidFieldNames + "]";
+                        }
+                        
+                    } else if (smodel.paymentResponse.paymentGatewayHeader.statusMessage.indexOf("card_type")> -1) {
+                        errorMessage = smessages.InvalidCardType;
+                    
+                    } else {
+                        errorMessage = smodel.paymentResponse.header.statusMessage + " [" + smodel.paymentResponse.paymentGatewayHeader.statusMessage + "]";
+                    }
+                    
+                    //Copy the data from payment response to payment request.
+                    smodel.paymentRequest.billingContact = smodel.paymentResponse.billingContact;
+                    smodel.paymentRequest.billingAddress = smodel.paymentResponse.billingAddress;
+                    smodel.paymentRequest.paymentTransaction = smodel.paymentResponse.paymentTransaction;
+                    smodel.local.creditCard = smodel.paymentResponse.cardDetails;
+                    smodel.local.echeck = smodel.paymentResponse.echeck;
+                    
+                    smodel.paymentRequest.paymentTransaction.amount = smodel.paymentResponse.paymentTransaction.amount;
+                    if (parseFloat(smodel.local.amountDue) == parseFloat(smodel.paymentResponse.paymentTransaction.amount)) {
+                        smodel.local.paymentType.amountType = 'total';
+                    } else {
+                        smodel.local.paymentType.amountType = 'other';
+                        smodel.local.paymentType.otherAmount = smodel.paymentResponse.paymentTransaction.amount;
+                    }
+                }
+            }
+            
+            spayment.refreshView();
+            
+            if (utils.isNotBlank(errorMessage)) {
+                utils.showErrorMessage(errorMessage);
+            }
+        },
+
+        initTemplates: function() {
+            smodel.templates = {};
+            smodel.templates.pagePayment = utils.getTemplate("#template-payment");
+            smodel.templates.pageAutoPayment = utils.getTemplate("#template-autopayment");
+            smodel.templates.paymentServiceForm = utils.getTemplate("#template-payment-service-form");
+        },
+
+        refreshView: function() {
+            
+            if (spayment.isAutoPayment()) {
+                utils.setHtml($("#payment-container"), smodel.templates.pageAutoPayment(smodel));
+
+                $("#btn-autopayment-details-next").click(spayment.processAutoPaymentDetailsNext);
+                $("#btn-autopayment-review-prev").click(spayment.processAutoPaymentReviewPrev);
+                $("#btn-autopayment-review-authorize").click(spayment.processAutoPaymentReviewAuthorize);
+                
+            } else {
+                utils.setHtml($("#payment-container"), smodel.templates.pagePayment(smodel));
+                
+                $("#btn-payment-type-next").click(spayment.processPaymentTypeNext);
+                $("#btn-payment-detals-card-prev").click(spayment.processPaymentDetailsCreditCardPrev);
+                $("#btn-payment-detals-echeck-prev").click(spayment.processPaymentDetailsECheckPrev);
+                $("#btn-payment-detals-card-paynow").click(spayment.processPaymentDetailsCardPayNow);
+                $("#btn-payment-detals-echeck-paynow").click(spayment.processPaymentDetailsECheckPayNow);
+                $("#pay-other-amount").change(function(){
+                    $("#other-amount").focus();
+                });
+            }
+        },
+
+        processPaymentTypeNext: function() {
+            utils.clearMessages();
+            
+            var model = spayment.paymentTypeUiToModel();
+            if (!spayment.validatePaymentTypeForm(model)) {
+                return;
+            }
+            smodel.local.paymentType = model;
+            
+            if (smodel.local.paymentType.amountType == 'total') {
+                smodel.paymentRequest.paymentTransaction.amount = smodel.local.amountDue;
+            } else {
+                smodel.paymentRequest.paymentTransaction.amount = smodel.local.paymentType.otherAmount;
+            }
+            
+            if (smodel.local.paymentType.methodType == 'card') {            
+                smodel.local.currentPage = "payment-details-card";
+            } else {
+                smodel.local.currentPage = "payment-details-echeck";
+            }
+            
+            spayment.refreshView();
+        },
+
+        validatePaymentTypeForm: function(model) {
+
+            if (model.amountType == 'other') {
+                if(utils.checkValueNotBlank(model.otherAmount, smessages.EnterOtherAmount, "#other-amount")) {
+                    return false;
+                }
+            }
+
+            if (model.amountType == 'other') {
+                if(utils.checkValueGreaterThanZero(model.otherAmount, smessages.EnterOtherAmountGreaterThanZero, "#other-amount")) {
+                    return false;
+                }
+            }
+            
+            return true;
+        },
+
+        paymentTypeUiToModel: function() {
+            var model = {};
+            model.amountType = utils.getRadioValue("payment-amount-type");
+            model.otherAmount = utils.getInputValue("#other-amount");
+            model.methodType = utils.getRadioValue("payment-method-type");
+
+            return model;
+        },
+
+        paymentDetailsCardUiToModel: function() {
+            var creditCard = {};
+            creditCard.type = utils.getComboboxValue("#card-type");
+            creditCard.number = utils.getInputValue("#card-number");
+
+            //If card contains spaces or -, remove them.
+            if (creditCard.number != '') {
+                creditCard.number = creditCard.number.split(' ').join('');
+                creditCard.number = creditCard.number.split('-').join('');
+            }
+            
+            creditCard.cvvCode = utils.getInputValue("#card-cvv-code");
+            creditCard.expiryMonth = utils.getComboboxValue("#card-expiry-month");
+            creditCard.expiryYear = utils.getComboboxValue("#card-expiry-year");
+
+            var cardModel = {};
+            cardModel.creditCard = creditCard;
+            cardModel.billingAddress = spayment.billingAddressUIToModel();
+            cardModel.billingContact = spayment.billingContactUIToModel();
+
+            return cardModel;
+        },
+
+        processPaymentDetailsCreditCardPrev: function() {
+            smodel.local.currentPage = "payment-type";
+            var model = spayment.paymentDetailsCardUiToModel();
+            smodel.local.creditCard = model.creditCard;
+            smodel.paymentRequest.billingAddress = model.billingAddress;
+            smodel.paymentRequest.billingContact = model.billingContact;
+    
+            spayment.refreshView();
+        },
+
+        processPaymentDetailsECheckPrev: function() {
+            smodel.local.currentPage = "payment-type";
+            var echeckModel = spayment.paymentDetailsECheckUiToModel();
+            
+            smodel.local.echeck = echeckModel.echeck;
+            smodel.paymentRequest.billingAddress = echeckModel.billingAddress;
+            smodel.paymentRequest.billingContact = echeckModel.billingContact;
+    
+            spayment.refreshView();
+        },
+
+        processPaymentDetailsCardPayNow: function() {
+            utils.clearMessages();
+
+            var model = spayment.paymentDetailsCardUiToModel();
+            if (!spayment.validateCardDetailsForm(model.creditCard)) {
+                return;
+            }
+            
+            if (!spayment.validateContactForm(model.billingContact)) {
+                return;
+            }
+
+            if (!spayment.validateBillingAddress(model.billingAddress)) {
+                return;
+            }
+          
+            utils.blockUI(smessages.ProcessRequest);
+            
+            //Send the details to the form and get the parametres to post to Cybersource
+            smodel.local.creditCard = model.creditCard;
+
+            smodel.paymentRequest.billingContact = model.billingContact;    
+            smodel.paymentRequest.billingAddress = model.billingAddress;
+            smodel.paymentRequest.paymentTransaction.transactionType = "sale";
+            smodel.paymentRequest.paymentTransaction.paymentType = "card";
+
+            //Give a chance to clients to process the request before sending off for signature creation.
+            if (spayment.preprocessPaymentRequest) {
+                spayment.preprocessPaymentRequest(spayment.continueProcessPaymentDetailsCardPayNow);
+            } else {
+                spayment.continueProcessPaymentDetailsCardPayNow();
+            }
+
+        },
+            
+        continueProcessPaymentDetailsCardPayNow: function() {
+            PaymentProcessorController.preparePaymentRequest(smodel.paymentRequest, function(result, event){
+                if (spayment.checkAndHandleError(result, event)) {
+                    return;
+                }
+            
+                //Based on the request, construct the payment service form and add the card details.
+                result.body.params.card_type = smodel.local.creditCard.type;
+                result.body.params.card_number = smodel.local.creditCard.number;                
+                result.body.params.card_expiry_date = smodel.local.creditCard.expiryMonth + '-' + smodel.local.creditCard.expiryYear;
+                result.body.params.card_cvn = smodel.local.creditCard.cvvCode;
+                
+                $("#payment-service-form").html(smodel.templates.paymentServiceForm(result.body));
+                $("#payment-service-form form").submit();
+            });
+        },
+        
+        validateCardDetailsForm: function(model) {
+
+            if(utils.checkValueNotBlank(model.number, smessages.EnterCardNum, "#card-number")) {
+                return false;
+            }
+
+            if (model.number.length < 15 || model.number.length > 16) {
+                utils.showErrorMessage(smessages.EnterCardNum);
+                $("#card-number").focus();
+                return false;
+            }
+
+            if(utils.checkValueGreaterThanZero(model.cvvCode, smessages.EnterCardCvvCode, "#card-cvv-code")) {
+                return false;
+            }
+            
+            if (model.cvvCode.length < 3 || model.cvvCode.length > 4) {
+                utils.showErrorMessage(smessages.EnterCardCvvCode);
+                $("#card-cvv-code").focus();
+                return false;
+            }
+            
+            if(utils.checkValueNotBlank(model.cvvCode, smessages.EnterCardCvvCode, "#card-cvv-code")) {
+                return false;
+            }
+
+            return true;
+        },
+
+        validateContactForm: function(contact) {
+
+            if(utils.checkValueNotBlank(contact.FirstName, smessages.EnterFirstName, "#first-name")) {
+                return false;
+            }
+
+            if(utils.checkValueNotBlank(contact.LastName, smessages.EnterLastName, "#last-name")) {
+                return false;
+            }
+            
+            if(utils.checkValueNotBlank(contact.Email, smessages.EnterEmail, "#email")) {
+                return false;
+            }
+
+            if(utils.checkValueNotBlank(contact.Phone, smessages.EnterPhone, "#phone")) {
+                return false;
+            }
+            return true;
+        },
+
+        validateBillingAddress: function(address) {
+
+            if(utils.checkValueNotBlank(address.street, smessages.EnterStreet, "#street")) {
+                return false;
+            }
+
+            if(utils.checkValueNotBlank(address.city, smessages.EnterCity, "#city")) {
+                return false;
+            }
+
+            if(utils.checkValueNotBlank(address.state, smessages.EnterState, "#state")) {
+                return false;
+            }
+
+            if(utils.checkValueNotBlank(address.postalCode, smessages.EnterPostalCode, "#postalCode")) {
+                return false;
+            }
+
+            return true;
+        },
+
+        processPaymentDetailsECheckPayNow: function() {
+            utils.clearMessages();
+
+            var echeckModel = spayment.paymentDetailsECheckUiToModel();
+            if (!spayment.validateECheckForm(echeckModel.echeck)) {
+                return;
+            }
+            
+            if (!spayment.validateContactForm(echeckModel.billingContact)) {
+                return;
+            }
+
+            if (!spayment.validateBillingAddress(echeckModel.billingAddress)) {
+                return;
+            }
+            
+            utils.blockUI(smessages.ProcessRequest);
+            
+            //Send the details to the form and get the parametres to post to Cybersource
+            smodel.local.echeck = echeckModel.echeck;
+
+            smodel.paymentRequest.billingContact = echeckModel.billingContact;    
+            smodel.paymentRequest.billingAddress = echeckModel.billingAddress;
+            smodel.paymentRequest.paymentTransaction.echeckType = smodel.local.echeck.echeckType;
+            smodel.paymentRequest.paymentTransaction.transactionType = "sale";
+            smodel.paymentRequest.paymentTransaction.paymentType = "echeck";
+            
+            //Give a chance to clients to process the request before sending off for signature creation.
+            if (spayment.preprocessPaymentRequest) {
+                spayment.preprocessPaymentRequest(spayment.continueProcessPaymentDetailsECheckPayNow);
+            } else {
+                spayment.continueProcessPaymentDetailsECheckPayNow();
+            }
+        },
+        
+        continueProcessPaymentDetailsECheckPayNow: function() {
+            PaymentProcessorController.preparePaymentRequest(smodel.paymentRequest, function(result, event){
+                if (spayment.checkAndHandleError(result, event)) {
+                    return;
+                }
+                
+                //Based on the request, construct the payment service form and add the card details.
+                result.body.params.echeck_account_type = smodel.local.echeck.echeckType;
+                result.body.params.echeck_routing_number = smodel.local.echeck.routingNumber;
+                result.body.params.echeck_account_number = smodel.local.echeck.accountNumber;
+                
+                $("#payment-service-form").html(smodel.templates.paymentServiceForm(result.body));
+                $("#payment-service-form form").submit();
+            });
+        },
+
+        paymentDetailsECheckUiToModel: function() {
+        
+            var echeck = {};
+            echeck.echeckType = utils.getRadioValue("echeck-type");
+            echeck.accountNumber = utils.getInputValue("#account-number");
+            echeck.routingNumber = utils.getInputValue("#routing-number");
+            
+            var echeckModel = {};
+            echeckModel.echeck = echeck;
+            echeckModel.billingContact = spayment.billingContactUIToModel();
+            echeckModel.billingAddress = spayment.billingAddressUIToModel();
+            
+            return echeckModel;
+        },
+
+        billingContactUIToModel: function() {
+            var billingContact = {};
+            billingContact.FirstName = utils.getInputValue("#first-name");
+            billingContact.LastName = utils.getInputValue("#last-name");
+            billingContact.Email = utils.getInputValue("#email");
+            billingContact.Phone = utils.getInputValue("#phone");
+            
+            return billingContact;
+        },
+
+        billingAddressUIToModel: function() {
+            var billingAddress = {};
+            billingAddress.street = utils.getInputValue("#street");
+            billingAddress.city = utils.getInputValue("#city");
+            billingAddress.state = utils.getInputValue("#state");
+            billingAddress.postalCode = utils.getInputValue("#postal-code");
+
+            return billingAddress;
+        },
+
+        validateECheckForm: function(model) {
+
+            if(utils.checkValueGreaterThanZero(model.routingNumber, smessages.EnterECheckRoutingNumber, "#routing-number")) {
+                return false;
+            }
+            
+            if (model.routingNumber.length != 9) {
+                utils.showErrorMessage(smessages.EnterECheckRoutingNumber);
+                $("#routing-number").focus();
+                return false;
+            }
+            
+            if(utils.checkValueGreaterThanZero(model.accountNumber, smessages.EnterECheckAccountNumber, "#account-number")) {
+                return false;
+            }
+
+            if(utils.checkValueTrue(model.accountNumber === utils.getInputValue("#account-number-confirmation"), smessages.EnterECheckAccountNumberConfirmation, "#account-number-confirmation")) {
+                return false;
+            }
+            
+            return true;
+        },
+        
+        checkAndHandleError: function(result, event) {
+            console.log("Prepare Payment Request event is " + JSON.stringify(event));
+            console.log("Prepare Payment Request result is " + JSON.stringify(result));
+        
+            if (event.type == 'exception') {
+                utils.unblockUI();
+                utils.showErrorMessage("Exception while preparing the payment request. [" + event.message + "]");
+                return true;
+            } 
+
+            if (result.header.status == 'error') {
+                utils.unblockUI();
+                utils.showErrorMessage("Exception while preparing the payment request. [" + result.header.statusMessage + "]");
+                $("#detailed-messages").html(result.header.detailedMessage);
+                return true;
+            }
+            
+            return false;
+        },
+        
+        processAutoPaymentDetailsNext: function() {
+            utils.clearMessages();
+
+            var echeckModel = spayment.paymentDetailsECheckUiToModel();
+            if (!spayment.validateECheckForm(echeckModel.echeck)) {
+                return;
+            }
+            
+            if (!spayment.validateContactForm(echeckModel.billingContact)) {
+                return;
+            }
+
+            if (!spayment.validateBillingAddress(echeckModel.billingAddress)) {
+                return;
+            }
+            
+            //Send the details to the form and get the parametres to post to Cybersource
+            smodel.local.echeck = echeckModel.echeck;
+            smodel.paymentRequest.billingAddress = echeckModel.billingAddress;
+            smodel.paymentRequest.billingContact = echeckModel.billingContact;
+
+            smodel.local.currentPage = "autopayment-review";
+            spayment.refreshView();
+        },
+        
+        processAutoPaymentReviewPrev: function() {
+            smodel.local.currentPage = "autopayment-details";
+            spayment.refreshView();
+        },
+        
+        processAutoPaymentReviewAuthorize: function() {
+            utils.clearMessages();
+
+            utils.blockUI(smessages.ProcessRequest);
+            
+            smodel.paymentRequest.paymentTransaction.transactionType = "create_payment_token";
+            smodel.paymentRequest.paymentTransaction.paymentType = "echeck";
+            
+            //Give a chance to clients to process the request before sending off for signature creation.
+            if (spayment.preprocessAutoPaymentRequest) {
+                spayment.preprocessAutoPaymentRequest(spayment.continueProcessAutoPaymentReviewAuthorize);
+            } else {
+                spayment.continueProcessAutoPaymentReviewAuthorize();
+            }
+        },
+        
+        continueProcessAutoPaymentReviewAuthorize: function() {
+            PaymentProcessorController.preparePaymentRequest(smodel.paymentRequest, function(result, event){
+                if (spayment.checkAndHandleError(result, event)) {
+                    return;
+                }
+                
+                //Based on the request, construct the payment service form and add the card details.
+                result.body.params.echeck_account_type = smodel.local.echeck.echeckType;
+                result.body.params.echeck_routing_number = smodel.local.echeck.routingNumber;
+                result.body.params.echeck_account_number = smodel.local.echeck.accountNumber;
+                
+                $("#payment-service-form").html(smodel.templates.paymentServiceForm(result.body));
+                $("#payment-service-form form").submit();
+            });
+        },
+        
+        createContactFromDetailsAndAddress: function(billingContact, billingAddress) {
+            var contact = {};
+            contact.FirstName = billingContact.FirstName;
+            contact.LastName = billingContact.LastName;
+            contact.Email = billingContact.Email;
+            contact.Phone = billingContact.Phone;
+            contact.MailingStreet = billingAddress.street;
+            contact.MailingCity = billingAddress.city;
+            contact.MailingState = billingAddress.state;
+            contact.MailingPostalCode = billingAddress.postalCode;
+            
+            return contact;
+        }
+        
+    }
+
+    </script>
+    
+    <script>
+            $(document).ready(spayment.init);
+    </script>
+
+    <script id="template-payment-service-form" type="text/x-handlebars-template">
+        <form id="payment_confirmation" action="{{paymentServiceFormPostUrl}}" method="post">
+            {{#each params}}
+                <!-- The key and value must be sent as returned by the server. This is to make sure that
+                    signature calculated by the cybersource matches the signatire sent by the server -->
+                <input type="hidden" name="{{{@key}}}" value="{{{this}}}"/>
+            {{/each}}
+            <input type="Submit" value="Submit" style="display: none"/>
+        </form>
+    </script>
+    
+    <script id="template-payment" type="text/x-handlebars-template">
+
+        <ul id="navigation" class="nostyle">
+            <li><span class="{{textIf local.currentPage "payment-type" "active"}}"> <apex:outputText >{!$Label.payment_Payment_Method} </apex:outputText></span></li>
+            <li><span class="{{textIf local.currentPage "payment-details-card" "active"}} {{textIf local.currentPage "payment-details-echeck" "active"}}">  <apex:outputText >{!$Label.payment_Payment_Details} </apex:outputText></span></li>
+            <li><span class="{{textIf local.currentPage "payment-confirmation" "active"}}"><apex:outputText >{!$Label.payment_Payment_Confirmation} </apex:outputText></span></li>
+        </ul>
+
+        <div id="messages" class="message-box error" style="display: none">
+        </div>
+        <div id="detailed-messages" class="message-box error" style="display: none">
+        </div>
+        
+        {{#ifCurrentPage "payment-type"}}
+        <div id="page-payment-type">
+            <h3><apex:outputText >{!$Label.payment_Select_Payment_Method} </apex:outputText></h3>
+            <h4><apex:outputText >{!$Label.payment_Total_Amount}</apex:outputText>: ${{formatAmount local.amountDue}}</h4>
+            <div class="amount-type">
+                <h4><apex:outputText >{!$Label.payment_Payment_Amount} </apex:outputText></h4>
+                <ul class="nostyle">
+                    <li>
+                        <input id="pay-total-amount" name="payment-amount-type" value="total" type="radio" {{checkedIf local.paymentType.amountType "total"}}/>
+                        <label class="inline-normal" for="pay-total-amount"><apex:outputText >{!$Label.payment_Total_Amount}</apex:outputText>: ${{formatAmount local.amountDue}}</label>
+                    </li>
+                    <li>
+                        <input id="pay-other-amount" name="payment-amount-type" value="other" type="radio" {{checkedIf local.paymentType.amountType "other"}}/>
+                        <label class="inline-normal" for="pay-other-amount"><apex:outputText >{!$Label.payment_Other_Amount}</apex:outputText>: </label>
+                        <input name="other-amount" id="other-amount" value="{{formatAmount local.paymentType.otherAmount}}"/>
+                    </li>
+                </ul>
+            </div>
+            <div class="method-type">
+                <h4><apex:outputText >{!$Label.payment_Payment_Method} </apex:outputText></h4>
+                <ul class="nostyle">
+                    <li>
+                        <input id="payment-method-check" name="payment-method-type" value="echeck" type="radio" {{checkedIf local.paymentType.methodType "echeck"}}>
+                            <label class="inline-normal" for="payment-method-check"><apex:outputText >{!$Label.payment_Checking_or_Savings_Account}</apex:outputText></label>
+                        </input>
+                    </li>
+                    <li>
+                        <input id="payment-method-card" name="payment-method-type" value="card" type="radio" {{checkedIf local.paymentType.methodType "card"}}/>
+                        <label class="inline-normal" for="payment-method-card"><apex:outputText >{!$Label.payment_Credit_or_Debit_Card}</apex:outputText> </label>
+                    </li>
+                </ul>
+            </div>
+            <div class="buttons">
+                {{#if local.cancelUrl}}
+                    <a href="{!cancelUrl}" class="btn"><apex:outputText >{!$Label.payment_Cancel}</apex:outputText></a>
+                {{/if}}
+
+                <button id="btn-payment-type-next"><apex:outputText >{!$Label.payment_Next}</apex:outputText></button>
+            </div>
+        </div>
+        {{/ifCurrentPage}}
+
+        {{#ifCurrentPage "payment-details-card"}}
+        <div class="payment-details-card form">
+            <h3><apex:outputText >{!$Label.payment_Enter_Credit_Card_Details}</apex:outputText></h3>
+            <h4 class="amount-due"><apex:outputText > {!$Label.payment_Payment_Amount}</apex:outputText>: ${{formatAmount paymentRequest.paymentTransaction.amount}}</h4> 
+            
+            <div>
+                <label for="card-type"><apex:outputText >{!$Label.payment_Card_Type}</apex:outputText></label>
+                <select name="card-type" id="card-type">
+                    <option value="001" {{selectedIf local.creditCard.type "001"}}><apex:outputText >{!$Label.payment_Visa}</apex:outputText></option>
+                    <option value="002" {{selectedIf local.creditCard.type "002"}}><apex:outputText >{!$Label.payment_Master_Card}</apex:outputText></option>
+                    <option value="003" {{selectedIf local.creditCard.type "003"}}><apex:outputText >{!$Label.payment_American_Express}</apex:outputText></option>
+                </select>
+            </div>
+            
+            <div>
+            <label for="card-number"><apex:outputText >{!$Label.payment_Card_Number}</apex:outputText></label>
+            <input type="text" name="card-number" id="card-number"  value="{{local.creditCard.number}}"/>
+            </div>
+            
+            <div>
+                <label for="card-expiry-month"><apex:outputText >{!$Label.payment_Card_Expiration_Date}</apex:outputText></label>
+                <select name="card-expiry-month" id="card-expiry-month">
+                    <option value="01" {{selectedIf local.creditCard.expiryMonth "01"}}><apex:outputText >{!$Label.payment_Jan_01}</apex:outputText></option>
+                    <option value="02" {{selectedIf local.creditCard.expiryMonth "02"}}><apex:outputText >{!$Label.payment_Feb_02}</apex:outputText></option>
+                    <option value="03" {{selectedIf local.creditCard.expiryMonth "03"}}><apex:outputText >{!$Label.payment_Mar_03}</apex:outputText></option>
+                    <option value="04" {{selectedIf local.creditCard.expiryMonth "04"}}><apex:outputText >{!$Label.payment_Apr_04}</apex:outputText></option>
+                    <option value="05" {{selectedIf local.creditCard.expiryMonth "05"}}><apex:outputText >{!$Label.payment_May_05}</apex:outputText></option>
+                    <option value="06" {{selectedIf local.creditCard.expiryMonth "06"}}><apex:outputText >{!$Label.payment_Jun_06}</apex:outputText></option>
+                    <option value="07" {{selectedIf local.creditCard.expiryMonth "07"}}><apex:outputText >{!$Label.payment_Jul_07}</apex:outputText></option>
+                    <option value="08" {{selectedIf local.creditCard.expiryMonth "08"}}><apex:outputText >{!$Label.payment_Aug_08}</apex:outputText></option>
+                    <option value="09" {{selectedIf local.creditCard.expiryMonth "09"}}><apex:outputText >{!$Label.payment_Sep_09}</apex:outputText></option>
+                    <option value="10" {{selectedIf local.creditCard.expiryMonth "10"}}><apex:outputText >{!$Label.payment_Oct_10}</apex:outputText></option>
+                    <option value="11" {{selectedIf local.creditCard.expiryMonth "11"}}><apex:outputText >{!$Label.payment_Nov_11}</apex:outputText></option>
+                    <option value="12" {{selectedIf local.creditCard.expiryMonth "12"}}><apex:outputText >{!$Label.payment_Dec_12}</apex:outputText></option>
+                </select>
+
+                <select name="card-expiry-year" id="card-expiry-year">
+                    <option value="2014" {{selectedIf local.creditCard.expiryYear "2014"}}>2014</option>
+                    <option value="2015" {{selectedIf local.creditCard.expiryYear "2015"}}>2015</option>
+                    <option value="2016" {{selectedIf local.creditCard.expiryYear "2016"}}>2016</option>
+                    <option value="2017" {{selectedIf local.creditCard.expiryYear "2017"}}>2017</option>
+                    <option value="2018" {{selectedIf local.creditCard.expiryYear "2018"}}>2018</option>
+                    <option value="2019" {{selectedIf local.creditCard.expiryYear "2019"}}>2019</option>
+                    <option value="2020" {{selectedIf local.creditCard.expiryYear "2020"}}>2020</option>
+                    <option value="2021" {{selectedIf local.creditCard.expiryYear "2021"}}>2021</option>
+                    <option value="2022" {{selectedIf local.creditCard.expiryYear "2022"}}>2022</option>                    
+                </select>
+            </div>
+            
+            <div>
+                <label for="card-cvv-code"><apex:outputText >{!$Label.payment_CVV_CVC}</apex:outputText> </label>
+                <input type="text" name="card-cvv-code" id="card-cvv-code" value="{{local.creditCard.cvvCode}}"/>
+            </div>
+            <div id="billing-contact">
+                <label for="first-name"><apex:outputText >{!$Label.payment_Billing_Contact}</apex:outputText> </label>
+                <div class="subform">
+                    <div>
+                        <label class="inline-normal" for="first-name"><apex:outputText >{!$Label.payment_Name}</apex:outputText> </label>
+                <input type="text" name="first-name" id="first-name" value="{{paymentRequest.billingContact.FirstName}}"/>
+                <input type="text" name="last-name" id="last-name" value="{{paymentRequest.billingContact.LastName}}"/>
+                    </div>
+                    <div>
+                        <label class="inline-normal" for="email"><apex:outputText >{!$Label.payment_Email}</apex:outputText> </label>
+                        <input type="text" name="email" id="email" value="{{paymentRequest.billingContact.Email}}"/>
+                    </div>
+                    <div>
+                        <label class="inline-normal" for="phone"><apex:outputText >{!$Label.payment_Phone}</apex:outputText></label>
+                <input type="text" name="phone" id="phone" value="{{paymentRequest.billingContact.Phone}}"/>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <label for="street"><apex:outputText >{!$Label.payment_Billing_Address}</apex:outputText></label>
+                <div class="subform">
+                    <div>
+                        <input type="text" name="street" id="street" value="{{paymentRequest.billingAddress.street}}"/>
+                    </div>
+                    <div>
+                        <input type="text" name="city" id="city" value="{{paymentRequest.billingAddress.city}}"/>
+                        <input type="text" name="state" id="state" value="{{paymentRequest.billingAddress.state}}"/>
+                        <input type="text" name="postal-code" id="postal-code" value="{{paymentRequest.billingAddress.postalCode}}"/>
+                    </div>
+                </div>
+            </div>
+            <div class="buttons">
+                {{#if local.cancelUrl}}
+                    <a href="{!cancelUrl}" class="btn"><apex:outputText >{!$Label.payment_Cancel}</apex:outputText> </a>
+                {{/if}}
+
+                <button id="btn-payment-detals-card-prev"><apex:outputText >{!$Label.payment_Prev}</apex:outputText> </button>
+                <button id="btn-payment-detals-card-paynow"><apex:outputText >{!$Label.payment_Pay_Now}</apex:outputText> </button>
+            </div>
+        </div>
+        {{/ifCurrentPage}}
+
+        {{#ifCurrentPage "payment-details-echeck"}}
+            <div id="page-payment-details-echeck" class="form">
+                <h3><apex:outputText >{!$Label.payment_Enter_Account_Details}</apex:outputText></h3>
+                <h4><apex:outputText >{!$Label.payment_Payment_Amount}</apex:outputText> <span class="amount">${{formatAmount paymentRequest.paymentTransaction.amount}}</span></h4>
+
+                <div class="account-details">
+                    <h4><apex:outputText >{!$Label.payment_Account_Type}</apex:outputText></h4>
+                    <ul class="nostyle options">
+                        <li>
+                            <input type="radio" name="echeck-type" value="C" id="account-type-checking" {{checkedIf local.echeck.echeckType "C"}}/>
+                            <label class="inline-normal" for="account-type-checking"><apex:outputText >{!$Label.payment_Checking}</apex:outputText></label>
+                        </li>
+                        <li>
+                            <input type="radio" name="echeck-type" value="S" id="account-type-saving" {{checkedIf local.echeck.echeckType "S"}}/>
+                            <label class="inline-normal" for="account-type-saving"><apex:outputText >{!$Label.payment_Savings}</apex:outputText></label>
+                        </li>
+                        <li>
+                            <input type="radio" name="echeck-type" value="X" id="account-type-corporate" {{checkedIf local.echeck.echeckType "X"}}/>
+                            <label class="inline-normal" for="account-type-corporate"><apex:outputText >{!$Label.payment_Corporate_Savings}</apex:outputText></label>
+                        </li>
+                    </ul>
+                </div>
+                <div>
+                    <label for="routing-number"><apex:outputText >{!$Label.payment_Routing_transit_Information}</apex:outputText></label>
+                    <input type="text" name="routing-number" id="routing-number" value="{{local.echeck.routingNumber}}"/>
+                </div>
+
+                <div>
+                    <label for="account-number"><apex:outputText >{!$Label.payment_Bank_Account_Number}</apex:outputText></label>
+                    <input type="text" name="account-number" id="account-number" value="{{local.echeck.accountNumber}}"/>
+                </div>
+
+                <div>
+                    <label for="account-number-confirmation"><apex:outputText >{!$Label.payment_Confirm_Bank_Account_Number}</apex:outputText></label>
+                    <input type="text" name="account-number-confirmation" id="account-number-confirmation" value="{{local.echeck.accountNumber}}"/>
+                </div>
+
+            <div id="billing-contact">
+                <label for="first-name"><apex:outputText >{!$Label.payment_Billing_Contact}</apex:outputText></label>
+                <div class="subform">
+                    <div>
+                        <label class="inline-normal" for="first-name"><apex:outputText >{!$Label.payment_Name}</apex:outputText></label>
+                  &nbsp; &nbsp;<input type="text" name="first-name" id="first-name" value="{{paymentRequest.billingContact.FirstName}}"/>
+                <input type="text" name="last-name" id="last-name" value="{{paymentRequest.billingContact.LastName}}"/>
+                    </div>
+                    <div>
+                        <label class="inline-normal" for="email"><apex:outputText >{!$Label.payment_Email}</apex:outputText></label>
+                        <input type="text" name="email" id="email" value="{{paymentRequest.billingContact.Email}}"/>
+                    </div>
+                    <div>
+                        <label class="inline-normal" for="phone"><apex:outputText >{!$Label.payment_Phone}</apex:outputText></label>
+                 &nbsp; &nbsp;<input type="text" name="phone" id="phone" value="{{paymentRequest.billingContact.Phone}}"/>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <label for="street"><apex:outputText >{!$Label.payment_Billing_Address}</apex:outputText></label>
+                <div class="subform">
+                    <div>
+                        <input type="text" name="street" id="street" value="{{paymentRequest.billingAddress.street}}"/>
+                    </div>
+                    <div>
+                        <input type="text" name="city" id="city" value="{{paymentRequest.billingAddress.city}}"/>
+                        <input type="text" name="state" id="state" value="{{paymentRequest.billingAddress.state}}"/>
+                        <input type="text" name="postal-code" id="postal-code" value="{{paymentRequest.billingAddress.postalCode}}"/>
+                    </div>
+                </div>
+            </div>
+                <div class="buttons">
+                    {{#if local.cancelUrl}}
+                        <a href="{!cancelUrl}" class="btn"><apex:outputText >{!$Label.payment_Cancel}</apex:outputText></a>
+                    {{/if}}
+                    <button id="btn-payment-detals-echeck-prev"><apex:outputText >{!$Label.payment_Prev}</apex:outputText></button>
+                    <button id="btn-payment-detals-echeck-paynow"><apex:outputText >{!$Label.payment_Authorize}</apex:outputText></button>
+                </div>
+            </div>
+        {{/ifCurrentPage}}
+
+        {{#ifCurrentPage "payment-confirmation"}}
+        <div class="payment-success">
+            <h3><apex:outputText >{!$Label.payment_Payment_Successfully_Completed}</apex:outputText></h3>
+            <h4><apex:outputText >{!$Label.payment_Your_payment_of}</apex:outputText> ${{formatAmount paymentResponse.paymentTransaction.amount}}&nbsp;   <apex:outputText >{!$Label.payment_has_been_processed}</apex:outputText></h4> 
+                    <p><apex:outputText >{!$Label.payment_72hrs} </apex:outputText></p>
+            <p>
+                <span><apex:outputText >{!$Label.payment_Confirmation_Id} </apex:outputText>: {{paymentResponse.paymentTransaction.paymentGatewayTransactionId}}</span>
+            </p>
+            <div class="buttons">
+                {{#if local.successUrl}}
+                    <a href="{!successUrl}" class="btn"><apex:outputText >{!$Label.payment_Continue} </apex:outputText></a>
+                {{/if}}
+            </div>
+        </div>
+        {{/ifCurrentPage}}
+    </script>
+    
+    <script id="template-autopayment" type="text/x-handlebars-template">
+
+        <ul id="navigation" class="nostyle">
+            <li><span class="{{textIf local.currentPage "autopayment-details" "active"}}"><apex:outputText >{!$Label.payment_Details} </apex:outputText></span></li>
+            <li><span class="{{textIf local.currentPage "autopayment-review" "active"}}"><apex:outputText >{!$Label.payment_Review} </apex:outputText></span></li>
+            <li><span class="{{textIf local.currentPage "autopayment-confirmation" "active"}}"><apex:outputText >{!$Label.payment_Confirmation} </apex:outputText></span></li>
+        </ul>
+
+        <div id="messages" class="message-box error" style="display: none">
+        </div>
+        <div id="detailed-messages" class="message-box error" style="display: none">
+        </div>
+        
+        {{#ifCurrentPage "autopayment-details"}}
+        <div id="page-autopayment-details" class="form">
+            <h3><apex:outputText >{!$Label.payment_Introduction} </apex:outputText></h3>
+            <p><apex:outputText >{!$Label.payment_Introduction_text} </apex:outputText></p>
+              <div class="account-details">
+                <h4><apex:outputText >{!$Label.payment_Account_Type} </apex:outputText></h4>
+                <ul class="nostyle options">
+                    <li>
+                        <input type="radio" name="echeck-type" value="C" id="account-type-checking" {{checkedIf local.echeck.echeckType "C"}}/>
+                        <label class="inline-normal" for="account-type-checking"><apex:outputText >{!$Label.payment_Checking} </apex:outputText></label>
+                    </li>
+                    <li>
+                        <input type="radio" name="echeck-type" value="S" id="account-type-saving" {{checkedIf local.echeck.echeckType "S"}}/>
+                        <label class="inline-normal" for="account-type-saving"><apex:outputText >{!$Label.payment_Savings} </apex:outputText></label>
+                    </li>
+                    <li>
+                        <input type="radio" name="echeck-type" value="X" id="account-type-corporate" {{checkedIf local.echeck.echeckType "X"}}/>
+                        <label class="inline-normal" for="account-type-corporate"><apex:outputText >{!$Label.payment_Corporate_Savings} </apex:outputText></label>
+                    </li>
+                </ul>
+            </div>
+
+            <div>
+                <label for="routing-number"><apex:outputText >{!$Label.payment_Routing_transit_Information} </apex:outputText></label>
+                <input type="text" name="routing-number" id="routing-number" value="{{local.echeck.routingNumber}}"/>
+            </div>
+
+            <div>
+                <label for="account-number"><apex:outputText >{!$Label.payment_Bank_Account_Number} </apex:outputText></label>
+                <input type="text" name="account-number" id="account-number" value="{{local.echeck.accountNumber}}"/>
+            </div>
+
+            <div>
+                <label for="account-number-confirmation"><apex:outputText >{!$Label.payment_Confirm_Bank_Account_Number} </apex:outputText></label>
+                <input type="text" name="account-number-confirmation" id="account-number-confirmation" value="{{local.echeck.accountNumber}}"/>
+            </div>
+            <div id="billing-contact">
+                <label for="first-name"><apex:outputText >{!$Label.payment_Billing_Contact} </apex:outputText></label>
+                <div class="subform">
+                    <div>
+                        <label class="inline-normal" for="first-name"><apex:outputText >{!$Label.payment_Name} </apex:outputText></label>
+                <input type="text" name="first-name" id="first-name" value="{{paymentRequest.billingContact.FirstName}}"/>
+                <input type="text" name="last-name" id="last-name" value="{{paymentRequest.billingContact.LastName}}"/>
+                    </div>
+                    <div>
+                        <label class="inline-normal" for="email"><apex:outputText >{!$Label.payment_Email} </apex:outputText></label>
+                    <input type="text" name="email" id="email" value="{{paymentRequest.billingContact.Email}}"/>
+                    </div>
+                    <div>
+                        <label class="inline-normal" for="phone"><apex:outputText >{!$Label.payment_Phone} </apex:outputText></label>
+                   <input type="text" name="phone" id="phone" value="{{paymentRequest.billingContact.Phone}}"/>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <label for="street"><apex:outputText >{!$Label.payment_Billing_Address} </apex:outputText></label>
+                <div class="subform">
+                    <div>
+                        <input type="text" name="street" id="street" value="{{paymentRequest.billingAddress.street}}"/>
+                    </div>
+                    <div>
+                        <input type="text" name="city" id="city" value="{{paymentRequest.billingAddress.city}}"/>
+                        <input type="text" name="state" id="state" value="{{paymentRequest.billingAddress.state}}"/>
+                        <input type="text" name="postal-code" id="postal-code" value="{{paymentRequest.billingAddress.postalCode}}"/>
+                    </div>
+                </div>
+            </div>
+            <div class="buttons">
+                {{#if local.cancelUrl}}
+                    <a href="{!cancelUrl}" class="btn"><apex:outputText >{!$Label.payment_Cancel} </apex:outputText></a>
+                {{/if}}
+
+                <button id="btn-autopayment-details-next"><apex:outputText >{!$Label.payment_Next} </apex:outputText></button>
+            </div>
+        </div>
+        {{/ifCurrentPage}}
+
+        {{#ifCurrentPage "autopayment-review"}}
+        <div class="autopayment-review form">
+            <h3><apex:outputText >{!$Label.payment_Review_your_Auto_Payment_information} </apex:outputText></h3>
+            <div class="account-details">
+                <label><apex:outputText >{!$Label.payment_Account_Type} </apex:outputText> </label>
+                <span class="value">{{echeckType local.echeck.echeckType}}</span>
+            </div>
+
+            <div>
+                <label><apex:outputText >{!$Label.payment_Payment_Date} </apex:outputText></label>
+                <span class="value">{!$Label.payment_Last_business_day_of_the_month}</span>
+            </div>
+
+            <div>
+                <label><apex:outputText >{!$Label.payment_Routing_Number} </apex:outputText></label>
+                <span class="value">{{local.echeck.routingNumber}}</span>
+            </div>
+
+            <div>
+                <label><apex:outputText >{!$Label.payment_Account_Number} </apex:outputText></label>
+                <span class="value">{{local.echeck.accountNumber}}</span>
+            </div>
+
+            <div id="billing-contact">
+                <label for="first-name"><apex:outputText >{!$Label.payment_Billing_Contact} </apex:outputText></label>
+                <div class="subform">
+                    <div>
+                        <label class="inline-normal" for="first-name"><apex:outputText >{!$Label.payment_Name} </apex:outputText></label>
+                         &nbsp; &nbsp;<span class="value">{{paymentRequest.billingContact.FirstName}}</span>
+                        <span class="value">{{paymentRequest.billingContact.LastName}}</span>
+                    </div>
+                    <div>
+                        <label class="inline-normal" for="email"><apex:outputText >{!$Label.payment_Email} </apex:outputText></label>
+                         <span class="value">{{paymentRequest.billingContact.Email}}</span>
+                    </div>
+                    <div>
+                        <label class="inline-normal" for="phone"><apex:outputText >{!$Label.payment_Phone} </apex:outputText></label>
+                        &nbsp; &nbsp; <span class="value">{{paymentRequest.billingContact.Phone}}</span>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <label for="street"><apex:outputText >{!$Label.payment_Billing_Address} </apex:outputText></label>
+                <div class="subform">
+                    <div>
+                        <span class="value">{{paymentRequest.billingAddress.street}}</span>
+                    </div>
+                    <div>
+                        <span class="value">{{paymentRequest.billingAddress.city}}</span>
+                        <span class="value">{{paymentRequest.billingAddress.state}}</span>
+                        <span class="value">{{paymentRequest.billingAddress.postalCode}}</span>
+                    </div>
+                </div>
+            </div>
+            <div class="terms-and-conditions">
+                <label for="terms-and-conditions"><apex:outputText >{!$Label.payment_Terms_and_Conditions} </apex:outputText></label>
+                <textarea rows="8" cols="50" id="terms-and-conditions" readonly="readonly">
+                           <apex:outputText >{!$Label.payment_Monthy_terms1} </apex:outputText>
+                            <apex:outputText >{!$Label.payment_Monthy_terms2} </apex:outputText>
+                           <apex:outputText >{!$Label.payment_Monthy_terms3} </apex:outputText>
+                            <apex:outputText >{!$Label.payment_Monthy_terms3_b} </apex:outputText>
+                            <apex:outputText >{!$Label.payment_Monthy_terms3_a} </apex:outputText>
+                            <apex:outputText >{!$Label.payment_Monthy_terms4} </apex:outputText>
+                           <apex:outputText >{!$Label.payment_terms5} </apex:outputText>
+                           <apex:outputText >{!$Label.payment_terms6} </apex:outputText>
+               </textarea>
+            </div>
+            <div>
+                <label><apex:outputText >{!$Label.payment_Agreement} </apex:outputText></label>
+                <span class="value"><apex:outputText >{!$Label.payment_byselecting} </apex:outputText></span>
+            </div>
+
+            <div class="buttons">
+                {{#if local.cancelUrl}}
+                    <a href="{!cancelUrl}" class="btn"><apex:outputText >{!$Label.payment_Cancel} </apex:outputText></a>
+                {{/if}}
+
+                <button id="btn-autopayment-review-prev"><apex:outputText >{!$Label.payment_Edit} </apex:outputText></button>
+                <button id="btn-autopayment-review-authorize"><apex:outputText >{!$Label.payment_Authorize_for_Auto_Payment} </apex:outputText></button>
+            </div>
+        </div>
+        {{/ifCurrentPage}}
+
+        {{#ifCurrentPage "autopayment-confirmation"}}
+        <div class="autopayment-success">
+            <h3><apex:outputText >{!$Label.payment_You_have_been_successfully_enrolled_in_Auto_Payment} </apex:outputText></h3> 
+            <p><apex:outputText >{!$Label.payment_Thank_you_for_enrolling_in_auto_payment} </apex:outputText></p>
+            <p>
+                <span><apex:outputText >{!$Label.payment_Confirmation_Id} </apex:outputText>: {{paymentResponse.paymentTransaction.paymentGatewayTransactionId}}</span>
+            </p>
+            <div class="buttons">
+                {{#if local.successUrl}}
+                    <a href="{!successUrl}" class="btn"><apex:outputText >{!$Label.payment_Continue} </apex:outputText></a>
+                {{/if}}
+            </div>
+        </div>
+        {{/ifCurrentPage}}
+    </script>    
+    <script>
+        Handlebars.registerHelper('selectInputIf', function(field, value) {
+            var exprn = ((field == value)?"selected":"");
+            return new Handlebars.SafeString();
+        });
+
+        Handlebars.registerHelper('selectedIf', function(field, value) {
+            return field == value ? ' selected ' : '';
+        });
+
+        Handlebars.registerHelper('formatAmount', function(amountValue) {
+            return new Handlebars.SafeString(utils.formatAmount(amountValue, 2, ",", ".", ""));
+        });
+
+        Handlebars.registerHelper('textIf', function(field, value, text) {
+            return field == value ? text : '';
+        });
+
+        Handlebars.registerHelper('checkedIf', function(field, value) {
+            return field == value ? ' checked ' : '';
+        });
+        
+        Handlebars.registerHelper('ifCurrentPage', function(page, options) {
+            if(this.local.currentPage == page) {
+                return options.fn(this);
+            }
+        });
+
+        Handlebars.registerHelper('echeckType', function(value) {
+            if (value === 'C') {
+                return '<apex:outputText >{!$Label.payment_Checking}</apex:outputText>';
+
+            } else if (value === 'S') {
+                return '<apex:outputText >{!$Label.payment_Savings}</apex:outputText>';
+
+            } else if (value === 'X') {
+                return '<apex:outputText >{!$Label.payment_Corporate_Savings}</apex:outputText>';
+                
+            } else {
+                return 'Unknown';
+            }
+        });
+    </script>
+
+    <div id="payment-container">
+    </div>
+    <div id="payment-service-form">
+    </div>
+    
+    <style>
+        #terms-and-conditions {
+            height: auto !Important;
+        }
+    </style>
+    
+</apex:component>

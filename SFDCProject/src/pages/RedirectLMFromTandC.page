@@ -1,0 +1,2 @@
+<apex:page standardController="Contact" extensions="RedirectLMFromTandCExt" action="{!Init}">
+</apex:page>

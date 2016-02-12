@@ -1,0 +1,56 @@
+<apex:page standardController="Proposal__c" extensions="CreateServiceContractController" action="{!create}" >
+	<apex:form id="CreateSCForm">
+		<apex:pageMessages ></apex:pageMessages>
+		<apex:inputHidden value="{!Proposal__c.Stage__c}"/>
+		
+		<apex:panelGroup layout="block" >
+		<apex:outputpanel style="text-align:center" layout="block">
+			<apex:commandbutton rendered="{!(showError || showExistingSC)}" value="Return to Proposal" action="{!ReturnToProposal}"/>
+			<!--
+			&nbsp;&nbsp;
+			 <apex:commandbutton rendered="{!showExistingSC}" value="Overwrite Existing Service Contract" action="{!overwriteExistingSC}"/>
+			&nbsp;&nbsp;
+			<apex:commandbutton rendered="{!showExistingSC}" value="Generate New Service Contract" action="{!generateNewServiceContract}"/>
+			-->
+			&nbsp;&nbsp;
+			<apex:actionStatus id="mySaveStatus1">
+	         <apex:facet name="stop">
+	             <apex:commandButton value="Update Existing Service Contract" action="{!overwriteExistingSC}" rerender="CreateSCForm" rendered="{!showExistingSC}" status="mySaveStatus1"/>
+	         </apex:facet>
+	         <apex:facet name="start">
+	         	<apex:outputtext value="In progress ..." />
+	             	<apex:outputPanel >
+	                   <apex:image value="/img/loading32.gif" style="height: 15px;"/>
+	                   <apex:commandButton value="Processing..." status="mySaveStatus1" disabled="true"/>
+					</apex:outputPanel>
+	           </apex:facet>
+	        </apex:actionStatus>
+			
+			&nbsp;&nbsp;
+			<apex:actionStatus id="mySaveStatus2">
+	         <apex:facet name="stop">
+	             <apex:commandButton value="Generate New Service Contract" action="{!generateNewServiceContract}" rerender="CreateSCForm" rendered="{!showExistingSC}" status="mySaveStatus2"/>
+	         </apex:facet>
+	         <apex:facet name="start">
+	         	<apex:outputtext value="In progress ..." />
+	             	<apex:outputPanel >
+	                   <apex:image value="/img/loading32.gif" style="height: 15px;"/>
+	                   <apex:commandButton value="Processing..." status="mySaveStatus2" disabled="true"/>
+					</apex:outputPanel>
+	           </apex:facet>
+	        </apex:actionStatus>
+
+		</apex:outputpanel>
+		</apex:panelGroup>
+		
+		<!-- <apex:outputtext id="CreateSCForm" value="" />  -->
+		
+		<!--
+				<apex:pageblock title="Proposal List"  id="ProposalList">
+		</apex:pageblock> 
+		 -->
+
+		
+		
+	</apex:form>
+</apex:page>

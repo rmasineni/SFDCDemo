@@ -1,0 +1,27 @@
+<apex:component >
+    <apex:outputPanel layout="none" rendered="{!BEGINS($Site.Prefix, '/aeepartner')}"> 
+        <div class="grid_12" style="text-align: center">
+            © 2016 AEE Solar
+        </div>
+    </apex:outputPanel>
+    <apex:outputPanel layout="none" rendered="{!BEGINS($Site.Prefix, '/partner')}"> 
+        <div align="center" class="header-meta grid_16 clearfix">
+            <apex:outputPanel layout="block">
+                <ul class="footerUlist" id="footernav">
+                    <li class="footerlist">© 2007 - 2012 Sunrun Inc.</li>
+                    <li class="footerlist"><a href="http://www.sunrun.com/">Sunrun Home</a></li>
+                    <li class="footerlist"><span class="divider">|</span> <a href="http://www.sunrun.com/about-sunrun/contact">Contact Sunrun</a></li>
+                    <li class="footerlist"><span class="divider">|</span> <a href="http://www.sunrun.com/about-sunrun">About Sunrun</a></li>
+                    <li class="footerlist"><span class="divider">|</span> <a href="http://www.sunrun.com/blog">Blog</a></li>
+                    <li class="footerlist"><span class="divider">|</span> <a href="http://www.sunrun.com/privacy-policy">Privacy Policy</a></li>
+                </ul>
+            </apex:outputPanel>
+    
+            <apex:outputPanel layout="block">
+                <!--<img src="{!$Resource.PartnerPortalFooter1}" height="40px;" width="960px;"/>  -->
+                <hr/>
+            </apex:outputPanel>
+            <br></br>
+        </div>
+    </apex:outputPanel>
+</apex:component>

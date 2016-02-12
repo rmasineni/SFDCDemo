@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<HomePageComponent xmlns="http://soap.sforce.com/2006/04/metadata">
+    <body>&lt;div id=&quot;dropbox&quot; style=&quot;height:70%;&quot;&gt;&lt;iframe id=&quot;frameId1&quot; src=&quot;&quot; frameborder=&quot;0&quot; height=&quot;400px&quot; width=&quot;100%&quot;&gt;&lt;/iframe&gt;&lt;script&gt;     var 
+homepageURL = document.URL; if(homepageURL.indexOf(&apos;/partner&apos;) &gt; -1){             document.getElementById(&apos;frameId1&apos;).src = &apos;/partner/apex/PartnerPortalHomeComponent&apos;;      }else{  document.getElementById(&apos;frameId1&apos;).src 
+=  &apos;/apex/PartnerPortalHomeComponent&apos;;       }   &lt;/script&gt;&lt;/div&gt;</body>
+    <pageComponentType>htmlArea</pageComponentType>
+    <width>wide</width>
+</HomePageComponent>

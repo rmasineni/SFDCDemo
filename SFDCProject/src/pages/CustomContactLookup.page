@@ -1,0 +1,116 @@
+<apex:page controller="CustomContactLookup" title="Search" showHeader="false" 
+					sideBar="false" tabStyle="Contact" id="pg" readonly="true">
+	<apex:form >
+		<apex:outputPanel id="page" layout="block" style="margin:5px;padding:10px;padding-top:2px;">
+			<apex:actionRegion >  
+			<apex:outputPanel id="top" layout="block" style="margin:5px;padding:10px;padding-top:2px;">
+				<apex:outputLabel value="Search" style="font-weight:Bold;padding-right:10px;" for="txtSearch"/>
+				<apex:inputText id="txtSearch" value="{!searchString}" onkeypress="handleKeyPress(event);"/>
+				<span style="padding-left:5px">
+					<apex:commandButton id="btnGo" value="Go" action="{!Search}" rerender="searchResults"></apex:commandButton>
+					<script> var sbutton = document.getElementById("{!$Component.btnGo}"); </script>
+				</span>
+			</apex:outputPanel>
+			<apex:pageBlock id="searchResults"> 
+           		<apex:Pageblocksection title="Contacts" columns="1"/>
+					<apex:pageBlockTable value="{!results}" var="a" id="tblResults">
+						<apex:column >
+						  <apex:facet name="header">
+						    <apex:outputPanel >Name</apex:outputPanel>
+						  </apex:facet>
+						   <apex:outputLink value="javascript:top.window.opener.lookupPick2('{!FormTag}','{!TextBox}_lkid','{!TextBox}','{!a.Id}','{!a.Name}', false)" rendered="{!NOT(ISNULL(a.Id))}">{!a.Name}</apex:outputLink>     
+						</apex:column>
+		                <apex:column headerValue="Email" value="{!a.email}"/>
+		                <apex:column headerValue="Street" value="{!a.MailingStreet}"/>
+		                <apex:column headerValue="City" value="{!a.MailingCity}"/>
+						<apex:column headerValue="State" value="{!a.MailingState}"/>
+						<!-- <apex:column headerValue="Country" value="{!a.MailingCountry}"/> -->
+						<apex:column headerValue="Postal Code" value="{!a.MailingPostalCode}"/>
+					</apex:pageBlockTable>
+					&nbsp;
+					<apex:outputPanel layout="block" styleClass="pSearchShowMore" id="otpNavTop">
+						Total Records Found: <apex:outputText rendered="{!IF(Con.resultSize==10000,true,false)}">10000 +</apex:outputText><apex:outputText rendered="{!IF(Con.resultSize < 10000,true,false)}">{!Con.resultSize}</apex:outputText>  
+						<apex:image url="/img/search_prevarrow_disabled.gif" styleClass="prevArrow" rendered="{!NOT(Con.HasPrevious)}"/>  
+						<apex:image url="/img/search_prevarrow.gif" title="First Page" styleClass="prevArrow" rendered="{!Con.HasPrevious}"/>  
+						<apex:commandLink action="{!first}" title="First Page" value="First Page" rendered="{!Con.HasPrevious}"/>  
+						<apex:outputPanel styleClass="pShowLess noLink" style="color:grey" rendered="{!NOT(Con.HasPrevious)}">First Page</apex:outputPanel>           
+		
+						<apex:image url="/img/search_prevarrow_disabled.gif" styleClass="prevArrow" rendered="{!NOT(Con.HasPrevious)}"/>  
+						<apex:image url="/img/search_prevarrow.gif" title="Previous Page" styleClass="prevArrow" rendered="{!Con.HasPrevious}"/>  
+						<apex:commandLink action="{!Previous}" title="Previous Page" value="Previous Page" rendered="{!Con.HasPrevious}"/>  
+						<apex:outputPanel styleClass="pShowLess noLink" style="color:grey" rendered="{!NOT(Con.HasPrevious)}">Previous Page</apex:outputPanel>           
+						&nbsp;({!IF(Con.PageNumber == 1,1,((Con.PageNumber -1) * Con.PageSize)+1)}-{!IF(Con.resultSize < Con.PageSize,Con.resultSize,Con.PageNumber * Con.pageSize)})&nbsp;  
+						<apex:outputPanel styleClass="pShowLess noLink" style="color:grey" rendered="{!NOT(Con.HasNext)}">Next Page</apex:outputPanel>           
+						<apex:commandLink title="Next Page" value="Next Page" rendered="{!Con.HasNext}" action="{!Next}"/>&nbsp;  
+						<apex:image url="/img/search_nextarrow.gif" title="Next Page" styleClass="nextArrow" rendered="{!Con.HasNext}"/>  
+						<apex:image url="/img/search_nextarrow_disabled.gif" rendered="{!NOT(Con.HasNext)}"/>            
+						<apex:outputPanel styleClass="pShowLess noLink" style="color:grey" rendered="{!NOT(Con.HasNext)}">Last Page</apex:outputPanel>           
+						<apex:commandLink title="Last Page" value="Last Page" rendered="{!Con.HasNext}" action="{!last}"/>&nbsp;  
+						<apex:image url="/img/search_nextarrow.gif" title="Last Page" styleClass="nextArrow" rendered="{!Con.HasNext}"/>  
+						<apex:image url="/img/search_nextarrow_disabled.gif" rendered="{!NOT(Con.HasNext)}"/>
+					</apex:outputPanel> 
+				</apex:pageBlock>
+			</apex:actionRegion>
+		</apex:outputPanel>
+	</apex:form>
+	
+	<style type="text/css">
+        .custPopup{
+              background-color: white;
+              white-space:nowrap;
+              border-width: 2px;
+              border-style: solid;
+              z-index: 9999;
+              left: 50%;
+              padding:10px;
+              position: absolute;
+              width: 500px;
+              margin-left: -250px;
+              top:100px;
+          }
+        .popupBackground{
+              background-color:black;
+              opacity: 0.50;
+              filter: alpha(opacity = 20);
+              position: absolute;
+              width: 100%;
+              height: 100%;
+              top: 0;
+              left: 0;
+              z-index: 9998;
+          }
+    </style>
+
+   <style type="text/css">
+        .pointer
+        {
+            cursor:pointer;
+            border:1px solid #ccc;
+            padding:5px;
+        }
+
+        body { font-size: 75.5%; }
+        custombody { font-size: 50.5%; }
+        fieldset { padding:0; border:0; margin-top:25px; }
+        input.text { margin-bottom:12px; width:95%; padding: .4em; }
+        h1 { font-size: 1.2em; margin: .6em 0; }
+        div#users-contain { width: 750px; margin: 20px 0; }
+        div#users-contain table { margin: 1em 0; border-collapse: collapse; width: 100%; }
+        div#users-contain table td, div#users-contain table th { border: 1px solid #eee; padding: .6em 10px; text-align: left; }
+        .ui-dialog .ui-state-error { padding: .3em; }
+        .validateTips { border: 1px solid transparent; padding: 0.3em; }
+    </style> 
+	<script type="text/javascript">
+		function handleKeyPress(e){
+			var key= 0;
+			if(window.event){
+				key= e.keyCode;
+            }else if(e.which){
+           		key= e.which;
+			}
+			if(key==13){
+				sbutton.click();
+			}
+		}
+	</script>
+</apex:page>

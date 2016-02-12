@@ -1,0 +1,54 @@
+<apex:page title="Sunrun Partner Portal Need Help Signing in?" sidebar="false" showHeader="false" controller="PartnerPortalLogin">
+	<apex:composition template="PartnerPortalSiteTemplate">
+		<apex:define name="mainContent">
+			<apex:outputpanel layout="block" styleclass="grid_2">
+				<div class="needHelpDiv1">
+				</div>
+			</apex:outputpanel>
+			<apex:outputpanel layout="block" styleclass="grid_8">
+				<apex:form >
+				<div class="needHelpDiv2">
+					<div>
+				   		<BR>&nbsp;</BR><BR>&nbsp;</BR>
+				   		<BR>&nbsp;</BR><BR>&nbsp;</BR>
+						<BR>&nbsp;</BR>
+			   		</div>
+
+			        <div id="SuccessMessage" class="pbHeader">
+			            <table id="successBox" border="0" cellpadding="0" cellspacing="0">
+			                <tr><td>
+			                    <div class="">
+			                        <div class=""></div>
+			                        <div style="font-size:14px; color:black;" >{!confirmMessage}</div>
+			                        <div class="">
+			                            <div class="bg"></div>
+			                        </div>
+			                    </div>
+			                </td></tr>
+							<tr><td>
+				                <div style="padding-left:0px;">
+									<BR>&nbsp;</BR><BR>&nbsp;</BR>
+									<apex:outputPanel >
+										<span style="margin-left:0px;width:0px;">
+											<apex:commandLink style="font-size:110%;"
+												action="{!returnTologinPage}" 
+												title="Return to login page" value="Return to login page"/>    
+										</span>
+									</apex:outputPanel>
+				                </div>	
+			                </td></tr>
+			            </table> 
+			        </div>
+					<p></p>
+
+					<div>
+		   				<BR>&nbsp;</BR>
+	   				</div>
+					
+				</div>
+				
+				</apex:form>
+			</apex:outputpanel>
+		</apex:define>
+	</apex:composition>
+</apex:page>

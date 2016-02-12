@@ -1,0 +1,2 @@
+<apex:page standardController="ServiceContract" extensions="ServiceContractInstallAuditController" action="{!create}" >
+</apex:page>

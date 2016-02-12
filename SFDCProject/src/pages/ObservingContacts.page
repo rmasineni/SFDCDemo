@@ -1,0 +1,83 @@
+<apex:page standardController="Contact" extensions="ContactObservingExtension" action="{!init}">
+<apex:form >
+<apex:pageMessages />
+<apex:pageBlock >
+ <apex:outputText value="{!Contact.Name} can observe the following {!Contact.Account.Name} contacts:"/>
+ <br/><br/>
+ <apex:pageBlockButtons location="top">
+<!--   <apex:commandButton value="  Remove Contacts  " action="{!RemoveContacts}" reRender="cons"/>  
+   <apex:commandButton value="  Add All Contacts  " action="{!AddAll}" reRender="cons"/>  -->  
+   <apex:commandButton value="  Save  " action="{!UpdateProposalTool}"/>   
+   <apex:commandButton value="  Cancel  " action="{!Cancel}"/>   
+ </apex:pageBlockButtons>
+
+  Add Single Contact: 
+ <apex:inputField value="{!Contact.ObservingContact__c}" id="singlecon">
+ <apex:inputField value="{!Contact.Contact_Number__c}" rendered="false"/>
+ <apex:actionSupport event="onchange" action="{!addOne}" reRender="cons,singlecon"/>
+ </apex:inputField>
+ 
+ <apex:pageBlockTable value="{!listPartnerCons}" var="oc" id="cons">  
+   <apex:column headerValue="Select"> 
+    <apex:facet name="header">
+    <apex:outputText value="Observing?">
+    <apex:inputCheckBox selected="false" onclick="checkAll(this)">
+    </apex:inputCheckBox>
+    </apex:outputText>
+    </apex:facet>                                            
+    <apex:inputCheckbox value="{!oc.Selected}" />    
+   </apex:column>  
+  <apex:column headerValue="Contact Number" value="{!oc.ConNumber}"/>   
+  <apex:column headerValue="Salutation" value="{!oc.Salutation}"/>
+  <apex:column headerValue="First Name" value="{!oc.FirstName}"/>
+  <apex:column headerValue="Last Name" value="{!oc.LastName}"/>
+  <apex:column headerValue="Proposal Tool Access" value="{!oc.ProposalToolAccess}"/>
+  <apex:column headerValue="Email" value="{!oc.Email}"/>
+  <apex:column headerValue="Phone" value="{!oc.Phone}"/>
+  <apex:column headerValue="Title" value="{!oc.Title}"/>
+ </apex:pageBlockTable>
+ </apex:pageBlock>
+ 
+<!--
+ <apex:pageBlock title="Search for Contacts to Add">
+
+ <apex:pageBlockButtons location="top">
+   <apex:commandButton value="  Search  " action="{!Search}" reRender="searchlist"/>   
+   <apex:commandButton value="  Add  " action="{!AddToList}" reRender="cons"/>   
+ </apex:pageBlockButtons>
+
+ <apex:pageBlockSection collapsible="true" columns="2">
+  <apex:inputField value="{!Contact.Job_Function__c}"/>
+  <apex:inputField value="{!Contact.Role__c}"/> 
+ </apex:pageBlockSection>
+ 
+  <apex:pageBlockSection columns="1">
+<apex:pageBlockTable value="{!listAdditionalPartnerCons}" var="addcon" id="searchlist">
+
+  <apex:column headerValue="Salutation" value="{!addcon.Salutation}"/>
+  <apex:column headerValue="First Name" value="{!addcon.FirstName}"/>
+  <apex:column headerValue="Last Name" value="{!addcon.LastName}"/>
+  <apex:column headerValue="Title" value="{!addcon.Title}"/>
+  <apex:column headerValue="Email" value="{!addcon.Email}"/>
+  <apex:column headerValue="Phone" value="{!addcon.Phone}"/>
+  <apex:column headerValue="Contact Number" value="{!addcon.ConNumber}"/>
+</apex:pageBlockTable>
+  </apex:pageBlockSection>
+ </apex:pageBlock>
+-->
+
+</apex:form>
+<script language="javascript">
+function checkAll(cb)
+{
+   var inputElem = document.getElementsByTagName("input");
+   for(var i=0; i<inputElem.length; i++)
+   {
+      if(inputElem[i].type == "checkbox" && inputElem[i].name.indexOf('j_id0:')!= -1)
+      { 
+         inputElem[i].checked = cb.checked;
+      }
+   }       
+}
+</script>    
+</apex:page>

@@ -1,0 +1,5 @@
+<apex:page showHeader="false" sidebar="false" standardStylesheets="false">
+	<apex:composition template="CustomerOptyAutoPaymentTemplate">
+        <!-- we will use the default values and there is nothing to override -->
+    </apex:composition>
+</apex:page>

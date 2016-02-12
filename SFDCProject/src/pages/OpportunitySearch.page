@@ -1,0 +1,108 @@
+<apex:page id="page" controller="OpportunitySearch" sidebar="false" tabstyle="Opportunity">
+<apex:form >
+<apex:pageblock mode="Edit" id="ViewDetails" >
+        <apex:outputpanel >
+            <div style="margin-bottom:12px;margin-top:15px" align="center">
+                <apex:outputLabel style="font-weight:bold;">View</apex:outputLabel>
+                &nbsp;
+                <apex:selectList value="{!viewName}" id="viewId" size="1">
+                    <apex:selectOptions value="{!Views}" />
+                </apex:selectList>
+                &nbsp;&nbsp;
+                <!--<apex:commandButton action="{!userActions}" value="  Go  "  reRender="OpptyList"/> --> 
+                <apex:actionStatus id="myStatus">
+                     <apex:facet name="stop">
+                         <apex:commandButton value="  Go  "  action="{!userActions}" rerender="details" status="myStatus"/>
+                     </apex:facet>
+                     <apex:facet name="start">
+                        <apex:outputtext value="In progress ..." />
+                            <apex:outputPanel >
+                               <apex:image value="/img/loading32.gif" style="height: 15px;"/>
+                               <apex:commandButton value="Processing..." status="myStatus" disabled="true"/>
+                            </apex:outputPanel>
+                       </apex:facet>
+                  </apex:actionStatus>
+            </div>
+    </apex:outputpanel>
+    </apex:pageblock>
+    <apex:pageBlock id="details">
+    <apex:pageblocksection columns="1">
+            <apex:outputpanel >
+                <div>
+                    <table width="100%">
+                        <tr>
+                            <td align="right">&nbsp;</td>
+                            <td  align="center" width="100%">
+                                <apex:outputLabel style="font-weight:bold" value="Search By " />
+                                    <apex:selectList value="{!searchColumnName}" id="searchColumnName" size="1">
+                                        <apex:selectOptions value="{!SearchBy}" />
+                                    </apex:selectList>    
+                                
+                                &nbsp;&nbsp;&nbsp;
+                                <apex:inputText id="searchValue" value="{!searchValue}" />   
+                                &nbsp;&nbsp;&nbsp;
+                                <apex:commandButton action="{!doSearch}" value="  Search  " />
+                                <!-- <apex:commandButton action="{!doNew}" value="  New Opportunity  " />-->                   
+                            </td>
+                        </tr>
+                    </table>
+                <div align="right">
+                </div>
+                </div>
+            </apex:outputpanel>
+        </apex:pageblocksection>
+    <apex:pageBlockTable value="{!OpptyList}" var="oppt">
+ <!--               <apex:column >
+                    <apex:facet name="header">Opportunity Name</apex:facet>                  
+                    <apex:commandLink action="{!redirectOppty}" value="{!oppt.name}" immediate="false" >
+                         <apex:param name="oId" value="{!oppt.id}" assignTo="{!opptyId}"/>
+                    </apex:commandLink>                
+                </apex:column>
+                <apex:column headerValue="Stage" value="{!oppt.StageName}"/> 
+                <apex:column headerValue="Ready For" value="{!oppt.Ready_for__c}"/>                                
+                <apex:column headerValue="Customer Name">
+                    <apex:outputText value="{!oppt.OpportunityContactRoles[0].Contact.Name}" rendered="{!oppt.OpportunityContactRoles.size>0}"></apex:outputText>
+                </apex:column> -->
+                <apex:column >
+                    <apex:facet name="header">Customer Name</apex:facet>                  
+                    <apex:commandLink action="{!redirectOppty}" value="{!oppt.OpportunityContactRoles[0].Contact.Name}" immediate="false" 
+                    rendered="{!oppt.OpportunityContactRoles.size>0}">
+                         <apex:param name="oId" value="{!oppt.id}" assignTo="{!opptyId}"/>
+                    </apex:commandLink>                
+                </apex:column>
+                <apex:column headerValue="Customer Address" value="{!oppt.Address__c}"/>
+                <apex:column headerValue="Customer Email">
+                    <apex:outputText value="{!oppt.OpportunityContactRoles[0].Contact.Email}" rendered="{!oppt.OpportunityContactRoles.size>0}"></apex:outputText>
+                </apex:column>
+                <apex:column headerValue="Customer Phone">
+                    <apex:outputText value="{!oppt.OpportunityContactRoles[0].Contact.Phone}" rendered="{!oppt.OpportunityContactRoles.size>0}"></apex:outputText>
+                </apex:column>                
+                <apex:column headerValue="Ready For" value="{!oppt.Ready_for__c}"/>                                
+                <apex:column headerValue="Created Date" value="{!oppt.CreatedDate}"/>                
+            </apex:pageBlockTable>
+   
+    <apex:outputPanel layout="block" styleClass="pSearchShowMore" id="otpNavTop">
+                <br></br>               
+                Total Records Found: <apex:outputText rendered="{!IF(totalCount==10000,true,false)}">10000 +</apex:outputText><apex:outputText rendered="{!IF(totalCount < 10000,true,false)}">{!totalCount}</apex:outputText>  
+                <apex:image url="/img/search_prevarrow_disabled.gif" styleClass="prevArrow" rendered="{!NOT(HasPrevious)}"/>  
+                <apex:image url="/img/search_prevarrow.gif" title="First Page" styleClass="prevArrow" rendered="{!HasPrevious}"/>  
+                <apex:commandLink action="{!first}" title="First Page" value="First Page" rendered="{!HasPrevious}"/>  
+                <apex:outputPanel styleClass="pShowLess noLink" style="color:grey" rendered="{!NOT(HasPrevious)}">First Page</apex:outputPanel>           
+
+                <apex:image url="/img/search_prevarrow_disabled.gif" styleClass="prevArrow" rendered="{!NOT(HasPrevious)}"/>  
+                <apex:image url="/img/search_prevarrow.gif" title="Previous Page" styleClass="prevArrow" rendered="{!HasPrevious}"/>  
+                <apex:commandLink action="{!Previous}" title="Previous Page" value="Previous Page" rendered="{!HasPrevious}"/>  
+                <apex:outputPanel styleClass="pShowLess noLink" style="color:grey" rendered="{!NOT(HasPrevious)}">Previous Page</apex:outputPanel>           
+                &nbsp;({!IF(PageNumber == 1,1,((PageNumber -1) )+1)}-{!totalPageCount})&nbsp;  
+                <apex:outputPanel styleClass="pShowLess noLink" style="color:grey" rendered="{!NOT(HasNext)}">Next Page</apex:outputPanel>           
+                <apex:commandLink title="Next Page" value="Next Page" rendered="{!HasNext}" action="{!Next}"/>&nbsp;  
+                <apex:image url="/img/search_nextarrow.gif" title="Next Page" styleClass="nextArrow" rendered="{!HasNext}"/>  
+                <apex:image url="/img/search_nextarrow_disabled.gif" rendered="{!NOT(HasNext)}"/>            
+                <apex:outputPanel styleClass="pShowLess noLink" style="color:grey" rendered="{!NOT(HasNext)}">Last Page</apex:outputPanel>           
+                <apex:commandLink title="Last Page" value="Last Page" rendered="{!HasNext}" action="{!last}"/>&nbsp;  
+                <apex:image url="/img/search_nextarrow.gif" title="Last Page" styleClass="nextArrow" rendered="{!HasNext}"/>  
+                <apex:image url="/img/search_nextarrow_disabled.gif" rendered="{!NOT(HasNext)}"/>
+            </apex:outputPanel>    
+    </apex:pageBlock>
+</apex:form>
+</apex:page>

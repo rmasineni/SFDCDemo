@@ -1,0 +1,2829 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Follow</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <enableActivities>false</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableDivisions>false</enableDivisions>
+    <enableEnhancedLookup>true</enableEnhancedLookup>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>false</enableHistory>
+    <enableReports>true</enableReports>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <externalSharingModel>ReadWrite</externalSharingModel>
+    <fields>
+        <fullName>Case_Origin__c</fullName>
+        <externalId>false</externalId>
+        <label>Case Origin</label>
+        <picklist>
+            <controllingField>Case_Record_Type__c</controllingField>
+            <picklistValues>
+                <fullName>Call Inbound</fullName>
+                <controllingFieldValues>Standard</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Call Outbound</fullName>
+                <controllingFieldValues>Standard</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Chat</fullName>
+                <controllingFieldValues>Standard</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Email Inbound</fullName>
+                <controllingFieldValues>Standard</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Email Outbound</fullName>
+                <controllingFieldValues>Standard</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>GetSatisfaction Community</fullName>
+                <controllingFieldValues>Standard</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Internal</fullName>
+                <controllingFieldValues>Standard</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Customer Call</fullName>
+                <controllingFieldValues>FS Ticket</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Customer Email</fullName>
+                <controllingFieldValues>FS Ticket</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Customer Portal</fullName>
+                <controllingFieldValues>FS Ticket</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Install Partner</fullName>
+                <controllingFieldValues>FS Ticket</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Maintenance Partner</fullName>
+                <controllingFieldValues>FS Ticket</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>SunRun Staff</fullName>
+                <controllingFieldValues>FS Ticket</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>SunRun Automated</fullName>
+                <controllingFieldValues>FS Ticket</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Case_Reason__c</fullName>
+        <externalId>false</externalId>
+        <label>Case Reason</label>
+        <picklist>
+            <controllingField>Case_Record_Type__c</controllingField>
+            <picklistValues>
+                <fullName>Account Credits</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Autopay</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Billing</fullName>
+                <controllingFieldValues>Standard</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Billing &amp; Credit</fullName>
+                <controllingFieldValues>Standard</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Cancellation</fullName>
+                <controllingFieldValues>Standard</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>CAP</fullName>
+                <controllingFieldValues>Project Coordinator</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Collections</fullName>
+                <controllingFieldValues>Standard</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Collections/Dispute</fullName>
+                <controllingFieldValues>FS Ticket</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Contact Info</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Credit</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>CSAT</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>CSLB</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Customer Website</fullName>
+                <controllingFieldValues>Standard</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Design / ENGR Issues</fullName>
+                <controllingFieldValues>Project Coordinator</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Documentation</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Documentation Collection</fullName>
+                <controllingFieldValues>Project Coordinator</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>ENG: Contracted Design</fullName>
+                <controllingFieldValues>Project Coordinator</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>EPC Pricing</fullName>
+                <controllingFieldValues>Project Coordinator</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Equipment</fullName>
+                <controllingFieldValues>Standard</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Expected Production Change</fullName>
+                <controllingFieldValues>Standard</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Fleet Operations Escalation</fullName>
+                <controllingFieldValues>Standard</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>HOA</fullName>
+                <controllingFieldValues>Project Coordinator</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Home Maintenance</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Inaccurate Facility Inputs</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Inspection</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Installation</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Installation &amp; PTO</fullName>
+                <controllingFieldValues>Standard</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Installation Process</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Install Issue</fullName>
+                <controllingFieldValues>Project Coordinator</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Insurance</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Knowledge Request</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Metering</fullName>
+                <controllingFieldValues>FS Ticket</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>NTP Requests</fullName>
+                <controllingFieldValues>Project Coordinator</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Operations</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Other</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Outbound Check-In</fullName>
+                <controllingFieldValues>Standard</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Panel Washing</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Partner Invoice</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Permitting</fullName>
+                <controllingFieldValues>Project Coordinator</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Product</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Production</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Project Inquiry</fullName>
+                <controllingFieldValues>Project Coordinator</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Proposal Issue</fullName>
+                <controllingFieldValues>Project Coordinator</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Proposal Tool</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Prospective Customer</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>PTO</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Quality Assurance</fullName>
+                <controllingFieldValues>FS Ticket</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Rate Modification</fullName>
+                <controllingFieldValues>Standard</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>REC Merger</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Referral</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Referrals and Promotions</fullName>
+                <controllingFieldValues>Standard</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Return to Sales Projects</fullName>
+                <controllingFieldValues>Project Coordinator</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Roof Leak</fullName>
+                <controllingFieldValues>FS Ticket</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>SalesForce Enhancements</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Savings</fullName>
+                <controllingFieldValues>Standard</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Service Transfer</fullName>
+                <controllingFieldValues>Standard</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Site Audits</fullName>
+                <controllingFieldValues>Project Coordinator</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Solar System Information</fullName>
+                <controllingFieldValues>Standard</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Spread the Word</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>SRECs</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Sunrun</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Sunrun 101</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Sunrun Agreement</fullName>
+                <controllingFieldValues>Standard</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Sunrun Lifeline</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>System Deactivation</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>System Failure</fullName>
+                <controllingFieldValues>FS Ticket</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>System Maintenance</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>System Maintenance Services</fullName>
+                <controllingFieldValues>FS Ticket</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>System Redeployment</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>System Removal</fullName>
+                <controllingFieldValues>Standard</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>System Under-performance</fullName>
+                <controllingFieldValues>FS Ticket</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Tax/Rebate</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>TEST</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Third Party Inspection</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Update Asset Characteristics</fullName>
+                <controllingFieldValues>Standard</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Utility</fullName>
+                <controllingFieldValues>Standard</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Welcome Call</fullName>
+                <controllingFieldValues>Standard</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Wildlife</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>true</sorted>
+        </picklist>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Case_Record_Type__c</fullName>
+        <description>Case Record Type for the case</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Select the Case Record Type for the case to be created.</inlineHelpText>
+        <label>Case Record Type</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Standard</fullName>
+                <default>true</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>FS Ticket</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Project Coordinator</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Description__c</fullName>
+        <externalId>false</externalId>
+        <label>Description</label>
+        <length>32768</length>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>FS_Initial_Diagnosis__c</fullName>
+        <description>FS Initial Diagnosis to be used for creating the new case.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Enter the FS Initial Diagnosis to be used for creating the new case.</inlineHelpText>
+        <label>FS Initial Diagnosis</label>
+        <length>4000</length>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Priority__c</fullName>
+        <externalId>false</externalId>
+        <label>Priority</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Low</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Normal</fullName>
+                <default>true</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>High</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Escalated</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Dispute with Utility</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Dispute with Partner</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Reported to AG, BBB, Gov&apos;t, or Press</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Litigious</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Urgent</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Private_Customer_Care_Description__c</fullName>
+        <description>[Requested in SFDC-675]</description>
+        <externalId>false</externalId>
+        <inlineHelpText>[Requested in SFDC-675]</inlineHelpText>
+        <label>Private Customer Care Description</label>
+        <length>32768</length>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Process_Impact_Type__c</fullName>
+        <externalId>false</externalId>
+        <label>Process Impact Type</label>
+        <picklist>
+            <controllingField>Case_Record_Type__c</controllingField>
+            <picklistValues>
+                <fullName>Escape</fullName>
+                <controllingFieldValues>Project Coordinator</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Turnback</fullName>
+                <controllingFieldValues>Project Coordinator</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>N/A</fullName>
+                <controllingFieldValues>Project Coordinator</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Subject__c</fullName>
+        <externalId>false</externalId>
+        <label>Subject</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Subset_Reason__c</fullName>
+        <externalId>false</externalId>
+        <label>Subset Reason</label>
+        <picklist>
+            <controllingField>Case_Reason__c</controllingField>
+            <picklistValues>
+                <fullName>&quot;The Right Stuff&quot; Webinar</fullName>
+                <controllingFieldValues>Prospective Customer</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>2011</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>2012</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>2013</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>2014</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>3rd Party Solar Stats</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>ACH Timeline</fullName>
+                <controllingFieldValues>Billing &amp; Credit</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>ACP</fullName>
+                <controllingFieldValues>Product</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>AC power outage</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Activation</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Additional System Clarification/Request</fullName>
+                <controllingFieldValues>Sunrun Agreement</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Aesthetics</fullName>
+                <controllingFieldValues>System Maintenance</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Aggregation</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Agreement Terms</fullName>
+                <controllingFieldValues>Sunrun Agreement</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Annual Increase</fullName>
+                <controllingFieldValues>Sunrun Agreement</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Application</fullName>
+                <controllingFieldValues>SRECs</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>As-built system different from design</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Autopay</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Aziumth</fullName>
+                <controllingFieldValues>Expected Production Change</controllingFieldValues>
+                <controllingFieldValues>Update Asset Characteristics</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Bad Roof for Solar</fullName>
+                <controllingFieldValues>Cancellation</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Balance Verification</fullName>
+                <controllingFieldValues>Billing &amp; Credit</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Bankruptcy</fullName>
+                <controllingFieldValues>Collections</controllingFieldValues>
+                <controllingFieldValues>Service Transfer</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Billing</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Billing Method</fullName>
+                <controllingFieldValues>Utility</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Billing Method Switch</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Billing System Error One-off</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Billing System Error Widespread</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Bonus</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Broken panel(s)</fullName>
+                <controllingFieldValues>System Maintenance</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Builder</fullName>
+                <controllingFieldValues>Project Inquiry</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Business Model/General Questions</fullName>
+                <controllingFieldValues>Sunrun 101</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Cancellation</fullName>
+                <controllingFieldValues>Return to Sales Projects</controllingFieldValues>
+                <controllingFieldValues>Welcome Call</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Care Program</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Challenging Deal: Lack of Savings</fullName>
+                <controllingFieldValues>Welcome Call</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Challenging Deal: Other</fullName>
+                <controllingFieldValues>Welcome Call</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Challenging Deal: System Sizing is Suspect</fullName>
+                <controllingFieldValues>Welcome Call</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Changed Mind</fullName>
+                <controllingFieldValues>Cancellation</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Change Order</fullName>
+                <controllingFieldValues>Cancellation</controllingFieldValues>
+                <controllingFieldValues>Operations</controllingFieldValues>
+                <controllingFieldValues>Sunrun Agreement</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Clarification</fullName>
+                <controllingFieldValues>Inspection</controllingFieldValues>
+                <controllingFieldValues>Installation</controllingFieldValues>
+                <controllingFieldValues>Insurance</controllingFieldValues>
+                <controllingFieldValues>PTO</controllingFieldValues>
+                <controllingFieldValues>Referrals and Promotions</controllingFieldValues>
+                <controllingFieldValues>SRECs</controllingFieldValues>
+                <controllingFieldValues>Tax/Rebate</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Cold Feet</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Collections</fullName>
+                <controllingFieldValues>System Redeployment</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Communication failure</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Compensation</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Competitors</fullName>
+                <controllingFieldValues>Sunrun</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Component Error/Defect</fullName>
+                <controllingFieldValues>System Failure</controllingFieldValues>
+                <controllingFieldValues>System Maintenance Services</controllingFieldValues>
+                <controllingFieldValues>System Under-performance</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Confusion</fullName>
+                <controllingFieldValues>Cancellation</controllingFieldValues>
+                <controllingFieldValues>Inspection</controllingFieldValues>
+                <controllingFieldValues>Installation</controllingFieldValues>
+                <controllingFieldValues>Insurance</controllingFieldValues>
+                <controllingFieldValues>PTO</controllingFieldValues>
+                <controllingFieldValues>Tax/Rebate</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Confusion/Concerns</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Contact Information</fullName>
+                <controllingFieldValues>Welcome Call</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Contract</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Contract/Savings Dispute</fullName>
+                <controllingFieldValues>Collections</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Costco</fullName>
+                <controllingFieldValues>Referrals and Promotions</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>CP2.0 Feedback</fullName>
+                <controllingFieldValues>Customer Website</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Credit</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Credit Issued</fullName>
+                <controllingFieldValues>Billing &amp; Credit</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Credit Requested</fullName>
+                <controllingFieldValues>Billing &amp; Credit</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Credit Score</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Credit Tool</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Credit Tool Error</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>CSAT</fullName>
+                <controllingFieldValues>Outbound Check-In</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Customer</fullName>
+                <controllingFieldValues>Project Inquiry</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Customer Default</fullName>
+                <controllingFieldValues>System Removal</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Customer-facing change order</fullName>
+                <controllingFieldValues>CAP</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Customer interference</fullName>
+                <controllingFieldValues>System Failure</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Customer is Sick</fullName>
+                <controllingFieldValues>Cancellation</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Customer Unresponsive after multiple attempts</fullName>
+                <controllingFieldValues>Collections</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Damage</fullName>
+                <controllingFieldValues>System Maintenance</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Damaged</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Damages</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Data Communication Terminated</fullName>
+                <controllingFieldValues>Metering</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Data Entry / Values Question</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Deactivate system</fullName>
+                <controllingFieldValues>Collections</controllingFieldValues>
+                <controllingFieldValues>Collections/Dispute</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Death</fullName>
+                <controllingFieldValues>Cancellation</controllingFieldValues>
+                <controllingFieldValues>Service Transfer</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Decided to Purchase System</fullName>
+                <controllingFieldValues>Cancellation</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Delay</fullName>
+                <controllingFieldValues>PTO</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Delayed Service Requests</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Delays</fullName>
+                <controllingFieldValues>Installation</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Deposits and Refunds</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Design/Build Discrepancy</fullName>
+                <controllingFieldValues>System Under-performance</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Didn’t receive - Logging Error</fullName>
+                <controllingFieldValues>Referrals and Promotions</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Didn’t receive- System Error</fullName>
+                <controllingFieldValues>Referrals and Promotions</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Divorce</fullName>
+                <controllingFieldValues>Service Transfer</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Documentation</fullName>
+                <controllingFieldValues>Operations</controllingFieldValues>
+                <controllingFieldValues>Welcome Call</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Documentation/PTO Letter</fullName>
+                <controllingFieldValues>Utility</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Electrical issue</fullName>
+                <controllingFieldValues>Home Maintenance</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>End of Agreement</fullName>
+                <controllingFieldValues>System Removal</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Engineering/IT</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Equipment</fullName>
+                <controllingFieldValues>Expected Production Change</controllingFieldValues>
+                <controllingFieldValues>Solar System Information</controllingFieldValues>
+                <controllingFieldValues>Update Asset Characteristics</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Equipment Damage</fullName>
+                <controllingFieldValues>System Failure</controllingFieldValues>
+                <controllingFieldValues>System Maintenance Services</controllingFieldValues>
+                <controllingFieldValues>System Under-performance</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Equipment theft</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Error/Dispute</fullName>
+                <controllingFieldValues>Billing &amp; Credit</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Error or Problem</fullName>
+                <controllingFieldValues>Installation &amp; PTO</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Escalator</fullName>
+                <controllingFieldValues>Product</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Estimation</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Exam</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Explanation</fullName>
+                <controllingFieldValues>Savings</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Failed Deactivation</fullName>
+                <controllingFieldValues>Collections/Dispute</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Fair Market Value</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Financial Trouble</fullName>
+                <controllingFieldValues>Collections</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Fire</fullName>
+                <controllingFieldValues>Fleet Operations Escalation</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Firmware out of date</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Follow-Up</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Force Majeure</fullName>
+                <controllingFieldValues>System Removal</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Foreclosure</fullName>
+                <controllingFieldValues>Service Transfer</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>GE Firmware Upgrade</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Generation/Balanced Bill Switch</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Going With Competitor</fullName>
+                <controllingFieldValues>Cancellation</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Go out of business?</fullName>
+                <controllingFieldValues>Sunrun</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Grid power outage</fullName>
+                <controllingFieldValues>System Failure</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Grid voltage</fullName>
+                <controllingFieldValues>System Failure</controllingFieldValues>
+                <controllingFieldValues>System Under-performance</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Grid Voltage Irregularity</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Ground fault</fullName>
+                <controllingFieldValues>System Failure</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Hardware Damage</fullName>
+                <controllingFieldValues>Insurance</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Hardware failure</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Home Electrical Issue</fullName>
+                <controllingFieldValues>System Maintenance Services</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Home improvement project</fullName>
+                <controllingFieldValues>Home Maintenance</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Home Renovations</fullName>
+                <controllingFieldValues>Cancellation</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>How do you make money?</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Inaccurate Facility Inputs- Oversized</fullName>
+                <controllingFieldValues>Rate Modification</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Inaccurate Facility Inputs- SR Rate &gt; ACP</fullName>
+                <controllingFieldValues>Rate Modification</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Incomplete</fullName>
+                <controllingFieldValues>Site Audits</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Incomplete construction</fullName>
+                <controllingFieldValues>Home Maintenance</controllingFieldValues>
+                <controllingFieldValues>System Maintenance Services</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Incorrect Address</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Incorrect Contact Info</fullName>
+                <controllingFieldValues>Documentation</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Incorrect Email</fullName>
+                <controllingFieldValues>Contact Info</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Incorrectly Installed</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Incorrect Mailing Address</fullName>
+                <controllingFieldValues>Contact Info</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Incorrect Name</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Incorrect Name in SalesForce</fullName>
+                <controllingFieldValues>Contact Info</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Incorrect Phone</fullName>
+                <controllingFieldValues>Contact Info</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Information</fullName>
+                <controllingFieldValues>Billing &amp; Credit</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Information/Forms</fullName>
+                <controllingFieldValues>Service Transfer</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Inspection Clarification</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Inspection Failure</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Installation</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Installation Delay</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Installation error</fullName>
+                <controllingFieldValues>System Failure</controllingFieldValues>
+                <controllingFieldValues>System Maintenance</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Installation issue</fullName>
+                <controllingFieldValues>Welcome Call</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Installation Timeline</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Insurance</fullName>
+                <controllingFieldValues>Sunrun Agreement</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Intermittent Data</fullName>
+                <controllingFieldValues>Metering</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Invalid Data</fullName>
+                <controllingFieldValues>Metering</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Inverter</fullName>
+                <controllingFieldValues>System Maintenance</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Inverter clipping</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Inverter Error</fullName>
+                <controllingFieldValues>System Maintenance</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Inverter failure</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Invoice Type</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>JCP&amp;L PTO W/O Net Meter</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Legal</fullName>
+                <controllingFieldValues>System Redeployment</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Lien</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Lien Concerns</fullName>
+                <controllingFieldValues>Sunrun Agreement</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Login</fullName>
+                <controllingFieldValues>Customer Website</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Low coverage</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Maintenance</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Major Rewrite</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Manual Modification of Asset</fullName>
+                <controllingFieldValues>Operations</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Marketing</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Meter hardware failure</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Meter installed incorrectly</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Meter needs to be replaced</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Meter not communicating</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Meter not provisioning</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Meter out of coverage</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Meter Registration Error</fullName>
+                <controllingFieldValues>Metering</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Meter test missing</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Meter wired backwards</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Microinverter Reports Outage</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Minor Update</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Missed</fullName>
+                <controllingFieldValues>Site Audits</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Missing</fullName>
+                <controllingFieldValues>Documentation</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Missing Documentation</fullName>
+                <controllingFieldValues>PTO</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Missing Email</fullName>
+                <controllingFieldValues>Contact Info</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Missing Info: Change Order</fullName>
+                <controllingFieldValues>Welcome Call</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Missing Info: Other</fullName>
+                <controllingFieldValues>Welcome Call</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Missing Info: Partner Finance/Promotion</fullName>
+                <controllingFieldValues>Welcome Call</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Missing Phone</fullName>
+                <controllingFieldValues>Contact Info</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Misunderstanding: Annual Escalator</fullName>
+                <controllingFieldValues>Welcome Call</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Misunderstanding: Contract Length</fullName>
+                <controllingFieldValues>Welcome Call</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Misunderstanding: Installation/Activation</fullName>
+                <controllingFieldValues>Welcome Call</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Misunderstanding: Other</fullName>
+                <controllingFieldValues>Welcome Call</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Misunderstanding: Sunrun Bills</fullName>
+                <controllingFieldValues>Welcome Call</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Misunderstanding: System Size</fullName>
+                <controllingFieldValues>Welcome Call</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Misunderstanding: Utility Bills</fullName>
+                <controllingFieldValues>Welcome Call</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Module</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Moving</fullName>
+                <controllingFieldValues>Service Transfer</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Natural Disaster (Force Majeure)</fullName>
+                <controllingFieldValues>Fleet Operations Escalation</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Need Meter Test</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Needs Investigation</fullName>
+                <controllingFieldValues>Roof Leak</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Net Meter/Smart Meter</fullName>
+                <controllingFieldValues>Utility</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Net Meter Installation</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Never Received Data</fullName>
+                <controllingFieldValues>Metering</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>New Article</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>New Home</fullName>
+                <controllingFieldValues>Service Transfer</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>New Referral</fullName>
+                <controllingFieldValues>Referrals and Promotions</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>New Template</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>No- Concerned with availability of funds, payment, timing, etc.</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>No- Don&apos;t trust Sunrun with bank account information</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Noise</fullName>
+                <controllingFieldValues>System Maintenance</controllingFieldValues>
+                <controllingFieldValues>System Maintenance Services</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Non-Communicating</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Normal</fullName>
+                <controllingFieldValues>Quality Assurance</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Not Eligible</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Notification</fullName>
+                <controllingFieldValues>Inspection</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Not Provisioning</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Not Receiving Bills</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Not Solar</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Not-solar</fullName>
+                <controllingFieldValues>Roof Leak</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>No- Unaware of service fee and upset</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>No- Would rather pay by check + fee</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>One-time payment</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>On-hold</fullName>
+                <controllingFieldValues>Return to Sales Projects</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Operations</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Oracle data issues</fullName>
+                <controllingFieldValues>Collections</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Order</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Other</fullName>
+                <controllingFieldValues>Cancellation</controllingFieldValues>
+                <controllingFieldValues>Credit</controllingFieldValues>
+                <controllingFieldValues>Documentation</controllingFieldValues>
+                <controllingFieldValues>Fleet Operations Escalation</controllingFieldValues>
+                <controllingFieldValues>Installation</controllingFieldValues>
+                <controllingFieldValues>Metering</controllingFieldValues>
+                <controllingFieldValues>Operations</controllingFieldValues>
+                <controllingFieldValues>Product</controllingFieldValues>
+                <controllingFieldValues>Proposal Tool</controllingFieldValues>
+                <controllingFieldValues>Prospective Customer</controllingFieldValues>
+                <controllingFieldValues>Referral</controllingFieldValues>
+                <controllingFieldValues>Site Audits</controllingFieldValues>
+                <controllingFieldValues>Sunrun Agreement</controllingFieldValues>
+                <controllingFieldValues>System Maintenance</controllingFieldValues>
+                <controllingFieldValues>System Redeployment</controllingFieldValues>
+                <controllingFieldValues>System Removal</controllingFieldValues>
+                <controllingFieldValues>Update Asset Characteristics</controllingFieldValues>
+                <controllingFieldValues>Wildlife</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Other Clarification</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Other home maintenance issue</fullName>
+                <controllingFieldValues>Home Maintenance</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Other language</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Out of Coverage</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Overproduction</fullName>
+                <controllingFieldValues>Production</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Oversized</fullName>
+                <controllingFieldValues>Inaccurate Facility Inputs</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Panel degradation</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Panel soiling</fullName>
+                <controllingFieldValues>System Under-performance</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Panel Washing</fullName>
+                <controllingFieldValues>Solar System Information</controllingFieldValues>
+                <controllingFieldValues>System Maintenance Services</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Paper/Email Bill Switch</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Paper Statement Request</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Partner ecosystem</fullName>
+                <controllingFieldValues>Sunrun 101</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Partner Promotion</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Password Reset</fullName>
+                <controllingFieldValues>Customer Website</controllingFieldValues>
+                <controllingFieldValues>Proposal Tool</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Payment</fullName>
+                <controllingFieldValues>Billing &amp; Credit</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Payment Commitment received</fullName>
+                <controllingFieldValues>Collections</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Payment Options</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Payment Plan</fullName>
+                <controllingFieldValues>Collections</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Payment Processing</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Payments/Pricing Calculations</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Performance Guarantee</fullName>
+                <controllingFieldValues>Sunrun Agreement</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Performance Modeling Error</fullName>
+                <controllingFieldValues>Expected Production Change</controllingFieldValues>
+                <controllingFieldValues>System Under-performance</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Permanent Removal</fullName>
+                <controllingFieldValues>Collections/Dispute</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Permitting</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>PG&amp;E Rate Hike</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Physical Obstructions</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Pigeon</fullName>
+                <controllingFieldValues>System Maintenance</controllingFieldValues>
+                <controllingFieldValues>Wildlife</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Pigeon Guard</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Post-Dispatch Survey</fullName>
+                <controllingFieldValues>Outbound Check-In</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Power optimizer</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Prepay</fullName>
+                <controllingFieldValues>Rate Modification</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Pricing</fullName>
+                <controllingFieldValues>Cancellation</controllingFieldValues>
+                <controllingFieldValues>Sunrun Agreement</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Pricing/Product</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Pricing/SR rate</fullName>
+                <controllingFieldValues>Product</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Proactive</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Processing</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Production</fullName>
+                <controllingFieldValues>Savings</controllingFieldValues>
+                <controllingFieldValues>Solar System Information</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Production Clarification</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Production Guarantee</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Program Details</fullName>
+                <controllingFieldValues>Referral</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Property Damage</fullName>
+                <controllingFieldValues>Insurance</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Provision failure</fullName>
+                <controllingFieldValues>Metering</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>PTO Delay</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>PTO Timeline</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>PTO without</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>PTO Without NEM</fullName>
+                <controllingFieldValues>Utility</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Rain Damage</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Reactivate system</fullName>
+                <controllingFieldValues>Collections</controllingFieldValues>
+                <controllingFieldValues>Collections/Dispute</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Reassignment related</fullName>
+                <controllingFieldValues>Collections</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Rebate/SRECs</fullName>
+                <controllingFieldValues>Product</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Rebate Override</fullName>
+                <controllingFieldValues>Proposal Tool</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Rebates and Incentives</fullName>
+                <controllingFieldValues>Sunrun Agreement</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Reconciliation</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Referral</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Refund Verification</fullName>
+                <controllingFieldValues>Cancellation</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Refuses to pay until system is up and running</fullName>
+                <controllingFieldValues>Collections</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Removal and Re-installation</fullName>
+                <controllingFieldValues>System Maintenance</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Replacement</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Re-roof</fullName>
+                <controllingFieldValues>Return to Sales Projects</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Retroactive</fullName>
+                <controllingFieldValues>Service Transfer</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Reviewed, no action</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Roof/house damaged</fullName>
+                <controllingFieldValues>Collections</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Roof leaks</fullName>
+                <controllingFieldValues>Home Maintenance</controllingFieldValues>
+                <controllingFieldValues>Insurance</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Sales</fullName>
+                <controllingFieldValues>Product</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Sales Organization</fullName>
+                <controllingFieldValues>Project Inquiry</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Savings</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Savings Analysis</fullName>
+                <controllingFieldValues>Savings</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Says partner promised to cover it/promised $0 down</fullName>
+                <controllingFieldValues>Collections</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>SCE PTO W/O Meter Swap</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Schedule</fullName>
+                <controllingFieldValues>Installation</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>SDG&amp;E Solar Fee</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Seasonal Promotion</fullName>
+                <controllingFieldValues>Referrals and Promotions</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Sent copy of Agreement</fullName>
+                <controllingFieldValues>Sunrun Agreement</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Service Issue-CC</fullName>
+                <controllingFieldValues>Collections</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Service Issue Ops</fullName>
+                <controllingFieldValues>Collections</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Service Transfer</fullName>
+                <controllingFieldValues>System Redeployment</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Shade</fullName>
+                <controllingFieldValues>Expected Production Change</controllingFieldValues>
+                <controllingFieldValues>Update Asset Characteristics</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Shade growth</fullName>
+                <controllingFieldValues>System Under-performance</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Shading</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Shading Analysis</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Shading Issues</fullName>
+                <controllingFieldValues>Cancellation</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Short Sale</fullName>
+                <controllingFieldValues>Service Transfer</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Short-Term Removal &amp; Reinstallation</fullName>
+                <controllingFieldValues>System Maintenance Services</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Sign-up - Impersonated the customer</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Sign-up - Walked customer through the website</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Snow</fullName>
+                <controllingFieldValues>System Maintenance Services</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Snow Guard</fullName>
+                <controllingFieldValues>System Maintenance</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Solar</fullName>
+                <controllingFieldValues>Roof Leak</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Solar Billing Delay</fullName>
+                <controllingFieldValues>Utility</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Solar Stats</fullName>
+                <controllingFieldValues>Customer Website</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Special Request</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Special Utility Rate</fullName>
+                <controllingFieldValues>Rate Modification</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Squirrel</fullName>
+                <controllingFieldValues>System Maintenance</controllingFieldValues>
+                <controllingFieldValues>Wildlife</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>SR Credit Requirements</fullName>
+                <controllingFieldValues>Credit</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>SR Rate &gt; ACP</fullName>
+                <controllingFieldValues>Inaccurate Facility Inputs</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Status</fullName>
+                <controllingFieldValues>Referral</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Status/Escalation</fullName>
+                <controllingFieldValues>Credit</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>String disconnected</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Submission</fullName>
+                <controllingFieldValues>Referral</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Substantial</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>SunRun 101</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Sunrun ID</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Sunrun Meter</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Suspected System Issue</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Switch Agreement Type</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>System Activation</fullName>
+                <controllingFieldValues>System Maintenance</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>System Build Issue</fullName>
+                <controllingFieldValues>Rate Modification</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>System damage</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>System damage from fire</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>System damage from weather event</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>System Error</fullName>
+                <controllingFieldValues>Credit</controllingFieldValues>
+                <controllingFieldValues>Customer Website</controllingFieldValues>
+                <controllingFieldValues>Proposal Tool</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>System Failure</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>System not activated</fullName>
+                <controllingFieldValues>System Failure</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>System On?</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>System Purchase/FMV</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>System re-installation</fullName>
+                <controllingFieldValues>Collections</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>System Relocation</fullName>
+                <controllingFieldValues>System Removal</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>System removal</fullName>
+                <controllingFieldValues>Collections</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Taxes</fullName>
+                <controllingFieldValues>Sunrun Agreement</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Template Rewrite</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Temporary Underproduction</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>test</fullName>
+                <controllingFieldValues>TEST</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Theft</fullName>
+                <controllingFieldValues>System Maintenance</controllingFieldValues>
+                <controllingFieldValues>System Under-performance</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>The Sunrun Code of Conduct</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Third Party Monitoring</fullName>
+                <controllingFieldValues>Metering</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Tilt</fullName>
+                <controllingFieldValues>Expected Production Change</controllingFieldValues>
+                <controllingFieldValues>Update Asset Characteristics</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Timeline/Schedule</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Timeline Questions</fullName>
+                <controllingFieldValues>Installation &amp; PTO</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>TOS Concerns</fullName>
+                <controllingFieldValues>Customer Website</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Training</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>True-Up</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Under-producing</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Under-producing system</fullName>
+                <controllingFieldValues>Fleet Operations Escalation</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Underproduction</fullName>
+                <controllingFieldValues>Production</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Understanding Score/ Response</fullName>
+                <controllingFieldValues>Credit</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Unknown</fullName>
+                <controllingFieldValues>Metering</controllingFieldValues>
+                <controllingFieldValues>System Failure</controllingFieldValues>
+                <controllingFieldValues>System Maintenance</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Unpermitted Structures On Property</fullName>
+                <controllingFieldValues>Cancellation</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Unresolved Underproduction</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Update Preferences</fullName>
+                <controllingFieldValues>Billing &amp; Credit</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Upfront</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>User Access</fullName>
+                <controllingFieldValues>Proposal Tool</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>User Error</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Using Tool</fullName>
+                <controllingFieldValues>Credit</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Using Tool/Data Entry</fullName>
+                <controllingFieldValues>Proposal Tool</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Utilities and Rates</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Utility</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Utility Bills</fullName>
+                <controllingFieldValues>Savings</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Utility denied interconnection</fullName>
+                <controllingFieldValues>Cancellation</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Utility Rate Change</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Value</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Walkthrough</fullName>
+                <controllingFieldValues>Customer Website</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Weather</fullName>
+                <controllingFieldValues>System Under-performance</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Welcome Call</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>What if I move?</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Wildlife</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Wildlife: Pigeons</fullName>
+                <controllingFieldValues>System Maintenance Services</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Wildlife: Squirrels</fullName>
+                <controllingFieldValues>System Maintenance Services</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Wired Backwards</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Wiring</fullName>
+                <controllingFieldValues>System Under-performance</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Won&apos;t Receive</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Yes- Impersonated customer</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Yes- Walked customer through website</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Yes- Will sign up at a later time</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>true</sorted>
+        </picklist>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <label>Quick Case Template</label>
+    <listViews>
+        <fullName>Account_Credits</fullName>
+        <columns>Case_Reason__c</columns>
+        <columns>Subset_Reason__c</columns>
+        <columns>NAME</columns>
+        <columns>Subject__c</columns>
+        <columns>Case_Origin__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Case_Reason__c</field>
+            <operation>equals</operation>
+            <value>Account Credits</value>
+        </filters>
+        <label>Account Credits</label>
+    </listViews>
+    <listViews>
+        <fullName>All_Quick_Case_Tempaltes</fullName>
+        <columns>NAME</columns>
+        <columns>Subject__c</columns>
+        <columns>Case_Reason__c</columns>
+        <columns>Subset_Reason__c</columns>
+        <columns>LAST_UPDATE</columns>
+        <columns>Case_Record_Type__c</columns>
+        <columns>Priority__c</columns>
+        <columns>Private_Customer_Care_Description__c</columns>
+        <filterScope>Everything</filterScope>
+        <label>All Quick Case Templates</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>Billing_Templates</fullName>
+        <columns>Case_Reason__c</columns>
+        <columns>Subset_Reason__c</columns>
+        <columns>NAME</columns>
+        <columns>Subject__c</columns>
+        <columns>Case_Origin__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Case_Reason__c</field>
+            <operation>equals</operation>
+            <value>Billing</value>
+        </filters>
+        <label>Billing Templates</label>
+    </listViews>
+    <listViews>
+        <fullName>Cancellation_Templates</fullName>
+        <columns>Case_Reason__c</columns>
+        <columns>Subset_Reason__c</columns>
+        <columns>NAME</columns>
+        <columns>Subject__c</columns>
+        <columns>Case_Origin__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Case_Reason__c</field>
+            <operation>equals</operation>
+            <value>Cancellation</value>
+        </filters>
+        <label>Cancellation Templates</label>
+    </listViews>
+    <listViews>
+        <fullName>Collections_Templates</fullName>
+        <columns>Case_Reason__c</columns>
+        <columns>Subset_Reason__c</columns>
+        <columns>NAME</columns>
+        <columns>Subject__c</columns>
+        <columns>Case_Origin__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Case_Reason__c</field>
+            <operation>equals</operation>
+            <value>Collections</value>
+        </filters>
+        <label>Collections Templates</label>
+    </listViews>
+    <listViews>
+        <fullName>Equipment_Templates</fullName>
+        <columns>NAME</columns>
+        <columns>OBJECT_ID</columns>
+        <columns>OWNER.FIRST_NAME</columns>
+        <columns>OWNER.LAST_NAME</columns>
+        <columns>Priority__c</columns>
+        <columns>Case_Reason__c</columns>
+        <columns>Case_Record_Type__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Case_Reason__c</field>
+            <operation>equals</operation>
+            <value>Equipment</value>
+        </filters>
+        <label>Equipment Templates</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>FS_Ticket_Cases</fullName>
+        <columns>NAME</columns>
+        <columns>Case_Reason__c</columns>
+        <columns>Subset_Reason__c</columns>
+        <columns>Case_Origin__c</columns>
+        <columns>Case_Record_Type__c</columns>
+        <columns>Priority__c</columns>
+        <columns>Subject__c</columns>
+        <columns>Private_Customer_Care_Description__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Case_Record_Type__c</field>
+            <operation>equals</operation>
+            <value>FS Ticket</value>
+        </filters>
+        <label>FS Ticket Cases</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>Foreclosure_Templates</fullName>
+        <columns>Case_Reason__c</columns>
+        <columns>Subset_Reason__c</columns>
+        <columns>NAME</columns>
+        <columns>Subject__c</columns>
+        <columns>Case_Origin__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Case_Reason__c</field>
+            <operation>equals</operation>
+            <value>Foreclosure</value>
+        </filters>
+        <label>Foreclosure Templates</label>
+    </listViews>
+    <listViews>
+        <fullName>Inspection_Templates</fullName>
+        <columns>Case_Reason__c</columns>
+        <columns>Subset_Reason__c</columns>
+        <columns>NAME</columns>
+        <columns>Subject__c</columns>
+        <columns>Case_Origin__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Case_Reason__c</field>
+            <operation>equals</operation>
+            <value>Inspection</value>
+        </filters>
+        <label>Inspection Templates</label>
+    </listViews>
+    <listViews>
+        <fullName>Installation_Templates</fullName>
+        <columns>Case_Reason__c</columns>
+        <columns>Subset_Reason__c</columns>
+        <columns>NAME</columns>
+        <columns>Subject__c</columns>
+        <columns>Case_Origin__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Case_Reason__c</field>
+            <operation>equals</operation>
+            <value>Installation</value>
+        </filters>
+        <label>Installation Templates</label>
+    </listViews>
+    <listViews>
+        <fullName>Insurance_Templates</fullName>
+        <columns>Case_Reason__c</columns>
+        <columns>Subset_Reason__c</columns>
+        <columns>NAME</columns>
+        <columns>Subject__c</columns>
+        <columns>Case_Origin__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Case_Reason__c</field>
+            <operation>equals</operation>
+            <value>Insurance</value>
+        </filters>
+        <label>Insurance Templates</label>
+    </listViews>
+    <listViews>
+        <fullName>Meter_Templates</fullName>
+        <columns>Case_Reason__c</columns>
+        <columns>Subset_Reason__c</columns>
+        <columns>NAME</columns>
+        <columns>Subject__c</columns>
+        <columns>Case_Origin__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Case_Reason__c</field>
+            <operation>equals</operation>
+            <value>Meter</value>
+        </filters>
+        <label>Meter Templates</label>
+    </listViews>
+    <listViews>
+        <fullName>Monitoring_Templates</fullName>
+        <columns>Case_Reason__c</columns>
+        <columns>Subset_Reason__c</columns>
+        <columns>NAME</columns>
+        <columns>Subject__c</columns>
+        <columns>Case_Origin__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Case_Reason__c</field>
+            <operation>equals</operation>
+            <value>Monitoring</value>
+        </filters>
+        <label>Monitoring Templates</label>
+    </listViews>
+    <listViews>
+        <fullName>Operations_Templates</fullName>
+        <columns>Case_Reason__c</columns>
+        <columns>Subset_Reason__c</columns>
+        <columns>NAME</columns>
+        <columns>Subject__c</columns>
+        <columns>Case_Origin__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Case_Reason__c</field>
+            <operation>equals</operation>
+            <value>Operations</value>
+        </filters>
+        <label>Operations Templates</label>
+    </listViews>
+    <listViews>
+        <fullName>Other_Templates</fullName>
+        <columns>Case_Reason__c</columns>
+        <columns>Subset_Reason__c</columns>
+        <columns>NAME</columns>
+        <columns>Subject__c</columns>
+        <columns>Case_Origin__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Case_Reason__c</field>
+            <operation>equals</operation>
+            <value>Other</value>
+        </filters>
+        <label>Other Templates</label>
+    </listViews>
+    <listViews>
+        <fullName>PC_Team_Templates</fullName>
+        <columns>NAME</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Case_Record_Type__c</field>
+            <operation>equals</operation>
+            <value>Project Coordinator</value>
+        </filters>
+        <label>PC Team Templates</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>PTO_Templates</fullName>
+        <columns>Case_Reason__c</columns>
+        <columns>Subset_Reason__c</columns>
+        <columns>NAME</columns>
+        <columns>Subject__c</columns>
+        <columns>Case_Origin__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Case_Reason__c</field>
+            <operation>equals</operation>
+            <value>PTO</value>
+        </filters>
+        <label>PTO Templates</label>
+    </listViews>
+    <listViews>
+        <fullName>Panel_Washing_2011_Templates</fullName>
+        <columns>Case_Reason__c</columns>
+        <columns>Subset_Reason__c</columns>
+        <columns>NAME</columns>
+        <columns>Subject__c</columns>
+        <columns>Case_Origin__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Case_Reason__c</field>
+            <operation>equals</operation>
+            <value>Panel Washing - 2011</value>
+        </filters>
+        <label>Panel Washing - 2011 Templates</label>
+    </listViews>
+    <listViews>
+        <fullName>Panel_Washing_Templates</fullName>
+        <columns>Case_Reason__c</columns>
+        <columns>Subset_Reason__c</columns>
+        <columns>NAME</columns>
+        <columns>Subject__c</columns>
+        <columns>Case_Origin__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Case_Reason__c</field>
+            <operation>equals</operation>
+            <value>Panel Washing</value>
+        </filters>
+        <label>Panel Washing Templates</label>
+    </listViews>
+    <listViews>
+        <fullName>Reassignment_Templates</fullName>
+        <columns>Case_Reason__c</columns>
+        <columns>Subset_Reason__c</columns>
+        <columns>NAME</columns>
+        <columns>Subject__c</columns>
+        <columns>Case_Origin__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Case_Reason__c</field>
+            <operation>equals</operation>
+            <value>Reassignment</value>
+        </filters>
+        <label>Reassignment Templates</label>
+    </listViews>
+    <listViews>
+        <fullName>Roof_Leak_Templates</fullName>
+        <columns>Case_Reason__c</columns>
+        <columns>Subset_Reason__c</columns>
+        <columns>NAME</columns>
+        <columns>Subject__c</columns>
+        <columns>Case_Origin__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Case_Reason__c</field>
+            <operation>equals</operation>
+            <value>Roof Leak</value>
+        </filters>
+        <label>Roof Leak Templates</label>
+    </listViews>
+    <listViews>
+        <fullName>SRECs_Templates</fullName>
+        <columns>Case_Reason__c</columns>
+        <columns>Subset_Reason__c</columns>
+        <columns>NAME</columns>
+        <columns>Subject__c</columns>
+        <columns>Case_Origin__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Case_Reason__c</field>
+            <operation>equals</operation>
+            <value>SRECs</value>
+        </filters>
+        <label>SRECs Templates</label>
+    </listViews>
+    <listViews>
+        <fullName>Standard_Cases</fullName>
+        <columns>NAME</columns>
+        <columns>Case_Record_Type__c</columns>
+        <columns>Case_Origin__c</columns>
+        <columns>Case_Reason__c</columns>
+        <columns>Subject__c</columns>
+        <columns>Subset_Reason__c</columns>
+        <columns>Description__c</columns>
+        <columns>FS_Initial_Diagnosis__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Case_Record_Type__c</field>
+            <operation>equals</operation>
+            <value>Standard</value>
+        </filters>
+        <label>Standard Cases</label>
+    </listViews>
+    <listViews>
+        <fullName>Tax_Rebate_Templates</fullName>
+        <columns>Case_Reason__c</columns>
+        <columns>Subset_Reason__c</columns>
+        <columns>NAME</columns>
+        <columns>Subject__c</columns>
+        <columns>Case_Origin__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Case_Reason__c</field>
+            <operation>equals</operation>
+            <value>Tax/Rebate</value>
+        </filters>
+        <label>Tax/Rebate Templates</label>
+    </listViews>
+    <listViews>
+        <fullName>Utility_Templates</fullName>
+        <columns>Case_Reason__c</columns>
+        <columns>Subset_Reason__c</columns>
+        <columns>NAME</columns>
+        <columns>Subject__c</columns>
+        <columns>Case_Origin__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Case_Reason__c</field>
+            <operation>equals</operation>
+            <value>Utility</value>
+        </filters>
+        <label>Utility Templates</label>
+    </listViews>
+    <nameField>
+        <label>Quick Case Template Name</label>
+        <type>Text</type>
+    </nameField>
+    <pluralLabel>Quick Case Templates</pluralLabel>
+    <searchLayouts/>
+    <sharingModel>ReadWrite</sharingModel>
+</CustomObject>

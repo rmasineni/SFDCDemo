@@ -1,0 +1,102 @@
+<apex:page sidebar="false" showHeader="false"  controller="wfTask_Update" >
+	 <style>
+		.headerLogo {
+            margin:1px 1px 1px 1px;
+            border:0;
+            padding-left:10px;
+            padding-bottom:10px;
+			padding-top:10px;
+        }
+
+        .bPageTitle, .apexp{
+            margin-left: 15px;
+            margin-right: 20px;
+            width: 97%;
+        }	
+	</style>
+    <c:WorkflowTask_CSS />
+	<div align="left" width="100%">
+		<img src="{!$Resource.PartnerPortalHeader32}" class="headerLogo"/>
+    </div>
+	<apex:sectionHeader title="{!title}"/>
+	
+	<apex:pageMessages />
+	<apex:outputPanel layout="block">
+		<apex:pageBlock id="block1">
+			<apex:outputPanel styleClass="blue" layout="block">
+		        <apex:pageBlockSection id="taskDetails">
+		            <apex:pageBlockSectionitem id="item1">
+		                <apex:outputLabel value="Project Name"/>
+		                <apex:outputPanel >
+		                    <apex:outputText value="{!projectObj.Name}"/>
+		                </apex:outputPanel>
+		            </apex:pageBlockSectionitem>
+		            <apex:pageBlockSectionitem id="item2">
+		                <apex:outputLabel value="Opportunity"/>
+		                <apex:outputPanel >                     
+		                    <apex:outputText value="{!projectObj.Opportunity_Name__c}"/>
+		                </apex:outputPanel>
+		            </apex:pageBlockSectionitem>
+					<apex:outputfield value="{!taskObj.Name}" />
+					<apex:outputfield value="{!taskObj.Status__c}" />
+					<apex:outputfield value="{!taskObj.Reopen__c}"/>
+				</apex:pageBlockSection>
+			</apex:outputPanel>
+		</apex:pageBlock>
+	</apex:outputPanel>
+	
+	<apex:form id="wfUpdate">
+		<apex:pageMessages />
+        <apex:pageBlock id="notesList" >
+			<apex:pageBlockButtons style="align:center;">
+				<apex:commandButton rendered="{!NOT(confirmMode)}" action="{!saveTask}" value=" Save " 
+					rerender="wfUpdate" oncomplete="closeAndRefreshparent('{!parentURL}','{!confirmMode}');" /> &nbsp;
+				<apex:commandButton rendered="{!NOT(confirmMode)}" value="Cancel" onclick="window.top.close();" immediate="true" /> &nbsp;
+				<apex:commandButton rendered="{!confirmMode}" value="Close" 
+						onclick="closeAndRefreshparent('{!parentURL}');window.top.close();" immediate="true"/>
+			</apex:pageBlockButtons>       		
+			<apex:outputpanel styleClass="blue" >
+                <apex:pageBlockSection columns="2" title="Task Details">
+					<apex:pageBlockSectionItem rendered="{!showOnHold}">
+	                    <apex:outputLabel value="{!$ObjectType.Task__c.fields.OnHoldEndDate__c.label}" for="reason" />
+	                    <apex:outputPanel layout="block" styleClass="requiredInput">
+	                    <apex:outputPanel layout="block" styleClass="requiredBlock"/>
+	                        <apex:inputField value="{!customLookupObj.End_Date__c}" rendered="{!showOnHold}"/>
+	                    </apex:outputPanel>
+	                </apex:pageBlockSectionItem>
+					<apex:pageBlockSectionItem rendered="{!showOnHold}">
+	                    <apex:outputLabel value="{!$ObjectType.Task__c.fields.On_Hold_Reason__c.label}" for="reason" />
+	                    <apex:outputPanel layout="block" styleClass="requiredInput">
+	                    <apex:outputPanel layout="block" styleClass="requiredBlock"/>
+	                        <apex:inputField value="{!taskObj.On_Hold_Reason__c}" style="width:300px" rendered="{!showOnHold}"/>
+	                    </apex:outputPanel>
+	                </apex:pageBlockSectionItem>
+
+	                <apex:pageBlockSectionItem rendered="{!showReopen}">
+	                    <apex:outputLabel value="{!$ObjectType.Task__c.fields.Reopen_Reason__c.label}" for="reason" />
+	                    <apex:outputPanel layout="block" styleClass="requiredInput">
+	                    <apex:outputPanel layout="block" styleClass="requiredBlock"/>
+	                        <apex:inputField value="{!taskObj.Reopen_Reason__c}" style="width:500px" rendered="{!showReopen}"/>
+	                    </apex:outputPanel>
+	                </apex:pageBlockSectionItem>
+				</apex:pageblocksection>            
+            </apex:outputpanel>
+        </apex:pageblock>
+	</apex:form>
+	<script type="text/javascript">
+		function closeAndRefreshparent(parentWindowUrl, confirmMode)
+		{
+			if(confirmMode == false){
+				return;
+			}
+
+			if(confirmMode == 'true'){
+				window.top.close();
+				window.opener.location.href= parentWindowUrl;
+				window.opener.location.reload();
+				var win = window.open('','_parent','');
+				win.close();
+			}
+		}
+	</script>
+</apex:page>

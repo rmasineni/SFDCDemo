@@ -1,0 +1,137 @@
+<apex:page standardcontroller="Proposal__c" tabStyle="Search_Credit_Reports__tab" extensions="SearchCreditReports" >
+
+    <apex:includeScript value="{!URLFOR($Resource.jquery_162)}"  />
+    <link rel="stylesheet"  type="text/css" href="{!$Resource.fakebutton_css}" />
+
+    <apex:sectionHeader title="Search Credit Reports"/>
+    
+    <apex:form >
+        <apex:pageblock >
+            <apex:pageblocksection Title="Search Credit Reports" columns="2">
+                <apex:inputfield id="contactId" value="{!creditReportObj.Contact__c}" /> 
+                
+                <apex:inputfield id="firstname" value="{!creditReportObj.First_Name__c}" /> 
+                <apex:inputfield id="lastname" value="{!creditReportObj.Last_Name__c}" /> 
+                <apex:inputtext id="email" value="{!creditReportObj.Customer_Email__c}" /> 
+
+                <apex:inputfield id="street" value="{!creditReportObj.Street__c}" /> 
+                <apex:inputfield id="city" value="{!creditReportObj.City__c}" /> 
+                <apex:inputfield id="state" value="{!creditReportObj.State__c}" />
+                <apex:inputfield id="country" value="{!creditReportObj.Country__c}" /> 
+                
+                <!--  
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="Street Address" for="address1" />
+                    <apex:inputText id="address1" value="{!address1}" />
+                </apex:pageBlockSectionItem>
+
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="City" for="city" />
+                    <apex:inputText id="city" value="{!city}" />
+                </apex:pageBlockSectionItem>
+
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="State" for="state" />
+                    <apex:inputText id="state" value="{!state}" />
+                </apex:pageBlockSectionItem>
+                
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="Country" for="country" />
+                    <apex:inputText id="country" value="{!country}" />
+                </apex:pageBlockSectionItem>                
+                -->
+                
+            </apex:pageblocksection>
+        
+            <div align="Center">
+                <apex:commandButton action="{!applySearchFilter}" value="  Search  " />
+                <apex:commandButton action="{!NewCreditReport}" value="  New Credit Report  "/>                
+                <apex:commandButton action="{!CancelSearch}" value="  Cancel  " />
+            </div>
+         </apex:pageblock>
+        
+       <apex:pageblock >
+      
+      <!-- <div align="center">
+        <table>
+            <tr>
+                <td>
+                <apex:outputLink target="_parent" value="{!newCreditReporturl}"  styleClass="btn" 
+                            style="text-decoration:none; margin:20px 0px 20px 0px;">New Credit Report</apex:outputLink>
+                </td>
+            </tr>
+            <tr></tr>
+            <tr></tr>
+        </table>
+       </div>-->
+
+        <apex:pageblocksection Title="Credit Reports" columns="1">
+            <apex:pageBlockTable value="{!CreditReportList}" var="creditReportWrapper">             
+                <apex:column headerValue="First Name">
+                    <apex:outputLink value="/apex/CreditCheck?id={!creditReportWrapper.customerCreditObj.Id}&ProposalId={!proposalObj.Id}"><apex:outputText value="{!creditReportWrapper.customerCreditObj.First_Name__c}"/></apex:outputLink>
+                </apex:column>
+                <apex:column headerValue="Last Name" value="{!creditReportWrapper.customerCreditObj.Last_Name__c}"/>  
+                <apex:column headerValue="Address" value="{!creditReportWrapper.address}"/>
+                <apex:column headerValue="Email" value="{!creditReportWrapper.customerCreditObj.Customer_Email__c}"/>
+                <apex:column headerValue="Date Pulled" value="{!creditReportWrapper.customerCreditObj.Date_Pulled__c}"/>                  
+            </apex:pageBlockTable> 
+        </apex:pageblocksection>
+                    <apex:outputPanel layout="block" styleClass="pSearchShowMore" id="otpNavTop">
+                                Total Records Found: <apex:outputText rendered="{!IF(Con.resultSize==10000,true,false)}">10000 +</apex:outputText><apex:outputText rendered="{!IF(Con.resultSize < 10000,true,false)}">{!Con.resultSize}</apex:outputText>  
+                                <apex:image url="/img/search_prevarrow_disabled.gif" styleClass="prevArrow" rendered="{!NOT(Con.HasPrevious)}"/>  
+                                <apex:image url="/img/search_prevarrow.gif" title="First Page" styleClass="prevArrow" rendered="{!Con.HasPrevious}"/>  
+                                <apex:commandLink action="{!first}" title="First Page" value="First Page" rendered="{!Con.HasPrevious}"/>  
+                                <apex:outputPanel styleClass="pShowLess noLink" style="color:grey" rendered="{!NOT(Con.HasPrevious)}">First Page</apex:outputPanel>           
+                                
+                                <apex:image url="/img/search_prevarrow_disabled.gif" styleClass="prevArrow" rendered="{!NOT(Con.HasPrevious)}"/>  
+                                <apex:image url="/img/search_prevarrow.gif" title="Previous Page" styleClass="prevArrow" rendered="{!Con.HasPrevious}"/>  
+                                <apex:commandLink action="{!Previous}" title="Previous Page" value="Previous Page" rendered="{!Con.HasPrevious}"/>  
+                            <apex:outputPanel styleClass="pShowLess noLink" style="color:grey" rendered="{!NOT(Con.HasPrevious)}">Previous Page</apex:outputPanel>           
+                            &nbsp;({!IF(Con.PageNumber == 1,1,((Con.PageNumber -1) * Con.PageSize)+1)}-{!IF(Con.resultSize < Con.PageSize,Con.resultSize,Con.PageNumber * Con.pageSize)})&nbsp;  
+                            <apex:outputPanel styleClass="pShowLess noLink" style="color:grey" rendered="{!NOT(Con.HasNext)}">Next Page</apex:outputPanel>           
+                            <apex:commandLink title="Next Page" value="Next Page" rendered="{!Con.HasNext}" action="{!Next}"/>&nbsp;  
+                            <apex:image url="/img/search_nextarrow.gif" title="Next Page" styleClass="nextArrow" rendered="{!Con.HasNext}"/>  
+                            <apex:image url="/img/search_nextarrow_disabled.gif" rendered="{!NOT(Con.HasNext)}"/>            
+                            <apex:outputPanel styleClass="pShowLess noLink" style="color:grey" rendered="{!NOT(Con.HasNext)}">Last Page</apex:outputPanel>           
+                            <apex:commandLink title="Last Page" value="Last Page" rendered="{!Con.HasNext}" action="{!last}"/>&nbsp;  
+                            <apex:image url="/img/search_nextarrow.gif" title="Last Page" styleClass="nextArrow" rendered="{!Con.HasNext}"/>  
+                            <apex:image url="/img/search_nextarrow_disabled.gif" rendered="{!NOT(Con.HasNext)}"/>
+                            </apex:outputPanel>             
+        </apex:pageblock>
+    </apex:form>
+    
+ <style type="text/css">
+
+
+.custPopup{
+            background-color: white;
+            white-space:nowrap;
+            border-width: 2px;
+            border-style: solid;
+            z-index: 9999;
+            left: 50%;
+            padding:10px;
+            position: absolute;
+            width: 500px;
+            margin-left: -250px;
+            top:100px;
+        }
+        .popupBackground{
+            background-color:black;
+            opacity: 0.50;
+            filter: alpha(opacity = 20);
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: 9998;
+        }
+
+</style>
+ 
+    <script>
+
+    </script>
+ 
+</apex:page>

@@ -1,0 +1,191 @@
+<apex:page controller="wfTaskSearchNew" tabStyle="Task_Nirvana__tab">
+    <script type="text/javascript">
+        function selectAllCheckboxes(obj,receivedInputID){
+            var inputCheckBox = document.getElementsByTagName("input");                  
+            for(var i=0; i<inputCheckBox.length; i++){          
+                if(inputCheckBox[i].id.indexOf(receivedInputID)!=-1){                                     
+                    inputCheckBox[i].checked = obj.checked;
+                }
+            }
+        }
+    
+    // fucntion Add(){
+    //	doAdd();
+    // } 
+     
+    </script>
+    
+    <style>   
+    .inlineEditModified {
+            color: blue;
+            font-weight: bold;
+            }
+    </style>  
+    
+    
+    <apex:form >
+      <!-- <apex:pagemessages /> 
+       <apex:messages styleClass="producterror" /> -->
+    <apex:pageblock Title="Task Search" mode="Edit" id="ViewDetails" >
+        <apex:pageMessages id="showmsg"></apex:pageMessages>
+        
+			 <apex:pageblocksection columns="2">
+                  <apex:outputpanel >
+               <div style="margin-bottom:12px;margin-top:15px" align="right"> 
+                    <apex:outputLabel style="font-weight:bold;">View</apex:outputLabel>
+                    &nbsp;
+                    <apex:selectList value="{!viewName}" id="viewId" size="1" >
+                        <apex:selectOptions value="{!Views}" />
+                    </apex:selectList>
+                    &nbsp;&nbsp;
+                    
+                    <!-- <apex:commandButton action="{!userActions}" value="  Go  "  status="searchStart" reRender="taskList"/> -->  
+					
+                </div> 
+            </apex:outputpanel>
+       
+                <apex:outputpanel >
+                    
+                    <apex:pageBlock id="pbContainer"  > 
+ 		                        <apex:pageBlockTable id="pbTable" value="{!loadtable}" var="ow"> 
+ 			                             
+ 			                             <apex:column headerValue="Selection" > 
+ 			                                 <apex:selectList value="{!ow.selectedValue}" size="1" multiselect="false" > 
+ 			                                    <apex:selectOptions value="{!SearchBy}"  /> 
+ 			                                </apex:selectList> 
+ 			                             </apex:column> 
+ 		                            <apex:column headerValue="Search Text" > 
+ 			                                 <apex:inputText value="{!ow.searchText}" style="width:300px" />   
+ 			                             </apex:column>
+                                    <apex:column headerValue="Action" width="100px" > 
+ 			                                 <apex:outputPanel > 
+                                                 <!--  <apex:image value="{!$Resource.PlusIcon}" style="cursor:pointer;"  onclick="Add()"/>  -->
+ 			                                   <apex:commandLink style="color: #015BA7;" styleClass="cmdLink" value="Add" action="{!DoAdd}"  
+ 			                                       rerender="pbContainer,showmsg"> 
+                                                  
+                                                 </apex:commandLink>  &nbsp; / &nbsp; 
+                                                <apex:commandLink style="color: #015BA7;" styleClass="cmdLink" value="Remove" action="{!removeRow}"  
+ 			                                       rerender="pbContainer,showmsg">    
+ 			                                   </apex:commandLink> 
+ 			                                </apex:outputPanel> 
+ 			                        </apex:column> 
+                                   
+ 			                    </apex:pageBlockTable> 
+                  
+ 			                </apex:pageBlock> 
+
+                </apex:outputpanel>
+                 <div style="position:Center;left:100px;"> 
+                    <apex:actionStatus id="mySaveStatus1">
+                     <apex:facet name="stop">
+                         <apex:commandButton value="  Search  "  action="{!doSearch}" rerender="TaskList,showmsg" status="mySaveStatus1"/>
+                     </apex:facet>
+                     <apex:facet name="start">
+                        <apex:outputtext value="In progress ..." />
+                            <apex:outputPanel >
+                               <apex:image value="/img/loading32.gif" style="height: 15px;"/>
+                               <apex:commandButton value="Processing..." status="mySaveStatus1" disabled="true"/>
+                            </apex:outputPanel>
+                       </apex:facet>
+                    </apex:actionStatus> 
+                    </div>    
+                    
+            </apex:pageblocksection>
+        </apex:pageblock>
+         <apex:actionFunction name="doAdd" action="{!DoAdd}" rerender="pbContainer,showmsg">
+        </apex:actionFunction>
+
+        <apex:pageBlock title="Task List"  id="TaskList">    
+                <apex:pageblockbuttons location="Top">                    
+                    <apex:commandbutton action="{!AssignTasks}" value="Assign To Me" id="saveButton"  rerender="TaskTable,TaskList,showmsg" />                   
+            <apex:commandButton rerender="TaskTable,TaskList,showmsg" status="ButtonStatus" value="Save" action="{!DoSave}"   />
+
+       </apex:pageblockbuttons>
+            
+    <apex:pageblocksection columns="1">
+                
+                <apex:pageBlockTable value="{!taskListdisp}" var="a" id="TaskTable" >
+               <apex:column id="selectAll" >
+                    <apex:facet name="header" >
+                        <apex:inputCheckbox onclick="selectAllCheckboxes(this,'checkboxId')"/>
+                    </apex:facet>
+                    <apex:inputCheckbox value="{!a.checked}" id="checkboxId"/> 
+                </apex:column>
+                <!-- <apex:column headerValue="Task Id" value="{!a.taskObj.ID}"/> -->
+                 
+             <apex:column >
+                 <apex:facet name="header">Task Name</apex:facet>
+                 <a href='{!urlPrefix}/{!a.taskObj.ID}' onclick="redirect('{!a.taskObj.ID}')"><apex:outputtext value="{!a.taskObj.name}"></apex:outputtext></a>
+             </apex:column>
+                       
+              <apex:column headerValue="Task Status" value="{!a.taskObj.Status__c}"/>
+             
+               <apex:column headerValue="Task Open Date" value="{!a.taskObj.Start_Date__c}" />
+               
+               <apex:column headerValue="Group" value="{!a.taskObj.Group_Name__c}" />     
+                  
+               <apex:column headerValue="SLA Status" value="{!a.taskObj.SLA_Status__c}" /> 
+                    
+               <apex:column headerValue="Phase Name" value="{!a.taskObj.Phase__c}"/>     
+        
+               <apex:column >
+                     <apex:facet name="header">Project Name</apex:facet>
+                        <a href='{!urlPrefix}/{!a.taskObj.Phase__r.Project__r.id}' onclick="redirect('{!a.taskObj.Phase__r.Project__r.id}')"><apex:outputtext value="{!a.taskObj.Phase__r.Project__r.name}"></apex:outputtext></a>
+              </apex:column>
+          
+             <apex:column headerValue="Customer Full Name" value="{!a.taskObj.Phase__r.Project__r.Proposal__r.Homeowner_Name__c }" />
+                    
+             <apex:column headerValue="Sales Partner" value="{!a.taskObj.Phase__r.Project__r.Sales_Partner__c}" /> 
+             
+             <apex:column headerValue="Install Partner" value="{!a.taskObj.Phase__r.Project__r.Install_Partner__c}" /> 
+                    
+                    
+             <!-- <apex:column headerValue="Task Number" value="{!a.taskObj.Task_Number__c}"/> -->
+                
+             <apex:column headerValue="Project Open Date" value="{!a.taskObj.Phase__r.Project__r.CreatedDate}" />        
+                    
+                <apex:column HeaderValue="Task Owner" >
+                    <apex:outputField value="{!a.taskObj.Task_Owner__c}">
+                    <apex:inlineEditSupport showOnEdit="ButtonStatus"   event="ondblclick"/> 
+                    <!-- <apex:actionSupport event="onblur" action= "{!checkforGroup}" rerender="TaskTable"/> 
+                    </apex:inlineEditSupport> -->
+                    </apex:outputField> 
+            </apex:column>
+                 
+           <!--  <apex:column headerValue="Task Category" value="{!a.taskObj.Category__c}" />  -->
+            
+             <!-- <apex:column headerValue="Related Task" value="{!a.taskObj.Related_Task__c}"/> -->
+                </apex:pageBlockTable>
+            </apex:pageblocksection>     
+            
+     
+            <apex:outputPanel layout="block" styleClass="tSearchShowMore" id="otpNavTop">
+                <br></br>           
+                Total Records Found: {!total_size}  
+                <apex:image url="/img/search_prevarrow_disabled.gif" styleClass="prevArrow" rendered="{!NOT(HasPrevious)}"/>  
+                <apex:image url="/img/search_prevarrow.gif" title="First Page" styleClass="prevArrow" rendered="{!HasPrevious}"/>  
+                <apex:commandLink action="{!first}" title="First Page" value="First Page" rendered="{!HasPrevious}"/>  
+                <apex:outputPanel styleClass="pShowLess noLink" style="color:grey" rendered="{!NOT(HasPrevious)}">First Page</apex:outputPanel>  &nbsp;         
+
+                <apex:image url="/img/search_prevarrow_disabled.gif" styleClass="prevArrow" rendered="{!NOT(HasPrevious)}"/>  
+                <apex:image url="/img/search_prevarrow.gif" title="Previous Page" styleClass="prevArrow" rendered="{!HasPrevious}"/>  
+                <apex:commandLink action="{!Previous}" title="Previous Page" value="Previous Page" rendered="{!HasPrevious}"/>  
+                <apex:outputPanel styleClass="pShowLess noLink" style="color:grey" rendered="{!NOT(HasPrevious)}">Previous Page</apex:outputPanel>  
+            
+                &nbsp;({!PageNumber} / {!TotalPages})&nbsp; 
+            
+                <apex:outputPanel styleClass="pShowLess noLink" style="color:grey" rendered="{!NOT(HasNext)}">Next Page</apex:outputPanel>           
+                <apex:commandLink title="Next Page" value="Next Page" rendered="{!HasNext}" action="{!Next}"/>&nbsp;  
+                <apex:image url="/img/search_nextarrow.gif" title="Next Page" styleClass="nextArrow" rendered="{!HasNext}"/>  
+                <apex:image url="/img/search_nextarrow_disabled.gif" rendered="{!NOT(HasNext)}"/> &nbsp;       
+                
+                <apex:outputPanel styleClass="pShowLess noLink" style="color:grey" rendered="{!NOT(HasNext)}">Last Page</apex:outputPanel>           
+                <apex:commandLink title="Last Page" value="Last Page" rendered="{!HasNext}" action="{!last}"/>&nbsp;  
+                <apex:image url="/img/search_nextarrow.gif" title="Last Page" styleClass="nextArrow" rendered="{!HasNext}"/>  
+                <apex:image url="/img/search_nextarrow_disabled.gif" rendered="{!NOT(HasNext)}"/>&nbsp;
+            </apex:outputPanel>
+            
+        </apex:pageBlock>
+
+    </apex:form>
+</apex:page>

@@ -1,0 +1,248 @@
+<apex:page standardController="Lead" extensions="RepSchedLead" sidebar="false" standardStylesheets="false">
+ <script type="text/javascript">         
+    window.onload = setFocus      
+    function setFocus() {         
+        
+        document.getElementById("form1:AF").focus();        
+    }         
+    </script> 
+    <style>      
+        .dateFormat{        
+        display:none;       
+        }       
+    </style> 
+    <style type = "text/css">
+        tr.scaffolding, .scaffolding td {       
+        border:normal;    
+        padding-top:10px;       
+        padding-bottom:10px;        
+        height:15;      
+        margin-top:0;       
+        margin-bottom:0;        
+        visibility:hidden;      
+        }       
+        
+    </style>        
+    <style type = "text/css">       
+        
+        
+        .headr
+        {
+        font-size:17px;
+        font-weight:bold;
+        color:maroon;
+        }
+        
+        .popup
+        {
+        background-color: white;
+        border-width: 6px;
+        border-style: solid;
+        z-index: 9999;
+        left: 50%;
+        padding:10px;
+        position: absolute;
+        width: 500px;
+        margin-left: -210px;
+        top:80px;
+        }
+        
+        .popupBg
+        {
+        background-color:black;
+        opacity: 0.20;
+        filter: alpha(opacity = 70);
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        z-index: 9998;
+        }
+        .scaffolding{border: 1px solid #ccc;
+        border-color: rgba(0,0,0,.2);
+        box-shadow: 0 2px 10px rgba(0,0,0,.2);
+        font-weight:normal;
+        font-family:arial;
+        outline: none;
+        }
+        .pbBody td{
+        padding: 0 0% 0 0%;
+        }
+        body .bPageBlock .pbBody .lblue .pbSubheader {
+        background-color: #428bca!important;box-shadow: 0 2px 10px rgba(0,0,0,.2);
+        background:url(https://cs18.salesforce.com/resource/1413642674000/caland) no-repeat ;background-position: 1%;
+        padding: 1% 1% 1% 5%;
+        }
+        .textbx{
+        padding: 6px 12px;
+        font-size: 14px;
+        line-height: 1.42857143;
+        color: #555;
+        background-color: #fff;
+        background-image: none;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+        box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+        -webkit-transition: border-color ease-in-out .15s,-webkit-box-shadow ease-in-out .15s;
+        -o-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+        transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+        }
+        body .bPageBlock .pbBody .labelCol{font-weight: normal;
+        font-size: .92em;font-family: verdana;}
+        .rt th{background-color: #1ba1e2;}
+        .pbBody a{font-size: 0.9em;
+        padding: 0.6%;
+        line-height: 21px;
+        
+        }
+        input.btn{
+        color: #fff;
+        background-color: #428bca;
+        border-color: #357ebd;
+        display: inline-block;
+        padding: 6px 12px;
+        margin-bottom: 0;
+        font-size: 14px;
+        font-weight: 400;
+        line-height: 1.42857143;
+        text-align: center;
+        white-space: nowrap;
+        vertical-align: middle;
+        cursor: pointer;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+        background-image: none;
+        border: 1px solid transparent;
+        border-radius: 4px;
+        }
+    </style>
+    
+    <style>
+        body .bPageBlock .pbBody .red .pbSubheader{
+        background-color:#c00000;
+        }
+        body .bPageBlock .pbBody .lblue .pbSubheader{
+        background-color:#5dbcd2;
+        }
+        body .bPageBlock .pbBody .lblue .pbSubheader h3{
+        color:#ffffff;
+        } 
+    </style>
+    
+    <apex:form id="form1">
+        <c:loadingbox />
+        <apex:pageblock >
+            <apex:pageMessages />
+            <apex:outputPanel styleClass="lblue">  
+                <apex:pageBlockSection title="Enter Dates To Check Availability" id="Section1" columns="1" collapsible="false">
+                    <apex:inputField label="Availability From" value="{!conskills.StartDateTime__c}" style="width:200px;" styleClass="textbx" id="AF"/>   
+                    <apex:inputField styleClass="textbx" label="Availability To " value="{!conskills.EndDateTime__c}" style="width:200px;"/>
+                    <apex:outputText styleClass="textbx" label="Branch" value="{!Branch}" style="width:30%;" rendered="{!ldtta.Sales_Contact_Method__c != 'Phone Consultation'}"/>  
+                    <apex:inputField styleClass="textbx" label="Skill Type" value="{!conskills.Skill_Type__c}" style="width:100px;"/>
+                    <apex:inputField styleClass="textbx" label="Skill Level" value="{!conskills.Skill_Level__c}" style="width:100px;"/>  
+                    <apex:pageBlockSectionItem >
+                        <apex:outputPanel />
+                        <apex:commandButton styleClass="bton" Value="Check Availability"  action="{!CheckAvailability}" style="width:205px;text-align:center;"/>
+                    </apex:pageBlockSectionItem>
+                    <apex:pageBlockSectionItem >
+                        <apex:outputPanel />
+                        <apex:commandButton styleClass="bton" onClick="window.top.close();" value="Close" style="width:205px;text-align:center;"/>
+                    </apex:pageBlockSectionItem> 
+                </apex:pageBlockSection>
+            </apex:outputPanel>
+        </apex:pageblock>
+    </apex:form>   
+    
+    <apex:form id="form3" rendered="{!SalesrepDisp}" styleClass="pSearchShowMore" >
+     <apex:pageblock >
+       <apex:outputpanel id="myButtons">
+       <br></br>
+        
+        <apex:commandButton action="{!Beginning}" title="Beginning" value="First Page" disabled="{!disablePrevious}" reRender="myPanel,myButtons" />
+        <apex:commandButton action="{!Previous}" title="Previous" value="Previous Page" disabled="{!disablePrevious}" reRender="myPanel,myButtons"/>        
+        <apex:commandButton action="{!Next}" title="Next" value="Next Page" disabled="{!disableNext}" reRender="myPanel,myButtons"/>
+        <apex:commandButton action="{!End}" title="End" value=" Last Page " disabled="{!disableNext}" reRender="myPanel,myButtons"/>     
+        </apex:outputpanel>  
+   </apex:pageblock>
+  </apex:form>
+    
+    
+
+    
+    <apex:form id="form2" styleClass="none">
+        <apex:pageblock >
+            <apex:outputPanel styleClass="lblue" rendered="{!table}" id="myPanel">  
+                <table border="1" class="rt" cellpadding="10px" cellspacing="5px" style="border:1px #5dbcd2;width:100%"  > 
+                    
+                    <th class="scaffolding" style="text-align:center;" padding="2" bgcolor="#5dbcd2"><font color="#ffffff">  Contact Name  </font> </th>       
+                    <th class="scaffolding" style="text-align:center;" padding="2" bgcolor="#5dbcd2"><font color="#ffffff">  Skill Level  </font> </th>  
+                    <apex:repeat value="{!ListOfDates}" var="ld">
+                        <th class="scaffolding" style="text-align:center" padding="2" bgcolor="#5dbcd2"><font color="#ffffff">
+                            <apex:outputText value="{0,date,dd'-'MMM'-'yyyy}">
+                                <apex:param value="{!ld}" />
+                            </apex:outputText>
+                            </font>
+                        </th>
+                    </apex:repeat>  
+                    <tr>
+                        <apex:repeat value="{!FinallistSl}" var="FS"> 
+                            <tr>
+                                <td class="scaffolding"  valign="Top" style="padding:0.6% 0.2%;font-size: 0.91em;" ><div style=" ">{!FS.Contactname}<br></br><br>User Time Zone: {!FS.Tzonelocal}</br></div></td>
+                        <td  style="display:none;">{!FS.Contactid}</td>
+                        <td  style="display:none;">{!ldtta.id}</td>
+                        <td  style="display:none;">{!ldtta.Name}</td>
+                        <td class="scaffolding" valign="Top" align="Center" padding="2"  > {!FS.Skilllevel}</td>
+                        
+                        <apex:repeat value="{!FS.FinalSlt}" var="FSL"> 
+                            <td class="scaffolding" id="my_cell" valign="Top" align="Center" padding="2">
+                                <apex:repeat value="{!FSL.Availslot}" var="ls1">  
+                                    <apex:CommandLink action="{!appointmentOpen}" status="loadStatus" reRender="AppointmentDetail">
+                                        <apex:outputText value="{!ls1.datetimess1}"></apex:outputText>
+                                        <apex:outputText value="{!ls1.datetimess}" style="display:none;"></apex:outputText>
+                                        <apex:outputText value="{!ls1.datetimessldisply1}" style="display:none;"></apex:outputText>
+                                        <apex:outputText value=" - "></apex:outputText>
+                                        <apex:outputText value="{!ls1.datetimeed1}"></apex:outputText>
+                                        <apex:outputText value="{!ls1.datetimeed}" style="display:none;"></apex:outputText>
+                                        <apex:outputText value="{!ls1.datetimeedldisply1}" style="display:none;"></apex:outputText>
+                                        
+                                        <apex:param assignTo="{!paramstdate }" name="dtss" value="{!ls1.datetimess}"/>
+                                        <apex:param assignTo="{!parameddate }" name="dted" value="{!ls1.datetimeed}"/>
+                                        <apex:param assignTo="{!paramcontact}" name="evasto" value="{!FS.Contactid}"/>
+                                        <apex:param assignTo="{!paramlead}" name="ld" value="{!ldtta.id}"/>
+                                        <apex:param assignTo="{!timezone}" name="tz" value="{!FS.Tzonelocal}"/>
+                                    </apex:CommandLink>
+                                    <br></br> 
+                            </apex:repeat>
+                    </td>
+            </apex:repeat></tr>
+        
+    </apex:repeat></tr>
+</table>
+</apex:outputPanel>
+</apex:pageBlock>
+<apex:outputPanel id="AppointmentDetail">
+    <apex:outputPanel styleClass="popupBg" layout="block" rendered="{!displayPopUp}"/>
+    <apex:outputPanel styleClass="popup" layout="block" rendered="{!displayPopUp}">
+        <apex:pageblock title="AppointmentDetail" >
+            
+            <apex:pageBlockSection title="Appointment Information" columns="1" collapsible="true">
+               <!-- <apex:inputField value="{!appt.Name}" style="width:170px;"/>-->
+                <apex:inputField value="{!appt.Appointment_Date_Time__c}" style="width:170px;"/>
+                <apex:inputField value="{!appt.Appointment_End_Date_Time__c}" style="width:170px;"/>
+                <apex:inputField value="{!appt.Lead__c}" style="width:170px;"/>
+            </apex:pageBlockSection>
+            
+            <apex:pageBlockButtons location="bottom">
+                <apex:commandButton value="Create Appointment" action="{!saveAppointment}" reRender="AppointmentDetail"/>
+                <apex:commandButton value="Close Window" action="{!closePopup}" rerender="AppointmentDetail"/>
+            </apex:pageBlockButtons>
+        </apex:pageblock>
+    </apex:outputPanel>
+</apex:outputPanel>
+
+</apex:form>
+</apex:page>

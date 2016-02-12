@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CaseSettings xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseAssignNotificationTemplate>Case_Templates/Case_Reassignment_Notification</caseAssignNotificationTemplate>
+    <closeCaseThroughStatusChange>false</closeCaseThroughStatusChange>
+    <defaultCaseOwner>CustomerCareCases</defaultCaseOwner>
+    <defaultCaseOwnerType>Queue</defaultCaseOwnerType>
+    <defaultCaseUser>sunruncrm@sunrunhome.com</defaultCaseUser>
+    <emailToCase>
+        <enableEmailToCase>true</enableEmailToCase>
+        <enableHtmlEmail>true</enableHtmlEmail>
+        <enableOnDemandEmailToCase>true</enableOnDemandEmailToCase>
+        <enableThreadIDInBody>true</enableThreadIDInBody>
+        <enableThreadIDInSubject>true</enableThreadIDInSubject>
+        <notifyOwnerOnNewCaseEmail>true</notifyOwnerOnNewCaseEmail>
+        <overEmailLimitAction>Requeue</overEmailLimitAction>
+        <routingAddresses>
+            <addressType>EmailToCase</addressType>
+            <caseOrigin>Documents</caseOrigin>
+            <casePriority>Normal</casePriority>
+            <createTask>false</createTask>
+            <emailAddress>documents@sunrun.com</emailAddress>
+            <routingName>Documents</routingName>
+            <saveEmailHeaders>false</saveEmailHeaders>
+        </routingAddresses>
+        <routingAddresses>
+            <addressType>EmailToCase</addressType>
+            <caseOrigin>Internal Request</caseOrigin>
+            <casePriority>High</casePriority>
+            <createTask>false</createTask>
+            <emailAddress>cc_internal@sunrun.com</emailAddress>
+            <routingName>Internal Escalations</routingName>
+            <saveEmailHeaders>false</saveEmailHeaders>
+        </routingAddresses>
+        <routingAddresses>
+            <addressType>EmailToCase</addressType>
+            <caseOrigin>Sungevity</caseOrigin>
+            <casePriority>Normal</casePriority>
+            <createTask>false</createTask>
+            <emailAddress>sungevityservicetransfers@sunrun.com</emailAddress>
+            <routingName>Sungevity Service Transfers</routingName>
+            <saveEmailHeaders>false</saveEmailHeaders>
+        </routingAddresses>
+        <routingAddresses>
+            <addressType>EmailToCase</addressType>
+            <caseOrigin>Sungevity</caseOrigin>
+            <casePriority>Normal</casePriority>
+            <createTask>false</createTask>
+            <emailAddress>sungevitycustomercare@sunrun.com</emailAddress>
+            <routingName>Sungevity Serviced by Sunrun</routingName>
+            <saveEmailHeaders>false</saveEmailHeaders>
+        </routingAddresses>
+        <routingAddresses>
+            <addressType>EmailToCase</addressType>
+            <caseOrigin>Email</caseOrigin>
+            <casePriority>Normal</casePriority>
+            <createTask>false</createTask>
+            <emailAddress>customercare@sunrun.com</emailAddress>
+            <routingName>Sunrun Customer Care</routingName>
+            <saveEmailHeaders>false</saveEmailHeaders>
+        </routingAddresses>
+        <routingAddresses>
+            <addressType>EmailToCase</addressType>
+            <caseOrigin>Email</caseOrigin>
+            <casePriority>Normal</casePriority>
+            <createTask>false</createTask>
+            <emailAddress>service@sunrun.com</emailAddress>
+            <routingName>Sunrun Fleet Operations</routingName>
+            <saveEmailHeaders>false</saveEmailHeaders>
+        </routingAddresses>
+        <routingAddresses>
+            <addressType>EmailToCase</addressType>
+            <caseOrigin>Email Inbound</caseOrigin>
+            <casePriority>Normal</casePriority>
+            <createTask>true</createTask>
+            <emailAddress>panelwashing@sunrun.com</emailAddress>
+            <routingName>Sunrun Panel Washing</routingName>
+            <saveEmailHeaders>false</saveEmailHeaders>
+            <taskStatus>Not Started</taskStatus>
+        </routingAddresses>
+        <routingAddresses>
+            <addressType>EmailToCase</addressType>
+            <caseOrigin>Email</caseOrigin>
+            <casePriority>Normal</casePriority>
+            <createTask>false</createTask>
+            <emailAddress>sunrunhelp@sunrun.com</emailAddress>
+            <routingName>Sunrun Sales Help</routingName>
+            <saveEmailHeaders>false</saveEmailHeaders>
+        </routingAddresses>
+        <unauthorizedSenderAction>Bounce</unauthorizedSenderAction>
+    </emailToCase>
+    <enableCaseFeed>false</enableCaseFeed>
+    <enableEarlyEscalationRuleTriggers>false</enableEarlyEscalationRuleTriggers>
+    <enableSuggestedArticlesApplication>true</enableSuggestedArticlesApplication>
+    <enableSuggestedArticlesCustomerPortal>false</enableSuggestedArticlesCustomerPortal>
+    <enableSuggestedArticlesPartnerPortal>false</enableSuggestedArticlesPartnerPortal>
+    <enableSuggestedSolutions>false</enableSuggestedSolutions>
+    <keepRecordTypeOnAssignmentRule>false</keepRecordTypeOnAssignmentRule>
+    <notifyContactOnCaseComment>false</notifyContactOnCaseComment>
+    <notifyDefaultCaseOwner>false</notifyDefaultCaseOwner>
+    <notifyOwnerOnCaseComment>true</notifyOwnerOnCaseComment>
+    <notifyOwnerOnCaseOwnerChange>false</notifyOwnerOnCaseOwnerChange>
+    <useSystemEmailAddress>false</useSystemEmailAddress>
+    <webToCase>
+        <enableWebToCase>false</enableWebToCase>
+    </webToCase>
+</CaseSettings>

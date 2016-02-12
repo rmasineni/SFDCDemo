@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<HomePageComponent xmlns="http://soap.sforce.com/2006/04/metadata">
+    <body>&amp;lt;script language=&quot;JavaScript&quot; src=&quot;http://feed2js.org//feed2js.php?src=http%3A%2F%2Fwww.sunrun.com%2Fblog%2Ffeed%2F&amp;amp;amp;chan=y&amp;amp;amp;num=5&amp;amp;amp;desc=200&amp;amp;amp;tz=+8&quot;&amp;nbsp; type=&quot;text/javascript&quot;&amp;gt;&amp;lt;/script&amp;gt;&amp;lt;noscript&amp;gt;&amp;lt;a href=&quot;http://feed2js.org//feed2js.php?src=http%3A%2F%2Fwww.sunrun.com%2Fblog%2Ffeed%2F&amp;amp;amp;chan=y&amp;amp;amp;num=5&amp;amp;amp;desc=200&amp;amp;amp;tz=+8&amp;amp;amp;html=y&quot;&amp;gt;View RSS feed&amp;lt;/a&amp;gt;&lt;br&gt;&amp;lt;/noscript&amp;gt;&lt;br&gt;&lt;br&gt;</body>
+    <pageComponentType>htmlArea</pageComponentType>
+    <width>wide</width>
+</HomePageComponent>

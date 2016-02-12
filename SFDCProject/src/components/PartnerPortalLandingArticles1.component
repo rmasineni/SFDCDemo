@@ -1,0 +1,115 @@
+<apex:component controller="PartnerPortalLanding">
+    <apex:attribute name="content" type="String" required="false" description="Article Content"/>
+     <apex:outputpanel layout="block" styleclass="grid_16">
+        <div style="height:20px; width:200px;" ></div>
+    </apex:outputpanel>  
+    <!-- 
+    <div style="text-align:center;">
+           <apex:outputPanel id="outputId0"> 
+            <p>
+                <span style="font-size:16px; color:Red;"><span style="font-size:18px; font-wigth:bold;">New Features:</span> In-Person eSigning is here! <a href="http://pages.sunrun.com/rs/sunrun/images/Sales%20Tutorial_In-Person%20eSignatures.mp4" target="_blank"><span style="color:#00ade6;font-family: verdana, geneva, sans-serif;">Watch</span></a> the training video.</span><br/>
+                <span style="font-size:16px; color:Red;">Click “Contact Us” to ask Sunrun for assistance.</span>
+            </p>
+        </apex:outputPanel> 
+        <br/>
+    </div>  
+     -->
+
+    <apex:outputpanel layout="block" styleclass="grid_3">
+        <div class="contenetDiv101" >
+            <img src="{!$Resource.PartnerPortalHomePageImage41}" />
+        </div>
+        <div class="contenetDiv102" >
+            <img src="{!$Resource.PartnerPortalHomePageImage42}" />
+        </div>
+    </apex:outputpanel>
+
+    <apex:outputpanel layout="block" styleclass="grid_5">
+         <div class="contenetDiv111" >
+            <div style="text-align:center;">
+                <div style="text-align:left;">
+                <apex:outputPanel id="outputId1"> 
+                    <p>
+                    <span style="font-size:16px;"><span style="font-family: verdana, geneva, sans-serif;"><span style="font-size:18px;">Monthly e-Conduits</span><br/><br/>
+                    <span style="font-size:14px;">
+                    <a href="http://pages.sunrun.com/monthly_update.html" target="_blank"><span style="color:#00ade6;"><span style="font-size: 14px;"><span style="font-family: verdana, geneva, sans-serif;">Read</span></span></span></a> Sunrun's current and past e-Conduits</span></span></span>
+                    </p>
+                </apex:outputPanel> 
+                </div>
+            </div>
+        </div>
+         <div class="contenetDiv112" >
+            <div style="text-align:center;">
+                <div style="text-align:left;">
+                <apex:outputPanel id="outputId2"> 
+                    <p>
+                        <span style="font-size:16px;"><span style="font-family: verdana, geneva, sans-serif;"><span style="font-size:18px;">Customer Promotions</span><br/><br/>
+                        <span style="font-size:14px;">
+                        <a href="https://docs.google.com/forms/d/1eyAXmfBBbVRWQAD94hoYxljOGmAVL50qMOb9fY4225w/viewform" target="_blank"><span style="color:#00ade6;"><span style="font-size: 14px;"><span style="font-family: verdana, geneva, sans-serif;">Submit</span></span></span></a> customer referrals and <a href='{!accountMessage}' target="_blank"><span style="color:#00ade6;"><span style="font-size: 14px;"><span style="font-family: verdana, geneva, sans-serif;">learn more</span></span></span></a> about Sunrun's current promotions.</span></span></span>
+                    </p>
+                </apex:outputPanel> 
+                </div>
+            </div>
+        </div>        
+    </apex:outputpanel>
+    
+     <apex:outputpanel layout="block" styleclass="grid_3">
+        <div class="contenetDiv101" >
+            <img src="{!$Resource.PartnerPortalHomePageImage43}" />
+        </div>
+         <div class="contenetDiv102" >
+            <img src="{!$Resource.partnerportalCEE}" />
+        </div>
+         <div class="contenetDiv101" >
+            <img src="{!$Resource.partnerportalAEELink}" />
+        </div>
+    </apex:outputpanel>
+    <apex:outputpanel layout="block" styleclass="grid_5">
+        <div class="contenetDiv111" >
+            <div style="text-align:center;">
+                <div style="text-align:left;">
+                    <apex:outputPanel id="outputId3"> 
+                        <p>
+                            <span style="font-size:16px;"><span style="font-family: verdana, geneva, sans-serif;"><span style="font-size:18px;">New Partner Portal Features</span><br/><br/>
+                            <span style="font-size:14px;">
+                            <a href="http://pages.sunrun.com/TrainingDocuments.html" target="_blank"><span style="color:#00ade6;"><span style="font-size: 14px;"><span style="font-family: verdana, geneva, sans-serif;">Watch</span></span></span></a> Sunrun’s Partner Portal instructional videos to learn about our new features.</span></span></span>
+                        </p>
+                    </apex:outputPanel> 
+                </div>
+            </div>
+        </div> 
+         <div class="contenetDiv112" >
+            <div style="text-align:center;">
+                <div style="text-align:left;">
+                <apex:outputPanel id="outputId4"> 
+                    <p>
+                      <span>
+                          <span>
+                        <span style="font-size:14px;">
+                            <a href="https://cee.leadmanager.co/login?utm_source=sunrunpartnerportal" target="_blank"><span style="color:#00ade6;"><span style="font-size: 14px;"><span style="font-family: verdana, geneva, sans-serif;">Purchase Leads from CEE</span>
+                                </span>
+                                </span>
+                                
+                            </a>
+                        </span>
+                          </span>
+                          <br/><br/>
+                            <br/><br/>
+                          <span>
+                          <span style="font-size:14px;">
+                            <a href="http://www.AEEsolar.com" target="_blank"><span style="color:#00ade6;"><span style="font-size: 14px;"><span style="font-family: verdana, geneva, sans-serif;">Purchase Equipment from AEE</span>
+                                </span>
+                                </span>
+                                
+                            </a>
+                            </span>
+                          </span>
+                      </span>
+                    </p>
+                </apex:outputPanel> 
+                </div>
+            </div>
+        </div>        
+    </apex:outputpanel>
+    
+</apex:component>

@@ -1,0 +1,4 @@
+<apex:page id="SROtherDocs"  sidebar="false" showHeader="false" tabStyle="Opportunity" StandardController="Proposal__c">
+	<c:SRAttachmentsListViewComponent id="SROtherDocsComponent"  relatedObject="{!Id}"/>
+	<c:Proposal_SRAttachmentsJavascript />
+</apex:page>

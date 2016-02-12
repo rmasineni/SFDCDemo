@@ -1,0 +1,30 @@
+<apex:page standardController="Opportunity" extensions="AppointmentTypes">
+    <apex:form >
+      <div style="float:right;margin: 0 auto;text-align: center;">
+        <apex:outputLabel style="font-weight: bold;" for="Payments"
+            value="Appointment Types:">
+            </apex:outputlabel>
+            <apex:selectList id="actionId" title="apptTypes" size="1"
+                value="{!apptType}" multiselect="false">
+                <apex:selectOptions value="{!ApptTypes}" />
+            </apex:selectList>          
+            <apex:commandLink value="Go" onclick="return processUserActions('{!$Component.actionId}')" action="{!showScheduler}" target="_blank" styleClass="btn" style="text-decoration:none;padding:2px;">
+            </apex:commandLink>
+      </div>      
+    </apex:form>
+    
+    <script> 
+    	 function processUserActions(actionId){
+			var result = true;
+			var actionText = document.getElementById(actionId).value;
+			if(actionText == null || actionText == '--None--'){
+				alert('Select an appointment type');
+				result = false;
+			}
+			return result;
+    	 	//var win = window.open(redirectUrl, '_blank');
+  			//win.focus();
+    	 	//return true;
+    	 }
+    </script>
+</apex:page>

@@ -1,0 +1,218 @@
+<apex:page id="AdhocTask" standardController="Task__c" extensions="wfcreateAdhocTaskClass" sidebar="false" tabStyle="Task__c" >
+
+    <apex:sectionHeader title="Enter Task Details "/>
+    <apex:form id="TaskCloneForm">
+        <apex:pageBlock id="block1">
+        <apex:pageMessages />
+            <div style="text-align: center;" >
+               
+                 <apex:commandButton action="{!saveAdhocTask}" value=" Save " status="status2" title="Click to save the Task" rendered="{!editModeSec}"/>
+                &nbsp;
+                <apex:commandButton action="{!editTask}" value=" Edit " status="status2" title="Click to Edit the Task" rendered="{!!editModeSec}"/>
+                 &nbsp;&nbsp;&nbsp;
+                <apex:commandButton action="{!backToSearch}" value="  Back  " title="Click to go back to List" immediate="true"
+                                    html-formnovalidate="formnovalidate"/>
+                &nbsp;
+              
+               <apex:actionStatus id="status2" startText="saving..."/>
+        </div> 
+            <br/>
+       
+        <!-- <apex:actionFunction name="RenderSection" action="{!RenderSec}"/> -->
+            <apex:pageBlockSection title="Task Details" id="taskDetails" rendered="{!editModeSec}">   
+                
+                <apex:pageBlockSectionitem id="item1">
+                      <apex:outputLabel value="Task Name"/>
+                      <apex:outputPanel layout="block" styleClass="requiredInput">
+                        <apex:outputPanel layout="block" styleClass="requiredBlock"/>
+                        
+                        <apex:inputfield id="tName" value="{!newTask.name}"  required="true"/>
+                    </apex:outputPanel>                    
+                </apex:pageBlockSectionitem>
+                                             
+                <apex:pageBlockSectionitem id="item3">
+                 <apex:outputLabel value="Project Name"/>
+                 <apex:outputfield id="projName2" value="{!newTask.Project_Name__c}" />
+                   <!--   <apex:outputPanel layout="block" styleClass="requiredInput">
+                        <apex:outputPanel layout="block" styleClass="requiredBlock"/>                                   
+                    </apex:outputPanel>  -->
+                </apex:pageBlockSectionitem> 
+       
+                <apex:pageBlockSectionitem id="item5">  
+                    <apex:outputLabel value="Task Group"/>
+                     
+                    <apex:outputPanel >                     
+                        <apex:inputField value="{!newTask.Group_Name__c}" required="true"/>
+                    </apex:outputPanel>
+                </apex:pageBlockSectionitem>
+                
+                <apex:pageBlockSectionitem id="item6">  
+                    <apex:outputLabel value="Phase Name"/>
+                    <apex:outputPanel >  
+                    <apex:inputfield id="phaseName" value="{!newTask.Phase__c}" required="true"/>                   
+                    </apex:outputPanel>
+                </apex:pageBlockSectionitem>
+                
+                 <apex:pageBlockSectionitem id="item7">  
+                    <apex:outputLabel value="Reason"/>
+                    <apex:outputPanel >  
+                    <apex:inputfield id="Reason" value="{!newTask.Reason__c}" required="true"/>                   
+                    </apex:outputPanel>
+                </apex:pageBlockSectionitem>
+                
+                         
+                 <apex:pageBlockSectionitem id="item8">  
+                    <apex:outputLabel value="Sub-Reason"/>
+                    <apex:outputPanel >  
+                    <apex:inputfield id="Subreason" value="{!newTask.Sub_Reason__c}" required="true"/>                   
+                    </apex:outputPanel>
+                </apex:pageBlockSectionitem>
+                
+                
+                <apex:pageBlockSectionitem id="item25"> 
+                    <apex:outputLabel value="Task Owner"/>
+                    <apex:outputPanel layout="block" >                                
+                             <apex:inputField value="{!newTask.Task_Owner__c}" />
+                    </apex:outputPanel>
+                </apex:pageBlockSectionitem>
+                
+                
+                <apex:pageBlockSectionitem id="item21">  
+                    <apex:outputLabel value="Task Status"/>
+                    <apex:outputPanel >                     
+                        <apex:outputField value="{!newTask.Status__c}"/>
+                    </apex:outputPanel>
+                </apex:pageBlockSectionitem>
+                
+                     <apex:pageBlockSectionitem id="item29"> 
+                    <apex:outputLabel value="Send Notification Email"/>
+                    <apex:outputPanel layout="block" >                                
+                             <apex:inputCheckbox value="{!newTask.Notify_Owner__c}" />
+                    </apex:outputPanel>
+                </apex:pageBlockSectionitem>
+                
+                <apex:pageBlockSectionitem id="item20">  
+                    <apex:outputLabel value="Task Type"/>
+                    <apex:outputPanel >                     
+                        <apex:outputField value="{!newTask.Type__c}"/>
+                    </apex:outputPanel>
+                </apex:pageBlockSectionitem>
+   
+             <!--   <apex:pageBlockSectionitem id="item26">  
+                    <apex:outputLabel value="Task Category"/>
+                    <apex:outputPanel >                     
+                        <apex:outputField value="{!newTask.Category__c}"/>
+                    </apex:outputPanel>
+                </apex:pageBlockSectionitem> -->
+                
+                 <apex:pageBlockSectionitem id="item27">  
+                    <apex:outputLabel value="Task Open Date"/>
+                    <apex:outputPanel >                     
+                        <apex:outputField value="{!newTask.Start_Date__c}"/>
+                    </apex:outputPanel>
+                </apex:pageBlockSectionitem>
+                
+                <apex:pageBlockSectionitem id="item4">  
+                    <apex:outputLabel value="Task Description"/>
+                    <apex:outputPanel >                     
+                        <apex:inputfield value="{!newTask.Task_Description__c}" required="true"/>
+                    </apex:outputPanel>
+                </apex:pageBlockSectionitem>
+                
+                                 
+                <apex:pageBlockSectionitem id="item2">               
+                 <apex:outputPanel style="display:none">
+                      <apex:inputfield id="projName1" value="{!newTask.Project_Name__c}" />
+                </apex:outputPanel>      
+                </apex:pageBlockSectionitem>
+                
+              </apex:pageBlockSection> 
+            <!--- _____________________________Task Details to Show After Submit_________________________________________________-->       
+             <apex:outputpanel rendered="{!Not(editModeSec)}">
+            <apex:outputtext />
+                  <c:wfAdhocTaskAftrSubmitComp asObjectType="{!newTask}" aViewMode="{!Not(editModeSec)}" />
+            </apex:outputpanel>          
+            
+           <!--
+            <apex:pageBlockSection title="Task Details After Submit" id="taskDetailsEntered" Rendered="{!Not(editModeSec)}" >
+                <apex:pageBlockSectionitem id="item7">
+                    <apex:outputLabel value="Task Name"/>
+                    <apex:outputPanel >
+                       
+                        <apex:outputtext value="{!newTask.name}"/>
+                    </apex:outputPanel>
+                </apex:pageBlockSectionitem>
+                                 
+               <apex:pageBlockSectionitem id="item11">
+                    <apex:outputLabel value="Project Name"/> 
+                    <apex:outputtext value="{!newTask.phase__r.Project__r.name}"/> 
+                </apex:pageBlockSectionitem> 
+                
+                <apex:pageBlockSectionitem id="item9">
+                    <apex:outputLabel value="Task Group"/>
+                    <apex:outputPanel >
+                      
+                        <apex:outputtext value="{!newTask.Group_Name__c}"/>
+                    </apex:outputPanel>
+                </apex:pageBlockSectionitem>
+              
+                <apex:pageBlockSectionitem id="item10">
+                    <apex:outputLabel value="Task Phase"/> 
+                    <apex:outputtext value="{!newTask.Phase__r.name}"/>   
+                  </apex:pageBlockSectionitem>   
+           
+                <apex:pageBlockSectionitem id="item17">
+                    <apex:outputLabel value="Task Owner"/> 
+                    <apex:outputfield value="{!newTask.Task_Owner__c}"/>     
+               </apex:pageBlockSectionitem> 
+                
+                <apex:pageBlockSectionitem id="item20">
+                    <apex:outputLabel value="Notify Owner"/> 
+                    <apex:outputfield value="{!newTask.Notify_Owner__c}"/>     
+               </apex:pageBlockSectionitem> 
+                
+                <apex:pageBlockSectionitem id="item12">
+                    <apex:outputLabel value="Task Status"/> 
+                    <apex:outputtext value="{!newTask.Status__c}"/>     
+               </apex:pageBlockSectionitem> 
+               
+               <apex:pageBlockSectionitem id="item13">
+                    <apex:outputLabel value="Task Type"/> 
+                    <apex:outputtext value="{!newTask.Type__c}"/>                     
+              </apex:pageBlockSectionitem>  
+              
+              
+              <apex:pageBlockSectionitem id="item18">
+                    <apex:outputLabel value="Task Category"/> 
+                    <apex:outputtext value="{!newTask.Category__c}"/>                     
+              </apex:pageBlockSectionitem>  
+                
+             <apex:pageBlockSectionitem id="item31">
+                    <apex:outputLabel value="Task Start Date"/> 
+                    <apex:outputfield value="{!newTask.Start_Date__c}"/>                     
+              </apex:pageBlockSectionitem> 
+              
+              
+                <apex:pageBlockSectionitem id="item8">
+                    <apex:outputLabel value="Task Description"/>
+                    <apex:outputPanel >
+                        <apex:outputText value="{!newTask.Task_Description__c}"/>
+                    </apex:outputPanel>
+                </apex:pageBlockSectionitem>  
+                
+           
+            
+            </apex:pageBlockSection>   --> 
+   
+         </apex:pageBlock>
+        
+               <!--  <div style="text-align: center;" >
+              
+                    <apex:commandButton action="{!backToSearch}" value="  Back  " title="Click to go back to List" immediate="true" style="text-align: center;"
+                    html-formnovalidate="formnovalidate"  Rendered="{!Not(editModeSec)}"  />
+                    &nbsp;
+                </div>      -->
+    </apex:form>
+    <apex:relatedList subject="{!newTask}" list="Task_Dependencies1__r" title="Successor Tasks" /> 
+    <apex:relatedList subject="{!newTask}" list="Task_Dependencys__r" title="Predecessor Tasks"  /> 
+</apex:page>
