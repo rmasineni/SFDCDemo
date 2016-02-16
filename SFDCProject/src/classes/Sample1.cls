@@ -8,4 +8,8 @@ public class Sample1 {
 	public void method3(){
         
     }    
+	
+    public void method4(){
+        
+    }
 }
