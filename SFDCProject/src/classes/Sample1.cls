@@ -9,4 +9,11 @@ public class Sample1 {
 >>>>>>> DevLocal
         
     }
+	public void method3(){
+        
+    }    
+	
+    public void method4(){
+        
+    }
 }
