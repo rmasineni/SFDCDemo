@@ -12,4 +12,8 @@ public class Sample1 {
     public void method4(){
         
     }
+
+	public void method5(){
+        
+    }
 }
