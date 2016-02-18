@@ -86,6 +86,16 @@
         <type>Text</type>
         <unique>false</unique>
     </fields>
+    <fields>
+        <fullName>SampleField2__c</fullName>
+        <externalId>false</externalId>
+        <label>SampleField2</label>
+        <length>100</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
     <label>SampleObject1</label>
     <nameField>
         <label>SampleObject1 Name</label>
