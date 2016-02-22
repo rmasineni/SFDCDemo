@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Package xmlns="http://soap.sforce.com/2006/04/metadata">
     <types>
-        <members>Sample1</members>
+        <members>PartnerUserShare</members>
         <name>ApexClass</name>
+    </types>
+    <types>
+        <members>trg_user_aft_Ins_createContact</members>
+        <name>ApexTrigger</name>
     </types>
     <version>34.0</version>
 </Package>
