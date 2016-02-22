@@ -2,15 +2,22 @@ trigger trg_user_aft_Ins_createContact on User (after insert,after update) {
     Set<id> UserIds=new Set<id>();
     Set<id> EmailUserIds=new Set<id>();
     Set<id> contIds=new Set<id>();
+    Set<String> PPUserIds=new Set<String>();
     if(trigger.isInsert){
     for(User u:trigger.new){
         if(u.usertype=='Standard'){         
             UserIds.add(u.id);
             contIds.add(u.PP_Contact_Id__c);
         }
+        else if(u.usertype=='PowerPartner'){
+            PPUserIds.add(u.id);
+        }
     }
     if(!UserIds.isEmpty()){
         CreateContactOnUserCreate.CreateContact(UserIds,contIds);
+    }
+    if(!PPUserIds.isempty()){
+        PartnerUserShare.doPartnerSharing(PPUserIds,true);
     }
     }
     else if(trigger.isUpdate){

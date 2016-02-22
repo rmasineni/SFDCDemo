@@ -83,6 +83,6 @@
     <types>
         <members>*</members>
         <name>Settings</name>
-    </types>
+    </types>  
     <version>34.0</version>
 </Package>
