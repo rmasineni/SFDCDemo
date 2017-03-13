@@ -10,7 +10,7 @@
   <target name="deploy_run_tests">
     <mkdir dir="../runtest" />
     <copy file="package.xml" todir="../src/" overwrite="true" failonerror="true"/>
-    <sf:deploy username="${env.SFUSER}" password="${env.SFPASS}${env.SFTOKEN}" serverurl="${env.SF_SANDBOXURL}" deployRoot="./src" runAllTests="true" maxPoll="10000"/>
+    <sf:deploy username="${env.SFUSER}" password="${env.SFPASS}${env.SFTOKEN}" serverurl="${env.SF_SANDBOXURL}" deployRoot="src" runAllTests="true" maxPoll="10000"/>
   </target>
 
   <target name="deploy_dont_run_tests">
