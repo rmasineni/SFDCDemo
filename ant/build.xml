@@ -9,6 +9,11 @@
 
   <target name="deploy_run_tests">
     <mkdir dir="../runtest" />
+    <xmltask source="package.xml">
+        <copy path="/Package/types/@members"
+        property="types.members"
+        append="true" propertySeparator="," />
+    </xmltask>
     <copy file="package.xml" todir="../src/" overwrite="true" failonerror="true"/>
     <sf:deploy username="${env.SFUSER}" password="${env.SFPASS}${env.SFTOKEN}" serverurl="${env.SF_SANDBOXURL}" deployRoot="../src" runAllTests="true" maxPoll="10000"/>
   </target>
