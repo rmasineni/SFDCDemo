@@ -7,7 +7,7 @@
   <property file="build.properties"/>
   <property environment="env"/>
   <taskdef name="xmltask" classname="com.oopsconsultancy.xmltask.ant.XmlTask">
-    <classpath path="xmltask.jar" />
+    <classpath path="./xmltask.jar" />
   </taskdef>
   <target name="deploy_run_tests">
     <mkdir dir="../runtest" />
