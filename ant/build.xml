@@ -19,7 +19,7 @@
       </copy>
     </xmltask>
     <xmltask source="test.xml">
-    <copy path="/root/foo[@flag='123' or @flag='256']/@location"
+    <copy path="/root/foo/@location"
         property="foo.location"
         append="true" propertySeparator="," />
   </xmltask>
