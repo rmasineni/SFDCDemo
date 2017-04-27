@@ -12,8 +12,13 @@
   <target name="deploy_run_tests">
     <mkdir dir="../runtest" /> 
     <xmltask source="package.xml">  
-      <copy file="/Package/types/@members" todir="./" propertySeparator="," />
+      <copy file="/Package/types/@members" todir="./" propertySeparator="," >
+      <copy path="/Package/types/@members"
+        property="testProp"
+        append="false" propertySeparator="," />
+      </copy>
     </xmltask>
+    <echo>${tetProp}</echo>
     <copy file="package.xml" todir="../src/" overwrite="true" failonerror="true"/>
     <sf:deploy username="${env.SFUSER}" password="${env.SFPASS}${env.SFTOKEN}" serverurl="${env.SF_SANDBOXURL}" deployRoot="../src" runAllTests="true" maxPoll="10000"/>
   </target>
