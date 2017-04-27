@@ -10,6 +10,8 @@
   <taskdef name="xmltask" classname="com.oopsconsultancy.xmltask.ant.XmlTask">
     <classpath path="./xmltask.jar" />
   </taskdef>
+ 
+<taskdef resource="net/sf/antcontrib/antcontrib.properties" classpath="./ant-contrib.jar" />	
     <target name="copy_files">
         <foreach list="${Package.types.members}" target="copy" param="var" delimiter="," />
     	 <property name="folderName" value="${${Package.types.name}"/>
