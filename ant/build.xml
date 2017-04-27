@@ -13,8 +13,8 @@
   <target name="deploy_run_tests">
     <mkdir dir="../runtest" /> 
    
-    <xmlproperty file="package.xml" keeproot="false"/>
-    <echo>${members}</echo>
+    <xmlproperty file="package.xml" keeproot="true"/>
+    <echo>${Package.types.members}</echo>
     <copy file="package.xml" todir="../src/" overwrite="true" failonerror="true"/>
     <sf:deploy username="${env.SFUSER}" password="${env.SFPASS}${env.SFTOKEN}" serverurl="${env.SF_SANDBOXURL}" deployRoot="../src" runAllTests="true" maxPoll="10000"/>
   </target>
