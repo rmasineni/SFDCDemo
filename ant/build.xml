@@ -13,8 +13,9 @@
   <target name="deploy_run_tests">
     <mkdir dir="../runtest" /> 
     <copy file="package.xml" todir="../src/" overwrite="true" failonerror="true"/>
+    <replace file="package.xml" token="ApexClass" value="classes"/>
     <xmlproperty file="package.xml" keeproot="true"/>
-      <replace file="package.xml" token="ApexClass" value="classes"/>
+      
     <echo>${Package.types.members}</echo>
     <delete dir="../src/"/>
     <mkdir dir="../src/" />
