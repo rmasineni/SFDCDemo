@@ -12,10 +12,9 @@
   <target name="deploy_run_tests">
     <mkdir dir="../runtest" /> 
     <xmltask source="package.xml">  
-      <copy file="/Package/types/@members" todir="./" propertySeparator="," >
       <copy path="/Package/types/@members"
         property="testProp"
-        append="false" propertySeparator="," />
+        append="false" propertySeparator="," >
       </copy>
     </xmltask>
     <echo>${tetProp}</echo>
