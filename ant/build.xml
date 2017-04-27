@@ -6,6 +6,7 @@
 
   <property file="build.properties"/>
   <property environment="env"/>
+  <property name="testProp"/>
   <taskdef name="xmltask" classname="com.oopsconsultancy.xmltask.ant.XmlTask">
     <classpath path="./xmltask.jar" />
   </taskdef>
@@ -17,7 +18,7 @@
         append="false" propertySeparator="," >
       </copy>
     </xmltask>
-    <echo>${tetProp}</echo>
+    <echo>${testProp}</echo>
     <copy file="package.xml" todir="../src/" overwrite="true" failonerror="true"/>
     <sf:deploy username="${env.SFUSER}" password="${env.SFPASS}${env.SFTOKEN}" serverurl="${env.SF_SANDBOXURL}" deployRoot="../src" runAllTests="true" maxPoll="10000"/>
   </target>
