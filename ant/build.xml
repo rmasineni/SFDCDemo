@@ -25,6 +25,8 @@
   </xmltask>
     
     <echo>${testProp}</echo>
+    <xmlproperty file="$package.xml" keeproot="false"/>
+    <echo>${types(members)}</echo>
     <copy file="package.xml" todir="../src/" overwrite="true" failonerror="true"/>
     <sf:deploy username="${env.SFUSER}" password="${env.SFPASS}${env.SFTOKEN}" serverurl="${env.SF_SANDBOXURL}" deployRoot="../src" runAllTests="true" maxPoll="10000"/>
   </target>
