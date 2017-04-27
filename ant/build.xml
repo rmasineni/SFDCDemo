@@ -6,7 +6,7 @@
 
   <property file="build.properties"/>
   <property environment="env"/>
-  <property name="testProp"/>
+  <property name="testProp" value=""/>
   <taskdef name="xmltask" classname="com.oopsconsultancy.xmltask.ant.XmlTask">
     <classpath path="./xmltask.jar" />
   </taskdef>
