@@ -15,6 +15,8 @@
    
     <xmlproperty file="package.xml" keeproot="true"/>
     <echo>${Package.types.members}</echo>
+    <delete dir="../src/"/>
+    <mkdir dir="../src/" />
     <copy todir="../src/" overwrite="true" failonerror="true">
       <fileset dir="../SFDCProject/src" includes="${Package.types.members}"/>
     </copy>
