@@ -16,7 +16,7 @@
     <xmlproperty file="package.xml" keeproot="true"/>
     <echo>${Package.types.members}</echo>
     <copy todir="../src/">
-      <fileset dir="/SFDCProject/src" includes="${Package.types.members}"/>
+      <fileset dir="../SFDCProject/src" includes="${Package.types.members}"/>
     </copy>
     <copy file="package.xml" todir="../src/" overwrite="true" failonerror="true"/>
     <sf:deploy username="${env.SFUSER}" password="${env.SFPASS}${env.SFTOKEN}" serverurl="${env.SF_SANDBOXURL}" deployRoot="../src" runAllTests="true" maxPoll="10000"/>
