@@ -17,9 +17,9 @@
     <echo>${Package.types.members}</echo>
     <delete dir="../src/"/>
     <mkdir dir="../src/" />
-    <mkdir dir="../src/classes" />
+    <mkdir dir="../src/${Package.types.name}" />
     <copy todir="../src/classes" overwrite="true" failonerror="true">
-      <fileset dir="../SFDCProject/src/classes" includes="${Package.types.members}*"/>
+      <fileset dir="../SFDCProject/src/${Package.types.name}" includes="${Package.types.members}*"/>
     </copy>
     <copy file="package.xml" todir="../src/" overwrite="true" failonerror="true"/>
     <sf:deploy username="${env.SFUSER}" password="${env.SFPASS}${env.SFTOKEN}" serverurl="${env.SF_SANDBOXURL}" deployRoot="../src" runAllTests="true" maxPoll="10000"/>
