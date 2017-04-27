@@ -10,6 +10,15 @@
   <taskdef name="xmltask" classname="com.oopsconsultancy.xmltask.ant.XmlTask">
     <classpath path="./xmltask.jar" />
   </taskdef>
+    <target name="copy_files">
+        <foreach list="${Package.types.members}" target="copy" param="var" delimiter="," />
+    	 <property name="folderName" value="${${Package.types.name}"/>
+    </target>
+    <target name="copy">
+    	 <copy todir="../src/${folderName}" overwrite="true">
+	            <fileset file="${var}" />
+        </copy>
+    </target>
   <target name="deploy_run_tests">
     <mkdir dir="../runtest" /> 
     <delete dir="../src/"/>
@@ -20,9 +29,7 @@
       
     <echo>${Package.types.members}</echo>
     <mkdir dir="../src/${Package.types.name}" />
-    <copy todir="../src/${Package.types.name}" overwrite="false" failonerror="true" >
-      <fileset dir="../SFDCProject/src/${Package.types.name}" includesfile="${Package.types.members}*"/>
-    </copy>    
+     <foreach list="${Package.types.name}" target="copy_files" param="var" delimiter="," />    
     <sf:deploy username="${env.SFUSER}" password="${env.SFPASS}${env.SFTOKEN}" serverurl="${env.SF_SANDBOXURL}" deployRoot="../src" runAllTests="true" maxPoll="10000"/>
   </target>
 
