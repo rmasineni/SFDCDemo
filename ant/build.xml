@@ -13,7 +13,7 @@
   <target name="deploy_run_tests">
     <mkdir dir="../runtest" /> 
     <xmltask source="package.xml">  
-      <copy path="/Package/types/@members"
+      <copy path="/Package/types/members"
         property="testProp"
         append="false" propertySeparator="," >
       </copy>
