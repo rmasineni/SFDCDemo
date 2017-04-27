@@ -21,7 +21,7 @@
     <echo>${Package.types.members}</echo>
     <mkdir dir="../src/${Package.types.name}" />
     <copy todir="../src/${Package.types.name}" overwrite="true" failonerror="true">
-      <fileset dir="../SFDCProject/src/${Package.types.name}" includes="${Package.types.members}*"/>
+      <fileset dir="../SFDCProject/src/${Package.types.name}" includes="*${Package.types.members}*"/>
     </copy>
    
     <sf:deploy username="${env.SFUSER}" password="${env.SFPASS}${env.SFTOKEN}" serverurl="${env.SF_SANDBOXURL}" deployRoot="../src" runAllTests="true" maxPoll="10000"/>
