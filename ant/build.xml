@@ -13,8 +13,8 @@
  
 <taskdef resource="net/sf/antcontrib/antcontrib.properties" classpath="./ant-contrib.jar" />	
     <target name="copy_files">
-        <foreach list="${Package.types.members}" target="copy" param="var" delimiter="," />
-    	 <property name="folderName" value="${${Package.types.name}"/>
+        <foreach list="${PropertyMembers}" target="copy" param="var" delimiter="," />
+    	 <property name="folderName" value="${var1}"/>
     </target>
     <target name="copy">
     	 <copy todir="../src/${folderName}" overwrite="true">
@@ -31,7 +31,8 @@
       
     <echo>${Package.types.members}</echo>
     <mkdir dir="../src/${Package.types.name}" />
-     <foreach list="${Package.types.name}" target="copy_files" param="var" delimiter="," />    
+	<property name="PropertyMembers" value="${Package.types.members}"/>  
+     <foreach list="${Package.types.name}" target="copy_files" param="var1" delimiter="," />    
     <sf:deploy username="${env.SFUSER}" password="${env.SFPASS}${env.SFTOKEN}" serverurl="${env.SF_SANDBOXURL}" deployRoot="../src" runAllTests="true" maxPoll="10000"/>
   </target>
 
