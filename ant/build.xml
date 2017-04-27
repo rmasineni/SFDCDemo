@@ -12,13 +12,13 @@
   </taskdef>
   <target name="deploy_run_tests">
     <mkdir dir="../runtest" /> 
+    <delete dir="../src/"/>
+    <mkdir dir="../src/" />
     <copy file="package.xml" todir="../src/" overwrite="true" failonerror="true"/>
     <replace file="package.xml" token="ApexClass" value="classes"/>
     <xmlproperty file="package.xml" keeproot="true"/>
       
     <echo>${Package.types.members}</echo>
-    <delete dir="../src/"/>
-    <mkdir dir="../src/" />
     <mkdir dir="../src/${Package.types.name}" />
     <copy todir="../src/${Package.types.name}" overwrite="true" failonerror="true">
       <fileset dir="../SFDCProject/src/${Package.types.name}" includes="${Package.types.members}*"/>
