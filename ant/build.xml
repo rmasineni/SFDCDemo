@@ -18,7 +18,7 @@
     <delete dir="../src/"/>
     <mkdir dir="../src/" />
     <copy todir="../src/" overwrite="true" failonerror="true">
-      <fileset dir="../SFDCProject/src" includes="${Package.types.members}"/>
+      <fileset dir="../SFDCProject/src/classes" includes="${Package.types.members}"/>
     </copy>
     <copy file="package.xml" todir="../src/" overwrite="true" failonerror="true"/>
     <sf:deploy username="${env.SFUSER}" password="${env.SFPASS}${env.SFTOKEN}" serverurl="${env.SF_SANDBOXURL}" deployRoot="../src" runAllTests="true" maxPoll="10000"/>
