@@ -1,5 +1,5 @@
 <root>
-        <foo location="bar"/>
+        <foo location="bar">abcd</foo>
         <foo location="in" flag="123"/>
         <foo location="pak"/>
         <foo location="us" flag="256"/>
