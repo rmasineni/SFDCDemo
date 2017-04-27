@@ -17,7 +17,8 @@
     <echo>${Package.types.members}</echo>
     <delete dir="../src/"/>
     <mkdir dir="../src/" />
-    <copy todir="../src/" overwrite="true" failonerror="true">
+    <mkdir dir="../src/classes" />
+    <copy todir="../src/classes" overwrite="true" failonerror="true">
       <fileset dir="../SFDCProject/src/classes" includes="${Package.types.members}*"/>
     </copy>
     <copy file="package.xml" todir="../src/" overwrite="true" failonerror="true"/>
