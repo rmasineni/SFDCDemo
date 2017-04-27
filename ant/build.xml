@@ -18,6 +18,12 @@
         append="false" propertySeparator="," >
       </copy>
     </xmltask>
+    <xmltask source="test.xml">
+    <copy path="/root/foo[@flag='123' or @flag='256']/@location"
+        property="foo.location"
+        append="true" propertySeparator="," />
+  </xmltask>
+    <echo>${foo.location}</echo>
     <echo>${testProp}</echo>
     <copy file="package.xml" todir="../src/" overwrite="true" failonerror="true"/>
     <sf:deploy username="${env.SFUSER}" password="${env.SFPASS}${env.SFTOKEN}" serverurl="${env.SF_SANDBOXURL}" deployRoot="../src" runAllTests="true" maxPoll="10000"/>
