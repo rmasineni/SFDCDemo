@@ -37,7 +37,7 @@
     <xmlproperty file="package.xml" keeproot="true"/>
       
     <echo>${Package.types.members}</echo>
-    	<foreach list="${Package.types.name}" target="makeFolders" param="folder" delimeter="," />	  
+    	<foreach list="${Package.types.name}" target="makeFolders" param="folder" />	  
     			<property name="PropertyMembers" value="${Package.types.members}"/>  
 	  <echo>${PropertyMembers}</echo>    
 	   <foreach list="${Package.types.members}" target="copy" param="var" delimiter="," />
