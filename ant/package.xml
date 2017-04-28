@@ -3,6 +3,10 @@
                         <members>BatchApexEmailStatusTest</members>  
                         <members>BatchApexCallCDYNETest</members>
                         <name>ApexClass</name>
-       </types>	      
+       </types>	
+       <types>                                         
+                        <members>AnswersHome</members>
+                        <name>ApexPage</name>
+       </types>
 <version>34.0</version>
 </Package>
