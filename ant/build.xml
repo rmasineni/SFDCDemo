@@ -20,7 +20,9 @@
           <target name="copy">
 		  <echo>${var}</echo>
     	 	<copy todir="../src/classes" overwrite="true">
-	            <fileset file="../SFDCProject/classes/${var}*" />
+	            <fileset dir="../SFDCProject/classes/" >
+			<include name="${var}*"/>
+		    </fileset>
         	</copy>
     	   </target>
   <target name="deploy_run_tests">
