@@ -17,7 +17,11 @@
         <foreach list="${PropertyMembers}" target="copy" param="var" delimiter="," />
     	 <property name="folderName" value="${var1}"/>
     </target>
-   
+          <target name="copy">
+    	 	<copy todir="../src/classes" overwrite="true">
+	            <fileset file="${var}" />
+        	</copy>
+    	   </target>
   <target name="deploy_run_tests">
     <mkdir dir="../runtest" /> 
     <delete dir="../src/"/>
@@ -31,11 +35,7 @@
 	<property name="PropertyMembers" value="${Package.types.members}"/>  
 	  <echo>${PropertyMembers}</echo>     
 	   <foreach list="${Package.types.members}" target="copy" param="var" delimiter="," />
-	   <target name="copy">
-    	 	<copy todir="../src/${Package.types.name}" overwrite="true">
-	            <fileset file="${var}" />
-        	</copy>
-    	   </target>
+	   
     <sf:deploy username="${env.SFUSER}" password="${env.SFPASS}${env.SFTOKEN}" serverurl="${env.SF_SANDBOXURL}" deployRoot="../src" runAllTests="true" maxPoll="10000"/>
   </target>
 
