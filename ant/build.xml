@@ -37,9 +37,7 @@
     <mkdir dir="../src/${Package.types.name}" />
 	<property name="PropertyMembers" value="${Package.types.members}"/>  
 	  <echo>${PropertyMembers}</echo>    
-	  <foreach list="${Package.types.name}" param="var1">
 	   <foreach list="${Package.types.members}" target="copy" param="var" delimiter="," />
-	  </foreach>
     <sf:deploy username="${env.SFUSER}" password="${env.SFPASS}${env.SFTOKEN}" serverurl="${env.SF_SANDBOXURL}" deployRoot="../src" runAllTests="true" maxPoll="10000"/>
   </target>
 
