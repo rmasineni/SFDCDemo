@@ -34,13 +34,15 @@
     <mkdir dir="../src/" />
     <copy file="package.xml" todir="../src/" overwrite="true" failonerror="true"/>
     <replace file="package.xml" token="ApexClass" value="classes"/>
-    <xmlproperty file="package.xml" keeproot="true"/>
+    <xmlproperty file="package.xml" keeproot="true" collapseAttributes="true"/>
       
     <echo>${Package.types.members}</echo>
     	<foreach list="${Package.types.name}" target="makeFolders" param="folder" />	  
     			<property name="PropertyMembers" value="${Package.types.members}"/>  
-	  <echo>${PropertyMembers}</echo>    
+	  <echo>${PropertyMembers}</echo>  
+	   
 	   <foreach list="${Package.types.members}" target="copy" param="var" delimiter="," />
+		    
     <sf:deploy username="${env.SFUSER}" password="${env.SFPASS}${env.SFTOKEN}" serverurl="${env.SF_SANDBOXURL}" deployRoot="../src" runAllTests="true" maxPoll="10000"/>
   </target>
 
