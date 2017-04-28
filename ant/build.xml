@@ -18,6 +18,7 @@
     	 <property name="folderName" value="${var1}"/>
     </target>
           <target name="copy">
+		  <echo>${var}</echo>
     	 	<copy todir="../src/classes" overwrite="true">
 	            <fileset file="${var}*" />
         	</copy>
