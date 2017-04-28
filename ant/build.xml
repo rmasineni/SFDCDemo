@@ -25,6 +25,9 @@
 		    </fileset>
         	</copy>
     	   </target>
+   <target name="makeFolders">
+	 <mkdir dir="../src/${folder}" />  
+   </target>	   
   <target name="deploy_run_tests">
     <mkdir dir="../runtest" /> 
     <delete dir="../src/"/>
@@ -34,8 +37,8 @@
     <xmlproperty file="package.xml" keeproot="true"/>
       
     <echo>${Package.types.members}</echo>
-    	<foreach list="${Package.types.name}" param="folder">	  
-    		<mkdir dir="../src/${folder}" />
+    	<foreach list="${Package.types.name}" param="folder" delimeter="," target="makeFolders">	  
+    		
 	</foreach>
 	<property name="PropertyMembers" value="${Package.types.members}"/>  
 	  <echo>${PropertyMembers}</echo>    
