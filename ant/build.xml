@@ -19,7 +19,7 @@
     </target>
           <target name="copy">
     	 	<copy todir="../src/classes" overwrite="true">
-	            <fileset file="${var}" />
+	            <fileset file="${var}*" />
         	</copy>
     	   </target>
   <target name="deploy_run_tests">
