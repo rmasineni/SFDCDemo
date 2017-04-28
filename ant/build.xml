@@ -34,7 +34,9 @@
     <xmlproperty file="package.xml" keeproot="true"/>
       
     <echo>${Package.types.members}</echo>
-    <mkdir dir="../src/${Package.types.name}" />
+    	<foreach list="${Package.types.name}" param="folder">	  
+    		<mkdir dir="../src/${folder}" />
+	</foreach>
 	<property name="PropertyMembers" value="${Package.types.members}"/>  
 	  <echo>${PropertyMembers}</echo>    
 	   <foreach list="${Package.types.members}" target="copy" param="var" delimiter="," />
