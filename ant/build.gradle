@@ -2,7 +2,7 @@ task parseXml() {
     def parsedProjectXml = (new XmlParser()).parse('ant/package.xml')
     println parsedProjectXml
     println parsedProjectXml.@version
-    println "TypesList name : " + parsedProjectXml.Package.types[0].@name +
+    println "TypesList name : " + parsedProjectXml.types[0].@name +
             ", members : " + parsedProjectXml.types[0].@members
     parsedProjectXml.types.members.each{ module ->
       println "Name : " + members
