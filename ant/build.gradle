@@ -1,5 +1,5 @@
 task parseXml() {
-    def parsedProjectXml = (new XmlParser()).parse('package.xml')
+    def parsedProjectXml = (new XmlParser()).parse('ant/package.xml')
     println parsedProjectXml.@name
     println parsedProjectXml.@version
     println "TypesList name : " + parsedProjectXml.types[0].@name +
