@@ -3,7 +3,7 @@ task parseXml() {
    for(types in parsedProjectXml.'types'){
      println("name: " + types.name.text())
      for(members in types.'members'.text()){
-          println("type: " + members.text())
+          println("type: " + members.value)
     }
     }
 }
