@@ -1,8 +1,9 @@
-task parseXml() {    
-    def parsedProjectXml= (new XmlParser()).parse('ant/package.xml')
-    parsedProjectXml.'types'.each { m ->       
-        parsedProjectXml.'members'.each{
-        println "members:" + members.text()
-        }
+task parseXml() {       
+   def parsedProjectXml= (new XmlParser()).parse('ant/package.xml')
+   for(types in parsedProjectXml.'types'){
+     println("name: " + types.name.text())
+     for(members in types.'members'.text()){
+          println("type: " + members.text())
+    }
     }
 }
