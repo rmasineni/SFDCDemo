@@ -2,7 +2,7 @@ task parseXml() {
     def parsedProjectXml= (new XmlParser()).parse('ant/package.xml')
     parsedProjectXml.'types'.each { m ->       
         parsedProjectXml.'members'.each{
-        members.text()
+        println "members:" + members.text()
         }
     }
 }
