@@ -2,10 +2,18 @@ task parseXml() {
    def parsedProjectXml= (new XmlParser()).parse('ant/package.xml')
    for(types in parsedProjectXml.'types'){
      println("name: " + types.name.text())
-     if(types.name.text() == "ApexClass")
+     if(types.name.text() == "ApexClass"){
       println("true")
+      mkdir ('src/classes')
+      }
      for(members in types.'members'){
           println("type: " + members.text())
+          copy {
+            if(types.name.text() == "ApexClass"){
+            from "SFDCProject/src/classes/members.text()"
+            into "src/classes"
+            }
+      }
     }
     }
 }
