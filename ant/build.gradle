@@ -11,7 +11,8 @@ task parseXml() {
           if(types.name.text() == "ApexClass"){
           copy {           
             from "../SFDCProject/src/classes"
-            into "../src/classes"           
+            into "../src/classes"  
+            include members.text()*
             }
       }
     }
