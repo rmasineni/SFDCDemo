@@ -2,6 +2,8 @@ task parseXml() {
    def parsedProjectXml= (new XmlParser()).parse('ant/package.xml')
    for(types in parsedProjectXml.'types'){
      println("name: " + types.name.text())
+     if(types.name.text() == ApexClass)
+      println("true")
      for(members in types.'members'){
           println("type: " + members.text())
     }
