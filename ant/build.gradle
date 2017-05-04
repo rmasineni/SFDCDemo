@@ -13,7 +13,7 @@ task parseXml() {
           copy {           
             from "../SFDCProject/src/classes"
             into "../src/classes"  
-            include className+'*'
+            include members.text()+'*'
             }
       }
     }
