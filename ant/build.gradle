@@ -4,7 +4,7 @@ task parseXml() {
      println("name: " + types.name.text())
      if(types.name.text() == "ApexClass"){
       println("true")
-      mkdir ('src/classes')
+      mkdir ('../src/classes')
       }
      for(members in types.'members'){
           println("type: " + members.text())
