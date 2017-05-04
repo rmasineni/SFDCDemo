@@ -8,10 +8,10 @@ task parseXml() {
       }
      for(members in types.'members'){
           println("type: " + members.text())
-          copy {
-            if(types.name.text() == "ApexClass"){
-            from "/SFDCProject/src/classes"
-            into "/src/classes"
+          if(types.name.text() == "ApexClass"){
+          copy {           
+            from "../SFDCProject/src/classes"
+            into "../src/classes"
             include "members.text()"
             }
       }
