@@ -4,7 +4,7 @@ task parseXml() {
     println parsedProjectXml.@version
     println "TypesList name : " + parsedProjectXml.types[0].value +
             ", members : " + parsedProjectXml.types[0].value
-    parsedProjectXml.types.members.each{ module ->
+    parsedProjectXml.types.members.each{ members ->
       println "Name : " + members.value
     }
 }
