@@ -6,43 +6,13 @@
 
   <property file="build.properties"/>
   <property environment="env"/>
-  <property name="testProp" value=""/>
   <taskdef name="xmltask" classname="com.oopsconsultancy.xmltask.ant.XmlTask">
     <classpath path="./xmltask.jar" />
   </taskdef>
- 
-<taskdef resource="net/sf/antcontrib/antcontrib.properties" classpath="./ant-contrib.jar" />	
-    <target name="copy_files">
-	        <echo>${PropertyMembers}</echo>
-        <foreach list="${PropertyMembers}" target="copy" param="var" delimiter="," />
-    	 <property name="folderName" value="${var1}"/>
-    </target>
-          <target name="copy">
-		  <echo>${var}</echo>
-    	 	<copy todir="../src/classes" overwrite="true">
-	            <fileset dir="../SFDCProject/src/classes/" >
-			<include name="${var}*"/>
-		    </fileset>
-        	</copy>
-    	   </target>
-   <target name="makeFolders">
-	 <mkdir dir="../src/${folder}" />  
-   </target>	   
+   	   
   <target name="deploy_run_tests">
     <mkdir dir="../runtest" /> 
-    <delete dir="../src/"/>
-    <mkdir dir="../src/" />
-    <copy file="package.xml" todir="../src/" overwrite="true" failonerror="true"/>
-    <replace file="package.xml" token="ApexClass" value="classes"/>
-    <xmlproperty file="package.xml" keeproot="true" collapseAttributes="true"/>
-      
-    <echo>${Package.types.members}</echo>
-    	<foreach list="${Package.types.name}" target="makeFolders" param="folder" />	  
-    			<property name="PropertyMembers" value="${Package.types.members}"/>  
-	  <echo>${PropertyMembers}</echo>  
-	   
-	   <foreach list="${Package.types.members}" target="copy" param="var" delimiter="," />
-		    
+    <copy file="package.xml" todir="../src/" overwrite="true" failonerror="true"/>      	   		    
     <sf:deploy username="${env.SFUSER}" password="${env.SFPASS}${env.SFTOKEN}" serverurl="${env.SF_SANDBOXURL}" deployRoot="../src" runAllTests="true" maxPoll="10000"/>
   </target>
 
