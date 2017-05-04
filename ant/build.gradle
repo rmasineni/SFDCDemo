@@ -1,10 +1,6 @@
-task parseXml() {
-    def parsedProjectXml = (new XmlParser()).parse('ant/package.xml')
-    println parsedProjectXml
-    println parsedProjectXml.@version
-    println "TypesList name : " + parsedProjectXml.types[0].value +
-            ", members : " + parsedProjectXml.types[0].value
-    parsedProjectXml.types.members.each{ members ->
-      println "Name : " + members.value
+task parseXml() {    
+    def parsedProjectXml= (new XmlParser()).parse('ant/package.xml')
+    parsedProjectXml.'types'.each { m ->
+        println "ID: " + m.members[0].text()
     }
 }
