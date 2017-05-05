@@ -6,6 +6,9 @@ task parseXml() {
       println("true")
       mkdir ('../src/classes')
       }
+      else if(types.name.text() == 'ApexPage'){
+       mkdir ('../src/pages')
+      }
      for(members in types.'members'){
           println("type: " + members.text())
           def className=members.text()
@@ -13,6 +16,13 @@ task parseXml() {
           copy {           
             from "../SFDCProject/src/classes"
             into "../src/classes"  
+            include members.text()+'*'
+            }
+      }
+       if(types.name.text() == "ApexPage"){
+          copy {           
+            from "../SFDCProject/src/pages"
+            into "../src/pages"  
             include members.text()+'*'
             }
       }
