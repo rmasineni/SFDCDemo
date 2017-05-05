@@ -9,6 +9,12 @@ task parseXml() {
       else if(types.name.text() == 'ApexPage'){
        mkdir ('../src/pages')
       }
+      else if(types.name.text() == 'ApexTrigger'){
+       mkdir ('../src/triggers')
+      }
+      else if(types.name.text() == 'ApexComponent'){
+       mkdir ('../src/components')
+      }
      for(members in types.'members'){
           println("type: " + members.text())
           def className=members.text()
@@ -19,10 +25,24 @@ task parseXml() {
             include members.text()+'*'
             }
       }
-       if(types.name.text() == "ApexPage"){
+       else if(types.name.text() == "ApexPage"){
           copy {           
             from "../SFDCProject/src/pages"
             into "../src/pages"  
+            include members.text()+'*'
+            }
+      }
+       else if(types.name.text() == "ApexTrigger"){
+          copy {           
+            from "../SFDCProject/src/triggers"
+            into "../src/triggers"  
+            include members.text()+'*'
+            }
+      }
+      else if(types.name.text() == "ApexComponent"){
+          copy {           
+            from "../SFDCProject/src/components"
+            into "../src/components"  
             include members.text()+'*'
             }
       }
