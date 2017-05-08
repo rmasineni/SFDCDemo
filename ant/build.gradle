@@ -1,5 +1,6 @@
 task parseXml() {  
    def proj = file(System.env.PACKAGE)
+    println("proj" +proj)
    def parsedProjectXml= (new XmlParser()).parse(proj)
    for(types in parsedProjectXml.'types'){
      println("name: " + types.name.text())
