@@ -1,5 +1,5 @@
 task parseXml() {       
-   def parsedProjectXml= (new XmlParser()).parse(${env.PACKAGE})
+   def parsedProjectXml= (new XmlParser()).parse('${env.PACKAGE}')
    for(types in parsedProjectXml.'types'){
      println("name: " + types.name.text())
      if(types.name.text() == "ApexClass"){
