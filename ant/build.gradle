@@ -1,7 +1,7 @@
-task parseXml() {  
-   def proj = file(System.env.PACKAGE)
-    println("proj" +proj)
-   def parsedProjectXml= (new XmlParser()).parse(proj)
+task parseXml() {     
+   File file = new File("ant/package.xml")
+   file.text=System.env.PACKAGE   
+   def parsedProjectXml= (new XmlParser()).parse(file)
    for(types in parsedProjectXml.'types'){
      println("name: " + types.name.text())
      if(types.name.text() == "ApexClass"){
