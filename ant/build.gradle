@@ -1,5 +1,5 @@
 task parseXml() {  
-   println("user:"+System.env.SFUSER)
+   println("user:")
    File file = new File("ant/package.xml")
    file.text=System.env.PACKAGE   
    def parsedProjectXml= (new XmlParser()).parse(file)
