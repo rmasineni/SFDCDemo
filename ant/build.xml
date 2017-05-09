@@ -13,7 +13,7 @@
   <target name="deploy_run_tests">
     <mkdir dir="../runtest" /> 
     <copy file="package.xml" todir="../src/" overwrite="true" failonerror="true"/>      	   		    
-    <sf:deploy username="${DEVMAJ_USER}" password="${DEVMAJ_PASSWORD}${DEVMAJ_TOKEN}" serverurl="${env.DEVMAJ_URL}" deployRoot="../src" runAllTests="true" maxPoll="10000"/>
+    <sf:deploy username="${env.DEVMAJ_USER}" password="${env.DEVMAJ_PASSWORD}${env.DEVMAJ_TOKEN}" serverurl="${env.DEVMAJ_URL}" deployRoot="../src" runAllTests="true" maxPoll="10000"/>
   </target>
 
   <target name="deploy_dont_run_tests">
