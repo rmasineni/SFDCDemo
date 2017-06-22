@@ -55,11 +55,11 @@
       deployTask.setTestLevel('RunSpecifiedTests');
       tests = tests.toString().split(',');
       for (var i = 0; i < tests.length; i++) {
+       self.log('tests[]'+tests[i]);
         var runTest = java.lang.Class.forName(
           "com.salesforce.ant.DeployTask$CodeNameElement"
         ).newInstance();
-        runTest.addText(tests[i]);
-        self.log('tests[]'+tests[i]);
+        runTest.addText(tests[i]);        
         deployTask.addRunTest(runTest);
       }
     }
