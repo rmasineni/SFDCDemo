@@ -53,7 +53,7 @@
    self.log('tests'+tests);
     if (tests) {
       deployTask.setTestLevel('RunSpecifiedTests');
-      tests = tests.toString().split(',');
+      tests = tests.toString().substring(0,tests.tests.length()).split(',');
       for (var i = 0; i < tests.length; i++) {
        self.log('tests[]'+tests[i]);
         var runTest = java.lang.Class.forName(
