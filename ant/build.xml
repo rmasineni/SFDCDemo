@@ -5,9 +5,9 @@
        classpath="./ant-salesforce.jar"/>
 
   <property file="build.properties"/>
-  <property name="devmajUser"  value="${env.DEVMAJ_USER}"/>
-  <property name="devmajUserPwd"  value="${env.DEVMAJ_PASSWORD}${env.DEVMAJ_TOKEN}"/>
-  <property name="devmajUrl"  value="${env.DEVMAJ_URL}"/>  
+  <property name="devmajUser"  value="${DEVMAJ_USER}"/>
+  <property name="devmajUserPwd"  value="${DEVMAJ_PASSWORD}${DEVMAJ_TOKEN}"/>
+  <property name="devmajUrl"  value="${DEVMAJ_URL}"/>  
   <property environment="env"/>
   <taskdef name="xmltask" classname="com.oopsconsultancy.xmltask.ant.XmlTask">
     <classpath path="./xmltask.jar" />
