@@ -24,7 +24,44 @@
     <copy file="package.xml" todir="../src/" overwrite="true" failonerror="true"/>
     <sf:deploy username="${env.SFUSER}" password="${env.SFPASS}${env.SFTOKEN}" serverurl="${env.SF_SANDBOXURL}" deployRoot="../src" runAllTests="false" maxPoll="10000"/>
   </target>
-  
+  <target name="deploy">
+ <mkdir dir="../runtest" /> 
+ <copy file="package.xml" todir="../src/" overwrite="true" failonerror="true"/> 
+    <sfQuickDeploy checkOnly="true" username="${env.DEVMAJ_USER}" password="${env.DEVMAJ_PASSWORD}${env.DEVMAJ_TOKEN}" server="${env.DEVMAJ_URL}" dir="../src">
+        <fileset dir="../src/classes">
+            <include name="**/*Test*.cls"/>
+        </fileset>
+    </sfQuickDeploy>
+</target>
+  <scriptdef name="sfQuickDeploy" language="javascript">
+  <attribute name="checkonly"/>
+      <attribute name="username"/>
+      <attribute name="password"/>
+      <attribute name="server"/>
+    <attribute name="trace"/>
+    <element name="fileset" type="fileset"/>
+  <![CDATA[
+    var deployTask = project.createTask('antlib:com.salesforce:deploy');
+    deployTask.setUsername(attributes.get("username"));
+    deployTask.setPassword(attributes.get("password"));
+    deployTask.setServer(attributes.get("server"));
+    deployTask.setDeployRoot(attributes.get("dir"));
+    deployTask.setMaxPoll("300");
+    var tests = elements.get('tests');
+    if (tests) {
+      deployTask.setTestLevel('RunSpecifiedTests');
+      tests = tests.split(',');
+      for (var i = 0; i < tests.length; i++) {
+        var runTest = java.lang.Class.forName(
+          "com.salesforce.ant.DeployTask$CodeNameElement"
+        ).newInstance();
+        runTest.addText(tests[i]);
+        deployTask.addRunTest(runTest);
+      }
+    }
+    deployTask.perform();
+  ]]>
+  </scriptdef>
   <target name="test">
     <sfCompileAndTestUnmanaged checkOnly="true" username="${env.DEVMAJ_USER}" password="${env.DEVMAJ_PASSWORD}${env.DEVMAJ_TOKEN}" server="${env.DEVMAJ_URL}">
         <fileset dir="../src/classes">
