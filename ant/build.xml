@@ -5,6 +5,9 @@
        classpath="./ant-salesforce.jar"/>
 
   <property file="build.properties"/>
+  <property name="devmajUser"  value="${env.DEVMAJ_USER}"/>
+  <property name="devmajUserPwd"  value="${env.DEVMAJ_PASSWORD}${env.DEVMAJ_TOKEN}"/>
+  <property name="devmajUrl"  value="${env.DEVMAJ_URL}"/>  
   <property environment="env"/>
   <taskdef name="xmltask" classname="com.oopsconsultancy.xmltask.ant.XmlTask">
     <classpath path="./xmltask.jar" />
@@ -24,9 +27,9 @@
   <target name="deploy">
   <script language="javascript"><![CDATA[
     var deployTask = project.createTask('antlib:com.salesforce:deploy');
-    deployTask.setUsername("${DEVMAJ_USER}");
-    deployTask.setPassword("${DEVMAJ_PASSWORD}${DEVMAJ_TOKEN}");
-    deployTask.setServerURL("${DEVMAJ_URL}");
+    deployTask.setUsername(project.getProperty("${devmajUser}"));
+    deployTask.setPassword(project.getProperty("${devmajUserPwd}"));
+    deployTask.setServerURL(project.getProperty("${devmajUrl}"));
     deployTask.setDeployRoot("../src");
     deployTask.setTestLevel(project.getProperty("testLevel"));
     deployTask.setMaxPoll("300");
