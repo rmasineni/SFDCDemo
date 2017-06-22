@@ -51,19 +51,31 @@
     deployTask.setMaxPoll("300");
     var tests = elements.get("fileset");
    self.log('tests'+tests);
-    if (tests) {
-      deployTask.setTestLevel('RunSpecifiedTests');
-      tests = tests.toString().substring(1,tests.toString().length-1).replace(".cls","").split(',');
-      for (var i = 0; i < tests.length; i++) {
-       self.log('tests[]'+tests[i]);
-        var runTest = java.lang.Class.forName(
-          "com.salesforce.ant.DeployTask$CodeNameElement"
-        ).newInstance();
-        runTest.addText(tests[i]);  
-      self.log('runTest'+runTest);
-        deployTask.addRunTest(runTest);
-      }
-    }
+    
+  var filesets = elements.get("fileset");
+        var filesetsIterator = filesets.iterator();
+        var projectClasses = [];
+        while(filesetsIterator.hasNext()){
+            var fs = filesetsIterator.next();
+            var iter = fs.iterator();
+            while(iter.hasNext()){
+                var resource = iter.next();
+                var clazz = resource.getName().replace(".cls","");
+                self.log("CLASS: " + clazz);
+                projectClasses.push(clazz);
+            }
+        }
+               
+        var testsElement = deployTask.getClass().getClassLoader().loadClass("com.salesforce.ant.CompileAndTest$RunTestsElement").newInstance();
+        deployTask.addRunTests(testsElement);
+
+        var classClazz = deployTask.getClass().getClassLoader().loadClass("com.salesforce.ant.CompileAndTest$CodeNameElement");
+        for(i in projectClasses){
+            var clazz = classClazz.newInstance();
+            clazz.addText(projectClasses[i]);
+            testsElement.addClass(clazz);
+        }
+
     deployTask.perform();
   ]]>
   </scriptdef>
