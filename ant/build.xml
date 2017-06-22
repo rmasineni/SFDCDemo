@@ -38,6 +38,7 @@
       <attribute name="username"/>
       <attribute name="password"/>
       <attribute name="server"/>
+     <attribute name="dir"/>
     <attribute name="trace"/>
     <element name="fileset" type="fileset"/>
   <![CDATA[
