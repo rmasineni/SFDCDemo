@@ -50,7 +50,7 @@
     deployTask.setCheckonly(attributes.get("checkonly") == 'true');
     deployTask.setMaxPoll("300");
     var tests = elements.get('tests');
-    console.log('tests'+tests);
+   self.log('tests'+tests);
     if (tests) {
       deployTask.setTestLevel('RunSpecifiedTests');
       tests = tests.split(',');
