@@ -24,29 +24,58 @@
     <copy file="package.xml" todir="../src/" overwrite="true" failonerror="true"/>
     <sf:deploy username="${env.SFUSER}" password="${env.SFPASS}${env.SFTOKEN}" serverurl="${env.SF_SANDBOXURL}" deployRoot="../src" runAllTests="false" maxPoll="10000"/>
   </target>
-  <target name="deploy">
-  <script language="javascript"><![CDATA[
-    var deployTask = project.createTask('antlib:com.salesforce:deploy');
-    deployTask.setUsername(project.getProperty("sf.devmajUser"));
-    deployTask.setPassword(project.getProperty("sf.devmajUserPwd"));
-    deployTask.setServerURL(project.getProperty("sf.devmajUrl"));
-    deployTask.setDeployRoot("../src");
-    deployTask.setTestLevel(project.getProperty("testLevel"));
-    deployTask.setMaxPoll("300");
-    var tests = project.getProperty('tests');
-    if (tests) {
-      deployTask.setTestLevel('RunSpecifiedTests');
-      tests = tests.split(',');
-      for (var i = 0; i < tests.length; i++) {
-        var runTest = java.lang.Class.forName(
-          "com.salesforce.ant.DeployTask$CodeNameElement"
-        ).newInstance();
-        runTest.addText(tests[i]);
-        deployTask.addRunTest(runTest);
-      }
-    }
-    deployTask.perform();
-  ]]></script>
+  
+  <target name="test">
+    <sfCompileAndTestUnmanaged checkOnly="true" username="${env.DEVMAJ_USER}" password="${env.DEVMAJ_PASSWORD}${env.DEVMAJ_TOKEN}" server="${env.DEVMAJ_URL}">
+        <fileset dir="src/classes">
+            <include name="**/Test*.cls"/>
+        </fileset>
+    </sfCompileAndTestUnmanaged>
 </target>
+
+<scriptdef name="sfCompileAndTestUnmanaged" language="javascript">
+    <attribute name="checkonly"/>
+    <attribute name="username"/>
+    <attribute name="password"/>
+    <attribute name="server"/>
+    <attribute name="trace"/>
+    <element name="fileset" type="fileset"/>
+
+    <![CDATA[
+        var filesets = elements.get("fileset");
+        var filesetsIterator = filesets.iterator();
+        var projectClasses = [];
+        while(filesetsIterator.hasNext()){
+            var fs = filesetsIterator.next();
+            var iter = fs.iterator();
+            while(iter.hasNext()){
+                var resource = iter.next();
+                var clazz = resource.getName().replace(".cls","");
+                self.log("CLASS: " + clazz);
+                projectClasses.push(clazz);
+            }
+        }
+
+        var task = project.createTask("antlib:com.salesforce:compileAndTest");
+        task.setCheckonly(attributes.get("checkonly") == 'true');
+        task.setUsername(attributes.get("username"));
+        task.setPassword(attributes.get("password"));
+        task.setServer(attributes.get("server"));
+        task.setTrace(attributes.get("trace") == 'true');
+
+        //I tried 'importPackage' and conventional instantiation but couldn't get the inner class to instantiate; this works though
+        var testsElement = task.getClass().getClassLoader().loadClass("com.salesforce.ant.CompileAndTest$RunTestsElement").newInstance();
+        task.addRunTests(testsElement);
+
+        var classClazz = task.getClass().getClassLoader().loadClass("com.salesforce.ant.CompileAndTest$CodeNameElement");
+        for(i in projectClasses){
+            var clazz = classClazz.newInstance();
+            clazz.addText(projectClasses[i]);
+            testsElement.addClass(clazz);
+        }
+
+        task.execute();
+     ]]>
+</scriptdef>
 
 </project>
