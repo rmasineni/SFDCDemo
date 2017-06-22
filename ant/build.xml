@@ -48,6 +48,7 @@
     deployTask.setServerURL(attributes.get("server"));
     deployTask.setDeployRoot(attributes.get("dir"));
     deployTask.setCheckonly(attributes.get("checkonly") == 'true');
+    deployTask.setTestLevel('RunSpecifiedTests');
     deployTask.setMaxPoll("300");
     var tests = elements.get("fileset");
    self.log('tests'+tests);
