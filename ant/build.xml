@@ -67,7 +67,7 @@
         }
                
         var testsElement = deployTask.getClass().getClassLoader().loadClass("com.salesforce.ant.CompileAndTest$RunTestsElement").newInstance();
-        deployTask.addRunTests(testsElement);
+        deployTask.addRunTest(testsElement);
 
         var classClazz = deployTask.getClass().getClassLoader().loadClass("com.salesforce.ant.CompileAndTest$CodeNameElement");
         for(i in projectClasses){
