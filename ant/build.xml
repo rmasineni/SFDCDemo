@@ -45,7 +45,7 @@
     var deployTask = project.createTask('antlib:com.salesforce:deploy');
     deployTask.setUsername(attributes.get("username"));
     deployTask.setPassword(attributes.get("password"));
-    deployTask.setServer(attributes.get("server"));
+    deployTask.setServerURL(attributes.get("server"));
     deployTask.setDeployRoot(attributes.get("dir"));
     deployTask.setMaxPoll("300");
     var tests = elements.get('tests');
