@@ -47,6 +47,7 @@
     deployTask.setPassword(attributes.get("password"));
     deployTask.setServerURL(attributes.get("server"));
     deployTask.setDeployRoot(attributes.get("dir"));
+    deployTask.setCheckonly(attributes.get("checkonly") == 'true');
     deployTask.setMaxPoll("300");
     var tests = elements.get('tests');
     if (tests) {
