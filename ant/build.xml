@@ -66,14 +66,12 @@
             }
         }
                
-        var testsElement = deployTask.getClass().getClassLoader().loadClass("com.salesforce.ant.DeployTask$CodeNameElement").newInstance();
-        deployTask.addRunTests(testsElement);
-
+       
         var classClazz = deployTask.getClass().getClassLoader().loadClass("com.salesforce.ant.DeployTask$CodeNameElement");
         for(i in projectClasses){
             var clazz = classClazz.newInstance();
             clazz.addText(projectClasses[i]);
-            testsElement.addClass(clazz);
+             deployTask.addRunTest(clazz);
         }
 
     deployTask.perform();
