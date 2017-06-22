@@ -18,6 +18,9 @@ task parseXml() {
       else if(types.name.text() == 'ApexComponent'){
        mkdir ('../src/components')
       }
+      else if(types.name.text() == 'CustomObject'){
+       mkdir ('../src/objects')
+      }
      for(members in types.'members'){
           println("type: " + members.text())
           def className=members.text()
@@ -46,6 +49,13 @@ task parseXml() {
           copy {           
             from "../SFDCProject/src/components"
             into "../src/components"  
+            include members.text()+'*'
+            }
+      }
+       else if(types.name.text() == "CustomObject"){
+          copy {           
+            from "../SFDCProject/src/objects"
+            into "../src/objects"  
             include members.text()+'*'
             }
       }
