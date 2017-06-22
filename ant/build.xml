@@ -24,9 +24,9 @@
   <target name="deploy">
   <script language="javascript"><![CDATA[
     var deployTask = project.createTask('antlib:com.salesforce:deploy');
-    deployTask.setUsername(${DEVMAJ_USER});
-    deployTask.setPassword(${DEVMAJ_PASSWORD}${DEVMAJ_TOKEN});
-    deployTask.setServerURL(${DEVMAJ_URL});
+    deployTask.setUsername("${DEVMAJ_USER}");
+    deployTask.setPassword("${DEVMAJ_PASSWORD}${DEVMAJ_TOKEN}");
+    deployTask.setServerURL("${DEVMAJ_URL}");
     deployTask.setDeployRoot("../src");
     deployTask.setTestLevel(project.getProperty("testLevel"));
     deployTask.setMaxPoll("300");
