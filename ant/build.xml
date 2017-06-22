@@ -28,7 +28,7 @@
   <target name="test">
     <sfCompileAndTestUnmanaged checkOnly="true" username="${env.DEVMAJ_USER}" password="${env.DEVMAJ_PASSWORD}${env.DEVMAJ_TOKEN}" server="${env.DEVMAJ_URL}">
         <fileset dir="../src/classes">
-            <include name="**/Test*.cls"/>
+            <include name="**/*Test*.cls"/>
         </fileset>
     </sfCompileAndTestUnmanaged>
 </target>
